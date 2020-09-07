@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct StringLabel: View {
-    var position: [CGFloat] = GetPosition()
-    var height: CGFloat = GetHeight()
-    var width: CGFloat = GetWidth()
-    var fontsize: CGFloat = GetFontSize()
-    var tracking: CGFloat = GetTracking()
-    var stringContent: String = GetStringContent()
+    var id : Int
+    var position: [CGFloat]
+    var height: CGFloat
+    var width: CGFloat
+    var fontsize: CGFloat
+    var tracking: CGFloat
+    var content: String
     
     var body: some View {
         ZStack{
@@ -22,49 +23,54 @@ struct StringLabel: View {
             .fill(Color(red: 1, green: 0, blue: 0, opacity: 0.3))
                 .frame(width: self.width, height: self.height)
             
-            Text(GetStringContent())
+            Text(self.content)
                 .font(.system(size: self.fontsize, weight: .light, design: .serif))
 
         }
-        .position(x: GetPosition()[0], y: GetPosition()[1])
+        .position(x: self.position[0], y: self.position[1])
     }
 }
 
 struct StringLabel_Previews: PreviewProvider {
     static var previews: some View {
         StringLabel(
-            position: GetPosition(),
-            height: GetHeight(),
-            width: GetWidth(),
-            fontsize: GetFontSize(),
-            tracking: GetTracking(),
-            stringContent: GetStringContent()
+            id: SetID(),
+            position: SetPosition(),
+            height: SetHeight(),
+            width: SetWidth(),
+            fontsize: SetFontSize(),
+            tracking: SetTracking(),
+            content: SetContent()
         )
     }
 }
 
-func GetPosition() -> [CGFloat] {
+func SetID() -> Int {
+    return stringObjectsData.count
+}
+
+func SetPosition() -> [CGFloat] {
     //let x = Int.random(in: 0..<100)
     //let y = Int.random(in: 0..<100)
     return [200, 200]
 }
 
-func GetHeight() -> CGFloat {
+func SetHeight() -> CGFloat {
     return 20
 }
 
-func GetWidth() -> CGFloat {
+func SetWidth() -> CGFloat {
     return 20
 }
 
-func GetFontSize() -> CGFloat {
+func SetFontSize() -> CGFloat {
     return 20
 }
 
-func GetTracking() -> CGFloat {
+func SetTracking() -> CGFloat {
     return 20
 }
 
-func GetStringContent() -> String{
-    return "Default " +  GetPosition()[0].description  + ", " +  GetPosition()[1].description  
+func SetContent() -> String{
+    return "Default " +  SetPosition()[0].description  + ", " +  SetPosition()[1].description
 }

@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "content": "Hello",
+        "position": [
+            220.0,
+            100.0
+        ],
+        "width": 50.0,
+        "height": 50.0,
+        "tracking": 10.0,
+        "fontsize": 24.0
+    },
+    {
+        "id": 2,
+        "content": "This is text",
+        "position": [
+            50.0,
+            300.0
+        ],
+        "width": 50.0,
+        "height": 50.0,
+        "tracking": 10.0,
+        "fontsize": 24.0
+    },
+    {
+        "id": 3,
+        "content": "Nice Try!",
+        "position": [
+            300.0,
+            500.0
+        ],
+        "width": 50.0,
+        "height": 50.0,
+        "tracking": 10.0,
+        "fontsize": 24.0
+    },
+    {
+        "id": 4,
+        "content": "18 Aug 2020",
+        "position":[
+            500.0,
+            100.0
+        ],
+        "width": 50.0,
+        "height": 50.0,
+        "tracking": 10.0,
+        "fontsize": 24.0
+    }
+]

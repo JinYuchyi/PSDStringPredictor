@@ -15,12 +15,16 @@ struct ContentView: View {
     
     var body: some View {
         HStack{
-            //ListData()
-            ControlView()
-                .frame(width: 400)
+            //StringObjectListView(stringObject: StringObjectsData)
+            VStack{
+                ControlView()
+                    .frame(width: 400)
+                StringObjectList()
+
+            }
             ZStack{
                 ImageView()
-                StringLabel()
+                LabelsOnImage()
             }
         }
 
