@@ -20,14 +20,13 @@ struct LabelsOnImage: View {
                 position: item.position,
                 height: item.height,
                 width: item.width,
-                fontsize: item.fontsize,
+                fontsize: item.fontSize,
                 tracking: item.tracking,
                 content: item.content
             )
         }
 
         
-        //return StringObject_List
         
     }
 }

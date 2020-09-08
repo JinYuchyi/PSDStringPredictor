@@ -9,16 +9,29 @@
 import SwiftUI
 
 struct ImageView: View {
-    
+
     var body: some View{
-        ScrollView(.vertical){
+        
             ZStack{
-                //Image(#imageLiteral(resourceName: "locSampleWithGrid.png"))
-                Image("locSampleWithGrid")
-                Text("Label")
+                //Image("locSampleWithGrid")
+                GetImage(name: "locSampleWithGrid")
+                //Text("Label")
             }
-        }
+        
     }
+}
+
+//struct GetShowContent: View{
+//    var body: some View{
+//
+//    }
+//}
+
+func GetImage(name: String) -> Image{
+    var image: Image {
+        ImageStore.shared.image(name: name)
+    }
+    return image
 }
 
 struct ImageView_Previews: PreviewProvider {

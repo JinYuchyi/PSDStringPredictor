@@ -9,7 +9,7 @@
         "width": 50.0,
         "height": 50.0,
         "tracking": 10.0,
-        "fontsize": 24.0
+        "fontSize": 24.0
     },
     {
         "id": 2,
@@ -21,7 +21,7 @@
         "width": 50.0,
         "height": 50.0,
         "tracking": 10.0,
-        "fontsize": 24.0
+        "fontSize": 24.0
     },
     {
         "id": 3,
@@ -33,7 +33,7 @@
         "width": 50.0,
         "height": 50.0,
         "tracking": 10.0,
-        "fontsize": 24.0
+        "fontSize": 24.0
     },
     {
         "id": 4,
@@ -45,6 +45,6 @@
         "width": 50.0,
         "height": 50.0,
         "tracking": 10.0,
-        "fontsize": 24.0
+        "fontSize": 24.0
     }
 ]

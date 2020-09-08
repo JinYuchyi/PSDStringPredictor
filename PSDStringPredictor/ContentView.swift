@@ -14,19 +14,27 @@ struct ContentView: View {
     //var li: [] = ListData()
     
     var body: some View {
-        HStack{
+        HStack(alignment: .top){
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
-                ControlView()
-                    .frame(width: 400)
+                ControlPanel()
+                
                 StringObjectList()
 
             }
-            ZStack{
-                ImageView()
-                LabelsOnImage()
+            .padding(5)
+            .frame(width: 400.0)
+            
+            ScrollView([.horizontal, .vertical] , showsIndicators: true ){
+                ZStack{
+                    ImageView()
+                    LabelsOnImage()
+                }
             }
+                .padding(5)
+            .frame(width: 1100)
         }
+
 
     }
 }
@@ -97,15 +105,7 @@ struct ListData: View {
 
 
 
-struct ControlView: View{
-    var body: some View{
-        HStack{
-            Button(action: {}){
-                Text("Generate Strings")
-            }
-        }
-    }
-}
+
 
 
 

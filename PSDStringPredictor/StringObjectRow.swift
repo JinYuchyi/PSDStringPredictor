@@ -15,7 +15,7 @@ struct StringObjectRow: View {
            HStack{
                Text(stringObject.content)
                Spacer()
-               Text((stringObject.fontsize).description)
+               Text((stringObject.fontSize).description)
                Spacer()
                Text((stringObject.position[0]).description + ", "+(stringObject.position[1]).description)
            }
