@@ -15,14 +15,16 @@ struct ContentView: View {
     
     var body: some View {
         HStack(alignment: .top){
+
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
                 ControlPanel()
-                
                 StringObjectList()
+                LogList()
+                    .frame(width:400, height: 300.0)
 
             }
-            .padding(5)
+     
             .frame(width: 400.0)
             
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
@@ -31,7 +33,7 @@ struct ContentView: View {
                     LabelsOnImage()
                 }
             }
-                .padding(5)
+         
             .frame(width: 1100)
         }
 

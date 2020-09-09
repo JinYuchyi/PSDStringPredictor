@@ -24,4 +24,9 @@ struct ControlPanel_Previews: PreviewProvider {
     }
 }
 
+func CreateStringObjects(){
+    //LogList.PushMsg(LogObject(id:2, content: "This is log 2", time: <#String#>, category: LogObject.Category.normal))
+}
+
+
 

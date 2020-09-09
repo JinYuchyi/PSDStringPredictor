@@ -15,6 +15,9 @@
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
 		3F56E3E9250606C000E64337 /* StringObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E8250606C000E64337 /* StringObjectList.swift */; };
 		3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */; };
+		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
+		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
+		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
 		3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD401F22500F2FB00525E67 /* AppDelegate.swift */; };
 		3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD401F42500F2FB00525E67 /* ContentView.swift */; };
 		3FD401F72500F2FB00525E67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401F62500F2FB00525E67 /* Assets.xcassets */; };
@@ -28,7 +31,7 @@
 		3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91D25072F8300AEF1C8 /* OCR.swift */; };
 		3FEFE920250734E300AEF1C8 /* StringObjectsProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91F250734E300AEF1C8 /* StringObjectsProcess.swift */; };
 		3FEFE92225073C0C00AEF1C8 /* ShareData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE92125073C0C00AEF1C8 /* ShareData.swift */; };
-		3FEFE9242507900500AEF1C8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9232507900500AEF1C8 /* Log.swift */; };
+		3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9232507900500AEF1C8 /* LogListData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
 		3F56E3E8250606C000E64337 /* StringObjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectList.swift; sourceTree = "<group>"; };
 		3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectRow.swift; sourceTree = "<group>"; };
+		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
+		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
+		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
 		3FD401EF2500F2FB00525E67 /* PSDStringPredictor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSDStringPredictor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD401F22500F2FB00525E67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD401F42500F2FB00525E67 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,7 +62,7 @@
 		3FEFE91D25072F8300AEF1C8 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
 		3FEFE91F250734E300AEF1C8 /* StringObjectsProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectsProcess.swift; sourceTree = "<group>"; };
 		3FEFE92125073C0C00AEF1C8 /* ShareData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareData.swift; sourceTree = "<group>"; };
-		3FEFE9232507900500AEF1C8 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		3FEFE9232507900500AEF1C8 /* LogListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +112,10 @@
 			isa = PBXGroup;
 			children = (
 				3FEFE9122507200400AEF1C8 /* ControlPanel.swift */,
-				3FEFE9232507900500AEF1C8 /* Log.swift */,
+				3FEFE9232507900500AEF1C8 /* LogListData.swift */,
+				3FA49B36250874390093EBD2 /* LogObjectView.swift */,
+				3FA49B382508B0D40093EBD2 /* LogObject.swift */,
+				3FA49B3A2508EAE90093EBD2 /* LogListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -247,8 +256,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F4D13E42501FB9E008F846B /* ImageView.swift in Sources */,
+				3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */,
 				3FEFE920250734E300AEF1C8 /* StringObjectsProcess.swift in Sources */,
-				3FEFE9242507900500AEF1C8 /* Log.swift in Sources */,
+				3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */,
+				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
 				3FEFE9152507266600AEF1C8 /* DB.swift in Sources */,
 				3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */,
 				3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */,
@@ -256,6 +267,7 @@
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
+				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
 				3F4D13EB2502220D008F846B /* LabelsOnImage.swift in Sources */,
 				3FEFE92225073C0C00AEF1C8 /* ShareData.swift in Sources */,

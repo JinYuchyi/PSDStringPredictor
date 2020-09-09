@@ -10,8 +10,8 @@ import Foundation
 import SwiftUI
 
 
-func CreateStringObjects(){
-    print("Predict!")
-}
+//func CreateStringObjects(){
+//    print("Predict!")
+//}
 
 
