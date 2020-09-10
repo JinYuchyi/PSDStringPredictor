@@ -71,8 +71,15 @@ class ReadTextFromFile{
     }
 
     func ReadAllContentAsString(FromFile filePath: String) -> String{
+        
+        if FileManager.default.fileExists(atPath: filePath) {
+            print("CSV file found.")
+        }else{
+            print("CSV file not found.")
+        }
         let readHandle = FileHandle.init(forReadingAtPath: filePath)
         let data = readHandle?.readDataToEndOfFile()
+
         let str = String.init(data: data!, encoding: String.Encoding.utf8)
         return str!
     }

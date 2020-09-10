@@ -12,7 +12,8 @@ struct ContentView: View {
     //@Binding var selectedPeople: People?
     //var li: [] = ListData()
     @ObservedObject var loglist = LogListData()
-
+    @State private var db = DBUtils()
+    @State private var ocr =  OCRUtils()
     
     var body: some View {
         HStack(alignment: .top){
@@ -24,7 +25,7 @@ struct ContentView: View {
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
 
-                ControlPanel(loglist:loglist)
+                ControlPanel(loglist:loglist, db: $db, ocr: $ocr)
                 StringObjectList()
                 LogListView(logList: loglist)
                     .frame(width:400, height: 300.0)

@@ -12,6 +12,7 @@ import Vision
 
 class OCRUtils{
     
+    let imageProcess = ImageProcess()
     
     func GetObservations(fromImage image: CIImage, withRecognitionLevel recognitionLevel: VNRequestTextRecognitionLevel, usesLanguageCorrection: Bool)->[VNRecognizedTextObservation]{
         let requestHandler = VNImageRequestHandler(ciImage: image, options: [:])
@@ -98,10 +99,9 @@ class OCRUtils{
         let stringsRects = GetRectsFromObservations(stringsResults, Int((ciImage.extent.width)), Int((ciImage.extent.height)))
         let strs = GetStringArrayFromObservations(stringsResults)
         for i in 0..<stringsRects.count{
-            //let path = outputFolder+"b\(i).png"
-            //let strImage = ciImage.cropped(to: stringsRects[i])
             let (charRects, chars) = GetCharsInfoFromObservation(stringsResults[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
-            //ciImage.ToPNG(stringsRects[i], url: URL(fileURLWithPath: path)) //Save the string image
+            
+            ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads", CreatePath: true) //Save the string image
             let newStrContent = StringObjectComplete(strs[i], stringsRects[i], stringsResults[i], chars, charRects)
             //newStrContent.FindBestWeightForString()
             //newStrContent.GetDataReady()
@@ -110,4 +110,5 @@ class OCRUtils{
         }
         return strobjs
     }
+    
 }

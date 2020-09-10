@@ -11,7 +11,9 @@ import Foundation
 import SQLite
 
 class DBUtils{
-    
+    let dbPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/db1.sqlite3"
+    let csvPath = "CharacterData.csv"
+
     var db: Connection!
     //let ducumentPath = NSHomeDirectory() + "/Documents/Development/StringObjectCreator/StringObjectCreator/DataModel/db.sqlite3"
     let TABLE_CHARACTER = Table("table_character")
@@ -26,14 +28,22 @@ class DBUtils{
         //connectDatabase(ducumentPath)
     }
     
-    func connectDatabase(_ filePath: String ) {
-        let sqlFilePath = filePath
+    func connectDatabase() {
+        
+        let sqlFilePath = self.dbPath
+        if FileManager.default.fileExists(atPath: dbPath) {
+            print("DB file found.")
+        }
+        else{
+            print("Cannot find the DB file.")
+        }
         do{
-            db = try Connection(sqlFilePath)
+            db = try Connection("db.sqlite3")
+            print(db.description)
             print("Connection Success!")
        
-            let all = Array(try db.prepare(TABLE_CHARACTER))
-            print("We have \(all.count) items in database.")
+//            let all = Array(try db.prepare(TABLE_CHARACTER))
+//            print("We have \(all.count) items in database.")
         }
         catch{
             print("Connection Failed: \(error)")
@@ -152,7 +162,7 @@ class DBUtils{
         //RemoveAll()
         var index:Int = 0
         let readText = ReadTextFromFile()
-        let  str = readText.ReadAllContentAsString(FromFile: NSHomeDirectory() + "/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/CharacterData.csv")
+        let str = readText.ReadAllContentAsString(FromFile: csvPath)
         let objArray = readText.ConvertToObjectArray(FromString: str)
         for obj in objArray{
             TableCharacterInsertItem(char:obj.char, width:obj.width, height:obj.height, weight: obj.weight)
@@ -180,7 +190,7 @@ class DBUtils{
     func FindWeight(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
         var objArray: [Row] = []
         var result: Int64 = 0
-        //print("Looking for: \(char) - \(width) - \(height)")
+        print("Looking for: \(char) - \(width) - \(height)")
         
         if(db == nil){
             print("DB equals null.")
