@@ -9,30 +9,27 @@
 import SwiftUI
 
 struct LogObjectView: View {
-    var id: Int
-    var content: String
-    var time: String = GetTime()
-    var category: Category
+    var logObject: LogObject
     
     var body: some View {
         HStack(alignment: .top){
-            Text(category.rawValue+":")
+            Text(logObject.category.rawValue+":")
                 .multilineTextAlignment(.leading)
             
-            Text(content)
+            Text(logObject.content)
                 .multilineTextAlignment(.leading)
                 .frame(width: 250)
             //Spacer()
-            Text(time)
+            Text(logObject.time)
                 .multilineTextAlignment(.trailing)
         }
     }
     
-    enum Category: String, CaseIterable, Codable, Hashable {
-        case normal = "Normal"
-        case warning = "Warning"
-        case error = "Error"
-    }
+//    enum Category: String, CaseIterable, Codable, Hashable {
+//        case normal = "Normal"
+//        case warning = "Warning"
+//        case error = "Error"
+//    }
     
 
     
@@ -40,7 +37,7 @@ struct LogObjectView: View {
 
 struct LogObjectView_Previews: PreviewProvider {
     static var previews: some View {
-        LogObjectView(id: 1, content: "This is a new log. This is a new log. This is a new log. This is a new log.", category: LogObject.Category.normal)
+        LogObjectView(logObject: LogObject(id: 1, content: "This is a new log. This is a new log. This is a new log. This is a new log.", time: "xxx-xxx-xxx", category: LogObject.Category.normal))
             .frame(width: 400.0)
     }
 }

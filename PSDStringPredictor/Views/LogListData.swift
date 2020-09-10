@@ -47,15 +47,41 @@
 //
 
 import Foundation
+import Combine
 
 class LogListData: ObservableObject{
-    @Published var logListData: [LogObject] = []
+    @Published var testnum: [Int]  = []
+    @Published var logListData = [
+        LogObject(id: 1, content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
+        LogObject(id: 2, content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
+    ]
 
-    func PushMsg(_ msg: LogObject){
-        logListData.append(msg)
+    
+    
+    func PushMsg(_ content: String, _ category: LogObject.Category){
+        let id = logListData.count + 1
+        let obj = LogObject(id:id, content:content, time: GetTime(), category: category)
+        logListData.append(obj)
         if (logListData.count > 10) {
             logListData.removeFirst()
         }
+        print("Add log: " + String(obj.id) + ", " + obj.content)
     }
+    
+    func CleanMsg(){
+        logListData = []
+        print("Clean log, log length is: " + String(logListData.count))
+    }
+    
+
+     func GetTime() -> String {
+        let now = Date()
+        let dformatter = DateFormatter()
+        dformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let str = dformatter.string(from: now)
+        return str
+    }
+    
+
     
 }

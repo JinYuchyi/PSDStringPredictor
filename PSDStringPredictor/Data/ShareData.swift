@@ -10,5 +10,4 @@ import Foundation
 
 struct ShareData{
     static var idIndex: Int = 0
-    
 }

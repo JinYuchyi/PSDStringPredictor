@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F48FFFA2509FB54005B14EB /* ObservableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F48FFF92509FB54005B14EB /* ObservableArray.swift */; };
 		3F4D13E42501FB9E008F846B /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13E32501FB9E008F846B /* ImageView.swift */; };
 		3F4D13E625020F22008F846B /* StringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13E525020F22008F846B /* StringLabel.swift */; };
 		3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F4D13E825021B74008F846B /* StringObjectsData.json */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F48FFF92509FB54005B14EB /* ObservableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableArray.swift; sourceTree = "<group>"; };
 		3F4D13E32501FB9E008F846B /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		3F4D13E525020F22008F846B /* StringLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabel.swift; sourceTree = "<group>"; };
 		3F4D13E825021B74008F846B /* StringObjectsData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StringObjectsData.json; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				3F56E3E62506042D00E64337 /* StringObject.swift */,
+				3F48FFF92509FB54005B14EB /* ObservableArray.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				3FEFE920250734E300AEF1C8 /* StringObjectsProcess.swift in Sources */,
 				3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */,
 				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
+				3F48FFFA2509FB54005B14EB /* ObservableArray.swift in Sources */,
 				3FEFE9152507266600AEF1C8 /* DB.swift in Sources */,
 				3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */,
 				3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */,

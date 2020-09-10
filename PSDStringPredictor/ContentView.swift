@@ -10,17 +10,23 @@ import SwiftUI
 
 struct ContentView: View {
     //@Binding var selectedPeople: People?
-    
     //var li: [] = ListData()
+    @ObservedObject var loglist = LogListData()
+
     
     var body: some View {
         HStack(alignment: .top){
-
+//            Button(action: {
+//                self.loglist.CleanMsg()
+//            }) {
+//                Text("Test")
+//            }
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
-                ControlPanel()
+
+                ControlPanel(loglist:loglist)
                 StringObjectList()
-                LogList()
+                LogListView(logList: loglist)
                     .frame(width:400, height: 300.0)
 
             }

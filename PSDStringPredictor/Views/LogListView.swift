@@ -9,15 +9,22 @@
 import SwiftUI
 
 struct LogListView: View {
-     @ObservedObject var logList = LogListData()
+    @ObservedObject var logList: LogListData
+    
+
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+        List(self.logList.logListData, id: \.id){ item in
+            LogObjectView(logObject: LogObject(id: item.id, content: item.content, time: "xxx_xxx", category: item.category ))
+        }
     }
+    
+
 }
 
-struct LogListView_Previews: PreviewProvider {
-    static var previews: some View {
-        LogListView()
-    }
-}
+//struct LogListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LogListView()
+//    }
+//}

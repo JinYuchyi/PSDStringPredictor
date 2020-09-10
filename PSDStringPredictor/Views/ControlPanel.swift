@@ -9,24 +9,28 @@
 import SwiftUI
 
 struct ControlPanel: View {
+    @ObservedObject var loglist: LogListData 
+    
+    func CreateStringObjects(){
+        //loglist.PushMsg("Hi, This is the new log", LogObject.Category.normal)
+        
+    }
+    
     var body: some View {
-        HStack{
-            Button(action: {CreateStringObjects()}){
-                Text("Generate Strings")
-            }
+        Button(action: CreateStringObjects){
+            Text("Predict")
         }
     }
+
 }
 
-struct ControlPanel_Previews: PreviewProvider {
-    static var previews: some View {
-        ControlPanel()
-    }
-}
+//struct ControlPanel_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ControlPanel()
+//    }
+//}
 
-func CreateStringObjects(){
-    //LogList.PushMsg(LogObject(id:2, content: "This is log 2", time: <#String#>, category: LogObject.Category.normal))
-}
+
 
 
 
