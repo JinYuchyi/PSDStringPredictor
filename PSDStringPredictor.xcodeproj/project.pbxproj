@@ -14,13 +14,14 @@
 		3F4D13E42501FB9E008F846B /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13E32501FB9E008F846B /* ImageView.swift */; };
 		3F4D13E625020F22008F846B /* StringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13E525020F22008F846B /* StringLabel.swift */; };
 		3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F4D13E825021B74008F846B /* StringObjectsData.json */; };
-		3F4D13EB2502220D008F846B /* LabelsOnImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13EA2502220D008F846B /* LabelsOnImage.swift */; };
+		3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13EA2502220D008F846B /* StringLabelList.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
 		3F56E3E9250606C000E64337 /* StringObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E8250606C000E64337 /* StringObjectListView.swift */; };
 		3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */; };
 		3F689AB3250B172700D02377 /* LocSample.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F689AB2250B172700D02377 /* LocSample.png */; };
 		3F689AB5250B2E5800D02377 /* StringObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F689AB4250B2E5800D02377 /* StringObjectList.swift */; };
+		3F689AB7250B78BC00D02377 /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F689AB6250B78BC00D02377 /* default_image.png */; };
 		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
 		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
 		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
@@ -48,13 +49,14 @@
 		3F4D13E32501FB9E008F846B /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		3F4D13E525020F22008F846B /* StringLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabel.swift; sourceTree = "<group>"; };
 		3F4D13E825021B74008F846B /* StringObjectsData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StringObjectsData.json; sourceTree = "<group>"; };
-		3F4D13EA2502220D008F846B /* LabelsOnImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsOnImage.swift; sourceTree = "<group>"; };
+		3F4D13EA2502220D008F846B /* StringLabelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabelList.swift; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
 		3F56E3E8250606C000E64337 /* StringObjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectListView.swift; sourceTree = "<group>"; };
 		3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectRow.swift; sourceTree = "<group>"; };
 		3F689AB2250B172700D02377 /* LocSample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocSample.png; path = ../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png; sourceTree = DEVELOPER_DIR; };
 		3F689AB4250B2E5800D02377 /* StringObjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectList.swift; sourceTree = "<group>"; };
+		3F689AB6250B78BC00D02377 /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_image.png; path = ../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png; sourceTree = DEVELOPER_DIR; };
 		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				3F689AB2250B172700D02377 /* LocSample.png */,
+				3F689AB6250B78BC00D02377 /* default_image.png */,
 				3FD401F82500F2FB00525E67 /* Preview Content */,
 				3FEFE91925072A0000AEF1C8 /* CharacterData.csv */,
 				3FEFE91025071F2100AEF1C8 /* locSampleWithGrid.png */,
@@ -164,7 +167,7 @@
 				3F4D13E32501FB9E008F846B /* ImageView.swift */,
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
 				3F4D13E525020F22008F846B /* StringLabel.swift */,
-				3F4D13EA2502220D008F846B /* LabelsOnImage.swift */,
+				3F4D13EA2502220D008F846B /* StringLabelList.swift */,
 				3F56E3E8250606C000E64337 /* StringObjectListView.swift */,
 				3F689AB4250B2E5800D02377 /* StringObjectList.swift */,
 				3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */,
@@ -258,6 +261,7 @@
 				3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */,
 				3FEFE91A25072A0000AEF1C8 /* CharacterData.csv in Resources */,
 				3FEFE91125071F2200AEF1C8 /* locSampleWithGrid.png in Resources */,
+				3F689AB7250B78BC00D02377 /* default_image.png in Resources */,
 				3FD401FD2500F2FB00525E67 /* Main.storyboard in Resources */,
 				3FD401FA2500F2FB00525E67 /* Preview Assets.xcassets in Resources */,
 				3F689AB3250B172700D02377 /* LocSample.png in Resources */,
@@ -290,7 +294,7 @@
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
 				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
-				3F4D13EB2502220D008F846B /* LabelsOnImage.swift in Sources */,
+				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,
 				3FEFE92225073C0C00AEF1C8 /* ShareData.swift in Sources */,
 				3F4D13E625020F22008F846B /* StringLabel.swift in Sources */,

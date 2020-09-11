@@ -9,18 +9,29 @@
 import Foundation
 import CoreImage
 import Vision
+import SwiftUI
 
-class ImageProcess{
+class ImageProcess: ObservableObject{
+    @Published var targetImagePath: CIImage  = LoadCIImage("/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png")
     
     func convertCGImageToCIImage(inputImage: CGImage) -> CIImage! {
         var ciImage = CIImage(cgImage: inputImage)
         return ciImage
     }
-    
-//    func GetCIImage(PathFrom path: String){
-//        let url = URL(string: path)
-//        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-//        imageView.image = UIImage(data: data!)
-//    }
-}
 
+
+    //name: only the file name, path string and "png" do not included.
+    func GetImage(name: String) -> Image{
+        var image: Image {
+            ImageStore.shared.image(name: name)
+        }
+        
+        return image
+    }
+
+    func LoadCIImage(path: String) -> CIImage{
+        var img = CIImage(contentsOf: URL(fileURLWithPath: path))
+        return img!
+    }
+
+}

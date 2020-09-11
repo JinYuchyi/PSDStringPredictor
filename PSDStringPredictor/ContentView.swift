@@ -13,9 +13,9 @@ struct ContentView: View {
     //var li: [] = ListData()
     @ObservedObject var loglist = LogListData()
     @ObservedObject var stringObjectList = StringObjectList()
+    @ObservedObject var imageProcess = ImageProcess()
     @State private var db = DBUtils()
     @State private var ocr =  OCRUtils()
-    
     
     var body: some View {
         HStack(alignment: .top){
@@ -27,11 +27,10 @@ struct ContentView: View {
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
 
-                ControlPanel(db: $db, ocr: $ocr, stringObjectList: stringObjectList)
+                ControlPanel(db: $db, ocr: $ocr, stringObjectList: stringObjectList, imageProcess: imageProcess)
                 StringObjectListView( stringObjectList: stringObjectList)
                 LogListView(logList: loglist)
                     .frame(width:400, height: 300.0)
-
             }
      
             .frame(width: 400.0)

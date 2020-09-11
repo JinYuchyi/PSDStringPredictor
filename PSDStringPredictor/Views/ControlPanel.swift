@@ -13,10 +13,10 @@ struct ControlPanel: View {
     @Binding var db: DBUtils
     @Binding var ocr: OCRUtils
     @ObservedObject var stringObjectList: StringObjectList
+    @ObservedObject var imageProcess: ImageProcess
     
-    let tempImagePath = "LocSample"
-    
-    var imageProcess = ImageProcess()
+    //let tempImagePath = "LocSample"
+
     
     func HandleDBConnection(){
         //loglist.PushMsg("Hi, This is the new log", LogObject.Category.normal)
@@ -26,8 +26,12 @@ struct ControlPanel: View {
     }
     
     func CreateStringObjects(){
-        let cgImg: CGImage = ImageStore.loadImage(name: tempImagePath)
-        guard let ciImg = imageProcess.convertCGImageToCIImage(inputImage: cgImg) else { return   }
+        
+        //Load image for test
+        imageProcess.targetImagePath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png"
+        
+        guard let ciImg = CIImage.init?(contentsOf: URL(imageProcess.targetImagePath))
+        //guard let ciImg = imageProcess.convertCGImageToCIImage(inputImage: image) else { return   }
         if ciImg.extent.isEmpty == false{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: ciImg)
             stringObjectList.stringObjectListData = stringObjects

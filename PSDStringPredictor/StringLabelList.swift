@@ -23,11 +23,9 @@ struct LabelsOnImage: View {
                 fontsize: item.fontSize,
                 tracking: item.tracking,
                 content: item.content
-            )
+            ).position(x: item.position[0], y: item.position[1])
         }
 
-        
-        
     }
 }
 
@@ -49,3 +47,6 @@ struct LabelsOnImage: View {
 //    return StringLabels
 //}
 
+//func ToPSDLocation(Location location: [CGFloat]) ->[CGFloat]{
+//    
+//}

@@ -27,7 +27,7 @@ struct StringLabel: View {
                 .font(.system(size: self.fontsize, weight: .light, design: .serif))
 
         }
-        .position(x: self.position[0], y: self.position[1])
+        
     }
 }
 

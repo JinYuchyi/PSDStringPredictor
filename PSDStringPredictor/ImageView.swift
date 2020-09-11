@@ -27,12 +27,7 @@ struct ImageView: View {
 //    }
 //}
 
-func GetImage(name: String) -> Image{
-    var image: Image {
-        ImageStore.shared.image(name: name)
-    }
-    return image
-}
+
 
 struct ImageView_Previews: PreviewProvider {
     static var previews: some View {
