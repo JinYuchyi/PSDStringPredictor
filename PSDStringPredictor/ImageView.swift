@@ -14,7 +14,7 @@ struct ImageView: View {
         
             ZStack{
                 //Image("locSampleWithGrid")
-                GetImage(name: "locSampleWithGrid")
+                GetImage(name: "LocSample")
                 //Text("Label")
             }
         

@@ -13,7 +13,7 @@ extension CIImage{
         return nsImage
     }
     
-    func ToPNG(_ rect: CGRect, ToPath path: String, CreatePath createPath: Bool){
+    func ToPNG(_ rect: CGRect, ToPath path: String, FileName fileName: String, CreatePath createPath: Bool){
         let newimg = self.cropped(to: rect)
         print("RectW:\(rect.width), RectH:\(rect.height). Mid Image Size: \(newimg.extent), row size: \(self.extent)")
         let nsimg = newimg.ToNSImage()
@@ -24,7 +24,7 @@ extension CIImage{
             try! FileManager.default.createDirectory(atPath: path,
             withIntermediateDirectories: true, attributes: nil)
         }
-        nsimg.pngWrite(to: URL(string:path)!)
+        nsimg.pngWrite(to: URL(fileURLWithPath:path+fileName))
     
     }
     

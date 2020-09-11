@@ -2,7 +2,7 @@ import Foundation
 import CoreLocation
 import SwiftUI
 
-let stringObjectsData: [StringObject] = load("StringObjectsData.json")
+//let stringObjectsData: [StringObject] = load("StringObjectsData.json")
 
 
 func load<T: Decodable>(_ filename: String) -> T {

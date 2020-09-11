@@ -50,7 +50,6 @@ import Foundation
 import Combine
 
 class LogListData: ObservableObject{
-    @Published var testnum: [Int]  = []
     @Published var logListData = [
         LogObject(id: 1, content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
         LogObject(id: 2, content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)

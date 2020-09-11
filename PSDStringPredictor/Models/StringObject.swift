@@ -11,19 +11,19 @@ import CoreImage
 import Vision
 import Foundation
 
-struct StringObject: Hashable, Codable, Identifiable {
-    var id: Int
-    var content: String
-    var position: [CGFloat]
-    var width: CGFloat
-    var height: CGFloat
-    var tracking: CGFloat
-    var fontSize: CGFloat
-}
+//struct StringObject: Hashable, Codable, Identifiable {
+//    var id: Int
+//    var content: String
+//    var position: [CGFloat]
+//    var width: CGFloat
+//    var height: CGFloat
+//    var tracking: CGFloat
+//    var fontSize: CGFloat
+//}
 
 //struct StringObject: Hashable, Codable, Identifiable {
-struct StringObjectComplete {
-    var id: Int
+struct StringObject {
+    var id: Int = 0
     var content: String
     var position: [CGFloat]
     var width: CGFloat
@@ -37,7 +37,6 @@ struct StringObjectComplete {
     var charRects: [CGRect]
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect]){
-       //self.image = image
         ShareData.idIndex = ShareData.idIndex + 1
         self.id = (ShareData.idIndex)
         self.stringRect = stringRect
@@ -54,6 +53,7 @@ struct StringObjectComplete {
         
         self.tracking = GetTracking()
         self.color = GetColor()
+        self.position = CalcPosition()
 
        }
     
@@ -105,13 +105,11 @@ struct StringObjectComplete {
             if char.isNumber || char.isLetter{
                 var tempweight = dbUtils.FindWeight(String(char), Int64(charRects[index].width), Int64(charRects[index].height))
                 //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
-
                 weightArray.append(tempweight)
             }
         }
         //self.fontWeight = FindBestWeightFromWeightArray(weightArray)
         return FindBestWeightFromWeightArray(FromArray: weightArray)
-        
     }
     
     private func FindBestWeightFromWeightArray(FromArray weightArray: [Int64]) -> Float{
@@ -146,6 +144,15 @@ struct StringObjectComplete {
     
      func GetColor() -> Color {
         return Color.white
+    }
+    
+    func CalcPosition() -> [CGFloat]{
+        if stringRect.isEmpty {
+            return [0,0]
+        }
+        else{
+            return [stringRect.minX, stringRect.minY]
+        }
     }
     
 

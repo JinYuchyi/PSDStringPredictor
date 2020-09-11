@@ -93,16 +93,16 @@ class OCRUtils{
         return (rects, chars)
     }
     
-    func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObjectComplete]{
-        var strobjs : [StringObjectComplete] = []
+    func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObject]{
+        var strobjs : [StringObject] = []
         let stringsResults = GetObservations(fromImage: ciImage, withRecognitionLevel: VNRequestTextRecognitionLevel.fast, usesLanguageCorrection: true)
         let stringsRects = GetRectsFromObservations(stringsResults, Int((ciImage.extent.width)), Int((ciImage.extent.height)))
         let strs = GetStringArrayFromObservations(stringsResults)
         for i in 0..<stringsRects.count{
             let (charRects, chars) = GetCharsInfoFromObservation(stringsResults[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
             
-            ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads", CreatePath: true) //Save the string image
-            let newStrContent = StringObjectComplete(strs[i], stringsRects[i], stringsResults[i], chars, charRects)
+            ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
+            let newStrContent = StringObject(strs[i], stringsRects[i], stringsResults[i], chars, charRects)
             //newStrContent.FindBestWeightForString()
             //newStrContent.GetDataReady()
             strobjs.append(newStrContent)

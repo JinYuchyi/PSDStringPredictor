@@ -17,8 +17,10 @@
 		3F4D13EB2502220D008F846B /* LabelsOnImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13EA2502220D008F846B /* LabelsOnImage.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
-		3F56E3E9250606C000E64337 /* StringObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E8250606C000E64337 /* StringObjectList.swift */; };
+		3F56E3E9250606C000E64337 /* StringObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E8250606C000E64337 /* StringObjectListView.swift */; };
 		3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */; };
+		3F689AB3250B172700D02377 /* LocSample.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F689AB2250B172700D02377 /* LocSample.png */; };
+		3F689AB5250B2E5800D02377 /* StringObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F689AB4250B2E5800D02377 /* StringObjectList.swift */; };
 		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
 		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
 		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
@@ -49,8 +51,10 @@
 		3F4D13EA2502220D008F846B /* LabelsOnImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsOnImage.swift; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
-		3F56E3E8250606C000E64337 /* StringObjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectList.swift; sourceTree = "<group>"; };
+		3F56E3E8250606C000E64337 /* StringObjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectListView.swift; sourceTree = "<group>"; };
 		3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectRow.swift; sourceTree = "<group>"; };
+		3F689AB2250B172700D02377 /* LocSample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocSample.png; path = ../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png; sourceTree = DEVELOPER_DIR; };
+		3F689AB4250B2E5800D02377 /* StringObjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectList.swift; sourceTree = "<group>"; };
 		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 		3F4D13E725021AFB008F846B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3F689AB2250B172700D02377 /* LocSample.png */,
 				3FD401F82500F2FB00525E67 /* Preview Content */,
 				3FEFE91925072A0000AEF1C8 /* CharacterData.csv */,
 				3FEFE91025071F2100AEF1C8 /* locSampleWithGrid.png */,
@@ -160,7 +165,8 @@
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
 				3F4D13E525020F22008F846B /* StringLabel.swift */,
 				3F4D13EA2502220D008F846B /* LabelsOnImage.swift */,
-				3F56E3E8250606C000E64337 /* StringObjectList.swift */,
+				3F56E3E8250606C000E64337 /* StringObjectListView.swift */,
+				3F689AB4250B2E5800D02377 /* StringObjectList.swift */,
 				3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */,
 			);
 			path = PSDStringPredictor;
@@ -254,6 +260,7 @@
 				3FEFE91125071F2200AEF1C8 /* locSampleWithGrid.png in Resources */,
 				3FD401FD2500F2FB00525E67 /* Main.storyboard in Resources */,
 				3FD401FA2500F2FB00525E67 /* Preview Assets.xcassets in Resources */,
+				3F689AB3250B172700D02377 /* LocSample.png in Resources */,
 				3FD401F72500F2FB00525E67 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,7 +283,8 @@
 				3F4CB5A9250A327E00E41082 /* NSImageExtension.swift in Sources */,
 				3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */,
 				3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */,
-				3F56E3E9250606C000E64337 /* StringObjectList.swift in Sources */,
+				3F56E3E9250606C000E64337 /* StringObjectListView.swift in Sources */,
+				3F689AB5250B2E5800D02377 /* StringObjectList.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
@@ -422,6 +430,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PSDStringPredictor/PSDStringPredictor.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -445,6 +454,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PSDStringPredictor/PSDStringPredictor.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "";

@@ -9,11 +9,12 @@
 import SwiftUI
 
 struct ControlPanel: View {
-    @ObservedObject var loglist: LogListData 
+    //@ObservedObject var loglist: LogListData
     @Binding var db: DBUtils
     @Binding var ocr: OCRUtils
+    @ObservedObject var stringObjectList: StringObjectList
     
-    let tempImagePath = "locSampleWithGrid"
+    let tempImagePath = "LocSample"
     
     var imageProcess = ImageProcess()
     
@@ -29,9 +30,10 @@ struct ControlPanel: View {
         guard let ciImg = imageProcess.convertCGImageToCIImage(inputImage: cgImg) else { return   }
         if ciImg.extent.isEmpty == false{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: ciImg)
+            stringObjectList.stringObjectListData = stringObjects
             for index in 0..<stringObjects.count{
                 //stringObjects[index].fontWeight = stringObjects[index].FindBestWeightForString()
-                print("All Weights: \(stringObjects[index].content),\(stringObjects[index].FindBestWeightForString(db)), \(stringObjects[index].position)")
+                print("All Weights: \(stringObjects[index].id) - \(stringObjects[index].content),\(stringObjects[index].FindBestWeightForString(db)), \(stringObjects[index].position)")
             }
         }
         else{

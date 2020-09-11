@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct LabelsOnImage: View {
-
+    @ObservedObject var stringObjectList: StringObjectList
     //var StringObject_List: [StringLabel]
     
     
     var body: some View {
-        ForEach(stringObjectsData){ item in
+        ForEach(stringObjectList.stringObjectListData, id: \.id){ item in
             StringLabel(
                 id: item.id,
                 position: item.position,
@@ -31,11 +31,11 @@ struct LabelsOnImage: View {
     }
 }
 
-struct LabelsOnImage_Previews: PreviewProvider {
-    static var previews: some View {
-        LabelsOnImage()
-    }
-}
+//struct LabelsOnImage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LabelsOnImage()
+//    }
+//}
 
 
 

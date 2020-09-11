@@ -11,7 +11,7 @@ import Foundation
 import SQLite
 
 class DBUtils{
-    let dbPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/db1.sqlite3"
+    let dbPath = "/Users/ipdesign/Library/Containers/jin.PSDStringPredictor/Data/db.sqlite3"
     let csvPath = "CharacterData.csv"
 
     var db: Connection!
@@ -190,7 +190,7 @@ class DBUtils{
     func FindWeight(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
         var objArray: [Row] = []
         var result: Int64 = 0
-        print("Looking for: \(char) - \(width) - \(height)")
+        //print("Looking for: \(char) - \(width) - \(height)")
         
         if(db == nil){
             print("DB equals null.")

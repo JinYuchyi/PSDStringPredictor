@@ -13,7 +13,7 @@ import Vision
 class ImageProcess{
     
     func convertCGImageToCIImage(inputImage: CGImage) -> CIImage! {
-       var ciImage = CIImage(cgImage: inputImage)
+        var ciImage = CIImage(cgImage: inputImage)
         return ciImage
     }
     

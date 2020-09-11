@@ -1,25 +1,28 @@
 //
-//  StringObjectListView.swift
+//  StringObjectListData.swift
 //  PSDStringPredictor
 //
-//  Created by ipdesign on 7/9/2020.
+//  Created by ipdesign on 11/9/2020.
 //  Copyright © 2020 ipdesign. All rights reserved.
 //
 
-import SwiftUI
+import Foundation
 
-struct StringObjectList: View {
-    //var stringObject: StringObject
+class StringObjectList: ObservableObject{
+    @Published var stringObjectListData: [StringObject]  = [
+        //StringObject.init(<#T##content: String##String#>, <#T##stringRect: CGRect##CGRect#>, <#T##observation: VNRecognizedTextObservation##VNRecognizedTextObservation#>, <#T##charArray: [Character]##[Character]#>, <#T##charRacts: [CGRect]##[CGRect]#>)
+    ]
     
-    var body: some View {
-        List(stringObjectsData){ stringObject in
-            StringObjectRow(stringObject: stringObject)
-        }
+    func Count() -> Int{
+        return stringObjectListData.count
     }
-}
-
-struct StringObjectList_Previews: PreviewProvider {
-    static var previews: some View {
-        StringObjectList()
+    
+    func AddElement(NewElement element: StringObject){
+        stringObjectListData.append(element)
     }
+    
+    func Clean(){
+        stringObjectListData.removeAll()
+    }
+    
 }

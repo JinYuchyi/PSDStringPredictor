@@ -31,23 +31,23 @@ struct StringLabel: View {
     }
 }
 
-struct StringLabel_Previews: PreviewProvider {
-    static var previews: some View {
-        StringLabel(
-            id: SetID(),
-            position: SetPosition(),
-            height: SetHeight(),
-            width: SetWidth(),
-            fontsize: SetFontSize(),
-            tracking: SetTracking(),
-            content: SetContent()
-        )
-    }
-}
+//struct StringLabel_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StringLabel(
+//            id: SetID(),
+//            position: SetPosition(),
+//            height: SetHeight(),
+//            width: SetWidth(),
+//            fontsize: SetFontSize(),
+//            tracking: SetTracking(),
+//            content: SetContent()
+//        )
+//    }
+//}
 
-func SetID() -> Int {
-    return stringObjectsData.count
-}
+//func SetID() -> Int {
+//    return stringObjectsData.
+//}
 
 func SetPosition() -> [CGFloat] {
     //let x = Int.random(in: 0..<100)
