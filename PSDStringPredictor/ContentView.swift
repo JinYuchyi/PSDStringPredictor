@@ -34,9 +34,10 @@ struct ContentView: View {
             VStack{
 
                 ControlPanel(db: db, ocr: $ocr, stringObjectList: stringObjectList, imageProcess: imageProcess)
+                ImageProcessView()
                 StringObjectListView( stringObjectList: stringObjectList)
-                LogListView(logList: loglist)
-                    .frame(width:400, height: 300.0)
+//                LogListView(logList: loglist)
+//                    .frame(width:400, height: 300.0)
             }
      
             .frame(width: 400.0)
@@ -57,7 +58,7 @@ struct ContentView: View {
 
 
 //struct ContentView_Previews: PreviewProvider {
-//    
+//
 //    static var previews: some View {
 //        ContentView()
 //            .frame(width: 1500, height: 1000 )

@@ -44,7 +44,6 @@ class DBUtils: ObservableObject{
         do{
             db = try Connection("db.sqlite3")
             print(db.description)
-            printLog(text: "Connection Success!")
        
 //            let all = Array(try db.prepare(TABLE_CHARACTER))
 //            print("We have \(all.count) items in database.")

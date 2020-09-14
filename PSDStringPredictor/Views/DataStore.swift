@@ -18,6 +18,9 @@ class DataStore: ObservableObject{
         LogObject(id: 1, content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
         LogObject(id: 2, content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
     ]
+    
+    //Image Process
+    @Published var gammaValue: CGFloat = 0.75
 //    
 //    static let shared = DataStore()
 //    private init(){}
