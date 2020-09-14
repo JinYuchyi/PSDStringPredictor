@@ -85,10 +85,12 @@ final class ImageStore {
 
 func ChangeGamma(_ image: CIImage, _ value: CGFloat) -> CIImage? {
     print("Change gamma value: \(value)")
+    
     let filter = CIFilter(name: "CIGammaAdjust")
     //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
     filter?.setValue(image, forKey: kCIInputImageKey)
-    filter?.setValue(5, forKey: "inputPower")
+    filter?.setValue(value, forKey: "inputPower")
     let filteredImage = filter?.outputImage
     return filteredImage
 }
+

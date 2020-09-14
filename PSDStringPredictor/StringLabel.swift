@@ -26,6 +26,7 @@ struct StringLabel: View {
             Text(self.content)
                 //.font(.system(size: self.fontsize, weight: .light, design: .serif))
                 .font(.custom("SF Pro Text", size: fontsize))
+            
         
    
             

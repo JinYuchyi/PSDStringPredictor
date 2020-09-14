@@ -31,9 +31,12 @@ struct ControlPanel: View {
     func CreateStringObjects(){
         
         //Load image for test
-        //let targetImg = ImageStore.loadImage(name: imageProcess.targetImageName) //Load to new image instance
         data.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
-        data.targetImageSize = [Int64(data.targetImage.extent.width), Int64(data.targetImage.extent.height)]
+        if data.targetImageProcessed.extent.width > 0{
+        }else{
+            data.targetImageProcessed = data.targetImage
+        }
+        data.targetImageSize = [Int64(data.targetImageProcessed.extent.width), Int64(data.targetImageProcessed.extent.height)]
         //let targetCII = imageProcess.ConvertCGImageToCIImage(inputImage: targetImg)!
 //      imageProcess.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
         
@@ -41,7 +44,7 @@ struct ControlPanel: View {
         
         //guard let ciImg = imageProcess.convertCGImageToCIImage(inputImage: image) else { return   }
         if data.targetImage.extent.isEmpty == false{
-            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: data.targetImage )
+            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: data.targetImageProcessed )
             stringObjectList.stringObjectListData = stringObjects
             for index in 0..<stringObjects.count{
                 

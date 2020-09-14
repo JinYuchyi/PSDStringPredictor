@@ -12,6 +12,7 @@ import Vision
 
 class DataStore: ObservableObject{
     @Published var targetImage: CIImage  = CIImage.init()
+    @Published var targetImageProcessed: CIImage  = CIImage.init()
     @Published var targetImageName: String = "default_image"
     @Published var targetImageSize: [Int64] = []
     @Published var logListData = [
@@ -24,6 +25,7 @@ class DataStore: ObservableObject{
 //    
 //    static let shared = DataStore()
 //    private init(){}
+
     
 }
 

@@ -10,7 +10,6 @@ import Foundation
 
 class StringObjectList: ObservableObject{
     @Published var stringObjectListData: [StringObject]  = [
-        //StringObject.init(<#T##content: String##String#>, <#T##stringRect: CGRect##CGRect#>, <#T##observation: VNRecognizedTextObservation##VNRecognizedTextObservation#>, <#T##charArray: [Character]##[Character]#>, <#T##charRacts: [CGRect]##[CGRect]#>)
     ]
     
     func Count() -> Int{
