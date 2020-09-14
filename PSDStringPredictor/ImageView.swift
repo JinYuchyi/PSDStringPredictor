@@ -16,8 +16,9 @@ var imageProcess: ImageProcess
     var body: some View{
             ZStack{
                 //imageProcess.GetImage(name: "LocSample")
-
-                imageProcess.GetImage(name: data.targetImageName)
+                //Image(data.targetImage.cgImage)
+                Image(nsImage: data.targetImage.ToNSImage())
+                //imageProcess.GetImage(name: data.targetImageName)
                 //Text("Label")
             }
     }

@@ -51,6 +51,6 @@ extension CIImage{
 //       updateImage.addRepresentation(rep)
 //       return updateImage
 //    }
-    
+
 
 }

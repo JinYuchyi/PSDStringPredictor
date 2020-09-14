@@ -10,11 +10,23 @@ import SwiftUI
 
 struct ImageProcessView: View {
     @EnvironmentObject var data: DataStore
+    @State private  var gammaValue: Float = 0.0
+    
     
     var body: some View {
         VStack{
-            Slider(value: $data.gammaValue, in: 0...10, label: "Gamma")
-                .padding(5.0)
+            Slider(
+                value: Binding(
+                    get: {
+                        self.gammaValue
+                    },
+                    set: {(newValue) in
+                        self.gammaValue = newValue
+                        self.data.targetImage = ChangeGamma(self.data.targetImage, CGFloat(newValue))!
+                }
+                )
+            
+            )
         }
     }
 }
