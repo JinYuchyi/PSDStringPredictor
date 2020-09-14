@@ -10,8 +10,7 @@ import SwiftUI
 
 struct LabelsOnImage: View {
     @ObservedObject var stringObjectList: StringObjectList
-    //var StringObject_List: [StringLabel]
-    
+    @ObservedObject var imageProcess: ImageProcess
     
     var body: some View {
         ForEach(stringObjectList.stringObjectListData, id: \.id){ item in
@@ -23,11 +22,15 @@ struct LabelsOnImage: View {
                 fontsize: item.fontSize,
                 tracking: item.tracking,
                 content: item.content
-            ).position(x: item.position[0], y: item.position[1])
+            )
+                .position(x: item.position[0] + item.width/2, y: CGFloat(self.imageProcess.targetImageSize[1]) -  item.position[1] - item.height/2)
+            
         }
 
     }
 }
+
+
 
 //struct LabelsOnImage_Previews: PreviewProvider {
 //    static var previews: some View {
@@ -50,3 +53,9 @@ struct LabelsOnImage: View {
 //func ToPSDLocation(Location location: [CGFloat]) ->[CGFloat]{
 //    
 //}
+
+struct StringLabelList_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}

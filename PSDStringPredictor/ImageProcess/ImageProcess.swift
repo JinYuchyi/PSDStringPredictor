@@ -12,13 +12,15 @@ import Vision
 import SwiftUI
 
 class ImageProcess: ObservableObject{
-    @Published var targetImagePath: CIImage  = LoadCIImage("/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png")
+    @Published var targetImage: CIImage  = CIImage.init()
+    @Published var targetImageName: String = "default_image"
+    @Published var targetImageSize: [Int] = []
+    //targetImage = LoadCIImage(path: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png")
     
     func convertCGImageToCIImage(inputImage: CGImage) -> CIImage! {
-        var ciImage = CIImage(cgImage: inputImage)
+        let ciImage = CIImage(cgImage: inputImage)
         return ciImage
     }
-
 
     //name: only the file name, path string and "png" do not included.
     func GetImage(name: String) -> Image{
@@ -28,10 +30,55 @@ class ImageProcess: ObservableObject{
         
         return image
     }
-
-    func LoadCIImage(path: String) -> CIImage{
-        var img = CIImage(contentsOf: URL(fileURLWithPath: path))
-        return img!
+    
+    func GetTargetImageSize() -> [Int]{
+        let img : CGImage = ImageStore.loadImage(name: targetImageName)
+        return [img.width, img.height]
     }
 
+    func LoadCIImage(FileName: String) -> CIImage?{
+       let fileURL = Bundle.main.url(forResource: FileName, withExtension: "png")
+
+        let img = CIImage(contentsOf: fileURL!)
+        return img
+    }
+    
+    func ConvertCGImageToCIImage(inputImage: CGImage) -> CIImage! {
+        let ciImage = CIImage(cgImage: inputImage)
+        return ciImage
+    }
+
+}
+
+final class ImageStore {
+    typealias _ImageDictionary = [String: CGImage]
+    fileprivate var images: _ImageDictionary = [:]
+
+    fileprivate static var scale = 1
+    
+    static var shared = ImageStore()
+    
+    func image(name: String) -> Image {
+        let index = _guaranteeImage(name: name)
+        
+        return Image(images.values[index], scale: CGFloat(ImageStore.scale), label: Text(name))
+    }
+
+    static func loadImage(name: String) -> CGImage {
+        guard
+            let url = Bundle.main.url(forResource: name, withExtension: "png"),
+            let imageSource = CGImageSourceCreateWithURL(url as NSURL, nil),
+            let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
+        else {
+            fatalError("Couldn't load image \(name).png from main bundle.")
+        }
+        return image
+    }
+    
+    fileprivate func _guaranteeImage(name: String) -> _ImageDictionary.Index {
+        if let index = images.index(forKey: name) { return index }
+        
+        images[name] = ImageStore.loadImage(name: name)
+        return images.index(forKey: name)!
+    }
 }

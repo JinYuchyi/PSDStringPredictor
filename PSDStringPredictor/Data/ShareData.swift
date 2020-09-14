@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import SQLite
 
-struct ShareData{
+class ShareData{
     static var idIndex: Int = 0
-    
+    //static var db: Connection! 
 }

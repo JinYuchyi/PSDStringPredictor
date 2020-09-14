@@ -13,18 +13,23 @@ struct StringLabel: View {
     var position: [CGFloat]
     var height: CGFloat
     var width: CGFloat
-    var fontsize: CGFloat
+    var fontsize: CGFloat = SetFontSize()
     var tracking: CGFloat
     var content: String
     
     var body: some View {
         ZStack{
             Rectangle()
-            .fill(Color(red: 1, green: 0, blue: 0, opacity: 0.3))
+            .fill(Color(red: 1, green: 0, blue: 0, opacity: 0.6))
                 .frame(width: self.width, height: self.height)
             
             Text(self.content)
-                .font(.system(size: self.fontsize, weight: .light, design: .serif))
+                //.font(.system(size: self.fontsize, weight: .light, design: .serif))
+                .font(.custom("SF Pro Text", size: fontsize))
+        
+   
+            
+            //print("width: \(width), height: \(height)")
 
         }
         
@@ -64,7 +69,7 @@ func SetWidth() -> CGFloat {
 }
 
 func SetFontSize() -> CGFloat {
-    return 20
+    return 50
 }
 
 func SetTracking() -> CGFloat {
@@ -73,4 +78,10 @@ func SetTracking() -> CGFloat {
 
 func SetContent() -> String{
     return "Default " +  SetPosition()[0].description  + ", " +  SetPosition()[1].description
+}
+
+struct StringLabel_Previews: PreviewProvider {
+    static var previews: some View {
+        StringLabel(id:1, position:[0,0], height: 10, width: 10, fontsize: 20, tracking: 50, content: "Weather")
+    }
 }

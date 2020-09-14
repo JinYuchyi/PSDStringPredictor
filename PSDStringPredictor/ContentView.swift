@@ -14,7 +14,7 @@ struct ContentView: View {
     @ObservedObject var loglist = LogListData()
     @ObservedObject var stringObjectList = StringObjectList()
     @ObservedObject var imageProcess = ImageProcess()
-    @State private var db = DBUtils()
+    @ObservedObject  var db = DBUtils()
     @State private var ocr =  OCRUtils()
     
     var body: some View {
@@ -27,7 +27,7 @@ struct ContentView: View {
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
 
-                ControlPanel(db: $db, ocr: $ocr, stringObjectList: stringObjectList, imageProcess: imageProcess)
+                ControlPanel(db: db, ocr: $ocr, stringObjectList: stringObjectList, imageProcess: imageProcess)
                 StringObjectListView( stringObjectList: stringObjectList)
                 LogListView(logList: loglist)
                     .frame(width:400, height: 300.0)
@@ -37,8 +37,8 @@ struct ContentView: View {
             
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
-                    ImageView()
-                    LabelsOnImage(stringObjectList: stringObjectList)
+                    ImageView(imageProcess: imageProcess)
+                    LabelsOnImage(stringObjectList: stringObjectList, imageProcess: imageProcess)
                 }
             }
          

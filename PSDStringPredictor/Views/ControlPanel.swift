@@ -10,17 +10,21 @@ import SwiftUI
 
 struct ControlPanel: View {
     //@ObservedObject var loglist: LogListData
-    @Binding var db: DBUtils
+    @ObservedObject var db: DBUtils
     @Binding var ocr: OCRUtils
     @ObservedObject var stringObjectList: StringObjectList
     @ObservedObject var imageProcess: ImageProcess
     
+    //var fontSizeML : FontSizeML = FontSizeML()
     //let tempImagePath = "LocSample"
 
     
     func HandleDBConnection(){
+        imageProcess.targetImageName = "LocSample"
         //loglist.PushMsg("Hi, This is the new log", LogObject.Category.normal)
         db.connectDatabase()
+        var shareData = ShareData()
+        
         //db.TableCharacterCreate()
         //db.ReFillDBFromCSV()
     }
@@ -28,14 +32,19 @@ struct ControlPanel: View {
     func CreateStringObjects(){
         
         //Load image for test
-        imageProcess.targetImagePath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png"
+        let targetImg = ImageStore.loadImage(name: imageProcess.targetImageName)
+        imageProcess.targetImageSize = [targetImg.width, targetImg.height]
+        let targetCII = imageProcess.ConvertCGImageToCIImage(inputImage: targetImg)!
+//      imageProcess.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
         
-        guard let ciImg = CIImage.init?(contentsOf: URL(imageProcess.targetImagePath))
+        //guard let ciImg = CIImage.init?(contentsOf: URL(imageProcess.targetImagePath))
+        
         //guard let ciImg = imageProcess.convertCGImageToCIImage(inputImage: image) else { return   }
-        if ciImg.extent.isEmpty == false{
-            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: ciImg)
+        if targetCII.extent.isEmpty == false{
+            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: targetCII)
             stringObjectList.stringObjectListData = stringObjects
             for index in 0..<stringObjects.count{
+                
                 //stringObjects[index].fontWeight = stringObjects[index].FindBestWeightForString()
                 print("All Weights: \(stringObjects[index].id) - \(stringObjects[index].content),\(stringObjects[index].FindBestWeightForString(db)), \(stringObjects[index].position)")
             }

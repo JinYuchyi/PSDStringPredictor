@@ -36,6 +36,9 @@ struct StringObject {
     var charArray: [Character]
     var charRects: [CGRect]
     
+    var shareData = ShareData()
+    let dbUtils: DBUtils = DBUtils()
+    
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect]){
         ShareData.idIndex = ShareData.idIndex + 1
         self.id = (ShareData.idIndex)
@@ -54,7 +57,7 @@ struct StringObject {
         self.tracking = GetTracking()
         self.color = GetColor()
         self.position = CalcPosition()
-
+        self.fontSize =  CGFloat(FindBestWeightForString(dbUtils))
        }
     
     func GetCharsInfo(_ myimg: CIImage) -> ([CGRect], [Character]){
@@ -103,12 +106,13 @@ struct StringObject {
         //Find weight for each character, and guess the best choice for the string's weight
         for (index, char) in charArray.enumerated(){
             if char.isNumber || char.isLetter{
-                var tempweight = dbUtils.FindWeight(String(char), Int64(charRects[index].width), Int64(charRects[index].height))
+                var tempweight = FindWeight(String(char), Int64(charRects[index].width), Int64(charRects[index].height))
                 //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
-                weightArray.append(tempweight)
+                if (tempweight != 0){
+                    weightArray.append(tempweight)
+                }
             }
         }
-        //self.fontWeight = FindBestWeightFromWeightArray(weightArray)
         return FindBestWeightFromWeightArray(FromArray: weightArray)
     }
     
@@ -132,17 +136,15 @@ struct StringObject {
             result = result + Float(key)
         }
         result = result / Float(filtered.count)
-        //print("result:\(result)")
+        print("result:\(result)")
         return result
     }
-    
-    
-    
-     func GetTracking() -> CGFloat {
+
+    func GetTracking() -> CGFloat {
         return 10
     }
     
-     func GetColor() -> Color {
+    func GetColor() -> Color {
         return Color.white
     }
     
@@ -153,6 +155,32 @@ struct StringObject {
         else{
             return [stringRect.minX, stringRect.minY]
         }
+    }
+    
+    func FindWeight(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
+        //var objArray: [Row] = []
+        var result: Int64 = 0
+        
+        if(db == nil){
+            print("DB equals null.")
+            return 0
+        }
+        
+        let objList = QueryFor(char: char, width: width, height: height)
+
+        
+        func Predict() -> Int64 {
+            Int64(PredictFontSize(character: char, width: Double(width), height: Double(height)))
+        }
+
+        func FindIt() -> Int64{
+            let strObj = objList[0][TABLE_CHARACTER_WIGHT]
+            result = strObj
+            return strObj
+        }
+        
+        return result == 0 ? Predict() : FindIt()
+
     }
     
 

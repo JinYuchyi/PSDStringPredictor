@@ -8,16 +8,17 @@
 
 import SwiftUI
 
-struct ImageView: View {
 
+struct ImageView: View {
+@ObservedObject var imageProcess: ImageProcess
+    
     var body: some View{
-        
             ZStack{
-                //Image("locSampleWithGrid")
-                GetImage(name: "LocSample")
+                //imageProcess.GetImage(name: "LocSample")
+
+                imageProcess.GetImage(name: imageProcess.targetImageName)
                 //Text("Label")
             }
-        
     }
 }
 
@@ -31,7 +32,7 @@ struct ImageView: View {
 
 struct ImageView_Previews: PreviewProvider {
     static var previews: some View {
-        ImageView()
+        ImageView(imageProcess: ImageProcess())
             .previewLayout(PreviewLayout.fixed(width: 1000, height: 1000))
     }
 }

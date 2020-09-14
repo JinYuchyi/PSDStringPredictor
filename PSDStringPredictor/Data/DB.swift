@@ -7,22 +7,25 @@
 //
 
 import Foundation
-
 import SQLite
 
-class DBUtils{
+var db: Connection!
+
+let TABLE_CHARACTER = Table("table_character")
+let TABLE_CHARACTER_ID = Expression<Int64>("character_id")
+let TABLE_CHARACTER_CHAR = Expression<String>("character_char")
+let TABLE_CHARACTER_WIDTH = Expression<Int64>("character_width")
+let TABLE_CHARACTER_HEIGHT = Expression<Int64>("character_height")
+let TABLE_CHARACTER_WIGHT = Expression<Int64>("character_weight")
+
+class DBUtils: ObservableObject{
     let dbPath = "/Users/ipdesign/Library/Containers/jin.PSDStringPredictor/Data/db.sqlite3"
     let csvPath = "CharacterData.csv"
 
-    var db: Connection!
-    //let ducumentPath = NSHomeDirectory() + "/Documents/Development/StringObjectCreator/StringObjectCreator/DataModel/db.sqlite3"
-    let TABLE_CHARACTER = Table("table_character")
-    let TABLE_CHARACTER_ID = Expression<Int64>("character_id")
-    let TABLE_CHARACTER_CHAR = Expression<String>("character_char")
-    let TABLE_CHARACTER_WIDTH = Expression<Int64>("character_width")
-    let TABLE_CHARACTER_HEIGHT = Expression<Int64>("character_height")
-    let TABLE_CHARACTER_WIGHT = Expression<Int64>("character_weight")
+    //@Published var db: Connection!
+
     
+    //var fontSizeML :FontSizeML = FontSizeML()
     
     init(){
         //connectDatabase(ducumentPath)
@@ -187,10 +190,9 @@ class DBUtils{
         catch{}
     }
     
-    func FindWeight(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
+    func FindWeight1(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
         var objArray: [Row] = []
         var result: Int64 = 0
-        //print("Looking for: \(char) - \(width) - \(height)")
         
         if(db == nil){
             print("DB equals null.")
@@ -202,41 +204,15 @@ class DBUtils{
             let objs = try db.prepare(query)
             objArray = Array(objs)
             result = Int64(objArray.count)
-            for obj in objArray{
-            //num = Array(obj).count
-            //print("test num: \(num)")
-            //print("\(obj[TABLE_CHARACTER_CHAR]), \(obj[TABLE_CHARACTER_WIDTH]), \(obj[TABLE_CHARACTER_HEIGHT])")
-            }
+            print("The result:\(result)")
         }
         catch{}
         
-        func FindNearBy() -> Int64{
-            let offset1:Int64 = Int64.random(in: -2...2)
-            let offset2:Int64 = Int64.random(in: -2...2)
-
-            let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width+offset1 && TABLE_CHARACTER_HEIGHT == height+offset2).select(TABLE_CHARACTER_CHAR,TABLE_CHARACTER_WIDTH,TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
-            do{
-                var obj = try db.prepare(query)
-                objArray = Array(obj)
-                if objArray.count == 0{
-                    FindNearBy()
-                }
-            }
-            catch{}
-            let strObj = objArray[0][TABLE_CHARACTER_WIGHT]
-            result = strObj
-            return strObj
-        }
-        
-        func FindIt() -> Int64{
-            let strObj = objArray[0][TABLE_CHARACTER_WIGHT]
-            result = strObj
-            return strObj
-        }
-        
-        return result == 0 ? FindNearBy() : FindIt()
+        return result
 
     }
+    
+ 
     
 
     
@@ -249,4 +225,71 @@ class DBUtils{
     
 
     
+}
+
+
+func FindWeight(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
+    var objArray: [Row] = []
+    var result: Int64 = 0
+    
+    if(db == nil){
+        print("DB equals null.")
+        return 0
+    }
+            
+    let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width && TABLE_CHARACTER_HEIGHT == height).select(TABLE_CHARACTER_CHAR,TABLE_CHARACTER_WIDTH,TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
+    do{
+        let objs = try db.prepare(query)
+        objArray = Array(objs)
+        result = Int64(objArray.count)
+        //for obj in objArray{
+        //num = Array(obj).count
+        //print("test num: \(num)")
+        //print("\(obj[TABLE_CHARACTER_CHAR]), \(obj[TABLE_CHARACTER_WIDTH]), \(obj[TABLE_CHARACTER_HEIGHT])")
+        //}
+    }
+    catch{}
+    
+//        func FindNearBy() -> Int64{
+//            let offset1:Int64 = Int64.random(in: -2...2)
+//            let offset2:Int64 = Int64.random(in: -2...2)
+//
+//            let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width+offset1 && TABLE_CHARACTER_HEIGHT == height+offset2).select(TABLE_CHARACTER_CHAR,TABLE_CHARACTER_WIDTH,TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
+//            do{
+//                var obj = try db.prepare(query)
+//                objArray = Array(obj)
+//                if objArray.count == 0{
+//                    FindNearBy()
+//                }
+//            }
+//            catch{}
+//            let strObj = objArray[0][TABLE_CHARACTER_WIGHT]
+//            result = strObj
+//            return strObj
+//        }
+    
+    func Predict() -> Int64 {
+        Int64(PredictFontSize(character: char, width: Double(width), height: Double(height)))
+    }
+
+    func FindIt() -> Int64{
+        let strObj = objArray[0][TABLE_CHARACTER_WIGHT]
+        result = strObj
+        return strObj
+    }
+    
+    return result == 0 ? Predict() : FindIt()
+
+}
+
+func QueryFor(char: String, width: Int64, height: Int64) -> [Row]{
+    var objArray = [Row]()
+    let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width && TABLE_CHARACTER_HEIGHT == height).select(TABLE_CHARACTER_CHAR,TABLE_CHARACTER_WIDTH,TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
+    do{
+        let objs = try db.prepare(query)
+        objArray = Array(objs)
+    }
+    catch{}
+    
+    return objArray
 }
