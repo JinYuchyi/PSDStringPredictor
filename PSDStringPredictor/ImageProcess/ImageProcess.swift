@@ -11,11 +11,11 @@ import CoreImage
 import Vision
 import SwiftUI
 
-class ImageProcess: ObservableObject{
-    @Published var targetImage: CIImage  = CIImage.init()
-    @Published var targetImageName: String = "default_image"
-    @Published var targetImageSize: [Int] = []
-    //targetImage = LoadCIImage(path: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png")
+class ImageProcess{
+//    @Published var targetImage: CIImage  = CIImage.init()
+//    @Published var targetImageName: String = "default_image"
+//    @Published var targetImageSize: [Int64] = []
+    @EnvironmentObject var data: DataStore
     
     func convertCGImageToCIImage(inputImage: CGImage) -> CIImage! {
         let ciImage = CIImage(cgImage: inputImage)
@@ -32,7 +32,7 @@ class ImageProcess: ObservableObject{
     }
     
     func GetTargetImageSize() -> [Int]{
-        let img : CGImage = ImageStore.loadImage(name: targetImageName)
+        let img : CGImage = ImageStore.loadImage(name: data.targetImageName)
         return [img.width, img.height]
     }
 

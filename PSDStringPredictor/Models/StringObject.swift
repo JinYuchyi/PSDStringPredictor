@@ -88,7 +88,6 @@ struct StringObject {
             
             chars.append(char)
         }
-
         return (rects, chars)
     }
     

@@ -27,9 +27,10 @@ class DBUtils: ObservableObject{
     
     //var fontSizeML :FontSizeML = FontSizeML()
     
-    init(){
-        //connectDatabase(ducumentPath)
-    }
+//    var data: DataStore
+//    init(data: DataStore){
+//        self.data = data
+//    }
     
     func connectDatabase() {
         
@@ -43,7 +44,7 @@ class DBUtils: ObservableObject{
         do{
             db = try Connection("db.sqlite3")
             print(db.description)
-            print("Connection Success!")
+            printLog(text: "Connection Success!")
        
 //            let all = Array(try db.prepare(TABLE_CHARACTER))
 //            print("We have \(all.count) items in database.")

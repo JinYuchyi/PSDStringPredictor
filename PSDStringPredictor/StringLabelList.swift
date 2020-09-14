@@ -10,8 +10,8 @@ import SwiftUI
 
 struct LabelsOnImage: View {
     @ObservedObject var stringObjectList: StringObjectList
-    @ObservedObject var imageProcess: ImageProcess
-    
+    //var imageProcess: ImageProcess = ImageProcess()
+    @EnvironmentObject var data: DataStore
     var body: some View {
         ForEach(stringObjectList.stringObjectListData, id: \.id){ item in
             StringLabel(
@@ -23,7 +23,7 @@ struct LabelsOnImage: View {
                 tracking: item.tracking,
                 content: item.content
             )
-                .position(x: item.position[0] + item.width/2, y: CGFloat(self.imageProcess.targetImageSize[1]) -  item.position[1] - item.height/2)
+                .position(x: item.position[0] + item.width/2, y: CGFloat(self.data.targetImageSize[1]) -  item.position[1] - item.height/2)
             
         }
 

@@ -50,26 +50,29 @@ import Foundation
 import Combine
 
 class LogListData: ObservableObject{
-    @Published var logListData = [
-        LogObject(id: 1, content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
-        LogObject(id: 2, content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
-    ]
-
+//    @Published var logListData = [
+//        LogObject(id: 1, content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
+//        LogObject(id: 2, content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
+//    ]
     
+    var data: DataStore
+    init(data: DataStore){
+        self.data = data
+    }
     
     func PushMsg(_ content: String, _ category: LogObject.Category){
-        let id = logListData.count + 1
+        let id = data.logListData.count + 1
         let obj = LogObject(id:id, content:content, time: GetTime(), category: category)
-        logListData.append(obj)
-        if (logListData.count > 10) {
-            logListData.removeFirst()
+        data.logListData.append(obj)
+        if (data.logListData.count > 10) {
+            data.logListData.removeFirst()
         }
         print("Add log: " + String(obj.id) + ", " + obj.content)
     }
     
     func CleanMsg(){
-        logListData = []
-        print("Clean log, log length is: " + String(logListData.count))
+        data.logListData = []
+        //print("Clean log, log length is: " + String(logListData.count))
     }
     
 

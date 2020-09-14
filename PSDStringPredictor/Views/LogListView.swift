@@ -10,12 +10,11 @@ import SwiftUI
 
 struct LogListView: View {
     @ObservedObject var logList: LogListData
-    
+    @EnvironmentObject var data: DataStore
 
-    
     var body: some View {
 
-        List(self.logList.logListData, id: \.id){ item in
+        List(data.logListData, id: \.id){ item in
             LogObjectView(logObject: LogObject(id: item.id, content: item.content, time: "xxx_xxx", category: item.category ))
         }
     }

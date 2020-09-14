@@ -13,17 +13,16 @@ struct ControlPanel: View {
     @ObservedObject var db: DBUtils
     @Binding var ocr: OCRUtils
     @ObservedObject var stringObjectList: StringObjectList
-    @ObservedObject var imageProcess: ImageProcess
-    
+    var imageProcess: ImageProcess  = ImageProcess()
+    @EnvironmentObject var data: DataStore
     //var fontSizeML : FontSizeML = FontSizeML()
     //let tempImagePath = "LocSample"
 
     
     func HandleDBConnection(){
-        imageProcess.targetImageName = "LocSample"
+        data.targetImageName = "LocSample"
         //loglist.PushMsg("Hi, This is the new log", LogObject.Category.normal)
         db.connectDatabase()
-        var shareData = ShareData()
         
         //db.TableCharacterCreate()
         //db.ReFillDBFromCSV()
@@ -32,16 +31,17 @@ struct ControlPanel: View {
     func CreateStringObjects(){
         
         //Load image for test
-        let targetImg = ImageStore.loadImage(name: imageProcess.targetImageName)
-        imageProcess.targetImageSize = [targetImg.width, targetImg.height]
-        let targetCII = imageProcess.ConvertCGImageToCIImage(inputImage: targetImg)!
+        //let targetImg = ImageStore.loadImage(name: imageProcess.targetImageName) //Load to new image instance
+        data.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
+        data.targetImageSize = [Int64(data.targetImage.extent.width), Int64(data.targetImage.extent.height)]
+        //let targetCII = imageProcess.ConvertCGImageToCIImage(inputImage: targetImg)!
 //      imageProcess.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
         
         //guard let ciImg = CIImage.init?(contentsOf: URL(imageProcess.targetImagePath))
         
         //guard let ciImg = imageProcess.convertCGImageToCIImage(inputImage: image) else { return   }
-        if targetCII.extent.isEmpty == false{
-            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: targetCII)
+        if data.targetImage.extent.isEmpty == false{
+            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: data.targetImage )
             stringObjectList.stringObjectListData = stringObjects
             for index in 0..<stringObjects.count{
                 

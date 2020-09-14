@@ -37,5 +37,20 @@ extension CIImage{
         nsimg.pngWrite(to: url)
     }
     
+    func ToCGImage(context: CIContext? = nil) -> CGImage? {
+       let ctx = context ?? CIContext(options: nil)
+       return ctx.createCGImage(self, from: self.extent)
+    }
+
+//    /// Create an NSImage version of this image
+//    ///
+//    /// - Returns: Converted image, or nil
+//    func asNSImage() -> NSImage? {
+//       let rep = NSCIImageRep(ciImage: self)
+//       let updateImage = NSImage(size: rep.size)
+//       updateImage.addRepresentation(rep)
+//       return updateImage
+//    }
+    
 
 }

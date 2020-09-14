@@ -11,13 +11,19 @@ import SwiftUI
 struct ContentView: View {
     //@Binding var selectedPeople: People?
     //var li: [] = ListData()
-    @ObservedObject var loglist = LogListData()
     @ObservedObject var stringObjectList = StringObjectList()
-    @ObservedObject var imageProcess = ImageProcess()
+    var imageProcess: ImageProcess = ImageProcess()
     @ObservedObject  var db = DBUtils()
     @State private var ocr =  OCRUtils()
+    @ObservedObject var loglist: LogListData
+    
+    @EnvironmentObject var data: DataStore
+
+
     
     var body: some View {
+        
+        
         HStack(alignment: .top){
 //            Button(action: {
 //                self.loglist.CleanMsg()
@@ -38,7 +44,7 @@ struct ContentView: View {
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView(imageProcess: imageProcess)
-                    LabelsOnImage(stringObjectList: stringObjectList, imageProcess: imageProcess)
+                    LabelsOnImage(stringObjectList: stringObjectList)
                 }
             }
          
@@ -50,13 +56,13 @@ struct ContentView: View {
 }
 
 
-struct ContentView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        ContentView()
-            .frame(width: 1500, height: 1000 )
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    
+//    static var previews: some View {
+//        ContentView()
+//            .frame(width: 1500, height: 1000 )
+//    }
+//}
 
 
 struct People: Identifiable {
