@@ -28,15 +28,16 @@ struct StringLabel: View {
             
             Text(self.content)
                 //.font(.system(size: self.fontsize, weight: .light, design: .serif))
-                .font(.custom("SF Pro Text", size: fontsize))
-                .overlay(
-                     GeometryReader {
-                        geometry in
-                        Text(geometry.frame(in: .global).debugDescription)
-                            .background(Color.yellow)
-                        //Text(geometry.frame(in: .global).size)
-                    }
-                )
+            .font(.custom("SF Pro Text", size: fontsize))
+            .tracking(tracking)
+//                .overlay(
+//                     GeometryReader {
+//                        geometry in
+//                        Text(geometry.frame(in: .global).debugDescription)
+//                            .background(Color.yellow)
+//                        //Text(geometry.frame(in: .global).size)
+//                    }
+//                )
         
    
             

@@ -54,10 +54,11 @@ struct StringObject {
         self.tracking = 10
         self.color = Color.white
         
-        self.tracking = GetTracking()
         self.color = GetColor()
         self.position = CalcPosition()
         self.fontSize =  CGFloat(FindBestWeightForString(dbUtils))
+        self.tracking = GetTracking()
+
        }
     
     func GetCharsInfo(_ myimg: CIImage) -> ([CGRect], [Character]){
@@ -135,12 +136,35 @@ struct StringObject {
             result = result + Float(key)
         }
         result = result / Float(filtered.count)
-        print("result:\(result)")
+        //print("result:\(result)")
         return result
     }
 
     func GetTracking() -> CGFloat {
-        return 10
+        var trackingList: [Double] = []
+        for i in 0...charArray.count-2 {
+            if (charArray[i].isLowercase && charArray[i+1].isLowercase){
+                var dist = abs(charRects[i].midX - charRects[i+1].midX)
+                let t = PredictFontTracking(str1: String(charArray[i]), str2: String(charArray[i+1]), fontsize: Double(fontSize), distance: Double(dist))
+                print("Tracking of \(String(charArray[i])) and \(String(charArray[i+1])) is \(t), weight is \(fontSize)")
+
+                trackingList.append(t)
+            }
+        }
+        if (trackingList.count > 0){
+            var result: CGFloat = 0
+            for i in 0...trackingList.count - 1 {
+                result += CGFloat(trackingList[i])
+            }
+            result = result / CGFloat(trackingList.count)
+            result = result  / 1000
+            print("\(content) tracking is \(result)")
+            return result
+        }
+        else {
+            return 0
+        }
+        
     }
     
     func GetColor() -> Color {

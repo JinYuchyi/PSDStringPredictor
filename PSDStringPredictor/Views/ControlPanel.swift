@@ -48,11 +48,10 @@ struct ControlPanel: View {
         if data.targetImage.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: data.targetImageProcessed )
             stringObjectList.stringObjectListData = stringObjects
-            for index in 0..<stringObjects.count{
-                
-                //stringObjects[index].fontWeight = stringObjects[index].FindBestWeightForString()
-                print("All Weights: \(stringObjects[index].id) - \(stringObjects[index].content),\(stringObjects[index].FindBestWeightForString(db)), \(stringObjects[index].position)")
-            }
+//            for index in 0..<stringObjects.count{
+//                
+//                print("All Weights: \(stringObjects[index].id) - \(stringObjects[index].content),\(stringObjects[index].FindBestWeightForString(db)), \(stringObjects[index].position)")
+//            }
         }
         else{
             print("Load Image failed.")
