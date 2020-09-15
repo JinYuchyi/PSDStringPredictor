@@ -31,6 +31,8 @@ struct ControlPanel: View {
     func CreateStringObjects(){
         
         //Load image for test
+        //let nsImg = LoadNSImage(imageUrlPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png")
+        //data.targetNSImage = nsImg
         data.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
         if data.targetImageProcessed.extent.width > 0{
         }else{
@@ -43,7 +45,7 @@ struct ControlPanel: View {
         //guard let ciImg = CIImage.init?(contentsOf: URL(imageProcess.targetImagePath))
         
         //guard let ciImg = imageProcess.convertCGImageToCIImage(inputImage: image) else { return   }
-        if data.targetImage.extent.isEmpty == false{
+        if data.targetImage.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: data.targetImageProcessed )
             stringObjectList.stringObjectListData = stringObjects
             for index in 0..<stringObjects.count{
@@ -57,6 +59,22 @@ struct ControlPanel: View {
         }
     }
     
+    func CreateTrackingData(){
+        let allFilePath: [String] = getAllFilePath("/Users/ipdesign/Downloads/testpath")!
+        for var i in 0...allFilePath.count - 1 {
+            if allFilePath[i].GetSuffix() == "png"{
+                let img = LoadNSImage(imageUrlPath: allFilePath[i])
+                let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img.ToCIImage()! )
+                for var j in 0...stringObjects[0].charArray.count-2 {
+                    
+                    print("\(allFilePath[i].GetFileName()) \(stringObjects[0].charArray[j]) \(stringObjects[0].charArray[j+1]) \(abs(stringObjects[0].charRects[j].midX - stringObjects[0].charRects[j + 1].midX))" )
+                }
+            }
+        }
+    }
+    
+
+    
     var body: some View {
         VStack{
             Button(action: HandleDBConnection){
@@ -64,6 +82,9 @@ struct ControlPanel: View {
             }
             Button(action: CreateStringObjects){
                 Text("Predict")
+            }
+            Button(action: CreateTrackingData){
+                Text("Create Tracking Data")
             }
         }
     }

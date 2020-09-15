@@ -17,16 +17,26 @@ struct StringLabel: View {
     var tracking: CGFloat
     var content: String
     
+    @EnvironmentObject var data: DataStore
+    
     var body: some View {
         ZStack{
             Rectangle()
             .fill(Color(red: 1, green: 0, blue: 0, opacity: 0.6))
                 .frame(width: self.width, height: self.height)
             
+            
             Text(self.content)
                 //.font(.system(size: self.fontsize, weight: .light, design: .serif))
                 .font(.custom("SF Pro Text", size: fontsize))
-            
+                .overlay(
+                     GeometryReader {
+                        geometry in
+                        Text(geometry.frame(in: .global).debugDescription)
+                            .background(Color.yellow)
+                        //Text(geometry.frame(in: .global).size)
+                    }
+                )
         
    
             

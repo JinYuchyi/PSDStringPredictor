@@ -24,12 +24,14 @@
 		3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */; };
 		3F689AB3250B172700D02377 /* LocSample.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F689AB2250B172700D02377 /* LocSample.png */; };
 		3F689AB5250B2E5800D02377 /* StringObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F689AB4250B2E5800D02377 /* StringObjectList.swift */; };
+		3F8460A2251057FF00788176 /* CompareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8460A1251057FF00788176 /* CompareImage.swift */; };
 		3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7D250F2855003B652C /* DataStore.swift */; };
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
 		3F9B3A82250F791B003B652C /* ImageProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessView.swift */; };
 		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
 		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
 		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
+		3FBA3A7C2510AFC900F041DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA3A7B2510AFC900F041DC /* String.swift */; };
 		3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD401F22500F2FB00525E67 /* AppDelegate.swift */; };
 		3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD401F42500F2FB00525E67 /* ContentView.swift */; };
 		3FD401F72500F2FB00525E67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401F62500F2FB00525E67 /* Assets.xcassets */; };
@@ -64,12 +66,14 @@
 		3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectRow.swift; sourceTree = "<group>"; };
 		3F689AB2250B172700D02377 /* LocSample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocSample.png; path = ../../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png; sourceTree = DEVELOPER_DIR; };
 		3F689AB4250B2E5800D02377 /* StringObjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectList.swift; sourceTree = "<group>"; };
+		3F8460A1251057FF00788176 /* CompareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareImage.swift; sourceTree = "<group>"; };
 		3F9B3A7D250F2855003B652C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
 		3F9B3A81250F791B003B652C /* ImageProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessView.swift; sourceTree = "<group>"; };
 		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
+		3FBA3A7B2510AFC900F041DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		3FD401EF2500F2FB00525E67 /* PSDStringPredictor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSDStringPredictor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD401F22500F2FB00525E67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD401F42500F2FB00525E67 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,6 +161,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		3FBA3A7A2510AFAB00F041DC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3FBA3A7B2510AFC900F041DC /* String.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		3FD401E62500F2FB00525E67 = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +188,7 @@
 		3FD401F12500F2FB00525E67 /* PSDStringPredictor */ = {
 			isa = PBXGroup;
 			children = (
+				3FBA3A7A2510AFAB00F041DC /* Utils */,
 				3F25BC63250DC44900E105A6 /* ML */,
 				3FEFE91C25072F5600AEF1C8 /* ImageProcess */,
 				3F56E3EA25060CD300E64337 /* Views */,
@@ -213,6 +226,7 @@
 				3F4CB5A4250A23E200E41082 /* ImageProcess.swift */,
 				3F4CB5A6250A324300E41082 /* CIImageExtension.swift */,
 				3F4CB5A8250A327E00E41082 /* NSImageExtension.swift */,
+				3F8460A1251057FF00788176 /* CompareImage.swift */,
 			);
 			path = ImageProcess;
 			sourceTree = "<group>";
@@ -329,9 +343,11 @@
 				3F48FFFA2509FB54005B14EB /* ObservableArray.swift in Sources */,
 				3FEFE9152507266600AEF1C8 /* DB.swift in Sources */,
 				3F4CB5A9250A327E00E41082 /* NSImageExtension.swift in Sources */,
+				3FBA3A7C2510AFC900F041DC /* String.swift in Sources */,
 				3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */,
 				3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */,
 				3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */,
+				3F8460A2251057FF00788176 /* CompareImage.swift in Sources */,
 				3F56E3E9250606C000E64337 /* StringObjectListView.swift in Sources */,
 				3F689AB5250B2E5800D02377 /* StringObjectList.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,

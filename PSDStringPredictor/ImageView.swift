@@ -19,7 +19,7 @@ var imageProcess: ImageProcess
                 //Image(data.targetImage.cgImage)
 
                 Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
-                    data.targetImage.ToNSImage()
+                    data.targetNSImage
                 )
                 //imageProcess.GetImage(name: data.targetImageName)
                 //Text("Label")

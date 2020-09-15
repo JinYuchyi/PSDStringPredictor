@@ -46,7 +46,7 @@ func PredictFontSize(character: String, width: Double, height: Double) -> (CGFlo
         
         output = CGFloat(predict.weight)
         
-        print("ML predict: \(output)")
+        //print("ML predict: \(output)")
     }
     catch
     {

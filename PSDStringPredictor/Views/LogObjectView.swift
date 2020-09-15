@@ -22,6 +22,7 @@ struct LogObjectView: View {
             //Spacer()
             Text(logObject.time)
                 .multilineTextAlignment(.trailing)
+            
         }
     }
     

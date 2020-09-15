@@ -10,6 +10,7 @@ import Foundation
 import CoreImage
 import Vision
 import SwiftUI
+//import UIKit
 
 class ImageProcess{
 //    @Published var targetImage: CIImage  = CIImage.init()
@@ -48,6 +49,18 @@ class ImageProcess{
         return ciImage
     }
 
+}
+
+func LoadNSImage(imageUrlPath: String) -> NSImage {
+    var  newImg :NSImage = NSImage.init()
+    if FileManager.default.fileExists(atPath: imageUrlPath) {
+        let url = URL.init(fileURLWithPath: imageUrlPath)
+
+        let data = NSData(contentsOf: url)!
+        newImg = NSImage(data: data as Data)!
+        //print(newImg.isValid)
+    }
+    return newImg
 }
 
 final class ImageStore {
@@ -93,4 +106,55 @@ func ChangeGamma(_ image: CIImage, _ value: CGFloat) -> CIImage? {
     let filteredImage = filter?.outputImage
     return filteredImage
 }
+
+//func CompareImages(img1: CIImage, img2: CIImage) -> CIImage {
+//    if CIIExist(img: img1) && CIIExist(img: img2) == true{
+//        let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+//        let request = VNGenerateImageFeaturePrintRequest()
+//        do {
+//            try requestHandler.perform([request])
+//            let result = request.results?.first as? VNFeaturePrintObservation
+//            var distance = Float(0)
+//            try result?.computeDistance(&distance, to: sourceResult)
+//        }catch{
+//        }
+//    }
+//    else{
+//        return CIImage.init()
+//    }
+//    
+//}
+
+func CIIExist(img: CIImage) -> Bool {
+    if img.extent.width > 0 {
+        return true
+    }
+    else {return false}
+}
+
+func getAllFilePath(_ dirPath: String) -> [String]? {
+    var filePaths = [String]()
+    
+    do {
+        let array = try FileManager.default.contentsOfDirectory(atPath: dirPath)
+        
+        for fileName in array {
+            var isDir: ObjCBool = true
+            
+            let fullPath = "\(dirPath)/\(fileName)"
+            
+            if FileManager.default.fileExists(atPath: fullPath, isDirectory: &isDir) {
+                if !isDir.boolValue {
+                    filePaths.append(fullPath)
+                }
+            }
+        }
+        
+    } catch let error as NSError {
+        print("get file path error: \(error)")
+    }
+    
+    return filePaths
+}
+
 
