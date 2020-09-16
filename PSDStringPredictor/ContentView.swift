@@ -34,13 +34,21 @@ struct ContentView: View {
             VStack{
 
                 ControlPanel(db: db, ocr: $ocr, stringObjectList: stringObjectList, imageProcess: imageProcess)
+                    .padding(.top, 20.0)
+                    .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 ImageProcessView()
+                    .padding(.top, 20.0)
+                .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+
                 StringObjectListView( stringObjectList: stringObjectList)
+                    .padding(.top, 20.0)
+                .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+
 //                LogListView(logList: loglist)
 //                    .frame(width:400, height: 300.0)
             }
      
-            .frame(width: 400.0)
+            //.frame(width: 400.0)
             
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{

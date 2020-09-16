@@ -20,7 +20,7 @@ struct ControlPanel: View {
 
     
     func HandleDBConnection(){
-        data.targetImageName = "LocSample"
+        //data.targetImageName = "LocSample"
         //loglist.PushMsg("Hi, This is the new log", LogObject.Category.normal)
         db.connectDatabase()
         
@@ -33,7 +33,8 @@ struct ControlPanel: View {
         //Load image for test
         //let nsImg = LoadNSImage(imageUrlPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png")
         //data.targetNSImage = nsImg
-        data.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
+        
+        //data.targetImage = imageProcess.LoadCIImage(FileName: "LocSample")!
         if data.targetImageProcessed.extent.width > 0{
         }else{
             data.targetImageProcessed = data.targetImage
@@ -87,15 +88,43 @@ struct ControlPanel: View {
     var body: some View {
         VStack{
             Button(action: HandleDBConnection){
-                Text("Connect DB")
+                Text("Connect Database")
+                    .padding(.horizontal, 40.0)
+                .frame(minWidth: 200, maxWidth: .infinity)
+
+
+
             }
+            .padding(.horizontal, 40.0)
+            
             Button(action: CreateStringObjects){
-                Text("Predict")
+                Text("Predict Strings")
+                    .padding(.horizontal, 40.0)
+                .frame(minWidth: 200, maxWidth: .infinity)
+
+
             }
-            Button(action: CreateTrackingData){
-                Text("Create Tracking Data")
+            .frame(minWidth: 400, maxWidth: .infinity)
+            
+            Button(action: CreateStringObjects){
+                Text("Modify PSD")
+                    .padding(.horizontal, 40.0)
+                .frame(minWidth: 200, maxWidth: .infinity)
+
+
             }
+            .frame(minWidth: 400, maxWidth: .infinity)
+
+
+
+
+            
+//            Button(action: CreateTrackingData){
+//                Text("Create Tracking Data")
+//            }
+//            .frame(width: 500, height: 20, alignment: Alignment.center)
         }
+        .frame(height: 200.0)
     }
 
 }

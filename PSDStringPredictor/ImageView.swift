@@ -12,27 +12,44 @@ import SwiftUI
 struct ImageView: View {
 var imageProcess: ImageProcess
 @EnvironmentObject var data: DataStore
-
+@State var showImg = false
+    
     var body: some View{
             ZStack{
-                //imageProcess.GetImage(name: "LocSample")
-                //Image(data.targetImage.cgImage)
-                if data.targetImage.IsValid() == true{
-                    Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
-                        data.targetNSImage
-                    )
+                if(showImg == false){
+                    Button(action: BtnLoadImage){
+                                            Text("Load Image")
+                                        }
                 }
                 else{
-                    Button(action: LoadTargetImage){
-                        Text("Load Image")
+                    Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
+                                          data.targetNSImage
+                                      )
+
                     }
-                }
-                //imageProcess.GetImage(name: data.targetImageName)
-                //Text("Label")
+
+
             }
     }
     
-    
+ 
+    func BtnLoadImage() {
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
+                {
+                    self.data.targetNSImage =  LoadNSImage(imageUrlPath: panel.url!.path)
+                    self.data.targetImage = self.data.targetNSImage.ToCIImage()!
+                    self.showImg = true
+                }
+                
+            }
+        }
+        
+        //return true
+    }
 }
 
 //struct GetShowContent: View{
