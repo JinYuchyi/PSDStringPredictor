@@ -17,14 +17,22 @@ var imageProcess: ImageProcess
             ZStack{
                 //imageProcess.GetImage(name: "LocSample")
                 //Image(data.targetImage.cgImage)
-
-                Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
-                    data.targetNSImage
-                )
+                if data.targetImage.IsValid() == true{
+                    Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
+                        data.targetNSImage
+                    )
+                }
+                else{
+                    Button(action: LoadTargetImage){
+                        Text("Load Image")
+                    }
+                }
                 //imageProcess.GetImage(name: data.targetImageName)
                 //Text("Label")
             }
     }
+    
+    
 }
 
 //struct GetShowContent: View{

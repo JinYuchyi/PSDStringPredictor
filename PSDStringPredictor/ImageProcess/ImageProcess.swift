@@ -157,4 +157,19 @@ func getAllFilePath(_ dirPath: String) -> [String]? {
     return filePaths
 }
 
+func LoadTargetImage() -> Bool{
+    let panel = NSOpenPanel()
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        let result = panel.runModal()
+        if result == .OK {
+            if ( FileAtPathExist(PathString: panel.url!.absoluteString) && ((panel.url?.isFileURL) != nil) && (panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
+            {
+                
+            }
+            
+        }
+    }
+    
+    return true
+}
 

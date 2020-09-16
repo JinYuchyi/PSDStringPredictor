@@ -52,5 +52,13 @@ extension CIImage{
 //       return updateImage
 //    }
 
+    func IsValid() -> Bool {
+        if self.extent.width > 0{
+            return true
+        }
+        else {
+            return false
+        }
+    }
 
 }
