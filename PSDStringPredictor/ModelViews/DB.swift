@@ -32,6 +32,8 @@ class DBUtils: ObservableObject{
 //        self.data = data
 //    }
     
+    
+    
     func connectDatabase() {
         
         let sqlFilePath = self.dbPath

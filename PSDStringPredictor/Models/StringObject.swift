@@ -22,8 +22,9 @@ import Foundation
 //}
 
 //struct StringObject: Hashable, Codable, Identifiable {
-struct StringObject {
-    var id: Int = 0
+struct StringObject : Identifiable{
+    
+    var id: UUID = UUID()
     var content: String
     var position: [CGFloat]
     var width: CGFloat
@@ -36,12 +37,12 @@ struct StringObject {
     var charArray: [Character]
     var charRects: [CGRect]
     
-    var shareData = ShareData()
+    @EnvironmentObject var data: DataStore
+//stringObjectIndex
+    
     let dbUtils: DBUtils = DBUtils()
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect]){
-        ShareData.idIndex = ShareData.idIndex + 1
-        self.id = (ShareData.idIndex)
         self.stringRect = stringRect
         self.content = content
         self.width = stringRect.width
@@ -53,20 +54,21 @@ struct StringObject {
         self.charRects = charRacts
         self.tracking = 10
         self.color = Color.white
-        
         self.color = GetColor()
         self.position = CalcPosition()
         self.fontSize =  CGFloat(FindBestWeightForString(dbUtils))
         self.tracking = GetTracking()
+        //data.stringObjectIndex = data.stringObjectIndex + 1
+        //self.id = (data.stringObjectIndex)
+        
+        FillCharFrameList()
 
        }
     
     func GetCharsInfo(_ myimg: CIImage) -> ([CGRect], [Character]){
         var rects: [CGRect] = []
         var chars: [Character] = []
-        //let obsrs = GetMyObservations()
 
-        //for obsr in obsrs{
         let candidate = observation.topCandidates(1).first!
         
         for offset in 0..<candidate.string.count{
@@ -74,17 +76,13 @@ struct StringObject {
             let index_end = candidate.string.index(candidate.string.startIndex, offsetBy: offset+1)
             let myrange = index_start..<index_end
             let boxObservation = try? candidate.boundingBox(for: myrange)
-            //let boxObservation = try? candidate.boundingBox(for: stringRange)
             
             // Get the normalized CGRect value.
             let boundingBox = boxObservation?.boundingBox ?? .zero
             let Rect = VNImageRectForNormalizedRect(boundingBox, Int(myimg.extent.width), Int(myimg.extent.height))
 
-            //print(boundingBox)
             // Convert the rectangle from normalized coordinates to image coordinates.
-            //return VNImageRectForNormalizedRect(boundingBox, 100, 100)
             rects.append(VNImageRectForNormalizedRect(boundingBox, Int(myimg.extent.width), Int(myimg.extent.height)))
-            //print("\(offset) \(candidate.string[index_start]) \(boundingBox)")
             let char = candidate.string[index_start]
             
             chars.append(char)
@@ -204,6 +202,14 @@ struct StringObject {
         
         return result == 0 ? Predict() : FindIt()
 
+    }
+    
+    func FillCharFrameList(){
+        for (index, char) in charArray.enumerated() {
+            let tmpFrame = CharFrame(id: data.charFrameIndex, rect: self.charRects[index], char: String(char))
+            data.charFrameList.append(tmpFrame)
+            data.charFrameIndex += 1
+        }
     }
     
     

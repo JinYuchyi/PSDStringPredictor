@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct LogObject {
-    var id: Int
+struct LogObject: Identifiable {
+    var id: UUID = UUID()
     var content: String
     var time: String
     var category: Category

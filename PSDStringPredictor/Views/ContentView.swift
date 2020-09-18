@@ -53,6 +53,8 @@ struct ContentView: View {
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView(imageProcess: imageProcess)
+                    CharacterFrameListView(frameList: data.charFrameList)
+                    
                     LabelsOnImage(stringObjectList: stringObjectList)
                 }
             }

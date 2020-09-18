@@ -18,7 +18,9 @@ class OCRUtils{
         let requestHandler = VNImageRequestHandler(ciImage: image, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
         TextRecognitionRequest.recognitionLevel = recognitionLevel
-        TextRecognitionRequest.usesLanguageCorrection = usesLanguageCorrection
+        TextRecognitionRequest.usesLanguageCorrection = true
+        TextRecognitionRequest.recognitionLanguages = ["en_US"]
+        //TextRecognitionRequest.customWords = ["Photos"]
         //Send request to request handler
         do {
             try requestHandler.perform([TextRecognitionRequest])
@@ -100,11 +102,9 @@ class OCRUtils{
         let strs = GetStringArrayFromObservations(stringsResults)
         for i in 0..<stringsRects.count{
             let (charRects, chars) = GetCharsInfoFromObservation(stringsResults[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
+            //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             
-            ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             let newStrContent = StringObject(strs[i], stringsRects[i], stringsResults[i], chars, charRects)
-            //newStrContent.FindBestWeightForString()
-            //newStrContent.GetDataReady()
             strobjs.append(newStrContent)
 
         }

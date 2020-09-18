@@ -22,14 +22,11 @@ var imageProcess: ImageProcess
                                         }
                 }
                 else{
-                    Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
-                                          data.targetNSImage
-                                      )
-
-                    }
-
-
-            }
+                        Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
+                                              data.targetNSImage
+                        )
+                }
+        }
     }
     
  
