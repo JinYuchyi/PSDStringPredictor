@@ -10,8 +10,8 @@ import SwiftUI
 
 
 struct ImageView: View {
-var imageProcess: ImageProcess
-@EnvironmentObject var data: DataStore
+//var imageProcess: ImageProcess
+//@EnvironmentObject var data: DataStore
 @State var showImg = false
     
     var body: some View{
@@ -22,8 +22,8 @@ var imageProcess: ImageProcess
                                         }
                 }
                 else{
-                        Image(nsImage: data.targetImageProcessed.extent.width > 0 ? data.targetImageProcessed.ToNSImage() :
-                                              data.targetNSImage
+                        Image(nsImage: targetImageProcessed.extent.width > 0 ? targetImageProcessed.ToNSImage() :
+                                              targetNSImage
                         )
                 }
         }
@@ -37,8 +37,8 @@ var imageProcess: ImageProcess
             if result == .OK{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
                 {
-                    self.data.targetNSImage =  LoadNSImage(imageUrlPath: panel.url!.path)
-                    self.data.targetImage = self.data.targetNSImage.ToCIImage()!
+                    targetNSImage =  LoadNSImage(imageUrlPath: panel.url!.path)
+                    targetImage = targetNSImage.ToCIImage()!
                     self.showImg = true
                 }
                 

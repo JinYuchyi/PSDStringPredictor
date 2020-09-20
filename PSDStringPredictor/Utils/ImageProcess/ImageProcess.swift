@@ -12,11 +12,11 @@ import Vision
 import SwiftUI
 //import UIKit
 
-class ImageProcess{
+class ImageProcess: ObservableObject{
 //    @Published var targetImage: CIImage  = CIImage.init()
 //    @Published var targetImageName: String = "default_image"
 //    @Published var targetImageSize: [Int64] = []
-    @EnvironmentObject var data: DataStore
+    //@EnvironmentObject var data: DataStore
     
     func convertCGImageToCIImage(inputImage: CGImage) -> CIImage! {
         let ciImage = CIImage(cgImage: inputImage)
@@ -33,7 +33,7 @@ class ImageProcess{
     }
     
     func GetTargetImageSize() -> [Int]{
-        let img : CGImage = ImageStore.loadImage(name: data.targetImageName)
+        let img : CGImage = ImageStore.loadImage(name: targetImageName)
         return [img.width, img.height]
     }
 

@@ -17,7 +17,7 @@ struct StringLabel: View {
     var tracking: CGFloat
     var content: String
     
-    @EnvironmentObject var data: DataStore
+    //@EnvironmentObject var data: DataStore
     
     var body: some View {
         ZStack{

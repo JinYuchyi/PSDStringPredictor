@@ -9,16 +9,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    //@Binding var selectedPeople: People?
-    //var li: [] = ListData()
-    @ObservedObject var stringObjectList = StringObjectList()
-    var imageProcess: ImageProcess = ImageProcess()
-    @ObservedObject  var db = DBUtils()
-    @State private var ocr =  OCRUtils()
-    @ObservedObject var loglist: LogListData
-    
-    @EnvironmentObject var data: DataStore
 
+//    @ObservedObject var stringObjectList = StringObjectList()
+//    @ObservedObject var imageProcess: ImageProcess = ImageProcess()
+//    @ObservedObject  var db = DBVideoModel()
+//    @State private var ocr =  OCR()
+//
+//    @EnvironmentObject var data: DataStore
+    let data = DataStore()
+
+    //let stringObjectViewModel = StringObjectViewModel()
 
     
     var body: some View {
@@ -33,14 +33,14 @@ struct ContentView: View {
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
 
-                ControlPanel(db: db, ocr: $ocr, stringObjectList: stringObjectList, imageProcess: imageProcess)
+                ControlPanel()
                     .padding(.top, 20.0)
                     .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 ImageProcessView()
                     .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
 
-                StringObjectListView( stringObjectList: stringObjectList)
+                StringObjectListView( )
                     .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
 
@@ -52,10 +52,10 @@ struct ContentView: View {
             
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
-                    ImageView(imageProcess: imageProcess)
-                    CharacterFrameListView(frameList: data.charFrameList)
+                    ImageView()
+                    CharacterFrameListView(frameList: charFrameList)
                     
-                    LabelsOnImage(stringObjectList: stringObjectList)
+                    LabelsOnImage( )
                 }
             }
          

@@ -7,21 +7,24 @@
 //
 
 import Foundation
+import CoreImage
 
 class StringObjectList: ObservableObject{
-    @Published var stringObjectListData: [StringObject]  = [
-    ]
+    
+    //@Published var stringObjectListData: [StringObject]  = []
+    @Published var ocr: OCR = OCR()
+    @Published var data: DataStore = DataStore()
     
     func Count() -> Int{
-        return stringObjectListData.count
+        return stringObjectList.count
     }
     
     func AddElement(NewElement element: StringObject){
-        stringObjectListData.append(element)
+        stringObjectList.append(element)
     }
     
     func Clean(){
-        stringObjectListData.removeAll()
+        stringObjectList.removeAll()
     }
     
     func CreateStringObjects(FromCIImage img: CIImage){
@@ -31,11 +34,11 @@ class StringObjectList: ObservableObject{
 //        else{
 //            data.targetImageProcessed = data.targetImage
 //        }
-        data.targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
+        //targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
 
         if img.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
-            stringObjectList.stringObjectListData = stringObjects
+            stringObjectList = stringObjects
         }
         else{
             print("Load Image failed.")

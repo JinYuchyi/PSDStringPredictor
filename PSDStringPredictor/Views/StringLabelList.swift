@@ -9,9 +9,10 @@
 import SwiftUI
 
 struct LabelsOnImage: View {
-    @ObservedObject var stringObjectList: StringObjectList
+    //@ObservedObject var stringObjectList: StringObjectList
     //var imageProcess: ImageProcess = ImageProcess()
-    @EnvironmentObject var data: DataStore
+    //@EnvironmentObject var data: DataStore
+    @ObservedObject var stringObjectViewModel = StringObjectViewModel()
     var body: some View {
 //        ForEach(stringObjectList.stringObjectListData, id: \.id){ item in
 //            StringLabel(
@@ -26,7 +27,7 @@ struct LabelsOnImage: View {
 //                .position(x: item.position[0] + item.width/2, y: CGFloat(self.data.targetImageSize[1]) -  item.position[1] - item.height/2)
 //
 //        }
-        Text(String(data.charFrameList.count))
+        Text(String(stringObjectViewModel.charFrameListData.count))
     }
 }
 

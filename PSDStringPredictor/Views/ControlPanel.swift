@@ -9,14 +9,16 @@
 import SwiftUI
 
 struct ControlPanel: View {
+    
+    var dbvm = DBViewModel()
+    @ObservedObject var strObjVM = StringObjectViewModel()
     //@ObservedObject var loglist: LogListData
-    @ObservedObject var db: DBUtils
-    @Binding var ocr: OCRUtils
-    @ObservedObject var stringObjectList: StringObjectList
+    //@ObservedObject var db: DB = DB()
+    //@ObservedObject var ocr: OCR = OCR()
+    //@ObservedObject var stringObjectList: StringObjectList  = StringObjectList()
     var imageProcess: ImageProcess  = ImageProcess()
-    @EnvironmentObject var data: DataStore
-    //var fontSizeML : FontSizeML = FontSizeML()
-    //let tempImagePath = "LocSample"
+    //@ObservedObject var data: DataStore
+
 
     
 //    func HandleDBConnection(){
@@ -36,22 +38,22 @@ struct ControlPanel: View {
     
     var body: some View {
         VStack{
-            Button(action: db.connectDatabase()){
+            Button(action: {self.dbvm.ConnectDB()}){
                 Text("Connect Database")
                     .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 
             }
             .padding(.horizontal, 40.0)
-            
-            Button(action: stringObjectList.CreateStringObjects(data.targetImageProcessed)){
+   
+            Button(action: {self.strObjVM.PredictStrings()}){
                 Text("Predict Strings")
                     .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
             }
             .frame(minWidth: 400, maxWidth: .infinity)
             
-            Button(action: stringObjectList.CreateStringObjects(data.targetImageProcessed)){
+            Button(action: {self.strObjVM.PredictStrings()}){
                 Text("Modify PSD")
                     .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)

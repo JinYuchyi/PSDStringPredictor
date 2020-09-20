@@ -55,23 +55,24 @@ class LogListData: ObservableObject{
 //        LogObject(id: 2, content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
 //    ]
     
-    var data: DataStore
-    init(data: DataStore){
-        self.data = data
-    }
+    //@Published var data: DataStore = DataStore()
+    
+//    init(data: DataStore){
+//        self.data = data
+//    }
     
     func PushMsg(_ content: String, _ category: LogObject.Category){
-        let id = data.logListData.count + 1
-        let obj = LogObject(id:id, content:content, time: GetTime(), category: category)
-        data.logListData.append(obj)
-        if (data.logListData.count > 10) {
-            data.logListData.removeFirst()
+        let id = logListData.count + 1
+        let obj = LogObject(content:content, time: GetTime(), category: category)
+        logListData.append(obj)
+        if (logListData.count > 10) {
+            logListData.removeFirst()
         }
-        print("Add log: " + String(obj.id) + ", " + obj.content)
+        //print("Add log: " + String(obj.id) + ", " + obj.content)
     }
     
     func CleanMsg(){
-        data.logListData = []
+        logListData = []
         //print("Clean log, log length is: " + String(logListData.count))
     }
     

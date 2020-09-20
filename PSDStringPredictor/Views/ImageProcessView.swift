@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ImageProcessView: View {
-    @EnvironmentObject var data: DataStore
+    //@EnvironmentObject var data: DataStore
     @State private  var gammaValue: Float = 0.75
     
     
@@ -22,7 +22,7 @@ struct ImageProcessView: View {
                     },
                     set: {(newValue) in
                         self.gammaValue = newValue
-                        self.data.targetImageProcessed = ChangeGamma(self.data.targetImage, CGFloat(newValue))!
+                        targetImageProcessed = ChangeGamma(targetImage, CGFloat(newValue))!
                 }
                 ),
                 in: 0...10
@@ -32,8 +32,8 @@ struct ImageProcessView: View {
     }
 }
 
-struct ImageProcessView_Previews: PreviewProvider {
-    static var previews: some View {
-        ImageProcessView()
-    }
-}
+//struct ImageProcessView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ImageProcessView()
+//    }
+//}

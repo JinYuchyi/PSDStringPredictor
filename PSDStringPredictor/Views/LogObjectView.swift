@@ -38,7 +38,7 @@ struct LogObjectView: View {
 
 struct LogObjectView_Previews: PreviewProvider {
     static var previews: some View {
-        LogObjectView(logObject: LogObject(id: 1, content: "This is a new log. This is a new log. This is a new log. This is a new log.", time: "xxx-xxx-xxx", category: LogObject.Category.normal))
+        LogObjectView(logObject: LogObject(content: "This is a new log. This is a new log. This is a new log. This is a new log.", time: "xxx-xxx-xxx", category: LogObject.Category.normal))
             .frame(width: 400.0)
     }
 }
