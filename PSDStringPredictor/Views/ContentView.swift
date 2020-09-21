@@ -17,7 +17,8 @@ struct ContentView: View {
 //
 //    @EnvironmentObject var data: DataStore
     let data = DataStore()
-
+    @ObservedObject var stringObjectViewModel = StringObjectViewModel()
+    //@ObservedObject var charFrameVM = charframe()
     //let stringObjectViewModel = StringObjectViewModel()
 
     
@@ -32,8 +33,8 @@ struct ContentView: View {
 //            }
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
-
-                ControlPanel()
+                Text(String(self.stringObjectViewModel.countNum))
+                ControlPanel(stringObjectViewModel: stringObjectViewModel)
                     .padding(.top, 20.0)
                     .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 ImageProcessView()
@@ -53,9 +54,9 @@ struct ContentView: View {
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView()
-                    CharacterFrameListView(frameList: charFrameList)
+                    //CharacterFrameListView(frameList: charFrameList)
                     
-                    LabelsOnImage( )
+                    LabelsOnImage( stringObjectViewModel:stringObjectViewModel)
                 }
             }
          

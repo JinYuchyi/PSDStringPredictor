@@ -12,7 +12,7 @@ struct LabelsOnImage: View {
     //@ObservedObject var stringObjectList: StringObjectList
     //var imageProcess: ImageProcess = ImageProcess()
     //@EnvironmentObject var data: DataStore
-    @ObservedObject var stringObjectViewModel = StringObjectViewModel()
+    @ObservedObject var stringObjectViewModel : StringObjectViewModel
     var body: some View {
 //        ForEach(stringObjectList.stringObjectListData, id: \.id){ item in
 //            StringLabel(

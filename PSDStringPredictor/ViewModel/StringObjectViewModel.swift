@@ -28,7 +28,7 @@ class StringObjectViewModel: ObservableObject{
     var data: DataStore = DataStore()
     @Published var stringObjectListData = stringObjectList
     @Published var charFrameListData: [CharFrame] = []
-    
+    @Published var countNum =  0
     static func FetchStringObjectList() -> [StringObject] {
         return stringObjectList
     }
@@ -38,6 +38,7 @@ class StringObjectViewModel: ObservableObject{
 //    }
     
     func PredictStrings()  {
+        countNum += 1
         stringObject.PredictStringObjects(FromCIImage: targetImage)
         //stringObjectListData = stringObjectList
         data.FillCharFrameList()
@@ -47,11 +48,13 @@ class StringObjectViewModel: ObservableObject{
     
     func FetchCharFrameListData() {
         charFrameListData.removeAll()
-        for i in 0..<charFrameList.count{
-            charFrameListData.append(charFrameList[i])
-        }
+        charFrameListData.append(contentsOf: charFrameList)
+//        charFrameListData.removeAll()
+//        for i in 0..<charFrameList.count{
+//            charFrameListData.append(charFrameList[i])
+//        }
         
-        print("CharFrameListData: \(stringObjectListData.count)")
+        print("charFrameList:\(charFrameList.count), CharFrameListData: \(self.charFrameListData.count)")
 
     }
     
