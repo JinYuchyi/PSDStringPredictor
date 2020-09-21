@@ -17,13 +17,22 @@ struct ContentView: View {
 //
 //    @EnvironmentObject var data: DataStore
     let data = DataStore()
+    @ObservedObject var imageViewModel = ImageProcess()
     @ObservedObject var stringObjectViewModel = StringObjectViewModel()
+    
+    @State private var ShowPredictString = true
+    @State var isDragging = false
     //@ObservedObject var charFrameVM = charframe()
     //let stringObjectViewModel = StringObjectViewModel()
-
+    var drag: some Gesture {
+        DragGesture()
+            .onChanged { _ in self.isDragging = true }
+            .onEnded { _ in self.isDragging = false }
+    }
     
     var body: some View {
         
+
         
         HStack(alignment: .top){
 //            Button(action: {
@@ -37,11 +46,11 @@ struct ContentView: View {
                 ControlPanel(stringObjectViewModel: stringObjectViewModel)
                     .padding(.top, 20.0)
                     .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                ImageProcessView()
+                ImageProcessView(imageViewModel: imageViewModel)
                     .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
 
-                StringObjectListView( )
+                StringObjectListView()
                     .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
 
@@ -50,16 +59,32 @@ struct ContentView: View {
             }
      
             //.frame(width: 400.0)
-            
-            ScrollView([.horizontal, .vertical] , showsIndicators: true ){
-                ZStack{
-                    ImageView()
-                    //CharacterFrameListView(frameList: charFrameList)
-                    
-                    LabelsOnImage( stringObjectViewModel:stringObjectViewModel)
+            ZStack{
+                           
+                ScrollView([.horizontal, .vertical] , showsIndicators: true ){
+                    ZStack{
+                        ImageView(imageViewModel:imageViewModel).gesture(drag)
+                        LabelsOnImage( imageProcess:imageViewModel, stringObjectViewModel: stringObjectViewModel, ShowPredictString: $ShowPredictString)
+                        .blendMode(.difference)
+
+                        CharacterFrameListView(frameList: stringObjectViewModel.charFrameListData, imageViewModel: imageViewModel)
+
+
+                    }
                 }
+                
+                
+                Toggle(isOn: $ShowPredictString) {
+                    Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
+                }
+                .frame(width: 1000, height: 950, alignment: .topTrailing)
+                
+                Circle()
+                .fill(self.isDragging ? Color.red : Color.blue)
+                .frame(width: 100, height: 100, alignment: .center)
+                .gesture(drag)
+            
             }
-         
             .frame(width: 1100)
         }
 

@@ -13,18 +13,18 @@ class StringObjectList: ObservableObject{
     
     //@Published var stringObjectListData: [StringObject]  = []
     @Published var ocr: OCR = OCR()
-    @Published var data: DataStore = DataStore()
+    //@Published var data: DataStore = DataStore()
     
     func Count() -> Int{
-        return stringObjectList.count
+        return DataStore.stringObjectList.count
     }
     
     func AddElement(NewElement element: StringObject){
-        stringObjectList.append(element)
+        DataStore.stringObjectList.append(element)
     }
     
     func Clean(){
-        stringObjectList.removeAll()
+        DataStore.stringObjectList.removeAll()
     }
     
     func CreateStringObjects(FromCIImage img: CIImage){
@@ -38,7 +38,7 @@ class StringObjectList: ObservableObject{
 
         if img.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
-            stringObjectList = stringObjects
+            DataStore.stringObjectList = stringObjects
         }
         else{
             print("Load Image failed.")

@@ -14,7 +14,7 @@ struct LogListView: View {
 
     var body: some View {
 
-        List(logListData, id: \.id){ item in
+        List(DataStore.logListData, id: \.id){ item in
             LogObjectView(logObject: LogObject(id: item.id, content: item.content, time: "xxx_xxx", category: item.category ))
         }
     }

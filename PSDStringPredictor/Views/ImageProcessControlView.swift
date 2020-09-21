@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ImageProcessView: View {
     //@EnvironmentObject var data: DataStore
+    @ObservedObject var imageViewModel: ImageProcess = ImageProcess()
     @State private  var gammaValue: Float = 0.75
     
     
@@ -22,7 +23,8 @@ struct ImageProcessView: View {
                     },
                     set: {(newValue) in
                         self.gammaValue = newValue
-                        targetImageProcessed = ChangeGamma(targetImage, CGFloat(newValue))!
+                        let tmp = ChangeGamma(self.imageViewModel.GetTargetCIImage(), CGFloat(newValue))!
+                        self.imageViewModel.SetTargetProcessedImage(tmp)
                 }
                 ),
                 in: 0...10

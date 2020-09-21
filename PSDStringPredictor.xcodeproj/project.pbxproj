@@ -32,7 +32,7 @@
 		3F8460A2251057FF00788176 /* CompareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8460A1251057FF00788176 /* CompareImage.swift */; };
 		3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7D250F2855003B652C /* DataStore.swift */; };
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
-		3F9B3A82250F791B003B652C /* ImageProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessView.swift */; };
+		3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */; };
 		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
 		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
 		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
@@ -45,6 +45,7 @@
 		3FD401F72500F2FB00525E67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401F62500F2FB00525E67 /* Assets.xcassets */; };
 		3FD401FA2500F2FB00525E67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401F92500F2FB00525E67 /* Preview Assets.xcassets */; };
 		3FD401FD2500F2FB00525E67 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401FB2500F2FB00525E67 /* Main.storyboard */; };
+		3FD9957F2518B48D007E3D05 /* ViewSnapShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD9957E2518B48D007E3D05 /* ViewSnapShot.swift */; };
 		3FEFE91125071F2200AEF1C8 /* locSampleWithGrid.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEFE91025071F2100AEF1C8 /* locSampleWithGrid.png */; };
 		3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9122507200400AEF1C8 /* ControlPanel.swift */; };
 		3FEFE9152507266600AEF1C8 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9142507266600AEF1C8 /* DB.swift */; };
@@ -81,7 +82,7 @@
 		3F8460A1251057FF00788176 /* CompareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareImage.swift; sourceTree = "<group>"; };
 		3F9B3A7D250F2855003B652C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
-		3F9B3A81250F791B003B652C /* ImageProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessView.swift; sourceTree = "<group>"; };
+		3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessControlView.swift; sourceTree = "<group>"; };
 		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		3FD401FC2500F2FB00525E67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3FD401FE2500F2FB00525E67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FD401FF2500F2FB00525E67 /* UITest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UITest.entitlements; sourceTree = "<group>"; };
+		3FD9957E2518B48D007E3D05 /* ViewSnapShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSnapShot.swift; sourceTree = "<group>"; };
 		3FEFE91025071F2100AEF1C8 /* locSampleWithGrid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locSampleWithGrid.png; path = ../../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/locSampleWithGrid.png; sourceTree = DEVELOPER_DIR; };
 		3FEFE9122507200400AEF1C8 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
 		3FEFE9142507266600AEF1C8 /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
@@ -176,7 +178,7 @@
 				3FEFE9232507900500AEF1C8 /* LogListData.swift */,
 				3FA49B36250874390093EBD2 /* LogObjectView.swift */,
 				3FA49B3A2508EAE90093EBD2 /* LogListView.swift */,
-				3F9B3A81250F791B003B652C /* ImageProcessView.swift */,
+				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
 				3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */,
 				3FAAB485251341A600CB89B1 /* CharacterFrameListView.swift */,
 			);
@@ -190,6 +192,7 @@
 				3F689AB4250B2E5800D02377 /* StringObjectList.swift */,
 				3F8208552516068100832192 /* StringObjectViewModel.swift */,
 				3F7E6AA525175CE20082D3FF /* DBViewModel.swift */,
+				3F4CB5A4250A23E200E41082 /* ImageProcess.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -268,10 +271,10 @@
 		3FEFE91C25072F5600AEF1C8 /* ImageProcess */ = {
 			isa = PBXGroup;
 			children = (
-				3F4CB5A4250A23E200E41082 /* ImageProcess.swift */,
 				3F4CB5A6250A324300E41082 /* CIImageExtension.swift */,
 				3F4CB5A8250A327E00E41082 /* NSImageExtension.swift */,
 				3F8460A1251057FF00788176 /* CompareImage.swift */,
+				3FD9957E2518B48D007E3D05 /* ViewSnapShot.swift */,
 			);
 			path = ImageProcess;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			files = (
 				3F8208522511129200832192 /* TrackingRegressor.mlmodel in Sources */,
 				3F4D13E42501FB9E008F846B /* ImageView.swift in Sources */,
+				3FD9957F2518B48D007E3D05 /* ViewSnapShot.swift in Sources */,
 				3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */,
 				3F4CB5A5250A23E200E41082 /* ImageProcess.swift in Sources */,
 				3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */,
@@ -405,7 +409,7 @@
 				3FF1D20925173C320081D57C /* DBModel.swift in Sources */,
 				3FAAB4972514BD6600CB89B1 /* Train.swift in Sources */,
 				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
-				3F9B3A82250F791B003B652C /* ImageProcessView.swift in Sources */,
+				3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */,
 				3FAAB486251341A600CB89B1 /* CharacterFrameListView.swift in Sources */,
 				3F7E6AA625175CE20082D3FF /* DBViewModel.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,

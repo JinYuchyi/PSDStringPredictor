@@ -25,38 +25,46 @@ import Foundation
 class StringObjectViewModel: ObservableObject{
     
     var stringObject: StringObject = StringObject()
-    var data: DataStore = DataStore()
-    @Published var stringObjectListData = stringObjectList
+    @ObservedObject var imageViewModel: ImageProcess = ImageProcess()
+    //var data: DataStore = DataStore()
+    @Published var stringObjectListData: [StringObject] = []
     @Published var charFrameListData: [CharFrame] = []
     @Published var countNum =  0
-    static func FetchStringObjectList() -> [StringObject] {
-        return stringObjectList
-    }
     
-//    init(_ data: DataStore ){
-//        self.data = data
+//    static func FetchStringObjectList() -> [StringObject] {
+//        return DataStore.stringObjectList
+//    }
+    
+//    init(imageViewModel: ImageProcess){
+//        self.imageViewModel = ImageProcess
+//    }
+//    init(){
+//        self.imageViewModel = ImageProcess()
 //    }
     
     func PredictStrings()  {
         countNum += 1
-        stringObject.PredictStringObjects(FromCIImage: targetImage)
-        //stringObjectListData = stringObjectList
-        data.FillCharFrameList()
+        imageViewModel.FetchProcessedImage()
+        stringObject.PredictStringObjects(FromCIImage: imageViewModel.targetImageProcessed)
+        stringObjectListData = DataStore.stringObjectList
+        DataStore.FillCharFrameList()
         FetchCharFrameListData()
         
     }
     
     func FetchCharFrameListData() {
         charFrameListData.removeAll()
-        charFrameListData.append(contentsOf: charFrameList)
+        charFrameListData.append(contentsOf: DataStore.charFrameList)
 //        charFrameListData.removeAll()
 //        for i in 0..<charFrameList.count{
 //            charFrameListData.append(charFrameList[i])
 //        }
         
-        print("charFrameList:\(charFrameList.count), CharFrameListData: \(self.charFrameListData.count)")
+        //print("charFrameList:\(charFrameList.count), CharFrameListData: \(self.charFrameListData.count)")
 
     }
+    
+ 
     
 
     

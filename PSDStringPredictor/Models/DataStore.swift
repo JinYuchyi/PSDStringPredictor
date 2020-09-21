@@ -12,35 +12,26 @@ import Vision
 import AppKit
 import SQLite
 
-var stringObjectList: [StringObject] = []
-//DB
-var dbConnection: Connection!
-//ImageProcess
-var targetNSImage: NSImage  = NSImage.init()
-var targetImage: CIImage  = CIImage.init()
-var targetImageProcessed: CIImage  = CIImage.init()
-var targetImageName: String = "default_image"
-//UI
-var charFrameIndex = 0
-var charFrameList: [CharFrame] = []
+class DataStore{
+    static var stringObjectList: [StringObject] = []
+    //DB
+    static var dbConnection: Connection!
+    //ImageProcess
+    static var targetNSImage: NSImage  = NSImage.init()
+    //var targetImage: CIImage  = CIImage.init()
+    static var targetImageProcessed: CIImage  = CIImage.init()
+    //var targetImageName: String = "default_image"
+    //var targetImageSize: [CGFloat] = []
+    //UI
+    static var charFrameIndex = 0
+    static var charFrameList: [CharFrame] = []
 
-var logListData = [
-    LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
-    LogObject(content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
-]
-
-struct DataStore{
-
-//    @Published var logListData = [
-//        LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
-//        LogObject(content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
-//    ]
-//    @Published var stringObjectList: [StringObject] = []
-//
-//    //Image Process
-//    @Published var gammaValue: CGFloat = 0.75
-
-    func FillCharFrameList() {
+    static var logListData = [
+        LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
+        LogObject(content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
+    ]
+    
+    static func FillCharFrameList() {
         charFrameList.removeAll()
         for i in 0 ..< stringObjectList.count {
             for j in 0 ..< stringObjectList[i].charRects.count{
@@ -49,6 +40,22 @@ struct DataStore{
             }
         }
     }
+    
+
 }
+
+//struct DataStore1{
+//    var stringObjectList1: [StringObject] = []
+////    @Published var logListData = [
+////        LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
+////        LogObject(content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
+////    ]
+////    @Published var stringObjectList: [StringObject] = []
+////
+////    //Image Process
+////    @Published var gammaValue: CGFloat = 0.75
+//
+
+//}
 
 

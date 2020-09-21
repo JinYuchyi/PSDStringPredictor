@@ -13,14 +13,15 @@ struct CharacterFrameView: View {
     var body: some View {
         ZStack{
             Rectangle()
-                .stroke(Color.red, lineWidth: 1)
+                .stroke(Color.pink, lineWidth: 1)
                 .frame(width: charFrame.rect.width, height: charFrame.rect.height)
                 //.position(x: charFrame.rect.midX, y: charFrame.rect.midY)
             Text(charFrame.char)
-                .font(.custom("SF Pro Text", size: 12))
-                .foregroundColor(Color.red.opacity(0.5))
+                .font(.custom("SF Pro Text", size: 18))
+                .foregroundColor(Color.pink.opacity(0.5))
                 //.position(x: charFrame.rect.midX, y: charFrame.rect.midY)
         }
+        
     }
 }
 

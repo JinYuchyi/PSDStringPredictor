@@ -39,8 +39,8 @@ struct DB{
         }
         
         do{
-            dbConnection = try Connection(path)
-            print(dbConnection.description)
+            DataStore.dbConnection = try Connection(path)
+            print(DataStore.dbConnection.description)
         }
         catch{
             print("Connection Failed: \(error)")
@@ -50,7 +50,7 @@ struct DB{
     
         func TableCharacterCreate() -> Void {
             do { // 创建表TABLE_LAMP
-                try dbConnection.run(TABLE_CHARACTER.create { table in
+                try DataStore.dbConnection.run(TABLE_CHARACTER.create { table in
                     table.column(TABLE_CHARACTER_ID, primaryKey: .autoincrement) // 主键自加且不为空
                     table.column(TABLE_CHARACTER_CHAR)
                     table.column(TABLE_CHARACTER_WIDTH)
@@ -71,7 +71,7 @@ struct DB{
             //print("Checking same row: \(Array(arrayLiteral: query).count)")
             var num: Int = 0
             do{
-                let obj = try dbConnection.prepare(query)
+                let obj = try DataStore.dbConnection.prepare(query)
                 num = Array(obj).count
             }
             catch{}
@@ -96,7 +96,7 @@ struct DB{
             if(duplicated == false && CheckIfNoneLetterOrNumber(char) == false){
                 let insert = TABLE_CHARACTER.insert(TABLE_CHARACTER_CHAR <- char, TABLE_CHARACTER_WIDTH <- width, TABLE_CHARACTER_HEIGHT <- height, TABLE_CHARACTER_WIGHT <- weight)
                 do {
-                    let rowid = try dbConnection.run(insert)
+                    let rowid = try DataStore.dbConnection.run(insert)
                     //print("Insert Data Success! id: \(rowid)")
                 } catch {
                     print("Insert Data Failed: \(error)")
@@ -109,7 +109,7 @@ struct DB{
         
         //Run SQL
         func RunSQL(cmdStr: String)  {
-            try! dbConnection.execute(cmdStr)
+            try! DataStore.dbConnection.execute(cmdStr)
         }
         
         
@@ -117,9 +117,9 @@ struct DB{
         func PrintAllItemsInCharacterTable() -> Void {
             
             do{
-                let all = Array(try dbConnection.prepare(TABLE_CHARACTER))
+                let all = Array(try DataStore.dbConnection.prepare(TABLE_CHARACTER))
             print("We have \(all.count) items in database.")
-                for item in (try! dbConnection.prepare(TABLE_CHARACTER)) {
+                for item in (try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) {
                 print("CHARACRER:\n id: \(item[TABLE_CHARACTER_ID]), char: \(item[TABLE_CHARACTER_CHAR]), width: \(item[TABLE_CHARACTER_WIDTH]), height: \(item[TABLE_CHARACTER_HEIGHT]), weight: \(item[TABLE_CHARACTER_WIGHT])")
             }
                 
@@ -129,9 +129,9 @@ struct DB{
         func PrintAllItemsInCharacterTable(limit lmt: Int) -> Void {
             var count: Int = 0
             do{
-                let all = Array(try dbConnection.prepare(TABLE_CHARACTER))
+                let all = Array(try DataStore.dbConnection.prepare(TABLE_CHARACTER))
             print("We have \(all.count) items in database.")
-                for item in (try! dbConnection.prepare(TABLE_CHARACTER)) {
+                for item in (try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) {
                 //print("CHARACRER:\n id: \(item[TABLE_CHARACTER_ID]), char: \(item[TABLE_CHARACTER_CHAR]), width: \(item[TABLE_CHARACTER_WIDTH]), height: \(item[TABLE_CHARACTER_HEIGHT]), weight: \(item[TABLE_CHARACTER_WIGHT])")
                 count+=1
                 if(count > lmt){
@@ -147,7 +147,7 @@ struct DB{
             //let item = TABLE_CHARACTER.filter(TABLE_CHARACTER_ID == *)
             //let items = try! db.prepare("SELECT * FROM TABLE_CHARACTER")
             do{
-                try dbConnection.run(TABLE_CHARACTER.delete())
+                try DataStore.dbConnection.run(TABLE_CHARACTER.delete())
             print("Cleanning database...")
 
             }catch{
@@ -174,7 +174,7 @@ struct DB{
             let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == "9" && TABLE_CHARACTER_WIDTH == 24 && TABLE_CHARACTER_HEIGHT == 34 )//
             .select(TABLE_CHARACTER_CHAR, TABLE_CHARACTER_WIDTH, TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
                 do{
-                    let objs = try dbConnection.prepare(query)
+                    let objs = try DataStore.dbConnection.prepare(query)
                     for obj in objs{
                         num+=1
                     //num = Array(obj).count
@@ -189,14 +189,14 @@ struct DB{
             var objArray: [Row] = []
             var result: Int64 = 0
             
-            if(dbConnection == nil){
+            if(DataStore.dbConnection == nil){
                 print("DB equals null.")
                 return 0
             }
                     
             let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width && TABLE_CHARACTER_HEIGHT == height).select(TABLE_CHARACTER_CHAR,TABLE_CHARACTER_WIDTH,TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
             do{
-                let objs = try dbConnection.prepare(query)
+                let objs = try DataStore.dbConnection.prepare(query)
                 objArray = Array(objs)
                 result = Int64(objArray.count)
                 print("The result:\(result)")

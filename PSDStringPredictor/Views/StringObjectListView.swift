@@ -12,7 +12,7 @@ struct StringObjectListView: View {
     //@ObservedObject var stringObjectList: StringObjectList
     //let listData = stringObjectList.stringObjectListData
     var body: some View {
-        List(stringObjectList, id: \.id){ item in
+        List(DataStore.stringObjectList, id: \.id){ item in
             
             //init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect])
             StringObjectRow(stringObject: item)

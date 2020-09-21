@@ -17,6 +17,49 @@ class ImageProcess: ObservableObject{
 //    @Published var targetImageName: String = "default_image"
 //    @Published var targetImageSize: [Int64] = []
     //@EnvironmentObject var data: DataStore
+    @Published var targetImageProcessed = CIImage.init()
+    @Published var targetNSImage = NSImage()
+    
+
+    
+     func FetchImage() {
+        //UpdateTargetImageInfo()
+        targetNSImage = DataStore.targetNSImage
+        FetchProcessedImage()
+        
+        //return  DataStore.targetNSImage
+        //return targetNSImage
+    }
+    
+     func GetTargetCIImage() -> CIImage{
+        //UpdateTargetImageInfo()
+        return DataStore.targetNSImage.ToCIImage()!
+    }
+    
+     func FetchProcessedImage(){
+        if DataStore.targetImageProcessed.extent.width > 0 {
+            targetImageProcessed = DataStore.targetImageProcessed
+        }
+        else{
+            DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+            targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+        }
+        print("After fetch, the processed image: \(targetImageProcessed.extent.size)")
+    }
+    
+    func GetTargetImageSize() -> [CGFloat]{
+        return [DataStore.targetNSImage.size.width, DataStore.targetNSImage.size.height]
+    }
+    
+    func SetTargetNSImage(_ img: NSImage){
+        DataStore.targetNSImage = img
+        FetchImage()
+    }
+    
+    func SetTargetProcessedImage(_ img: CIImage) {
+        DataStore.targetImageProcessed = img
+        FetchProcessedImage()
+    }
     
     func convertCGImageToCIImage(inputImage: CGImage) -> CIImage! {
         let ciImage = CIImage(cgImage: inputImage)
@@ -32,10 +75,10 @@ class ImageProcess: ObservableObject{
         return image
     }
     
-    func GetTargetImageSize() -> [Int]{
-        let img : CGImage = ImageStore.loadImage(name: targetImageName)
-        return [img.width, img.height]
-    }
+//    func GetTargetImageSize() -> [Int]{
+//        let img : CGImage = ImageStore.loadImage(name: targetImageName)
+//        return [img.width, img.height]
+//    }
 
     func LoadCIImage(FileName: String) -> CIImage?{
        let fileURL = Bundle.main.url(forResource: FileName, withExtension: "png")

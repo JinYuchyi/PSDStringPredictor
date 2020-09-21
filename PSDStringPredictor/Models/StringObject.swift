@@ -51,9 +51,10 @@ struct StringObject : Identifiable{
         fontSize = 0
         stringRect = CGRect()
         observation = VNRecognizedTextObservation.init()
-        color = Color.white
+        color = Color.black
         charArray = []
         charRects = []
+        self.color = CalcColor()
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect]){
@@ -67,11 +68,12 @@ struct StringObject : Identifiable{
         self.charArray = charArray
         self.charRects = charRacts
         self.tracking = 10
-        self.color = Color.white
-        self.color = CalcColor()
+        self.color = Color.black
+        //self.color = CalcColor()
         self.position = CalcPosition()
         self.fontSize = CGFloat(CalcBestWeightForString())
         self.tracking = CalcTracking()
+        self.color = CalcColor()
         //data.stringObjectIndex = data.stringObjectIndex + 1
         //self.id = (data.stringObjectIndex)
 
@@ -107,7 +109,8 @@ struct StringObject : Identifiable{
     }
     
     func CalcColor() -> Color {
-        return Color.white
+        //return Color.white.opacity(1)
+        return Color.white.opacity(0.9)
     }
     
     func CalcPosition() -> [CGFloat]{
@@ -128,7 +131,7 @@ struct StringObject : Identifiable{
 //            return 0
 //        }
         
-        let objList = DB.QueryFor(dbConnection: dbConnection, char: char, width: width, height: height)
+        let objList = DB.QueryFor(dbConnection: DataStore.dbConnection, char: char, width: width, height: height)
 
         
         func Predict() -> Int64 {
@@ -186,9 +189,9 @@ struct StringObject : Identifiable{
         return result
     }
     
-    func Count() -> Int{
-        return stringObjectList.count
-    }
+//    func Count() -> Int{
+//        return stringObjectList.count
+//    }
     
 //    mutating func AddElement(NewElement element: StringObject){
 //        stringObjectList.append(element)
@@ -203,7 +206,7 @@ struct StringObject : Identifiable{
 
         if img.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
-            stringObjectList = stringObjects
+            DataStore.stringObjectList = stringObjects
         }
         else{
             print("Load Image failed.")

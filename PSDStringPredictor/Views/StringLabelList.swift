@@ -10,25 +10,34 @@ import SwiftUI
 
 struct LabelsOnImage: View {
     //@ObservedObject var stringObjectList: StringObjectList
-    //var imageProcess: ImageProcess = ImageProcess()
+    @ObservedObject var imageProcess: ImageProcess
     //@EnvironmentObject var data: DataStore
     @ObservedObject var stringObjectViewModel : StringObjectViewModel
+    @Binding var ShowPredictString: Bool
+    
+    //let data: DataStore = DataStore()
     var body: some View {
-//        ForEach(stringObjectList.stringObjectListData, id: \.id){ item in
-//            StringLabel(
-//                id: item.id,
-//                position: item.position,
-//                height: item.height,
-//                width: item.width,
-//                fontsize: item.fontSize,
-//                tracking: item.tracking,
-//                content: item.content
-//            )
-//                .position(x: item.position[0] + item.width/2, y: CGFloat(self.data.targetImageSize[1]) -  item.position[1] - item.height/2)
-//
-//        }
-        Text(String(stringObjectViewModel.charFrameListData.count))
+        
+        ForEach(stringObjectViewModel.stringObjectListData, id:\.id){ item in
+            StringLabel(
+                
+                position: item.position,
+                height: item.height,
+                width: item.width,
+                fontsize: item.fontSize,
+                tracking: item.tracking,
+                content: item.content,
+                color: item.color,
+                imageViewModel: self.imageProcess,
+                ShowPredictString: self.$ShowPredictString
+            )
+            //.position(x: item.position[0] + item.width/2, y: CGFloat(self.data.targetImageSize[1]) -  item.position[1] - item.height/2)
+
+        }
+        //Text(String(stringObjectViewModel.charFrameListData.count))
     }
+    
+
 }
 
 
@@ -55,8 +64,8 @@ struct LabelsOnImage: View {
 //    
 //}
 
-struct StringLabelList_Previews: PreviewProvider {
-    static var previews: some View {
-        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
-    }
-}
+//struct StringLabelList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+//    }
+//}

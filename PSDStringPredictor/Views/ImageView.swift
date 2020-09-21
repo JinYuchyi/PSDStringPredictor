@@ -12,19 +12,18 @@ import SwiftUI
 struct ImageView: View {
 //var imageProcess: ImageProcess
 //@EnvironmentObject var data: DataStore
-@State var showImg = false
+    @ObservedObject var imageViewModel: ImageProcess
+    @State var showImg = false
     
     var body: some View{
             ZStack{
                 if(showImg == false){
                     Button(action: BtnLoadImage){
-                                            Text("Load Image")
-                                        }
+                        Text("Load Image")
+                    }
                 }
                 else{
-                        Image(nsImage: targetImageProcessed.extent.width > 0 ? targetImageProcessed.ToNSImage() :
-                                              targetNSImage
-                        )
+                    Image(nsImage: (imageViewModel.targetImageProcessed.extent.width > 0 ? imageViewModel.targetImageProcessed.ToNSImage() : imageViewModel.targetNSImage) )
                 }
         }
     }
@@ -37,8 +36,13 @@ struct ImageView: View {
             if result == .OK{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
                 {
-                    targetNSImage =  LoadNSImage(imageUrlPath: panel.url!.path)
-                    targetImage = targetNSImage.ToCIImage()!
+                    let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
+                    //print("tmp:\(tmp.size)")
+                    self.imageViewModel.SetTargetNSImage(tmp)
+                   // self.imageViewModel.SetTargetNSImage( LoadNSImage(imageUrlPath: panel.url!.path))
+                   // targetImage = targetNSImage.ToCIImage()!
+                    
+                    //targetImageSize = [(targetImage.extent.width),(targetImage.extent.height)]
                     self.showImg = true
                 }
                 
