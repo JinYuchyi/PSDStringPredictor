@@ -53,6 +53,10 @@ class ImageUtil{
         return newimg
     }
     
+    func CompareImage(_ img1: CIImage, img2: CIImage) -> CGFloat{
+        
+    }
+    
     
 }
 
