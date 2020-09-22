@@ -24,16 +24,16 @@ struct ContentView: View {
     @State var isDragging = false
     //@ObservedObject var charFrameVM = charframe()
     //let stringObjectViewModel = StringObjectViewModel()
-    var drag: some Gesture {
-        DragGesture()
-            .onChanged { _ in self.isDragging = true }
-            .onEnded { _ in self.isDragging = false }
-    }
+    
+//    var drag: some Gesture {
+//        DragGesture()
+//            .onChanged { _ in self.isDragging = true }
+//            .onEnded { _ in self.isDragging = false }
+//    }
+    
+
     
     var body: some View {
-        
-
-        
         HStack(alignment: .top){
 //            Button(action: {
 //                self.loglist.CleanMsg()
@@ -42,7 +42,7 @@ struct ContentView: View {
 //            }
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
-                Text(String(self.stringObjectViewModel.countNum))
+                //Text(String(self.stringObjectViewModel.countNum))
                 ControlPanel(stringObjectViewModel: stringObjectViewModel)
                     .padding(.top, 20.0)
                     .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
@@ -63,7 +63,8 @@ struct ContentView: View {
                            
                 ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                     ZStack{
-                        ImageView(imageViewModel:imageViewModel).gesture(drag)
+                        ImageView(imageViewModel:imageViewModel)
+                            //.gesture(drag)
                         LabelsOnImage( imageProcess:imageViewModel, stringObjectViewModel: stringObjectViewModel, ShowPredictString: $ShowPredictString)
                         .blendMode(.difference)
 
@@ -79,10 +80,10 @@ struct ContentView: View {
                 }
                 .frame(width: 1000, height: 950, alignment: .topTrailing)
                 
-                Circle()
-                .fill(self.isDragging ? Color.red : Color.blue)
-                .frame(width: 100, height: 100, alignment: .center)
-                .gesture(drag)
+//                Circle()
+//                .fill(self.isDragging ? Color.red : Color.blue)
+//                .frame(width: 100, height: 100, alignment: .center)
+//                .gesture(drag)
             
             }
             .frame(width: 1100)

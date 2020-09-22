@@ -10,7 +10,6 @@ import Foundation
 import CoreImage
 import Vision
 import SwiftUI
-//import UIKit
 
 class ImageProcess: ObservableObject{
 //    @Published var targetImage: CIImage  = CIImage.init()
@@ -19,10 +18,8 @@ class ImageProcess: ObservableObject{
     //@EnvironmentObject var data: DataStore
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetNSImage = NSImage()
-    
 
-    
-     func FetchImage() {
+    func FetchImage() {
         //UpdateTargetImageInfo()
         targetNSImage = DataStore.targetNSImage
         FetchProcessedImage()
@@ -91,7 +88,7 @@ class ImageProcess: ObservableObject{
         let ciImage = CIImage(cgImage: inputImage)
         return ciImage
     }
-
+    
 }
 
 func LoadNSImage(imageUrlPath: String) -> NSImage {

@@ -19,4 +19,6 @@ struct LogObject: Identifiable {
         case warning = "Warning"
         case error = "Error"
     }
+    
+    
 }
