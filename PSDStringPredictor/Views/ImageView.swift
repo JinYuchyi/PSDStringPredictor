@@ -12,6 +12,7 @@ import SwiftUI
 struct ImageView: View {
 //var imageProcess: ImageProcess
 //@EnvironmentObject var data: DataStore
+    let imgUtil = ImageUtil()
     @ObservedObject var imageViewModel: ImageProcess
     @State var showImg = false
     
@@ -36,14 +37,18 @@ struct ImageView: View {
             if result == .OK{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
                 {
+                    
+                    
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     //print("tmp:\(tmp.size)")
                     self.imageViewModel.SetTargetNSImage(tmp)
                    // self.imageViewModel.SetTargetNSImage( LoadNSImage(imageUrlPath: panel.url!.path))
                    // targetImage = targetNSImage.ToCIImage()!
-                    
+                    self.imgUtil.TestMask(BGImage: tmp.ToCIImage()!)
                     //targetImageSize = [(targetImage.extent.width),(targetImage.extent.height)]
                     self.showImg = true
+                    
+
                 }
                 
             }

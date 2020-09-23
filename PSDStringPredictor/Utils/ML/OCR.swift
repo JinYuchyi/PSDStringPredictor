@@ -119,9 +119,15 @@ class OCR: ObservableObject{
             let (charRects, chars) = GetCharsInfoFromObservation(results[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
             //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             
-            let newStrContent = StringObject(strs[i], stringsRects[i], results[i], chars, charRects)
-            strobjs.append(newStrContent)
-
+            let newStrObj = StringObject(strs[i], stringsRects[i], results[i], chars, charRects)
+            strobjs.append(newStrObj)
+            
+            //Save String image as png
+//            let tmpImg = ciImage.cropped(to: stringsRects[i])
+//            let url = URL(fileURLWithPath: "Users/ipdesign/Downloads/Dataset\(newStrObj.content).png")
+//            tmpImg.ToPNG(url: url)
+            ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Dataset/", FileName: "\(newStrObj.content).png", CreatePath: true)
+            
         }
         return strobjs
     }

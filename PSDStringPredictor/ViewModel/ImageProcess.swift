@@ -89,6 +89,8 @@ class ImageProcess: ObservableObject{
         return ciImage
     }
     
+
+    
 }
 
 func LoadNSImage(imageUrlPath: String) -> NSImage {
@@ -134,6 +136,8 @@ final class ImageStore {
         images[name] = ImageStore.loadImage(name: name)
         return images.index(forKey: name)!
     }
+    
+
 }
 
 func ChangeGamma(_ image: CIImage, _ value: CGFloat) -> CIImage? {

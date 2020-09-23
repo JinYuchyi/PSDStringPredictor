@@ -38,6 +38,8 @@ struct ControlPanel: View {
     
     var body: some View {
         VStack{
+
+            
             Button(action: {self.dbvm.ConnectDB()}){
                 Text("Connect Database")
                     .padding(.horizontal, 40.0)
