@@ -148,9 +148,10 @@ class ImageUtil{
 //        print("the target img size: \(img.extent.size)")
 //        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
 //        img.ToPNG(url: url)
-        
+        let rect = CGRect(x: 500, y: 600, width: 100, height: 50)
         let ct = createBitmapContext(img: img)
-        ct.addRect(<#T##rect: CGRect##CGRect#>)
+        ct.addRect(rect).
+        
     }
     
     
