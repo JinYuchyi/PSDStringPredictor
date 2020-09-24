@@ -30,26 +30,16 @@ class StringObjectViewModel: ObservableObject{
     @Published var stringObjectListData: [StringObject] = []
     @Published var charFrameListData: [CharFrame] = []
     @Published var charFrameListRects: [CGRect] = []
-    @Published var countNum =  0
+    @Published var StringLabelListData: [StringLabelObject] = []
     
-//    static func FetchStringObjectList() -> [StringObject] {
-//        return DataStore.stringObjectList
-//    }
-    
-//    init(imageViewModel: ImageProcess){
-//        self.imageViewModel = ImageProcess
-//    }
-
     
     func PredictStrings()  {
-        countNum += 1
-        //imageViewModel.FetchProcessedImage()
         stringObject.PredictStringObjects(FromCIImage: DataStore.targetImageProcessed)
-        //print("imageViewModel.targetImageProcessed exist: \(imageViewModel.targetImageProcessed.extent.width)")
         stringObjectListData = DataStore.stringObjectList
         DataStore.FillCharFrameList()
         FetchCharFrameListData()
         FetchCharFrameListRects()
+        FetchStringLabelList()
         
     }
     
@@ -63,8 +53,18 @@ class StringObjectViewModel: ObservableObject{
         for element in DataStore.charFrameList{
             charFrameListRects.append(element.rect)
         }
+    }
+    
+    func FetchStringLabelList(){
+        StringLabelListData.removeAll()
+        for element in DataStore.stringObjectList{
+            let tmpElement = StringLabelObject(position: element.position, height: element.height, width: element.width, fontsize: element.fontSize, tracking: element.tracking, content: element.content, color: element.color)
+            StringLabelListData.append(tmpElement)
         }
     }
+    
+    
+}
     
  
     

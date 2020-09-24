@@ -18,10 +18,7 @@ class DataStore{
     static var dbConnection: Connection!
     //ImageProcess
     static var targetNSImage: NSImage  = NSImage.init()
-    //var targetImage: CIImage  = CIImage.init()
     static var targetImageProcessed: CIImage  = CIImage.init()
-    //var targetImageName: String = "default_image"
-    //var targetImageSize: [CGFloat] = []
     //UI
     static var charFrameIndex = 0
     static var charFrameList: [CharFrame] = []

@@ -126,7 +126,7 @@ class OCR: ObservableObject{
 //            let tmpImg = ciImage.cropped(to: stringsRects[i])
 //            let url = URL(fileURLWithPath: "Users/ipdesign/Downloads/Dataset\(newStrObj.content).png")
 //            tmpImg.ToPNG(url: url)
-            ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Dataset/", FileName: "\(newStrObj.content).png", CreatePath: true)
+            //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Dataset/", FileName: "\(newStrObj.content).png", CreatePath: true)
             
         }
         return strobjs

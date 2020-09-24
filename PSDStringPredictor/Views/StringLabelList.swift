@@ -14,23 +14,22 @@ struct LabelsOnImage: View {
     @ObservedObject var stringObjectVM : StringObjectViewModel = stringObjectViewModel
     @Binding var ShowPredictString: Bool
     
-    //let data: DataStore = DataStore()
+    
     var body: some View {
         
-        ForEach(stringObjectVM.stringObjectListData, id:\.id){ item in
-            StringLabel(
-                
-                position: item.position,
-                height: item.height,
-                width: item.width,
-                fontsize: item.fontSize,
-                tracking: item.tracking,
-                content: item.content,
-                color: item.color,
-                imageViewModel: self.imageProcess,
-                ShowPredictString: self.$ShowPredictString
-            )
-            //.position(x: item.position[0] + item.width/2, y: CGFloat(self.data.targetImageSize[1]) -  item.position[1] - item.height/2)
+        ForEach(stringObjectVM.StringLabelListData, id:\.id){ item in
+            
+//            StringLabel(
+//                position: item.position,
+//                height: item.height,
+//                width: item.width,
+//                fontsize: item.fontSize,
+//                tracking: item.tracking,
+//                content: item.content,
+//                color: item.color,
+//                imageViewModel: self.imageProcess,
+//                ShowPredictString: self.$ShowPredictString
+//            )
 
         }
         //Text(String(stringObjectViewModel.charFrameListData.count))

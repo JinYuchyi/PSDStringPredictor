@@ -30,13 +30,8 @@ struct CharacterFrameView: View {
         }
         .onTapGesture {
             self.imgProcess.FetchImage()
-            //let r = CGRect(x: 0, y: 0, width: 1000, height: 1000)
-            //self.imgUtil.AddRectangleMask(BGImage: &self.imgProcess.targetImageProcessed, Rects: [self.charFrame.rect], MaskColor: CIColor.black)
             let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.rect.minX, PositionY: self.charFrame.rect.minY, Width: self.charFrame.rect.width, Height: self.charFrame.rect.height, MaskColor: CIColor.white)
             self.imgProcess.SetTargetProcessedImage(tmpImg)
-            let url1 = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext_clamped1.png")
-            self.imgProcess.targetImageProcessed.ToPNG(url: url1)
-            print("Character tapped: \(self.charFrame.id)")
         }
         
     }
