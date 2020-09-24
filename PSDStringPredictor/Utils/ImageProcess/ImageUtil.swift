@@ -137,20 +137,25 @@ class ImageUtil{
 //        newimg.ToPNG(url: url)
     }
     
-    func TestMask(BGImage img: CGImage){
+    func TestMask(BGImage img: CIImage){
         //Create mask
-//        var mask = CIImage.init(color: CIColor.white)
-//        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
-//        mask = mask.clamped(to: rect)
-//        print("the BGImage img size: \(img.extent.size)")
+        var mask = CIImage.init(color: CIColor.red)
+        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+        mask = mask.cropped(to: rect)
+        //print("the BGImage img size: \(mask.extent.size)")
 //
-//        let img = ImageOntop(OverlayImage: mask, BGImage: img, OffsetX: 200, OffsetY: 300)
+        let img = ImageOntop(OverlayImage: mask, BGImage: img, OffsetX: 200, OffsetY: 300)
 //        print("the target img size: \(img.extent.size)")
-//        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
-//        img.ToPNG(url: url)
-        let rect = CGRect(x: 500, y: 600, width: 100, height: 50)
-        let ct = createBitmapContext(img: img)
-        ct.addRect(rect).
+
+        //let rect = CGRect(x: 500, y: 600, width: 100, height: 50)
+        //let ct = createBitmapContext(img: img)
+        //ct.addRect(rect)
+        //let img = ct.makeImage()
+        
+        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
+        //let output = img?.ToCIImage()
+        img.ToPNG(url: url)
+        
         
     }
     
