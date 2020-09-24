@@ -19,6 +19,7 @@ struct LabelsOnImage: View {
         
         ForEach(stringObjectVM.StringLabelListData, id:\.id){ item in
             
+            StringLabel(ShowPredictString: self.$ShowPredictString, stringLabel: item)
 //            StringLabel(
 //                position: item.position,
 //                height: item.height,

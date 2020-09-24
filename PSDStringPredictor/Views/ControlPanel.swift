@@ -17,6 +17,7 @@ struct ControlPanel: View {
     //@ObservedObject var ocr: OCR = OCR()
     //@ObservedObject var stringObjectList: StringObjectList  = StringObjectList()
     var imageProcess: ImageProcess  = imageProcessViewModel
+    var imgUtil: ImageUtil = ImageUtil()
     //@ObservedObject var data: DataStore
 
 
@@ -63,10 +64,10 @@ struct ControlPanel: View {
             .frame(minWidth: 400, maxWidth: .infinity)
 
             
-//            Button(action: CreateTrackingData){
-//                Text("Create Tracking Data")
-//            }
-//            .frame(width: 500, height: 20, alignment: Alignment.center)
+            Button(action: {self.imgUtil.OutputAllStringPng(FromImage: self.imageProcess.targetCIImage, ToFolder: "/Users/ipdesign/Downloads/Test/")}){
+                Text("Create Tracking Data")
+            }
+            .frame(width: 500, height: 20, alignment: Alignment.center)
         }
         .frame(height: 200.0)
     }

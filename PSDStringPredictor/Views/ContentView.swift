@@ -83,10 +83,7 @@ struct ContentView: View {
                 }
                 .frame(width: 1000, height: 950, alignment: .topTrailing)
                 
-//                Circle()
-//                .fill(self.isDragging ? Color.red : Color.blue)
-//                .frame(width: 100, height: 100, alignment: .center)
-//                .gesture(drag)
+                
             
             }
             .frame(width: 1100)

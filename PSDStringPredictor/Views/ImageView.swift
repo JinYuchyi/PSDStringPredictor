@@ -26,8 +26,12 @@ struct ImageView: View {
                 }
                 //Show Image if we have loaded image
                 else{
-                    
-                    Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
+                    ZStack{
+                        Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
+                        Button(action: BtnLoadImage){
+                            Text("Load Image")
+                        }
+                    }
                 }
         }
     }

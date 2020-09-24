@@ -19,26 +19,26 @@ struct StringLabel: View {
 //    var color: Color
     
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @Binding var ShowPredictString: Bool
+    @Binding var ShowPredictString: Bool 
     
-    //let stringLabel = StringLabel()
+    var stringLabel: StringLabelObject
     
     var body: some View {
         ZStack{
             Rectangle()
                 //.fill(Color.red.opacity(0.5))
                 .stroke(Color.red, lineWidth: 2)
-                .frame(width: self.width, height: self.height)
+                .frame(width: stringLabel.width, height: stringLabel.height)
             
             if ShowPredictString == true {
-                Text(self.content)
-                .foregroundColor(color)
-                .font(.custom("SF Pro Text", size: fontsize))
-                .tracking(tracking)
+                Text(stringLabel.content)
+                    .foregroundColor(stringLabel.color)
+                    .font(.custom("SF Pro Text", size: stringLabel.fontsize))
+                    .tracking(stringLabel.tracking)
             }
                
         }
-        .position(x: position[0] + width/2, y: imageViewModel.GetTargetImageSize()[1] -  position[1] - height/2)
+        .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
 
         
     }
