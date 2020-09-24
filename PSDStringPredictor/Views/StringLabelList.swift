@@ -10,15 +10,14 @@ import SwiftUI
 
 struct LabelsOnImage: View {
     //@ObservedObject var stringObjectList: StringObjectList
-    @ObservedObject var imageProcess: ImageProcess
-    //@EnvironmentObject var data: DataStore
-    @ObservedObject var stringObjectViewModel : StringObjectViewModel
+    @ObservedObject var imageProcess: ImageProcess = imageProcessViewModel
+    @ObservedObject var stringObjectVM : StringObjectViewModel = stringObjectViewModel
     @Binding var ShowPredictString: Bool
     
     //let data: DataStore = DataStore()
     var body: some View {
         
-        ForEach(stringObjectViewModel.stringObjectListData, id:\.id){ item in
+        ForEach(stringObjectVM.stringObjectListData, id:\.id){ item in
             StringLabel(
                 
                 position: item.position,

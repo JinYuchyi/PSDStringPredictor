@@ -120,10 +120,7 @@ class ImageUtil{
         return color
     }
     
-    func ImageOntop(OverlayImage img1: CIImage, BGImage img2: CIImage, OffsetX x: CGFloat, OffsetY y: CGFloat) ->CIImage {
-        
-        
-        
+    func ImageOntop(OverlayImage img1: CIImage, BGImage img2: inout CIImage, OffsetX x: CGFloat = 0, OffsetY y: CGFloat = 0) ->CIImage {
         //Filter Creation
         let filter = CIFilter(name: "CISourceOverCompositing")
         let movedImage = img1.transformed(by: CGAffineTransform(translationX: x, y: y))
@@ -132,30 +129,35 @@ class ImageUtil{
         filter!.setValue(img2, forKey: "inputBackgroundImage")
         
         return  filter!.outputImage!
-        
-//        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
-//        newimg.ToPNG(url: url)
     }
     
-    func TestMask(BGImage img: CIImage){
+    func AddRectangleMask(BGImage img: inout CIImage, PositionX x: CGFloat, PositionY y: CGFloat, Width w: CGFloat, Height h: CGFloat, MaskColor color: CIColor) -> CIImage{
         //Create mask
-        var mask = CIImage.init(color: CIColor.red)
-        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+        var mask = CIImage.init(color: color)
+        let rect = CGRect(x: 0, y: 0, width: w, height: h)
         mask = mask.cropped(to: rect)
-        //print("the BGImage img size: \(mask.extent.size)")
-//
-        let img = ImageOntop(OverlayImage: mask, BGImage: img, OffsetX: 200, OffsetY: 300)
-//        print("the target img size: \(img.extent.size)")
 
-        //let rect = CGRect(x: 500, y: 600, width: 100, height: 50)
-        //let ct = createBitmapContext(img: img)
-        //ct.addRect(rect)
-        //let img = ct.makeImage()
+        let img = ImageOntop(OverlayImage: mask, BGImage: &img, OffsetX: x, OffsetY: y)
         
-        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
-        //let output = img?.ToCIImage()
-        img.ToPNG(url: url)
+        return img
+        //Save Image
+//        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
+//        img.ToPNG(url: url)
         
+    }
+    
+    func AddRectangleMask(BGImage img: inout CIImage, Rects rects: [CGRect], MaskColor color: CIColor){
+        for i in 0..<rects.count{
+            //Create mask
+            var mask = CIImage.init(color: color)
+            //let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+            mask = mask.cropped(to: rects[i])
+            ImageOntop(OverlayImage: mask, BGImage: &img )
+        }
+        //return img
+        //Save Image
+//        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
+//        img.ToPNG(url: url)
         
     }
     

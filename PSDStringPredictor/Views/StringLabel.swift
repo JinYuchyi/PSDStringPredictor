@@ -19,7 +19,7 @@ struct StringLabel: View {
     var color: Color
     
     //@EnvironmentObject var data: DataStore
-    @ObservedObject var imageViewModel: ImageProcess
+    @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @Binding var ShowPredictString: Bool
     
     var body: some View {

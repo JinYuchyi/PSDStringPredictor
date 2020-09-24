@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ImageProcessView: View {
     //@EnvironmentObject var data: DataStore
-    @ObservedObject var imageViewModel: ImageProcess = ImageProcess()
+    @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @State private  var gammaValue: Float = 0.75
     
     

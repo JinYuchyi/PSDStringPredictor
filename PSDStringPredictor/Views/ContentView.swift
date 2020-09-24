@@ -17,11 +17,12 @@ struct ContentView: View {
 //
 //    @EnvironmentObject var data: DataStore
     let data = DataStore()
-    @ObservedObject var imageViewModel = ImageProcess()
-    @ObservedObject var stringObjectViewModel = StringObjectViewModel()
+    @ObservedObject var imageViewModel = imageProcessViewModel
+    @ObservedObject var stringObjectVM = stringObjectViewModel
     
     @State private var ShowPredictString = true
     @State var isDragging = false
+    @State private var clickPositionOnImage = CGSize.zero
     //@ObservedObject var charFrameVM = charframe()
     //let stringObjectViewModel = StringObjectViewModel()
     
@@ -43,7 +44,7 @@ struct ContentView: View {
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
                 //Text(String(self.stringObjectViewModel.countNum))
-                ControlPanel(stringObjectViewModel: stringObjectViewModel)
+                ControlPanel()
                     .padding(.top, 20.0)
                     .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 ImageProcessView(imageViewModel: imageViewModel)
@@ -65,13 +66,15 @@ struct ContentView: View {
                     ZStack{
                         ImageView(imageViewModel:imageViewModel)
                             //.gesture(drag)
-                        LabelsOnImage( imageProcess:imageViewModel, stringObjectViewModel: stringObjectViewModel, ShowPredictString: $ShowPredictString)
+                        LabelsOnImage(ShowPredictString: $ShowPredictString)
                         .blendMode(.difference)
 
-                        CharacterFrameListView(frameList: stringObjectViewModel.charFrameListData, imageViewModel: imageViewModel)
+                        CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
+
 
 
                     }
+                    
                 }
                 
                 

@@ -48,6 +48,7 @@
 		3FD401FA2500F2FB00525E67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401F92500F2FB00525E67 /* Preview Assets.xcassets */; };
 		3FD401FD2500F2FB00525E67 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401FB2500F2FB00525E67 /* Main.storyboard */; };
 		3FD9957F2518B48D007E3D05 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD9957E2518B48D007E3D05 /* ImageUtil.swift */; };
+		3FEBA6C1251C93F7002D8EC1 /* ViewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */; };
 		3FEFE91125071F2200AEF1C8 /* locSampleWithGrid.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEFE91025071F2100AEF1C8 /* locSampleWithGrid.png */; };
 		3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9122507200400AEF1C8 /* ControlPanel.swift */; };
 		3FEFE9182507276F00AEF1C8 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 3FEFE9172507276F00AEF1C8 /* SQLite */; };
@@ -102,6 +103,7 @@
 		3FD401FE2500F2FB00525E67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FD401FF2500F2FB00525E67 /* UITest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UITest.entitlements; sourceTree = "<group>"; };
 		3FD9957E2518B48D007E3D05 /* ImageUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
+		3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelContainer.swift; sourceTree = "<group>"; };
 		3FEFE91025071F2100AEF1C8 /* locSampleWithGrid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locSampleWithGrid.png; path = ../../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/locSampleWithGrid.png; sourceTree = DEVELOPER_DIR; };
 		3FEFE9122507200400AEF1C8 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
 		3FEFE91925072A0000AEF1C8 /* CharacterData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CharacterData.csv; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				3F8208552516068100832192 /* StringObjectViewModel.swift */,
 				3F7E6AA525175CE20082D3FF /* DBViewModel.swift */,
 				3F4CB5A4250A23E200E41082 /* ImageProcess.swift */,
+				3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
 				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,
+				3FEBA6C1251C93F7002D8EC1 /* ViewModelContainer.swift in Sources */,
 				3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */,
 				3F4D13E625020F22008F846B /* StringLabel.swift in Sources */,
 				3F56E3E42505F0B400E64337 /* Data.swift in Sources */,

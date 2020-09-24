@@ -13,18 +13,21 @@ struct ImageView: View {
 //var imageProcess: ImageProcess
 //@EnvironmentObject var data: DataStore
     let imgUtil = ImageUtil()
-    @ObservedObject var imageViewModel: ImageProcess
+    @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @State var showImg = false
     
     var body: some View{
             ZStack{
+                //Show button before we have image loaded
                 if(showImg == false){
                     Button(action: BtnLoadImage){
                         Text("Load Image")
                     }
                 }
+                //Show Image if we have loaded image
                 else{
-                    Image(nsImage: (imageViewModel.targetImageProcessed.extent.width > 0 ? imageViewModel.targetImageProcessed.ToNSImage() : imageViewModel.targetNSImage) )
+                    
+                    Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
                 }
         }
     }
@@ -37,15 +40,9 @@ struct ImageView: View {
             if result == .OK{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
                 {
-                    
-                    
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
-                    //print("tmp:\(tmp.size)")
                     self.imageViewModel.SetTargetNSImage(tmp)
-                   // self.imageViewModel.SetTargetNSImage( LoadNSImage(imageUrlPath: panel.url!.path))
-                   // targetImage = targetNSImage.ToCIImage()!
-                    self.imgUtil.TestMask(BGImage: tmp.ToCIImage()!)
-                    //targetImageSize = [(targetImage.extent.width),(targetImage.extent.height)]
+                    print("After select: \(self.imageViewModel.targetImageProcessed.extent.width)")
                     self.showImg = true
                     
 

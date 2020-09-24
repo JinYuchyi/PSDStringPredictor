@@ -16,32 +16,40 @@ class ImageProcess: ObservableObject{
 //    @Published var targetImageName: String = "default_image"
 //    @Published var targetImageSize: [Int64] = []
     //@EnvironmentObject var data: DataStore
+    
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetNSImage = NSImage()
+    @Published var targetCIImage = CIImage()
 
     func FetchImage() {
-        //UpdateTargetImageInfo()
         targetNSImage = DataStore.targetNSImage
-        FetchProcessedImage()
-        
-        //return  DataStore.targetNSImage
-        //return targetNSImage
+        targetCIImage = targetNSImage.ToCIImage()!
+        targetImageProcessed = DataStore.targetImageProcessed
     }
     
      func GetTargetCIImage() -> CIImage{
         //UpdateTargetImageInfo()
-        return DataStore.targetNSImage.ToCIImage()!
+        return targetCIImage
     }
     
-     func FetchProcessedImage(){
+     func GetProcessedImage() -> CIImage{
+//        if DataStore.targetImageProcessed.extent.width > 0 {
+//        }
+//        else{
+//            DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+//        }
+        return targetImageProcessed
+    }
+    
+     func GetProcessedNSImage() -> NSImage{
         if DataStore.targetImageProcessed.extent.width > 0 {
-            targetImageProcessed = DataStore.targetImageProcessed
+            //return targetImageProcessed = DataStore.targetImageProcessed
         }
         else{
             DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
-            targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+            //targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
         }
-        print("After fetch, the processed image: \(targetImageProcessed.extent.size)")
+        return DataStore.targetImageProcessed.ToNSImage()
     }
     
     func GetTargetImageSize() -> [CGFloat]{
@@ -50,12 +58,16 @@ class ImageProcess: ObservableObject{
     
     func SetTargetNSImage(_ img: NSImage){
         DataStore.targetNSImage = img
+        if(DataStore.targetImageProcessed.extent.width > 0){}
+        else{
+            DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+        }
         FetchImage()
     }
     
     func SetTargetProcessedImage(_ img: CIImage) {
         DataStore.targetImageProcessed = img
-        FetchProcessedImage()
+        FetchImage()
     }
     
     func convertCGImageToCIImage(inputImage: CGImage) -> CIImage! {

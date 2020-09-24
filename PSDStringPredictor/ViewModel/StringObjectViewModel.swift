@@ -25,10 +25,11 @@ import Foundation
 class StringObjectViewModel: ObservableObject{
     
     var stringObject: StringObject = StringObject()
-    @ObservedObject var imageViewModel: ImageProcess = ImageProcess()
+    //@ObservedObject var imageViewModel: ImageProcess = ImageProcess()
     //var data: DataStore = DataStore()
     @Published var stringObjectListData: [StringObject] = []
     @Published var charFrameListData: [CharFrame] = []
+    @Published var charFrameListRects: [CGRect] = []
     @Published var countNum =  0
     
 //    static func FetchStringObjectList() -> [StringObject] {
@@ -38,30 +39,31 @@ class StringObjectViewModel: ObservableObject{
 //    init(imageViewModel: ImageProcess){
 //        self.imageViewModel = ImageProcess
 //    }
-//    init(){
-//        self.imageViewModel = ImageProcess()
-//    }
+
     
     func PredictStrings()  {
         countNum += 1
-        imageViewModel.FetchProcessedImage()
-        stringObject.PredictStringObjects(FromCIImage: imageViewModel.targetImageProcessed)
+        //imageViewModel.FetchProcessedImage()
+        stringObject.PredictStringObjects(FromCIImage: DataStore.targetImageProcessed)
+        //print("imageViewModel.targetImageProcessed exist: \(imageViewModel.targetImageProcessed.extent.width)")
         stringObjectListData = DataStore.stringObjectList
         DataStore.FillCharFrameList()
         FetchCharFrameListData()
+        FetchCharFrameListRects()
         
     }
     
     func FetchCharFrameListData() {
         charFrameListData.removeAll()
         charFrameListData.append(contentsOf: DataStore.charFrameList)
-//        charFrameListData.removeAll()
-//        for i in 0..<charFrameList.count{
-//            charFrameListData.append(charFrameList[i])
-//        }
-        
-        //print("charFrameList:\(charFrameList.count), CharFrameListData: \(self.charFrameListData.count)")
 
+    }
+    
+    func FetchCharFrameListRects(){
+        for element in DataStore.charFrameList{
+            charFrameListRects.append(element.rect)
+        }
+        }
     }
     
  
@@ -203,4 +205,4 @@ class StringObjectViewModel: ObservableObject{
     
     
 
-}
+

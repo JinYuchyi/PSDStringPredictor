@@ -11,12 +11,12 @@ import SwiftUI
 struct ControlPanel: View {
     
     var dbvm = DBViewModel()
-    @ObservedObject var stringObjectViewModel: StringObjectViewModel
+    @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     //@ObservedObject var loglist: LogListData
     //@ObservedObject var db: DB = DB()
     //@ObservedObject var ocr: OCR = OCR()
     //@ObservedObject var stringObjectList: StringObjectList  = StringObjectList()
-    var imageProcess: ImageProcess  = ImageProcess()
+    var imageProcess: ImageProcess  = imageProcessViewModel
     //@ObservedObject var data: DataStore
 
 
@@ -48,14 +48,14 @@ struct ControlPanel: View {
             }
             .padding(.horizontal, 40.0)
    
-            Button(action: {self.stringObjectViewModel.PredictStrings()}){
+            Button(action: {self.stringObjectVM.PredictStrings()}){
                 Text("Predict Strings")
                     .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
             }
             .frame(minWidth: 400, maxWidth: .infinity)
             
-            Button(action: {self.stringObjectViewModel.PredictStrings()}){
+            Button(action: {self.stringObjectVM.PredictStrings()}){
                 Text("Modify PSD")
                     .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
