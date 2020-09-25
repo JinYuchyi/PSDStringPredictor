@@ -13,7 +13,7 @@ import SwiftUI
 
 class PixelProcess{
     
-    func LoadARowColors(FromImage img: CGImage, Index index : Int, IsForRow forRow: Bool) -> [NSColor] {
+    func LoadALineColors(FromImage img: CGImage, Index index : Int, IsForRow forRow: Bool) -> [NSColor] {
         var colors: [NSColor] = []
         if (forRow == true){
             for w in 0 ..< img.width {
@@ -109,6 +109,7 @@ class PixelProcess{
         
         return context!
     }
+    
     
 
 }

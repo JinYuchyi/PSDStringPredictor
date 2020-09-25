@@ -57,9 +57,7 @@ class ImageUtil{
 //
 //    }
     
-    func Debug(){
-        
-    }
+
     
 
     

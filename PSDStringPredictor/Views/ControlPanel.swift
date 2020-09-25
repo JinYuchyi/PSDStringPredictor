@@ -78,7 +78,7 @@ struct ControlPanel: View {
     }
     
     func Debug(){
-        let cs = pixelProcess.LoadARowColors(FromImage: imageProcess.targetNSImage.ToCGImage()!, Index: 0,  IsForRow: true)
+        let cs = pixelProcess.LoadALineColors(FromImage: imageProcess.targetNSImage.ToCGImage()!, Index: 0,  IsForRow: true)
         for c in cs {
             print(c.ToGrayScale()  )
         }
