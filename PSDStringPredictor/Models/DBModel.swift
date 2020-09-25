@@ -157,7 +157,6 @@ struct DB{
         }
         
         func AddStrObjArrayToDB() -> Int{
-            //RemoveAll()
             var index:Int = 0
             let readText = ReadTextFromFile()
             let str = readText.ReadAllContentAsString(FromFile: csvPath)

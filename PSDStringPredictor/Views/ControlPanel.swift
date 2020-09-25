@@ -38,6 +38,14 @@ struct ControlPanel: View {
 
             }
             .padding(.horizontal, 40.0)
+            
+            Button(action: {self.ReloadStrTableBtnPressed()}){
+                Text("Reload String Table DB")
+                    .padding(.horizontal, 40.0)
+                .frame(minWidth: 200, maxWidth: .infinity)
+
+            }
+            .padding(.horizontal, 40.0)
    
             Button(action: {self.stringObjectVM.PredictStrings()}){
                 Text("Predict Strings")
@@ -72,6 +80,19 @@ struct ControlPanel: View {
                     let tmp = NSImage(imageUrlPath: panel.url!.path)
                     self.imageProcess.SetTargetNSImage(tmp)
                     self.showImage = true
+                }
+            }
+        }
+    }
+    
+    func ReloadStrTableBtnPressed()  {
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "csv" ) )
+                {
+                   //TODO: Reload function
                 }
             }
         }
