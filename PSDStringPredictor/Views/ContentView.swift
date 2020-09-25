@@ -20,9 +20,13 @@ struct ContentView: View {
     @ObservedObject var imageViewModel = imageProcessViewModel
     @ObservedObject var stringObjectVM = stringObjectViewModel
     
+    @State var showImage = false
     @State private var ShowPredictString = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
+    
+    //let control = Controller()
+
     //@ObservedObject var charFrameVM = charframe()
     //let stringObjectViewModel = StringObjectViewModel()
     
@@ -44,7 +48,7 @@ struct ContentView: View {
             //StringObjectListView(stringObject: StringObjectsData)
             VStack{
                 //Text(String(self.stringObjectViewModel.countNum))
-                ControlPanel()
+                ControlPanel(showImage: $showImage)
                     .padding(.top, 20.0)
                     .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 ImageProcessView(imageViewModel: imageViewModel)
@@ -64,7 +68,7 @@ struct ContentView: View {
                            
                 ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                     ZStack{
-                        ImageView(imageViewModel:imageViewModel)
+                        ImageView(imageViewModel:imageViewModel, showImage: $showImage)
                             //.gesture(drag)
                         LabelsOnImage(ShowPredictString: $ShowPredictString)
                         .blendMode(.difference)
@@ -77,21 +81,26 @@ struct ContentView: View {
                     
                 }
                 
-                
-                Toggle(isOn: $ShowPredictString) {
-                    Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
+                VStack{
+                    Toggle(isOn: $ShowPredictString) {
+                        Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
+                    }
+                    .frame(width: 1000, height: 950, alignment: .topTrailing)
+                    
+                    
                 }
-                .frame(width: 1000, height: 950, alignment: .topTrailing)
-                
                 
             
             }
             .frame(width: 1100)
         }
-
+        
 
     }
+    
+
 }
+
 
 
 //struct ContentView_Previews: PreviewProvider {
@@ -103,59 +112,6 @@ struct ContentView: View {
 //}
 
 
-struct People: Identifiable {
-    var id = UUID()
-    var name: String
-    var number: String
-}
-
-struct PeopleRow: View {
-    @State var isChecked: Bool = true
-    
-    var people: People
-    
-    var body: some View{
-        //Text("The street name is \(people.name)")
-        HStack{
-            
-            Button(action: {self.isChecked.toggle()}) {
-                if self.isChecked {
-                    Image("star-empty")
-                        .resizable()
-                        .renderingMode(.original)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 12, height: 12)
-                } else {
-                    Image("star-filled")
-                        .resizable()
-                        .frame(width: 12, height: 12)
-                }
-
-            }
-            .padding(.leading, 10)
-            
-
-            VStack(alignment: .leading){
-                Text(people.name)
-                Text(people.number)
-            }
-            
-        }
-    }
-}
-
-struct ListData: View {
-    
-    var body: some View{
-        let people1 = People(name: "Adam", number: "555-666")
-        let people2 = People(name: "Carry", number: "555-666")
-        let peoples = [people1, people2]
-
-        return List(peoples){
-            item in PeopleRow(people: item)
-        }
-    }
-}
 
 
 

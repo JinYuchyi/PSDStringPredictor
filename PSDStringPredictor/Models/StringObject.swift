@@ -205,7 +205,7 @@ struct StringObject : Identifiable{
         //data.targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
 
         if img.extent.width > 0{
-            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
+            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img, Method: VNRequestTextRecognitionLevel.accurate )
             DataStore.stringObjectList = stringObjects
         }
         else{

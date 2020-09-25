@@ -95,13 +95,13 @@ class OCR: ObservableObject{
         return (rects, chars)
     }
     
-    func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObject]{
+    func CreateAllStringObjects(FromCIImage ciImage: CIImage, Method method: VNRequestTextRecognitionLevel) -> [StringObject]{
         var strobjs : [StringObject] = []
         
         //Get Observations
         let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
-        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
+        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         TextRecognitionRequest.usesLanguageCorrection = true
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
         //TextRecognitionRequest.customWords = ["Photos"]
@@ -110,16 +110,24 @@ class OCR: ObservableObject{
         } catch {
             print(error)
         }
-        guard let results = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
+        guard let results_accurate = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
+        
+        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
+        do {
+            try requestHandler.perform([TextRecognitionRequest])
+        } catch {
+            print(error)
+        }
+        guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
         //let stringsResults = GetObservations(fromImage: ciImage, withRecognitionLevel: VNRequestTextRecognitionLevel.fast, usesLanguageCorrection: true)
-        let stringsRects = GetRectsFromObservations(results, Int((ciImage.extent.width)), Int((ciImage.extent.height)))
-        let strs = GetStringArrayFromObservations(results)
+        let stringsRects = GetRectsFromObservations(results_fast, Int((ciImage.extent.width)), Int((ciImage.extent.height)))
+        let strs = GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
-            let (charRects, chars) = GetCharsInfoFromObservation(results[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
+            let (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
             //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             
-            let newStrObj = StringObject(strs[i], stringsRects[i], results[i], chars, charRects)
+            let newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects)
             strobjs.append(newStrObj)
             
             //Save String image as png

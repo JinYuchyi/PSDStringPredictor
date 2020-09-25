@@ -58,6 +58,7 @@ class ImageProcess: ObservableObject{
     
     func SetTargetNSImage(_ img: NSImage){
         DataStore.targetNSImage = img
+        DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
         if(DataStore.targetImageProcessed.extent.width > 0){}
         else{
             DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
@@ -106,7 +107,7 @@ class ImageProcess: ObservableObject{
     
 }
 
-func LoadNSImage(imageUrlPath: String) -> NSImage {
+func NSImage(imageUrlPath: String) -> NSImage {
     var  newImg :NSImage = NSImage.init()
     if FileManager.default.fileExists(atPath: imageUrlPath) {
         let url = URL.init(fileURLWithPath: imageUrlPath)

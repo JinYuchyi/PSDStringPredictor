@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
 		3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */; };
+		3F308027251DD96600550DEA /* PixelProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308026251DD96600550DEA /* PixelProcess.swift */; };
+		3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308028251DFA3500550DEA /* NSColorExtension.swift */; };
 		3F440FFD250C72AD00EDAF3F /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F440FFC250C72AD00EDAF3F /* default_image.png */; };
 		3F4CB5A5250A23E200E41082 /* ImageProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CB5A4250A23E200E41082 /* ImageProcess.swift */; };
 		3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CB5A6250A324300E41082 /* CIImageExtension.swift */; };
@@ -62,6 +64,8 @@
 /* Begin PBXFileReference section */
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
 		3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TextWeightTabularRegressor.mlmodel; sourceTree = "<group>"; };
+		3F308026251DD96600550DEA /* PixelProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelProcess.swift; sourceTree = "<group>"; };
+		3F308028251DFA3500550DEA /* NSColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColorExtension.swift; sourceTree = "<group>"; };
 		3F440FFC250C72AD00EDAF3F /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_image.png; path = ../../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png; sourceTree = DEVELOPER_DIR; };
 		3F4CB5A4250A23E200E41082 /* ImageProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcess.swift; sourceTree = "<group>"; };
 		3F4CB5A6250A324300E41082 /* CIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageExtension.swift; sourceTree = "<group>"; };
@@ -229,17 +233,9 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
-		3FAE5A96251B3DC700DFB4A3 /* Filter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Filter;
-			sourceTree = "<group>";
-		};
 		3FBA3A7A2510AFAB00F041DC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3FAE5A96251B3DC700DFB4A3 /* Filter */,
 				3F5C30472519E65000A1FF45 /* String */,
 				3FEFE91C25072F5600AEF1C8 /* ImageProcess */,
 				3FAAB49325148AFB00CB89B1 /* Debug */,
@@ -313,9 +309,11 @@
 			children = (
 				3F4CB5A6250A324300E41082 /* CIImageExtension.swift */,
 				3F4CB5A8250A327E00E41082 /* NSImageExtension.swift */,
+				3F308028251DFA3500550DEA /* NSColorExtension.swift */,
 				3F8460A1251057FF00788176 /* CompareImage.swift */,
 				3FD9957E2518B48D007E3D05 /* ImageUtil.swift */,
 				3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */,
+				3F308026251DD96600550DEA /* PixelProcess.swift */,
 			);
 			path = ImageProcess;
 			sourceTree = "<group>";
@@ -442,6 +440,7 @@
 				3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */,
 				3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */,
 				3F8460A2251057FF00788176 /* CompareImage.swift in Sources */,
+				3F308027251DD96600550DEA /* PixelProcess.swift in Sources */,
 				3F56E3E9250606C000E64337 /* StringObjectListView.swift in Sources */,
 				3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
@@ -449,6 +448,7 @@
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
 				3FF1D20925173C320081D57C /* DBModel.swift in Sources */,
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
+				3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */,
 				3FAAB4972514BD6600CB89B1 /* Train.swift in Sources */,
 				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
 				3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */,
