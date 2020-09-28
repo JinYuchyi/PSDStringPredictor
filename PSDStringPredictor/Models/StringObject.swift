@@ -27,8 +27,6 @@ struct StringObject : Identifiable{
     var id: UUID = UUID()
     var content: String
     var position: [CGFloat]
-    var width: CGFloat
-    var height: CGFloat
     var tracking: CGFloat
     var fontSize: CGFloat
     var stringRect: CGRect
@@ -45,8 +43,6 @@ struct StringObject : Identifiable{
         //id = UUID()
         content = ""
         position = []
-        width = 0
-        height = 0
         tracking = 0
         fontSize = 0
         stringRect = CGRect()
@@ -60,8 +56,6 @@ struct StringObject : Identifiable{
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect]){
         self.stringRect = stringRect
         self.content = content
-        self.width = stringRect.width
-        self.height = stringRect.height
         self.fontSize = 0.0
         self.position = [0,0]
         self.observation = observation
@@ -124,12 +118,12 @@ struct StringObject : Identifiable{
         }
     }
     
-    func ProcessStringRect(FromRect rect: CGRect) -> CGRect{
+    mutating func DeleteDescentForRect() {
         var h: CGFloat = 0
         var n: CGFloat = 0
         
         for index in 0..<charArray.count{
-            if charArray[index].isUppercase {
+            if (charArray[index].isUppercase) {
                 h += charRects[index].height
                 n += 1
             }
@@ -139,11 +133,11 @@ struct StringObject : Identifiable{
             h = h / n
         }
         else{
-            h = height
+            h = stringRect.height
         }
-        
-        
-        return CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.width, height: h)
+        stringRect = CGRect(x: stringRect.minX, y: stringRect.minY, width: stringRect.width, height: h)
+    
+        //return CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.width, height: h)
     }
     
     func CalcWeightForSingleChar(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
@@ -173,8 +167,7 @@ struct StringObject : Identifiable{
     }
     
     func CalcBestWeightForString()-> Float{
-        
-        
+
         var weightArray:[Int64] = []
         //Find weight for each character, and guess the best choice for the string's weight
         for (index, char) in self.charArray.enumerated(){

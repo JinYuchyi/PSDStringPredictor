@@ -58,7 +58,7 @@ class StringObjectViewModel: ObservableObject{
     func FetchStringLabelList(){
         StringLabelListData.removeAll()
         for element in DataStore.stringObjectList{
-            let tmpElement = StringLabelObject(position: element.position, height: element.height, width: element.width, fontsize: element.fontSize, tracking: element.tracking, content: element.content, color: element.color)
+            let tmpElement = StringLabelObject(position: element.position, height: element.stringRect.height, width: element.stringRect.width, fontsize: element.fontSize, tracking: element.tracking, content: element.content, color: element.color)
             StringLabelListData.append(tmpElement)
         }
     }

@@ -19,6 +19,7 @@
 		3F4D13E625020F22008F846B /* StringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13E525020F22008F846B /* StringLabel.swift */; };
 		3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F4D13E825021B74008F846B /* StringObjectsData.json */; };
 		3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13EA2502220D008F846B /* StringLabelList.swift */; };
+		3F5218182521E89200646F91 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5218172521E89200646F91 /* TestView.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
 		3F56E3E9250606C000E64337 /* StringObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E8250606C000E64337 /* StringObjectListView.swift */; };
@@ -74,6 +75,7 @@
 		3F4D13E525020F22008F846B /* StringLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabel.swift; sourceTree = "<group>"; };
 		3F4D13E825021B74008F846B /* StringObjectsData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StringObjectsData.json; sourceTree = "<group>"; };
 		3F4D13EA2502220D008F846B /* StringLabelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabelList.swift; sourceTree = "<group>"; };
+		3F5218172521E89200646F91 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
 		3F56E3E8250606C000E64337 /* StringObjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectListView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				3F56E3EB25062A9D00E64337 /* StringObjectRow.swift */,
 				3F56E3E8250606C000E64337 /* StringObjectListView.swift */,
+				3F5218172521E89200646F91 /* TestView.swift */,
 				3F4D13E32501FB9E008F846B /* ImageView.swift */,
 				3F4D13E525020F22008F846B /* StringLabel.swift */,
 				3F4D13EA2502220D008F846B /* StringLabelList.swift */,
@@ -462,6 +465,7 @@
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
+				3F5218182521E89200646F91 /* TestView.swift in Sources */,
 				3FF1D20925173C320081D57C /* DB.swift in Sources */,
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
 				3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */,
