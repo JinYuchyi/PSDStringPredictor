@@ -74,6 +74,7 @@ struct StringObject : Identifiable{
         self.fontSize = CGFloat(CalcBestWeightForString())
         self.tracking = CalcTracking()
         self.color = CalcColor()
+        //self.stringRect = ProcessStringRect(FromRect: stringRect)
         //data.stringObjectIndex = data.stringObjectIndex + 1
         //self.id = (data.stringObjectIndex)
 
@@ -85,7 +86,7 @@ struct StringObject : Identifiable{
         var trackingList: [Double] = []
         for i in 0...charArray.count-2 {
             if (charArray[i].isLowercase && charArray[i+1].isLowercase){
-                var dist = abs(charRects[i].midX - charRects[i+1].midX)
+                var dist = abs(charRects[i].minX - charRects[i+1].minX)
                 let t = PredictFontTracking(str1: String(charArray[i]), str2: String(charArray[i+1]), fontsize: Double(fontSize), distance: Double(dist))
                 print("Tracking of \(String(charArray[i])) and \(String(charArray[i+1])) is \(t), weight is \(fontSize)")
 
@@ -118,8 +119,31 @@ struct StringObject : Identifiable{
             return [0,0]
         }
         else{
+            //return [stringRect.minX, stringRect.minY]
             return [stringRect.minX, stringRect.minY]
         }
+    }
+    
+    func ProcessStringRect(FromRect rect: CGRect) -> CGRect{
+        var h: CGFloat = 0
+        var n: CGFloat = 0
+        
+        for index in 0..<charArray.count{
+            if charArray[index].isUppercase {
+                h += charRects[index].height
+                n += 1
+            }
+        }
+        
+        if (n != 0){
+            h = h / n
+        }
+        else{
+            h = height
+        }
+        
+        
+        return CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.width, height: h)
     }
     
     func CalcWeightForSingleChar(_ char: String, _ width: Int64, _ height: Int64) -> Int64{

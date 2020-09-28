@@ -74,9 +74,6 @@ struct ContentView: View {
                         .blendMode(.difference)
 
                         CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
-
-
-
                     }
                     
                 }
