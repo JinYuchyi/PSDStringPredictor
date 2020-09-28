@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct StringObjectListView: View {
-    //@ObservedObject var stringObjectList: StringObjectList
+    @ObservedObject var stringObjectList = stringObjectViewModel
     //let listData = stringObjectList.stringObjectListData
     var body: some View {
-        List(DataStore.stringObjectList, id: \.id){ item in
+        List(stringObjectList.stringObjectListData, id: \.id){ item in
             
             //init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect])
             StringObjectRow(stringObject: item)

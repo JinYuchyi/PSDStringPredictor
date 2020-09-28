@@ -130,6 +130,7 @@ class OCR: ObservableObject{
             let newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects)
             strobjs.append(newStrObj)
             
+
             //Save String image as png
 //            let tmpImg = ciImage.cropped(to: stringsRects[i])
 //            let url = URL(fileURLWithPath: "Users/ipdesign/Downloads/Dataset\(newStrObj.content).png")

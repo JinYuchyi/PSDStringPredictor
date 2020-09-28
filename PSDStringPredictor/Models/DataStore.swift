@@ -16,12 +16,14 @@ class DataStore{
     static var stringObjectList: [StringObject] = []
     //DB
     static var dbConnection: Connection!
+    static var csvPath: String = ""
     //ImageProcess
     static var targetNSImage: NSImage  = NSImage.init()
     static var targetImageProcessed: CIImage  = CIImage.init()
     //UI
     static var charFrameIndex = 0
     static var charFrameList: [CharFrame] = []
+    
 
     static var logListData = [
         LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),

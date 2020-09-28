@@ -19,6 +19,7 @@ struct ControlPanel: View {
     var imageProcess: ImageProcess  = imageProcessViewModel
     var imgUtil: ImageUtil = ImageUtil()
     var pixelProcess = PixelProcess()
+    var db = DB()
     //@ObservedObject var data: DataStore
     @Binding var showImage: Bool
 
@@ -92,7 +93,8 @@ struct ControlPanel: View {
             if result == .OK{
                 if ((panel.url?.pathExtension == "csv" ) )
                 {
-                   //TODO: Reload function
+                    DataStore.csvPath = panel.url!.path
+                    self.db.ReFillDBFromCSV()
                 }
             }
         }

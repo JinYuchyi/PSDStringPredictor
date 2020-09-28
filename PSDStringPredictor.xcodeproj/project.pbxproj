@@ -58,7 +58,7 @@
 		3FEFE91A25072A0000AEF1C8 /* CharacterData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FEFE91925072A0000AEF1C8 /* CharacterData.csv */; };
 		3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91D25072F8300AEF1C8 /* OCR.swift */; };
 		3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9232507900500AEF1C8 /* LogListData.swift */; };
-		3FF1D20925173C320081D57C /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF1D20825173C320081D57C /* DBModel.swift */; };
+		3FF1D20925173C320081D57C /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF1D20825173C320081D57C /* DB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,7 +115,7 @@
 		3FEFE91925072A0000AEF1C8 /* CharacterData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CharacterData.csv; sourceTree = "<group>"; };
 		3FEFE91D25072F8300AEF1C8 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
 		3FEFE9232507900500AEF1C8 /* LogListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListData.swift; sourceTree = "<group>"; };
-		3FF1D20825173C320081D57C /* DBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModel.swift; sourceTree = "<group>"; };
+		3FF1D20825173C320081D57C /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +171,6 @@
 				3FAAB48D25134FE800CB89B1 /* CharFrameData.swift */,
 				3FA49B382508B0D40093EBD2 /* LogObject.swift */,
 				3F56E3E62506042D00E64337 /* StringObject.swift */,
-				3FF1D20825173C320081D57C /* DBModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -194,6 +193,14 @@
 				3FAAB485251341A600CB89B1 /* CharacterFrameListView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		3F5892A7251F7683001CAF6E /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				3FF1D20825173C320081D57C /* DB.swift */,
+			);
+			path = DB;
 			sourceTree = "<group>";
 		};
 		3F5C30472519E65000A1FF45 /* String */ = {
@@ -236,6 +243,7 @@
 		3FBA3A7A2510AFAB00F041DC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3F5892A7251F7683001CAF6E /* DB */,
 				3F5C30472519E65000A1FF45 /* String */,
 				3FEFE91C25072F5600AEF1C8 /* ImageProcess */,
 				3FAAB49325148AFB00CB89B1 /* Debug */,
@@ -446,7 +454,7 @@
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
-				3FF1D20925173C320081D57C /* DBModel.swift in Sources */,
+				3FF1D20925173C320081D57C /* DB.swift in Sources */,
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
 				3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */,
 				3FAAB4972514BD6600CB89B1 /* Train.swift in Sources */,

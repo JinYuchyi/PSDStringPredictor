@@ -14,12 +14,12 @@ func PredictFontSize(character: String, width: Double, height: Double) -> (CGFlo
     var output: CGFloat = 0
     do{
         let model = TextWeightTabularRegressor()
-        guard let predict = try? model.prediction(character: character, width: width, height: height)
+        guard let predict = try? model.prediction(char_: character, width: width, height: height)
             else {
             fatalError("Unexpected runtime error.")
         }
         
-        output = CGFloat(predict.weight)
+        output = CGFloat(predict.fontsize)
         
         //print("ML predict: \(output)")
     }
@@ -27,6 +27,7 @@ func PredictFontSize(character: String, width: Double, height: Double) -> (CGFlo
     {
         
     }
+    
     return output
 
 }

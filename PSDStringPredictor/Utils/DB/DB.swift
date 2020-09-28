@@ -159,7 +159,7 @@ struct DB{
         func AddStrObjArrayToDB() -> Int{
             var index:Int = 0
             let readText = ReadTextFromFile()
-            let str = readText.ReadAllContentAsString(FromFile: csvPath)
+            let str = readText.ReadAllContentAsString(FromFile: DataStore.csvPath)
             let objArray = readText.ConvertToObjectArray(FromString: str)
             for obj in objArray{
                 TableCharacterInsertItem(char:obj.char, width:obj.width, height:obj.height, weight: obj.weight)
@@ -192,6 +192,7 @@ struct DB{
                 print("DB equals null.")
                 return 0
             }
+            
                     
             let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width && TABLE_CHARACTER_HEIGHT == height).select(TABLE_CHARACTER_CHAR,TABLE_CHARACTER_WIDTH,TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
             do{
@@ -207,6 +208,7 @@ struct DB{
         }
         
         func ReFillDBFromCSV(){
+            TableCharacterCreate()
             RemoveAll()
             print("Refilling data...")
             var num = AddStrObjArrayToDB()

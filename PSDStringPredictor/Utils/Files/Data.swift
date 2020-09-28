@@ -56,15 +56,17 @@ class ReadTextFromFile{
     func ConvertToObjectArray(FromString str: String) -> [StrObj]{
         var objArray: [StrObj] = []
         let objStrArray = str.components(separatedBy: "\n")
-        //print(objStrArray[1])
-        for index in 0..<objStrArray.count{
+        for index in 1..<objStrArray.count{
+            //print("index: \(index)")
             let itemArray = objStrArray[index].components(separatedBy: ",")
-            let newobj = StrObj(char: itemArray[0], width: Int64(itemArray[1])!, height: Int64(itemArray[2])!, weight: Int64(itemArray[3])!)
+            let a = itemArray[0]
+            let b = Int64(itemArray[1])!
+            let c = Int64(itemArray[2])!
+            let d = Int64(itemArray[3].replacingOccurrences(of: "\r", with: ""))!
+            let newobj = StrObj(char: a, width: b, height: c, weight: d)
             objArray.append(newobj)
-            //Test
             
         }
-        //In here, the order is correct
         return objArray
     }
     

@@ -30,6 +30,23 @@ class PixelProcess{
         return colors
     }
     
+    func LoadRangeColors(FromImage img: CGImage, Index index : Int, RangeMin min: Int, RangeMax max: Int, IsForRow forRow: Bool) -> [NSColor] {
+        var colors: [NSColor] = []
+        if (forRow == true){
+            for w in min ..< max {
+                let tmp = colorAt(x: w, y: index, img: img)
+                colors.append(tmp)
+            }
+        }
+        else{
+            for h in min ..< max {
+                let tmp = colorAt(x: index, y: h, img: img)
+                colors.append(tmp)
+            }
+        }
+        return colors
+    }
+    
     func HasDifferentColor(ColorArray colors: [NSColor], Threshhold threshold: CGFloat) -> Bool {
         var minBrightness: CGFloat = 1
         var maxBrightness: CGFloat = 0
@@ -110,6 +127,27 @@ class PixelProcess{
         return context!
     }
     
+//    func FixBlankEdge(FromImage image: CGImage, OriginalRect rect: CGRect ) -> CGRect {
+//        let w = image.width
+//        let h = image.height
+//        var minX = rect.minX
+//        var minY = rect.minY
+//        var maxX = rect.maxX
+//        var maxY = rect.maxY
+//        
+//        //Calc the top edge
+//        let colorList = self.LoadRangeColors(FromImage: image, Index: 0, RangeMin: Int(rect.minX), RangeMax: Int(rect.maxX), IsForRow: true)
+//        let hasDiff = HasDifferentColor(ColorArray: colorList, Threshhold: 0.2)
+//
+//        if hasDiff == true {
+//            let rect = CGRect(x: Int(rect.origin.x), y: Int(rect.origin.y), width: Int(rect.width), height: Int(rect.height)+1)
+//            FixBlankEdge(FromImage: image, OriginalRect: rect)
+//        }
+//        else{
+//            
+//        }
+//
+//    }
     
 
 }

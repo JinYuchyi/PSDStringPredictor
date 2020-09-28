@@ -26,20 +26,41 @@ struct StringLabel: View {
     var body: some View {
         ZStack{
             Rectangle()
+            .fill(Color.red.opacity(1))
+            .frame(width: 10, height: 10)
+                .position(x: stringLabel.position[0], y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] )
+            
+            Rectangle()
                 //.fill(Color.red.opacity(0.5))
                 .stroke(Color.red, lineWidth: 2)
                 .frame(width: stringLabel.width, height: stringLabel.height)
+            .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
+
             
             if ShowPredictString == true {
-                Text(stringLabel.content)
+                if stringLabel.fontsize < 20 {
+                    Text(stringLabel.content)
+                        .foregroundColor(stringLabel.color)
+                        .font(.custom("SF Pro Text", size: stringLabel.fontsize))
+                        .tracking(stringLabel.tracking)
+                    .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
+
+                }
+                else{
+                    Text(stringLabel.content)
                     .foregroundColor(stringLabel.color)
-                    .font(.custom("SF Pro Text", size: stringLabel.fontsize))
+                    .font(.custom("SF Pro Display", size: stringLabel.fontsize))
                     .tracking(stringLabel.tracking)
+                    .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
+
+                }
+                
             }
                
         }
-        .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
+        //.position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
 
+        
         
     }
 }

@@ -156,7 +156,7 @@ struct StringObject : Identifiable{
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
                 var tempweight = CalcWeightForSingleChar(String(char), Int64(charRects[index].width), Int64(charRects[index].height))
-                //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
+                print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
                 if (tempweight != 0){
                     weightArray.append(tempweight)
                 }
