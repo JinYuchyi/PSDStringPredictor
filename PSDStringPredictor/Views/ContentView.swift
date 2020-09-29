@@ -17,6 +17,7 @@ struct ContentView: View {
 //
 //    @EnvironmentObject var data: DataStore
     let data = DataStore()
+    let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
     @ObservedObject var stringObjectVM = stringObjectViewModel
     
@@ -24,7 +25,6 @@ struct ContentView: View {
     @State private var ShowPredictString = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
-    
     //let control = Controller()
 
     //@ObservedObject var charFrameVM = charframe()
@@ -74,6 +74,17 @@ struct ContentView: View {
                         .blendMode(.difference)
 
                         CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
+                        
+                        Text("Flooy fird")
+                            .foregroundColor(Color.red)
+                        .font(.custom("SF Pro Display", size: 60))
+                            
+                            .tracking(1.0)
+                            .position(x: 221.85 , y:300 + (font.GetFontInfo(Font: "SF Pro Display", Content: "Flooy fird", Size: 60).capHeight + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooy fird", Size: 60).descent) / 2)
+
+                            .alignmentGuide(.leading, computeValue: {d in d[.leading]})
+                        
+                        
                     }
                     
                 }

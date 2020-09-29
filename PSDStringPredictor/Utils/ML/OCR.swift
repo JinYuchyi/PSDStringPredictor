@@ -128,11 +128,14 @@ class OCR: ObservableObject{
             //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects)
+            newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
             
             
         }
         return strobjs
     }
+    
+
     
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
 		3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */; };
 		3F308027251DD96600550DEA /* PixelProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308026251DD96600550DEA /* PixelProcess.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
 		3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TextWeightTabularRegressor.mlmodel; sourceTree = "<group>"; };
 		3F308026251DD96600550DEA /* PixelProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelProcess.swift; sourceTree = "<group>"; };
@@ -132,6 +134,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F1A629625230CED006DC9F9 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				3F1A629725230D0F006DC9F9 /* Font.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		3F25BC63250DC44900E105A6 /* ML */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +267,7 @@
 		3FBA3A7A2510AFAB00F041DC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3F1A629625230CED006DC9F9 /* Font */,
 				3FAEC5CA25219A90008ECA23 /* Extensions */,
 				3F5892A7251F7683001CAF6E /* DB */,
 				3F5C30472519E65000A1FF45 /* String */,
@@ -473,6 +484,7 @@
 				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
 				3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */,
 				3FAAB486251341A600CB89B1 /* CharacterFrameListView.swift in Sources */,
+				3F1A629825230D0F006DC9F9 /* Font.swift in Sources */,
 				3F7E6AA625175CE20082D3FF /* DBViewModel.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,

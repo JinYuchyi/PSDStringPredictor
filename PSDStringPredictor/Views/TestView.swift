@@ -16,7 +16,7 @@ struct TestView: View {
         .stroke(Color.red, lineWidth: 2)
         .frame(width: 100, height: 50)
             
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Hello, Wo")
             .frame(width: 100, alignment: .leading)
             
         }

@@ -21,23 +21,29 @@ struct StringLabel: View {
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @Binding var ShowPredictString: Bool
     
-    
     var stringLabel: StringLabelObject
     
 
+    func OnTap(){
+        print()
+    }
     
     var body: some View {
         ZStack {
             
             //Rect of original position
-//            Rectangle()
-//            .fill(Color.red.opacity(1))
-//            .frame(width: 10, height: 10)
-            
+            Rectangle()
+            .fill(Color.red.opacity(1))
+            .frame(width: 10, height: 10)
+            .position(x: stringLabel.position[0] , y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] )
+                .onTapGesture {
+                    print("\(self.imageViewModel.GetTargetImageSize()[1] - self.stringLabel.position[1] )")
+            }
+
             Rectangle()
             .stroke(Color.red, lineWidth: 2)
             .frame(width: stringLabel.width, height: stringLabel.height)
-            //.position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] )
+            .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
 
             
             if ShowPredictString == true {
@@ -47,10 +53,7 @@ struct StringLabel: View {
                     .foregroundColor(stringLabel.color)
                     .font(.custom("SF Pro Text", size: stringLabel.fontsize))
                     .tracking(stringLabel.tracking)
-                    //.frame(width: stringLabel.width, height: stringLabel.height, alignment: .topLeading)
-
-                    //.position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
-                    //.position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] )
+                    .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
 
                 }
                 else{
@@ -58,7 +61,7 @@ struct StringLabel: View {
                     .foregroundColor(stringLabel.color)
                     .font(.custom("SF Pro Display", size: stringLabel.fontsize))
                     .tracking(stringLabel.tracking)
-                    //.frame(width: stringLabel.width, height: stringLabel.height, alignment: .topLeading)
+                    .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
 
                 }
                 
@@ -66,7 +69,6 @@ struct StringLabel: View {
 
                
         }
-        .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
 
         //.position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
 

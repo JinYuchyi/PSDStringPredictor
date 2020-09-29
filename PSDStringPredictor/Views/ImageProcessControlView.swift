@@ -30,6 +30,9 @@ struct ImageProcessView: View {
                 in: 0...10
             
             )
+
+            
+            
         }
     }
 }

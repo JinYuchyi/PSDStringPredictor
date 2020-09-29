@@ -37,6 +37,7 @@ struct StringObject : Identifiable{
     
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
+    let fontUtils = FontUtils()
     //var stringObjectList: [StringObject]
     
     init(){
@@ -119,25 +120,20 @@ struct StringObject : Identifiable{
     }
     
     mutating func DeleteDescentForRect() {
-        var h: CGFloat = 0
-        var n: CGFloat = 0
-        
-        for index in 0..<charArray.count{
-            if (charArray[index].isUppercase) {
-                h += charRects[index].height
-                n += 1
-            }
-        }
-        
-        if (n != 0){
-            h = h / n
+
+        var fontName: String = ""
+        if (fontSize >= 20) {
+            fontName = "SFProDisplay-Regular"
         }
         else{
-            h = stringRect.height
+            fontName = "SFProText-Regular"
         }
-        stringRect = CGRect(x: stringRect.minX, y: stringRect.minY, width: stringRect.width, height: h)
-    
-        //return CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.width, height: h)
+        
+        let font = fontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize)
+
+        self.position = [self.position[0], self.position[1]  ]
+        stringRect = CGRect(x: stringRect.minX, y: stringRect.minY, width: stringRect.width, height: stringRect.height)
+
     }
     
     func CalcWeightForSingleChar(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
