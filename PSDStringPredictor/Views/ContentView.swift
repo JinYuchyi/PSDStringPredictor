@@ -25,7 +25,9 @@ struct ContentView: View {
     @State private var ShowPredictString = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
-    //let control = Controller()
+    
+//    @state var fontPosX = 50 + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width
+//    @state var fontPosY = 100 + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height
 
     //@ObservedObject var charFrameVM = charframe()
     //let stringObjectViewModel = StringObjectViewModel()
@@ -75,14 +77,22 @@ struct ContentView: View {
 
                         CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
                         
+                        Rectangle()
+                            .fill(Color.red.opacity(0.2))
+                        .frame(width: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width, height: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height)
+                        .position(x: 50 , y: 100 )
+                            .onTapGesture {
+                                //print("\(self.imageViewModel.GetTargetImageSize()[1] - self.stringLabel.position[1] )")
+                        }
+                        
                         Text("Flooy fird")
                             .foregroundColor(Color.red)
                         .font(.custom("SF Pro Display", size: 60))
-                            
                             .tracking(1.0)
-                            .position(x: 221.85 , y:300 + (font.GetFontInfo(Font: "SF Pro Display", Content: "Flooy fird", Size: 60).capHeight + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooy fird", Size: 60).descent) / 2)
+                            .position(x: 50, y: 100)
+                        
 
-                            .alignmentGuide(.leading, computeValue: {d in d[.leading]})
+                            //.alignmentGuide(.leading, computeValue: {d in d[.leading]})
                         
                         
                     }

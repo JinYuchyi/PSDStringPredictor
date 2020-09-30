@@ -119,8 +119,9 @@ struct StringObject : Identifiable{
         }
     }
     
-    mutating func DeleteDescentForRect() {
-
+    mutating func DeleteDescentForRect()  {
+        var heightLetterEvenHeight: CGFloat = 0
+        var lowerLetterEvenHeight: CGFloat = 0
         var fontName: String = ""
         if (fontSize >= 20) {
             fontName = "SFProDisplay-Regular"
@@ -129,10 +130,46 @@ struct StringObject : Identifiable{
             fontName = "SFProText-Regular"
         }
         
-        let font = fontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize)
+//        let font = fontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize)
+//
+//        self.position = [self.position[0], self.position[1]  ]
+//        stringRect = CGRect(x: stringRect.minX, y: stringRect.minY, width: stringRect.width, height: stringRect.height)
+        var n: CGFloat = 0
+        var n1: CGFloat = 0
+        for (index, c) in charArray.enumerated() {
+            if (c.isLowercase && c.isLetter){
+                if (
+                    c == "p" ||
+                    c == "q" ||
+                    c == "g" ||
+                    c == "y" ||
+                    c == "j"
+                    ) {
+                    heightLetterEvenHeight += charRects[index].height
+                    n += 1
+                }
+                else{
+                    lowerLetterEvenHeight += charRects[index].height
+                    n1 += 1
+                }
+            }
+        }
+        
+        //Calc the descent value
+        var descent: CGFloat = 0
+        if (n != 0){
+            heightLetterEvenHeight = heightLetterEvenHeight / n
+        }
+        if (n1 != 0){
+            lowerLetterEvenHeight = lowerLetterEvenHeight / n1
+        }
+        if (heightLetterEvenHeight == 0){
+            descent = 0
+        }
+        descent = heightLetterEvenHeight - lowerLetterEvenHeight
 
-        self.position = [self.position[0], self.position[1]  ]
-        stringRect = CGRect(x: stringRect.minX, y: stringRect.minY, width: stringRect.width, height: stringRect.height)
+        stringRect = CGRect(x: stringRect.origin.x, y: stringRect.origin.y + descent, width: stringRect.width, height: stringRect.height - descent)
+        
 
     }
     
