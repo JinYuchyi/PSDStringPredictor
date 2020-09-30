@@ -14,10 +14,13 @@ struct StringObjectRow: View {
        var body: some View {
            HStack{
                Text(stringObject.content)
-               Spacer()
+                .frame(width: 100, height: 30, alignment: .leading)
+               //Spacer()
                Text((stringObject.fontSize).description)
-               Spacer()
-            Text((stringObject.position[0]).rounded(.toNearestOrAwayFromZero).description + ", "+(stringObject.position[1]).rounded(.toNearestOrAwayFromZero).description)
+                .frame(width: 100, height: 30, alignment: .leading)
+               //Spacer()
+            Text((stringObject.confidence).description)
+                 .frame(width: 50, height: 30, alignment: .leading)
            }
        }
 }

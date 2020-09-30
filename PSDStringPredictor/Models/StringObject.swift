@@ -26,7 +26,7 @@ struct StringObject : Identifiable{
     
     var id: UUID = UUID()
     var content: String
-    var position: [CGFloat]
+    //var position: [CGFloat]
     var tracking: CGFloat
     var fontSize: CGFloat
     var stringRect: CGRect
@@ -34,6 +34,7 @@ struct StringObject : Identifiable{
     var color: Color
     var charArray: [Character]
     var charRects: [CGRect]
+    var confidence: CGFloat
     
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
@@ -43,7 +44,7 @@ struct StringObject : Identifiable{
     init(){
         //id = UUID()
         content = ""
-        position = []
+        //position = []
         tracking = 0
         fontSize = 0
         stringRect = CGRect()
@@ -51,21 +52,23 @@ struct StringObject : Identifiable{
         color = Color.black
         charArray = []
         charRects = []
+        confidence = 0
         self.color = CalcColor()
     }
     
-    init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect]){
+    init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], _ confidence: CGFloat){
         self.stringRect = stringRect
         self.content = content
         self.fontSize = 0.0
-        self.position = [0,0]
+        //self.position = [0,0]
         self.observation = observation
         self.charArray = charArray
         self.charRects = charRacts
         self.tracking = 10
         self.color = Color.black
+        self.confidence = confidence
         //self.color = CalcColor()
-        self.position = CalcPosition()
+        //self.position = CalcPosition()
         self.fontSize = CGFloat(CalcBestWeightForString())
         self.tracking = CalcTracking()
         self.color = CalcColor()
@@ -120,7 +123,7 @@ struct StringObject : Identifiable{
     }
     
     mutating func DeleteDescentForRect()  {
-        var heightLetterEvenHeight: CGFloat = 0
+        var highLetterEvenHeight: CGFloat = 0
         var lowerLetterEvenHeight: CGFloat = 0
         var fontName: String = ""
         if (fontSize >= 20) {
@@ -145,7 +148,7 @@ struct StringObject : Identifiable{
                     c == "y" ||
                     c == "j"
                     ) {
-                    heightLetterEvenHeight += charRects[index].height
+                    highLetterEvenHeight += charRects[index].height
                     n += 1
                 }
                 else{
@@ -158,15 +161,17 @@ struct StringObject : Identifiable{
         //Calc the descent value
         var descent: CGFloat = 0
         if (n != 0){
-            heightLetterEvenHeight = heightLetterEvenHeight / n
+            highLetterEvenHeight = highLetterEvenHeight / n
         }
         if (n1 != 0){
             lowerLetterEvenHeight = lowerLetterEvenHeight / n1
         }
-        if (heightLetterEvenHeight == 0){
+        if (highLetterEvenHeight == 0){
             descent = 0
         }
-        descent = heightLetterEvenHeight - lowerLetterEvenHeight
+        else{
+            descent = highLetterEvenHeight - lowerLetterEvenHeight
+        }
 
         stringRect = CGRect(x: stringRect.origin.x, y: stringRect.origin.y + descent, width: stringRect.width, height: stringRect.height - descent)
         
