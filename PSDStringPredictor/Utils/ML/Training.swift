@@ -65,4 +65,11 @@ class MLTraining {
         //Save Content
         //SaveStringToFile(str: contentStr, path: filePath)
     }
+    
+    func ParseFileName(FileName nameStr: String) -> (char: String, size: Int, tracking: Int ){
+        let strGrp = nameStr.components(separatedBy: "~")
+        if strGrp.count == 3 {
+            return (strGrp[0], Int(strGrp[1]), Int(strGrp[2]))
+        }
+    }
 }
