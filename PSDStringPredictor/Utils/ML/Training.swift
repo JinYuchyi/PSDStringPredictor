@@ -25,16 +25,16 @@ class MLTraining {
             let result = panel.runModal()
             if result == .OK{
                 //if ((?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
-                
-                //let allFilePath: [String] = getAllFilePath(panel.url!.absoluteString)!
-                //print("We have \(allFilePath.count) datasets.")
+                let allFilePath = try? FileManager.default.contentsOfDirectory(at: panel.url!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                 
                 for i in 0..<10{
-                    print(panel.urls[i].absoluteString)
-                    let nsImg = NSImage(byReferencing: panel.urls[i])
+                    print(allFilePath![i].absoluteString)
+                    let url = try?URL(resolvingAliasFileAt: allFilePath![i])
+                    let nsImg = NSImage(byReferencing: url!)
                     let ciImg = nsImg.ToCIImage()!
-                    let lines = self.ocr.CreateAllStringObjects(FromCIImage: ciImg)
-                    print("We have \(lines.count) linse.")
+                    let line = self.ocr.CreateAllStringObjects(FromCIImage: ciImg)
+                    print(line[0].charArray.count)
+                   //print("We have \(lines.count) lines.")
                 }
             }
             
@@ -69,7 +69,10 @@ class MLTraining {
     func ParseFileName(FileName nameStr: String) -> (char: String, size: Int, tracking: Int ){
         let strGrp = nameStr.components(separatedBy: "~")
         if strGrp.count == 3 {
-            return (strGrp[0], Int(strGrp[1]), Int(strGrp[2]))
+            return (strGrp[0], Int(strGrp[1])!, Int(strGrp[2])!)
+        }
+        else{
+            return ("",0,0)
         }
     }
 }

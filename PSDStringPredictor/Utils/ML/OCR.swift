@@ -102,7 +102,7 @@ class OCR: ObservableObject{
         let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
-        TextRecognitionRequest.usesLanguageCorrection = true
+        TextRecognitionRequest.usesLanguageCorrection = false
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
         //TextRecognitionRequest.customWords = ["Photos"]
         do {
