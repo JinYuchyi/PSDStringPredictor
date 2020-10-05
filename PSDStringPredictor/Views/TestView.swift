@@ -19,7 +19,6 @@ struct TestView: View {
             Text("Hello, Wo11")
                 .multilineTextAlignment(.leading)
                 .padding(.all, 0.0)
-                .coordinateSpace(name: /*@START_MENU_TOKEN@*/ /*@PLACEHOLDER=Coordinate Space Name@*/CoordinateSpace.local/*@END_MENU_TOKEN@*/)
                 
             //.frame(width: 100, alignment: .leading)
             

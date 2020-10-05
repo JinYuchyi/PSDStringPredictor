@@ -95,7 +95,7 @@ class OCR: ObservableObject{
         return (rects, chars)
     }
     
-    func CreateAllStringObjects(FromCIImage ciImage: CIImage, Method method: VNRequestTextRecognitionLevel) -> [StringObject]{
+    func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObject]{
         var strobjs : [StringObject] = []
         
         //Get Observations

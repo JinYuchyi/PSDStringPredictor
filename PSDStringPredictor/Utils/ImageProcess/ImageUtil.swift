@@ -42,7 +42,7 @@ class ImageUtil{
         let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext.png")
         newimg.ToPNG(url: url)
 
-        let stringsObjectPredicted = ocr.CreateAllStringObjects(FromCIImage: newimg, Method: VNRequestTextRecognitionLevel.accurate)
+        let stringsObjectPredicted = ocr.CreateAllStringObjects(FromCIImage: newimg)
         //print(stringsObjectPredicted[0].stringRect)
 
         let clampedImg = newimg.cropped(to: stringsObjectPredicted[0].stringRect)
