@@ -23,14 +23,15 @@ class CSVManager{
         return str!
     }
     
-    func ParsingCsvStringAsTwoIntArray(FromString str: String) -> [(Int16,Int16)]{
-        var objArray:  = [[Int16]]
+    func ParsingCsvStringAsTwoIntArray(FromString str: String) -> [[Int16]]{
+        var objArray : [[Int16]] = []
         let objStrArray = str.components(separatedBy: "\n")
         for index in 1..<objStrArray.count{
             //print("index: \(index)")
             let itemArray = objStrArray[index].components(separatedBy: ",")
             let b = Int16(itemArray[0])!
-            let c = Int16(itemArray[1]).replacingOccurrences(of: "\r", with: ""))!
+            let tmpStr = itemArray[1].replacingOccurrences(of: "\r", with: "")
+            let c = Int16(tmpStr)!
             
             objArray.append([b,c])
             
