@@ -45,7 +45,6 @@ final class CoreDataManager  {
         
         //Execute
         do {
-            let dataList = [Int16]
             try context.executeFetchRequest(fetchRequest)as! [NSManagedObject]
             var dList = [Int16]
             for d in dataList as! [SizeTracking] {
@@ -63,7 +62,6 @@ final class CoreDataManager  {
          }
         do {
             try context.save()
-            print("Saving Success!")
          }catch let error{
              print("context can't save!, Error:\(error)")
          }
@@ -71,7 +69,24 @@ final class CoreDataManager  {
         return dList
     }
     
-    func ClearAll(){}
+    func ClearAll(){
+        let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context = appDel.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "SizeTracking")
+        
+        do {
+            try context.executeFetchRequest(fetchRequest)as! [NSManagedObject]
+            for d in dataList as! [SizeTracking] {
+                context.deleteObject(d)
+         }catch let error{
+             print("context can't delete!, Error:\(error)")
+         }
+        do {
+           try context.save()
+        }catch let error{
+            print("context can't save!, Error:\(error)")
+        }
+    }
     
     
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F0007BC252EF8AC0047574A /* Csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0007BB252EF8AC0047574A /* Csv.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
 		3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */; };
@@ -70,6 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F0007BB252EF8AC0047574A /* Csv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Csv.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
 		3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TextWeightTabularRegressor.mlmodel; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				3F56E3E32505F0B400E64337 /* Data.swift */,
 				3FBA3A7B2510AFC900F041DC /* String.swift */,
 				3F82084F2510F8CE00832192 /* File.swift */,
+				3F0007BB252EF8AC0047574A /* Csv.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				3F1A629825230D0F006DC9F9 /* Font.swift in Sources */,
 				3F68B707252EA8A900CCFCE5 /* FontDataModel.xcdatamodeld in Sources */,
 				3F68B704252DCAC700CCFCE5 /* ArrayExtension.swift in Sources */,
+				3F0007BC252EF8AC0047574A /* Csv.swift in Sources */,
 				3F7E6AA625175CE20082D3FF /* DBViewModel.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,

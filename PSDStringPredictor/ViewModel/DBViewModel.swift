@@ -12,6 +12,7 @@ import SwiftUI
 class DBViewModel: ObservableObject{
     var dbModel = DB()
     let imgUtil = ImageUtil()
+    let csv = CSVManager()
     @Published private var dbPathString = "db.sqlite3"
     
     func ConnectDB()  {
@@ -20,5 +21,9 @@ class DBViewModel: ObservableObject{
         dbModel.connectDatabase(DBFilePath: dbPathString)
         //imgUtil.RenderTextToImage(Content: "Text123!", Color: NSColor.init(red: 1, green: 0, blue: 0, alpha: 1) , Size: 100)
 
+    }
+    
+    func RefillSizeTrackingDB(){
+        //csv.ReadAllContentAsString(FromFile filePath)
     }
 }
