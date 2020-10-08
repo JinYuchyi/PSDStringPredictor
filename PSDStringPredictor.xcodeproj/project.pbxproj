@@ -28,6 +28,10 @@
 		3F689AB3250B172700D02377 /* LocSample.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F689AB2250B172700D02377 /* LocSample.png */; };
 		3F68B702252D7D8900CCFCE5 /* FontSizeTrackingTable.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */; };
 		3F68B704252DCAC700CCFCE5 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */; };
+		3F68B707252EA8A900CCFCE5 /* FontDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B705252EA8A900CCFCE5 /* FontDataModel.xcdatamodeld */; };
+		3F68B709252EAB6F00CCFCE5 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B708252EAB6F00CCFCE5 /* CoreData.swift */; };
+		3F68B70C252EB3F500CCFCE5 /* SizeTracking+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B70A252EB3F500CCFCE5 /* SizeTracking+CoreDataClass.swift */; };
+		3F68B70D252EB3F500CCFCE5 /* SizeTracking+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B70B252EB3F500CCFCE5 /* SizeTracking+CoreDataProperties.swift */; };
 		3F6B455425133BD100BE6F76 /* CharacterFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */; };
 		3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */; };
 		3F7E6AA625175CE20082D3FF /* DBViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7E6AA525175CE20082D3FF /* DBViewModel.swift */; };
@@ -62,7 +66,7 @@
 		3FEFE91A25072A0000AEF1C8 /* CharacterData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FEFE91925072A0000AEF1C8 /* CharacterData.csv */; };
 		3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91D25072F8300AEF1C8 /* OCR.swift */; };
 		3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9232507900500AEF1C8 /* LogListData.swift */; };
-		3FF1D20925173C320081D57C /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF1D20825173C320081D57C /* DB.swift */; };
+		3FF1D20925173C320081D57C /* DB_SQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF1D20825173C320081D57C /* DB_SQLite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +91,10 @@
 		3F689AB2250B172700D02377 /* LocSample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocSample.png; path = ../../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/LocSample.png; sourceTree = DEVELOPER_DIR; };
 		3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = FontSizeTrackingTable.csv; sourceTree = "<group>"; };
 		3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		3F68B706252EA8A900CCFCE5 /* FontDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FontDataModel.xcdatamodel; sourceTree = "<group>"; };
+		3F68B708252EAB6F00CCFCE5 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		3F68B70A252EB3F500CCFCE5 /* SizeTracking+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SizeTracking+CoreDataClass.swift"; path = "PSDStringPredictor/Utils/DB/SizeTracking+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3F68B70B252EB3F500CCFCE5 /* SizeTracking+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SizeTracking+CoreDataProperties.swift"; path = "PSDStringPredictor/Utils/DB/SizeTracking+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFrameView.swift; sourceTree = "<group>"; };
 		3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImageExtension.swift; sourceTree = "<group>"; };
 		3F7E6AA525175CE20082D3FF /* DBViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBViewModel.swift; sourceTree = "<group>"; };
@@ -123,7 +131,7 @@
 		3FEFE91925072A0000AEF1C8 /* CharacterData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CharacterData.csv; sourceTree = "<group>"; };
 		3FEFE91D25072F8300AEF1C8 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
 		3FEFE9232507900500AEF1C8 /* LogListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListData.swift; sourceTree = "<group>"; };
-		3FF1D20825173C320081D57C /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
+		3FF1D20825173C320081D57C /* DB_SQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB_SQLite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +184,7 @@
 		3F56E3E22505F06300E64337 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				3F68B705252EA8A900CCFCE5 /* FontDataModel.xcdatamodeld */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -216,7 +225,8 @@
 		3F5892A7251F7683001CAF6E /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				3FF1D20825173C320081D57C /* DB.swift */,
+				3FF1D20825173C320081D57C /* DB_SQLite.swift */,
+				3F68B708252EAB6F00CCFCE5 /* CoreData.swift */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -288,6 +298,8 @@
 		3FD401E62500F2FB00525E67 = {
 			isa = PBXGroup;
 			children = (
+				3F68B70A252EB3F500CCFCE5 /* SizeTracking+CoreDataClass.swift */,
+				3F68B70B252EB3F500CCFCE5 /* SizeTracking+CoreDataProperties.swift */,
 				3FD401F12500F2FB00525E67 /* PSDStringPredictor */,
 				3FD401F02500F2FB00525E67 /* Products */,
 			);
@@ -476,6 +488,7 @@
 				3F56E3EC25062A9D00E64337 /* StringObjectRow.swift in Sources */,
 				3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */,
 				3F8460A2251057FF00788176 /* CompareImage.swift in Sources */,
+				3F68B70C252EB3F500CCFCE5 /* SizeTracking+CoreDataClass.swift in Sources */,
 				3F308027251DD96600550DEA /* PixelProcess.swift in Sources */,
 				3F56E3E9250606C000E64337 /* StringObjectListView.swift in Sources */,
 				3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */,
@@ -484,14 +497,16 @@
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
 				3F5218182521E89200646F91 /* TestView.swift in Sources */,
-				3FF1D20925173C320081D57C /* DB.swift in Sources */,
+				3FF1D20925173C320081D57C /* DB_SQLite.swift in Sources */,
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
 				3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */,
+				3F68B709252EAB6F00CCFCE5 /* CoreData.swift in Sources */,
 				3FAAB4972514BD6600CB89B1 /* Training.swift in Sources */,
 				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
 				3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */,
 				3FAAB486251341A600CB89B1 /* CharacterFrameListView.swift in Sources */,
 				3F1A629825230D0F006DC9F9 /* Font.swift in Sources */,
+				3F68B707252EA8A900CCFCE5 /* FontDataModel.xcdatamodeld in Sources */,
 				3F68B704252DCAC700CCFCE5 /* ArrayExtension.swift in Sources */,
 				3F7E6AA625175CE20082D3FF /* DBViewModel.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
@@ -499,6 +514,7 @@
 				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,
 				3FEBA6C1251C93F7002D8EC1 /* ViewModelContainer.swift in Sources */,
+				3F68B70D252EB3F500CCFCE5 /* SizeTracking+CoreDataProperties.swift in Sources */,
 				3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */,
 				3FEBA6C4251CA522002D8EC1 /* Control.swift in Sources */,
 				3F4D13E625020F22008F846B /* StringLabel.swift in Sources */,
@@ -736,6 +752,19 @@
 			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		3F68B705252EA8A900CCFCE5 /* FontDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3F68B706252EA8A900CCFCE5 /* FontDataModel.xcdatamodel */,
+			);
+			currentVersion = 3F68B706252EA8A900CCFCE5 /* FontDataModel.xcdatamodel */;
+			path = FontDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3FD401E72500F2FB00525E67 /* Project object */;
 }
