@@ -39,6 +39,7 @@ struct StringObject : Identifiable{
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
+    let db = DB.shared
     //var stringObjectList: [StringObject]
     
     init(){
@@ -70,7 +71,7 @@ struct StringObject : Identifiable{
         //self.color = CalcColor()
         //self.position = CalcPosition()
         self.fontSize = CGFloat(CalcBestWeightForString())
-        self.tracking = CalcTracking()
+        self.tracking = FetchTrackingFromDB(self.fontSize)
         self.color = CalcColor()
         //self.stringRect = ProcessStringRect(FromRect: stringRect)
         //data.stringObjectIndex = data.stringObjectIndex + 1
@@ -105,6 +106,11 @@ struct StringObject : Identifiable{
             return 0
         }
         
+    }
+    
+    func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
+        let raw = db.FindTrackingFromTableFont(size: Int64(size))
+        return CGFloat(raw)
     }
     
     func CalcColor() -> Color {
@@ -211,13 +217,18 @@ struct StringObject : Identifiable{
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
                 var tempweight = CalcWeightForSingleChar(String(char), Int64(charRects[index].width), Int64(charRects[index].height))
-                print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
+                //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
                 if (tempweight != 0){
                     weightArray.append(tempweight)
                 }
             }
         }
-        return FindBestWeightFromWeightArray(FromArray: weightArray)
+        //return FindBestWeightFromWeightArray(FromArray: weightArray)
+        var rawSizeNum = FindBestWeightFromWeightArray(FromArray: weightArray)
+        var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER))
+        var result = all.FindNearest(toNumber: Int(rawSizeNum.rounded()) )
+        
+        return Float(result)
     }
     
     private func FindBestWeightFromWeightArray(FromArray weightArray: [Int64]) -> Float{

@@ -17,6 +17,7 @@ class DataStore{
     //DB
     static var dbConnection: Connection!
     static var csvPath: String = ""
+    static var fontCsvPath: String = ""
     //ImageProcess
     static var targetNSImage: NSImage  = NSImage.init()
     static var targetImageProcessed: CIImage  = CIImage.init()

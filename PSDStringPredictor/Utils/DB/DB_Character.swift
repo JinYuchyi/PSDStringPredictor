@@ -18,8 +18,10 @@ let TABLE_CHARACTER_HEIGHT = Expression<Int64>("character_height")
 let TABLE_CHARACTER_WIGHT = Expression<Int64>("character_weight")
 
 struct DB{
+    
+    static let shared = Self()
     //let dbPath = "/Users/ipdesign/Library/Containers/jin.PSDStringPredictor/Data/db.sqlite3"
-    let csvPath = "CharacterData.csv"
+    //let csvPath = "CharacterData.csv"
     
 
     
@@ -77,10 +79,10 @@ struct DB{
         }
     }
     
-    //Check for table Character.
-    func CheckIfDuplicated(char: String, width: Int64, height: Int64, weight: Int64) -> Bool{
+    //Check data
+    func CheckIfDuplicatedForTableCharacter(char: String, width: Int64, height: Int64, weight: Int64) -> Bool{
         //let query = TABLE_CHARACTER.select(TABLE_CHARACTER_CHAR, TABLE_CHARACTER_WIDTH,TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)           // SELECT "email" FROM "users"
-        let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width && TABLE_CHARACTER_HEIGHT == height && TABLE_CHARACTER_WIGHT == weight)     // WHERE "name" IS NOT NULL
+        let query = Table("table_character").filter(TABLE_CHARACTER_CHAR == char && TABLE_CHARACTER_WIDTH == width && TABLE_CHARACTER_HEIGHT == height && TABLE_CHARACTER_WIGHT == weight)     // WHERE "name" IS NOT NULL
             .select(TABLE_CHARACTER_CHAR)
         //print("Checking same row: \(Array(arrayLiteral: query).count)")
         var num: Int = 0
@@ -95,11 +97,10 @@ struct DB{
         }else{ return false }
         
     }
-    
-    //Check for table font
-    func CheckIfDuplicated(FontSize size: Int64) -> Bool{
+
+    func CheckIfDuplicatedForTableFont(FontSize size: Int64) -> Bool{
         let query = Table("table_font").filter(Expression<Int64>("size") == size )     // WHERE "name" IS NOT NULL
-            .select(Table("table_font"))
+            //.select(Table("table_font"))
         var num: Int = 0
         do{
             let obj = try DataStore.dbConnection.prepare(query)
@@ -122,7 +123,7 @@ struct DB{
     // 插入
     func TableCharacterInsertItem(char: String, width: Int64, height: Int64, weight: Int64) -> Void {
 
-        let duplicated = CheckIfDuplicated(char: char, width: width, height: height, weight: weight)
+        let duplicated = CheckIfDuplicatedForTableCharacter(char: char, width: width, height: height, weight: weight)
         if(duplicated == false && CheckIfNoneLetterOrNumber(char) == false){
             let insert = TABLE_CHARACTER.insert(TABLE_CHARACTER_CHAR <- char, TABLE_CHARACTER_WIDTH <- width, TABLE_CHARACTER_HEIGHT <- height, TABLE_CHARACTER_WIGHT <- weight)
             do {
@@ -139,7 +140,7 @@ struct DB{
     
     func TableFontInsertItem(FontSize size: Int64, Tracking tracking: Int64) -> Void {
 
-        let duplicated = CheckIfDuplicated( FontSize: size)
+        let duplicated = CheckIfDuplicatedForTableFont(FontSize: size)
         if( duplicated == false ){
             let insert = Table("table_font").insert(Expression<Int64>("size") <- size, Expression<Int64>("tracking") <- tracking)
             do {
@@ -160,7 +161,7 @@ struct DB{
     }
     
     
-//    // 遍历
+    // 遍历
     func PrintAllItemsInCharacterTable() -> Void {
         
         do{
@@ -215,21 +216,34 @@ struct DB{
         return index
     }
     
-    func FindWeightTest() {
-        var num:Int = 0
-        let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == "9" && TABLE_CHARACTER_WIDTH == 24 && TABLE_CHARACTER_HEIGHT == 34 )//
-        .select(TABLE_CHARACTER_CHAR, TABLE_CHARACTER_WIDTH, TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
-            do{
-                let objs = try DataStore.dbConnection.prepare(query)
-                for obj in objs{
-                    num+=1
-                //num = Array(obj).count
-                //print("test num: \(num)")
-                print("num: \(num): \(obj[TABLE_CHARACTER_CHAR]), \(obj[TABLE_CHARACTER_WIDTH]), \(obj[TABLE_CHARACTER_HEIGHT])")
-                }
-            }
-        catch{}
+    func AddFontArrayToDB() -> Int{
+        var index:Int = 0
+        //let readText = ReadTextFromFile()
+        
+        let str = CSVManager.shared.ReadAllContentAsString(FromFile: DataStore.fontCsvPath)
+        let objArray = CSVManager.shared.ParsingCsvStringAsTwoIntArray(FromString: str)
+        for obj in objArray{
+            TableFontInsertItem(FontSize: obj[0], Tracking: obj[1])
+            index += 1
+        }
+        return index
     }
+    
+//    func FindWeightTest() {
+//        var num:Int = 0
+//        let query = TABLE_CHARACTER.filter(TABLE_CHARACTER_CHAR == "9" && TABLE_CHARACTER_WIDTH == 24 && TABLE_CHARACTER_HEIGHT == 34 )//
+//        .select(TABLE_CHARACTER_CHAR, TABLE_CHARACTER_WIDTH, TABLE_CHARACTER_HEIGHT,TABLE_CHARACTER_WIGHT)
+//            do{
+//                let objs = try DataStore.dbConnection.prepare(query)
+//                for obj in objs{
+//                    num+=1
+//                //num = Array(obj).count
+//                //print("test num: \(num)")
+//                print("num: \(num): \(obj[TABLE_CHARACTER_CHAR]), \(obj[TABLE_CHARACTER_WIDTH]), \(obj[TABLE_CHARACTER_HEIGHT])")
+//                }
+//            }
+//        catch{}
+//    }
     
     func FindWeight1(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
         var objArray: [Row] = []
@@ -254,13 +268,38 @@ struct DB{
 
     }
     
-    func ReFillDBFromCSV(){
+    func RefillDBFromCSV(){
         TableCharacterCreate()
-        RemoveAll()
+        RemoveAll(DBName: "table_character")
         print("Refilling data...")
         var num = AddStrObjArrayToDB()
         print("Refilling data finished, \(num) items have been added into DB.")
     }
+    
+    func RefillFontDBFromCSV(){
+        TableFontCreate()
+        RemoveAll(DBName: "table_font")
+        print("Refilling data...")
+        var num = AddFontArrayToDB()
+        print("Refilling data finished, \(num) items have been added into DB.")
+    }
+    
+    func FindTrackingFromTableFont(size size: Int64) -> Int64{
+        var output: Int64 = 0
+        let query = Table("table_font").filter( Expression<Int64>("size") == size ).select( Expression<Int64>("tracking") )
+        do{
+            let objs = try DataStore.dbConnection.prepare(query)
+            //output = DataStore.dbConnection.scalar(Table("table_font").filter(Expression<Int64>("size") == size))
+            for o in objs {
+                output = o[Expression<Int64>("size")]
+            }
+        }
+        catch{}
+        
+        return output
+    }
+    
+    
         
     //    func FindWeight(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
     //        var objArray: [Row] = []

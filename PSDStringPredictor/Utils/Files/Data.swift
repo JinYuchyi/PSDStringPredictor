@@ -70,16 +70,17 @@ class ReadTextFromFile{
         return objArray
     }
     
-    func CsvStringToDictionary(FromString str: String) -> [Int: Int]{
-        var dict = [Int: Int]()
+    func ParseFontDataString(FromString str: String) -> [[Int]]{
+        var _array = [[Int]]()
         let objArray = str.components(separatedBy: "\n")
         for index in 1..<objArray.count{
             let itemArray = objArray[index].components(separatedBy: ",")
             let a = Int(itemArray[0])!
             let b = Int(itemArray[1])!
-            dict[a] = b
+            var tmp = [a,b]
+            _array.append(tmp)
         }
-        return dict
+        return _array
     }
     
 

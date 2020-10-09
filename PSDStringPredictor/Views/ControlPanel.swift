@@ -41,8 +41,16 @@ struct ControlPanel: View {
             }
             .padding(.horizontal, 40.0)
             
-            Button(action: {self.ReloadStrTableBtnPressed()}){
-                Text("Reload String Table DB")
+            Button(action: {self.dbvm.ReloadCharacterTable()}){
+                Text("Reload String Table")
+                    .padding(.horizontal, 40.0)
+                .frame(minWidth: 200, maxWidth: .infinity)
+
+            }
+            .padding(.horizontal, 40.0)
+            
+            Button(action: {self.dbvm.ReloadFontTable()}){
+                Text("Reload Font Table")
                     .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 
@@ -87,19 +95,9 @@ struct ControlPanel: View {
         }
     }
     
-    func ReloadStrTableBtnPressed()  {
-        let panel = NSOpenPanel()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let result = panel.runModal()
-            if result == .OK{
-                if ((panel.url?.pathExtension == "csv" ) )
-                {
-                    DataStore.csvPath = panel.url!.path
-                    self.db.ReFillDBFromCSV()
-                }
-            }
-        }
-    }
+
+    
+
     
     func Debug(){
         training.CreateTrackingData()

@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 class DBViewModel: ObservableObject{
-    var dbModel = DB()
+    //var dbModel = DB()
     let imgUtil = ImageUtil()
     let csv = CSVManager()
     @Published private var dbPathString = "db.sqlite3"
@@ -18,12 +18,36 @@ class DBViewModel: ObservableObject{
     func ConnectDB()  {
         //imgUtil.RenderText("Text123!")
         //imgUtil.RenderTextToImage("Text123")
-        dbModel.connectDatabase(DBFilePath: dbPathString)
+        DB.shared.connectDatabase(DBFilePath: dbPathString)
         //imgUtil.RenderTextToImage(Content: "Text123!", Color: NSColor.init(red: 1, green: 0, blue: 0, alpha: 1) , Size: 100)
 
     }
     
-    func RefillSizeTrackingDB(){
-        //csv.ReadAllContentAsString(FromFile filePath)
+    func ReloadFontTable()  {
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "csv" ) )
+                {
+                    DataStore.fontCsvPath = panel.url!.path
+                    DB.shared.RefillFontDBFromCSV()
+                }
+            }
+        }
+    }
+    
+    func ReloadCharacterTable()  {
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "csv" ) )
+                {
+                    DataStore.csvPath = panel.url!.path
+                    DB.shared.RefillDBFromCSV()
+                }
+            }
+        }
     }
 }
