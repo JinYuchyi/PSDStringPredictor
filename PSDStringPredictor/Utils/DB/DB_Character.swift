@@ -299,6 +299,14 @@ struct DB{
         return output
     }
     
+    func GetSizeArrayFromTableFont()->[CGFloat]{
+        var output: [CGFloat] = []
+        for obj in try DataStore.dbConnection.prepare(Table("table_font").select(Expression<Int64>("size")) {
+            output.append(CGFloat(obj))
+        }
+        
+    }
+    
     
         
     //    func FindWeight(_ char: String, _ width: Int64, _ height: Int64) -> Int64{

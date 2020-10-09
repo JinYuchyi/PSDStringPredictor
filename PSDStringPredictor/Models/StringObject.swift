@@ -225,7 +225,7 @@ struct StringObject : Identifiable{
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
         var rawSizeNum = FindBestWeightFromWeightArray(FromArray: weightArray)
-        var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER))
+        var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) //Fix bug
         var result = all.FindNearest(toNumber: Int(rawSizeNum.rounded()) )
         
         return Float(result)
