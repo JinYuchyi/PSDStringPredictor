@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import GRDB
 
 class DBViewModel: ObservableObject{
     //var dbModel = DB()
@@ -49,5 +50,11 @@ class DBViewModel: ObservableObject{
                 }
             }
         }
+    }
+    
+    //GRDB
+    func Connect(){
+        let dbQueue = try DatabaseQueue(path: dbPathString)
+
     }
 }

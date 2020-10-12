@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ControlPanel: View {
     
@@ -23,7 +24,7 @@ struct ControlPanel: View {
     var training = MLTraining()
     //@ObservedObject var data: DataStore
     @Binding var showImage: Bool
-
+    @Environment(\.managedObjectContext) private var viewContext
 
     
     var body: some View {
@@ -100,7 +101,7 @@ struct ControlPanel: View {
 
     
     func Debug(){
-        training.CreateTrackingData()
+        //persistentContainer.context
     }
 
 }
