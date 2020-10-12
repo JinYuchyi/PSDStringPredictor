@@ -25,6 +25,8 @@ struct ControlPanel: View {
     //@ObservedObject var data: DataStore
     @Binding var showImage: Bool
     @Environment(\.managedObjectContext) private var viewContext
+    let trackingData = TrackingDataManager.shared
+    
 
     
     var body: some View {
@@ -101,16 +103,11 @@ struct ControlPanel: View {
 
     
     func Debug(){
-        //persistentContainer.context
-        let newTracking = TrackingData(context: self.viewContext)
-        newTracking.size = 100
-        newTracking.tracking = 200
-        try? self.viewContext.save()
+        TrackingDataManager.Delete(viewContext)
+        TrackingDataManager.Create(viewContext, 15, 50)
+//        TrackingDataManager.Create(viewContext, 115, 150)
+//        TrackingDataManager.FetchItems(viewContext)
         
-        let request = NSFetchRequest<TrackingData>(entityName:"TrackingData")
-        request.predicate = NSPredicate(format: "#size == 100")
-        let items = try? self.viewContext.fetch(request)
-        print(items!.count)
     }
 
 }
