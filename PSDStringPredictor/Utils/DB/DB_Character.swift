@@ -286,16 +286,16 @@ struct DB{
     
     func FindTrackingFromTableFont(size size: Int64) -> Int64{
         var output: Int64 = 0
-        let query = Table("table_font").sort(size.asc).filter( Expression<Int64>("size") >= size ).select( Expression<Int64>("tracking") )
-        do{
-            let objs = try DataStore.dbConnection.prepare(query)
-            //output = DataStore.dbConnection.scalar(Table("table_font").filter(Expression<Int64>("size") == size))
-            for o in objs {
-                output = o[Expression<Int64>("size")]
-            }
-        }
-        catch{}
-        
+//        let query = Table("table_font").sort(size.asc).filter( Expression<Int64>("size") >= size ).select( Expression<Int64>("tracking") )
+//        do{
+//            let objs = try DataStore.dbConnection.prepare(query)
+//            //output = DataStore.dbConnection.scalar(Table("table_font").filter(Expression<Int64>("size") == size))
+//            for o in objs {
+//                output = o[Expression<Int64>("size")]
+//            }
+//        }
+//        catch{}
+//        
         return output
     }
     

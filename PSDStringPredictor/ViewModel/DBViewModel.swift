@@ -52,9 +52,9 @@ class DBViewModel: ObservableObject{
         }
     }
     
-    //GRDB
-    func Connect(){
-        let dbQueue = try DatabaseQueue(path: dbPathString)
-
-    }
+//    //GRDB
+//    func Connect(){
+//        let dbQueue = try DatabaseQueue(path: dbPathString)
+//
+//    }
 }

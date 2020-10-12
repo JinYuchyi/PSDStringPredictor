@@ -102,6 +102,15 @@ struct ControlPanel: View {
     
     func Debug(){
         //persistentContainer.context
+        let newTracking = TrackingData(context: self.viewContext)
+        newTracking.size = 100
+        newTracking.tracking = 200
+        try? self.viewContext.save()
+        
+        let request = NSFetchRequest<TrackingData>(entityName:"TrackingData")
+        request.predicate = NSPredicate(format: "#size == 100")
+        let items = try? self.viewContext.fetch(request)
+        print(items!.count)
     }
 
 }
