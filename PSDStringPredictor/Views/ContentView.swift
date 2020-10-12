@@ -26,6 +26,8 @@ struct ContentView: View {
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
     
+
+    
 //    @state var fontPosX = 50 + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width
 //    @state var fontPosY = 100 + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height
 

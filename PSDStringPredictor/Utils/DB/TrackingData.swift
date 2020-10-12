@@ -22,18 +22,20 @@ class TrackingDataManager  {
     private init(){}
     
     static func Create(_ context: NSManagedObjectContext, _ fontSize: Int16, _ fontTracking: Int16){
-        let newTracking = TrackingData(context: context)
-        newTracking.fontSize = fontSize
-        newTracking.fontTracking = fontTracking
+
         
         let items = FetchItems(context, fontSize: fontSize, fontTracking: fontTracking)
+        
         if (items.count == 0){
-            do{
-                try context.save()
-            }catch{
-                print("Create new item failed.")
-            }
-        }else{
+            print("Saving context.")
+            
+            let newTracking = TrackingData(context: context)
+            newTracking.fontSize = fontSize
+            newTracking.fontTracking = fontTracking
+            
+            try? context.save()
+        }
+        else{
             print("Creating action skipped, for we have same data in DB.")
         }
     }
@@ -56,10 +58,10 @@ class TrackingDataManager  {
         request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
         //let predicate: NSPredicate
         if (fontSize != -1000 && fontTracking == -1000){
-            request.predicate = NSPredicate(format: "fontSize = %@ ", fontSize)
+            request.predicate = NSPredicate(format: "fontSize = %@ ", NSNumber(value: Int(fontSize)))
         }
-        else if (fontSize != -1000 && fontTracking != -1000){
-            request.predicate = NSPredicate(format: "fontSize = %@ and fontTracking = %@", fontSize, fontTracking)
+        if (fontSize != -1000 && fontTracking != -1000){
+            request.predicate = NSPredicate(format: "fontSize = %@ and fontTracking = %@", NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontTracking)))
         }
         
         let objs = (try? context.fetch(request)) ?? []
@@ -72,10 +74,10 @@ class TrackingDataManager  {
     static func Delete(_ context: NSManagedObjectContext, fontSize: Int16 = -1000, fontTracking: Int16 = -1000){
         let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName:"TrackingData")
         if (fontSize != -1000 && fontTracking == -1000){
-            request.predicate = NSPredicate(format: "fontSize = %@ ", NSNumber(value: fontSize))
+            request.predicate = NSPredicate(format: "fontSize = %@ ", NSNumber(value: Int(fontSize)))
         }
-        else if (fontSize != -1000 && fontTracking != -1000){
-            request.predicate = NSPredicate(format: "fontSize = %@ and fontTracking = %@", NSNumber(value: fontSize), NSNumber(value: fontTracking))
+        if (fontSize != -1000 && fontTracking != -1000){
+            request.predicate = NSPredicate(format: "fontSize = %@ and fontTracking = %@", NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontTracking)))
         }
         let objs = (try? context.fetch(request)) ?? []
         for item in objs {

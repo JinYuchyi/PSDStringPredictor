@@ -15,6 +15,8 @@ class DBViewModel: ObservableObject{
     let imgUtil = ImageUtil()
     let csv = CSVManager()
     @Published private var dbPathString = "db.sqlite3"
+    @Environment(\.managedObjectContext) private var viewContext
+
     
     func ConnectDB()  {
         //imgUtil.RenderText("Text123!")
@@ -31,8 +33,16 @@ class DBViewModel: ObservableObject{
             if result == .OK{
                 if ((panel.url?.pathExtension == "csv" ) )
                 {
-                    DataStore.fontCsvPath = panel.url!.path
-                    DB.shared.RefillFontDBFromCSV()
+                    //DataStore.fontCsvPath = panel.url!.path
+                    //DB.shared.RefillFontDBFromCSV()
+                    TrackingDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+
+                    let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
+                    let objArray = CSVManager.shared.ParsingCsvStringAsTwoIntArray(FromString: str)
+                    print("objArray length: \(objArray.count)")
+                    for obj in objArray{
+                        TrackingDataManager.Create(AppDelegate().persistentContainer.viewContext, Int16(obj[0]), Int16(obj[1]))
+                    }
                 }
             }
         }
