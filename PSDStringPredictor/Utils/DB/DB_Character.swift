@@ -166,7 +166,7 @@ struct DB{
         
         do{
             let all = Array(try DataStore.dbConnection.prepare(TABLE_CHARACTER))
-        print("We have \(all.count) items in database.")
+            print("We have \(all.count) items in database.")
             for item in (try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) {
             print("CHARACRER:\n id: \(item[TABLE_CHARACTER_ID]), char: \(item[TABLE_CHARACTER_CHAR]), width: \(item[TABLE_CHARACTER_WIDTH]), height: \(item[TABLE_CHARACTER_HEIGHT]), weight: \(item[TABLE_CHARACTER_WIGHT])")
         }
@@ -178,7 +178,7 @@ struct DB{
         var count: Int = 0
         do{
             let all = Array(try DataStore.dbConnection.prepare(TABLE_CHARACTER))
-        print("We have \(all.count) items in database.")
+            print("We have \(all.count) items in database.")
             for item in (try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) {
             //print("CHARACRER:\n id: \(item[TABLE_CHARACTER_ID]), char: \(item[TABLE_CHARACTER_CHAR]), width: \(item[TABLE_CHARACTER_WIDTH]), height: \(item[TABLE_CHARACTER_HEIGHT]), weight: \(item[TABLE_CHARACTER_WIGHT])")
             count+=1
@@ -196,7 +196,7 @@ struct DB{
         //let items = try! db.prepare("SELECT * FROM TABLE_CHARACTER")
         do{
             try DataStore.dbConnection.run(Table(name).delete())
-        print("Cleanning database...")
+            print("Cleanning database...")
 
         }catch{
             print("Clean the DB failed! \(error)")

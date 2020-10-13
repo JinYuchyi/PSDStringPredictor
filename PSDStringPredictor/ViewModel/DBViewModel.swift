@@ -39,10 +39,14 @@ class DBViewModel: ObservableObject{
 
                     let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
                     let objArray = CSVManager.shared.ParsingCsvStringAsTwoIntArray(FromString: str)
-                    print("objArray length: \(objArray.count)")
+                    var index = 0
                     for obj in objArray{
                         TrackingDataManager.Create(AppDelegate().persistentContainer.viewContext, Int16(obj[0]), Int16(obj[1]))
+                        index += 1
                     }
+                    
+                    print("\(index) of \(objArray.count) items have been filled into DB.")
+
                 }
             }
         }
