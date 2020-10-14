@@ -112,7 +112,7 @@ struct StringObject : Identifiable{
         //let raw = db.FindTrackingFromTableFont(size: Int64(size))
         //return CGFloat(raw)
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size))
-        return CGFloat(item[1])
+        return CGFloat(item.fontTracking)
     }
     
     func CalcColor() -> Color {

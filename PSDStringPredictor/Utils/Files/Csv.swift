@@ -26,17 +26,17 @@ class CSVManager{
         return str!
     }
     
-    func ParsingCsvStringAsTwoIntArray(FromString str: String) -> [[Int64]]{
-        var objArray : [[Int64]] = []
+    func ParsingCsvStringAsTrackingObjectArray(FromString str: String) -> [TrackingDataObject]{
+        var objArray : [TrackingDataObject] = []
         let objStrArray = str.components(separatedBy: "\n")
         for index in 1..<objStrArray.count{
             //print("index: \(index)")
             let itemArray = objStrArray[index].components(separatedBy: ",")
-            let b = Int64(itemArray[0])!
+            let b = Int16(itemArray[0])!
             let tmpStr = itemArray[1].replacingOccurrences(of: "\r", with: "")
-            let c = Int64(tmpStr)!
+            let c = Int16(tmpStr)!
             
-            objArray.append([b,c])
+            objArray.append(TrackingDataObject(fontSize: b, fontTracking: c))
             
         }
         return objArray

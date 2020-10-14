@@ -38,14 +38,16 @@ class DBViewModel: ObservableObject{
                     TrackingDataManager.Delete(AppDelegate().persistentContainer.viewContext)
 
                     let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
-                    let objArray = CSVManager.shared.ParsingCsvStringAsTwoIntArray(FromString: str)
-                    var index = 0
-                    for obj in objArray{
-                        TrackingDataManager.Create(AppDelegate().persistentContainer.viewContext, Int16(obj[0]), Int16(obj[1]))
-                        index += 1
-                    }
+                    let objArray = CSVManager.shared.ParsingCsvStringAsTrackingObjectArray(FromString: str)
                     
-                    print("\(index) of \(objArray.count) items have been filled into DB.")
+                    TrackingDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, trackingObjectList: objArray)
+//                    var index = 0
+//                    for obj in objArray{
+//                        TrackingDataManager.Create(AppDelegate().persistentContainer.viewContext, Int16(obj[0]), Int16(obj[1]))
+//                        index += 1
+//                    }
+//
+//                    print("\(index) of \(objArray.count) items have been filled into DB.")
 
                 }
             }

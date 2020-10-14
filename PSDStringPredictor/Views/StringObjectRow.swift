@@ -19,6 +19,9 @@ struct StringObjectRow: View {
                Text((stringObject.fontSize).description)
                 .frame(width: 100, height: 30, alignment: .leading)
                Spacer()
+            Text((stringObject.tracking).description)
+                 .frame(width: 100, height: 30, alignment: .leading)
+                Spacer()
             Text((stringObject.confidence).description)
                  .frame(width: 50, height: 30, alignment: .leading)
            }

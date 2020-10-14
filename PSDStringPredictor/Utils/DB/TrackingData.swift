@@ -21,7 +21,7 @@ class TrackingDataManager  {
     
     private init(){}
     
-    static func Create(_ context: NSManagedObjectContext, _ fontSize: Int16, _ fontTracking: Int16){
+    static func Insert(_ context: NSManagedObjectContext, _ fontSize: Int16, _ fontTracking: Int16){
         
         let items = FetchItems(context, fontSize: fontSize, fontTracking: fontTracking)
         print(items.count)
@@ -36,6 +36,24 @@ class TrackingDataManager  {
         }
         else{
             print("Creating action skipped, for we have same data (\(fontSize),\(fontTracking)) in DB.")
+        }
+    }
+    
+    static func BatchInsert(_ context: NSManagedObjectContext, trackingObjectList: [TrackingDataObject]){
+        //Create objects
+        var objects: [[String: Any]] = []
+        for item in trackingObjectList{
+            var tmpItem: [String: Any] = [:]
+            tmpItem["fontSize"] = item.fontSize
+            tmpItem["fontTracking"] = item.fontTracking
+            objects.append(tmpItem)
+        }
+        
+        context.perform {
+            let insertRequest = NSBatchInsertRequest(entityName: "CharacterData", objects: objects)
+            let insertResult = try? context.execute(insertRequest) as! NSBatchInsertResult
+            let success = insertResult?.result as! Bool
+            print("Batch insert \(success)")
         }
     }
     
@@ -54,29 +72,33 @@ class TrackingDataManager  {
     static func FetchItems(_ context: NSManagedObjectContext, fontSize: Int16 = -1000, fontTracking: Int16 = -1000) -> [TrackingDataObject]{
         var trackingDatas:[TrackingDataObject] = []
         let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
-        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
+        //request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
         //let predicate: NSPredicate
         if (fontSize != -1000 && fontTracking == -1000){
-            print("fontSize = \(NSNumber(value: Int(fontSize)))")
             request.predicate = NSPredicate(format: "fontSize = %@", NSNumber(value: Int(fontSize)))
         }
         else if (fontSize != -1000 && fontTracking != -1000){
             request.predicate = NSPredicate(format: "fontSize = %@ and fontTracking = %@", NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontTracking)))
         }
+        //let trackingDataList = try? request.execute()
         
         let objs = (try? context.fetch(request)) ?? []
         for item in objs {
             trackingDatas.append(TrackingDataObject(fontSize: item.fontSize, fontTracking: item.fontTracking))
         }
+        print("fontSize = \(NSNumber(value: Int(fontSize))), count = \(objs.count)")
+
         return trackingDatas
     }
     
-    static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> [Int16]{
+    static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> TrackingDataObject{
+        //var object: TrackingDataObject
         let fetchedResult = TrackingDataManager.FetchItems(context, fontSize: fontSize)
         print("Fetching \(fontSize), result count is \(fetchedResult.count)")
-        if (fetchedResult.count != 0) {
+
+        if (fetchedResult.count > 0) {
             //print("FetchNearestOne: \(fetchedResult.first!.fontSize), \(fetchedResult.first!.fontTracking)")
-            return [fetchedResult.first!.fontSize, fetchedResult.first!.fontTracking]
+            return fetchedResult.first!
         }
         
         let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
@@ -96,10 +118,10 @@ class TrackingDataManager  {
         if (size1 > 0 && size > 0){
             let dist = abs(size - fontSize)
             let dist1 = abs(size1 - fontSize)
-            return dist <= dist1 ? [objs.first!.fontSize, objs.first!.fontTracking] :  [objs1.first!.fontSize, objs1.first!.fontTracking]
+            return dist <= dist1 ? TrackingDataObject(fontSize: objs.first!.fontSize, fontTracking: objs.first!.fontTracking) :  TrackingDataObject(fontSize: objs1.first!.fontSize, fontTracking: objs1.first!.fontTracking)
         }
         else{
-            return []
+            return TrackingDataObject(fontSize: 0, fontTracking: 0)
         }
     }
     
