@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct CharDataObject{
+    var char: String
+    var fontSize: Int16
+    var height: Int16
+    var width: Int16
+}

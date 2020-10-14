@@ -81,22 +81,16 @@ struct ContentView: View {
                         
                         Rectangle()
                             .fill(Color.red.opacity(0.2))
-                        .frame(width: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width, height: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height)
-                        .position(x: 50 , y: 100 )
+                            .frame(width: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width, height: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height)
+                            .position(x: 50 , y: 100 )
                             .onTapGesture {
-                                //print("\(self.imageViewModel.GetTargetImageSize()[1] - self.stringLabel.position[1] )")
                         }
                         
                         Text("Flooy fird")
                             .foregroundColor(Color.red)
-                        .font(.custom("SF Pro Display", size: 60))
+                            .font(.custom("SF Pro Display", size: 60))
                             .tracking(1.0)
                             .position(x: 50, y: 100)
-                        
-
-                            //.alignmentGuide(.leading, computeValue: {d in d[.leading]})
-                        
-                        
                     }
                     
                 }
@@ -106,8 +100,6 @@ struct ContentView: View {
                         Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
                     }
                     .frame(width: 1000, height: 950, alignment: .topTrailing)
-                    
-                    
                 }
                 
             

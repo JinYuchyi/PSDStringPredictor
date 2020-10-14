@@ -41,4 +41,21 @@ class CSVManager{
         }
         return objArray
     }
+    
+    func ParsingCsvStringAsCharObjArray(FromString str: String) -> [CharDataObject]{
+        var objArray : [CharDataObject] = []
+        let objStrArray = str.components(separatedBy: "\n")
+        for index in 1..<objStrArray.count{
+            //print("index: \(index)")
+            let itemArray = objStrArray[index].components(separatedBy: ",")
+            let a = itemArray[0]
+            let b = Int16(itemArray[1])!
+            let c = Int16(itemArray[2])!
+            let d = Int16(itemArray[3].replacingOccurrences(of: "\r", with: ""))!
+            
+            objArray.append(CharDataObject(char: a,fontSize: b,height: c,width: d))
+            
+        }
+        return objArray
+    }
 }

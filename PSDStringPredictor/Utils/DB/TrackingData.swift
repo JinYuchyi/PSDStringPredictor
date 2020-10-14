@@ -22,7 +22,6 @@ class TrackingDataManager  {
     private init(){}
     
     static func Create(_ context: NSManagedObjectContext, _ fontSize: Int16, _ fontTracking: Int16){
-        print(FetchItems(context).count)
         
         let items = FetchItems(context, fontSize: fontSize, fontTracking: fontTracking)
         print(items.count)
@@ -85,7 +84,6 @@ class TrackingDataManager  {
         
         let size = objs.first?.fontSize ?? 0
         let size1 = objs1.first?.fontSize ?? 0
-        print("\(size) / \(size1)")
         
         if (size1 > 0 && size > 0){
             let dist = abs(size - fontSize)

@@ -33,12 +33,12 @@ struct ControlPanel: View {
         VStack{
             Button(action: {self.LoadImageBtnPressed()}){
                 Text("Load Image")
-                    .frame(minWidth: 200, maxWidth: .infinity)
+                .frame(minWidth: 200, maxWidth: .infinity)
             }.padding(.horizontal, 40.0)
             
             Button(action: {self.dbvm.ConnectDB()}){
                 Text("Connect Database")
-                    .padding(.horizontal, 40.0)
+                .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 
             }
@@ -46,7 +46,7 @@ struct ControlPanel: View {
             
             Button(action: {self.dbvm.ReloadCharacterTable()}){
                 Text("Reload String Table")
-                    .padding(.horizontal, 40.0)
+                .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 
             }
@@ -54,7 +54,7 @@ struct ControlPanel: View {
             
             Button(action: {self.dbvm.ReloadFontTable()}){
                 Text("Reload Font Table")
-                    .padding(.horizontal, 40.0)
+                .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 
             }
@@ -62,14 +62,14 @@ struct ControlPanel: View {
    
             Button(action: {self.stringObjectVM.PredictStrings()}){
                 Text("Predict Strings")
-                    .padding(.horizontal, 40.0)
+                .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
             }
             .frame(minWidth: 400, maxWidth: .infinity)
             
             Button(action: {self.stringObjectVM.PredictStrings()}){
                 Text("Modify PSD")
-                    .padding(.horizontal, 40.0)
+                .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
             }
             .frame(minWidth: 400, maxWidth: .infinity)

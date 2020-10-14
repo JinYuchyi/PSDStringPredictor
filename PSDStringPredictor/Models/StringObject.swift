@@ -109,8 +109,10 @@ struct StringObject : Identifiable{
     }
     
     func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
-        let raw = db.FindTrackingFromTableFont(size: Int64(size))
-        return CGFloat(raw)
+        //let raw = db.FindTrackingFromTableFont(size: Int64(size))
+        //return CGFloat(raw)
+        let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size))
+        return CGFloat(item[1])
     }
     
     func CalcColor() -> Color {
@@ -184,39 +186,44 @@ struct StringObject : Identifiable{
 
     }
     
-    func CalcWeightForSingleChar(_ char: String, _ width: Int64, _ height: Int64) -> Int64{
+    func CalcWeightForSingleChar(_ char: String, _ width: Int16, _ height: Int16) -> Int16{
         //var objArray: [Row] = []
-        var result: Int64 = 0
+        var result: Int16 = 0
         
 //        if(db == nil){
 //            print("DB equals null.")
 //            return 0
 //        }
         
-        let objList = DB.QueryFor(dbConnection: DataStore.dbConnection, char: char, width: width, height: height)
-
+        //let objList = DB.QueryFor(dbConnection: DataStore.dbConnection, char: char, width: width, height: height)
+        let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: char, width: width, height: height)
         
-        func Predict() -> Int64 {
-            Int64(PredictFontSize(character: char, width: Double(width), height: Double(height)))
-        }
-
-        func FindIt() -> Int64{
-            let strObj = objList[0][TABLE_CHARACTER_WIGHT]
-            result = strObj
-            return strObj
+//        func Predict() -> Int16 {
+//            Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
+//        }
+//
+//        func FindIt() -> Int16{
+//            let strObj = objList[0][TABLE_CHARACTER_WIGHT]
+//            result = strObj
+//            return strObj
+//        }
+        if (objList.count == 0){
+           return Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
+        }else{
+            return objList[0].fontSize
         }
         
-        return result == 0 ? Predict() : FindIt()
+        //return result == 0 ? Predict() : FindIt()
 
     }
     
-    func CalcBestWeightForString()-> Float{
+    func CalcBestWeightForString()-> Int16{
 
-        var weightArray:[Int64] = []
+        var weightArray:[Int16] = []
         //Find weight for each character, and guess the best choice for the string's weight
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
-                var tempweight = CalcWeightForSingleChar(String(char), Int64(charRects[index].width), Int64(charRects[index].height))
+                var tempweight = CalcWeightForSingleChar(String(char), Int16(charRects[index].width), Int16(charRects[index].height))
                 //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
                 if (tempweight != 0){
                     weightArray.append(tempweight)
@@ -224,15 +231,17 @@ struct StringObject : Identifiable{
             }
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
-        var rawSizeNum = FindBestWeightFromWeightArray(FromArray: weightArray)
-        var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) //Fix bug
-        var result = all.FindNearest(toNumber: Int(rawSizeNum.rounded()) )
+        var floatSize = FindBestWeightFromWeightArray(FromArray: weightArray)
+        print("floatsize:\(floatSize)")
+        let result = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize))
+        //var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) //Fix bug
+        //var result = all.FindNearest(toNumber: Int(rawSizeNum.rounded()) )
         
-        return Float(result)
+        return  (result.fontSize)
     }
     
-    private func FindBestWeightFromWeightArray(FromArray weightArray: [Int64]) -> Float{
-        var weightDict: [Int64: Int64] = [:]
+    private func FindBestWeightFromWeightArray(FromArray weightArray: [Int16]) -> Float{
+        var weightDict: [Int16: Int16] = [:]
         for w in weightArray{
             let keyExists = weightDict[w] != nil
             if keyExists == false { //If the weight is new
