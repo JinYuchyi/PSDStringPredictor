@@ -14,7 +14,7 @@ class CharDataManager{
     
     private init(){}
     
-    static func Create(_ context: NSManagedObjectContext, _ char: String, _ fontSize: Int16 , _ width: Int16, _ height: Int16){
+    static func Insert(_ context: NSManagedObjectContext, _ char: String, _ fontSize: Int16 , _ width: Int16, _ height: Int16){
         
         let items = CharDataManager.FetchItems(context, char: char, fontSize: fontSize, width: width, height: height)
         if (items.count == 0){
@@ -27,7 +27,27 @@ class CharDataManager{
             try? context.save()
         }
         else{
-            print("Creating action skipped, for we have same data in DB.")
+            print("For we already have \(items.count) same item(s), the creating action skipped.")
+        }
+    }
+    
+    static func BatchInsert(_ context: NSManagedObjectContext, CharObjectList: [CharDataObject]){
+        //Create objects
+        var objects: [[String: Any]] = []
+        for item in CharObjectList{
+            var tmpItem: [String: Any] = [:]
+            tmpItem["char"] = item.char
+            tmpItem["fontSize"] = item.fontSize
+            tmpItem["width"] = item.width
+            tmpItem["height"] = item.height
+            objects.append(tmpItem)
+        }
+        
+        context.perform {
+            let insertRequest = NSBatchInsertRequest(entityName: "CharacterData", objects: objects)
+            let insertResult = try? context.execute(insertRequest) as! NSBatchInsertResult
+            let success = insertResult?.result as! Bool
+            print("Batch insert \(success)")
         }
     }
     
@@ -51,14 +71,17 @@ class CharDataManager{
         if (char != "" && fontSize == -1000 && width == -1000 && height == -1000){
             request.predicate = NSPredicate(format: "char = %@ ", char)
         }
-        if (char != "" && fontSize != -1000 && width == -1000 && height == -1000){
+        else if (char != "" && fontSize != -1000 && width == -1000 && height == -1000){
             request.predicate = NSPredicate(format: "char = %@ and fontSize = %@", char, NSNumber(value: Int(fontSize)))
         }
-        if (char != "" && fontSize != -1000 && width != -1000 && height == -1000){
-            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontSize)))
+        else if (char != "" && fontSize != -1000 && width != -1000 && height == -1000){
+            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)))
         }
-        if (char != "" && fontSize != -1000 && width != -1000 && height != -1000){
-            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontSize)))
+        else if (char != "" && fontSize != -1000 && width != -1000 && height != -1000){
+            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)), NSNumber(value: Int(height)))
+        }
+        else if (char != "" && fontSize == -1000 && width != -1000 && height != -1000){
+            request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)))
         }
         
         let objs = (try? context.fetch(request)) ?? []
@@ -94,13 +117,15 @@ class CharDataManager{
     }
     
     static func Delete(_ context: NSManagedObjectContext, fontSize: Int16 = -1000, fontTracking: Int16 = -1000){
-        let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName:"TrackingData")
+        let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName:"CharacterData")
+        
         if (fontSize != -1000 && fontTracking == -1000){
             request.predicate = NSPredicate(format: "fontSize = %@ ", NSNumber(value: Int(fontSize)))
         }
-        if (fontSize != -1000 && fontTracking != -1000){
+        else if (fontSize != -1000 && fontTracking != -1000){
             request.predicate = NSPredicate(format: "fontSize = %@ and fontTracking = %@", NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontTracking)))
         }
+        
         let objs = (try? context.fetch(request)) ?? []
         let index = objs.count
         var index1 = 0

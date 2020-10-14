@@ -188,6 +188,7 @@ struct StringObject : Identifiable{
     
     func CalcWeightForSingleChar(_ char: String, _ width: Int16, _ height: Int16) -> Int16{
         //var objArray: [Row] = []
+        print("Calc weight for \(char), with width \(width) and height \(height)")
         var result: Int16 = 0
         
 //        if(db == nil){
@@ -197,6 +198,7 @@ struct StringObject : Identifiable{
         
         //let objList = DB.QueryFor(dbConnection: DataStore.dbConnection, char: char, width: width, height: height)
         let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: char, width: width, height: height)
+
         
 //        func Predict() -> Int16 {
 //            Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
@@ -208,8 +210,10 @@ struct StringObject : Identifiable{
 //            return strObj
 //        }
         if (objList.count == 0){
+            print("     Pridict it as \(PredictFontSize(character: char, width: Double(width), height: Double(height)))")
            return Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
         }else{
+            print("     Found it in DB, size is \(objList[0].fontSize)")
             return objList[0].fontSize
         }
         
@@ -253,14 +257,12 @@ struct StringObject : Identifiable{
             }
         }
         let sortedValue = weightDict.values.sorted(by: >)
-        //let filtered = sortedValue.filter { $0.value ==  sortedValue[0]} //Return the first key from sorted Dict
         let filtered = weightDict.filter { $0.1 ==  sortedValue[0] }
         var result: Float = 0.0
         for (key, value) in filtered{
             result = result + Float(key)
         }
         result = result / Float(filtered.count)
-        //print("result:\(result)")
         return result
     }
     

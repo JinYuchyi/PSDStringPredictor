@@ -57,9 +57,10 @@ class TrackingDataManager  {
         request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
         //let predicate: NSPredicate
         if (fontSize != -1000 && fontTracking == -1000){
-            request.predicate = NSPredicate(format: "fontSize = %@ ", NSNumber(value: Int(fontSize)))
+            print("fontSize = \(NSNumber(value: Int(fontSize)))")
+            request.predicate = NSPredicate(format: "fontSize = %@", NSNumber(value: Int(fontSize)))
         }
-        if (fontSize != -1000 && fontTracking != -1000){
+        else if (fontSize != -1000 && fontTracking != -1000){
             request.predicate = NSPredicate(format: "fontSize = %@ and fontTracking = %@", NSNumber(value: Int(fontSize)), NSNumber(value: Int(fontTracking)))
         }
         
@@ -71,9 +72,16 @@ class TrackingDataManager  {
     }
     
     static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> [Int16]{
+        let fetchedResult = TrackingDataManager.FetchItems(context, fontSize: fontSize)
+        print("Fetching \(fontSize), result count is \(fetchedResult.count)")
+        if (fetchedResult.count != 0) {
+            //print("FetchNearestOne: \(fetchedResult.first!.fontSize), \(fetchedResult.first!.fontTracking)")
+            return [fetchedResult.first!.fontSize, fetchedResult.first!.fontTracking]
+        }
+        
         let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
         request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: false)]
-        request.predicate = NSPredicate(format: "fontSize <= %@ ", NSNumber(value: Int(fontSize)))
+        request.predicate = NSPredicate(format: "fontSize < %@ ", NSNumber(value: Int(fontSize)))
         
         let request1: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
         request1.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]

@@ -64,14 +64,16 @@ class DBViewModel: ObservableObject{
                     CharDataManager.Delete(AppDelegate().persistentContainer.viewContext)
 
                     let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
+                    //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
                     let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
-                    var index = 0
-                    for obj in objArray{
-                        CharDataManager.Create(AppDelegate().persistentContainer.viewContext, (obj.char), obj.fontSize, obj.width, obj.height)
-                        index += 1
-                    }
-                    
-                    print("\(index) of \(objArray.count) items have been filled into DB.")
+                    CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
+//                    var index = 0
+//                    for obj in objArray{
+//                        CharDataManager.Create(AppDelegate().persistentContainer.viewContext, (obj.char), obj.fontSize, obj.width, obj.height)
+//                        index += 1
+//                    }
+//
+//                    print("\(index) of \(objArray.count) items have been filled into DB.")
 
                 }
             }

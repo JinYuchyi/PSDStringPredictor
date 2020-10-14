@@ -105,7 +105,10 @@ struct ControlPanel: View {
     func Debug(){
 //        TrackingDataManager.Delete(viewContext)
 //        TrackingDataManager.Create(viewContext, 16, 50)
-        let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: 12)
+        //let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: 12)
+        let num = CharDataManager.FetchItems(viewContext)
+        //let items = TrackingDataManager.FetchItems(viewContext)
+        print(num.count)
 //        for item in objList{
 //            print("\(item.fontSize) - \(item.fontTracking)")
 //        }
