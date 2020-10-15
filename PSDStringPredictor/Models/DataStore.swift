@@ -35,7 +35,7 @@ class DataStore{
         charFrameList.removeAll()
         for i in 0 ..< stringObjectList.count {
             for j in 0 ..< stringObjectList[i].charRects.count{
-                let tmp = CharFrame(rect: stringObjectList[i].charRects[j], char: String(stringObjectList[i].charArray[j]))
+                let tmp = CharFrame(rect: stringObjectList[i].charRects[j], char: String(stringObjectList[i].charArray[j]), predictedSize: Int16(stringObjectList[i].charSizeList[j]))
                 charFrameList.append(tmp)
             }
         }

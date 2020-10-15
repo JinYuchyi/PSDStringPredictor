@@ -34,6 +34,7 @@ struct StringObject : Identifiable{
     var color: Color
     var charArray: [Character]
     var charRects: [CGRect]
+    var charSizeList: [CGFloat]
     var confidence: CGFloat
     
     //@EnvironmentObject var db: DB
@@ -53,6 +54,7 @@ struct StringObject : Identifiable{
         color = Color.black
         charArray = []
         charRects = []
+        charSizeList = []
         confidence = 0
         self.color = CalcColor()
     }
@@ -65,14 +67,16 @@ struct StringObject : Identifiable{
         self.observation = observation
         self.charArray = charArray
         self.charRects = charRacts
+        self.charSizeList = []
         self.tracking = 10
         self.color = Color.black
         self.confidence = confidence
         //self.color = CalcColor()
         //self.position = CalcPosition()
-        self.fontSize = CGFloat(CalcBestWeightForString())
+        self.fontSize = CGFloat(CalcBestWeightForString().0)
         self.tracking = FetchTrackingFromDB(self.fontSize)
         self.color = CalcColor()
+        self.charSizeList = CalcBestWeightForString().1
         //self.stringRect = ProcessStringRect(FromRect: stringRect)
         //data.stringObjectIndex = data.stringObjectIndex + 1
         //self.id = (data.stringObjectIndex)
@@ -98,7 +102,7 @@ struct StringObject : Identifiable{
                 result += CGFloat(trackingList[i])
             }
             result = result / CGFloat(trackingList.count)
-            result = result  / 1000
+            result = result  / 100
             print("\(content) tracking is \(result)")
             return result
         }
@@ -112,7 +116,7 @@ struct StringObject : Identifiable{
         //let raw = db.FindTrackingFromTableFont(size: Int64(size))
         //return CGFloat(raw)
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size))
-        return CGFloat(item.fontTracking)
+        return CGFloat(item.fontTracking)/1000
     }
     
     func CalcColor() -> Color {
@@ -221,17 +225,26 @@ struct StringObject : Identifiable{
 
     }
     
-    func CalcBestWeightForString()-> Int16{
+    func CalcBestWeightForString()-> (Int16, [CGFloat]){
 
-        var weightArray:[Int16] = []
+        var weightArray:[CGFloat] = []
+        var weightArrayForSave: [CGFloat] = []
         //Find weight for each character, and guess the best choice for the string's weight
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
                 var tempweight = CalcWeightForSingleChar(String(char), Int16(charRects[index].width), Int16(charRects[index].height))
                 //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
                 if (tempweight != 0){
-                    weightArray.append(tempweight)
+                    weightArray.append(CGFloat(tempweight))
                 }
+                
+                if(tempweight > 0){
+                    weightArrayForSave.append(CGFloat(tempweight))
+                }else{
+                    weightArrayForSave.append(-1)
+                }
+            }else{
+                weightArrayForSave.append(-1)
             }
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
@@ -241,19 +254,19 @@ struct StringObject : Identifiable{
         //var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) //Fix bug
         //var result = all.FindNearest(toNumber: Int(rawSizeNum.rounded()) )
         
-        return  (result.fontSize)
+        return  (result.fontSize, weightArrayForSave)
     }
     
-    private func FindBestWeightFromWeightArray(FromArray weightArray: [Int16]) -> Float{
+    private func FindBestWeightFromWeightArray(FromArray weightArray: [CGFloat]) -> Float{
         var weightDict: [Int16: Int16] = [:]
         for w in weightArray{
-            let keyExists = weightDict[w] != nil
+            let keyExists = weightDict[Int16(round(w))] != nil
             if keyExists == false { //If the weight is new
-                weightDict[w] = 1
+                weightDict[Int16(round(w))] = 1
             }
             else{
-                let index = weightDict[w]
-                weightDict[w] = index! + 1
+                let index = weightDict[Int16(round(w))]
+                weightDict[Int16(round(w))] = index! + 1
             }
         }
         let sortedValue = weightDict.values.sorted(by: >)

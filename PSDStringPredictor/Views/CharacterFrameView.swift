@@ -9,11 +9,13 @@
 import SwiftUI
 
 struct CharacterFrameView: View {
-    let imgUtil = ImageUtil()
-    @ObservedObject var imgProcess = imageProcessViewModel
-    //@ObservedObject var strObjVM = StringObjectViewModel()
     
     var charFrame: CharFrame
+    
+    let imgUtil = ImageUtil()
+    @ObservedObject var imgProcess = imageProcessViewModel
+    @State var overText: Bool = false
+
     var body: some View {
         ZStack{
             Rectangle()
@@ -27,11 +29,20 @@ struct CharacterFrameView: View {
                 .font(.custom("SF Pro Text", size: 18))
                 .foregroundColor(Color.pink.opacity(0.5))
                 //.position(x: charFrame.rect.midX, y: charFrame.rect.midY)
+            //Hover Window
+            if(overText == true){
+                HoverOnCharView(width: charFrame.rect.width, height: charFrame.rect.height, predictSize: String(charFrame.predictedSize), isVisible: true, positionX: charFrame.rect.midX, positionY: imgProcess.GetTargetImageSize()[1] - (self.charFrame.rect.minY ))
+                    .offset(x: 0, y: -60)
+            }
+
         }
         .onTapGesture {
             self.imgProcess.FetchImage()
             let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.rect.minX, PositionY: self.charFrame.rect.minY, Width: self.charFrame.rect.width, Height: self.charFrame.rect.height, MaskColor: CIColor.white)
             self.imgProcess.SetTargetProcessedImage(tmpImg)
+        }
+        .onHover{over in
+            overText = over
         }
         
     }

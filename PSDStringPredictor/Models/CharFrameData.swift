@@ -12,7 +12,7 @@ struct CharFrame: Identifiable{
     var id: UUID = UUID()
     var rect: CGRect
     var char: String
-    
+    var predictedSize: Int16
     
 }
 

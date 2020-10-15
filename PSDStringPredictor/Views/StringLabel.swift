@@ -59,7 +59,7 @@ struct StringLabel: View {
                 else{
                     Text(stringLabel.content)
                     .foregroundColor(stringLabel.color)
-                    .font(.custom("SF Pro Display", size: stringLabel.fontsize))
+                    .font(.custom("SF Pro Text", size: stringLabel.fontsize))
                     .tracking(stringLabel.tracking)
                     .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
 

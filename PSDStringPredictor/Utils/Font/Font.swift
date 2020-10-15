@@ -32,7 +32,7 @@ class FontUtils {
         //CTFrameDraw(<#T##frame: CTFrame##CTFrame#>, <#T##context: CGContext##CGContext#>)
         info.lineHeight = info.ascent + info.descent + info.leading
         
-        print(info)
+        //print(info)
         
         return info
     }
