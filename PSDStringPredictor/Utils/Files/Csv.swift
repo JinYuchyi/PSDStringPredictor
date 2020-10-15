@@ -53,7 +53,7 @@ class CSVManager{
             let c = Int16(itemArray[2])!
             let d = Int16(itemArray[3].replacingOccurrences(of: "\r", with: ""))!
             
-            objArray.append(CharDataObject(char: a,fontSize: b,height: c,width: d))
+            objArray.append(CharDataObject(char: a,fontSize: d,height: c,width: b))
             
         }
         return objArray

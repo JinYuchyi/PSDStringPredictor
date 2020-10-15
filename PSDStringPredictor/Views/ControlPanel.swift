@@ -106,15 +106,27 @@ struct ControlPanel: View {
 //        TrackingDataManager.Delete(viewContext)
 //        TrackingDataManager.Create(viewContext, 16, 50)
         //let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: 12)
-        let num = CharDataManager.FetchItems(viewContext)
+        //let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: "S", width: 10, height: 14)
+        //let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext)
         //let items = TrackingDataManager.FetchItems(viewContext)
-        print(num.count)
+        //print(objList.count)
 //        for item in objList{
 //            print("\(item.fontSize) - \(item.fontTracking)")
 //        }
 
 //        TrackingDataManager.Create(viewContext, 115, 150)
 //        TrackingDataManager.FetchItems(viewContext)
+        var charDatas:[CharDataObject] = []
+        let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
+        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
+        
+        request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", ("S"), NSNumber(value: 10), NSNumber(value: 14))
+        
+        let objs = (try? AppDelegate().persistentContainer.viewContext.fetch(request)) ?? []
+//        for item in objs {
+//            print(item.height)
+//        }
+        
         
     }
 

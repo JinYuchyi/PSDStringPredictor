@@ -79,18 +79,18 @@ struct ContentView: View {
 
                         CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
                         
-                        Rectangle()
-                            .fill(Color.red.opacity(0.2))
-                            .frame(width: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width, height: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height)
-                            .position(x: 50 , y: 100 )
-                            .onTapGesture {
-                        }
-                        
-                        Text("Flooy fird")
-                            .foregroundColor(Color.red)
-                            .font(.custom("SF Pro Display", size: 60))
-                            .tracking(1.0)
-                            .position(x: 50, y: 100)
+//                        Rectangle()
+//                            .fill(Color.red.opacity(0.2))
+//                            .frame(width: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width, height: font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height)
+//                            .position(x: 50 , y: 100 )
+//                            .onTapGesture {
+//                        }
+//                        
+//                        Text("Flooy fird")
+//                            .foregroundColor(Color.red)
+//                            .font(.custom("SF Pro Display", size: 60))
+//                            .tracking(1.0)
+//                            .position(x: 50, y: 100)
                     }
                     
                 }

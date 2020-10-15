@@ -202,7 +202,7 @@ struct StringObject : Identifiable{
         
         //let objList = DB.QueryFor(dbConnection: DataStore.dbConnection, char: char, width: width, height: height)
         let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: char, width: width, height: height)
-
+        
         
 //        func Predict() -> Int16 {
 //            Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
@@ -215,7 +215,7 @@ struct StringObject : Identifiable{
 //        }
         if (objList.count == 0){
             print("     Pridict it as \(PredictFontSize(character: char, width: Double(width), height: Double(height)))")
-           return Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
+            return Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
         }else{
             print("     Found it in DB, size is \(objList[0].fontSize)")
             return objList[0].fontSize
@@ -249,7 +249,7 @@ struct StringObject : Identifiable{
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
         var floatSize = FindBestWeightFromWeightArray(FromArray: weightArray)
-        print("floatsize:\(floatSize)")
+        //print("floatsize:\(floatSize)")
         let result = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize))
         //var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) //Fix bug
         //var result = all.FindNearest(toNumber: Int(rawSizeNum.rounded()) )

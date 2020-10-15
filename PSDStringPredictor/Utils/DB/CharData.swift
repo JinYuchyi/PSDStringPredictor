@@ -81,7 +81,7 @@ class CharDataManager{
             request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)), NSNumber(value: Int(height)))
         }
         else if (char != "" && fontSize == -1000 && width != -1000 && height != -1000){
-            request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)))
+            request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", (char), NSNumber(value: Int(width)), NSNumber(value: Int(height)))
         }
         
         let objs = (try? context.fetch(request)) ?? []
