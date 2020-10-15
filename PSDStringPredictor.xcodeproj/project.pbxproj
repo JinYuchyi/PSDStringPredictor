@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F0007BC252EF8AC0047574A /* Csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0007BB252EF8AC0047574A /* Csv.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
+		3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
 		3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */; };
 		3F308027251DD96600550DEA /* PixelProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308026251DD96600550DEA /* PixelProcess.swift */; };
@@ -79,6 +80,7 @@
 /* Begin PBXFileReference section */
 		3F0007BB252EF8AC0047574A /* Csv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Csv.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardObject.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
 		3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TextWeightTabularRegressor.mlmodel; sourceTree = "<group>"; };
 		3F308026251DD96600550DEA /* PixelProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelProcess.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				3FEBA6C6251CA87C002D8EC1 /* StringLabelObject.swift */,
 				3FDA0D392534111D007792C0 /* TrackingDataObject.swift */,
 				3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */,
+				3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				3FAAB48E25134FE800CB89B1 /* CharFrameData.swift in Sources */,
 				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
 				3F8208502510F8CE00832192 /* File.swift in Sources */,
+				3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */,
 				3F4CB5A9250A327E00E41082 /* NSImageExtension.swift in Sources */,
 				3FBA3A7C2510AFC900F041DC /* String.swift in Sources */,
 				3F820854251112BA00832192 /* FontTracking.swift in Sources */,

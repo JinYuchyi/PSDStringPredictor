@@ -12,7 +12,7 @@ class CSVManager{
     
     static let shared = CSVManager()
     
-    func ReadAllContentAsString(FromFile filePath: String) -> String{
+    private func ReadAllContentAsString(FromFile filePath: String) -> String{
         
         if FileManager.default.fileExists(atPath: filePath) {
             print("CSV file found.")
@@ -26,7 +26,7 @@ class CSVManager{
         return str!
     }
     
-    func ParsingCsvStringAsTrackingObjectArray(FromString str: String) -> [TrackingDataObject]{
+    private func ParsingCsvStringAsTrackingObjectArray(FromString str: String) -> [TrackingDataObject]{
         var objArray : [TrackingDataObject] = []
         let objStrArray = str.components(separatedBy: "\n")
         for index in 1..<objStrArray.count{
@@ -42,7 +42,7 @@ class CSVManager{
         return objArray
     }
     
-    func ParsingCsvStringAsCharObjArray(FromString str: String) -> [CharDataObject]{
+    private func ParsingCsvStringAsCharObjArray(FromString str: String) -> [CharDataObject]{
         var objArray : [CharDataObject] = []
         let objStrArray = str.components(separatedBy: "\n")
         for index in 1..<objStrArray.count{
@@ -57,5 +57,39 @@ class CSVManager{
             
         }
         return objArray
+    }
+    
+    private func ParsingCsvStringAsFontStandardArray(FromString str: String) -> [FontStandardObject]{
+        var objArray : [FontStandardObject] = []
+        let objStrArray = str.components(separatedBy: "\n")
+        for index in 1..<objStrArray.count{
+            //print("index: \(index)")
+            let itemArray = objStrArray[index].components(separatedBy: ",")
+            
+            let a = itemArray[0]
+            let b = itemArray[1]
+            let c = itemArray[2]
+            let d = Int16(itemArray[3])!
+            let e = Int16(itemArray[4].replacingOccurrences(of: "\r", with: ""))!
+            
+            objArray.append(FontStandardObject(os: a, style: FontStyleType.init(rawValue: b)!, weight: FontWeightType.init(rawValue: c)!, fontSize: d, lineHeight: e))
+            
+        }
+        return objArray
+    }
+    
+    func ParsingCsvFileAsTrackingObjectArray(FilePath path: String) -> [TrackingDataObject] {
+        let str = ReadAllContentAsString(FromFile: path)
+        return ParsingCsvStringAsTrackingObjectArray(FromString: str)
+    }
+    
+    func ParsingCsvFileAsCharObjArray(FilePath path: String) -> [CharDataObject] {
+        let str = ReadAllContentAsString(FromFile: path)
+        return ParsingCsvStringAsCharObjArray(FromString: str)
+    }
+    
+    func ParsingCsvFileAsFontStandardArray(FilePath path: String) -> [FontStandardObject] {
+        let str = ReadAllContentAsString(FromFile: path)
+        return ParsingCsvStringAsFontStandardArray(FromString: str)
     }
 }

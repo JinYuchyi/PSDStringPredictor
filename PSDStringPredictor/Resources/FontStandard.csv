@@ -1,0 +1,12 @@
+os,style,weight,size,lineHeight
+iOS14,LargeTitle,Regular,26,32
+iOS14,Title1,Regular,22,26
+iOS14,Title2,Regular,17,22
+iOS14,Title3,Regular,15,20
+iOS14,Headline,Bold,13,16
+iOS14,Subheadline,Regular,11,14
+iOS14,Body,Regular,13,16
+iOS14,Callout,Regular,12,15
+iOS14,Footnote,Regular,10,13
+iOS14,Caption1,Regular,10,13
+iOS14,Caption2,Medium,10,13

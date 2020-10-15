@@ -220,8 +220,8 @@ struct DB{
         var index:Int = 0
         //let readText = ReadTextFromFile()
         
-        let str = CSVManager.shared.ReadAllContentAsString(FromFile: DataStore.fontCsvPath)
-        let objArray = CSVManager.shared.ParsingCsvStringAsTrackingObjectArray(FromString: str)
+        //let str = CSVManager.shared.ReadAllContentAsString(FromFile: DataStore.fontCsvPath)
+        let objArray = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray(FilePath: DataStore.fontCsvPath)
         for obj in objArray{
             TableFontInsertItem(FontSize: Int64(obj.fontSize), Tracking: Int64(obj.fontTracking))
             index += 1

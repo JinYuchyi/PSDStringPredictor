@@ -37,8 +37,8 @@ class DBViewModel: ObservableObject{
                     //DB.shared.RefillFontDBFromCSV()
                     TrackingDataManager.Delete(AppDelegate().persistentContainer.viewContext)
 
-                    let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
-                    let objArray = CSVManager.shared.ParsingCsvStringAsTrackingObjectArray(FromString: str)
+                   // let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
+                    let objArray = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray(FilePath: panel.url!.path)
                     
                     TrackingDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, trackingObjectList: objArray)
 //                    var index = 0
@@ -65,9 +65,9 @@ class DBViewModel: ObservableObject{
                     //DB.shared.RefillFontDBFromCSV()
                     CharDataManager.Delete(AppDelegate().persistentContainer.viewContext)
 
-                    let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
+                    //let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
                     //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
-                    let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
+                    let objArray = CSVManager.shared.ParsingCsvFileAsCharObjArray(FilePath: panel.url!.path)
                     CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
 //                    var index = 0
 //                    for obj in objArray{

@@ -26,19 +26,8 @@ struct ContentView: View {
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
     
-
+    //var sta = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray
     
-//    @state var fontPosX = 50 + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.width
-//    @state var fontPosY = 100 + font.GetFontInfo(Font: "SF Pro Display", Content: "Flooyfird", Size: 60).size.height
-
-    //@ObservedObject var charFrameVM = charframe()
-    //let stringObjectViewModel = StringObjectViewModel()
-    
-//    var drag: some Gesture {
-//        DragGesture()
-//            .onChanged { _ in self.isDragging = true }
-//            .onEnded { _ in self.isDragging = false }
-//    }
     
 
     
@@ -76,7 +65,6 @@ struct ContentView: View {
                             //.gesture(drag)
                         LabelsOnImage(ShowPredictString: $ShowPredictString)
                         .blendMode(.difference)
-
                         CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
                         
 //                        Rectangle()
