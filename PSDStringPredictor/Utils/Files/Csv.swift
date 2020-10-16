@@ -63,9 +63,8 @@ class CSVManager{
         var objArray : [FontStandardObject] = []
         let objStrArray = str.components(separatedBy: "\n")
         for index in 1..<objStrArray.count{
-            //print("index: \(index)")
             let itemArray = objStrArray[index].components(separatedBy: ",")
-            
+
             let a = itemArray[0]
             let b = itemArray[1]
             let c = itemArray[2]
@@ -73,7 +72,6 @@ class CSVManager{
             let e = Int16(itemArray[4].replacingOccurrences(of: "\r", with: ""))!
             
             objArray.append(FontStandardObject(os: a, style: FontStyleType.init(rawValue: b)!, weight: FontWeightType.init(rawValue: c)!, fontSize: d, lineHeight: e))
-            
         }
         return objArray
     }

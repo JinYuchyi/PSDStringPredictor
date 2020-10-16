@@ -54,6 +54,24 @@ class DBViewModel: ObservableObject{
         }
     }
     
+    func ReloadStandardTable(){
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "csv" ) )
+                {
+                    //DataStore.fontCsvPath = panel.url!.path
+                    //DB.shared.RefillFontDBFromCSV()
+                    OSStandardManager.DeleteAll(AppDelegate().persistentContainer.viewContext)
+                    let objArray = CSVManager.shared.ParsingCsvFileAsFontStandardArray(FilePath: panel.url!.path)
+                    OSStandardManager.BatchInsert(AppDelegate().persistentContainer.viewContext, FontStandardObjectList: objArray)
+
+                }
+            }
+        }
+    }
+    
     func ReloadCharacterTable()  {
         let panel = NSOpenPanel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -69,13 +87,27 @@ class DBViewModel: ObservableObject{
                     //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
                     let objArray = CSVManager.shared.ParsingCsvFileAsCharObjArray(FilePath: panel.url!.path)
                     CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
-//                    var index = 0
-//                    for obj in objArray{
-//                        CharDataManager.Create(AppDelegate().persistentContainer.viewContext, (obj.char), obj.fontSize, obj.width, obj.height)
-//                        index += 1
-//                    }
-//
-//                    print("\(index) of \(objArray.count) items have been filled into DB.")
+
+                }
+            }
+        }
+    }
+    
+    func ReloadOSStandardTable()  {
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "csv" ) )
+                {
+                    //DataStore.fontCsvPath = panel.url!.path
+                    //DB.shared.RefillFontDBFromCSV()
+                    CharDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+
+                    //let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
+                    //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
+                    let objArray = CSVManager.shared.ParsingCsvFileAsCharObjArray(FilePath: panel.url!.path)
+                    CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
 
                 }
             }

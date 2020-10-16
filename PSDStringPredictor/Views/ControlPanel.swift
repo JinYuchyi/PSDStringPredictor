@@ -36,8 +36,8 @@ struct ControlPanel: View {
                 .frame(minWidth: 200, maxWidth: .infinity)
             }.padding(.horizontal, 40.0)
             
-            Button(action: {self.dbvm.ConnectDB()}){
-                Text("Connect Database")
+            Button(action: {self.dbvm.ReloadStandardTable()}){
+                Text("Reload Standard Table")
                 .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 
