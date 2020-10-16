@@ -32,11 +32,12 @@ class CSVManager{
         for index in 1..<objStrArray.count{
             //print("index: \(index)")
             let itemArray = objStrArray[index].components(separatedBy: ",")
+            let a = Int16(itemArray[0])!
             let b = Int16(itemArray[0])!
             let tmpStr = itemArray[1].replacingOccurrences(of: "\r", with: "")
-            let c = Int16(tmpStr)!
+            let c = Float(tmpStr)!
             
-            objArray.append(TrackingDataObject(fontSize: b, fontTracking: c))
+            objArray.append(TrackingDataObject(fontSize: a, fontTracking: b, fontTrackingPoints: c))
             
         }
         return objArray
@@ -52,7 +53,6 @@ class CSVManager{
             let b = Int16(itemArray[1])!
             let c = Int16(itemArray[2])!
             let d = Int16(itemArray[3].replacingOccurrences(of: "\r", with: ""))!
-            
             objArray.append(CharDataObject(char: a,fontSize: d,height: c,width: b))
             
         }
@@ -64,13 +64,11 @@ class CSVManager{
         let objStrArray = str.components(separatedBy: "\n")
         for index in 1..<objStrArray.count{
             let itemArray = objStrArray[index].components(separatedBy: ",")
-
             let a = itemArray[0]
             let b = itemArray[1]
             let c = itemArray[2]
             let d = Int16(itemArray[3])!
             let e = Int16(itemArray[4].replacingOccurrences(of: "\r", with: ""))!
-            
             objArray.append(FontStandardObject(os: a, style: FontStyleType.init(rawValue: b)!, weight: FontWeightType.init(rawValue: c)!, fontSize: d, lineHeight: e))
         }
         return objArray

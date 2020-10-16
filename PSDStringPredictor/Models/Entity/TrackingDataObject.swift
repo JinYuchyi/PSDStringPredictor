@@ -11,4 +11,5 @@ import Foundation
 struct TrackingDataObject{
     var fontSize: Int16
     var fontTracking: Int16
+    var fontTrackingPoints: Float
 }

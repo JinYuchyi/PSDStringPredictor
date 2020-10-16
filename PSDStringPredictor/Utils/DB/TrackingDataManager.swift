@@ -21,17 +21,17 @@ class TrackingDataManager  {
     
     private init(){}
     
-    static func Insert(_ context: NSManagedObjectContext, _ fontSize: Int16, _ fontTracking: Int16){
+    static func Insert(_ context: NSManagedObjectContext, _ fontSize: Int16, _ fontTracking: Int16, _ fontTrackingPoints: Float){
         
         let items = FetchItems(context, fontSize: fontSize, fontTracking: fontTracking)
-        print(items.count)
+        //print(items.count)
         if (items.count == 0){
             print("Saving context.")
             
             let newTracking = TrackingData(context: context)
             newTracking.fontSize = fontSize
             newTracking.fontTracking = fontTracking
-            
+            newTracking.fontTrackingPoints = fontTrackingPoints
             try? context.save()
         }
         else{
@@ -46,11 +46,12 @@ class TrackingDataManager  {
             var tmpItem: [String: Any] = [:]
             tmpItem["fontSize"] = item.fontSize
             tmpItem["fontTracking"] = item.fontTracking
+            tmpItem["fontTrackingPoints"] = item.fontTrackingPoints
             objects.append(tmpItem)
         }
         
         context.perform {
-            let insertRequest = NSBatchInsertRequest(entityName: "CharacterData", objects: objects)
+            let insertRequest = NSBatchInsertRequest(entityName: "TrackingData", objects: objects)
             let insertResult = try? context.execute(insertRequest) as! NSBatchInsertResult
             let success = insertResult?.result as! Bool
             print("Batch insert \(success)")
@@ -84,7 +85,7 @@ class TrackingDataManager  {
         
         let objs = (try? context.fetch(request)) ?? []
         for item in objs {
-            trackingDatas.append(TrackingDataObject(fontSize: item.fontSize, fontTracking: item.fontTracking))
+            trackingDatas.append(TrackingDataObject(fontSize: item.fontSize, fontTracking: item.fontTracking, fontTrackingPoints: item.fontTrackingPoints))
         }
         print("fontSize = \(NSNumber(value: Int(fontSize))), count = \(objs.count)")
 
@@ -118,10 +119,11 @@ class TrackingDataManager  {
         if (size1 > 0 && size > 0){
             let dist = abs(size - fontSize)
             let dist1 = abs(size1 - fontSize)
-            return dist <= dist1 ? TrackingDataObject(fontSize: objs.first!.fontSize, fontTracking: objs.first!.fontTracking) :  TrackingDataObject(fontSize: objs1.first!.fontSize, fontTracking: objs1.first!.fontTracking)
+            return dist <= dist1 ? TrackingDataObject(fontSize: objs.first!.fontSize, fontTracking: objs.first!.fontTracking, fontTrackingPoints: objs.first!.fontTrackingPoints) :
+                TrackingDataObject(fontSize: objs1.first!.fontSize, fontTracking: objs1.first!.fontTracking, fontTrackingPoints: objs1.first!.fontTrackingPoints)
         }
         else{
-            return TrackingDataObject(fontSize: 0, fontTracking: 0)
+            return TrackingDataObject(fontSize: 0, fontTracking: 0, fontTrackingPoints: 0)
         }
     }
     

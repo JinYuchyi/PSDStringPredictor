@@ -18,8 +18,7 @@ func PredictFontTracking (str1: String, str2: String, fontsize: Double, distance
         }
         
         output = Double(predict.Tracking)
-        
-        //print("ML predict: \(output)")
+
     }
     catch
     {

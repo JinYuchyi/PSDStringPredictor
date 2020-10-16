@@ -22,7 +22,6 @@ enum FontWeightType: String,CaseIterable {
     case Regular = "Regular"
     case Medium = "Medium"
     case Bold = "Bold"
-    case Empty = "Empty"
 }
 
 enum FontStyleType: String,CaseIterable{
@@ -37,5 +36,4 @@ enum FontStyleType: String,CaseIterable{
     case Footnote = "Footnote"
     case Caption1 = "Caption1"
     case Caption2 = "Caption2"
-    case Empty = "Empty"
 }

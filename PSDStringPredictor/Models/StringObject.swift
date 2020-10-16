@@ -85,38 +85,38 @@ struct StringObject : Identifiable{
 
        }
     
-    func CalcTracking() -> CGFloat {
-        var trackingList: [Double] = []
-        for i in 0...charArray.count-2 {
-            if (charArray[i].isLowercase && charArray[i+1].isLowercase){
-                var dist = abs(charRects[i].minX - charRects[i+1].minX)
-                let t = PredictFontTracking(str1: String(charArray[i]), str2: String(charArray[i+1]), fontsize: Double(fontSize), distance: Double(dist))
-                print("Tracking of \(String(charArray[i])) and \(String(charArray[i+1])) is \(t), weight is \(fontSize)")
-
-                trackingList.append(t)
-            }
-        }
-        if (trackingList.count > 0){
-            var result: CGFloat = 0
-            for i in 0...trackingList.count - 1 {
-                result += CGFloat(trackingList[i])
-            }
-            result = result / CGFloat(trackingList.count)
-            result = result  / 100
-            print("\(content) tracking is \(result)")
-            return result
-        }
-        else {
-            return 0
-        }
-        
-    }
+//    func CalcTracking() -> CGFloat {
+//        var trackingList: [Double] = []
+//        for i in 0...charArray.count-2 {
+//            if (charArray[i].isLowercase && charArray[i+1].isLowercase){
+//                var dist = abs(charRects[i].minX - charRects[i+1].minX)
+//                let t = PredictFontTracking(str1: String(charArray[i]), str2: String(charArray[i+1]), fontsize: Double(fontSize), distance: Double(dist))
+//                print("Tracking of \(String(charArray[i])) and \(String(charArray[i+1])) is \(t), weight is \(fontSize)")
+//
+//                trackingList.append(t)
+//            }
+//        }
+//        if (trackingList.count > 0){
+//            var result: CGFloat = 0
+//            for i in 0...trackingList.count - 1 {
+//                result += CGFloat(trackingList[i])
+//            }
+//            result = result / CGFloat(trackingList.count)
+//            result = result  / 100
+//            return result
+//        }
+//        else {
+//            return 0
+//        }
+//
+//    }
     
     func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
         //let raw = db.FindTrackingFromTableFont(size: Int64(size))
         //return CGFloat(raw)
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size))
         return CGFloat(item.fontTracking)/1000
+        //return CGFloat(item.fontTrackingPoints)
     }
     
     func CalcColor() -> Color {
@@ -192,7 +192,7 @@ struct StringObject : Identifiable{
     
     func CalcWeightForSingleChar(_ char: String, _ width: Int16, _ height: Int16) -> Int16{
         //var objArray: [Row] = []
-        print("Calc weight for \(char), with width \(width) and height \(height)")
+        //print("Calc weight for \(char), with width \(width) and height \(height)")
         var result: Int16 = 0
         
 //        if(db == nil){
@@ -229,10 +229,11 @@ struct StringObject : Identifiable{
 
         var weightArray:[CGFloat] = []
         var weightArrayForSave: [CGFloat] = []
-        //Find weight for each character, and guess the best choice for the string's weight
+        //Find weight for each character
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
-                var tempweight = CalcWeightForSingleChar(String(char), Int16(charRects[index].width), Int16(charRects[index].height))
+                
+                var tempweight = CalcWeightForSingleChar(String(char), Int16((charRects[index].width.rounded())), Int16(charRects[index].height.rounded()))
                 //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
                 if (tempweight != 0){
                     weightArray.append(CGFloat(tempweight))
@@ -249,13 +250,14 @@ struct StringObject : Identifiable{
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
         var floatSize = FindBestWeightFromWeightArray(FromArray: weightArray)
-        //print("floatsize:\(floatSize)")
-        let result = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize))
-        //var all = Array(try! DataStore.dbConnection.prepare(TABLE_CHARACTER)) //Fix bug
-        //var result = all.FindNearest(toNumber: Int(rawSizeNum.rounded()) )
         
-        return  (result.fontSize, weightArrayForSave)
+
+        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize))
+        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize)) //Fetch nearest item from standard table
+        return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave)
     }
+    
+    
     
     private func FindBestWeightFromWeightArray(FromArray weightArray: [CGFloat]) -> Float{
         var weightDict: [Int16: Int16] = [:]

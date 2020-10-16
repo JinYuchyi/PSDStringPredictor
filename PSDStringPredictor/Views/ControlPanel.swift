@@ -73,7 +73,6 @@ struct ControlPanel: View {
                 .frame(minWidth: 200, maxWidth: .infinity)
             }
             .frame(minWidth: 400, maxWidth: .infinity)
-
             
             Button(action: {self.Debug()}){
                 Text("Debug")
@@ -103,30 +102,11 @@ struct ControlPanel: View {
 
     
     func Debug(){
-//        TrackingDataManager.Delete(viewContext)
-//        TrackingDataManager.Create(viewContext, 16, 50)
-        //let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: 12)
-        //let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: "S", width: 10, height: 14)
-        //let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext)
-        //let items = TrackingDataManager.FetchItems(viewContext)
-        //print(objList.count)
-//        for item in objList{
-//            print("\(item.fontSize) - \(item.fontTracking)")
-//        }
-
-//        TrackingDataManager.Create(viewContext, 115, 150)
-//        TrackingDataManager.FetchItems(viewContext)
-        var charDatas:[CharDataObject] = []
-        let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
-        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
-        
-        request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", ("S"), NSNumber(value: 10), NSNumber(value: 14))
-        
+        let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
+        //request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
+        //request.predicate = NSPredicate(format: "char = %@ and width = %@ ", "h", NSNumber(value: Int(8)))
         let objs = (try? AppDelegate().persistentContainer.viewContext.fetch(request)) ?? []
-//        for item in objs {
-//            print(item.height)
-//        }
-        
+        print(objs.count)
         
     }
 
