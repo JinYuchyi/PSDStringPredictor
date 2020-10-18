@@ -87,7 +87,7 @@ class TrackingDataManager  {
         for item in objs {
             trackingDatas.append(TrackingDataObject(fontSize: item.fontSize, fontTracking: item.fontTracking, fontTrackingPoints: item.fontTrackingPoints))
         }
-        print("fontSize = \(NSNumber(value: Int(fontSize))), count = \(objs.count)")
+        //print("fontSize = \(NSNumber(value: Int(fontSize))), count = \(objs.count)")
 
         return trackingDatas
     }
@@ -95,7 +95,7 @@ class TrackingDataManager  {
     static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> TrackingDataObject{
         //var object: TrackingDataObject
         let fetchedResult = TrackingDataManager.FetchItems(context, fontSize: fontSize)
-        print("Fetching \(fontSize), result count is \(fetchedResult.count)")
+        //print("Fetching \(fontSize), result count is \(fetchedResult.count)")
 
         if (fetchedResult.count > 0) {
             //print("FetchNearestOne: \(fetchedResult.first!.fontSize), \(fetchedResult.first!.fontTracking)")
@@ -104,7 +104,7 @@ class TrackingDataManager  {
         
         let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
         request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: false)]
-        request.predicate = NSPredicate(format: "fontSize < %@ ", NSNumber(value: Int(fontSize)))
+        request.predicate = NSPredicate(format: "fontSize <= %@ ", NSNumber(value: Int(fontSize)))
         
         let request1: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
         request1.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
@@ -112,9 +112,11 @@ class TrackingDataManager  {
         
         let objs = (try? context.fetch(request)) ?? []
         let objs1 = (try? context.fetch(request1)) ?? []
-        
+                
         let size = objs.first?.fontSize ?? 0
         let size1 = objs1.first?.fontSize ?? 0
+        
+        //print("Tracking points: \(objs.first!.fontTrackingPoints), \(objs1.first!.fontTrackingPoints)")
         
         if (size1 > 0 && size > 0){
             let dist = abs(size - fontSize)

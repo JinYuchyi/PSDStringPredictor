@@ -33,10 +33,9 @@ class CSVManager{
             //print("index: \(index)")
             let itemArray = objStrArray[index].components(separatedBy: ",")
             let a = Int16(itemArray[0])!
-            let b = Int16(itemArray[0])!
-            let tmpStr = itemArray[1].replacingOccurrences(of: "\r", with: "")
+            let b = Int16(itemArray[1])!
+            let tmpStr = itemArray[2].replacingOccurrences(of: "\r", with: "")
             let c = Float(tmpStr)!
-            
             objArray.append(TrackingDataObject(fontSize: a, fontTracking: b, fontTrackingPoints: c))
             
         }

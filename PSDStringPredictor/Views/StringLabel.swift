@@ -48,19 +48,21 @@ struct StringLabel: View {
             
             if ShowPredictString == true {
                 //Base on font size, define the font
-                if stringLabel.fontsize < 20 {
+                if stringLabel.fontsize < 60 {
                     Text(stringLabel.content)
-                    .foregroundColor(stringLabel.color)
-                    .font(.custom("SF Pro Text", size: stringLabel.fontsize))
-                    .tracking(stringLabel.tracking)
+                    //.foregroundColor(stringLabel.color)
+                    //.font(.custom("SF Pro Text", size: stringLabel.fontsize))
+                    //.tracking(stringLabel.tracking)
+                        .font(.system(size: stringLabel.fontsize))
                     .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
 
                 }
                 else{
                     Text(stringLabel.content)
-                    .foregroundColor(stringLabel.color)
-                    .font(.custom("SF Pro Text", size: stringLabel.fontsize))
-                    .tracking(stringLabel.tracking)
+                    //.foregroundColor(stringLabel.color)
+                    //.font(.custom("SF Pro Text", size: stringLabel.fontsize))
+                    //.tracking(stringLabel.tracking)
+                        .font(.system(size: stringLabel.fontsize))
                     .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
 
                 }

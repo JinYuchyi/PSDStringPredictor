@@ -106,7 +106,9 @@ struct ControlPanel: View {
         //request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
         //request.predicate = NSPredicate(format: "char = %@ and width = %@ ", "h", NSNumber(value: Int(8)))
         let objs = (try? AppDelegate().persistentContainer.viewContext.fetch(request)) ?? []
-        print(objs.count)
+        for o in objs {
+            print(o.fontTrackingPoints)
+        }
         
     }
 

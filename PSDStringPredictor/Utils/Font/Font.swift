@@ -9,7 +9,7 @@
 import Foundation
 
 class FontUtils {
-    func GetFontInfo(Font font: String, Content content: String, Size size: CGFloat) -> (ascent: CGFloat, descent: CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect ) {
+    static func GetFontInfo(Font font: String, Content content: String, Size size: CGFloat) -> (ascent: CGFloat, descent: CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect ) {
         var info: (ascent:CGFloat, descent:CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect )
         
 //        let fontDescriptorAttributes = [
@@ -29,10 +29,9 @@ class FontUtils {
         info.descent = CTFontGetDescent(font)
         info.leading = CTFontGetLeading(font)
         info.size = CTFontGetBoundingBox(font)
+        
         //CTFrameDraw(<#T##frame: CTFrame##CTFrame#>, <#T##context: CGContext##CGContext#>)
         info.lineHeight = info.ascent + info.descent + info.leading
-        
-        //print(info)
         
         return info
     }

@@ -112,11 +112,11 @@ struct StringObject : Identifiable{
 //    }
     
     func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
-        //let raw = db.FindTrackingFromTableFont(size: Int64(size))
-        //return CGFloat(raw)
+
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size))
-        return CGFloat(item.fontTracking)/1000
-        //return CGFloat(item.fontTrackingPoints)
+        //return CGFloat(item.fontTracking)/1000
+        //print("item.fontTrackingPoints ",item.fontTrackingPoints)
+        return CGFloat(item.fontTrackingPoints)
     }
     
     func CalcColor() -> Color {
@@ -145,45 +145,62 @@ struct StringObject : Identifiable{
             fontName = "SFProText-Regular"
         }
         
-//        let font = fontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize)
-//
-//        self.position = [self.position[0], self.position[1]  ]
-//        stringRect = CGRect(x: stringRect.minX, y: stringRect.minY, width: stringRect.width, height: stringRect.height)
+        //Condition of if has p,q,g,y,j character in string,
+        //We have to adjust string position and size
         var n: CGFloat = 0
         var n1: CGFloat = 0
+        var hasLongTail = false
         for (index, c) in charArray.enumerated() {
-            if (c.isLowercase && c.isLetter){
+            //if (c.isLowercase && c.isLetter){
                 if (
                     c == "p" ||
                     c == "q" ||
                     c == "g" ||
                     c == "y" ||
-                    c == "j"
+                    c == "j" ||
+                    c == "," ||
+                    c == ";"
                     ) {
-                    highLetterEvenHeight += charRects[index].height
-                    n += 1
+//                    highLetterEvenHeight += charRects[index].height
+//                    n += 1
+                    hasLongTail = true
                 }
-                else{
-                    lowerLetterEvenHeight += charRects[index].height
-                    n1 += 1
-                }
-            }
+//                else{
+//                    lowerLetterEvenHeight += charRects[index].height
+//                    n1 += 1
+//                }
+            //}
+            
+//            if (c == "," || c == ";"){
+//                hasComma = true
+//            }
         }
         
         //Calc the descent value
+//        var descent: CGFloat = 0
+//        if (n != 0){
+//            highLetterEvenHeight = highLetterEvenHeight / n
+//        }
+//        if (n1 != 0){
+//            lowerLetterEvenHeight = lowerLetterEvenHeight / n1
+//        }
+//        if (highLetterEvenHeight == 0){
+//            descent = 0
+//        }
+//        else{
+//            descent = highLetterEvenHeight - lowerLetterEvenHeight
+//        }
+        
+        //Condition if we have , or ; in string
+        //We have to adjust string position and size
+//        if(hasComma == true){
+//            //descent = highLetterEvenHeight - lowerLetterEvenHeight
+//        }
         var descent: CGFloat = 0
-        if (n != 0){
-            highLetterEvenHeight = highLetterEvenHeight / n
+        if hasLongTail == true{
+            descent = FontUtils.GetFontInfo(Font: "SF Pro Text", Content: content, Size: fontSize).descent
         }
-        if (n1 != 0){
-            lowerLetterEvenHeight = lowerLetterEvenHeight / n1
-        }
-        if (highLetterEvenHeight == 0){
-            descent = 0
-        }
-        else{
-            descent = highLetterEvenHeight - lowerLetterEvenHeight
-        }
+
 
         stringRect = CGRect(x: stringRect.origin.x, y: stringRect.origin.y + descent, width: stringRect.width, height: stringRect.height - descent)
         
@@ -250,8 +267,6 @@ struct StringObject : Identifiable{
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
         var floatSize = FindBestWeightFromWeightArray(FromArray: weightArray)
-        
-
         let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize))
         let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize)) //Fetch nearest item from standard table
         return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave)
