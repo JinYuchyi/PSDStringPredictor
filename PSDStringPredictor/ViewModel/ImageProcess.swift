@@ -155,12 +155,30 @@ final class ImageStore {
 }
 
 func ChangeGamma(_ image: CIImage, _ value: CGFloat) -> CIImage? {
-    print("Change gamma value: \(value)")
-    
+    //print("Change gamma value: \(value)")
     let filter = CIFilter(name: "CIGammaAdjust")
     //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
     filter?.setValue(image, forKey: kCIInputImageKey)
     filter?.setValue(value, forKey: "inputPower")
+    let filteredImage = filter?.outputImage
+    return filteredImage
+}
+
+func ChangeExposure(_ image: CIImage, _ value: CGFloat = 0.5)-> CIImage?{
+    let filter = CIFilter(name: "CIExposureAdjust")
+    //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
+    filter?.setValue(image, forKey: kCIInputImageKey)
+    filter?.setValue(value, forKey: "inputEV")
+    let filteredImage = filter?.outputImage
+    return filteredImage
+}
+
+//Default is 0.4
+func ChangeSharpen(_ image: CIImage, _ value: CGFloat = 0.4)-> CIImage?{
+    let filter = CIFilter(name: "CISharpenLuminance")
+    //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
+    filter?.setValue(image, forKey: kCIInputImageKey)
+    filter?.setValue(value, forKey: "inputSharpness")
     let filteredImage = filter?.outputImage
     return filteredImage
 }

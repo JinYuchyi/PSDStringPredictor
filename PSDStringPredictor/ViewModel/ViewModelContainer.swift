@@ -10,4 +10,5 @@ import Foundation
 import SwiftUI
 var imageProcessViewModel: ImageProcess = ImageProcess()
 var stringObjectViewModel = StringObjectViewModel()
+var imagePropertyViewModel = ImagePropertyViewModel()
 

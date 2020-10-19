@@ -31,33 +31,11 @@ struct ImageView: View {
                 else{
                     ZStack{
                         Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
-
                     }
                 }
         }
     }
-    
- 
-//    func BtnLoadImage() {
-//        let panel = NSOpenPanel()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            let result = panel.runModal()
-//            if result == .OK{
-//                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
-//                {
-//                    let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
-//                    self.imageViewModel.SetTargetNSImage(tmp)
-//                    print("After select: \(self.imageViewModel.targetImageProcessed.extent.width)")
-//                    self.showImg = true
-//                    
-//
-//                }
-//                
-//            }
-//        }
-//        
-//        //return true
-//    }
+
 }
 
 //struct GetShowContent: View{

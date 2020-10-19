@@ -12,14 +12,15 @@ struct LabelsOnImage: View {
     //@ObservedObject var stringObjectList: StringObjectList
     @ObservedObject var imageProcess: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM : StringObjectViewModel = stringObjectViewModel
-    @Binding var ShowPredictString: Bool
+//    @Binding var showPredictString: Bool
+//    @Binding var showDebugOverlay: Bool
     
     
     var body: some View {
         
         ForEach(stringObjectVM.StringLabelListData, id:\.id){ item in
             
-            StringLabel(ShowPredictString: self.$ShowPredictString, stringLabel: item)
+            StringLabel(stringLabel: item)
 //            StringLabel(
 //                position: item.position,
 //                height: item.height,

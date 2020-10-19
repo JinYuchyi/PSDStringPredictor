@@ -116,6 +116,7 @@ struct StringObject : Identifiable{
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size))
         //return CGFloat(item.fontTracking)/1000
         //print("item.fontTrackingPoints ",item.fontTrackingPoints)
+        //return CGFloat(item.fontTrackingPoints)
         return CGFloat(item.fontTrackingPoints)
     }
     

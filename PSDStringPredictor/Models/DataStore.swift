@@ -25,6 +25,8 @@ class DataStore{
     static var charFrameIndex = 0
     static var charFrameList: [CharFrame] = []
     static var fontStandardObjectList: [FontStandardObject] = []
+    //Image Property
+    static var colorMode = -1 // 1 = Light mode, 2 = Dark Mode
 
     static var logListData = [
         LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),

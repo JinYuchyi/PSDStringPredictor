@@ -9,21 +9,22 @@
 import SwiftUI
 
 struct StringLabel: View {
-//    var id : UUID = UUID()
-//    var position: [CGFloat]
-//    var height: CGFloat
-//    var width: CGFloat
-//    var fontsize: CGFloat = 50//SetFontSize()
-//    var tracking: CGFloat
-//    var content: String
-//    var color: Color
+    //    var id : UUID = UUID()
+    //    var position: [CGFloat]
+    //    var height: CGFloat
+    //    var width: CGFloat
+    //    var fontsize: CGFloat = 50//SetFontSize()
+    //    var tracking: CGFloat
+    //    var content: String
+    //    var color: Color
     
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @Binding var ShowPredictString: Bool
+//    @Binding var showPredictString: Bool
+//    @Binding var showDebugOverlay: Bool
     
     var stringLabel: StringLabelObject
     
-
+    
     func OnTap(){
         print()
     }
@@ -33,52 +34,57 @@ struct StringLabel: View {
             
             //Rect of original position
             Rectangle()
-            .fill(Color.red.opacity(1))
-            .frame(width: 10, height: 10)
-            .position(x: stringLabel.position[0] , y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] )
+                .fill(Color.red.opacity(1))
+                .frame(width: 4, height: 4)
+                .position(x: stringLabel.position[0] , y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] )
                 .onTapGesture {
                     print("\(self.imageViewModel.GetTargetImageSize()[1] - self.stringLabel.position[1] )")
-            }
-
-            Rectangle()
-            .stroke(Color.red, lineWidth: 2)
-            .frame(width: stringLabel.width, height: stringLabel.height)
-            .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
-
+                }
             
-            if ShowPredictString == true {
+            Rectangle()
+                .fill(Color.black.opacity(0.3))
+                .frame(width: stringLabel.width, height: stringLabel.height)
+                .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
+            
+            Rectangle()
+                .stroke(Color.red, lineWidth: 1)
+                .frame(width: stringLabel.width, height: stringLabel.height)
+                .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
+            
+            
+            //if showPredictString == true {
                 //Base on font size, define the font
-                if stringLabel.fontsize < 60 {
+                if stringLabel.fontsize < 20 {
                     Text(stringLabel.content)
-                    //.foregroundColor(stringLabel.color)
-                    //.font(.custom("SF Pro Text", size: stringLabel.fontsize))
-                    //.tracking(stringLabel.tracking)
-                        .font(.system(size: stringLabel.fontsize))
-                    .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
-
+                        .foregroundColor(stringLabel.color)
+                        .font(.custom("SF Pro Text", size: stringLabel.fontsize))
+                        .tracking(stringLabel.tracking)
+                        //.font(.system(size: stringLabel.fontsize))
+                        .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
+                    
                 }
                 else{
                     Text(stringLabel.content)
-                    //.foregroundColor(stringLabel.color)
-                    //.font(.custom("SF Pro Text", size: stringLabel.fontsize))
-                    //.tracking(stringLabel.tracking)
+                        .foregroundColor(stringLabel.color)
+                        .font(.custom("SF Pro Display", size: stringLabel.fontsize))
+                        .tracking(stringLabel.tracking)
                         .font(.system(size: stringLabel.fontsize))
-                    .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
-
+                        .position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.position[1] - stringLabel.height/2  )
+                    
                 }
                 
-            }
-
-               
+            //}
+            
+            
         }
-
+        
         //.position(x: stringLabel.position[0] + stringLabel.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
-
-//        func CGPositionToSwiftPosition(From pos: [Int]) -> [Int] {
-//            let newX = stringLabel.position[0] + stringLabel.width/2
-//            let newY = imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2
-//            return  [newX, newY]
-//        }
+        
+        //        func CGPositionToSwiftPosition(From pos: [Int]) -> [Int] {
+        //            let newX = stringLabel.position[0] + stringLabel.width/2
+        //            let newY = imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2
+        //            return  [newX, newY]
+        //        }
         
         
     }

@@ -42,7 +42,7 @@ struct CharacterFrameView: View {
             self.imgProcess.SetTargetProcessedImage(tmpImg)
         }
         .onHover{over in
-            overText = over
+            self.overText = over
         }
         
     }

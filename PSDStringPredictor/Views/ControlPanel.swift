@@ -22,6 +22,7 @@ struct ControlPanel: View {
     var pixelProcess = PixelProcess()
     var db = DB()
     var training = MLTraining()
+    let imagePropertyVM = imagePropertyViewModel
     //@ObservedObject var data: DataStore
     @Binding var showImage: Bool
     @Environment(\.managedObjectContext) private var viewContext
@@ -92,9 +93,14 @@ struct ControlPanel: View {
                     let tmp = NSImage(imageUrlPath: panel.url!.path)
                     self.imageProcess.SetTargetNSImage(tmp)
                     self.showImage = true
+                    
+                    let index = ColorModeClassifier.PredictColorMode(fromImage: DataStore.targetImageProcessed)
+                    self.imagePropertyVM.SetImageColorMode(modeIndex: index)
+                    print(index)
                 }
             }
         }
+
     }
     
 
