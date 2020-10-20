@@ -13,32 +13,46 @@ import Vision
 import ImageIO
 
 class FontWeightPredict{
-    
-    func Predict(ciimage: CIImage) -> String {
-        let model = try? VNCoreMLModel(for: FontWeightClassifier().model)
-        
-        
-        let request = VNCoreMLRequest(model: model, completionHandler: processResults)
-        let handler = VNImageRequestHandler(ciImage: ciimage)
-        
-        guard let results = request.results as? [VNClassificationObservation] else {
-            fatalError("Could not get results from ML Vision requests")
+    //var topResult: VNClassificationObservation = VNClassificationObservation.init()
+    var predictResult: String = ""
+
+    func detectImage(img: CIImage)  {
+        //var topResult: VNClassificationObservation = VNClassificationObservation.init()
+        // 1. Try and load the model
+        guard let model = try? VNCoreMLModel(for: FontWeightClassifier().model) else {
+            fatalError("Failed to load model")
         }
         
-        for classification in results {
+        // 2. Create a vision request
+        let request = VNCoreMLRequest(model: model) { [weak self] request, error in
+            guard let results = request.results as? [VNClassificationObservation],
+                  let topResult = results.first
+            else {
+                fatalError("Unexpected results")
+            }
             
-            if classification.confidence > bestConfidence {
-                
-                bestConfidence = classification.confidence
-                //bestPrediction = classification.identifier
+            self!.predictResult = topResult.identifier
+            // 3. Update the Main UI Thread with our result
+            //                DispatchQueue.main.async { [weak self] in
+            //                    self?.lblResult.text = "\(topResult.identifier) with \(Int(topResult.confidence * 100))% confidence"
+            //                }
+        }
+        
+        //            guard let ciImage = CIImage(image: self.myPhoto.image!)
+        //                else { fatalError("Cant create CIImage from UIImage") }
+        
+        // 4. Run the googlenetplaces classifier
+        let handler = VNImageRequestHandler(ciImage: img)
+        DispatchQueue.global().async {
+            do {
+                try handler.perform([request])
+            } catch {
+                print(error)
             }
         }
-        
-        return classification.identifier
-        
-        //try! handler.perform([ request ])
+        //request.results!.first
+
     }
-
-
+    
 }
 
