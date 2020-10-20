@@ -27,7 +27,7 @@ struct ControlPanel: View {
     @Binding var showImage: Bool
     @Environment(\.managedObjectContext) private var viewContext
     let trackingData = TrackingDataManager.shared
-    
+    let colorModeClassifier = ColorModeClassifier()
 
     
     var body: some View {
@@ -94,9 +94,9 @@ struct ControlPanel: View {
                     self.imageProcess.SetTargetNSImage(tmp)
                     self.showImage = true
                     
-                    let index = ColorModeClassifier.PredictColorMode(fromImage: DataStore.targetImageProcessed)
-                    self.imagePropertyVM.SetImageColorMode(modeIndex: index)
-                    print(index)
+                    colorModeClassifier.Prediction(ciImage: DataStore.targetImageProcessed)
+                    self.imagePropertyVM.SetImageColorMode(modeIndex: DataStore.colorMode)
+                    print(DataStore.colorMode)
                 }
             }
         }
