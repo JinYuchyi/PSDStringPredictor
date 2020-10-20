@@ -28,6 +28,14 @@ extension CIImage{
     
     }
     
+    func GetCroppedImages(rects: [CGRect]) -> [CIImage]{
+        var imgs :[CIImage] = []
+        for rect in rects {
+            imgs.append(self.cropped(to: rect))
+        }
+        return imgs
+    }
+    
     func ToPNG(url: URL){
         //let newimg = self.cropped(to: rect)
         let nsimg = self.ToNSImage()

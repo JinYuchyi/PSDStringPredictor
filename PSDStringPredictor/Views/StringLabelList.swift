@@ -18,9 +18,10 @@ struct LabelsOnImage: View {
     
     var body: some View {
         
-        ForEach(stringObjectVM.StringLabelListData, id:\.id){ item in
+        ForEach(stringObjectVM.stringObjectListData, id:\.id){ item in
             
             StringLabel(stringLabel: item)
+                
 //            StringLabel(
 //                position: item.position,
 //                height: item.height,

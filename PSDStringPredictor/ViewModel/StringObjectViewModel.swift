@@ -30,8 +30,9 @@ class StringObjectViewModel: ObservableObject{
     @Published var stringObjectListData: [StringObject] = []
     @Published var charFrameListData: [CharFrame] = []
     @Published var charFrameListRects: [CGRect] = []
-    @Published var StringLabelListData: [StringLabelObject] = []
-    
+    //@Published var StringLabelListData: [StringLabelObject] = []
+    @Published var selectedStringObject: StringObject = StringObject.init()
+    @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
     
     func PredictStrings()  {
         stringObject.PredictStringObjects(FromCIImage: DataStore.targetImageProcessed)
@@ -39,7 +40,7 @@ class StringObjectViewModel: ObservableObject{
         DataStore.FillCharFrameList()
         FetchCharFrameListData()
         FetchCharFrameListRects()
-        FetchStringLabelList()
+        //FetchStringLabelList()
         
     }
     
@@ -55,14 +56,23 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
-    func FetchStringLabelList(){
-        StringLabelListData.removeAll()
-        for element in DataStore.stringObjectList{
-            let tmpElement = StringLabelObject(position:[ element.stringRect.origin.x, element.stringRect.origin.y], height: element.stringRect.height, width: element.stringRect.width, fontsize: element.fontSize, tracking: element.tracking, content: element.content, color: element.color)
-            StringLabelListData.append(tmpElement)
+//    func FetchStringLabelList(){
+//        StringLabelListData.removeAll()
+//        for element in DataStore.stringObjectList{
+//            let tmpElement = StringLabelObject(position:[ element.stringRect.origin.x, element.stringRect.origin.y], height: element.stringRect.height, width: element.stringRect.width, fontsize: element.fontSize, tracking: element.tracking, content: element.content, color: element.color)
+//            StringLabelListData.append(tmpElement)
+//        }
+//    }
+    
+    func UpdateSelectedStringObject(selectedStringObject: StringObject ){
+        selectedCharImageListObjectList = []
+        self.selectedStringObject = selectedStringObject
+        for img in selectedStringObject.charImageList{
+            selectedCharImageListObjectList.append(CharImageThumbnailObject(image: img))
+            //print("selectedCharImageListObjectList.count: \(selectedCharImageListObjectList.count)")
+
         }
     }
-    
     
 }
     

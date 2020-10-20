@@ -127,7 +127,7 @@ class OCR: ObservableObject{
             let (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
             //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             
-            var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, CGFloat(results_fast[i].confidence))
+            var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
             
