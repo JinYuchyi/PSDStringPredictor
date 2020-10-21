@@ -1,0 +1,16 @@
+mode,name,r,g,b,api
+Light,Bule,0,122,255,systemBlue
+Light,Green,52,199,89,systemGreen
+Light,Indigo,88,86,214,systemIndigo
+Light,Orange,255,149,0,systemOrange
+Light,Pink,255,45,85,systemPink
+Light,Purple,175,82,222,systemPurple
+Light,Red,255,59,48,systemRed
+Light,Teal,90,200,250,systemTeal
+Light,Yellow,255,204,0,systemYellow
+Light,Gray,142,142,147,systemGray
+Light,Gray2,174,174,178,systemGray2
+Light,Gray3,199,199,204,systemGray3
+Light,Gray4,209,209,214,systemGray4
+Light,Gray5,229,229,234,systemGray5
+Light,Gray6,242,242,247,systemGray6

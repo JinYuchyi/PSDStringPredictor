@@ -90,9 +90,8 @@ struct ContentView: View {
             MidViewGroup()
             RightViewGroup()
         }
-        
-        
     }
+    
     
     
 }

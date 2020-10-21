@@ -13,46 +13,68 @@ import Vision
 import ImageIO
 
 class FontWeightPredict{
-    //var topResult: VNClassificationObservation = VNClassificationObservation.init()
-    var predictResult: String = ""
+    private var result: String = ""
 
-    func detectImage(img: CIImage)  {
-        //var topResult: VNClassificationObservation = VNClassificationObservation.init()
-        // 1. Try and load the model
-        guard let model = try? VNCoreMLModel(for: FontWeightClassifier().model) else {
-            fatalError("Failed to load model")
+    lazy var classificationRequest: VNCoreMLRequest = {
+        do {
+            /*
+             Use the Swift class `MobileNet` Core ML generates from the model.
+             To use a different Core ML classifier model, add it to the project
+             and replace `MobileNet` with that model's generated Swift class.
+             */
+            let model = try VNCoreMLModel(for: FontWeightClassifier().model)
+
+            let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
+                self?.processClassifications(for: request, error: error)
+            })
+            //request.imageCropAndScaleOption = .centerCrop
+            return request
+        } catch {
+            fatalError("Failed to load Vision ML model: \(error)")
         }
-        
-        // 2. Create a vision request
-        let request = VNCoreMLRequest(model: model) { [weak self] request, error in
-            guard let results = request.results as? [VNClassificationObservation],
-                  let topResult = results.first
-            else {
-                fatalError("Unexpected results")
+    }()
+    
+    /// - Tag: ProcessClassifications
+    func processClassifications(for request: VNRequest, error: Error?)  {
+        //DispatchQueue.main.async {
+            guard let results = request.results else {
+                print("Unable to classify the image.")
+                return
             }
-            
-            self!.predictResult = topResult.identifier
-            // 3. Update the Main UI Thread with our result
-            //                DispatchQueue.main.async { [weak self] in
-            //                    self?.lblResult.text = "\(topResult.identifier) with \(Int(topResult.confidence * 100))% confidence"
-            //                }
-        }
+            // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
+            let classifications = results as! [VNClassificationObservation]
         
-        //            guard let ciImage = CIImage(image: self.myPhoto.image!)
-        //                else { fatalError("Cant create CIImage from UIImage") }
-        
-        // 4. Run the googlenetplaces classifier
-        let handler = VNImageRequestHandler(ciImage: img)
-        DispatchQueue.global().async {
-            do {
-                try handler.perform([request])
-            } catch {
-                print(error)
+            if classifications.isEmpty {
+                print("Nothing recognized.")
+            } else {
+                // Display top classifications ranked by confidence in the UI.
+                //let topClassifications = classifications.prefix(2)
+                let topClassification = classifications[0]
+                result = topClassification.identifier
+
             }
-        }
-        //request.results!.first
+        //}
 
     }
     
+    func Prediction(ciImage: CIImage) -> String{
+        //DispatchQueue.global(qos: .userInitiated).async {
+            let handler = VNImageRequestHandler(ciImage: ciImage, orientation: .up)
+            do {
+                try handler.perform([self.classificationRequest])
+            } catch {
+                /*
+                 This handler catches general image processing errors. The `classificationRequest`'s
+                 completion handler `processClassifications(_:error:)` catches errors specific
+                 to processing that request.
+                 */
+                print("Failed to perform classification.\n\(error.localizedDescription)")
+            }
+        //}
+        return result
+    }
 }
+
+
+
 

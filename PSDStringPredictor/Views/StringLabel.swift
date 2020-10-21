@@ -32,7 +32,9 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
-//        print("\()")
+        let results = stringObjectVM.selectedStringObject.fontWeight
+        print(results)
+        //        print("\()")
     }
     
     var body: some View {
@@ -56,33 +58,36 @@ struct StringLabel: View {
                 .stroke(Color.red, lineWidth: 1)
                 .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
-
+            
             //Base on font size, decide the font
+
+
             if stringLabel.fontSize < 20 {
                 Text(stringLabel.content)
-                    .foregroundColor(stringLabel.color)
-                    .font(.custom("SF Pro Text", size: stringLabel.fontSize))
-                    .tracking(stringLabel.tracking)
-                    //.font(.system(size: stringLabel.fontsize))
+                    //.foregroundColor(stringLabel.color)
+                    //.font(.custom("SF Pro Text", size: stringLabel.fontSize))
+                    //.tracking(stringLabel.tracking)
+                    .font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
             }
             else{
                 Text(stringLabel.content)
-                    .foregroundColor(stringLabel.color)
-                    .font(.custom("SF Pro Display", size: stringLabel.fontSize))
-                    .tracking(stringLabel.tracking)
-                    .font(.system(size: stringLabel.fontSize))
+                    //.foregroundColor(stringLabel.color)
+                    //.font(.custom("SF Pro Display", size: stringLabel.fontSize))
+                    //.tracking(stringLabel.tracking)
+                    .font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
             }
-
+            
             //Button for show detail
             Button(action: {self.InfoBtnTapped()}){
-                                    Image("􀅵")
-                                        //.background(Color.black)
-                                        //.foregroundColor(Color.white)
-                                }
+                Text("􀍢")
+                //.background(Color.black)
+                .foregroundColor(Color.white)
+                    .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 1)
+            }
             .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
-
+            
             
         }
         

@@ -13,6 +13,7 @@ struct ControlPanel: View {
     
     var dbvm = DBViewModel()
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
+    @ObservedObject var strObjVM = stringObjectViewModel
     //@ObservedObject var loglist: LogListData
     //@ObservedObject var db: DB = DB()
     //@ObservedObject var ocr: OCR = OCR()
@@ -28,7 +29,6 @@ struct ControlPanel: View {
     @Environment(\.managedObjectContext) private var viewContext
     let trackingData = TrackingDataManager.shared
     let colorModeClassifier = ColorModeClassifier()
-
     
     var body: some View {
         VStack{
@@ -94,7 +94,7 @@ struct ControlPanel: View {
                     self.imageProcess.SetTargetNSImage(tmp)
                     self.showImage = true
                     
-                    colorModeClassifier.Prediction(ciImage: DataStore.targetImageProcessed)
+                    colorModeClassifier.Prediction(fromImage: DataStore.targetImageProcessed)
                     self.imagePropertyVM.SetImageColorMode(modeIndex: DataStore.colorMode)
                     print(DataStore.colorMode)
                 }
@@ -108,13 +108,7 @@ struct ControlPanel: View {
 
     
     func Debug(){
-        let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName: "TrackingData")
-        //request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
-        //request.predicate = NSPredicate(format: "char = %@ and width = %@ ", "h", NSNumber(value: Int(8)))
-        let objs = (try? AppDelegate().persistentContainer.viewContext.fetch(request)) ?? []
-        for o in objs {
-            print(o.fontTrackingPoints)
-        }
+        //fontWeightPrediction.Prediction(ciImage: DataStore.targetImageProcessed)
         
     }
 

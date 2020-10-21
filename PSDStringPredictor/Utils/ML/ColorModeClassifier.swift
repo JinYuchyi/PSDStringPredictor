@@ -34,7 +34,7 @@ class ColorModeClassifier{
     }()
     
     /// - Tag: ProcessClassifications
-    func processClassifications(for request: VNRequest, error: Error?) {
+    private func processClassifications(for request: VNRequest, error: Error?) {
         //DispatchQueue.main.async {
             guard let results = request.results else {
                 print("Unable to classify the image.")
@@ -69,7 +69,7 @@ class ColorModeClassifier{
         //}
     }
     
-    func Prediction(ciImage: CIImage){
+    func Prediction(fromImage ciImage: CIImage){
         //DispatchQueue.global(qos: .userInitiated).async {
             let handler = VNImageRequestHandler(ciImage: ciImage, orientation: .up)
             do {

@@ -29,7 +29,7 @@ struct StringObject : Identifiable{
     //var position: [CGFloat]
     var tracking: CGFloat
     var fontSize: CGFloat
-    var fontWeight: String
+    var fontWeight:  Font.Weight
     var stringRect: CGRect
     var observation : VNRecognizedTextObservation
     var color: Color
@@ -37,6 +37,8 @@ struct StringObject : Identifiable{
     var charRects: [CGRect]
     var charSizeList: [CGFloat]
     var charImageList: [CIImage]
+    var charFontWeightList: [Font.Weight]
+    
     var confidence: CGFloat
     
     //@EnvironmentObject var db: DB
@@ -51,7 +53,7 @@ struct StringObject : Identifiable{
         //position = []
         tracking = 0
         fontSize = 0
-        fontWeight = "regular"
+        fontWeight =  Font.Weight.regular
         charImageList = []
         stringRect = CGRect()
         observation = VNRecognizedTextObservation.init()
@@ -59,21 +61,24 @@ struct StringObject : Identifiable{
         charArray = []
         charRects = []
         charSizeList = []
+        charFontWeightList = []
         confidence = 0
         self.color = CalcColor()
+        self.fontWeight = PredictFontWeight()
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
         self.stringRect = stringRect
         self.content = content
         self.fontSize = 0.0
-        self.fontWeight = "regular"
+        self.fontWeight = Font.Weight.regular
         //self.position = [0,0]
         self.observation = observation
         self.charArray = charArray
         self.charRects = charRacts
         self.charSizeList = []
         self.charImageList = charImageList
+        self.charFontWeightList = []
         self.tracking = 10
         self.color = Color.black
         self.confidence = confidence
@@ -83,6 +88,8 @@ struct StringObject : Identifiable{
         self.tracking = FetchTrackingFromDB(self.fontSize)
         self.color = CalcColor()
         self.charSizeList = CalcBestWeightForString().1
+        self.fontWeight = PredictFontWeight()
+        
         //self.stringRect = ProcessStringRect(FromRect: stringRect)
         //data.stringObjectIndex = data.stringObjectIndex + 1
         //self.id = (data.stringObjectIndex)
@@ -329,15 +336,25 @@ struct StringObject : Identifiable{
         }
     }
     
-    func PredictFontWeight(){
+    mutating func PredictFontWeight()->Font.Weight{
+        charFontWeightList.removeAll()
         for img in charImageList{
-            
+            let temp = FontWeightPredict().Prediction(ciImage: img)
+            if (temp == "regular"){
+                charFontWeightList.append(Font.Weight.regular)
+            }
+            else if (temp == "semibold"){
+                charFontWeightList.append(Font.Weight.semibold)
+            }
         }
+        var result: Font.Weight = Font.Weight.regular
+        if (charFontWeightList.count > 0){
+            result = charFontWeightList.MajorityElement()
+        }
+        return result
     }
     
-    //    func GetStringObjectFromID(stringObjectId id: Int) -> StringObject{
-    //        data.stringObjectList
-    //    }
+    
     
     
     

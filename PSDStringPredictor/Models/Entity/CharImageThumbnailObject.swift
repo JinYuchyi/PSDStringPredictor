@@ -8,8 +8,12 @@
 
 import Foundation
 import CoreImage
+import SwiftUI
 
 struct CharImageThumbnailObject {
     var image: CIImage = CIImage.init()
+    var char: String
+    var weight: Font.Weight
+    var size: Int
     var id: UUID = UUID()
 }

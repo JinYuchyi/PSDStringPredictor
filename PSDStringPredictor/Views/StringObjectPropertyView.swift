@@ -11,22 +11,29 @@ import SwiftUI
 struct StringObjectPropertyView: View {
     
     @ObservedObject var stringObjectVM = stringObjectViewModel
+    @State var stringField: String = ""
     
     var body: some View {
         VStack{
             Text("Content:")
             Text("\(stringObjectVM.selectedStringObject.content)")
             Text("Components Images:")
-            ScrollView (.horizontal, showsIndicators: false) {
+            ScrollView ( .horizontal, showsIndicators: true) {
                 HStack {
                     ForEach(stringObjectVM.selectedCharImageListObjectList, id:\.id){ item in
-                        Image(nsImage: item.image.ToNSImage())
-                            .resizable()
-                            .frame(width: item.image.extent.width * 2, height: item.image.extent.height * 2)
+                        VStack{
+                            Image(nsImage: item.image.ToNSImage())
+                                .frame(height: 100)
+                                
+                            TextField(item.char, text: $stringField)
+                            Text(String(item.weight))
+                            Text(String(item.size))
+                        }
                     }
                 }
+                .fixedSize()
             }
-            .frame(width: 300)
+            //
             //            HStack{
             //                List(stringObjectVM.selectedStringObject.charImageList){ item in
             //                    Image(item)
