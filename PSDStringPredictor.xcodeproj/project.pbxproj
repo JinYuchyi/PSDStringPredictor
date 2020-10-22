@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F0007BC252EF8AC0047574A /* Csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0007BB252EF8AC0047574A /* Csv.swift */; };
+		3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0782822541B9F0007163D6 /* FontExtension.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
@@ -89,6 +90,7 @@
 
 /* Begin PBXFileReference section */
 		3F0007BB252EF8AC0047574A /* Csv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Csv.swift; sourceTree = "<group>"; };
+		3F0782822541B9F0007163D6 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardObject.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */,
 				3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */,
 				3FE881282532E6DD0088A1CD /* FontDataExtension.swift */,
+				3F0782822541B9F0007163D6 /* FontExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
 				3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */,
+				3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */,
 				3F5218182521E89200646F91 /* TestView.swift in Sources */,
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
 				3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */,
