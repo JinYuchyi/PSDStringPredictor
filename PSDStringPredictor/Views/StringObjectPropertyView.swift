@@ -21,12 +21,14 @@ struct StringObjectPropertyView: View {
             ScrollView ( .horizontal, showsIndicators: true) {
                 HStack {
                     ForEach(stringObjectVM.selectedCharImageListObjectList, id:\.id){ item in
+                        
                         VStack{
                             Image(nsImage: item.image.ToNSImage())
                                 .frame(height: 100)
-                                
+                            
                             TextField(item.char, text: $stringField)
-                            Text(String(item.weight))
+                            
+                            Text(String(item.weight.ToString()))
                             Text(String(item.size))
                         }
                     }

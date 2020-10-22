@@ -24,7 +24,7 @@ extension Array  {
 
             }
         }
-        var max = 0
+        var max = -1
         for (key, value) in dict {
             if value > max {
                 max = value

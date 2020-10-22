@@ -60,8 +60,8 @@ struct StringLabel: View {
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
             
             //Base on font size, decide the font
-
-
+            
+            
             if stringLabel.fontSize < 20 {
                 Text(stringLabel.content)
                     //.foregroundColor(stringLabel.color)
@@ -82,8 +82,8 @@ struct StringLabel: View {
             //Button for show detail
             Button(action: {self.InfoBtnTapped()}){
                 Text("􀍢")
-                //.background(Color.black)
-                .foregroundColor(Color.white)
+                    //.background(Color.black)
+                    .foregroundColor(Color.white)
                     .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 1)
             }
             .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )

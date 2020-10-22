@@ -340,11 +340,10 @@ struct StringObject : Identifiable{
         charFontWeightList.removeAll()
         for img in charImageList{
             let temp = FontWeightPredict().Prediction(ciImage: img)
-            if (temp == "regular"){
-                charFontWeightList.append(Font.Weight.regular)
-            }
-            else if (temp == "semibold"){
+            if (temp == "semibold"){
                 charFontWeightList.append(Font.Weight.semibold)
+            }else{
+                charFontWeightList.append(Font.Weight.regular)
             }
         }
         var result: Font.Weight = Font.Weight.regular
