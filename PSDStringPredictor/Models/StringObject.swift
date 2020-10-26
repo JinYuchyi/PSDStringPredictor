@@ -223,7 +223,7 @@ struct StringObject : Identifiable{
         
     }
     
-    func CalcWeightForSingleChar(_ char: String, _ width: Int16, _ height: Int16) -> Int16{
+    func CalcWeightForSingleChar(_ char: String, _ width: Int16, _ height: Int16, _ fontSize: Int16) -> Int16{
         //var objArray: [Row] = []
         //print("Calc weight for \(char), with width \(width) and height \(height)")
         var result: Int16 = 0
@@ -234,7 +234,14 @@ struct StringObject : Identifiable{
         //        }
         
         //let objList = DB.QueryFor(dbConnection: DataStore.dbConnection, char: char, width: width, height: height)
-        let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: char, width: width, height: height)
+        var keyvalues: [String: AnyObject] = [:]
+        keyvalues["char"] = char as AnyObject
+        keyvalues["fontSize"] = fontSize as AnyObject
+        keyvalues["width"] = width as AnyObject
+        keyvalues["height"] = height as AnyObject
+        //keyvalues["fontWeight"] = fontWeight as AnyObject
+        let objList = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
+        //let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: char, width: width, height: height)
         
         
         //        func Predict() -> Int16 {
@@ -266,7 +273,7 @@ struct StringObject : Identifiable{
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
                 
-                var tempweight = CalcWeightForSingleChar(String(char), Int16((charRects[index].width.rounded())), Int16(charRects[index].height.rounded()))
+                var tempweight = CalcWeightForSingleChar(String(char), Int16((charRects[index].width.rounded())), Int16(charRects[index].height.rounded()), Int16(fontSize))
                 //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
                 if (tempweight != 0){
                     weightArray.append(CGFloat(tempweight))

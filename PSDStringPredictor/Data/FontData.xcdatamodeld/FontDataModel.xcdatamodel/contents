@@ -3,6 +3,7 @@
     <entity name="CharacterData" representedClassName="CharacterData" syncable="YES" codeGenerationType="class">
         <attribute name="char" optional="YES" attributeType="String"/>
         <attribute name="fontSize" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fontWeight" optional="YES" attributeType="String"/>
         <attribute name="height" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="width" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -22,7 +23,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="CharacterData" positionX="-63" positionY="9" width="128" height="118"/>
+        <element name="CharacterData" positionX="-63" positionY="9" width="128" height="133"/>
         <element name="Standard" positionX="-63" positionY="36" width="128" height="133"/>
         <element name="TrackingData" positionX="-63" positionY="-18" width="128" height="103"/>
     </elements>

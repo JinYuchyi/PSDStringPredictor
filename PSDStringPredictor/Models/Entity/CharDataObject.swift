@@ -13,4 +13,5 @@ struct CharDataObject{
     var fontSize: Int16
     var height: Int16
     var width: Int16
+    var fontWeight: String
 }

@@ -14,9 +14,14 @@ class CharDataManager{
     
     private init(){}
     
-    static func Insert(_ context: NSManagedObjectContext, _ char: String, _ fontSize: Int16 , _ width: Int16, _ height: Int16){
-        
-        let items = CharDataManager.FetchItems(context, char: char, fontSize: fontSize, width: width, height: height)
+    static func Insert(_ context: NSManagedObjectContext, _ char: String, _ fontSize: Int16 , _ width: Int16, _ height: Int16, _ fontWeight: String){
+        var keyvalues: [String: AnyObject] = [:]
+        keyvalues["char"] = char as AnyObject
+        keyvalues["fontSize"] = fontSize as AnyObject
+        keyvalues["width"] = width as AnyObject
+        keyvalues["height"] = height as AnyObject
+        keyvalues["fontWeight"] = fontWeight as AnyObject
+        let items = CharDataManager.FetchItems(context, keyValues: keyvalues)
         if (items.count == 0){
             let newCharData = CharacterData(context: context)
             newCharData.char = char
@@ -40,6 +45,7 @@ class CharDataManager{
             tmpItem["fontSize"] = item.fontSize
             tmpItem["width"] = item.width
             tmpItem["height"] = item.height
+            tmpItem["fontWeight"] = item.fontWeight
             objects.append(tmpItem)
         }
         
@@ -51,45 +57,59 @@ class CharDataManager{
         }
     }
     
-//    static func FetchAll(_ context: NSManagedObjectContext)->[TrackingDataObject]{
-//        var trackingDatas:[TrackingDataObject] = []
-//        let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName:"TrackingData")
-//        request.sortDescriptors = [NSSortDescriptor(key: "size", ascending: true)]
-//        let objs = (try? context.fetch(request)) ?? []
-//        for item in objs {
-//            trackingDatas.append(TrackingDataObject(size: item.size, tracking: item.tracking))
-//        }
-//        return trackingDatas
-//
-//    }
+    //    static func FetchAll(_ context: NSManagedObjectContext)->[TrackingDataObject]{
+    //        var trackingDatas:[TrackingDataObject] = []
+    //        let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName:"TrackingData")
+    //        request.sortDescriptors = [NSSortDescriptor(key: "size", ascending: true)]
+    //        let objs = (try? context.fetch(request)) ?? []
+    //        for item in objs {
+    //            trackingDatas.append(TrackingDataObject(size: item.size, tracking: item.tracking))
+    //        }
+    //        return trackingDatas
+    //
+    //    }
     
-    static func FetchItems(_ context: NSManagedObjectContext, char: String = "", fontSize: Int16 = -1000, width: Int16 = -1000, height: Int16 = -1000) -> [CharDataObject]{
-        var charDatas:[CharDataObject] = []
+    static func FetchItems(_ context: NSManagedObjectContext, keyValues: [String: AnyObject]) -> [CharDataObject]{
+        var charDataList:[CharDataObject] = []
         let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
         request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
-        //let predicate: NSPredicate
-        if (char != "" && fontSize == -1000 && width == -1000 && height == -1000){
-            request.predicate = NSPredicate(format: "char = %@ ", char)
+        
+        var predicateList: [NSPredicate] = []
+        
+        if(keyValues.count > 0){
+            for (key, value) in keyValues {
+                let predicate:NSPredicate = NSPredicate(format: "%K == %@", key, value as! NSObject)
+                predicateList.append(predicate)
+            }
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates:predicateList)
         }
-        else if (char != "" && fontSize != -1000 && width == -1000 && height == -1000){
-            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@", char, NSNumber(value: Int(fontSize)))
-        }
-        else if (char != "" && fontSize != -1000 && width != -1000 && height == -1000){
-            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)))
-        }
-        else if (char != "" && fontSize != -1000 && width != -1000 && height != -1000){
-            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)), NSNumber(value: Int(height)))
-        }
-        else if (char != "" && fontSize == -1000 && width != -1000 && height != -1000){
-            request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", char, NSNumber(value: Int(width)), NSNumber(value: Int(height)))
-        }
+        //    static func FetchItems(_ context: NSManagedObjectContext, char: String = "", fontSize: Int16 = -1000, width: Int16 = -1000, height: Int16 = -1000) -> [CharDataObject]{
+        //        var charDatas:[CharDataObject] = []
+        //        let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
+        //        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
+        //        //let predicate: NSPredicate
+        //        if (char != "" && fontSize == -1000 && width == -1000 && height == -1000){
+        //            request.predicate = NSPredicate(format: "char = %@ ", char)
+        //        }
+        //        else if (char != "" && fontSize != -1000 && width == -1000 && height == -1000){
+        //            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@", char, NSNumber(value: Int(fontSize)))
+        //        }
+        //        else if (char != "" && fontSize != -1000 && width != -1000 && height == -1000){
+        //            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)))
+        //        }
+        //        else if (char != "" && fontSize != -1000 && width != -1000 && height != -1000){
+        //            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)), NSNumber(value: Int(height)))
+        //        }
+        //        else if (char != "" && fontSize == -1000 && width != -1000 && height != -1000){
+        //            request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", char, NSNumber(value: Int(width)), NSNumber(value: Int(height)))
+        //        }
         
         let objs = (try? context.fetch(request)) ?? []
-        print("Fetched \(objs.count) items, from char = \(char), width = \(width), height = \(height) ")
+        //print("Fetched \(objs.count) items, from char = \(char), width = \(width), height = \(height) ")
         for item in objs {
-            charDatas.append(CharDataObject(char: item.char!, fontSize: item.fontSize, height: item.height, width: item.width))
+            charDataList.append(CharDataObject(char: item.char!, fontSize: item.fontSize, height: item.height, width: item.width, fontWeight: item.fontWeight!))
         }
-        return charDatas
+        return charDataList
     }
     
     static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> CharDataObject{
@@ -110,10 +130,10 @@ class CharDataManager{
         if (size1 > 0 && size > 0){
             let dist = abs(size - fontSize)
             let dist1 = abs(size1 - fontSize)
-            return dist <= dist1 ? CharDataObject(char: objs.first!.char!, fontSize: objs.first!.fontSize, height: objs.first!.height, width: objs.first!.width) :  CharDataObject(char: objs1.first!.char!, fontSize: objs1.first!.fontSize, height: objs1.first!.height, width: objs1.first!.width)
+            return dist <= dist1 ? CharDataObject(char: objs.first!.char!, fontSize: objs.first!.fontSize, height: objs.first!.height, width: objs.first!.width, fontWeight: objs.first!.fontWeight!) :  CharDataObject(char: objs1.first!.char!, fontSize: objs1.first!.fontSize, height: objs1.first!.height, width: objs1.first!.width, fontWeight: objs.first!.fontWeight!)
         }
         else{
-            return CharDataObject(char: "", fontSize: 0,height: 0,width: 0)
+            return CharDataObject(char: "", fontSize: 0,height: 0,width: 0, fontWeight: "SFProDisplay-Regular")
         }
     }
     
