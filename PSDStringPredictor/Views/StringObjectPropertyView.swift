@@ -14,23 +14,33 @@ struct StringObjectPropertyView: View {
     @State var stringField: String = ""
     
     var body: some View {
+
         VStack{
+            
+
             Text("Content:")
             Text("\(stringObjectVM.selectedStringObject.content)")
+            Text("Size: \(stringObjectVM.selectedStringObject.fontSize)")
+            Text("Tracking: \(stringObjectVM.selectedStringObject.tracking)")
+            Text("Weight: \(stringObjectVM.selectedStringObject.fontWeight.ToString())")
             Text("Components Images:")
+            
             ScrollView ( .horizontal, showsIndicators: true) {
+                
                 HStack {
-                    ForEach(stringObjectVM.selectedCharImageListObjectList, id:\.id){ item in
+                    
+                    ForEach(0..<stringObjectVM.selectedStringObject.charImageList.count, id: \.self){ index in
                         
                         VStack{
-                            Image(nsImage: item.image.ToNSImage())
+                            Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
                                 .frame(height: 100)
                             
-                            TextField(item.char, text: $stringField)
-                            
-                            Text(String(item.weight.ToString()))
-                            Text(String(item.size))
+                            TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
+                            Text("W\(Int(stringObjectVM.selectedStringObject.charRects[index].width))H\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
+                            Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index].ToString()))
+                            Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description))
                         }
+                        
                     }
                 }
                 .fixedSize()
@@ -43,6 +53,7 @@ struct StringObjectPropertyView: View {
             //            }
             
         }
+        
     }
 }
 

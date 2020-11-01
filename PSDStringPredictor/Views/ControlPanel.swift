@@ -46,7 +46,7 @@ struct ControlPanel: View {
             .padding(.horizontal, 40.0)
             
             Button(action: {self.dbvm.ReloadCharacterTable()}){
-                Text("Reload String Table")
+                Text("Reload Size Table")
                 .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 
@@ -54,7 +54,7 @@ struct ControlPanel: View {
             .padding(.horizontal, 40.0)
             
             Button(action: {self.dbvm.ReloadFontTable()}){
-                Text("Reload Font Table")
+                Text("Reload Tracking Table")
                 .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
 

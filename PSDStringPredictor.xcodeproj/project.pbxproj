@@ -57,10 +57,10 @@
 		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
 		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
 		3FAAB486251341A600CB89B1 /* CharacterFrameListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB485251341A600CB89B1 /* CharacterFrameListView.swift */; };
-		3FAAB48E25134FE800CB89B1 /* CharFrameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB48D25134FE800CB89B1 /* CharFrameData.swift */; };
 		3FAAB4972514BD6600CB89B1 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB4962514BD6600CB89B1 /* Training.swift */; };
 		3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */; };
 		3FBA3A7C2510AFC900F041DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA3A7B2510AFC900F041DC /* String.swift */; };
+		3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */; };
 		3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */; };
 		3FD247FD253E9BDD007EBE36 /* CharImageThumbnailObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD247FC253E9BDD007EBE36 /* CharImageThumbnailObject.swift */; };
 		3FD24803253ED7B0007EBE36 /* FontWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD24802253ED7B0007EBE36 /* FontWeight.swift */; };
@@ -137,10 +137,10 @@
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
 		3FAAB485251341A600CB89B1 /* CharacterFrameListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFrameListView.swift; sourceTree = "<group>"; };
-		3FAAB48D25134FE800CB89B1 /* CharFrameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharFrameData.swift; sourceTree = "<group>"; };
 		3FAAB4962514BD6600CB89B1 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
 		3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		3FBA3A7B2510AFC900F041DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharFrameData.swift; sourceTree = "<group>"; };
 		3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectPropertyView.swift; sourceTree = "<group>"; };
 		3FD247FC253E9BDD007EBE36 /* CharImageThumbnailObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharImageThumbnailObject.swift; sourceTree = "<group>"; };
 		3FD24802253ED7B0007EBE36 /* FontWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontWeight.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 			children = (
 				3FEBA6C5251CA831002D8EC1 /* Entity */,
 				3F9B3A7D250F2855003B652C /* DataStore.swift */,
-				3FAAB48D25134FE800CB89B1 /* CharFrameData.swift */,
+				3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */,
 				3FA49B382508B0D40093EBD2 /* LogObject.swift */,
 				3F56E3E62506042D00E64337 /* StringObject.swift */,
 			);
@@ -534,7 +534,6 @@
 				3F4CB5A5250A23E200E41082 /* ImageProcess.swift in Sources */,
 				3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */,
 				3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */,
-				3FAAB48E25134FE800CB89B1 /* CharFrameData.swift in Sources */,
 				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
 				3F8208502510F8CE00832192 /* File.swift in Sources */,
 				3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */,
@@ -553,6 +552,7 @@
 				3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
+				3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
 				3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */,
 				3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */,

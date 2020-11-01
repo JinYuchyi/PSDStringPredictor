@@ -84,11 +84,11 @@ struct StringObject : Identifiable{
         self.confidence = confidence
         //self.color = CalcColor()
         //self.position = CalcPosition()
-        self.fontSize = CGFloat(CalcBestWeightForString().0)
+        self.fontWeight = PredictFontWeight()
+        self.fontSize = CGFloat(CalcBestSizeForString().0)
         self.tracking = FetchTrackingFromDB(self.fontSize)
         self.color = CalcColor()
-        self.charSizeList = CalcBestWeightForString().1
-        self.fontWeight = PredictFontWeight()
+        self.charSizeList = CalcBestSizeForString().1
         
         //self.stringRect = ProcessStringRect(FromRect: stringRect)
         //data.stringObjectIndex = data.stringObjectIndex + 1
@@ -223,58 +223,46 @@ struct StringObject : Identifiable{
         
     }
     
-    func CalcWeightForSingleChar(_ char: String, _ width: Int16, _ height: Int16, _ fontSize: Int16) -> Int16{
-        //var objArray: [Row] = []
-        //print("Calc weight for \(char), with width \(width) and height \(height)")
+    func CalcSizeForSingleChar(_ char: String, _ width: Int16, _ height: Int16, _ fontSize: Int16, _ fontWeight: String) -> Int16{
+        
         var result: Int16 = 0
         
-        //        if(db == nil){
-        //            print("DB equals null.")
-        //            return 0
-        //        }
-        
-        //let objList = DB.QueryFor(dbConnection: DataStore.dbConnection, char: char, width: width, height: height)
         var keyvalues: [String: AnyObject] = [:]
         keyvalues["char"] = char as AnyObject
         keyvalues["fontSize"] = fontSize as AnyObject
         keyvalues["width"] = width as AnyObject
         keyvalues["height"] = height as AnyObject
+        keyvalues["fontWeight"] = fontWeight as AnyObject
         //keyvalues["fontWeight"] = fontWeight as AnyObject
         let objList = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
-        //let objList:[CharDataObject] = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, char: char, width: width, height: height)
         
-        
-        //        func Predict() -> Int16 {
-        //            Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
-        //        }
-        //
-        //        func FindIt() -> Int16{
-        //            let strObj = objList[0][TABLE_CHARACTER_WIGHT]
-        //            result = strObj
-        //            return strObj
-        //        }
+        //TODO: Same parameters, sometimes predict sometimes found
         if (objList.count == 0){
-            print("     Pridict it as \(PredictFontSize(character: char, width: Double(width), height: Double(height)))")
-            return Int16(PredictFontSize(character: char, width: Double(width), height: Double(height)))
+            print("\(char), with width \(width) - height \(height) - weight \(fontWeight). Pridict it as \(PredictFontSize(character: char, width: Double(width), height: Double(height), fontWeight: fontWeight))")
+            return Int16(PredictFontSize(character: char, width: Double(width), height: Double(height), fontWeight: fontWeight))
         }else{
-            print("     Found it in DB, size is \(objList[0].fontSize)")
+            print("\(char), with width \(width) - height \(height) - weight \(fontWeight). Found it in DB, size is \(objList[0].fontSize)")
             return objList[0].fontSize
         }
         
-        //return result == 0 ? Predict() : FindIt()
-        
     }
     
-    func CalcBestWeightForString()-> (Int16, [CGFloat]){
+    func CalcBestSizeForString()-> (Int16, [CGFloat]){
         
         var weightArray:[CGFloat] = []
         var weightArrayForSave: [CGFloat] = []
         //Find weight for each character
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
-                
-                var tempweight = CalcWeightForSingleChar(String(char), Int16((charRects[index].width.rounded())), Int16(charRects[index].height.rounded()), Int16(fontSize))
-                //print("find:\(String(char)), \(Int64(charRects[index].width)), \(Int64(charRects[index].height)). weight:\(tempweight)")
+                //font.weight to fontWeight string, for searching
+                var _fontWeight = ""
+                if fontWeight == .regular {
+                    _fontWeight = "regular"
+                }
+                else if fontWeight == .semibold{
+                    _fontWeight = "semibold"
+                }
+                var tempweight = CalcSizeForSingleChar(String(char), Int16((charRects[index].width.rounded())), Int16(charRects[index].height.rounded()), Int16(fontSize), _fontWeight)
                 if (tempweight != 0){
                     weightArray.append(CGFloat(tempweight))
                 }
@@ -289,28 +277,26 @@ struct StringObject : Identifiable{
             }
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
-        var floatSize = FindBestWeightFromWeightArray(FromArray: weightArray)
+        var floatSize = FindBestSizeFromArray(FromArray: weightArray)
         let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize))
         let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize)) //Fetch nearest item from standard table
         return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave)
     }
-    
-    
-    
-    private func FindBestWeightFromWeightArray(FromArray weightArray: [CGFloat]) -> Float{
-        var weightDict: [Int16: Int16] = [:]
-        for w in weightArray{
-            let keyExists = weightDict[Int16(round(w))] != nil
+
+    private func FindBestSizeFromArray(FromArray sizeArray: [CGFloat]) -> Float{
+        var sizeDict: [Int16: Int16] = [:]
+        for w in sizeArray{
+            let keyExists = sizeDict[Int16(round(w))] != nil
             if keyExists == false { //If the weight is new
-                weightDict[Int16(round(w))] = 1
+                sizeDict[Int16(round(w))] = 1
             }
             else{
-                let index = weightDict[Int16(round(w))]
-                weightDict[Int16(round(w))] = index! + 1
+                let index = sizeDict[Int16(round(w))]
+                sizeDict[Int16(round(w))] = index! + 1
             }
         }
-        let sortedValue = weightDict.values.sorted(by: >)
-        let filtered = weightDict.filter { $0.1 ==  sortedValue[0] }
+        let sortedValue = sizeDict.values.sorted(by: >)
+        let filtered = sizeDict.filter { $0.1 ==  sortedValue[0] }
         var result: Float = 0.0
         for (key, value) in filtered{
             result = result + Float(key)
@@ -318,19 +304,7 @@ struct StringObject : Identifiable{
         result = result / Float(filtered.count)
         return result
     }
-    
-    //    func Count() -> Int{
-    //        return stringObjectList.count
-    //    }
-    
-    //    mutating func AddElement(NewElement element: StringObject){
-    //        stringObjectList.append(element)
-    //    }
-    
-    //    func Clean(){
-    //        data.stringObjectList.removeAll()
-    //    }
-    
+
     func PredictStringObjects(FromCIImage img: CIImage){
         //data.targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
         
@@ -349,11 +323,14 @@ struct StringObject : Identifiable{
             let temp = FontWeightPredict().Prediction(ciImage: img)
             if (temp == "semibold"){
                 charFontWeightList.append(Font.Weight.semibold)
-            }else{
+            }else if (temp == "regular"){
                 charFontWeightList.append(Font.Weight.regular)
+            }else{
+                charFontWeightList.append(Font.Weight.black)
             }
         }
         var result: Font.Weight = Font.Weight.regular
+        
         if (charFontWeightList.count > 0){
             result = charFontWeightList.MajorityElement()
         }
