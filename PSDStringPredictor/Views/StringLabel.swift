@@ -22,24 +22,34 @@ struct StringLabel: View {
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     //    @Binding var showPredictString: Bool
     //    @Binding var showDebugOverlay: Bool
+    @State var width: CGFloat = 0
     
     var stringLabel: StringObject
     
     
-    func OnTap(){
-        print()
-    }
+    func makeView(_ geometry: GeometryProxy) -> some View {
+            print(geometry.size.width, geometry.size.height)
+
+        DispatchQueue.main.async { self.width = geometry.size.width }
+
+            return Text("Test")
+                    .frame(width: geometry.size.width)
+        }
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
-        let results = stringObjectVM.selectedStringObject.fontWeight
-        print(results)
-        //        print("\()")
+        //let results = stringObjectVM.selectedStringObject.fontWeight
+        //print(results)
+        stringLabel.PredictTracking()
     }
     
     var body: some View {
+
         ZStack {
-            
+//            GeometryReader { geometry in
+//                self.makeView(geometry)
+//                //return EmptyView()
+//            }
             //Rect of original position
             Rectangle()
                 .fill(Color.red.opacity(1))
@@ -58,6 +68,8 @@ struct StringLabel: View {
                 .stroke(Color.red, lineWidth: 1)
                 .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+
+
             
             //Base on font size, decide the font
             

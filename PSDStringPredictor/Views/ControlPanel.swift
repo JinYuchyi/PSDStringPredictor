@@ -109,7 +109,8 @@ struct ControlPanel: View {
     
     func Debug(){
         //fontWeightPrediction.Prediction(ciImage: DataStore.targetImageProcessed)
-        
+        let mtp = FontUtils.GetFontInfo(Font: "SFProDisplay-Regular", Content: "ABcd!", Size: 60)
+        print(mtp.size.width)
     }
 
 }

@@ -69,8 +69,8 @@ class ColorModeOutput : MLFeatureProvider {
 
 
     /// Probability of each category as dictionary of strings to doubles
-    lazy var classLabelProbs: [String : Double] = {
-        [unowned self] in return self.provider.featureValue(for: "classLabelProbs")!.dictionaryValue as! [String : Double]
+    lazy var classLabelProbs: [String : Int16] = {
+        [unowned self] in return self.provider.featureValue(for: "classLabelProbs")!.dictionaryValue as! [String : Int16]
     }()
 
     /// Most likely image category as string value
@@ -86,7 +86,7 @@ class ColorModeOutput : MLFeatureProvider {
         return self.provider.featureValue(for: featureName)
     }
 
-    init(classLabelProbs: [String : Double], classLabel: String) {
+    init(classLabelProbs: [String : Int16], classLabel: String) {
         self.provider = try! MLDictionaryFeatureProvider(dictionary: ["classLabelProbs" : MLFeatureValue(dictionary: classLabelProbs as [AnyHashable : NSNumber]), "classLabel" : MLFeatureValue(string: classLabel)])
     }
 

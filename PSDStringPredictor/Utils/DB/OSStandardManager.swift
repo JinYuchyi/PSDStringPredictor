@@ -100,8 +100,8 @@ class OSStandardManager{
         let objs = (try? context.fetch(request)) ?? []
         let objs1 = (try? context.fetch(request1)) ?? []
         
-        let size = objs.first?.fontSize ?? 0
-        let size1 = objs1.first?.fontSize ?? 0
+        let size:Int16 = objs.first?.fontSize ?? 0
+        let size1:Int16 = objs1.first?.fontSize ?? 0
 
 
         if (size1 > 0 && size > 0){

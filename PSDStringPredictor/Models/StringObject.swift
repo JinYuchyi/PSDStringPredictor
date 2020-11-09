@@ -133,8 +133,24 @@ struct StringObject : Identifiable{
         return CGFloat(item.fontTrackingPoints)
     }
     
+    func PredictTracking()->Double{
+        var trackings: [Double] = []
+        for index in 0..<charArray.count{
+            if (index + 1 < charArray.count && charArray[index].isLetter && charArray[index+1].isLetter){
+                let strs: String = String(charArray[index]) + String(charArray[index+1])
+                let _width = fabs(charRects[index].minX - charRects[index+1].maxX) / fontSize * 12
+                let _fontWeight = "SFProText-Regular"
+                let tmp = PredictFontTracking(str: strs, fontSize: Double(fontSize), width: Double(_width), fontWeight: _fontWeight)
+                print("Predicting \(strs) - fontsize: \(fontSize) - width: \(_width) - result: \(tmp) ")
+                trackings.append(tmp)
+            }
+        }
+        let result: Double = trackings.MajorityElement()
+        print("Predict tracking: \(result)")
+        return result
+    }
+    
     func CalcColor() -> Color {
-        //return Color.white.opacity(1)
         return Color.white.opacity(0.9)
     }
     
@@ -238,8 +254,8 @@ struct StringObject : Identifiable{
         
         //TODO: Same parameters, sometimes predict sometimes found
         if (objList.count == 0){
-            print("\(char), with width \(width) - height \(height) - weight \(fontWeight). Pridict it as \(PredictFontSize(character: char, width: Double(width), height: Double(height), fontWeight: fontWeight))")
-            return Int16(PredictFontSize(character: char, width: Double(width), height: Double(height), fontWeight: fontWeight))
+            print("\(char), with width \((width)) - height \((height)) - weight \(fontWeight). Pridict it as \(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight))")
+            return Int16(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight))
         }else{
             print("\(char), with width \(width) - height \(height) - weight \(fontWeight). Found it in DB, size is \(objList[0].fontSize)")
             return objList[0].fontSize
@@ -262,7 +278,8 @@ struct StringObject : Identifiable{
                 else if fontWeight == .semibold{
                     _fontWeight = "semibold"
                 }
-                var tempweight = CalcSizeForSingleChar(String(char), Int16((charRects[index].width.rounded())), Int16(charRects[index].height.rounded()), Int16(fontSize), _fontWeight)
+                //print("  \(charRects[index].width)")
+                var tempweight = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), Int16(fontSize.rounded()), _fontWeight)
                 if (tempweight != 0){
                     weightArray.append(CGFloat(tempweight))
                 }

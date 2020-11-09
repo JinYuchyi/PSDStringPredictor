@@ -35,4 +35,8 @@ class FontUtils {
         
         return info
     }
+    
+    static func CalcStringSize(){
+        
+    }
 }

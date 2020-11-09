@@ -12,12 +12,11 @@
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
-		3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */; };
+		3F25BC67250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */; };
 		3F308027251DD96600550DEA /* PixelProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308026251DD96600550DEA /* PixelProcess.swift */; };
 		3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308028251DFA3500550DEA /* NSColorExtension.swift */; };
 		3F3E0009253DCA9D0047E4E5 /* ColorMode.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */; };
 		3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */; };
-		3F3EFF9F2533414B0047E4E5 /* TextWeightTabularRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813325333B4B0088A1CD /* TextWeightTabularRegressor.swift */; };
 		3F3EFFA32533479D0047E4E5 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3EFFA22533479D0047E4E5 /* GRDB */; };
 		3F3EFFA8253596140047E4E5 /* CharDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFA7253596140047E4E5 /* CharDataManager.swift */; };
 		3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */; };
@@ -53,6 +52,8 @@
 		3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7D250F2855003B652C /* DataStore.swift */; };
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
 		3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */; };
+		3FA1C5B225567D5500FC6DC3 /* FontSizeTabularRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */; };
+		3FA1C5B52557E7B100FC6DC3 /* TrackingRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */; };
 		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
 		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
 		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
@@ -94,7 +95,7 @@
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardObject.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
-		3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TextWeightTabularRegressor.mlmodel; sourceTree = "<group>"; };
+		3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FontSizeTabularRegressor.mlmodel; sourceTree = "<group>"; };
 		3F308026251DD96600550DEA /* PixelProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelProcess.swift; sourceTree = "<group>"; };
 		3F308028251DFA3500550DEA /* NSColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColorExtension.swift; sourceTree = "<group>"; };
 		3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ColorMode.mlmodel; sourceTree = "<group>"; };
@@ -133,6 +134,8 @@
 		3F9B3A7D250F2855003B652C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
 		3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessControlView.swift; sourceTree = "<group>"; };
+		3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontSizeTabularRegressor.swift; sourceTree = "<group>"; };
+		3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingRegressor.swift; path = PSDStringPredictor/Resources/TrackingRegressor.swift; sourceTree = SOURCE_ROOT; };
 		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
@@ -157,7 +160,6 @@
 		3FDA0D392534111D007792C0 /* TrackingDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDataObject.swift; sourceTree = "<group>"; };
 		3FE881282532E6DD0088A1CD /* FontDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontDataExtension.swift; sourceTree = "<group>"; };
 		3FE8812C25332A8D0088A1CD /* DB_Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB_Character.swift; sourceTree = "<group>"; };
-		3FE8813325333B4B0088A1CD /* TextWeightTabularRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextWeightTabularRegressor.swift; sourceTree = "<group>"; };
 		3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRegressor.swift; sourceTree = "<group>"; };
 		3FE8813C25333D080088A1CD /* StringObjectListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringObjectListView.swift; sourceTree = "<group>"; };
 		3FE8813F25333D820088A1CD /* StringObjectRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringObjectRow.swift; sourceTree = "<group>"; };
@@ -208,13 +210,13 @@
 			isa = PBXGroup;
 			children = (
 				3FD24809253EDED0007EBE36 /* FontWeightClassifier.swift */,
+				3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */,
 				3FD24806253EDDAE007EBE36 /* FontWeightClassifier.mlmodel */,
 				3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */,
 				3F50A7B9253DC76500C10810 /* ColorMode.swift */,
-				3FE8813325333B4B0088A1CD /* TextWeightTabularRegressor.swift */,
 				3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */,
 				3F8208512511129200832192 /* TrackingRegressor.mlmodel */,
-				3F25BC66250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel */,
+				3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */,
 				3F440FFC250C72AD00EDAF3F /* default_image.png */,
 				3FD401F82500F2FB00525E67 /* Preview Content */,
 				3FEFE91925072A0000AEF1C8 /* CharacterData.csv */,
@@ -258,6 +260,7 @@
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
 				3FEFE9122507200400AEF1C8 /* ControlPanel.swift */,
 				3FEFE9232507900500AEF1C8 /* LogListData.swift */,
+				3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */,
 				3FA49B36250874390093EBD2 /* LogObjectView.swift */,
 				3FA49B3A2508EAE90093EBD2 /* LogListView.swift */,
 				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
@@ -542,7 +545,7 @@
 				3F820854251112BA00832192 /* FontTracking.swift in Sources */,
 				3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */,
 				3F6B455425133BD100BE6F76 /* CharacterFrameView.swift in Sources */,
-				3F25BC67250DC97F00E105A6 /* TextWeightTabularRegressor.mlmodel in Sources */,
+				3F25BC67250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel in Sources */,
 				3FE8814025333D820088A1CD /* StringObjectRow.swift in Sources */,
 				3F8460A2251057FF00788176 /* CompareImage.swift in Sources */,
 				3FD24803253ED7B0007EBE36 /* FontWeight.swift in Sources */,
@@ -581,6 +584,7 @@
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
 				3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */,
 				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
+				3FA1C5B225567D5500FC6DC3 /* FontSizeTabularRegressor.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,
 				3FEBA6C1251C93F7002D8EC1 /* ViewModelContainer.swift in Sources */,
 				3FD24807253EDDAF007EBE36 /* FontWeightClassifier.mlmodel in Sources */,
@@ -589,10 +593,10 @@
 				3F50A7AE253DC5BA00C10810 /* ImagePropertyView.swift in Sources */,
 				3F4D13E625020F22008F846B /* StringLabel.swift in Sources */,
 				3F50A7B2253DC61F00C10810 /* ViewExtension.swift in Sources */,
+				3FA1C5B52557E7B100FC6DC3 /* TrackingRegressor.swift in Sources */,
 				3F50A7B4253DC64600C10810 /* ColorModeClassifier.swift in Sources */,
 				3F56E3E42505F0B400E64337 /* Data.swift in Sources */,
 				3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */,
-				3F3EFF9F2533414B0047E4E5 /* TextWeightTabularRegressor.swift in Sources */,
 				3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */,
 				3FD247FD253E9BDD007EBE36 /* CharImageThumbnailObject.swift in Sources */,
 			);

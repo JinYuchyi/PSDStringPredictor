@@ -36,7 +36,7 @@ struct StringObjectPropertyView: View {
                                 .frame(height: 100)
                             
                             TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
-                            Text("W\(Int(stringObjectVM.selectedStringObject.charRects[index].width))H\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
+                            Text("W\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))H\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
                             Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index].ToString()))
                             Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description))
                         }

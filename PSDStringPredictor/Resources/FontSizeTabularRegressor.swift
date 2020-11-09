@@ -1,5 +1,5 @@
 //
-// TextWeightTabularRegressor.swift
+// FontSizeTabularRegressor.swift
 //
 // This file was automatically generated and should not be edited.
 //
@@ -9,7 +9,7 @@ import CoreML
 
 /// Model Prediction Input Type
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
-class TextWeightTabularRegressorInput : MLFeatureProvider {
+class FontSizeTabularRegressorInput : MLFeatureProvider {
 
     /// char as string value
     var char_: String
@@ -56,7 +56,7 @@ class TextWeightTabularRegressorInput : MLFeatureProvider {
 
 /// Model Prediction Output Type
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
-class TextWeightTabularRegressorOutput : MLFeatureProvider {
+class FontSizeTabularRegressorOutput : MLFeatureProvider {
 
     /// Source provided by CoreML
 
@@ -88,20 +88,20 @@ class TextWeightTabularRegressorOutput : MLFeatureProvider {
 
 /// Class for model loading and prediction
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
-class TextWeightTabularRegressor {
+class FontSizeTabularRegressor {
     let model: MLModel
 
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
         let bundle = Bundle(for: self)
-        return bundle.url(forResource: "TextWeightTabularRegressor", withExtension:"mlmodelc")!
+        return bundle.url(forResource: "FontSizeTabularRegressor", withExtension:"mlmodelc")!
     }
 
     /**
-        Construct TextWeightTabularRegressor instance with an existing MLModel object.
+        Construct FontSizeTabularRegressor instance with an existing MLModel object.
 
-        Usually the application does not use this initializer unless it makes a subclass of TextWeightTabularRegressor.
-        Such application may want to use `MLModel(contentsOfURL:configuration:)` and `TextWeightTabularRegressor.urlOfModelInThisBundle` to create a MLModel object to pass-in.
+        Usually the application does not use this initializer unless it makes a subclass of FontSizeTabularRegressor.
+        Such application may want to use `MLModel(contentsOfURL:configuration:)` and `FontSizeTabularRegressor.urlOfModelInThisBundle` to create a MLModel object to pass-in.
 
         - parameters:
           - model: MLModel object
@@ -111,7 +111,7 @@ class TextWeightTabularRegressor {
     }
 
     /**
-        Construct TextWeightTabularRegressor instance by automatically loading the model from the app's bundle.
+        Construct FontSizeTabularRegressor instance by automatically loading the model from the app's bundle.
     */
     @available(*, deprecated, message: "Use init(configuration:) instead and handle errors appropriately.")
     convenience init() {
@@ -132,7 +132,7 @@ class TextWeightTabularRegressor {
     }
 
     /**
-        Construct TextWeightTabularRegressor instance with explicit path to mlmodelc file
+        Construct FontSizeTabularRegressor instance with explicit path to mlmodelc file
         - parameters:
            - modelURL: the file url of the model
 
@@ -157,7 +157,7 @@ class TextWeightTabularRegressor {
     }
 
     /**
-        Construct TextWeightTabularRegressor instance asynchronously with optional configuration.
+        Construct FontSizeTabularRegressor instance asynchronously with optional configuration.
 
         Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
 
@@ -166,12 +166,12 @@ class TextWeightTabularRegressor {
           - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
     */
 //    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
-//    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<TextWeightTabularRegressor, Error>) -> Void) {
+//    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<FontSizeTabularRegressor, Error>) -> Void) {
 //        return self.load(contentsOf: self.urlOfModelInThisBundle, configuration: configuration, completionHandler: handler)
 //    }
 
     /**
-        Construct TextWeightTabularRegressor instance asynchronously with URL of the .mlmodelc directory with optional configuration.
+        Construct FontSizeTabularRegressor instance asynchronously with URL of the .mlmodelc directory with optional configuration.
 
         Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
 
@@ -181,12 +181,12 @@ class TextWeightTabularRegressor {
           - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
     */
 //    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
-//    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<TextWeightTabularRegressor, Error>) -> Void) {
+//    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<FontSizeTabularRegressor, Error>) -> Void) {
 //        MLModel.__loadContents(of: modelURL, configuration: configuration) { (model, error) in
 //            if let error = error {
 //                handler(.failure(error))
 //            } else if let model = model {
-//                handler(.success(TextWeightTabularRegressor(model: model)))
+//                handler(.success(FontSizeTabularRegressor(model: model)))
 //            } else {
 //                fatalError("SPI failure: -[MLModel loadContentsOfURL:configuration::completionHandler:] vends nil for both model and error.")
 //            }
@@ -197,13 +197,13 @@ class TextWeightTabularRegressor {
         Make a prediction using the structured interface
 
         - parameters:
-           - input: the input to the prediction as TextWeightTabularRegressorInput
+           - input: the input to the prediction as FontSizeTabularRegressorInput
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as TextWeightTabularRegressorOutput
+        - returns: the result of the prediction as FontSizeTabularRegressorOutput
     */
-    func prediction(input: TextWeightTabularRegressorInput) throws -> TextWeightTabularRegressorOutput {
+    func prediction(input: FontSizeTabularRegressorInput) throws -> FontSizeTabularRegressorOutput {
         return try self.prediction(input: input, options: MLPredictionOptions())
     }
 
@@ -211,16 +211,16 @@ class TextWeightTabularRegressor {
         Make a prediction using the structured interface
 
         - parameters:
-           - input: the input to the prediction as TextWeightTabularRegressorInput
+           - input: the input to the prediction as FontSizeTabularRegressorInput
            - options: prediction options 
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as TextWeightTabularRegressorOutput
+        - returns: the result of the prediction as FontSizeTabularRegressorOutput
     */
-    func prediction(input: TextWeightTabularRegressorInput, options: MLPredictionOptions) throws -> TextWeightTabularRegressorOutput {
+    func prediction(input: FontSizeTabularRegressorInput, options: MLPredictionOptions) throws -> FontSizeTabularRegressorOutput {
         let outFeatures = try model.prediction(from: input, options:options)
-        return TextWeightTabularRegressorOutput(features: outFeatures)
+        return FontSizeTabularRegressorOutput(features: outFeatures)
     }
 
     /**
@@ -234,10 +234,10 @@ class TextWeightTabularRegressor {
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as TextWeightTabularRegressorOutput
+        - returns: the result of the prediction as FontSizeTabularRegressorOutput
     */
-    func prediction(char_: String, width: Double, height: Double, fontWeight: String) throws -> TextWeightTabularRegressorOutput {
-        let input_ = TextWeightTabularRegressorInput(char_: char_, width: width, height: height, fontWeight: fontWeight)
+    func prediction(char_: String, width: Double, height: Double, fontWeight: String) throws -> FontSizeTabularRegressorOutput {
+        let input_ = FontSizeTabularRegressorInput(char_: char_, width: width, height: height, fontWeight: fontWeight)
         return try self.prediction(input: input_)
     }
 
@@ -245,22 +245,22 @@ class TextWeightTabularRegressor {
         Make a batch prediction using the structured interface
 
         - parameters:
-           - inputs: the inputs to the prediction as [TextWeightTabularRegressorInput]
+           - inputs: the inputs to the prediction as [FontSizeTabularRegressorInput]
            - options: prediction options 
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as [TextWeightTabularRegressorOutput]
+        - returns: the result of the prediction as [FontSizeTabularRegressorOutput]
     */
     @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    func predictions(inputs: [TextWeightTabularRegressorInput], options: MLPredictionOptions = MLPredictionOptions()) throws -> [TextWeightTabularRegressorOutput] {
+    func predictions(inputs: [FontSizeTabularRegressorInput], options: MLPredictionOptions = MLPredictionOptions()) throws -> [FontSizeTabularRegressorOutput] {
         let batchIn = MLArrayBatchProvider(array: inputs)
         let batchOut = try model.predictions(from: batchIn, options: options)
-        var results : [TextWeightTabularRegressorOutput] = []
+        var results : [FontSizeTabularRegressorOutput] = []
         results.reserveCapacity(inputs.count)
         for i in 0..<batchOut.count {
             let outProvider = batchOut.features(at: i)
-            let result =  TextWeightTabularRegressorOutput(features: outProvider)
+            let result =  FontSizeTabularRegressorOutput(features: outProvider)
             results.append(result)
         }
         return results

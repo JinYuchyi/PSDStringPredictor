@@ -178,17 +178,17 @@ class FontWeightClassifier {
 //    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<FontWeightClassifier, Error>) -> Void) {
 //        return self.load(contentsOf: self.urlOfModelInThisBundle, configuration: configuration, completionHandler: handler)
 //    }
-//
-//    /**
-//        Construct FontWeightClassifier instance asynchronously with URL of the .mlmodelc directory with optional configuration.
-//
-//        Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
-//
-//        - parameters:
-//          - modelURL: the URL to the model
-//          - configuration: the desired model configuration
-//          - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
-//    */
+
+    /**
+        Construct FontWeightClassifier instance asynchronously with URL of the .mlmodelc directory with optional configuration.
+
+        Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
+
+        - parameters:
+          - modelURL: the URL to the model
+          - configuration: the desired model configuration
+          - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
+    */
 //    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
 //    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<FontWeightClassifier, Error>) -> Void) {
 //        MLModel.__loadContents(of: modelURL, configuration: configuration) { (model, error) in

@@ -11,47 +11,48 @@ import CoreML
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class TrackingRegressorInput : MLFeatureProvider {
 
-    /// First as string value
-    var First: String
+    /// chars as string value
+    var chars: String
 
-    /// Second as string value
-    var Second: String
+    /// fontSize as double value
+    var fontSize: Double
 
-    /// Fontsize as double value
-    var Fontsize: Double
+    /// width as double value
+    var width: Double
 
-    /// Distance as double value
-    var Distance: Double
+    /// fontWeight as string value
+    var fontWeight: String
 
     var featureNames: Set<String> {
         get {
-            return ["First", "Second", "Fontsize", "Distance"]
+            return ["chars", "fontSize", "width", "fontWeight"]
         }
     }
     
     func featureValue(for featureName: String) -> MLFeatureValue? {
-        if (featureName == "First") {
-            return MLFeatureValue(string: First)
+        if (featureName == "chars") {
+            return MLFeatureValue(string: chars)
         }
-        if (featureName == "Second") {
-            return MLFeatureValue(string: Second)
+        if (featureName == "fontSize") {
+            return MLFeatureValue(double: fontSize)
         }
-        if (featureName == "Fontsize") {
-            return MLFeatureValue(double: Fontsize)
+        if (featureName == "width") {
+            return MLFeatureValue(double: width)
         }
-        if (featureName == "Distance") {
-            return MLFeatureValue(double: Distance)
+        if (featureName == "fontWeight") {
+            return MLFeatureValue(string: fontWeight)
         }
         return nil
     }
     
-    init(First: String, Second: String, Fontsize: Double, Distance: Double) {
-        self.First = First
-        self.Second = Second
-        self.Fontsize = Fontsize
-        self.Distance = Distance
+    init(chars: String, fontSize: Double, width: Double, fontWeight: String) {
+        self.chars = chars
+        self.fontSize = fontSize
+        self.width = width
+        self.fontWeight = fontWeight
     }
 }
+
 
 /// Model Prediction Output Type
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
@@ -62,9 +63,9 @@ class TrackingRegressorOutput : MLFeatureProvider {
     private let provider : MLFeatureProvider
 
 
-    /// Tracking as double value
-    lazy var Tracking: Double = {
-        [unowned self] in return self.provider.featureValue(for: "Tracking")!.doubleValue
+    /// tracking as double value
+    lazy var tracking: Double = {
+        [unowned self] in return self.provider.featureValue(for: "tracking")!.doubleValue
     }()
 
     var featureNames: Set<String> {
@@ -75,8 +76,8 @@ class TrackingRegressorOutput : MLFeatureProvider {
         return self.provider.featureValue(for: featureName)
     }
 
-    init(Tracking: Double) {
-        self.provider = try! MLDictionaryFeatureProvider(dictionary: ["Tracking" : MLFeatureValue(double: Tracking)])
+    init(tracking: Double) {
+        self.provider = try! MLDictionaryFeatureProvider(dictionary: ["tracking" : MLFeatureValue(double: tracking)])
     }
 
     init(features: MLFeatureProvider) {
@@ -88,34 +89,42 @@ class TrackingRegressorOutput : MLFeatureProvider {
 /// Class for model loading and prediction
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class TrackingRegressor {
-    var model: MLModel
+    let model: MLModel
 
-/// URL of model assuming it was installed in the same bundle as this class
+    /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
-        let bundle = Bundle(for: TrackingRegressor.self)
+        let bundle = Bundle(for: self)
         return bundle.url(forResource: "TrackingRegressor", withExtension:"mlmodelc")!
     }
 
     /**
-        Construct a model with explicit path to mlmodelc file
+        Construct TrackingRegressor instance with an existing MLModel object.
+
+        Usually the application does not use this initializer unless it makes a subclass of TrackingRegressor.
+        Such application may want to use `MLModel(contentsOfURL:configuration:)` and `TrackingRegressor.urlOfModelInThisBundle` to create a MLModel object to pass-in.
+
         - parameters:
-           - url: the file url of the model
-           - throws: an NSError object that describes the problem
+          - model: MLModel object
     */
-    init(contentsOf url: URL) throws {
-        self.model = try MLModel(contentsOf: url)
+    init(model: MLModel) {
+        self.model = model
     }
 
-    /// Construct a model that automatically loads the model from the app's bundle
+    /**
+        Construct TrackingRegressor instance by automatically loading the model from the app's bundle.
+    */
+    @available(*, deprecated, message: "Use init(configuration:) instead and handle errors appropriately.")
     convenience init() {
         try! self.init(contentsOf: type(of:self).urlOfModelInThisBundle)
     }
 
     /**
         Construct a model with configuration
+
         - parameters:
            - configuration: the desired model configuration
-           - throws: an NSError object that describes the problem
+
+        - throws: an NSError object that describes the problem
     */
     @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
     convenience init(configuration: MLModelConfiguration) throws {
@@ -123,22 +132,75 @@ class TrackingRegressor {
     }
 
     /**
-        Construct a model with explicit path to mlmodelc file and configuration
+        Construct TrackingRegressor instance with explicit path to mlmodelc file
         - parameters:
-           - url: the file url of the model
-           - configuration: the desired model configuration
-           - throws: an NSError object that describes the problem
+           - modelURL: the file url of the model
+
+        - throws: an NSError object that describes the problem
     */
-    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
-    init(contentsOf url: URL, configuration: MLModelConfiguration) throws {
-        self.model = try MLModel(contentsOf: url, configuration: configuration)
+    convenience init(contentsOf modelURL: URL) throws {
+        try self.init(model: MLModel(contentsOf: modelURL))
     }
 
     /**
+        Construct a model with URL of the .mlmodelc directory and configuration
+
+        - parameters:
+           - modelURL: the file url of the model
+           - configuration: the desired model configuration
+
+        - throws: an NSError object that describes the problem
+    */
+    @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)
+    convenience init(contentsOf modelURL: URL, configuration: MLModelConfiguration) throws {
+        try self.init(model: MLModel(contentsOf: modelURL, configuration: configuration))
+    }
+
+    /**
+        Construct TrackingRegressor instance asynchronously with optional configuration.
+
+        Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
+
+        - parameters:
+          - configuration: the desired model configuration
+          - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
+    */
+//    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+//    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<TrackingRegressor, Error>) -> Void) {
+//        return self.load(contentsOf: self.urlOfModelInThisBundle, configuration: configuration, completionHandler: handler)
+//    }
+
+    /**
+        Construct TrackingRegressor instance asynchronously with URL of the .mlmodelc directory with optional configuration.
+
+        Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
+
+        - parameters:
+          - modelURL: the URL to the model
+          - configuration: the desired model configuration
+          - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
+    */
+//    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+//    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<TrackingRegressor, Error>) -> Void) {
+//        MLModel.__loadContents(of: modelURL, configuration: configuration) { (model, error) in
+//            if let error = error {
+//                handler(.failure(error))
+//            } else if let model = model {
+//                handler(.success(TrackingRegressor(model: model)))
+//            } else {
+//                fatalError("SPI failure: -[MLModel loadContentsOfURL:configuration::completionHandler:] vends nil for both model and error.")
+//            }
+//        }
+//    }
+
+    /**
         Make a prediction using the structured interface
+
         - parameters:
            - input: the input to the prediction as TrackingRegressorInput
+
         - throws: an NSError object that describes the problem
+
         - returns: the result of the prediction as TrackingRegressorOutput
     */
     func prediction(input: TrackingRegressorInput) throws -> TrackingRegressorOutput {
@@ -147,10 +209,13 @@ class TrackingRegressor {
 
     /**
         Make a prediction using the structured interface
+
         - parameters:
            - input: the input to the prediction as TrackingRegressorInput
            - options: prediction options 
+
         - throws: an NSError object that describes the problem
+
         - returns: the result of the prediction as TrackingRegressorOutput
     */
     func prediction(input: TrackingRegressorInput, options: MLPredictionOptions) throws -> TrackingRegressorOutput {
@@ -160,25 +225,31 @@ class TrackingRegressor {
 
     /**
         Make a prediction using the convenience interface
+
         - parameters:
-            - First as string value
-            - Second as string value
-            - Fontsize as double value
-            - Distance as double value
+            - chars as string value
+            - fontSize as double value
+            - width as double value
+            - fontWeight as string value
+
         - throws: an NSError object that describes the problem
+
         - returns: the result of the prediction as TrackingRegressorOutput
     */
-    func prediction(First: String, Second: String, Fontsize: Double, Distance: Double) throws -> TrackingRegressorOutput {
-        let input_ = TrackingRegressorInput(First: First, Second: Second, Fontsize: Fontsize, Distance: Distance)
+    func prediction(chars: String, fontSize: Double, width: Double, fontWeight: String) throws -> TrackingRegressorOutput {
+        let input_ = TrackingRegressorInput(chars: chars, fontSize: fontSize, width: width, fontWeight: fontWeight)
         return try self.prediction(input: input_)
     }
 
     /**
         Make a batch prediction using the structured interface
+
         - parameters:
            - inputs: the inputs to the prediction as [TrackingRegressorInput]
            - options: prediction options 
+
         - throws: an NSError object that describes the problem
+
         - returns: the result of the prediction as [TrackingRegressorOutput]
     */
     @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)

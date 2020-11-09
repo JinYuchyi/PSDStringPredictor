@@ -10,13 +10,14 @@ import Foundation
 import Vision
 
 
-func PredictFontSize(character: String, width: Double, height: Double, fontWeight: String) -> (CGFloat) {
+func PredictFontSize(character: String, width: Int16, height: Int16, fontWeight: String) -> (CGFloat) {
     var output: CGFloat = 0
     do{
-        let model = TextWeightTabularRegressor()
-        guard let predict = try? model.prediction(char_: character, width: width, height: height, fontWeight: fontWeight)
-            else {
+        let model = FontSizeTabularRegressor()
+        guard let predict = try? model.prediction(char_: character, width: Double(width), height: Double(height), fontWeight: fontWeight)
+        else  {
             fatalError("Unexpected runtime error.")
+            return 0
         }
         
         output = CGFloat(predict.fontSize)
