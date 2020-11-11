@@ -24,6 +24,7 @@ class FontUtils {
         
         var font = CTFontCreateWithName(font as CFString, size, nil)
         font = CTFontCreateForString(font, content as CFString, CFRange(location: 0, length: content.count))
+        
         info.capHeight = CTFontGetCapHeight(font)
         info.ascent = CTFontGetAscent(font)
         info.descent = CTFontGetDescent(font)
