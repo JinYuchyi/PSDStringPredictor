@@ -81,14 +81,16 @@ class OCR: ObservableObject{
             // Get the normalized CGRect value.
             let boundingBox = boxObservation?.boundingBox ?? .zero
             //let Rect = VNImageRectForNormalizedRect(boundingBox, width, height)
-
+            
             //print(boundingBox)
             // Convert the rectangle from normalized coordinates to image coordinates.
             //return VNImageRectForNormalizedRect(boundingBox, 100, 100)
             rects.append(VNImageRectForNormalizedRect(boundingBox, width, height))
             //print("\(offset) \(candidate.string[index_start]) \(boundingBox)")
             let char = candidate.string[index_start]
-            
+            if (char == "S"){
+                print("S; \(VNImageRectForNormalizedRect(boundingBox, width, height))")
+            }
             chars.append(char)
         }
 
@@ -121,10 +123,10 @@ class OCR: ObservableObject{
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
         //let stringsResults = GetObservations(fromImage: ciImage, withRecognitionLevel: VNRequestTextRecognitionLevel.fast, usesLanguageCorrection: true)
-        let stringsRects = GetRectsFromObservations(results_fast, Int((ciImage.extent.width)), Int((ciImage.extent.height)))
+        let stringsRects = GetRectsFromObservations(results_fast, Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
         let strs = GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
-            let (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width)), Int((ciImage.extent.height)))
+            let (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: DataStore.targetNSImage.ToCIImage()!.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))

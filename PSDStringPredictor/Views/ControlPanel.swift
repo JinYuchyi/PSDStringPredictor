@@ -90,7 +90,7 @@ struct ControlPanel: View {
             if result == .OK{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
                 {
-                    let tmp = NSImage(imageUrlPath: panel.url!.path)
+                    let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.imageProcess.SetTargetNSImage(tmp)
                     self.showImage = true
                     
@@ -108,9 +108,26 @@ struct ControlPanel: View {
 
     
     func Debug(){
-        //fontWeightPrediction.Prediction(ciImage: DataStore.targetImageProcessed)
-        let mtp = FontUtils.GetFontInfo(Font: "SFProDisplay-Regular", Content: "1sdf", Size: 100)
-        print(mtp.size)
+        
+        //let mtp = FontUtils.GetFontInfo(Font: "SFProDisplay-Regular", Content: "1sdf", Size: 100)
+        //print(mtp.size)
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
+                {
+                    let tempImg = LoadNSImage(imageUrlPath: panel.url!.path)
+                    let cgI = tempImg.ToCGImage()
+                    let colorList = pixelProcess.LoadALineColors(FromImage: cgI!, Index: 0, IsForRow: true)
+                    let hasDifColor = pixelProcess.HasDifferentColor(ColorArray: colorList, Threshhold: 0.6)
+                    for item in colorList {
+                        print(item.ToGrayScale())
+                    }
+                }
+            }
+        
+        }
     }
 
 }

@@ -102,12 +102,17 @@ class ImageProcess: ObservableObject{
         return ciImage
     }
     
+    func SaveCIIToPNG(CIImage img: CIImage, filePath path: String){
+        let url = URL(fileURLWithPath: path)
+        img.ToPNG(url: url)
+    }
+    
 
 
     
 }
 
-func NSImage(imageUrlPath: String) -> NSImage {
+func LoadNSImage(imageUrlPath: String) -> NSImage {
     var  newImg :NSImage = NSImage.init()
     if FileManager.default.fileExists(atPath: imageUrlPath) {
         let url = URL.init(fileURLWithPath: imageUrlPath)

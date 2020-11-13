@@ -11,7 +11,17 @@ import SwiftUI
 struct StringObjectPropertyView: View {
     
     @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var imageProcess = ImageProcess()
     @State var stringField: String = ""
+    
+    fileprivate func FontSizeView(index: Int) -> some View {
+        if stringObjectVM.selectedStringObject.isPredictedList[index] == 1 {
+            return Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description)+"􀫥").fixedSize()
+        }else{
+            return Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description)).fixedSize()
+        }
+            
+    }
     
     var body: some View {
 
@@ -36,9 +46,18 @@ struct StringObjectPropertyView: View {
                                 .frame(height: 100)
                             
                             TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
-                            Text("W\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))H\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
+                            Text("\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
                             Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index].ToString()))
-                            Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description))
+                            
+                            FontSizeView(index: index)
+                            
+                            Button(action: {SaveBtnPressed(index)}){
+                                Text("􀈄")
+//                                .padding(.horizontal, 40.0)
+//                                .frame(minWidth: 200, maxWidth: .infinity)
+
+                            }
+
                         }
                         
                     }
@@ -54,6 +73,19 @@ struct StringObjectPropertyView: View {
             
         }
         
+    }
+    
+    func SaveBtnPressed(_ index: Int){
+                
+        let panel = NSSavePanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                let img = stringObjectVM.selectedStringObject.charImageList[index]
+                imageProcess.SaveCIIToPNG(CIImage: img, filePath: panel.url!.path )
+                print(img.extent)
+            }
+        }
     }
 }
 

@@ -21,7 +21,11 @@ class CharDataManager{
         keyvalues["width"] = width as AnyObject
         keyvalues["height"] = height as AnyObject
         keyvalues["fontWeight"] = fontWeight as AnyObject
+        
         let items = CharDataManager.FetchItems(context, keyValues: keyvalues)
+        
+        //print("Count: \(items.count)")
+        
         if (items.count == 0){
             let newCharData = CharacterData(context: context)
             newCharData.char = char
@@ -78,6 +82,7 @@ class CharDataManager{
         
         if(keyValues.count > 0){
             for (key, value) in keyValues {
+                print("%K == %@", key, value as! NSObject)
                 let predicate:NSPredicate = NSPredicate(format: "%K == %@", key, value as! NSObject)
                 predicateList.append(predicate)
             }

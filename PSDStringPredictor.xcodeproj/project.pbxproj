@@ -209,6 +209,7 @@
 		3F4D13E725021AFB008F846B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */,
 				3FD24809253EDED0007EBE36 /* FontWeightClassifier.swift */,
 				3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */,
 				3FD24806253EDDAE007EBE36 /* FontWeightClassifier.mlmodel */,
@@ -260,7 +261,6 @@
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
 				3FEFE9122507200400AEF1C8 /* ControlPanel.swift */,
 				3FEFE9232507900500AEF1C8 /* LogListData.swift */,
-				3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */,
 				3FA49B36250874390093EBD2 /* LogObjectView.swift */,
 				3FA49B3A2508EAE90093EBD2 /* LogListView.swift */,
 				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
