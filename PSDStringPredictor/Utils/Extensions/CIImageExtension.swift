@@ -24,7 +24,7 @@ extension CIImage{
             try! FileManager.default.createDirectory(atPath: path,
             withIntermediateDirectories: true, attributes: nil)
         }
-        nsimg.pngWrite(to: URL(fileURLWithPath:path+fileName))
+        nsimg.pngWrite(atUrl: URL(fileURLWithPath:path+fileName))
     
     }
     
@@ -42,7 +42,7 @@ extension CIImage{
         //Save text images to file
         //let path = "/Users/user2/Public/Projects/MacAppTest/MacTest/TestOutput/a\(i).png"
         //nsimg.pngWrite(to: URL(fileURLWithPath: path))
-        nsimg.pngWrite(to: url)
+        nsimg.pngWrite(atUrl: url)
     }
     
     func ToCGImage(context: CIContext? = nil) -> CGImage? {

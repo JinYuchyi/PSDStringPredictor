@@ -94,39 +94,10 @@ struct StringObject : Identifiable{
         self.color = CalcColor()
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
-        //self.stringRect = ProcessStringRect(FromRect: stringRect)
-        //data.stringObjectIndex = data.stringObjectIndex + 1
-        //self.id = (data.stringObjectIndex)
-        
-        //FillCharFrameList()
         
     }
-    
-    //    func CalcTracking() -> CGFloat {
-    //        var trackingList: [Double] = []
-    //        for i in 0...charArray.count-2 {
-    //            if (charArray[i].isLowercase && charArray[i+1].isLowercase){
-    //                var dist = abs(charRects[i].minX - charRects[i+1].minX)
-    //                let t = PredictFontTracking(str1: String(charArray[i]), str2: String(charArray[i+1]), fontsize: Double(fontSize), distance: Double(dist))
-    //                print("Tracking of \(String(charArray[i])) and \(String(charArray[i+1])) is \(t), weight is \(fontSize)")
-    //
-    //                trackingList.append(t)
-    //            }
-    //        }
-    //        if (trackingList.count > 0){
-    //            var result: CGFloat = 0
-    //            for i in 0...trackingList.count - 1 {
-    //                result += CGFloat(trackingList[i])
-    //            }
-    //            result = result / CGFloat(trackingList.count)
-    //            result = result  / 100
-    //            return result
-    //        }
-    //        else {
-    //            return 0
-    //        }
-    //
-    //    }
+
+
     
     func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
         
@@ -197,41 +168,12 @@ struct StringObject : Identifiable{
                     c == "," ||
                     c == ";"
             ) {
-                //                    highLetterEvenHeight += charRects[index].height
-                //                    n += 1
+
                 hasLongTail = true
             }
-            //                else{
-            //                    lowerLetterEvenHeight += charRects[index].height
-            //                    n1 += 1
-            //                }
-            //}
-            
-            //            if (c == "," || c == ";"){
-            //                hasComma = true
-            //            }
+
         }
-        
-        //Calc the descent value
-        //        var descent: CGFloat = 0
-        //        if (n != 0){
-        //            highLetterEvenHeight = highLetterEvenHeight / n
-        //        }
-        //        if (n1 != 0){
-        //            lowerLetterEvenHeight = lowerLetterEvenHeight / n1
-        //        }
-        //        if (highLetterEvenHeight == 0){
-        //            descent = 0
-        //        }
-        //        else{
-        //            descent = highLetterEvenHeight - lowerLetterEvenHeight
-        //        }
-        
-        //Condition if we have , or ; in string
-        //We have to adjust string position and size
-        //        if(hasComma == true){
-        //            //descent = highLetterEvenHeight - lowerLetterEvenHeight
-        //        }
+
         var descent: CGFloat = 0
         if hasLongTail == true{
             descent = FontUtils.GetFontInfo(Font: "SF Pro Text", Content: content, Size: fontSize).descent
@@ -256,7 +198,6 @@ struct StringObject : Identifiable{
         //keyvalues["fontWeight"] = fontWeight as AnyObject
         let objList = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
         
-        //TODO: Same parameters, sometimes predict sometimes found
         if (objList.count == 0){
             isPredicted = 1
             print("\(char), with width \((width)) - height \((height)) - weight \(fontWeight). Pridict it as \(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight))")
