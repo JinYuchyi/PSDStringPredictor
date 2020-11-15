@@ -81,15 +81,22 @@ class OCR: ObservableObject{
             // Get the normalized CGRect value.
             let boundingBox = boxObservation?.boundingBox ?? .zero
             //let Rect = VNImageRectForNormalizedRect(boundingBox, width, height)
-            
+
             //print(boundingBox)
             // Convert the rectangle from normalized coordinates to image coordinates.
             //return VNImageRectForNormalizedRect(boundingBox, 100, 100)
-            rects.append(VNImageRectForNormalizedRect(boundingBox, width, height))
+            
+            let _x = (VNImageRectForNormalizedRect(boundingBox, width, height).minX).rounded()
+            let _y = (VNImageRectForNormalizedRect(boundingBox, width, height).minY).rounded()
+            let _w = (VNImageRectForNormalizedRect(boundingBox, width, height).width).rounded()
+            let _h = (VNImageRectForNormalizedRect(boundingBox, width, height).height).rounded()
+            let fixRect = CGRect.init(x: _x, y: _y, width: _w, height: _h)
+            
+            rects.append(fixRect)
             //print("\(offset) \(candidate.string[index_start]) \(boundingBox)")
             let char = candidate.string[index_start]
-            if (char == "S"){
-                print("S; \(VNImageRectForNormalizedRect(boundingBox, width, height))")
+            if (char == "B"){
+                print("B; \(VNImageRectForNormalizedRect(boundingBox, width, height))")
             }
             chars.append(char)
         }
@@ -127,9 +134,8 @@ class OCR: ObservableObject{
         let strs = GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
             let (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            //ciImage.ToPNG(stringsRects[i], ToPath: "/Users/ipdesign/Downloads/Test/", FileName: "test\(i).png",CreatePath: true) //Save the string image
             
-            var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: DataStore.targetNSImage.ToCIImage()!.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
+            var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: DataStore.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
             

@@ -15,13 +15,30 @@ extension NSImage {
         return bitmapImage.representation(using: .png, properties: [:])
     }
     
-    func pngWrite(to url: URL, options: Data.WritingOptions = .atomic) -> Bool {
+//    func pngWrite(to url: URL, options: Data.WritingOptions = .atomic) -> Bool {
+//        do {
+//            try pngData?.write(to: url, options: options)
+//            return true
+//        } catch {
+//            print(error)
+//            return false
+//        }
+//    }
+    
+    func pngWrite(atUrl url: URL) {
+        guard
+            let cgImage = self.cgImage(forProposedRect: nil, context: nil, hints: nil)
+            else { return } // TODO: handle error
+        let newRep = NSBitmapImageRep(cgImage: cgImage)
+        newRep.size = self.size // if you want the same size
+        guard
+            let pngData = newRep.representation(using: .bmp, properties: [:])
+            else { return } // TODO: handle error
         do {
-            try pngData?.write(to: url, options: options)
-            return true
-        } catch {
-            print(error)
-            return false
+            try pngData.write(to: url)
+        }
+        catch {
+            print("error saving: \(error)")
         }
     }
     

@@ -64,12 +64,7 @@ struct StringObjectPropertyView: View {
                 }
                 .fixedSize()
             }
-            //
-            //            HStack{
-            //                List(stringObjectVM.selectedStringObject.charImageList){ item in
-            //                    Image(item)
-            //                }
-            //            }
+
             
         }
         
@@ -81,9 +76,9 @@ struct StringObjectPropertyView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
             if result == .OK{
-                let img = stringObjectVM.selectedStringObject.charImageList[index]
-                imageProcess.SaveCIIToPNG(CIImage: img, filePath: panel.url!.path )
-                print(img.extent)
+                //let img = stringObjectVM.selectedStringObject.charImageList[index]
+                imageProcess.SaveCIIToPNG(CIImage: stringObjectVM.selectedStringObject.charImageList[index], filePath: panel.url!.path )
+
             }
         }
     }
