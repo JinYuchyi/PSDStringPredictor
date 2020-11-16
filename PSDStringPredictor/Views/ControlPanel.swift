@@ -115,16 +115,17 @@ struct ControlPanel: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
             if result == .OK{
-                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
-                {
+//                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
+//                {
                     let tempImg = LoadNSImage(imageUrlPath: panel.url!.path)
                     let cgI = tempImg.ToCGImage()
-                    let colorList = pixelProcess.LoadALineColors(FromImage: cgI!, Index: 0, IsForRow: true)
-                    let hasDifColor = pixelProcess.HasDifferentColor(ColorArray: colorList, Threshhold: 0.6)
+                let colorList = pixelProcess.LoadALineColors(FromImage: cgI!, Index: cgI!.width-1, IsForRow: false)
+                    let hasDifColor = pixelProcess.HasDifferentColor(ColorArray: colorList, Threshhold: 0.1)
+                    print(hasDifColor)
                     for item in colorList {
                         print(item.ToGrayScale())
                     }
-                }
+//                }
             }
         
         }

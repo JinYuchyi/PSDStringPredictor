@@ -82,7 +82,7 @@ class CharDataManager{
         
         if(keyValues.count > 0){
             for (key, value) in keyValues {
-                print("%K == %@", key, value as! NSObject)
+                //print("%K == %@", key, value as! NSObject)
                 let predicate:NSPredicate = NSPredicate(format: "%K == %@", key, value as! NSObject)
                 predicateList.append(predicate)
             }

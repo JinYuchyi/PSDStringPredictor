@@ -13,6 +13,170 @@ import SwiftUI
 
 class PixelProcess{
     
+    func FixBorder(image img: CIImage, rect rect: CGRect) -> CGRect {
+        
+        var x1: Int = Int(rect.minX.rounded())
+        var y1: Int = Int(rect.minY.rounded())
+        var x2: Int = Int(rect.maxX.rounded())
+        var y2: Int = Int(rect.maxY.rounded())
+        var hasDifT: Bool = true
+        var hasDifD: Bool = true
+        var hasDifL: Bool = true
+        var hasDifR: Bool = true
+        var previousHasDifT : Bool = true
+        var previousHasDifD : Bool = true
+        var previousHasDifL : Bool = true
+        var previousHasDifR : Bool = true
+        var finishT: Bool = false
+        var finishD: Bool = false
+        var finishL: Bool = false
+        var finishR: Bool = false
+        var stepT: Int = 6
+        var stepD: Int = 6
+        var stepL: Int = 6
+        var stepR: Int = 6
+        
+
+        func CheckEdgeT(){
+            //print("CheckEdgeT: previousHasDifT - \(previousHasDifT); hasDifT - \(hasDifT); stepT - \(stepT), \(x1),\(x2),\(y1),\(y2)")
+            previousHasDifT = hasDifT
+            //TODO: WIll get color list which all the element color is the same
+            let colorsTop = LoadRangeColors(FromImage: img.ToCGImage()!, Index: x1, RangeMin: y1, RangeMax: y2, IsForRow: true)
+            hasDifT = HasDifferentColor(ColorArray: colorsTop, Threshhold: 0.1)
+            if (previousHasDifT == false && hasDifT == true) || stepT == 0 {
+                finishT = true
+            }
+            stepT -= 1
+            if finishT == false{
+                //IsOKT()
+                if hasDifT == true  {
+                    print("hasDifT = \(hasDifT) == true")
+                    x1 = x1 - 1
+                }else if hasDifT == false{
+                    print("hasDifT = \(hasDifT) == false, x1 = \(x1)")
+                    x1 = x1 + 1
+                    print("Adter +1, x1 = \(x1)")
+                }
+                CheckEdgeT()
+
+            }
+        }
+        
+        func CheckEdgeD(){
+            print("CheckEdgeD: previousHasDifD - \(previousHasDifD); hasDifD - \(hasDifD); stepD - \(stepD)")
+            previousHasDifD = hasDifD
+            let colorsDown = LoadRangeColors(FromImage: img.ToCGImage()!, Index: x2, RangeMin: y1, RangeMax: y2, IsForRow: true)
+            hasDifD = HasDifferentColor(ColorArray: colorsDown, Threshhold: 0.1)
+            if (previousHasDifD == false && hasDifD == true) || stepD == 0{
+                finishD = true
+            }
+            stepD -= 1
+            if finishD == false{
+                IsOKD()
+            }
+        }
+        
+        func CheckEdgeL(){
+            print("CheckEdgeL")
+            previousHasDifL = hasDifL
+            let colorsLeft = LoadRangeColors(FromImage: img.ToCGImage()!, Index: y1, RangeMin: x1, RangeMax: x2, IsForRow: false)
+            hasDifL = HasDifferentColor(ColorArray: colorsLeft, Threshhold: 0.1)
+            if (previousHasDifL == false && hasDifL == true) || stepL == 0{
+                finishL = true
+            }
+            stepL -= 1
+            if finishL == false{
+                IsOKL()
+            }
+        }
+        
+        func CheckEdgeR(){
+            print("CheckEdgeR")
+            previousHasDifR = hasDifR
+            let colorsRight = LoadRangeColors(FromImage: img.ToCGImage()!, Index: y2, RangeMin: x1, RangeMax: x2, IsForRow: false)
+            hasDifR = HasDifferentColor(ColorArray: colorsRight, Threshhold: 0.1)
+            if (previousHasDifR == false && hasDifR == true) || stepR == 0{
+                finishR = true
+            }
+            stepR -= 1
+            if finishR == false{
+                IsOKR()
+            }
+        }
+        
+        //        func CheckEdge(){
+        //            let colorsTop = LoadRangeColors(FromImage: img.ToCGImage()!, Index: x1, RangeMin: y1, RangeMax: y2, IsForRow: true)
+        //            let colorsDown = LoadRangeColors(FromImage: img.ToCGImage()!, Index: x2, RangeMin: y1, RangeMax: y2, IsForRow: true)
+        //            let colorsLeft = LoadRangeColors(FromImage: img.ToCGImage()!, Index: y1, RangeMin: x1, RangeMax: x2, IsForRow: false)
+        //            let colorsRight = LoadRangeColors(FromImage: img.ToCGImage()!, Index: y2, RangeMin: x1, RangeMax: x2, IsForRow: false)
+        //
+        //            let hasDifT = HasDifferentColor(ColorArray: colorsTop, Threshhold: 0.1)
+        //            let hasDifD = HasDifferentColor(ColorArray: colorsDown, Threshhold: 0.1)
+        //            let hasDifL = HasDifferentColor(ColorArray: colorsLeft, Threshhold: 0.1)
+        //            let hasDifR = HasDifferentColor(ColorArray: colorsRight, Threshhold: 0.1)
+        //        }
+        func IsOKT(){
+                if hasDifT == true  {
+                    x1 = x1 - 1
+                    CheckEdgeT()
+                }else{
+                    x1 = x1 + 1
+                    CheckEdgeT()
+                }
+            
+        }
+        
+        func IsOKD(){
+                if hasDifD == true  {
+                    x2 = x2 + 1
+                    CheckEdgeD()
+                }else{
+                    x2 = x2 - 1
+                    CheckEdgeD()
+                }
+        }
+        
+        func IsOKL(){
+                if hasDifL == true  {
+                    y1 = y1 - 1
+                    CheckEdgeL()
+                }else{
+                    y1 = y1 + 1
+                    CheckEdgeL()
+                }
+            
+        }
+        
+        func IsOKR(){
+                if hasDifR == true  {
+                    y2 = y2 + 1
+                    CheckEdgeR()
+                }else{
+                    y2 = y2 - 1
+                    CheckEdgeR()
+                }
+            
+        }
+        
+        CheckEdgeT()
+        CheckEdgeD()
+        CheckEdgeL()
+        CheckEdgeR()
+
+        
+        //        if (finishT == true && finishD == true && finishL == true && finishR == true){
+        //            //Return rect
+        //        }
+        //Return rect
+        let resultRect = CGRect.init(x: x1, y: y1, width: x2-x1, height: y2-y1)
+        
+        print("Original rect: \(rect)")
+        print("Fixed rect: \(resultRect)")
+        print("\(stepT), \(stepD)")
+        
+        return resultRect
+    }
+    
     func LoadALineColors(FromImage img: CGImage, Index index : Int, IsForRow forRow: Bool) -> [NSColor] {
         var colors: [NSColor] = []
         if (forRow == true){
@@ -61,9 +225,16 @@ class PixelProcess{
         }
         
         if (maxBrightness - minBrightness > threshold){
+            print("True dif:")
+            print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
             return true
         }
         else{
+            print("False dif:")
+            for c in colors{
+                print(c.ToGrayScale())
+            }
+            print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
             return false
         }
     }
@@ -71,38 +242,38 @@ class PixelProcess{
     func colorAt(x: Int, y: Int, img: CGImage)->NSColor {
         
         let context = self.createBitmapContext(img: img)
-
+        
         assert(0<=x && x < context.width)
         assert(0<=y && y < context.height)
         
-
+        
         guard let pixelBuffer = context.data else { return .white }
         let data = pixelBuffer.bindMemory(to: UInt8.self, capacity: context.width * context.height)
-
+        
         let offset = 4 * (y * context.width + x)
-
+        
         let alpha: UInt8 = data[offset]
         let red: UInt8 = data[offset+1]
         let green: UInt8 = data[offset+2]
         let blue: UInt8 = data[offset+3]
-
+        
         let color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
-
+        
         return color
     }
     
     func createBitmapContext(img: CGImage) -> CGContext {
-
+        
         // Get image width, height
         let pixelsWide = img.width
         let pixelsHigh = img.height
-
+        
         let bitmapBytesPerRow = pixelsWide * 4
         let bitmapByteCount = bitmapBytesPerRow * Int(pixelsHigh)
-
+        
         // Use the generic RGB color space.
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-
+        
         // Allocate memory for image data. This is the destination in memory
         // where any drawing to the bitmap context will be rendered.
         let bitmapData = malloc(bitmapByteCount)
@@ -118,36 +289,36 @@ class PixelProcess{
                                 bytesPerRow: bitmapBytesPerRow,
                                 space: colorSpace,
                                 bitmapInfo: bitmapInfo.rawValue)
-
+        
         // draw the image onto the context
         let rect = CGRect(x: 0, y: 0, width: pixelsWide, height: pixelsHigh)
-
+        
         context?.draw(img, in: rect)
         
         return context!
     }
     
-//    func FixBlankEdge(FromImage image: CGImage, OriginalRect rect: CGRect ) -> CGRect {
-//        let w = image.width
-//        let h = image.height
-//        var minX = rect.minX
-//        var minY = rect.minY
-//        var maxX = rect.maxX
-//        var maxY = rect.maxY
-//        
-//        //Calc the top edge
-//        let colorList = self.LoadRangeColors(FromImage: image, Index: 0, RangeMin: Int(rect.minX), RangeMax: Int(rect.maxX), IsForRow: true)
-//        let hasDiff = HasDifferentColor(ColorArray: colorList, Threshhold: 0.2)
-//
-//        if hasDiff == true {
-//            let rect = CGRect(x: Int(rect.origin.x), y: Int(rect.origin.y), width: Int(rect.width), height: Int(rect.height)+1)
-//            FixBlankEdge(FromImage: image, OriginalRect: rect)
-//        }
-//        else{
-//            
-//        }
-//
-//    }
+    //    func FixBlankEdge(FromImage image: CGImage, OriginalRect rect: CGRect ) -> CGRect {
+    //        let w = image.width
+    //        let h = image.height
+    //        var minX = rect.minX
+    //        var minY = rect.minY
+    //        var maxX = rect.maxX
+    //        var maxY = rect.maxY
+    //
+    //        //Calc the top edge
+    //        let colorList = self.LoadRangeColors(FromImage: image, Index: 0, RangeMin: Int(rect.minX), RangeMax: Int(rect.maxX), IsForRow: true)
+    //        let hasDiff = HasDifferentColor(ColorArray: colorList, Threshhold: 0.2)
+    //
+    //        if hasDiff == true {
+    //            let rect = CGRect(x: Int(rect.origin.x), y: Int(rect.origin.y), width: Int(rect.width), height: Int(rect.height)+1)
+    //            FixBlankEdge(FromImage: image, OriginalRect: rect)
+    //        }
+    //        else{
+    //
+    //        }
+    //
+    //    }
     
-
+    
 }
