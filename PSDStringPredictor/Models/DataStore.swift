@@ -62,7 +62,6 @@ class DataStore{
     static var fontStandardObjectList: [FontStandardObject] = []
     //Image Property
     static var colorMode = -1 // 1 = Light mode, 2 = Dark Mode
-    
 
     static var logListData = [
         LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
@@ -73,7 +72,7 @@ class DataStore{
         charFrameList.removeAll()
         for i in 0 ..< stringObjectList.count {
             for j in 0 ..< stringObjectList[i].charRects.count{
-                let tmp = CharFrame(rect: stringObjectList[i].charRects[j], char: String(stringObjectList[i].charArray[j]), predictedSize: Int16(stringObjectList[i].charSizeList[j].rounded()))
+                let tmp = CharFrame(rect: stringObjectList[i].charRects[j], char: String(stringObjectList[i].charArray[j]), predictedSize: (stringObjectList[i].charSizeList[j]))
                 charFrameList.append(tmp)
             }
         }

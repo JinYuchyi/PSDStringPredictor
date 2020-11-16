@@ -35,7 +35,7 @@ struct StringObject : Identifiable{
     var color: Color
     var charArray: [Character]
     var charRects: [CGRect]
-    var charSizeList: [CGFloat]
+    var charSizeList: [Int16]
     var charImageList: [CIImage]
     var charFontWeightList: [Font.Weight]
     var isPredictedList: [Int]
@@ -100,7 +100,6 @@ struct StringObject : Identifiable{
 
     
     func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
-        
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size.rounded()))
         //return CGFloat(item.fontTracking)/1000
         //print("item.fontTrackingPoints ",item.fontTrackingPoints)
@@ -139,7 +138,23 @@ struct StringObject : Identifiable{
         }
     }
     
-    
+    func CalcFontFullName() -> String{
+        var family = ""
+        var style = ""
+        if (fontWeight == .regular){
+            style = "Regular"
+        }
+        else if fontWeight == .semibold{
+            style = "Semibold"
+        }
+        
+        if fontSize/3 < 20 {
+            family = "Text"
+        }else{
+            family = "Display"
+        }
+        return "SF Pro " + family + " " + style
+    }
     
     mutating func DeleteDescentForRect()  {
         var highLetterEvenHeight: CGFloat = 0
@@ -200,20 +215,20 @@ struct StringObject : Identifiable{
         
         if (objList.count == 0){
             isPredicted = 1
-            print("\(char), with width \((width)) - height \((height)) - weight \(fontWeight). Pridict it as \(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight))")
+            //print("\(char), with width \((width)) - height \((height)) - weight \(fontWeight). Pridict it as \(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight))")
             return (Int16(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight).rounded()), isPredicted)
         }else{
             isPredicted = -1
-            print("\(char), with width \(width) - height \(height) - weight \(fontWeight). Found it in DB, size is \(objList[0].fontSize)")
+            //print("\(char), with width \(width) - height \(height) - weight \(fontWeight). Found it in DB, size is \(objList[0].fontSize)")
             return (objList[0].fontSize, isPredicted)
         }
         
     }
     
-    func CalcBestSizeForString()-> (Int16, [CGFloat], [Int]){
+    func CalcBestSizeForString()-> (Int16, [Int16], [Int]){
         var predictList: [Int] = []
-        var weightArray:[CGFloat] = []
-        var weightArrayForSave: [CGFloat] = []
+        var weightArray:[Int16] = []
+        var weightArrayForSave: [Int16] = []
         //Find weight for each character
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
@@ -229,11 +244,11 @@ struct StringObject : Identifiable{
                 var singleChar = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), _fontWeight)
                 var tempweight = singleChar.0
                 if (tempweight != 0){
-                    weightArray.append(CGFloat(tempweight))
+                    weightArray.append((tempweight))
                 }
                 
                 if(tempweight > 0){
-                    weightArrayForSave.append(CGFloat(tempweight))
+                    weightArrayForSave.append((tempweight))
                     predictList.append(singleChar.1)
                 }else{
                     weightArrayForSave.append(-1)
@@ -246,31 +261,38 @@ struct StringObject : Identifiable{
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
         var floatSize = FindBestSizeFromArray(FromArray: weightArray)
-        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize.rounded()))
-        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(floatSize.rounded())) //Fetch nearest item from standard table
+        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize))
+        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize)) //Fetch nearest item from standard table
         return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave, predictList)
     }
 
-    private func FindBestSizeFromArray(FromArray sizeArray: [CGFloat]) -> Float{
+    private func FindBestSizeFromArray(FromArray sizeArray: [Int16]) -> Int16{
         var sizeDict: [Int16: Int16] = [:]
         for w in sizeArray{
-            let keyExists = sizeDict[Int16(round(w))] != nil
+            let keyExists = sizeDict[w] != nil
             if keyExists == false { //If the weight is new
-                sizeDict[Int16(round(w))] = 1
+                sizeDict[w] = 1
             }
             else{
-                let index = sizeDict[Int16(round(w))]
-                sizeDict[Int16(round(w))] = index! + 1
+                let index = sizeDict[w]
+                sizeDict[w] = index! + 1
             }
         }
-        let sortedValue = sizeDict.values.sorted(by: >)
-        let filtered = sizeDict.filter { $0.1 ==  sortedValue[0] }
-        var result: Float = 0.0
-        for (key, value) in filtered{
-            result = result + Float(key)
+        let sortedValues = sizeDict.values.sorted(by: >)
+        let filtered = sizeDict.filter { $0.1 ==  sortedValues[0] }
+//        var result: Float = 0.0
+//        for (key, value) in filtered{
+//            result = result + Float(key)
+//        }
+//        result = result / Float(filtered.count)
+        var res: Int16 = 0
+        for item in sizeDict.keys{
+            if sizeDict[item] == sortedValues[0]{
+                res = item
+            }
         }
-        result = result / Float(filtered.count)
-        return result
+        return res
+        
     }
 
     func PredictStringObjects(FromCIImage img: CIImage){

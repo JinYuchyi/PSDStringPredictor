@@ -12,13 +12,15 @@ import Vision
 import SwiftUI
 
 class PixelProcess{
-    
+    let ocr = OCR()
     func FixBorder(image img: CIImage, rect rect: CGRect) -> CGRect {
         
         var x1: Int = Int(rect.minX.rounded())
-        var y1: Int = Int(rect.minY.rounded())
+        //var y1: Int = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - Int(rect.maxY.rounded())
+        var y1: Int =  Int(rect.minY.rounded())
         var x2: Int = Int(rect.maxX.rounded())
         var y2: Int = Int(rect.maxY.rounded())
+        //var y2: Int = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - Int(rect.minY.rounded())
         var hasDifT: Bool = true
         var hasDifD: Bool = true
         var hasDifL: Bool = true
@@ -38,24 +40,35 @@ class PixelProcess{
         
 
         func CheckEdgeT(){
-            //print("CheckEdgeT: previousHasDifT - \(previousHasDifT); hasDifT - \(hasDifT); stepT - \(stepT), \(x1),\(x2),\(y1),\(y2)")
             previousHasDifT = hasDifT
+            
             //TODO: WIll get color list which all the element color is the same
-            let colorsTop = LoadRangeColors(FromImage: img.ToCGImage()!, Index: x1, RangeMin: y1, RangeMax: y2, IsForRow: true)
+            var yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
+            let colorsTop = LoadRangeColors(FromImage: img.ToCGImage()!, Index: yTemp, RangeMin: x1, RangeMax: x2, IsForRow: true)
             hasDifT = HasDifferentColor(ColorArray: colorsTop, Threshhold: 0.1)
+            
             if (previousHasDifT == false && hasDifT == true) || stepT == 0 {
                 finishT = true
+                //let resultRect = CGRect.init(x: x1, y: y1, width: abs(x2-x1), height: abs(y2-y1))
+                //let tmp = DataStore.targetImageProcessed.cropped(to: resultRect)
+                //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + "fixed"))
             }
+            
             stepT -= 1
             if finishT == false{
                 //IsOKT()
                 if hasDifT == true  {
-                    print("hasDifT = \(hasDifT) == true")
-                    x1 = x1 - 1
-                }else if hasDifT == false{
-                    print("hasDifT = \(hasDifT) == false, x1 = \(x1)")
-                    x1 = x1 + 1
-                    print("Adter +1, x1 = \(x1)")
+                    y1 = y1 - 1
+                    yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
+                    let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
+                    let tmp = DataStore.targetImageProcessed.cropped(to: resultRect)
+                    tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description  ))
+                }else{
+                    y1 = y1 + 1
+                    yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
+                    let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
+                    let tmp = DataStore.targetImageProcessed.cropped(to: resultRect)
+                    tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description))
                 }
                 CheckEdgeT()
 
@@ -159,9 +172,9 @@ class PixelProcess{
         }
         
         CheckEdgeT()
-        CheckEdgeD()
-        CheckEdgeL()
-        CheckEdgeR()
+//        CheckEdgeD()
+//        CheckEdgeL()
+//        CheckEdgeR()
 
         
         //        if (finishT == true && finishD == true && finishL == true && finishR == true){
@@ -170,9 +183,9 @@ class PixelProcess{
         //Return rect
         let resultRect = CGRect.init(x: x1, y: y1, width: x2-x1, height: y2-y1)
         
-        print("Original rect: \(rect)")
-        print("Fixed rect: \(resultRect)")
-        print("\(stepT), \(stepD)")
+//        print("Original rect: \(rect)")
+//        print("Fixed rect: \(resultRect)")
+//        print("\(stepT), \(stepD)")
         
         return resultRect
     }
@@ -181,13 +194,13 @@ class PixelProcess{
         var colors: [NSColor] = []
         if (forRow == true){
             for w in 0 ..< img.width {
-                let tmp = colorAt(x: w, y: index, img: img)
+                let tmp = colorAt(x: w, y: index, img: img, withAlpha: false)
                 colors.append(tmp)
             }
         }
         else{
             for h in 0 ..< img.height {
-                let tmp = colorAt(x: index, y: h, img: img)
+                let tmp = colorAt(x: index, y: h, img: img, withAlpha: false)
                 colors.append(tmp)
             }
         }
@@ -196,18 +209,26 @@ class PixelProcess{
     
     func LoadRangeColors(FromImage img: CGImage, Index index : Int, RangeMin min: Int, RangeMax max: Int, IsForRow forRow: Bool) -> [NSColor] {
         var colors: [NSColor] = []
+        
         if (forRow == true){
-            for w in min ..< max {
-                let tmp = colorAt(x: w, y: index, img: img)
+            //var index = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - index
+            for w in min...max {
+                let tmp = colorAt(x: w, y: index, img: img, withAlpha: true)
                 colors.append(tmp)
             }
         }
         else{
-            for h in min ..< max {
-                let tmp = colorAt(x: index, y: h, img: img)
+            for h in min...max {
+                //let hFix = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - h
+                let tmp = colorAt(x: index, y: h, img: img, withAlpha: true)
                 colors.append(tmp)
             }
         }
+        print("Row: \(index), range: \(min) - \(max)")
+        for c in colors{
+            print(c)
+        }
+        
         return colors
     }
     
@@ -223,42 +244,49 @@ class PixelProcess{
                 maxBrightness = c.ToGrayScale()
             }
         }
-        
+
         if (maxBrightness - minBrightness > threshold){
-            print("True dif:")
-            print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
+//            print("True dif:")
+//            print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
             return true
         }
         else{
-            print("False dif:")
-            for c in colors{
-                print(c.ToGrayScale())
-            }
-            print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
+            //print("False dif:")
+
+            //print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
             return false
         }
     }
     
-    func colorAt(x: Int, y: Int, img: CGImage)->NSColor {
+    func colorAt(x: Int, y: Int, img: CGImage, withAlpha: Bool)->NSColor {
         
         let context = self.createBitmapContext(img: img)
         
         assert(0<=x && x < context.width)
         assert(0<=y && y < context.height)
-        
+        var color: NSColor = NSColor.init()
         
         guard let pixelBuffer = context.data else { return .white }
         let data = pixelBuffer.bindMemory(to: UInt8.self, capacity: context.width * context.height)
         
-        let offset = 4 * (y * context.width + x)
-        
-        let alpha: UInt8 = data[offset]
-        let red: UInt8 = data[offset+1]
-        let green: UInt8 = data[offset+2]
-        let blue: UInt8 = data[offset+3]
-        
-        let color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
-        
+        if withAlpha == true {
+            let offset = 4 * (y * context.width + x)
+            
+            let alpha: UInt8 = data[offset]
+            let red: UInt8 = data[offset+1]
+            let green: UInt8 = data[offset+2]
+            let blue: UInt8 = data[offset+3]
+            
+             color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
+        }else{
+            let offset = 3 * (y * context.width + x)
+            
+            let red: UInt8 = data[offset]
+            let green: UInt8 = data[offset+1]
+            let blue: UInt8 = data[offset+2]
+            
+            color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: 1)
+        }
         return color
     }
     

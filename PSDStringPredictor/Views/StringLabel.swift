@@ -38,9 +38,8 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
-        //let results = stringObjectVM.selectedStringObject.fontWeight
-        //print(results)
         stringLabel.PredictTracking()
+        print(stringLabel.charSizeList)
     }
     
     var body: some View {
@@ -85,9 +84,12 @@ struct StringLabel: View {
             else{
                 Text(stringLabel.content)
                     //.foregroundColor(stringLabel.color)
-                    //.font(.custom("SF Pro Display", size: stringLabel.fontSize))
-                    //.tracking(stringLabel.tracking)
-                    .font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
+                
+                    //"SF Pro Display"
+                    
+                    .font(.custom(stringLabel.CalcFontFullName(), size: stringLabel.fontSize))
+                    .tracking(stringLabel.tracking)
+                    //.font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
             }
             

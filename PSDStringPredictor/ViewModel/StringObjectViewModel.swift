@@ -62,7 +62,7 @@ class StringObjectViewModel: ObservableObject{
         selectedCharImageListObjectList = []
         self.selectedStringObject = selectedStringObject
         for (index, img) in (selectedStringObject.charImageList).enumerated(){
-            let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObject.charArray[index]), weight: selectedStringObject.charFontWeightList[index], size: Int(selectedStringObject.charSizeList[index].rounded()))
+            let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObject.charArray[index]), weight: selectedStringObject.charFontWeightList[index], size: Int(selectedStringObject.charSizeList[index]))
             selectedCharImageListObjectList.append( temp )
             //print("selectedCharImageListObjectList.count: \(selectedCharImageListObjectList.count)")
 

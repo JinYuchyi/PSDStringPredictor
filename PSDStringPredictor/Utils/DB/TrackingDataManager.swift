@@ -94,7 +94,7 @@ class TrackingDataManager  {
     
     static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> TrackingDataObject{
         //var object: TrackingDataObject
-        let fetchedResult = TrackingDataManager.FetchItems(context, fontSize: fontSize)
+        let fetchedResult = TrackingDataManager.FetchItems(context, fontSize: fontSize/3)
         //print("Fetching \(fontSize), result count is \(fetchedResult.count)")
 
         if (fetchedResult.count > 0) {

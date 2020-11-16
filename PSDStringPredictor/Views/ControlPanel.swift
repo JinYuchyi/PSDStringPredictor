@@ -88,7 +88,7 @@ struct ControlPanel: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
             if result == .OK{
-                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
+                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd") )
                 {
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.imageProcess.SetTargetNSImage(tmp)
@@ -96,17 +96,13 @@ struct ControlPanel: View {
                     
                     colorModeClassifier.Prediction(fromImage: DataStore.targetImageProcessed)
                     self.imagePropertyVM.SetImageColorMode(modeIndex: DataStore.colorMode)
-                    print(DataStore.colorMode)
+                    //print(DataStore.colorMode)
                 }
             }
         }
 
     }
-    
 
-    
-
-    
     func Debug(){
         
         //let mtp = FontUtils.GetFontInfo(Font: "SFProDisplay-Regular", Content: "1sdf", Size: 100)

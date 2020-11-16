@@ -21,4 +21,15 @@ extension Font.Weight {
         }
         
     }
+    
+    func ToFullName()->String{
+        if (self == Font.Weight.regular){
+            return "SF Pro Text Regular"
+        }
+        else if (self == Font.Weight.semibold){
+            return "SF Pro Text Semibold"
+        }else{
+            return ""
+        }
+    }
 }
