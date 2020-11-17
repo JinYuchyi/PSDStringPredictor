@@ -33,7 +33,7 @@ extension NSImage {
         newRep.size = self.size // if you want the same size
         guard
             let pngData = newRep.representation(using: .bmp, properties: [:])
-            else { return } // TODO: handle error
+            else { return } 
         do {
             try pngData.write(to: url)
         }

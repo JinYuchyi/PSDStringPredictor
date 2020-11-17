@@ -79,9 +79,9 @@ struct StringObjectPropertyView: View {
             if result == .OK{
                 //let img = stringObjectVM.selectedStringObject.charImageList[index]
                 imageProcess.SaveCIIToPNG(CIImage: stringObjectVM.selectedStringObject.charImageList[index], filePath: panel.url!.path )
-                //let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
-                //let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
-                //imageProcess.SaveCIIToPNG(CIImage: fixedImg, filePath: panel.url!.path+"_fixed" )
+                let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
+                let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
+                imageProcess.SaveCIIToPNG(CIImage: fixedImg, filePath: panel.url!.path+"_fixed" )
 
             }
         }

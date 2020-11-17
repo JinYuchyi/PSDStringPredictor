@@ -94,10 +94,25 @@ struct StringObject : Identifiable{
         self.color = CalcColor()
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
-        
+        //self.content = FixContent(self.content)
+
     }
 
 
+    func FixContent(_ target: String) -> String{
+        var res: String = target
+        let lowerString: String = target.lowercased()
+        for _word in DataStore.wordList{
+            //Condition which we need to fix lowercase/uppercase problem for proper nouns, such as "iCloud".
+            if (lowerString.contains(_word.lowercased()) == true && lowerString.contains(_word) == false ){
+                let range = lowerString.range(of: _word.lowercased())
+                let first = range?.lowerBound
+                let last = range?.upperBound
+                res = target.replacingOccurrences(of: target[first!...last!], with: _word)
+            }
+        }
+        return res
+    }
     
     func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size.rounded()))
@@ -260,10 +275,11 @@ struct StringObject : Identifiable{
             }
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
-        var floatSize = FindBestSizeFromArray(FromArray: weightArray)
-        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize))
-        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize)) //Fetch nearest item from standard table
-        return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave, predictList)
+        var size = FindBestSizeFromArray(FromArray: weightArray)
+//        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize))
+//        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize)) //Fetch nearest item from standard table
+//        return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave, predictList)
+        return (size, weightArrayForSave, predictList)
     }
 
     private func FindBestSizeFromArray(FromArray sizeArray: [Int16]) -> Int16{
@@ -327,8 +343,10 @@ struct StringObject : Identifiable{
         return result
     }
     
-    
-    
+//    func FixContent(){
+//        if
+//    }
+//
     
     
 }

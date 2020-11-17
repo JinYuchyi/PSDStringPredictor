@@ -56,6 +56,10 @@ class DataStore{
         NSColor.init(red: 28, green: 28, blue: 30, alpha: 255)
     ]
     
+    static var wordList: [String] = [
+        "iCloud"
+    ]
+    
     //UI
     static var charFrameIndex = 0
     static var charFrameList: [CharFrame] = []
@@ -77,6 +81,8 @@ class DataStore{
             }
         }
     }
+    
+    
     
 
 }

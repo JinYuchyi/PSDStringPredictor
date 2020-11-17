@@ -41,17 +41,13 @@ class PixelProcess{
 
         func CheckEdgeT(){
             previousHasDifT = hasDifT
-            
-            //TODO: WIll get color list which all the element color is the same
+            print("stepT: \(stepT), previousHasDifT: \(previousHasDifT), hasDifT: \(hasDifT)")
             var yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
             let colorsTop = LoadRangeColors(FromImage: img.ToCGImage()!, Index: yTemp, RangeMin: x1, RangeMax: x2, IsForRow: true)
             hasDifT = HasDifferentColor(ColorArray: colorsTop, Threshhold: 0.1)
             
             if (previousHasDifT == false && hasDifT == true) || stepT == 0 {
                 finishT = true
-                //let resultRect = CGRect.init(x: x1, y: y1, width: abs(x2-x1), height: abs(y2-y1))
-                //let tmp = DataStore.targetImageProcessed.cropped(to: resultRect)
-                //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + "fixed"))
             }
             
             stepT -= 1

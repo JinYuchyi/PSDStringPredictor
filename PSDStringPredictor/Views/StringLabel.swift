@@ -69,10 +69,6 @@ struct StringLabel: View {
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
 
 
-            
-            //Base on font size, decide the font
-            
-            
             if stringLabel.fontSize < 20 {
                 Text(stringLabel.content)
                     //.foregroundColor(stringLabel.color)
