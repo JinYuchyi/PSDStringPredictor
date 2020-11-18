@@ -31,9 +31,9 @@ struct ImageView: View {
                 else{
                     ZStack{
                         Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
-                        Text("Hello!")
-                            .font(.custom("SFProText-Regular", size: 150))
-                            .tracking(60)
+//                        Text("Hello!")
+//                            .font(.custom("SFProText-Regular", size: 150))
+//                            .tracking(60)
                     }
                 }
         }
