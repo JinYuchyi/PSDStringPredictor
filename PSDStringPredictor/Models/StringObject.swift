@@ -198,15 +198,15 @@ struct StringObject : Identifiable{
                     c == "," ||
                     c == ";"
             ) {
-
                 hasLongTail = true
             }
-
         }
 
         var descent: CGFloat = 0
         if hasLongTail == true{
-            descent = FontUtils.GetFontInfo(Font: "SF Pro Text", Content: content, Size: fontSize).descent
+            let fontName = CalcFontFullName()
+            descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
+            descent = descent * 0.9
         }
         
         
