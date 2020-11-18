@@ -92,10 +92,15 @@ struct StringLabel: View {
             //Button for show detail
             Button(action: {self.InfoBtnTapped()}){
                 Text("􀍢")
+                    
                     //.background(Color.black)
                     .foregroundColor(Color.white)
-                    .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 1)
+                    //.border(Color.black, width: 1)
+                    //.shadow(radius: 0.1)
+                    .cornerRadius(10)
             }
+            .frame(width: 15, height: 15, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .shadow(radius: 10)
             .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
             
             
@@ -139,3 +144,19 @@ struct StringLabel: View {
 //    return "Default " +  SetPosition()[0].description  + ", " +  SetPosition()[1].description
 //}
 
+
+struct StringLabel_Previews: PreviewProvider {
+    static var previews: some View {
+        Button(action: {}){
+//            Text("􀍢")
+//
+//                //.background(Color.black)
+//                .foregroundColor(Color.white)
+//                //.border(Color.black, width: 1)
+//                //.shadow(radius: 0.1)
+//                .cornerRadius(10)
+        }
+        .frame(width: 15, height: 15, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        .shadow(radius: 10)
+    }
+}

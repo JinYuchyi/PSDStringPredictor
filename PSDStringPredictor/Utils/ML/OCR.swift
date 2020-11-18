@@ -113,7 +113,7 @@ class OCR: ObservableObject{
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         TextRecognitionRequest.usesLanguageCorrection = true
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
-        TextRecognitionRequest.customWords = ["iCloud"]
+        TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
         do {
             try requestHandler.perform([TextRecognitionRequest])
         } catch {

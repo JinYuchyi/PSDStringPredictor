@@ -206,7 +206,7 @@ struct StringObject : Identifiable{
         if hasLongTail == true{
             let fontName = CalcFontFullName()
             descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
-            descent = descent * 0.9
+            descent = descent * 0.8
         }
         
         
