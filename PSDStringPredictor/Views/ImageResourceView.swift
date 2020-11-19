@@ -12,7 +12,8 @@ func CustomImage(name: String, color: Color = .white) -> some View {
     return VStack {
         Image(name)
             .resizable()
-            .renderingMode(.template) // this one helps resize the image
+            .renderingMode(.original)
+            //.renderingMode(.template) // this one helps resize the image
             
             //.foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
             //.aspectRatio(1, contentMode: .fit) // keep the aspect ratio
