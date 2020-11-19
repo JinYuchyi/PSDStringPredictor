@@ -35,11 +35,13 @@ struct ContentView: View {
     
     fileprivate func LeftViewGroup() -> some View {
         return VStack{
-            //Text(String(self.stringObjectViewModel.countNum))
+            
             ImagePropertyView()
+            
             ControlPanel(showImage: $showImage)
                 .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+            
             ImageProcessView(imageViewModel: imageViewModel)
                 .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
@@ -47,6 +49,7 @@ struct ContentView: View {
             StringObjectListView()
                 .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+            
         }
     }
     
@@ -55,10 +58,8 @@ struct ContentView: View {
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView(imageViewModel:imageViewModel, showImage: $showImage)
-                    //.gesture(drag)
                     
                     LabelsOnImage()
-                        //.blendMode(.difference)
                         .IsHidden(condition: showPredictString)
                     CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
                         .IsHidden(condition: showDebugOverlay)

@@ -96,7 +96,7 @@ class OCR: ObservableObject{
             //print("\(offset) \(candidate.string[index_start]) \(boundingBox)")
             let char = candidate.string[index_start]
             if (char == "B"){
-                print("B; \(VNImageRectForNormalizedRect(boundingBox, width, height))")
+                print("B: \(VNImageRectForNormalizedRect(boundingBox, width, height))")
             }
             chars.append(char)
         }
@@ -139,9 +139,18 @@ class OCR: ObservableObject{
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
             
+            //Init blackdict
             
         }
         return strobjs
+    }
+    
+    func FiltOutIgnoredRect(targetList rects: [CGRect]){
+        for rect in rects{
+            for ignoreRect in stringObjectViewModel.stringObjectIgnoreDict{
+                if rect.
+            }
+        }
     }
     
 

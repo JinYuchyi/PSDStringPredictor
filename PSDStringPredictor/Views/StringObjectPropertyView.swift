@@ -29,7 +29,7 @@ struct StringObjectPropertyView: View {
         VStack{
             
 
-            Text("Content:")
+            Text("Content (\(stringObjectVM.selectedStringObject.id)):")
             Text("\(stringObjectVM.selectedStringObject.content)")
             Text("Size: \(stringObjectVM.selectedStringObject.fontSize)")
             Text("Tracking: \(stringObjectVM.selectedStringObject.tracking)")

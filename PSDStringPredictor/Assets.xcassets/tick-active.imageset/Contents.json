@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "close-icon copy.png",
+      "filename" : "tick_active.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "close-icon copy-1.png",
+      "filename" : "tick_active-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "close-icon copy-2.png",
+      "filename" : "tick_active-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

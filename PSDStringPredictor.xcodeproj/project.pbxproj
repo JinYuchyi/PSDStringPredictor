@@ -53,6 +53,8 @@
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
 		3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */; };
 		3F9ED7A52566090100F950BC /* ImageResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9ED7A42566090100F950BC /* ImageResourceView.swift */; };
+		3F9ED7A825662CD600F950BC /* ButtonStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */; };
+		3F9ED7AB25667E9400F950BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */; };
 		3FA1C5B225567D5500FC6DC3 /* FontSizeTabularRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */; };
 		3FA1C5B52557E7B100FC6DC3 /* TrackingRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */; };
 		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
@@ -136,6 +138,8 @@
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
 		3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessControlView.swift; sourceTree = "<group>"; };
 		3F9ED7A42566090100F950BC /* ImageResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceView.swift; sourceTree = "<group>"; };
+		3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleView.swift; sourceTree = "<group>"; };
+		3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontSizeTabularRegressor.swift; sourceTree = "<group>"; };
 		3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingRegressor.swift; path = PSDStringPredictor/Resources/TrackingRegressor.swift; sourceTree = SOURCE_ROOT; };
 		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 				3FAAB485251341A600CB89B1 /* CharacterFrameListView.swift */,
 				3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */,
 				3F9ED7A42566090100F950BC /* ImageResourceView.swift */,
+				3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 				3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */,
 				3FE881282532E6DD0088A1CD /* FontDataExtension.swift */,
 				3F0782822541B9F0007163D6 /* FontExtension.swift */,
+				3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -552,8 +558,10 @@
 				3FE8814025333D820088A1CD /* StringObjectRow.swift in Sources */,
 				3F8460A2251057FF00788176 /* CompareImage.swift in Sources */,
 				3FD24803253ED7B0007EBE36 /* FontWeight.swift in Sources */,
+				3F9ED7AB25667E9400F950BC /* CGRectExtension.swift in Sources */,
 				3F308027251DD96600550DEA /* PixelProcess.swift in Sources */,
 				3FE8812D25332A8D0088A1CD /* DB_Character.swift in Sources */,
+				3F9ED7A825662CD600F950BC /* ButtonStyleView.swift in Sources */,
 				3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */,
 				3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,

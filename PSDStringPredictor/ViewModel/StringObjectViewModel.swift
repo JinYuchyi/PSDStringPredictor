@@ -34,6 +34,9 @@ class StringObjectViewModel: ObservableObject{
     //@Published var StringLabelListData: [StringLabelObject] = []
     @Published var selectedStringObject: StringObject = StringObject.init()
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
+
+    @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
+    @Published var stringObjectFixedDict: [UUID: Bool] = [:]
     
     func PredictStrings()  {
         stringObject.PredictStringObjects(FromCIImage: DataStore.targetImageProcessed)
@@ -41,8 +44,6 @@ class StringObjectViewModel: ObservableObject{
         DataStore.FillCharFrameList()
         FetchCharFrameListData()
         FetchCharFrameListRects()
-        //FetchStringLabelList()
-        
     }
     
     func FetchCharFrameListData() {
@@ -64,8 +65,6 @@ class StringObjectViewModel: ObservableObject{
         for (index, img) in (selectedStringObject.charImageList).enumerated(){
             let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObject.charArray[index]), weight: selectedStringObject.charFontWeightList[index], size: Int(selectedStringObject.charSizeList[index]))
             selectedCharImageListObjectList.append( temp )
-            //print("selectedCharImageListObjectList.count: \(selectedCharImageListObjectList.count)")
-
         }
     }
     

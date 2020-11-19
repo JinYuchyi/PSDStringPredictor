@@ -13,11 +13,11 @@ func CustomImage(name: String, color: Color = .white) -> some View {
         Image(name)
             .resizable()
             .renderingMode(.original)
-            //.renderingMode(.template) // this one helps resize the image
             
             //.foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
             //.aspectRatio(1, contentMode: .fit) // keep the aspect ratio
-    }.frame(width: 32, height: 32) // the image will fit this size
+    }
+    //.frame(width: 32, height: 32) // the image will fit this size
 }
 
 struct ImageResourceView_Previews: PreviewProvider {

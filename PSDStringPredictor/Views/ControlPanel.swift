@@ -69,7 +69,7 @@ struct ControlPanel: View {
             .frame(minWidth: 400, maxWidth: .infinity)
             
             Button(action: {self.stringObjectVM.PredictStrings()}){
-                Text("Modify PSD")
+                Text("Create PSD")
                 .padding(.horizontal, 40.0)
                 .frame(minWidth: 200, maxWidth: .infinity)
             }

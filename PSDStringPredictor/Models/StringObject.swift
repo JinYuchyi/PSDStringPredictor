@@ -39,7 +39,7 @@ struct StringObject : Identifiable{
     var charImageList: [CIImage]
     var charFontWeightList: [Font.Weight]
     var isPredictedList: [Int]
-    
+    var isForbidden: Bool
     var confidence: CGFloat
     
     //@EnvironmentObject var db: DB
@@ -64,6 +64,7 @@ struct StringObject : Identifiable{
         charSizeList = []
         charFontWeightList = []
         confidence = 0
+        isForbidden = false
         isPredictedList = []
         self.color = CalcColor()
         self.fontWeight = PredictFontWeight()
@@ -85,8 +86,7 @@ struct StringObject : Identifiable{
         self.color = Color.black
         self.confidence = confidence
         self.isPredictedList = []
-        //self.color = CalcColor()
-        //self.position = CalcPosition()
+        isForbidden = false
         self.fontWeight = PredictFontWeight()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
@@ -343,11 +343,9 @@ struct StringObject : Identifiable{
         return result
     }
     
-//    func FixContent(){
-//        if
-//    }
-//
-    
+    mutating func SetForbidden(_ f: Bool){
+        isForbidden = f
+    }
     
 }
 
