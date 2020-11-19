@@ -91,16 +91,12 @@ struct StringLabel: View {
             
             //Button for show detail
             Button(action: {self.InfoBtnTapped()}){
-                Text("􀍢")
+                CustomImage( name: "detail-round")
                     
-                    //.background(Color.black)
-                    .foregroundColor(Color.white)
-                    //.border(Color.black, width: 1)
-                    //.shadow(radius: 0.1)
-                    .cornerRadius(10)
             }
-            .frame(width: 15, height: 15, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            .shadow(radius: 10)
+            //.frame(width: 15, height: 15, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            
+//            .shadow(radius: 10)
             .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
             
             
