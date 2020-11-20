@@ -31,10 +31,8 @@ struct StringLabel: View {
     
     var stringLabel: StringObject
     
-    
     func makeView(_ geometry: GeometryProxy) -> some View {
         print(geometry.size.width, geometry.size.height)
-        
         DispatchQueue.main.async { self.width = geometry.size.width }
         
         return Text("Test")
@@ -94,7 +92,6 @@ struct StringLabel: View {
                 .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
             
-            
             Text(stringLabel.content)
                 .font(.custom(stringLabel.CalcFontFullName(), size: stringLabel.fontSize))
                 .tracking(stringLabel.tracking)
@@ -132,8 +129,6 @@ struct StringLabel: View {
                 .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(-4)
 
-                //.position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
-                
                 //Button for lock
                 Button(action: {self.FixedBtnTapped()}){
                     CustomImage( name: fixed ? "tick-active" : "tick-round")
@@ -159,7 +154,7 @@ struct StringLabel: View {
                 //.position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
             }
             .frame(width: 30, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .trailing)
-            .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY - 5   )
+            .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY - 5 )
         }
         
         //.position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)

@@ -64,7 +64,6 @@ struct ContentView: View {
                     CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
                         .IsHidden(condition: showDebugOverlay)
                 }
-                
             }
             
             VStack(alignment: .trailing){

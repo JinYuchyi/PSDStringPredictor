@@ -11,12 +11,48 @@
         }
       },
       {
+        "package": "LoggerKit",
+        "repositoryURL": "https://github.com/pvieito/LoggerKit.git",
+        "state": {
+          "branch": "master",
+          "revision": "835b41248dbe474eb33dac2c1ef1376dea7dc11d",
+          "version": null
+        }
+      },
+      {
+        "package": "PythonKit",
+        "repositoryURL": "https://github.com/pvieito/PythonKit.git",
+        "state": {
+          "branch": "master",
+          "revision": "59a868e84e1d6a5e01569cf92086554033415fa4",
+          "version": null
+        }
+      },
+      {
+        "package": "Rainbow",
+        "repositoryURL": "https://github.com/onevcat/Rainbow",
+        "state": {
+          "branch": null,
+          "revision": "626c3d4b6b55354b4af3aa309f998fae9b31a3d9",
+          "version": "3.2.0"
+        }
+      },
+      {
         "package": "SQLite.swift",
         "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
         "state": {
           "branch": null,
           "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
           "version": "0.12.2"
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": "main",
+          "revision": "53555a04503c175eaffcf587e4b8c380a7c41a5c",
+          "version": null
         }
       },
       {

@@ -12,6 +12,7 @@ import CoreData
 struct ControlPanel: View {
     
     var dbvm = DBViewModel()
+    let ternimalScriptMgr = TernimalScriptManager()
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @ObservedObject var strObjVM = stringObjectViewModel
     //@ObservedObject var loglist: LogListData
@@ -96,7 +97,6 @@ struct ControlPanel: View {
                     
                     colorModeClassifier.Prediction(fromImage: DataStore.targetImageProcessed)
                     self.imagePropertyVM.SetImageColorMode(modeIndex: DataStore.colorMode)
-                    //print(DataStore.colorMode)
                 }
             }
         }
@@ -104,27 +104,27 @@ struct ControlPanel: View {
     }
 
     func Debug(){
-        
-        //let mtp = FontUtils.GetFontInfo(Font: "SFProDisplay-Regular", Content: "1sdf", Size: 100)
-        //print(mtp.size)
-        let panel = NSOpenPanel()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let result = panel.runModal()
-            if result == .OK{
-//                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
-//                {
-                    let tempImg = LoadNSImage(imageUrlPath: panel.url!.path)
-                    let cgI = tempImg.ToCGImage()
-                let colorList = pixelProcess.LoadALineColors(FromImage: cgI!, Index: cgI!.width-1, IsForRow: false)
-                    let hasDifColor = pixelProcess.HasDifferentColor(ColorArray: colorList, Threshhold: 0.1)
-                    print(hasDifColor)
-                    for item in colorList {
-                        print(item.ToGrayScale())
-                    }
-//                }
-            }
-        
-        }
+
+//        let panel = NSOpenPanel()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//            let result = panel.runModal()
+//            if result == .OK{
+////                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
+////                {
+//                    let tempImg = LoadNSImage(imageUrlPath: panel.url!.path)
+//                    let cgI = tempImg.ToCGImage()
+//                let colorList = pixelProcess.LoadALineColors(FromImage: cgI!, Index: cgI!.width-1, IsForRow: false)
+//                    let hasDifColor = pixelProcess.HasDifferentColor(ColorArray: colorList, Threshhold: 0.1)
+//                    print(hasDifColor)
+//                    for item in colorList {
+//                        print(item.ToGrayScale())
+//                    }
+////                }
+//            }
+//
+//        }
+        let cmd = "open /Users/ipdesign/Documents/Development/AdobeScript/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
+        PythonScriptManager.RunScript(str: cmd)
     }
 
 }

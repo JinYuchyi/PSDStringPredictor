@@ -129,12 +129,12 @@ class OCR: ObservableObject{
         }
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
-        //let stringsResults = GetObservations(fromImage: ciImage, withRecognitionLevel: VNRequestTextRecognitionLevel.fast, usesLanguageCorrection: true)
-        let stringsRects = GetRectsFromObservations(results_fast, Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
+        var stringsRects = GetRectsFromObservations(results_fast, Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
+        //stringsRects = RemoveIgnored(targetList: stringsRects)
+
         let strs = GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
-            let (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            
+            var (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: DataStore.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
@@ -145,12 +145,24 @@ class OCR: ObservableObject{
         return strobjs
     }
     
-    func FiltOutIgnoredRect(targetList rects: [CGRect]){
-        for rect in rects{
-            for ignoreRect in stringObjectViewModel.stringObjectIgnoreDict{
-                if rect.
+    func RemoveIgnored(targetList rects: [CGRect]) -> [CGRect]{
+        var resultRect: [CGRect] = rects
+        //var resultChar: [Character] = []
+        for (index,rect) in rects.enumerated(){
+            for (index,id) in stringObjectViewModel.stringObjectIgnoreDict.keys.enumerated(){
+                let index = stringObjectViewModel.stringObjectListData.firstIndex(where: {$0.id == id} )!
+                let obj = stringObjectViewModel.stringObjectListData[index]
+                let ignoreRect = obj.stringRect
+                if rect.IsSame(target: ignoreRect){
+                    resultRect.remove(at: index)
+                    print("\(rect) is same as \(self)")
+                }else{
+                    //resultRect.append(ignoreRect)
+                }
             }
         }
+        print("Result number: \(resultRect.count)")
+        return resultRect
     }
     
 

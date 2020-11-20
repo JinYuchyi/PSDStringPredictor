@@ -38,6 +38,9 @@
 		3F5218182521E89200646F91 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5218172521E89200646F91 /* TestView.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
+		3F662AFA25677D40008F1879 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F662AF925677D40008F1879 /* ScriptManager.swift */; };
+		3F66F86F2567BCE800BD48C3 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F66F86E2567BCE800BD48C3 /* PythonKit */; };
+		3F66F8722567BD7100BD48C3 /* PythonScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */; };
 		3F68B702252D7D8900CCFCE5 /* FontSizeTrackingTable.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */; };
 		3F68B704252DCAC700CCFCE5 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */; };
 		3F68B707252EA8A900CCFCE5 /* FontData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B705252EA8A900CCFCE5 /* FontData.xcdatamodeld */; };
@@ -122,6 +125,8 @@
 		3F5218172521E89200646F91 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
+		3F662AF925677D40008F1879 /* ScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptManager.swift; sourceTree = "<group>"; };
+		3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonScriptManager.swift; sourceTree = "<group>"; };
 		3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = FontSizeTrackingTable.csv; sourceTree = "<group>"; };
 		3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		3F68B706252EA8A900CCFCE5 /* FontDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FontDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -185,6 +190,7 @@
 			files = (
 				3FEFE9182507276F00AEF1C8 /* SQLite in Frameworks */,
 				3F3EFFA32533479D0047E4E5 /* GRDB in Frameworks */,
+				3F66F86F2567BCE800BD48C3 /* PythonKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +303,15 @@
 			path = String;
 			sourceTree = "<group>";
 		};
+		3F662AF825677D29008F1879 /* Script */ = {
+			isa = PBXGroup;
+			children = (
+				3F662AF925677D40008F1879 /* ScriptManager.swift */,
+				3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */,
+			);
+			path = Script;
+			sourceTree = "<group>";
+		};
 		3FAAB49125146FCA00CB89B1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +363,7 @@
 		3FBA3A7A2510AFAB00F041DC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3F662AF825677D29008F1879 /* Script */,
 				3F1A629625230CED006DC9F9 /* Font */,
 				3FAEC5CA25219A90008ECA23 /* Extensions */,
 				3F5892A7251F7683001CAF6E /* DB */,
@@ -452,6 +468,7 @@
 			packageProductDependencies = (
 				3FEFE9172507276F00AEF1C8 /* SQLite */,
 				3F3EFFA22533479D0047E4E5 /* GRDB */,
+				3F66F86E2567BCE800BD48C3 /* PythonKit */,
 			);
 			productName = UITest;
 			productReference = 3FD401EF2500F2FB00525E67 /* PSDStringPredictor.app */;
@@ -485,6 +502,7 @@
 				3FEFE9162507276F00AEF1C8 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				3F5C304425199E9600A1FF45 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 				3F3EFFA12533479D0047E4E5 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				3F66F86D2567BCE800BD48C3 /* XCRemoteSwiftPackageReference "PythonKit" */,
 			);
 			productRefGroup = 3FD401F02500F2FB00525E67 /* Products */;
 			projectDirPath = "";
@@ -545,6 +563,7 @@
 				3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */,
 				3F4CB5A5250A23E200E41082 /* ImageProcess.swift in Sources */,
 				3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */,
+				3F662AFA25677D40008F1879 /* ScriptManager.swift in Sources */,
 				3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */,
 				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
 				3F8208502510F8CE00832192 /* File.swift in Sources */,
@@ -554,6 +573,7 @@
 				3F820854251112BA00832192 /* FontTracking.swift in Sources */,
 				3FD401F52500F2FB00525E67 /* ContentView.swift in Sources */,
 				3F6B455425133BD100BE6F76 /* CharacterFrameView.swift in Sources */,
+				3F66F8722567BD7100BD48C3 /* PythonScriptManager.swift in Sources */,
 				3F25BC67250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel in Sources */,
 				3FE8814025333D820088A1CD /* StringObjectRow.swift in Sources */,
 				3F8460A2251057FF00788176 /* CompareImage.swift in Sources */,
@@ -824,6 +844,14 @@
 				minimumVersion = 1.8.2;
 			};
 		};
+		3F66F86D2567BCE800BD48C3 /* XCRemoteSwiftPackageReference "PythonKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pvieito/PythonKit.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		3FEFE9162507276F00AEF1C8 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
@@ -839,6 +867,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F3EFFA12533479D0047E4E5 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		3F66F86E2567BCE800BD48C3 /* PythonKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F66F86D2567BCE800BD48C3 /* XCRemoteSwiftPackageReference "PythonKit" */;
+			productName = PythonKit;
 		};
 		3FEFE9172507276F00AEF1C8 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
