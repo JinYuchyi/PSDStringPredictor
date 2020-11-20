@@ -123,7 +123,8 @@ struct ControlPanel: View {
 //            }
 //
 //        }
-        let cmd = "open /Users/ipdesign/Documents/Development/AdobeScript/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
+        
+        let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
         PythonScriptManager.RunScript(str: cmd)
     }
 
