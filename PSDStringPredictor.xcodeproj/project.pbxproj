@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F0007BC252EF8AC0047574A /* Csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0007BB252EF8AC0047574A /* Csv.swift */; };
 		3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0782822541B9F0007163D6 /* FontExtension.swift */; };
+		3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0DE2F425694E5A00BD3A3A /* JSManager.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
@@ -38,7 +39,7 @@
 		3F5218182521E89200646F91 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5218172521E89200646F91 /* TestView.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
-		3F662AFA25677D40008F1879 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F662AF925677D40008F1879 /* ScriptManager.swift */; };
+		3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F662AF925677D40008F1879 /* TerminalScriptManager.swift */; };
 		3F66F86F2567BCE800BD48C3 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F66F86E2567BCE800BD48C3 /* PythonKit */; };
 		3F66F8722567BD7100BD48C3 /* PythonScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */; };
 		3F68B702252D7D8900CCFCE5 /* FontSizeTrackingTable.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */; };
@@ -98,6 +99,7 @@
 /* Begin PBXFileReference section */
 		3F0007BB252EF8AC0047574A /* Csv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Csv.swift; sourceTree = "<group>"; };
 		3F0782822541B9F0007163D6 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+		3F0DE2F425694E5A00BD3A3A /* JSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSManager.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardObject.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
@@ -125,7 +127,7 @@
 		3F5218172521E89200646F91 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
-		3F662AF925677D40008F1879 /* ScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptManager.swift; sourceTree = "<group>"; };
+		3F662AF925677D40008F1879 /* TerminalScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalScriptManager.swift; sourceTree = "<group>"; };
 		3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonScriptManager.swift; sourceTree = "<group>"; };
 		3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = FontSizeTrackingTable.csv; sourceTree = "<group>"; };
 		3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -306,8 +308,9 @@
 		3F662AF825677D29008F1879 /* Script */ = {
 			isa = PBXGroup;
 			children = (
-				3F662AF925677D40008F1879 /* ScriptManager.swift */,
+				3F662AF925677D40008F1879 /* TerminalScriptManager.swift */,
 				3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */,
+				3F0DE2F425694E5A00BD3A3A /* JSManager.swift */,
 			);
 			path = Script;
 			sourceTree = "<group>";
@@ -563,9 +566,10 @@
 				3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */,
 				3F4CB5A5250A23E200E41082 /* ImageProcess.swift in Sources */,
 				3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */,
-				3F662AFA25677D40008F1879 /* ScriptManager.swift in Sources */,
+				3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */,
 				3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */,
 				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
+				3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */,
 				3F8208502510F8CE00832192 /* File.swift in Sources */,
 				3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */,
 				3F4CB5A9250A327E00E41082 /* NSImageExtension.swift in Sources */,

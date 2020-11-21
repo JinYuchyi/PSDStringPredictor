@@ -68,6 +68,7 @@ class DataStore{
     
     //Image Property
     static var colorMode = -1 // 1 = Light mode, 2 = Dark Mode
+    static var imagePath = ""
 
     static var logListData = [
         LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),

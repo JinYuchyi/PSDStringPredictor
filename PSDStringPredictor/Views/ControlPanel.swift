@@ -97,6 +97,7 @@ struct ControlPanel: View {
                     
                     colorModeClassifier.Prediction(fromImage: DataStore.targetImageProcessed)
                     self.imagePropertyVM.SetImageColorMode(modeIndex: DataStore.colorMode)
+                    DataStore.imagePath = panel.url!.path
                 }
             }
         }
@@ -123,9 +124,17 @@ struct ControlPanel: View {
 //            }
 //
 //        }
-        
-        let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
-        PythonScriptManager.RunScript(str: cmd)
+        let psdPath = DataStore.imagePath
+        let contentList = ["Hello"]
+        let colorList: [[CGFloat]] = [[0.2,1.0,0.2]]
+        let fontSizeList = [50]
+        let fontNameList = [""]
+        let positionList = [[100,100]]
+        let success = JSManager.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, fontNameList: fontNameList, positionList: positionList)
+        if success == true{
+            let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
+            PythonScriptManager.RunScript(str: cmd)
+        }
     }
 
 }
