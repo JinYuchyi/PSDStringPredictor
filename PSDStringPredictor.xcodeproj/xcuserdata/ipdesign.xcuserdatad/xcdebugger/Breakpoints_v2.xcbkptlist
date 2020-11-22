@@ -78,9 +78,9 @@
             filePath = "PSDStringPredictor/Models/StringObject.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
-            landmarkName = "PredictFontWeight()"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
+            landmarkName = "PredictStringObjects(FromCIImage:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

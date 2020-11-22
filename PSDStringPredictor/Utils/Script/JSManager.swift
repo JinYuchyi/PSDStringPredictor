@@ -9,52 +9,34 @@
 import Foundation
 import AppKit
 
-var variableStr = """
-    //Variables
 
-    var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/test.psd"
-    var contentList = ["Hello","12345"]
-    var colorList = []
-    var fontSizeList = []
-    var fontNameList= []
-    var positionList = []
-
-"""
-
-var funcStr = """
-//PS Preferance Setting
-
-var originalUnit = preferences.rulerUnits
-preferences.rulerUnits = Units.INCHES
-
-var fileRef = File(psdPath)
-var docRef = app.open(fileRef)
-
-//Create Folder
-
-var len = docRef.layerSets.length
-//Remove the previous folder
-var i
-for (i = 0; i < len; i++){
-    if (docRef.layerSets[i].name == "StringLayerGroup"){
-        docRef.layerSets[i].remove()
-    }
-}
-//Add new folder
-var layerSetRef = app.activeDocument.layerSets.add()
-layerSetRef.name = "StringLayerGroup"
-
-//Add Text layer
-var artLayerRef = layerSetRef.artLayers.add()
-artLayerRef.kind = LayerKind.TEXT
-var textItemRef = artLayerRef.textItem
-textItemRef.contents = "Hello, World"
-"""
 
 class JSManager{
     
-    static func CreateJSFile(psdPath: String, contentList: [String], colorList: [[CGFloat]], fontSizeList: [Int], fontNameList: [String], positionList: [[Int]])->Bool{
-        
+    private func NameNormalize(name : String)->String{
+        var res: String = ""
+        for c in name{
+            if c.isLetter || c.isNumber{
+                res = res + String(c)
+            }
+        }
+        return res
+    }
+    
+     private func NamesNormalize(names : [String])->[String]{
+        var res: [String] = []
+        var index = 0
+        for c in names{
+            res.append("\(index).")
+            let tmp = NameNormalize(name: c)
+            res.append(tmp)
+            index += 1
+        }
+        return res
+    }
+    
+    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Float]], fontSizeList: [Int], fontNameList: [String], positionList: [[Int]])->Bool{
+        let names = NamesNormalize(names: contentList)
         var jsStr = """
                 var psdPath = "\(psdPath)"
                 var contentList = \(contentList)
@@ -66,7 +48,7 @@ class JSManager{
                 //PS Preferance Setting
 
                 var originalUnit = preferences.rulerUnits
-                preferences.rulerUnits = Units.INCHES
+                preferences.rulerUnits = Units.PIXELS
 
                 var fileRef = File(psdPath)
                 var docRef = app.open(fileRef)
@@ -86,11 +68,24 @@ class JSManager{
                 var layerSetRef = app.activeDocument.layerSets.add()
                 layerSetRef.name = "StringLayerGroup"
 
+
+
                 //Add Text layer
-                var artLayerRef = layerSetRef.artLayers.add()
-                artLayerRef.kind = LayerKind.TEXT
-                var textItemRef = artLayerRef.textItem
-                textItemRef.contents = "Hello, World"
+                for (var i = 0; i < contentList.length; i++){
+                    var artLayerRef = layerSetRef.artLayers.add()
+                    artLayerRef.kind = LayerKind.TEXT
+                    var textItemRef = artLayerRef.textItem
+                    textItemRef.name = \(names)[i]
+                    textItemRef.contents = contentList[i]
+                    textColor = new SolidColor
+                    textColor.rgb.red = colorList[i][0]
+                    textColor.rgb.green = colorList[i][1]
+                    textColor.rgb.blue = colorList[i][2]
+                    textItemRef.color = textColor
+                    textItemRef.font = fontNameList[i]
+                    textItemRef.size = new UnitValue(fontSizeList[i], "pt")
+                    textItemRef.position = Array(positionList[i][0], positionList[i][1])
+                }
         """
         
         do {

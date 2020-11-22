@@ -32,7 +32,7 @@ struct StringObject : Identifiable{
     var fontWeight:  Font.Weight
     var stringRect: CGRect
     var observation : VNRecognizedTextObservation
-    var color: Color
+    var color: NSColor
     var charArray: [Character]
     var charRects: [CGRect]
     var charSizeList: [Int16]
@@ -41,6 +41,7 @@ struct StringObject : Identifiable{
     var isPredictedList: [Int]
     var isForbidden: Bool
     var confidence: CGFloat
+    
     
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
@@ -58,7 +59,7 @@ struct StringObject : Identifiable{
         charImageList = []
         stringRect = CGRect()
         observation = VNRecognizedTextObservation.init()
-        color = Color.black
+        color = NSColor.black
         charArray = []
         charRects = []
         charSizeList = []
@@ -83,7 +84,7 @@ struct StringObject : Identifiable{
         self.charImageList = charImageList
         self.charFontWeightList = []
         self.tracking = 10
-        self.color = Color.black
+        self.color = NSColor.black
         self.confidence = confidence
         self.isPredictedList = []
         isForbidden = false
@@ -139,8 +140,8 @@ struct StringObject : Identifiable{
         return result
     }
     
-    func CalcColor() -> Color {
-        return Color.white.opacity(0.9)
+    func CalcColor() -> NSColor {
+        return NSColor.white
     }
     
     func CalcPosition() -> [CGFloat]{

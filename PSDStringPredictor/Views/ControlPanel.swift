@@ -105,6 +105,7 @@ struct ControlPanel: View {
     }
 
     func Debug(){
+        stringObjectVM.UpdatePSD()
 
 //        let panel = NSOpenPanel()
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -124,17 +125,17 @@ struct ControlPanel: View {
 //            }
 //
 //        }
-        let psdPath = DataStore.imagePath
-        let contentList = ["Hello"]
-        let colorList: [[CGFloat]] = [[0.2,1.0,0.2]]
-        let fontSizeList = [50]
-        let fontNameList = [""]
-        let positionList = [[100,100]]
-        let success = JSManager.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, fontNameList: fontNameList, positionList: positionList)
-        if success == true{
-            let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
-            PythonScriptManager.RunScript(str: cmd)
-        }
+//        let psdPath = DataStore.imagePath
+//        let contentList = ["Hello"]
+//        let colorList: [[CGFloat]] = [[0.2,1.0,0.2]]
+//        let fontSizeList = [50]
+//        let fontNameList = [""]
+//        let positionList = [[100,100]]
+//        let success = JSManager.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, fontNameList: fontNameList, positionList: positionList)
+//        if success == true{
+//            let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
+//            PythonScriptManager.RunScript(str: cmd)
+//        }
     }
 
 }
