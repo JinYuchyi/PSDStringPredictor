@@ -72,28 +72,27 @@ class StringObjectViewModel: ObservableObject{
         
         var psdPath = DataStore.imagePath
         var contentList = [String]()
-        var colorList = [[Float]]()
+        var colorList = [[Int]]()
         var fontSizeList:[Int] = []
         var fontNameList: [String] = []
         var positionList = [[Int]]()
-        
+        var trackingList = [Int]()
         for obj in DataStore.stringObjectList{
             contentList.append(obj.content)
-            var tmpColor: [Float] = []
-            print("Color: \(Float(obj.color.redComponent))")
-            if #available(OSX 11, *) {
-                //TODO: Color data incorrect.
-                tmpColor = [ Float(obj.color.redComponent), Float(obj.color.greenComponent), Float(obj.color.blueComponent) ]
-            } else {
-                // Fallback on earlier versions
-            }
+            var tmpColor: [Int] = []
+
+            tmpColor = [ Int((Float(obj.color.components![0]) * 255).rounded()),
+                         Int((Float(obj.color.components![1]) * 255).rounded()),
+                         Int((Float(obj.color.components![2]) * 255).rounded())
+            ]
             colorList.append(tmpColor)
             fontSizeList.append(Int(obj.fontSize.rounded()))
-            fontNameList.append(obj.CalcFontFullName())
-            positionList.append([Int(obj.stringRect.minX.rounded()), Int(obj.stringRect.minY.rounded())])
+            fontNameList.append(obj.CalcFontPostScriptName())
+            positionList.append([Int(obj.stringRect.minX.rounded()), Int((DataStore.targetNSImage.size.height - obj.stringRect.minY).rounded())])
+            trackingList.append(Int(obj.trackingPS))
         }
-        
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, fontNameList: fontNameList, positionList: positionList)
+        print("Image Size: \(DataStore.targetNSImage.size)")
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList)
         
             if success == true{
                 let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"

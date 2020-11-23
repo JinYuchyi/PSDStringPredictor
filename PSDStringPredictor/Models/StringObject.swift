@@ -28,11 +28,12 @@ struct StringObject : Identifiable{
     var content: String
     //var position: [CGFloat]
     var tracking: CGFloat
+    var trackingPS: Int16
     var fontSize: CGFloat
     var fontWeight:  Font.Weight
     var stringRect: CGRect
     var observation : VNRecognizedTextObservation
-    var color: NSColor
+    var color: CGColor
     var charArray: [Character]
     var charRects: [CGRect]
     var charSizeList: [Int16]
@@ -41,6 +42,7 @@ struct StringObject : Identifiable{
     var isPredictedList: [Int]
     var isForbidden: Bool
     var confidence: CGFloat
+    
     
     
     //@EnvironmentObject var db: DB
@@ -59,13 +61,14 @@ struct StringObject : Identifiable{
         charImageList = []
         stringRect = CGRect()
         observation = VNRecognizedTextObservation.init()
-        color = NSColor.black
+        color = CGColor.black
         charArray = []
         charRects = []
         charSizeList = []
         charFontWeightList = []
         confidence = 0
         isForbidden = false
+        self.trackingPS = 0
         isPredictedList = []
         self.color = CalcColor()
         self.fontWeight = PredictFontWeight()
@@ -84,18 +87,19 @@ struct StringObject : Identifiable{
         self.charImageList = charImageList
         self.charFontWeightList = []
         self.tracking = 10
-        self.color = NSColor.black
+        self.color = CGColor.black
         self.confidence = confidence
         self.isPredictedList = []
+        self.trackingPS = 0
         isForbidden = false
         self.fontWeight = PredictFontWeight()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
-        self.tracking = FetchTrackingFromDB(self.fontSize)
+        self.tracking = FetchTrackingFromDB(self.fontSize).0
+        self.trackingPS = FetchTrackingFromDB(self.fontSize).1
         self.color = CalcColor()
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
-        //self.content = FixContent(self.content)
 
     }
 
@@ -115,12 +119,12 @@ struct StringObject : Identifiable{
         return res
     }
     
-    func FetchTrackingFromDB(_ size: CGFloat) -> CGFloat{
+    func FetchTrackingFromDB(_ size: CGFloat) -> (CGFloat, Int16){
         let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size.rounded()))
         //return CGFloat(item.fontTracking)/1000
         //print("item.fontTrackingPoints ",item.fontTrackingPoints)
         //return CGFloat(item.fontTrackingPoints)
-        return CGFloat(item.fontTrackingPoints)
+        return (CGFloat(item.fontTrackingPoints), item.fontTracking)
     }
     
     func PredictTracking()->Double{
@@ -140,8 +144,8 @@ struct StringObject : Identifiable{
         return result
     }
     
-    func CalcColor() -> NSColor {
-        return NSColor.white
+    func CalcColor() -> CGColor {
+        return CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
     }
     
     func CalcPosition() -> [CGFloat]{
@@ -170,6 +174,24 @@ struct StringObject : Identifiable{
             family = "Display"
         }
         return "SF Pro " + family + " " + style
+    }
+    
+    func CalcFontPostScriptName() -> String{
+        var family = ""
+        var style = ""
+        if (fontWeight == .regular){
+            style = "Regular"
+        }
+        else if fontWeight == .semibold{
+            style = "Semibold"
+        }
+        
+        if fontSize/3 < 20 {
+            family = "Text"
+        }else{
+            family = "Display"
+        }
+        return "SFPro" + family + "-" + style
     }
     
     mutating func DeleteDescentForRect()  {

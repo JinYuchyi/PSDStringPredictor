@@ -1,9 +1,10 @@
-        var psdPath = "/Users/ipdesign/Downloads/1TA_Screen_Light.psd"
-        var contentList = ["9:41 AM", "Done", "Columbus Ave & Pacific Ave", "Chinatown, San Francisco", "Tl", "i•niffjiiffli•", "inimnniiiii Xi", "•nimiininii Mnii", "Irl"]
-        var colorList = [[], [], [], [], [], [], [], [], []]
-        var fontSizeList = [38, 55, 69, 44, 41, 17, 17, 19, 19]
-        var fontNameList= ["SF Pro Text Regular", "SF Pro Text Semibold", "SF Pro Display Semibold", "SF Pro Text Regular", "SF Pro Text Regular", "SF Pro Text Regular", "SF Pro Text Regular", "SF Pro Text Regular", "SF Pro Text Regular"]
-        var positionList = [[492, 1956], [919, 1815], [47, 124], [47, 62], [921, 956], [455, 837], [484, 818], [466, 593], [1092, 409]]
+        var psdPath = "/Users/ipdesign/Desktop/SO_ObjectSearch-1FC~L_F.psd"
+        var contentList = ["9:41", "Beaches", "Cancel", "See All", "Moments", "See All", "Jul 22, 2019", "25", "Lisboa", "11", "Search", "/.lu Photos", "Essaouira"]
+        var colorList = [[255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0]]
+        var fontSizeList = [45, 51, 49, 50, 67, 51, 38, 50, 51, 50, 28, 67, 49]
+        var fontNameList= ["SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
+        var positionList = [[96, 86], [173, 230], [911, 227], [911, 429], [64, 1737], [911, 1737], [278, 1946], [929, 1916], [280, 2126], [943, 2154], [934, 2323], [70, 430], [280, 1886]]
+        var trackingList = [-16, -26, -20, -26, -4, -26, -6, -26, -26, -26, 19, -4, -20]
 
         //PS Preferance Setting
 
@@ -18,9 +19,11 @@
 
         //Remove the previous folder
         var i
-        for (i = 0; i < len; i++){
-            if (docRef.layerSets[i].name == "StringLayerGroup"){
-                docRef.layerSets[i].remove()
+        if(len >= 1){
+            for (i = 0; i < len; i++){
+                if (docRef.layerSets[i].name == "StringLayerGroup"){
+                    docRef.layerSets[i].remove()
+                }
             }
         }
 
@@ -28,14 +31,12 @@
         var layerSetRef = app.activeDocument.layerSets.add()
         layerSetRef.name = "StringLayerGroup"
 
-
-
         //Add Text layer
         for (var i = 0; i < contentList.length; i++){
             var artLayerRef = layerSetRef.artLayers.add()
             artLayerRef.kind = LayerKind.TEXT
             var textItemRef = artLayerRef.textItem
-            textItemRef.name = ["0.", "941AM", "1.", "Done", "2.", "ColumbusAvePacificAve", "3.", "ChinatownSanFrancisco", "4.", "Tl", "5.", "iniffjiiffli", "6.", "inimnniiiiiXi", "7.", "nimiininiiMnii", "8.", "Irl"][i]
+            textItemRef.name = ["0.941", "1.Beaches", "2.Cancel", "3.SeeAll", "4.Moments", "5.SeeAll", "6.Jul222019", "7.25", "8.Lisboa", "9.11", "10.Search", "11.luPhotos", "12.Essaouira"][i]
             textItemRef.contents = contentList[i]
             textColor = new SolidColor
             textColor.rgb.red = colorList[i][0]
@@ -45,4 +46,5 @@
             textItemRef.font = fontNameList[i]
             textItemRef.size = new UnitValue(fontSizeList[i], "pt")
             textItemRef.position = Array(positionList[i][0], positionList[i][1])
+            textItemRef.tracking = trackingList[i]
         }

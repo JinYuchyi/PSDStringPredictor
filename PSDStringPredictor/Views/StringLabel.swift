@@ -41,7 +41,7 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
-        stringLabel.PredictTracking()
+        //stringLabel.PredictTracking()
     }
     
     func FixedBtnTapped(){

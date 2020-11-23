@@ -27,15 +27,19 @@ class JSManager{
         var res: [String] = []
         var index = 0
         for c in names{
-            res.append("\(index).")
+
             let tmp = NameNormalize(name: c)
-            res.append(tmp)
+            res.append("\(index).\(tmp)")
             index += 1
+            if(index > 20) {
+                res.append("...")
+                return res
+            }
         }
         return res
     }
     
-    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Float]], fontSizeList: [Int], fontNameList: [String], positionList: [[Int]])->Bool{
+    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Int], trackingList: [Int], fontNameList: [String], positionList: [[Int]])->Bool{
         let names = NamesNormalize(names: contentList)
         var jsStr = """
                 var psdPath = "\(psdPath)"
@@ -44,6 +48,7 @@ class JSManager{
                 var fontSizeList = \(fontSizeList)
                 var fontNameList= \(fontNameList)
                 var positionList = \(positionList)
+                var trackingList = \(trackingList)
 
                 //PS Preferance Setting
 
@@ -58,17 +63,17 @@ class JSManager{
 
                 //Remove the previous folder
                 var i
-                for (i = 0; i < len; i++){
-                    if (docRef.layerSets[i].name == "StringLayerGroup"){
-                        docRef.layerSets[i].remove()
+                if(len >= 1){
+                    for (i = 0; i < len; i++){
+                        if (docRef.layerSets[i].name == "StringLayerGroup"){
+                            docRef.layerSets[i].remove()
+                        }
                     }
                 }
 
                 //Add new folder
                 var layerSetRef = app.activeDocument.layerSets.add()
                 layerSetRef.name = "StringLayerGroup"
-
-
 
                 //Add Text layer
                 for (var i = 0; i < contentList.length; i++){
@@ -85,6 +90,7 @@ class JSManager{
                     textItemRef.font = fontNameList[i]
                     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
                     textItemRef.position = Array(positionList[i][0], positionList[i][1])
+                    textItemRef.tracking = trackingList[i]
                 }
         """
         

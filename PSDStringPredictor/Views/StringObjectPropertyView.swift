@@ -34,6 +34,8 @@ struct StringObjectPropertyView: View {
             Text("Size: \(stringObjectVM.selectedStringObject.fontSize)")
             Text("Tracking: \(stringObjectVM.selectedStringObject.tracking)")
             Text("Weight: \(stringObjectVM.selectedStringObject.fontWeight.ToString())")
+            Text("x: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded()))")
+            Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
             Text("Components Images:")
             
             ScrollView ( .horizontal, showsIndicators: true) {
