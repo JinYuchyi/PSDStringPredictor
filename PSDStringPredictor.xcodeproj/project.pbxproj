@@ -11,6 +11,8 @@
 		3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0782822541B9F0007163D6 /* FontExtension.swift */; };
 		3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0DE2F425694E5A00BD3A3A /* JSManager.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
+		3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */; };
+		3F1B2B21256CDB7C00D9BA0F /* CharBoundsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */; };
 		3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
 		3F25BC67250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */; };
@@ -101,6 +103,8 @@
 		3F0782822541B9F0007163D6 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		3F0DE2F425694E5A00BD3A3A /* JSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSManager.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsDataManager.swift; sourceTree = "<group>"; };
+		3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsObject.swift; sourceTree = "<group>"; };
 		3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardObject.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
 		3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FontSizeTabularRegressor.mlmodel; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 				3F68B708252EAB6F00CCFCE5 /* TrackingDataManager.swift */,
 				3F3EFFA7253596140047E4E5 /* CharDataManager.swift */,
 				3F4445C925392FC300BB2745 /* OSStandardManager.swift */,
+				3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 				3FDA0D392534111D007792C0 /* TrackingDataObject.swift */,
 				3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */,
 				3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */,
+				3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -602,6 +608,7 @@
 				3F68B709252EAB6F00CCFCE5 /* TrackingDataManager.swift in Sources */,
 				3FAAB4972514BD6600CB89B1 /* Training.swift in Sources */,
 				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
+				3F1B2B21256CDB7C00D9BA0F /* CharBoundsObject.swift in Sources */,
 				3F50A7BA253DC76500C10810 /* ColorMode.swift in Sources */,
 				3F3EFFA8253596140047E4E5 /* CharDataManager.swift in Sources */,
 				3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */,
@@ -612,6 +619,7 @@
 				3F68B704252DCAC700CCFCE5 /* ArrayExtension.swift in Sources */,
 				3F0007BC252EF8AC0047574A /* Csv.swift in Sources */,
 				3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */,
+				3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */,
 				3F3E0009253DCA9D0047E4E5 /* ColorMode.mlmodel in Sources */,
 				3FE8813D25333D080088A1CD /* StringObjectListView.swift in Sources */,
 				3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */,

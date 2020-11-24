@@ -53,7 +53,7 @@ struct StringObject : Identifiable{
     
     init(){
         //id = UUID()
-        content = ""
+        content = "No content."
         //position = []
         tracking = 0
         fontSize = 0

@@ -61,6 +61,14 @@ struct ControlPanel: View {
 
             }
             .padding(.horizontal, 40.0)
+            
+            Button(action: {self.dbvm.ReloadBoundsTable()}){
+                Text("Reload Bounds Table")
+                .padding(.horizontal, 40.0)
+                .frame(minWidth: 200, maxWidth: .infinity)
+
+            }
+            .padding(.horizontal, 40.0)
    
             Button(action: {self.stringObjectVM.PredictStrings()}){
                 Text("Predict Strings")

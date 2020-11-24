@@ -21,60 +21,96 @@ struct StringObjectPropertyView: View {
         }else{
             return Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description)).fixedSize()
         }
-            
-    }
-    
-    var body: some View {
-
-        VStack{
-            
-
-            Text("Content (\(stringObjectVM.selectedStringObject.id)):")
-            Text("\(stringObjectVM.selectedStringObject.content)")
-            Text("Size: \(stringObjectVM.selectedStringObject.fontSize)")
-            Text("Tracking: \(stringObjectVM.selectedStringObject.tracking)")
-            Text("Weight: \(stringObjectVM.selectedStringObject.fontWeight.ToString())")
-            Text("x: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded()))")
-            Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
-            Text("Components Images:")
-            
-            ScrollView ( .horizontal, showsIndicators: true) {
-                
-                HStack {
-                    
-                    ForEach(0..<stringObjectVM.selectedStringObject.charImageList.count, id: \.self){ index in
-                        
-                        VStack{
-                            Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
-                                .frame(height: 100)
-                            
-                            TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
-                            Text("\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
-                            Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index].ToString()))
-                            
-                            FontSizeView(index: index)
-                            
-                            Button(action: {SaveBtnPressed(index)}){
-                                Text("􀈄")
-//                                .padding(.horizontal, 40.0)
-//                                .frame(minWidth: 200, maxWidth: .infinity)
-
-                            }
-
-                        }
-                        
-                    }
-                }
-                .fixedSize()
-            }
-
-            
-        }
         
     }
     
-    func SaveBtnPressed(_ index: Int){
+    var body: some View {
+        List{
+            Section(header: Text("String Properties")){
                 
+                
+                
+                VStack(alignment: .leading){
+                    Text("Content:")
+                        .foregroundColor(Color.gray)
+                    Text("\(stringObjectVM.selectedStringObject.content)")
+                }
+                
+                //Spacer().frame(height: 10)
+                
+                VStack(alignment: .leading){
+                    Text("Size:")
+                        .foregroundColor(Color.gray)
+                    Text("\(stringObjectVM.selectedStringObject.fontSize)")
+                }
+                
+                //Spacer().frame(height: 10)
+                
+                VStack(alignment: .leading){
+                    Text("Tracking:")
+                        .foregroundColor(Color.gray)
+                    Text("\(stringObjectVM.selectedStringObject.tracking)")
+                }
+                
+                //Spacer().frame(height: 10)
+                
+                VStack(alignment: .leading){
+                    Text("Weight:")
+                        .foregroundColor(Color.gray)
+                    Text("\(stringObjectVM.selectedStringObject.fontWeight.ToString())")
+                }
+                
+                //Spacer().frame(height: 10)
+                
+                VStack(alignment: .leading){
+                    Text("BoundingBox:")
+                        .foregroundColor(Color.gray)
+                    Text("x: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded()))")
+                    Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
+                }
+                
+                //Spacer().frame(height: 10)
+                
+                VStack(alignment: .leading){
+                    Text("Components Images:")
+                        .foregroundColor(Color.gray)
+                    ScrollView ( .horizontal, showsIndicators: true) {
+                        
+                        HStack {
+                            
+                            ForEach(0..<stringObjectVM.selectedStringObject.charImageList.count, id: \.self){ index in
+                                
+                                VStack{
+                                    Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
+                                        .frame(height: 100)
+                                    
+                                    TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
+                                    Text("\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
+                                    Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index].ToString()))
+                                    
+                                    FontSizeView(index: index)
+                                    
+                                    Button(action: {SaveBtnPressed(index)}){
+                                        Text("􀈄")
+                                        //                                .padding(.horizontal, 40.0)
+                                        //                                .frame(minWidth: 200, maxWidth: .infinity)
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }
+                        }
+                        .fixedSize()
+                    }
+                }
+                
+            }
+        }
+    }
+    
+    func SaveBtnPressed(_ index: Int){
+        
         let panel = NSSavePanel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
@@ -84,7 +120,7 @@ struct StringObjectPropertyView: View {
                 let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
                 let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
                 imageProcess.SaveCIIToPNG(CIImage: fixedImg, filePath: panel.url!.path+"_fixed" )
-
+                
             }
         }
     }

@@ -8,6 +8,15 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="width" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="CharBounds" representedClassName="CharBounds" syncable="YES" codeGenerationType="class">
+        <attribute name="char" optional="YES" attributeType="String"/>
+        <attribute name="fontSize" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weight" optional="YES" attributeType="String"/>
+        <attribute name="x1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="x2" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y2" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
     <entity name="Standard" representedClassName="Standard" syncable="YES" codeGenerationType="class">
         <attribute name="fontSize" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -25,8 +34,9 @@
     </entity>
     <elements>
         <element name="CharacterData" positionX="-63" positionY="9" width="128" height="133"/>
+        <element name="CharBounds" positionX="-54" positionY="54" width="128" height="148"/>
+        <element name="Entity" positionX="-54" positionY="63" width="128" height="43"/>
         <element name="Standard" positionX="-63" positionY="36" width="128" height="133"/>
         <element name="TrackingData" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="Entity" positionX="-54" positionY="63" width="128" height="43"/>
     </elements>
 </model>

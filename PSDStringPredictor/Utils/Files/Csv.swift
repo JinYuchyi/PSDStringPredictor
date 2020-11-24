@@ -74,6 +74,23 @@ class CSVManager{
         return objArray
     }
     
+    private func ParsingCsvStringAsCharBoundsArray(FromString str: String) -> [CharBoundsObject]{
+        var objArray : [CharBoundsObject] = []
+        let objStrArray = str.components(separatedBy: "\n")
+        for index in 1..<objStrArray.count{
+            let itemArray = objStrArray[index].components(separatedBy: ",")
+            let a = String(itemArray[0])
+            let b = Int16(itemArray[1])!
+            let c = Int16(itemArray[2])!
+            let d = Int16(itemArray[3])!
+            let e = Int16(itemArray[4])!
+            let f = Int16(itemArray[4])!
+            let g = (itemArray[5].replacingOccurrences(of: "\r", with: ""))
+            objArray.append(CharBoundsObject(char: a, fontSize: b, x1: c, y1: d, x2: e, y2: f, weight: g))
+        }
+        return objArray
+    }
+    
     func ParsingCsvFileAsTrackingObjectArray(FilePath path: String) -> [TrackingDataObject] {
         let str = ReadAllContentAsString(FromFile: path)
         return ParsingCsvStringAsTrackingObjectArray(FromString: str)
@@ -87,5 +104,10 @@ class CSVManager{
     func ParsingCsvFileAsFontStandardArray(FilePath path: String) -> [FontStandardObject] {
         let str = ReadAllContentAsString(FromFile: path)
         return ParsingCsvStringAsFontStandardArray(FromString: str)
+    }
+    
+    func ParsingCsvFileAsBoundsObjArray(FilePath path: String) -> [CharBoundsObject] {
+        let str = ReadAllContentAsString(FromFile: path)
+        return ParsingCsvStringAsCharBoundsArray(FromString: str)
     }
 }

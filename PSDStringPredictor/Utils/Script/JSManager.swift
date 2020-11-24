@@ -39,7 +39,7 @@ class JSManager{
         return res
     }
     
-    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Int], trackingList: [Int], fontNameList: [String], positionList: [[Int]])->Bool{
+    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Int], trackingList: [Int], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]])->Bool{
         let names = NamesNormalize(names: contentList)
         var jsStr = """
                 var psdPath = "\(psdPath)"
@@ -49,6 +49,7 @@ class JSManager{
                 var fontNameList= \(fontNameList)
                 var positionList = \(positionList)
                 var trackingList = \(trackingList)
+                var offsetList = \(offsetList)
 
                 //PS Preferance Setting
 
@@ -89,7 +90,7 @@ class JSManager{
                     textItemRef.color = textColor
                     textItemRef.font = fontNameList[i]
                     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
-                    textItemRef.position = Array(positionList[i][0], positionList[i][1])
+                    textItemRef.position = Array(positionList[i][0] - offsetList[i][0], positionList[i][1] - offsetList[i][1])
                     textItemRef.tracking = trackingList[i]
                 }
         """
@@ -104,6 +105,7 @@ class JSManager{
         }
         
         return true
+        
     }
     
 }

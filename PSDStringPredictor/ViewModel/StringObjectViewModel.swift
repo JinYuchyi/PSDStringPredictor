@@ -77,6 +77,7 @@ class StringObjectViewModel: ObservableObject{
         var fontNameList: [String] = []
         var positionList = [[Int]]()
         var trackingList = [Int]()
+        var offsetList = [[Int16]]()
         for obj in DataStore.stringObjectList{
             contentList.append(obj.content)
             var tmpColor: [Int] = []
@@ -87,12 +88,27 @@ class StringObjectViewModel: ObservableObject{
             ]
             colorList.append(tmpColor)
             fontSizeList.append(Int(obj.fontSize.rounded()))
+            //Calc the offset
+            var keyvalues: [String: AnyObject] = [:]
+            let char = (obj.content.first)
+            if (char!.isNumber || char!.isLetter){
+                keyvalues["char"] = String(char!) as AnyObject
+                keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
+                let items = CharBoundsDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
+                if items.count > 0 {
+                    let offset = [items[0].x1, Int16((Float(items[0].y2 - items[0].y1)/40).rounded())]
+                    offsetList.append(offset)
+                }
+            }
+            
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((DataStore.targetNSImage.size.height - obj.stringRect.minY).rounded())])
             trackingList.append(Int(obj.trackingPS))
         }
-        print("Image Size: \(DataStore.targetNSImage.size)")
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList)
+        
+        
+        
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList)
         
             if success == true{
                 let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"

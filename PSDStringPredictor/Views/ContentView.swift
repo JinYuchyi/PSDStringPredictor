@@ -35,9 +35,7 @@ struct ContentView: View {
     
     fileprivate func LeftViewGroup() -> some View {
         return VStack{
-            
-            ImagePropertyView()
-            
+                        
             ControlPanel(showImage: $showImage)
                 .padding(.top, 20.0)
                 .border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
@@ -80,8 +78,12 @@ struct ContentView: View {
     }
     
     fileprivate func RightViewGroup() -> some View {
+        return VStack{
+        ImagePropertyView()
+            .frame(width: 300, height: 150)
         StringObjectPropertyView()
             .frame(width: 300)
+    }
     }
     
     var body: some View {

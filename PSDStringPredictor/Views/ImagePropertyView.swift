@@ -12,7 +12,18 @@ struct ImagePropertyView: View {
     @ObservedObject var imagePropertyVM = imagePropertyViewModel
     //@State var colorState = -1
     var body: some View {
-        Text(imagePropertyVM.colorModeString)
+        List{
+            Section(header: Text("Image Properties")){
+                VStack(alignment: .leading){
+                    Text("ColorMode:")
+                    Text(imagePropertyVM.colorModeString)
+                }
+                VStack(alignment: .leading){
+                    Text("Path:")
+                    Text(DataStore.imagePath)
+                }
+            }
+        }
     
     }
 }
