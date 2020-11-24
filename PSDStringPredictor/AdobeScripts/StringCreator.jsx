@@ -1,11 +1,11 @@
         var psdPath = "/Users/ipdesign/Desktop/SO_ObjectSearch-1FC~L_F.psd"
         var contentList = ["9:41", "Beaches", "Cancel", "See All", "Moments", "See All", "Jul 22, 2019", "25", "Lisboa", "11", "Search", "/.lu Photos", "Essaouira"]
         var colorList = [[255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0]]
-        var fontSizeList = [45, 51, 51, 50, 67, 50, 38, 50, 49, 50, 28, 67, 49]
-        var fontNameList= ["SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
+        var fontSizeList = [46, 51, 49, 49, 67, 49, 38, 50, 51, 50, 28, 69, 49]
+        var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProDisplay-Semibold", "SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProDisplay-Regular", "SFProText-Regular"]
         var positionList = [[96, 86], [173, 230], [911, 227], [911, 429], [64, 1737], [911, 1737], [278, 1946], [929, 1916], [280, 2126], [943, 2154], [934, 2323], [70, 430], [280, 1886]]
-        var trackingList = [-16, -26, -26, -26, -4, -26, -6, -26, -20, -26, 19, -4, -20]
-        var offsetList = [[2, 1], [4, 2], [3, 2], [2, 2], [4, 2], [2, 2], [1, 1], [3, 2], [4, 2], [3, 1], [1, 1], [4, 2]]
+        var trackingList = [-16, -26, -20, -20, -4, -20, -6, -26, -26, -26, 19, -4, -20]
+        var offsetList = [[3, 2], [4, 2], [3, 2], [2, 2], [4, 2], [2, 2], [1, 1], [3, 2], [4, 2], [3, 1], [1, 1], [4, 2]]
 
         //PS Preferance Setting
 
