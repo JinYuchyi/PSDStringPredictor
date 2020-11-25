@@ -46,14 +46,14 @@ struct StringLabel: View {
     
     func FixedBtnTapped(){
         fixed = !fixed
-        stringObjectVM.stringObjectFixedDict[stringLabel.id] = fixed
+        stringObjectVM.stringObjectFixedDict[stringLabel] = fixed
         ignoredDisabled = fixed
         //print("Fixed List: \(stringObjectVM.stringObjectFixedDict)")
     }
     
     func IgnoreBtnTapped(){
         ignored = !ignored
-        stringObjectVM.stringObjectIgnoreDict[stringLabel.id] = ignored
+        stringObjectVM.stringObjectIgnoreDict[stringLabel] = ignored
         fixedDisabled = ignored
 //        if ignored == true {
 //            if fixed == true{

@@ -22,7 +22,31 @@ import Foundation
 //}
 
 //struct StringObject: Hashable, Codable, Identifiable {
-struct StringObject : Identifiable{
+struct StringObject : Identifiable, Equatable, Hashable{
+    
+    var hashValue: Int {
+        return id.hashValue
+      }
+    
+    static func == (lhs: StringObject, rhs: StringObject) -> Bool {
+        return
+        lhs.id == rhs.id &&
+        lhs.content == rhs.content &&
+        lhs.tracking == rhs.tracking &&
+        lhs.trackingPS == rhs.trackingPS &&
+        lhs.fontSize == rhs.fontSize &&
+        lhs.fontWeight == rhs.fontWeight &&
+        lhs.stringRect == rhs.stringRect &&
+        lhs.observation == rhs.observation &&
+        lhs.color == rhs.color &&
+        lhs.charArray == rhs.charArray &&
+        lhs.charRects == rhs.charRects &&
+        lhs.charSizeList == rhs.charSizeList &&
+        lhs.charImageList == rhs.charImageList &&
+        lhs.isPredictedList == rhs.isPredictedList &&
+        lhs.isForbidden == rhs.isForbidden
+    }
+    
     
     var id: UUID = UUID()
     var content: String
@@ -334,15 +358,17 @@ struct StringObject : Identifiable{
         
     }
 
-    func PredictStringObjects(FromCIImage img: CIImage){
+    func PredictStringObjects(FromCIImage img: CIImage) -> [StringObject]{
         //data.targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
         
         if img.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
             DataStore.stringObjectList = stringObjects
+            return stringObjects
         }
         else{
             print("Load Image failed.")
+            return []
         }
     }
     

@@ -130,7 +130,7 @@ class OCR: ObservableObject{
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
         var stringsRects = GetRectsFromObservations(results_fast, Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-        //stringsRects = RemoveIgnored(targetList: stringsRects)
+        //stringsRects = FiltRects(targetList: stringsRects)
 
         let strs = GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
@@ -138,31 +138,90 @@ class OCR: ObservableObject{
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: DataStore.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
-            
-            //Init blackdict
-            
         }
+        
+        //Add back the fixed
+//        for (key, value) in stringObjectViewModel.stringObjectFixedDict {
+//            if value == true{
+//                let index = stringObjectViewModel.stringObjectListData.firstIndex(where: {$0.id == key} )!
+//                strobjs.append(stringObjectViewModel.stringObjectListData[index])
+//            }
+//        }
+        strobjs = FiltStringObjects(originalList: strobjs)
+        
         return strobjs
     }
     
-    func RemoveIgnored(targetList rects: [CGRect]) -> [CGRect]{
-        var resultRect: [CGRect] = rects
-        //var resultChar: [Character] = []
-        for (index,rect) in rects.enumerated(){
-            for (index,id) in stringObjectViewModel.stringObjectIgnoreDict.keys.enumerated(){
-                let index = stringObjectViewModel.stringObjectListData.firstIndex(where: {$0.id == id} )!
-                let obj = stringObjectViewModel.stringObjectListData[index]
-                let ignoreRect = obj.stringRect
-                if rect.IsSame(target: ignoreRect){
-                    resultRect.remove(at: index)
-                    print("\(rect) is same as \(self)")
-                }else{
-                    //resultRect.append(ignoreRect)
+    func FiltStringObjects(originalList objList: [StringObject]) -> [StringObject]{
+        var newList : [StringObject] = objList
+        var ignoreList: [StringObject] = []
+        var index = 0
+        
+//        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict {
+//            if value == true{
+//                ignoreList.append(key)
+//            }
+//        }
+        print()
+        for obj in objList{
+            //Find the ignore object
+            for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
+                if value == true {
+                    print("\(key.content) is fixed")
+                    //Compare ignore obj with new obj, if rect overlap, remove from newlist
+                    if key.stringRect.IsSame(target: obj.stringRect){
+                        print("Same: \(key.content)")
+                        newList.remove(at: index)
+                    }
+                    break
                 }
+                
+                newList.append(obj)
             }
+            index += 1
         }
-        print("Result number: \(resultRect.count)")
-        return resultRect
+        
+//        var resultList: [StringObject] = objList
+//        //Get ignore list
+//        var ignoreList = [UUID]()
+//        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict {
+//            if value == true{
+//                ignoreList.append(key)
+//            }
+//        }
+//        for (key, value) in stringObjectViewModel.stringObjectFixedDict {
+//            if value == true{
+//                ignoreList.append(key)
+//            }
+//        }
+//
+//        let objIDList = stringObjectViewModel.stringObjectListData.map {$0.id}
+//        let objRectList = stringObjectViewModel.stringObjectListData.map {$0.stringRect}
+//
+//        for id in ignoreList{
+//
+//            for (index,rect) in resultRect.enumerated(){
+//                let index1 = stringObjectViewModel.stringObjectListData.firstIndex(where: {$0.id == id} ) //TODO
+//                if index1 != nil {
+//                    let obj = stringObjectViewModel.stringObjectListData[index1!]
+//                    if obj.stringRect.IsSame(target: rect){
+//                        //print("Remove rect: \(resultRect[index])")
+//                        resultRect.remove(at: index)
+//
+//                        break
+//                    }
+//                }else{
+//
+//                }
+//
+//
+//            }
+//
+//        }
+//
+//        print("Result number: \(resultRect.count)")
+        print("After filter objects: \(newList.count)")
+        return newList
     }
     
 

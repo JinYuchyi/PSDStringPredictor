@@ -90,7 +90,8 @@ class JSManager{
                     textItemRef.color = textColor
                     textItemRef.font = fontNameList[i]
                     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
-                    textItemRef.position = Array(positionList[i][0] - offsetList[i][0], positionList[i][1] - offsetList[i][1])
+                    //textItemRef.position = Array(positionList[i][0] - offsetList[i][0], positionList[i][1] - offsetList[i][1])
+                    textItemRef.position = Array(positionList[i][0] - offsetList[i][0], positionList[i][1]  - offsetList[i][1] / 4)
                     textItemRef.tracking = trackingList[i]
                 }
         """
