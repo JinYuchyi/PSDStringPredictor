@@ -162,10 +162,9 @@ class OCR: ObservableObject{
 //                ignoreList.append(key)
 //            }
 //        }
-        print()
         for obj in objList{
             //Find the ignore object
-            for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
+            for (key, value) in stringObjectViewModel.stringObjectFixedDict{
                 if value == true {
                     print("\(key.content) is fixed")
                     //Compare ignore obj with new obj, if rect overlap, remove from newlist
@@ -176,11 +175,14 @@ class OCR: ObservableObject{
                     break
                 }
                 
-                newList.append(obj)
+                //newList.append(obj)
             }
             index += 1
         }
         
+        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
+            newList.append(key)
+        }
 //        var resultList: [StringObject] = objList
 //        //Get ignore list
 //        var ignoreList = [UUID]()
@@ -220,7 +222,6 @@ class OCR: ObservableObject{
 //        }
 //
 //        print("Result number: \(resultRect.count)")
-        print("After filter objects: \(newList.count)")
         return newList
     }
     
