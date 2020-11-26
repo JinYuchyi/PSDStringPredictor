@@ -45,21 +45,21 @@ struct ContentView: View {
                     ImageView(imageViewModel:imageViewModel)
                     
                     LabelsOnImage()
-                        .IsHidden(condition: showPredictString)
+                        .IsHidden(condition: stringObjectVM.stringOverlay)
                     CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
-                        .IsHidden(condition: showDebugOverlay)
+                        .IsHidden(condition: stringObjectVM.frameOverlay)
                 }
             }
             
-            VStack(alignment: .trailing){
-                Toggle(isOn: $showPredictString) {
-                    Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
-                }
-                Toggle(isOn: $showDebugOverlay) {
-                    Text("Debug Overlay").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
-                }
-                .frame(width: 1000, height: 950, alignment: .topTrailing)
-            }
+//            VStack(alignment: .trailing){
+//                Toggle(isOn: $showPredictString) {
+//                    Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
+//                }
+//                Toggle(isOn: $showDebugOverlay) {
+//                    Text("Debug Overlay").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
+//                }
+//                .frame(width: 1000, height: 950, alignment: .topTrailing)
+//            }
         }
         .frame(width: 1100)
     }

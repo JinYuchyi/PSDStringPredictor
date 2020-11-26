@@ -35,56 +35,45 @@ struct ControlPanel: View {
         
             //Section(header: Text("Operations")){
                 VStack{
-
-                    //.padding(.horizontal, 40.0)
-                    
-//                    Button(action: {self.dbvm.ReloadStandardTable()}){
-//                        Text("Reload Standard Table")
-//                            .padding(.horizontal, 40.0)
-//                        //.frame(minWidth: 200, maxWidth: .infinity)
-//
-//                    }
-//                    //.padding(.horizontal, 40.0)
-//
-//                    Button(action: {self.dbvm.ReloadCharacterTable()}){
-//                        Text("Reload Size Table")
-//                            .padding(.horizontal, 40.0)
-//                        //.frame(minWidth: 200, maxWidth: .infinity)
-//
-//                    }
-//                    //.padding(.horizontal, 40.0)
-//
-//                    Button(action: {self.dbvm.ReloadFontTable()}){
-//                        Text("Reload Tracking Table")
-//                            .padding(.horizontal, 40.0)
-//                        //.frame(minWidth: 200, maxWidth: .infinity)
-//
-//                    }
-//                    //.padding(.horizontal, 40.0)
-//
-//                    Button(action: {self.dbvm.ReloadBoundsTable()}){
-//                        Text("Reload Bounds Table")
-//                            .padding(.horizontal, 40.0)
-//                        //.frame(minWidth: 200, maxWidth: .infinity)
-//
-//                    }
-//                    //.padding(.horizontal, 40.0)
-                    Button(action: {self.stringObjectVM.PredictStrings()}){
-                        Text("Predict Strings")
-                        .frame(minWidth: 250,  maxWidth: .infinity)
+                    Text("Caculate String Layers")
+                        .foregroundColor(.gray)
+                        .padding(.top)
+                        .frame(width: 300, alignment: .leading)
+                        
+                    HStack{
+                        Button(action: {self.stringObjectVM.PredictStrings()}){
+                            Text("Single Page")
+                            .frame(minWidth: 200,  maxWidth: .infinity)
+                        }
+                        Button(action: {self.stringObjectVM.PredictStrings()}){
+                            Text("All")
+                            .frame(minWidth: 40,  maxWidth: .infinity)
+                        }
                     }
                     .frame( maxWidth: .infinity)
-                    .padding(.top)
-                    
+
+                    Text("Create PSD")
+                        .foregroundColor(.gray)
+                        .padding(.top)
+                        .frame(width: 300, alignment: .leading)
+                    HStack{
                     Button(action: {self.stringObjectVM.CreatePSD()}){
-                        Text("Create PSD")
-                        .frame(minWidth: 250,  maxWidth: .infinity)
+                        Text("Single Page")
+                        .frame(minWidth: 200,  maxWidth: .infinity)
                             
                     }
+                    Button(action: {self.stringObjectVM.CreatePSD()}){
+                        Text("All")
+                        .frame(minWidth: 40,  maxWidth: .infinity)
+                            
+                    }
+                    }
                     .frame( maxWidth: .infinity)
-                    .padding()
+                    .padding(.bottom)
                     .padding(.bottom)
                     }
+                .padding()
+
         
 //                    Button(action: {self.Debug()}){
 //                        Text("Debug")

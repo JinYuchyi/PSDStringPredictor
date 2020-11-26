@@ -40,6 +40,11 @@ class StringObjectViewModel: ObservableObject{
     
     @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
     
+    @Published var stringObjectOutputList: [StringObject] = []
+    
+    @Published var stringOverlay: Bool = true
+    @Published var frameOverlay: Bool = true
+    
     func PredictStrings()  {
         stringObjectListData = stringObject.PredictStringObjects(FromCIImage: DataStore.targetImageProcessed)
         //stringObjectListData = DataStore.stringObjectList

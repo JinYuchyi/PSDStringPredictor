@@ -152,77 +152,56 @@ class OCR: ObservableObject{
         return strobjs
     }
     
-    func FiltStringObjects(originalList objList: [StringObject]) -> [StringObject]{
+    func FiltStringObjects(originalList objList: [StringObject]) -> ([StringObject]){
         var newList : [StringObject] = objList
         var ignoreList: [StringObject] = []
         var index = 0
         
-//        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict {
-//            if value == true{
-//                ignoreList.append(key)
-//            }
-//        }
+        //ignoreList.append(contentsOf: stringObjectViewModel.stringObjectFixedDict.keys)
+        //ignoreList.append(contentsOf: stringObjectViewModel.stringObjectIgnoreDict.keys)
+        
+        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
+            if value == true {
+                ignoreList.append(key)
+            }
+        }
+        
+        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
+            if value == true {
+                ignoreList.append(key)
+            }
+        }
+
         for obj in objList{
             //Find the ignore object
-            for (key, value) in stringObjectViewModel.stringObjectFixedDict{
-                if value == true {
-                    print("\(key.content) is fixed")
+            for ignoreObj in ignoreList{
+                //if value == true {
+                    //print("\(key.content) is fixed")
                     //Compare ignore obj with new obj, if rect overlap, remove from newlist
-                    if key.stringRect.IsSame(target: obj.stringRect){
-                        print("Same: \(key.content)")
+                    if ignoreObj.stringRect.IsSame(target: obj.stringRect){
+                        //print("Same: \(key.content)")
                         newList.remove(at: index)
                     }
                     break
-                }
-                
-                //newList.append(obj)
+                //}
             }
             index += 1
         }
         
+        //var updateList = newList
+        
+        
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             newList.append(key)
         }
-//        var resultList: [StringObject] = objList
-//        //Get ignore list
-//        var ignoreList = [UUID]()
-//        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict {
-//            if value == true{
-//                ignoreList.append(key)
-//            }
-//        }
-//        for (key, value) in stringObjectViewModel.stringObjectFixedDict {
-//            if value == true{
-//                ignoreList.append(key)
-//            }
-//        }
-//
-//        let objIDList = stringObjectViewModel.stringObjectListData.map {$0.id}
-//        let objRectList = stringObjectViewModel.stringObjectListData.map {$0.stringRect}
-//
-//        for id in ignoreList{
-//
-//            for (index,rect) in resultRect.enumerated(){
-//                let index1 = stringObjectViewModel.stringObjectListData.firstIndex(where: {$0.id == id} ) //TODO
-//                if index1 != nil {
-//                    let obj = stringObjectViewModel.stringObjectListData[index1!]
-//                    if obj.stringRect.IsSame(target: rect){
-//                        //print("Remove rect: \(resultRect[index])")
-//                        resultRect.remove(at: index)
-//
-//                        break
-//                    }
-//                }else{
-//
-//                }
-//
-//
-//            }
-//
-//        }
-//
-//        print("Result number: \(resultRect.count)")
-        return newList
+        
+        stringObjectViewModel.stringObjectOutputList = newList
+        
+        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
+            newList.append(key)
+        }
+
+        return (newList)
     }
     
 

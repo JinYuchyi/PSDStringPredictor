@@ -30,49 +30,60 @@ struct StringObjectPropertyView: View {
                 
                 
                 
-                VStack(alignment: .leading){
-                    Text("Content:")
+                HStack{
+                    Text("Content")
                         .foregroundColor(Color.gray)
+                        .frame(width:80, alignment: .topLeading)
                     Text("\(stringObjectVM.selectedStringObject.content)")
+                        .frame(width:200, alignment: .topLeading)
                 }
                 
                 //Spacer().frame(height: 10)
                 
-                VStack(alignment: .leading){
-                    Text("Size:")
+                HStack{
+                    Text("Size")
                         .foregroundColor(Color.gray)
+                        .frame(width:80, alignment: .topLeading)
                     Text("\(stringObjectVM.selectedStringObject.fontSize)")
+                        .frame(width:200, alignment: .topLeading)
                 }
                 
                 //Spacer().frame(height: 10)
                 
-                VStack(alignment: .leading){
-                    Text("Tracking:")
+                HStack{
+                    Text("Tracking")
                         .foregroundColor(Color.gray)
+                        .frame(width:80, alignment: .topLeading)
                     Text("\(stringObjectVM.selectedStringObject.tracking)")
+                        .frame(width:200, alignment: .topLeading)
                 }
                 
                 //Spacer().frame(height: 10)
                 
-                VStack(alignment: .leading){
-                    Text("Weight:")
+                HStack{
+                    Text("Weight")
                         .foregroundColor(Color.gray)
+                        .frame(width:80, alignment: .topLeading)
                     Text("\(stringObjectVM.selectedStringObject.fontWeight.ToString())")
+                        .frame(width:200, alignment: .topLeading)
                 }
                 
                 //Spacer().frame(height: 10)
                 
-                VStack(alignment: .leading){
-                    Text("BoundingBox:")
+                HStack{
+                    Text("Bounds")
                         .foregroundColor(Color.gray)
-                    Text("x: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded()))")
-                    Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
+                        .frame(width:80, alignment: .topLeading)
+                    Text("x: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded())), w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
+                    //Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
+                        .frame(width:200, alignment: .topLeading)
                 }
                 
                 //Spacer().frame(height: 10)
+                Spacer()
                 
                 VStack(alignment: .leading){
-                    Text("Components Images:")
+                    Text("Components")
                         .foregroundColor(Color.gray)
                     ScrollView ( .horizontal, showsIndicators: true) {
                         

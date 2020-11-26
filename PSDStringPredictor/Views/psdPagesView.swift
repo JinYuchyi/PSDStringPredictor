@@ -10,13 +10,24 @@ import SwiftUI
 
 struct psdPagesView: View {
     
+    @ObservedObject var stringObjectVM = stringObjectViewModel
+    
     var body: some View {
         
         List{
-            ForEach (stringObjectViewModel.psdPageObjectList) { item in
-                psdPageView(psdPageObjectList: item)
-                    .frame(width: 300, alignment: .center)
-                Divider()
+            ForEach (stringObjectVM.psdPageObjectList) { item in
+                VStack{
+                    ZStack{
+                        psdPageView(psdPageObjectList: item)
+                        .frame(width: 300, alignment: .center)
+                        Text("􀁢")
+                            .font(.system(size: 30))
+                            .frame(width: 300, alignment: .topTrailing)
+                            .offset(x: -20, y: 0)
+                            .foregroundColor(item.isCommitted == true ? .green : .gray)
+                    }
+                    Divider()
+                }
             }
         }
     }
