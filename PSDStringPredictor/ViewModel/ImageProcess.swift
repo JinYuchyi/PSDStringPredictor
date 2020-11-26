@@ -16,10 +16,14 @@ class ImageProcess: ObservableObject{
 //    @Published var targetImageName: String = "default_image"
 //    @Published var targetImageSize: [Int64] = []
     //@EnvironmentObject var data: DataStore
+    let colorModeClassifier = ColorModeClassifier()
     
+    var stringObject: StringObject = StringObject()
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetNSImage = NSImage()
     @Published var targetCIImage = CIImage()
+    
+    var showImage: Bool = false
 
     func FetchImage() {
         targetNSImage = DataStore.targetNSImage
@@ -107,7 +111,25 @@ class ImageProcess: ObservableObject{
         img.ToPNG(url: url)
     }
     
-
+    func LoadImageBtnPressed()  {
+        let panel = NSOpenPanel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = panel.runModal()
+            if result == .OK{
+                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd") )
+                {
+                    let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
+                    self.SetTargetNSImage(tmp)
+                    self.showImage = true
+                    
+                    self.colorModeClassifier.Prediction(fromImage: DataStore.targetImageProcessed)
+                    imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
+                    DataStore.imagePath = panel.url!.path
+                }
+            }
+        }
+        
+    }
 
     
 }

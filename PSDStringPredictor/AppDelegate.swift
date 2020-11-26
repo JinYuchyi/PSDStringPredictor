@@ -14,7 +14,7 @@ import CoreData
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow!
-
+    @ObservedObject var dbViewModel = DBViewModel()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Create the window and set the content view. 
         window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 1800, height: 1000),
+            contentRect: NSRect(x: 0, y: 0, width: 1700, height: 1000),
             //styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             styleMask: [.titled, .closable, .miniaturizable],
             backing: .buffered, defer: false)
@@ -141,6 +141,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return .terminateNow
     }
 
-
+    @IBAction func AboutStringLayerGenerator(_ sender: Any) {
+        // 应用警示框
+            let alert = NSAlert()
+            alert.addButton(withTitle: "OK")
+            alert.messageText = "Developer"
+            alert.informativeText = "yuqi_jin@apple.com"
+            alert.beginSheetModal(for: NSApp.mainWindow!, completionHandler: nil)
+    }
+    
+    @IBAction func LoadFontSizeTable(_ sender: Any) {
+        dbViewModel.ReloadCharacterTable()
+    }
+    
+    @IBAction func LoadFontTrackingTable(_ sender: Any) {
+        dbViewModel.ReloadFontTable()
+    }
+    
+    @IBAction func LoadBoundsTable(_ sender: Any) {
+        dbViewModel.ReloadBoundsTable()
+    }
+    
+    
 }
 

@@ -38,12 +38,18 @@ class StringObjectViewModel: ObservableObject{
     @Published var stringObjectIgnoreDict: [StringObject: Bool] = [:]
     @Published var stringObjectFixedDict: [StringObject: Bool] = [:]
     
+    @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
+    
     func PredictStrings()  {
         stringObjectListData = stringObject.PredictStringObjects(FromCIImage: DataStore.targetImageProcessed)
         //stringObjectListData = DataStore.stringObjectList
         DataStore.FillCharFrameList()
         FetchCharFrameListData()
         FetchCharFrameListRects()
+    }
+    
+    func CreatePSD(){
+        UpdatePSD()
     }
     
     func FetchCharFrameListData() {
@@ -117,6 +123,7 @@ class StringObjectViewModel: ObservableObject{
             }
     }
     
+
 
 
     

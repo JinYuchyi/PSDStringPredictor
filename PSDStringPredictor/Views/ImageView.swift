@@ -14,14 +14,15 @@ struct ImageView: View {
 //@EnvironmentObject var data: DataStore
     let imgUtil = ImageUtil()
     let control = Controller()
+    //let imgProcess = ImageProcess()
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @Binding var showImage: Bool
+//    @Binding var showImage: Bool
     
     var body: some View{
             ZStack{
                 //Show button before we have image loaded
                 
-                if(showImage == false){
+                if(imageProcessViewModel.showImage == false){
 //                    Button(action: {self.control.LoadImageBtnPressed()}){
 //                        Text("Load Image")
 //                    }

@@ -14,13 +14,24 @@ struct ImagePropertyView: View {
     var body: some View {
         List{
             Section(header: Text("Image Properties")){
-                VStack(alignment: .leading){
-                    Text("ColorMode:")
-                    Text(imagePropertyVM.colorModeString)
+                
+                HStack{
+                    Text("ColorMode")
+                        .frame(width:80, alignment: .topLeading)
+                        .foregroundColor(Color.gray)
+                    Text("\(imagePropertyVM.colorModeString)")
+                        .frame(width: 200, alignment: .topLeading)
+                    
+                    //Text(imagePropertyVM.colorModeString)
                 }
-                VStack(alignment: .leading){
-                    Text("Path:")
-                    Text(DataStore.imagePath)
+                HStack{
+                    HStack{
+                        Text("Path")
+                            .frame(width:80, alignment: .topLeading)
+                            .foregroundColor(Color.gray)
+                        Text(DataStore.imagePath)
+                            .frame(width: 200, alignment: .topLeading)
+                    }
                 }
             }
         }

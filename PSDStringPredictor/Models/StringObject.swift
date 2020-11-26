@@ -48,7 +48,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     }
     
     
-    var id: UUID = UUID()
+    var id: UUID
     var content: String
     //var position: [CGFloat]
     var tracking: CGFloat
@@ -76,7 +76,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     //var stringObjectList: [StringObject]
     
     init(){
-        //id = UUID()
+        id = UUID()
         content = "No content."
         //position = []
         tracking = 0
@@ -99,6 +99,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
+        id = UUID()
         self.stringRect = stringRect
         self.content = content
         self.fontSize = 0.0

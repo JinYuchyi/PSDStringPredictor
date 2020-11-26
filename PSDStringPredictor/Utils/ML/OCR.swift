@@ -12,7 +12,7 @@ import Vision
 
 class OCR: ObservableObject{
     
-    let imageProcess = ImageProcess()
+    //let imageProcess = ImageProcess()
     
 //    func GetObservations(fromImage image: CIImage, withRecognitionLevel recognitionLevel: VNRequestTextRecognitionLevel, usesLanguageCorrection: Bool)->[VNRecognizedTextObservation]{
 //        let requestHandler = VNImageRequestHandler(ciImage: image, options: [:])
