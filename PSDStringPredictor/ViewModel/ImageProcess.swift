@@ -200,6 +200,17 @@ func ChangeExposure(_ image: CIImage, _ value: CGFloat = 0.5)-> CIImage?{
     return filteredImage
 }
 
+func SetConv(_ image: CIImage)-> CIImage?{
+    let weights:[CGFloat] = [0,-2,0,-2,9,-2,0,-2,0]
+    let filter = CIFilter(name: "CIConvolution3X3")
+    //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
+    filter?.setValue(image, forKey: "inputImage")
+    filter?.setValue(CIVector(string:"[0 -2 0 -2 9 -2 0 -2 0]"), forKey: "inputWeights")
+    filter?.setValue(0.00, forKey: "inputBias")
+    let filteredImage = filter?.outputImage
+    return filteredImage
+}
+
 //Default is 0.4
 func ChangeSharpen(_ image: CIImage, _ value: CGFloat = 0.4)-> CIImage?{
     let filter = CIFilter(name: "CISharpenLuminance")

@@ -12,11 +12,26 @@ struct ImageProcessView: View {
     //@EnvironmentObject var data: DataStore
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @State private  var gammaValue: CGFloat = 1
-    //@State private  var sharpenValue: CGFloat = 0.4
     @State private  var exposureValue: CGFloat = 0
+    @State   var isConvolution: Bool = false
+    
+
     
     var body: some View {
+        
+
+        
         VStack{
+            //CIConvolution3x3
+            HStack{
+                //Text("Convolution3x3")
+                ToggleConv()
+
+                
+                
+                
+                
+            }
             
             HStack{
                 Text("Gamma")
@@ -70,34 +85,7 @@ struct ImageProcessView: View {
             .padding(.horizontal)
             .padding(.bottom)
             
-//            HStack{
-//                Text("Sharpen")
-//                Slider(
-//                    value: Binding(
-//                        get: {
-//                            self.sharpenValue
-//                        },
-//                        set: {(newValue) in
-//                            self.sharpenValue = newValue
-//                            //let tmp = ChangeSharpen(self.imageViewModel.GetTargetCIImage(), CGFloat(newValue))!
-//                            //self.imageViewModel.SetTargetProcessedImage(tmp)
-//                            var tmp = ChangeGamma(self.imageViewModel.GetTargetCIImage(), CGFloat(gammaValue))!
-//                            tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
-//                            tmp = ChangeSharpen(tmp, CGFloat(sharpenValue))!
-//
-//                            self.imageViewModel.SetTargetProcessedImage(tmp)
-//                        }
-//                    ),
-//                    in: 0...10
-//
-//                )
-//                Button(action: { sharpenValue = 0.5 }){
-//                    Text("Reset")
-//
-//                }
-//            }
-//            .padding(.horizontal)
-//            .padding(.vertical, -4)
+            //
             
             
         }
@@ -107,9 +95,26 @@ struct ImageProcessView: View {
         if (self.imageViewModel.GetTargetCIImage().IsValid()){
             var tmp = ChangeGamma(self.imageViewModel.GetTargetCIImage(), CGFloat(gammaValue))!
             tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
-            //tmp = ChangeSharpen(tmp, CGFloat(sharpenValue))!
+            if isConvolution == true{
+                tmp = SetConv(tmp)!
+            }
+            
             self.imageViewModel.SetTargetProcessedImage(tmp)
         }
+    }
+    
+    func ToggleConv() -> some View{
+        let bind = Binding<Bool>(
+            get:{self.isConvolution},
+            set:{self.isConvolution = $0
+                SetFilter()
+            }
+          )
+        return Toggle(isOn: bind, label: {
+            Text("Sharpen Edge")
+            
+                })
+        .frame(width: 300, alignment: .leading)
     }
 }
 
