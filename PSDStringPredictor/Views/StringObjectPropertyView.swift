@@ -38,6 +38,20 @@ struct StringObjectPropertyView: View {
                         .frame(width:200, alignment: .topLeading)
                 }
                 
+                HStack{
+                    Text("Color Mode")
+                        .foregroundColor(Color.gray)
+                        .frame(width:80, alignment: .topLeading)
+                    if stringObjectVM.selectedStringObject.colorMode == 1 {
+                        Text("􀆮")
+                            .frame(width:200, alignment: .topLeading)
+                    }else if stringObjectVM.selectedStringObject.colorMode == 2 {
+                        Text("􀆺")
+                            .frame(width:200, alignment: .topLeading)
+                    }else{}
+                    
+                }
+                
                 //Spacer().frame(height: 10)
                 
                 HStack{
@@ -61,11 +75,23 @@ struct StringObjectPropertyView: View {
                 //Spacer().frame(height: 10)
                 
                 HStack{
-                    Text("Weight")
+                    Text("Font")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.fontWeight.ToString())")
+                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
                         .frame(width:200, alignment: .topLeading)
+                }
+                
+                HStack{
+                    //stringObjectVM.selectedStringObject.color
+                    Text("Color")
+                        .foregroundColor(Color.gray)
+                        .frame(width:80, alignment: .topLeading)
+                    Rectangle()
+                        //.fill(stringObjectVM.selectedStringObject.color.ToColor())
+                        .frame(width:10, height:10, alignment: .center)
+//                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
+//                        .frame(width:200, alignment: .topLeading)
                 }
                 
                 //Spacer().frame(height: 10)
@@ -74,13 +100,13 @@ struct StringObjectPropertyView: View {
                     Text("Bounds")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("x: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded())), w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
+                    Text("X: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), Y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded())), W: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), H: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
                     //Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
                 //Spacer().frame(height: 10)
-                Spacer()
+                //Spacer()
                 
                 VStack(alignment: .leading){
                     Text("Components")
@@ -103,8 +129,7 @@ struct StringObjectPropertyView: View {
                                     
                                     Button(action: {SaveBtnPressed(index)}){
                                         Text("􀈄")
-                                        //                                .padding(.horizontal, 40.0)
-                                        //                                .frame(minWidth: 200, maxWidth: .infinity)
+
                                         
                                     }
                                     

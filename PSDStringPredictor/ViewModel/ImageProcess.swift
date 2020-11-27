@@ -17,7 +17,6 @@ class ImageProcess: ObservableObject{
 //    @Published var targetImageSize: [Int64] = []
     //@EnvironmentObject var data: DataStore
     let colorModeClassifier = ColorModeClassifier()
-    
     var stringObject: StringObject = StringObject()
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetNSImage = NSImage()
@@ -209,6 +208,39 @@ func SetConv(_ image: CIImage)-> CIImage?{
     filter?.setValue(0.00, forKey: "inputBias")
     let filteredImage = filter?.outputImage
     return filteredImage
+}
+
+func SetGrayScale(_ image: CIImage) -> CIImage?{
+    let filter = CIFilter(name: "CIPhotoEffectNoir")
+    filter?.setValue(image, forKey: kCIInputImageKey)
+    let filteredImage = filter?.outputImage
+    return filteredImage
+}
+
+func Maximum(_ image: CIImage) -> NSColor{
+    let pixelProcess = PixelProcess()
+
+    let filter = CIFilter(name: "CIAreaMaximum")
+    filter?.setValue(image, forKey: "inputImage")
+    filter?.setValue(image.extent, forKey: "inputExtent")
+    let filteredImage = filter?.outputImage
+    let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!, withAlpha: false)
+    //filteredImage?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/pix_max.png"))
+    
+    return c
+}
+
+func Minimun(_ image: CIImage) -> NSColor{
+    let pixelProcess = PixelProcess()
+
+    let filter = CIFilter(name: "CIAreaMinimum")
+    filter?.setValue(image, forKey: "inputImage")
+    filter?.setValue(image.extent, forKey: "inputExtent")
+    let filteredImage = filter?.outputImage
+    
+    //filteredImage?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/pix_min.png"))
+    let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!, withAlpha: false)
+    return c
 }
 
 //Default is 0.4

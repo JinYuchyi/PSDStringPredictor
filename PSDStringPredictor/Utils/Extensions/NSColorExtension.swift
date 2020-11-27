@@ -16,4 +16,10 @@ extension NSColor{
         let gray = 0.3 * self.redComponent + self.greenComponent * 0.59 + 0.11 * self.blueComponent
          return gray
      }
+    
+    func ToColor()->Color{
+        
+        let c = Color.init(red: Double(self.redComponent * 255), green: Double(self.greenComponent * 255), blue: Double(self.blueComponent * 255))
+        return c
+    }
 }

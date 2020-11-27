@@ -66,9 +66,8 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var isPredictedList: [Int]
     var isForbidden: Bool
     var confidence: CGFloat
-    
-    
-    
+    var colorMode: Int
+
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
@@ -81,6 +80,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         //position = []
         tracking = 0
         fontSize = 0
+        colorMode = -1
         fontWeight =  Font.Weight.regular
         charImageList = []
         stringRect = CGRect()
@@ -96,10 +96,13 @@ struct StringObject : Identifiable, Equatable, Hashable{
         isPredictedList = []
         self.color = CalcColor()
         self.fontWeight = PredictFontWeight()
+        colorMode = CalcColorMode()
+        
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
         id = UUID()
+        colorMode = -1
         self.stringRect = stringRect
         self.content = content
         self.fontSize = 0.0
@@ -125,10 +128,24 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.color = CalcColor()
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
+        colorMode = CalcColorMode()
 
     }
 
-
+    func CalcColorMode() -> Int{
+        var result = -1
+        var colorModeList = [Int]()
+        for img in charImageList{
+            let charColorMode = CharColorModeClassifier()
+            let result = charColorMode.Prediction(fromImage: img)
+            colorModeList.append(result)
+        }
+        if colorModeList.count > 0 {
+            result = colorModeList.MajorityElement()
+        }
+        return result
+    }
+    
     func FixContent(_ target: String) -> String{
         var res: String = target
         let lowerString: String = target.lowercased()
@@ -165,12 +182,29 @@ struct StringObject : Identifiable, Equatable, Hashable{
             }
         }
         let result: Double = trackings.MajorityElement()
-        print("Predict tracking: \(result)")
+        //print("Predict tracking: \(result)")
         return result
     }
     
     func CalcColor() -> CGColor {
-        return CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+        var colorList: [NSColor] = []
+        var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
+//        if colorMode == 1{
+//            for img in charImageList {
+//                let tmpC = Minimun(img)
+//                colorList.append(tmpC)
+//            }
+//            return colorList[0]
+//            //result = colorList.MajorityElement()
+//        }else if colorMode == 2{
+//            for img in charImageList {
+//                let tmpC = Minimun(img)
+//                colorList.append(tmpC)
+//            }
+//            return colorList[0]
+//        }
+//        return result
+        return result
     }
     
     func CalcPosition() -> [CGFloat]{
@@ -236,7 +270,6 @@ struct StringObject : Identifiable, Equatable, Hashable{
         var n1: CGFloat = 0
         var hasLongTail = false
         for (index, c) in charArray.enumerated() {
-            //if (c.isLowercase && c.isLetter){
             if (
                 c == "p" ||
                     c == "q" ||

@@ -41,6 +41,7 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
+        //print(stringLabel.color)
         //stringLabel.PredictTracking()
     }
     
@@ -93,6 +94,8 @@ struct StringLabel: View {
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
             
             Text(stringLabel.content)
+
+                .foregroundColor(Color(red: Double(stringLabel.color.components![0] * 255.0), green: Double(stringLabel.color.components![1] * 255.0), blue: Double(stringLabel.color.components![2] * 255.0)))
                 .font(.custom(stringLabel.CalcFontFullName(), size: stringLabel.fontSize))
                 .tracking(stringLabel.tracking)
                 //.font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))

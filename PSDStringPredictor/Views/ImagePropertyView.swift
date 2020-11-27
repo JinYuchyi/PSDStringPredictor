@@ -16,13 +16,18 @@ struct ImagePropertyView: View {
             Section(header: Text("Image Properties")){
                 
                 HStack{
-                    Text("ColorMode")
+                    Text("Color Mode")
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
-                    Text("\(imagePropertyVM.colorModeString)")
-                        .frame(width: 200, alignment: .topLeading)
-                    
-                    //Text(imagePropertyVM.colorModeString)
+                    if imagePropertyVM.colorModeString == "Dark Mode"{
+                        Text("􀆺")
+                            .frame(width: 200, alignment: .topLeading)
+                    }else if imagePropertyVM.colorModeString == "Light Mode" {
+                        Text("􀆮")
+                            .frame(width: 200, alignment: .topLeading)
+                    }else{}
+                        
+                        
                 }
                 HStack{
                     HStack{

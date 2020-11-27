@@ -15,7 +15,7 @@ struct ControlPanel: View {
     let ternimalScriptMgr = TernimalScriptManager()
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @ObservedObject var strObjVM = stringObjectViewModel
-    var imageProcess: ImageProcess  = imageProcessViewModel
+    @ObservedObject var imageProcessVM = imageProcessViewModel
     var imgUtil: ImageUtil = ImageUtil()
     var pixelProcess = PixelProcess()
     var db = DB()
@@ -28,7 +28,12 @@ struct ControlPanel: View {
     
     var body: some View {
         
+
+        
         VStack{
+            
+     
+            
             Text("Caculate String Layers")
                 .foregroundColor(.gray)
                 .padding(.top)
@@ -67,15 +72,17 @@ struct ControlPanel: View {
             .padding(.bottom)
         }
         .padding()
-        
-        
+
     }
     
     
     
+    
     func Debug(){
-        stringObjectVM.UpdatePSD()
-        
+//        pixelProcess.FindStrongestColor(img: imageProcessVM.targetCIImage)
+//        imageProcessVM.FetchImage()
+//        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageProcessVM.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 3, Height: 3, MaskColor: .red)
+//        imageProcessVM.SetTargetProcessedImage(tmpImg)
     }
     
 }

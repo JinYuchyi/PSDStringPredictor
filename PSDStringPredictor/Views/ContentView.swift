@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreImage
 
 struct ContentView: View {
     
@@ -20,7 +21,8 @@ struct ContentView: View {
     let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
     @ObservedObject var stringObjectVM = stringObjectViewModel
-    
+    let pixelProcess = PixelProcess()
+    let imgUtil = ImageUtil()
     @State var showImage = false
     //@State var showDebugOverlay = true
     @State private var showPredictString = true
@@ -92,8 +94,11 @@ struct ContentView: View {
             Divider()
             
             ControlPanel(showImage: $showImage)
-                //.padding(.top, 20.0)
-            //.border(Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.1), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+            
+            Button(action: {self.Debug()}){
+                Text("Debug")
+            }
+
         }
         
     }
@@ -109,6 +114,12 @@ var body: some View {
     }
 }
 
+    func Debug(){
+        //pixelProcess.FindStrongestColor(img: imageViewModel.targetCIImage)
+        imageViewModel.FetchImage()
+        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageViewModel.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 10, Height: 10, MaskColor: CIColor.red)
+        imageViewModel.SetTargetProcessedImage(tmpImg)
+    }
 
 
 }

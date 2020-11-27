@@ -27,10 +27,6 @@ struct ImageProcessView: View {
                 //Text("Convolution3x3")
                 ToggleConv()
 
-                
-                
-                
-                
             }
             
             HStack{

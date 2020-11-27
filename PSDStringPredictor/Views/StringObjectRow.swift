@@ -28,8 +28,4 @@ struct StringObjectRow: View {
        }
 }
 
-//struct StringObjectRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StringObjectRow(stringObject:stringObjectsData[0])
-//    }
-//}
+
