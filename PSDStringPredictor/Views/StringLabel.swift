@@ -82,11 +82,17 @@ struct StringLabel: View {
 //                .fill(Color.red.opacity(1))
 //                .frame(width: 4, height: 4)
 //                .position(x: stringLabel.stringRect.origin.x , y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y )
-           
-            Rectangle()
-                .fill(Color.black.opacity(0.3))
-                .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
-                .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+            if stringLabel.colorMode == 1{
+                Rectangle()
+                    .fill( Color.white.opacity(0.3))
+                    .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
+                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+            }else if stringLabel.colorMode == 2 {
+                Rectangle()
+                    .fill( Color.black.opacity(0.3))
+                    .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
+                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+            }
             
             Rectangle()
                 .stroke(stringObjectVM.selectedStringObject.id == stringLabel.id ? Color.green : Color.red, lineWidth: stringObjectVM.selectedStringObject.id == stringLabel.id ? 4 : 1)
@@ -94,33 +100,12 @@ struct StringLabel: View {
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
             
             Text(stringLabel.content)
-
                 .foregroundColor(stringLabel.color.ToColor())
                 .font(.custom(stringLabel.CalcFontFullName(), size: stringLabel.fontSize))
                 .tracking(stringLabel.tracking)
-                //.font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-      
-//            if stringLabel.fontSize < 20 {
-//                Text(stringLabel.content)
-//                    //.foregroundColor(stringLabel.color)
-//                    //.font(.custom("SF Pro Text", size: stringLabel.fontSize))
-//                    //.tracking(stringLabel.tracking)
-//                    .font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
-//                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-//            }
-//            else{
-//                Text(stringLabel.content)
-//                    //.foregroundColor(stringLabel.color)
-//
-//                    //"SF Pro Display"
-//
-//                    .font(.custom(stringLabel.CalcFontFullName(), size: stringLabel.fontSize))
-//                    .tracking(stringLabel.tracking)
-//                    //.font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
-//                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-//            }
-            
+                //.shadow(color: .white, radius: 10, x: 5, y: 5)
+
             HStack{
                 //Button for show detail
                 Button(action: {self.InfoBtnTapped()}){
