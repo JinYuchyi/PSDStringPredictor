@@ -26,6 +26,7 @@
 		3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */; };
 		3F440FFD250C72AD00EDAF3F /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F440FFC250C72AD00EDAF3F /* default_image.png */; };
 		3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4445C925392FC300BB2745 /* OSStandardManager.swift */; };
+		3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4471BA25735459003AE7B6 /* ColorExtension.swift */; };
 		3F44C63D2570D60400E438CA /* CharColorMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C63C2570D60400E438CA /* CharColorMode.swift */; };
 		3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */; };
 		3F44C6452570EB0C00E438CA /* CharColorMode.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C6442570EB0C00E438CA /* CharColorMode.mlmodel */; };
@@ -123,6 +124,7 @@
 		3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverOnCharView.swift; sourceTree = "<group>"; };
 		3F440FFC250C72AD00EDAF3F /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_image.png; path = ../../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png; sourceTree = DEVELOPER_DIR; };
 		3F4445C925392FC300BB2745 /* OSStandardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStandardManager.swift; sourceTree = "<group>"; };
+		3F4471BA25735459003AE7B6 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		3F44C63C2570D60400E438CA /* CharColorMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharColorMode.swift; sourceTree = "<group>"; };
 		3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharColorModeClassifier.swift; sourceTree = "<group>"; };
 		3F44C6442570EB0C00E438CA /* CharColorMode.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = CharColorMode.mlmodel; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				3F0782822541B9F0007163D6 /* FontExtension.swift */,
 				3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */,
 				3F44C6472570F42500E438CA /* CGColorExtension.swift */,
+				3F4471BA25735459003AE7B6 /* ColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
 				3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */,
+				3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */,
 				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
 				3FA1C5B225567D5500FC6DC3 /* FontSizeTabularRegressor.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,

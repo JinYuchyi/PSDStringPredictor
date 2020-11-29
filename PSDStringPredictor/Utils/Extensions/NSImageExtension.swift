@@ -30,7 +30,7 @@ extension NSImage {
             let cgImage = self.cgImage(forProposedRect: nil, context: nil, hints: nil)
             else { return } // TODO: handle error
         let newRep = NSBitmapImageRep(cgImage: cgImage)
-        newRep.size = self.size // if you want the same size
+        //newRep.size = self.size // if you want the same size
         guard
             let pngData = newRep.representation(using: .bmp, properties: [:])
             else { return } 

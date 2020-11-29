@@ -94,10 +94,9 @@ struct StringObject : Identifiable, Equatable, Hashable{
         isForbidden = false
         self.trackingPS = 0
         isPredictedList = []
-        self.color = CalcColor()
         self.fontWeight = PredictFontWeight()
         colorMode = CalcColorMode()
-        
+        self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
@@ -125,11 +124,11 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontSize = CGFloat(sizeFunc.0)
         self.tracking = FetchTrackingFromDB(self.fontSize).0
         self.trackingPS = FetchTrackingFromDB(self.fontSize).1
-        self.color = CalcColor()
+        
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
         colorMode = CalcColorMode()
-
+        self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
     func CalcColorMode() -> Int{
@@ -177,7 +176,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 let _width = fabs(charRects[index].minX - charRects[index+1].maxX) / fontSize * 12
                 let _fontWeight = "SFProText-Regular"
                 let tmp = PredictFontTracking(str: strs, fontSize: Double(fontSize), width: Double(_width), fontWeight: _fontWeight)
-                print("Predicting \(strs) - fontsize: \(fontSize) - width: \(_width) - result: \(tmp) ")
+                //print("Predicting \(strs) - fontsize: \(fontSize) - width: \(_width) - result: \(tmp) ")
                 trackings.append(tmp)
             }
         }
@@ -186,24 +185,28 @@ struct StringObject : Identifiable, Equatable, Hashable{
         return result
     }
     
-    func CalcColor() -> CGColor {
+    func CalcColor() -> CGColor? {
         var colorList: [NSColor] = []
         var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
-//        if colorMode == 1{
-//            for img in charImageList {
-//                let tmpC = Minimun(img)
-//                colorList.append(tmpC)
-//            }
-//            return colorList[0]
-//            //result = colorList.MajorityElement()
-//        }else if colorMode == 2{
-//            for img in charImageList {
-//                let tmpC = Minimun(img)
-//                colorList.append(tmpC)
-//            }
-//            return colorList[0]
-//        }
-//        return result
+        var maxC: CGColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+        var minC: CGColor =  CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+        //print("Char Image List: \(charImageList.count)")
+        if charImageList.count > 0{
+            if colorMode == 1{
+                let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                //let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: stringRect)
+                
+                strImg?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/Test/\(content)\(strImg?.extent.width)-\(stringRect.width)"))
+                result = Minimun(strImg!).cgColor
+                print("result min:\(Minimun(strImg!).description),for \(content)")
+
+            }
+            if colorMode == 2{
+                let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) - 3, height: stringRect.height.rounded(.towardZero)))
+                result = Maximum(strImg!).cgColor
+                //print("result max:\(Maximum(strImg!).description),for \(content)")
+            }
+        }
         return result
     }
     

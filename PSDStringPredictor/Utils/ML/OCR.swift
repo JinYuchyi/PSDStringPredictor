@@ -47,7 +47,9 @@ class OCR: ObservableObject{
 
             // Convert the rectangle from normalized coordinates to image coordinates.
             //return VNImageRectForNormalizedRect(boundingBox, 100, 100)
-            rects.append(VNImageRectForNormalizedRect(boundingBox, width, height))
+            let normBox = VNImageRectForNormalizedRect(boundingBox, width, height)
+            let newBox = CGRect.init(x: Int(normBox.origin.x.rounded()), y: Int(normBox.origin.y.rounded()), width: Int(normBox.width.rounded()), height: Int(normBox.height.rounded()))
+            rects.append(newBox)
             //return VNImageRectForNormalizedRect(boundingBox, width, height)
         }
         return rects
@@ -95,9 +97,9 @@ class OCR: ObservableObject{
             rects.append(fixRect)
             //print("\(offset) \(candidate.string[index_start]) \(boundingBox)")
             let char = candidate.string[index_start]
-            if (char == "B"){
-                print("B: \(VNImageRectForNormalizedRect(boundingBox, width, height))")
-            }
+//            if (char == "B"){
+//                print("B: \(VNImageRectForNormalizedRect(boundingBox, width, height))")
+//            }
             chars.append(char)
         }
 
@@ -129,7 +131,7 @@ class OCR: ObservableObject{
         }
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
-        var stringsRects = GetRectsFromObservations(results_fast, Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
+        var stringsRects = GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
         //stringsRects = FiltRects(targetList: stringsRects)
 
         let strs = GetStringArrayFromObservations(results_fast)

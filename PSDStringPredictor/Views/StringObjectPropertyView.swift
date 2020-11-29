@@ -88,8 +88,11 @@ struct StringObjectPropertyView: View {
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
                     Rectangle()
-                        //.fill(stringObjectVM.selectedStringObject.color.ToColor())
+                        .fill(stringObjectVM.selectedStringObject.color.ToColor())
                         .frame(width:10, height:10, alignment: .center)
+//                    Text("\(stringObjectVM.selectedStringObject.color.ToColor())")
+//                        .foregroundColor(Color.gray)
+//                        .frame(width:80, alignment: .topLeading)
 //                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
 //                        .frame(width:200, alignment: .topLeading)
                 }

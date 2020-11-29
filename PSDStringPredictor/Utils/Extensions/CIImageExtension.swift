@@ -14,11 +14,13 @@ extension CIImage{
     }
     
     func ToCGImage() -> CGImage! {
-        let context = CIContext(options: nil)
-        if context != nil {
-            return context.createCGImage(self, from: self.extent)
-        }
-        return nil
+        let context = CIContext()
+//        if context != nil {
+//            return context.createCGImage(self, from: self.extent)
+//        }else{
+//            return nil
+//        }
+        return context.createCGImage(self, from: self.extent)
     }
     
     func ToPNG(_ rect: CGRect, ToPath path: String, FileName fileName: String, CreatePath createPath: Bool){

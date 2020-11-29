@@ -239,7 +239,11 @@ func Minimun(_ image: CIImage) -> NSColor{
     let filteredImage = filter?.outputImage
     
     //filteredImage?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/pix_min.png"))
-    let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!, withAlpha: false)
+    let img = filteredImage!.ToCGImage()
+    let size = filteredImage!.extent
+    let c = pixelProcess.colorAt(x: 0, y: 0, img: img!, withAlpha: false)
+   // img?.ToCIImage().ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/test/\(c.blueComponent)"))
+    //print("Test: \(c.blueComponent)")
     return c
 }
 

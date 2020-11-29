@@ -115,10 +115,13 @@ var body: some View {
 }
 
     func Debug(){
-        //pixelProcess.FindStrongestColor(img: imageViewModel.targetCIImage)
-        imageViewModel.FetchImage()
-        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageViewModel.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 10, Height: 10, MaskColor: CIColor.red)
-        imageViewModel.SetTargetProcessedImage(tmpImg)
+//        imageViewModel.FetchImage()
+//        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageViewModel.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 10, Height: 10, MaskColor: CIColor.red)
+//        imageViewModel.SetTargetProcessedImage(tmpImg)
+        let rect = CGRect.init(x: 10, y: 10, width: 100, height: 100)
+        let testImg = DataStore.targetImageProcessed.cropped(to: rect)
+        print("\(rect)")
+        print("\(testImg.extent)")
     }
 
 

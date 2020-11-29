@@ -77,6 +77,7 @@ class StringObjectViewModel: ObservableObject{
             let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObject.charArray[index]), weight: selectedStringObject.charFontWeightList[index], size: Int(selectedStringObject.charSizeList[index]))
             selectedCharImageListObjectList.append( temp )
         }
+        print("Color: \(selectedStringObject.color.components![0]), \(selectedStringObject.color.components![1]), \(selectedStringObject.color.components![2])")
     }
     
     func UpdatePSD(){
@@ -117,21 +118,14 @@ class StringObjectViewModel: ObservableObject{
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((DataStore.targetNSImage.size.height - obj.stringRect.minY).rounded())])
             trackingList.append(Int(obj.trackingPS))
         }
-        
-        
-        
+
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList)
-        
             if success == true{
                 let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
                 PythonScriptManager.RunScript(str: cmd)
             }
     }
-    
 
-
-
-    
 }
     
  

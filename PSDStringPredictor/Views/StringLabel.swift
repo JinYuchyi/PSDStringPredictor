@@ -32,7 +32,7 @@ struct StringLabel: View {
     var stringLabel: StringObject
     
     func makeView(_ geometry: GeometryProxy) -> some View {
-        print(geometry.size.width, geometry.size.height)
+        //print(geometry.size.width, geometry.size.height)
         DispatchQueue.main.async { self.width = geometry.size.width }
         
         return Text("Test")
