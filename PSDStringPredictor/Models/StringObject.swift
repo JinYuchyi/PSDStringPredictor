@@ -196,7 +196,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
                 //let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: stringRect)
                 
-                strImg?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/Test/\(content)\(strImg?.extent.width)-\(stringRect.width)"))
+                //strImg?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/Test/\(content)\(strImg?.extent.width)-\(stringRect.width)"))
                 result = Minimun(strImg!).cgColor
                 print("result min:\(Minimun(strImg!).description),for \(content)")
 

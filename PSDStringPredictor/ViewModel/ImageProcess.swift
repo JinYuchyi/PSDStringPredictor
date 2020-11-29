@@ -224,7 +224,7 @@ func Maximum(_ image: CIImage) -> NSColor{
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent, forKey: "inputExtent")
     let filteredImage = filter?.outputImage
-    let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!, withAlpha: false)
+    let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
     //filteredImage?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/pix_max.png"))
     
     return c
@@ -241,8 +241,8 @@ func Minimun(_ image: CIImage) -> NSColor{
     //filteredImage?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/pix_min.png"))
     let img = filteredImage!.ToCGImage()
     let size = filteredImage!.extent
-    let c = pixelProcess.colorAt(x: 0, y: 0, img: img!, withAlpha: false)
-   // img?.ToCIImage().ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/test/\(c.blueComponent)"))
+    let c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
+    //img?.ToCIImage().ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/test/\(c.redComponent)-\(c.greenComponent)-\(c.blueComponent)"))
     //print("Test: \(c.blueComponent)")
     return c
 }

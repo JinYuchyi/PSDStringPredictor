@@ -190,13 +190,13 @@ class PixelProcess{
         var colors: [NSColor] = []
         if (forRow == true){
             for w in 0 ..< img.width {
-                let tmp = colorAt(x: w, y: index, img: img, withAlpha: false)
+                let tmp = colorAt(x: w, y: index, img: img)
                 colors.append(tmp)
             }
         }
         else{
             for h in 0 ..< img.height {
-                let tmp = colorAt(x: index, y: h, img: img, withAlpha: false)
+                let tmp = colorAt(x: index, y: h, img: img)
                 colors.append(tmp)
             }
         }
@@ -209,14 +209,14 @@ class PixelProcess{
         if (forRow == true){
             //var index = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - index
             for w in min...max {
-                let tmp = colorAt(x: w, y: index, img: img, withAlpha: true)
+                let tmp = colorAt(x: w, y: index, img: img)
                 colors.append(tmp)
             }
         }
         else{
             for h in min...max {
                 //let hFix = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - h
-                let tmp = colorAt(x: index, y: h, img: img, withAlpha: true)
+                let tmp = colorAt(x: index, y: h, img: img)
                 colors.append(tmp)
             }
         }
@@ -254,7 +254,7 @@ class PixelProcess{
         }
     }
     
-    func colorAt(x: Int, y: Int, img: CGImage, withAlpha: Bool)->NSColor {
+    func colorAt(x: Int, y: Int, img: CGImage)->NSColor {
         
         let context = self.createBitmapContext(img: img)
         
@@ -265,7 +265,7 @@ class PixelProcess{
         guard let pixelBuffer = context.data else { return .white }
         let data = pixelBuffer.bindMemory(to: UInt8.self, capacity: context.width * context.height)
         
-        if withAlpha == true {
+        //if withAlpha == true {
             let offset = 4 * (y * context.width + x)
             
             let alpha: UInt8 = data[offset]
@@ -274,15 +274,15 @@ class PixelProcess{
             let blue: UInt8 = data[offset+3]
             
              color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
-        }else{
-            let offset = 3 * (y * context.width + x)
-            
-            let red: UInt8 = data[offset]
-            let green: UInt8 = data[offset+1]
-            let blue: UInt8 = data[offset+2]
-            
-            color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: 1)
-        }
+//        }else{
+//            let offset = 3 * (y * context.width + x)
+//
+//            let red: UInt8 = data[offset]
+//            let green: UInt8 = data[offset+1]
+//            let blue: UInt8 = data[offset+2]
+//
+//            color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: 1)
+        //}
         return color
     }
     
