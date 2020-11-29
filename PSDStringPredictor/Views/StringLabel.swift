@@ -95,7 +95,7 @@ struct StringLabel: View {
             
             Text(stringLabel.content)
 
-                .foregroundColor(Color(red: Double(stringLabel.color.components![0] * 255.0), green: Double(stringLabel.color.components![1] * 255.0), blue: Double(stringLabel.color.components![2] * 255.0)))
+                .foregroundColor(stringLabel.color.ToColor())
                 .font(.custom(stringLabel.CalcFontFullName(), size: stringLabel.fontSize))
                 .tracking(stringLabel.tracking)
                 //.font(.system(size: stringLabel.fontSize, weight: stringLabel.fontWeight))
