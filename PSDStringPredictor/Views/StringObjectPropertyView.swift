@@ -40,6 +40,8 @@ struct StringObjectPropertyView: View {
                     HStack{
                         let targetImg = DataStore.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObject.stringRect).ToNSImage()
                         Image(nsImage: targetImg ?? NSImage.init())
+                            .resizable()
+                            .scaledToFit()
                             .frame(width: 200)
                         Spacer()
                         Button(action: {StringSaveBtnPressed()}){
@@ -137,13 +139,13 @@ struct StringObjectPropertyView: View {
 
                                     Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
                                         .resizable()
-                                       .aspectRatio(contentMode: .fit)
+                                        .scaledToFit()
                                         .frame(height: 40)
                                         .border(Color.yellow, width: 1)
                                     }else if  stringObjectVM.selectedStringObject.charColorModeList[index] == 2{
                                         Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
                                             .resizable()
-                                           .aspectRatio(contentMode: .fit)
+                                            .scaledToFit()
                                             .frame(height: 40)
                                             .border(Color.blue, width: 1)
                                     }
@@ -183,6 +185,8 @@ struct StringObjectPropertyView: View {
             if result == .OK{
                 //let img = stringObjectVM.selectedStringObject.charImageList[index]
                 imageProcess.SaveCIIToPNG(CIImage: stringObjectVM.selectedStringObject.charImageList[index], filePath: panel.url!.path )
+                let bw = SetGrayScale(stringObjectVM.selectedStringObject.charImageList[index])
+                imageProcess.SaveCIIToPNG(CIImage: bw!, filePath: panel.url!.path + "_bw" )
                 //let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
                 //let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
                 //imageProcess.SaveCIIToPNG(CIImage: fixedImg, filePath: panel.url!.path+"_fixed" )
