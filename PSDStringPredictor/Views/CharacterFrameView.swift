@@ -38,12 +38,18 @@ struct CharacterFrameView: View {
         }
         .onTapGesture {
             self.imgProcess.FetchImage()
-            let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.rect.minX, PositionY: self.charFrame.rect.minY, Width: self.charFrame.rect.width, Height: self.charFrame.rect.height, MaskColor: CIColor.white)
+            var tmpImg: CIImage = CIImage.init()
+            if DataStore.colorMode == 1{
+                tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.rect.minX, PositionY: self.charFrame.rect.minY, Width: self.charFrame.rect.width, Height: self.charFrame.rect.height, MaskColor: CIColor.white)
+            }else if DataStore.colorMode == 2 {
+                tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.rect.minX, PositionY: self.charFrame.rect.minY, Width: self.charFrame.rect.width, Height: self.charFrame.rect.height, MaskColor: CIColor.gray)
+            }
+            
             self.imgProcess.SetTargetProcessedImage(tmpImg)
         }
-        .onHover{over in
-            self.overText = over
-        }
+//        .onHover{over in
+//            self.overText = over
+//        }
         
     }
 }

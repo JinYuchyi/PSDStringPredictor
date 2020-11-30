@@ -144,14 +144,7 @@ struct StringLabel: View {
             .frame(width: 30, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .trailing)
             .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY - 5 )
         }
-        
-        //.position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2)
-        
-        //        func CGPositionToSwiftPosition(From pos: [Int]) -> [Int] {
-        //            let newX = stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2
-        //            let newY = imageViewModel.GetTargetImageSize()[1] -  stringLabel.position[1] - stringLabel.height/2
-        //            return  [newX, newY]
-        //        }
+
         
         
     }

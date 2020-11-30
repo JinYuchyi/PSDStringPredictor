@@ -36,8 +36,19 @@ struct ContentView: View {
     
     
     fileprivate func LeftViewGroup() -> some View {
+        VStack{
+        Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
+            Text("Load Image")
+                .frame(minWidth: 250,  maxWidth: .infinity)
+        }
+        .frame( maxWidth: .infinity)
+        .padding()
+        
+        Divider()
+        
         psdPagesView()
         .frame(width: 300, alignment: .center)
+        }
     }
     
     fileprivate func MidViewGroup() -> some View {
@@ -69,14 +80,9 @@ struct ContentView: View {
     fileprivate func RightViewGroup() -> some View {
         return VStack{
             
-            Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
-                Text("Load Image")
-                    .frame(minWidth: 250,  maxWidth: .infinity)
-            }
-            .frame( maxWidth: .infinity)
-            .padding()
+
             
-            Divider()
+            //Divider()
             
             ImageProcessView(imageViewModel: imageViewModel)
                 .padding(.top, 20.0)

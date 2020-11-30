@@ -200,7 +200,7 @@ func ChangeExposure(_ image: CIImage, _ value: CGFloat = 0.5)-> CIImage?{
 }
 
 func SetConv(_ image: CIImage)-> CIImage?{
-    let weights:[CGFloat] = [0,-2,0,-2,9,-2,0,-2,0]
+    let weights:[CGFloat] = [0,-1,0,-1,4,-1,0,-1,0]
     let filter = CIFilter(name: "CIConvolution3X3")
     //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
     filter?.setValue(image, forKey: "inputImage")
@@ -245,6 +245,18 @@ func Minimun(_ image: CIImage) -> NSColor{
     //img?.ToCIImage().ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/test/\(c.redComponent)-\(c.greenComponent)-\(c.blueComponent)"))
     //print("Test: \(c.blueComponent)")
     return c
+}
+
+func NoiseReduction(_ image: CIImage) -> CIImage?{
+    //let pixelProcess = PixelProcess()
+
+    let filter = CIFilter(name: "CINoiseReduction")
+    filter?.setValue(0.3, forKey: "inputSharpness")
+    filter?.setValue(0.1, forKey: "inputNoiseLevel")
+    filter?.setValue(image, forKey: "inputImage")
+    let filteredImage = filter?.outputImage
+    
+    return filteredImage
 }
 
 //Default is 0.4

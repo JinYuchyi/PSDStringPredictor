@@ -13,3 +13,6 @@ PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcdebugger/Breakpoi
 PSDStringPredictor.xcodeproj/project.xcworkspace/xcuserdata/ipdesign.xcuserdatad/UserInterfaceState.xcuserstate
 PSDStringPredictor.xcodeproj/project.pbxproj
 .DS_Store
+PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcschemes/xcschememanagement.plist
+PSDStringPredictor/Resources/CharColorMode.mlmodel
+PSDStringPredictor/Resources/CharColorMode.swift

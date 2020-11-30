@@ -38,7 +38,7 @@ class PixelProcess{
         var stepL: Int = 6
         var stepR: Int = 6
         
-
+        
         func CheckEdgeT(){
             previousHasDifT = hasDifT
             print("stepT: \(stepT), previousHasDifT: \(previousHasDifT), hasDifT: \(hasDifT)")
@@ -67,7 +67,7 @@ class PixelProcess{
                     tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description))
                 }
                 CheckEdgeT()
-
+                
             }
         }
         
@@ -125,53 +125,53 @@ class PixelProcess{
         //            let hasDifR = HasDifferentColor(ColorArray: colorsRight, Threshhold: 0.1)
         //        }
         func IsOKT(){
-                if hasDifT == true  {
-                    x1 = x1 - 1
-                    CheckEdgeT()
-                }else{
-                    x1 = x1 + 1
-                    CheckEdgeT()
-                }
+            if hasDifT == true  {
+                x1 = x1 - 1
+                CheckEdgeT()
+            }else{
+                x1 = x1 + 1
+                CheckEdgeT()
+            }
             
         }
         
         func IsOKD(){
-                if hasDifD == true  {
-                    x2 = x2 + 1
-                    CheckEdgeD()
-                }else{
-                    x2 = x2 - 1
-                    CheckEdgeD()
-                }
+            if hasDifD == true  {
+                x2 = x2 + 1
+                CheckEdgeD()
+            }else{
+                x2 = x2 - 1
+                CheckEdgeD()
+            }
         }
         
         func IsOKL(){
-                if hasDifL == true  {
-                    y1 = y1 - 1
-                    CheckEdgeL()
-                }else{
-                    y1 = y1 + 1
-                    CheckEdgeL()
-                }
+            if hasDifL == true  {
+                y1 = y1 - 1
+                CheckEdgeL()
+            }else{
+                y1 = y1 + 1
+                CheckEdgeL()
+            }
             
         }
         
         func IsOKR(){
-                if hasDifR == true  {
-                    y2 = y2 + 1
-                    CheckEdgeR()
-                }else{
-                    y2 = y2 - 1
-                    CheckEdgeR()
-                }
+            if hasDifR == true  {
+                y2 = y2 + 1
+                CheckEdgeR()
+            }else{
+                y2 = y2 - 1
+                CheckEdgeR()
+            }
             
         }
         
         CheckEdgeT()
-//        CheckEdgeD()
-//        CheckEdgeL()
-//        CheckEdgeR()
-
+        //        CheckEdgeD()
+        //        CheckEdgeL()
+        //        CheckEdgeR()
+        
         
         //        if (finishT == true && finishD == true && finishL == true && finishR == true){
         //            //Return rect
@@ -179,9 +179,9 @@ class PixelProcess{
         //Return rect
         let resultRect = CGRect.init(x: x1, y: y1, width: x2-x1, height: y2-y1)
         
-//        print("Original rect: \(rect)")
-//        print("Fixed rect: \(resultRect)")
-//        print("\(stepT), \(stepD)")
+        //        print("Original rect: \(rect)")
+        //        print("Fixed rect: \(resultRect)")
+        //        print("\(stepT), \(stepD)")
         
         return resultRect
     }
@@ -240,15 +240,15 @@ class PixelProcess{
                 maxBrightness = c.ToGrayScale()
             }
         }
-
+        
         if (maxBrightness - minBrightness > threshold){
-//            print("True dif:")
-//            print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
+            //            print("True dif:")
+            //            print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
             return true
         }
         else{
             //print("False dif:")
-
+            
             //print("Max: \(maxBrightness), min:\(minBrightness),\(maxBrightness - minBrightness)")
             return false
         }
@@ -265,24 +265,14 @@ class PixelProcess{
         guard let pixelBuffer = context.data else { return .white }
         let data = pixelBuffer.bindMemory(to: UInt8.self, capacity: context.width * context.height)
         
-        //if withAlpha == true {
-            let offset = 4 * (y * context.width + x)
-            
-            let alpha: UInt8 = data[offset]
-            let red: UInt8 = data[offset+1]
-            let green: UInt8 = data[offset+2]
-            let blue: UInt8 = data[offset+3]
-            
-             color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
-//        }else{
-//            let offset = 3 * (y * context.width + x)
-//
-//            let red: UInt8 = data[offset]
-//            let green: UInt8 = data[offset+1]
-//            let blue: UInt8 = data[offset+2]
-//
-//            color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: 1)
-        //}
+        let offset = 4 * (y * context.width + x)
+        let alpha: UInt8 = data[offset]
+        let red: UInt8 = data[offset+1]
+        let green: UInt8 = data[offset+2]
+        let blue: UInt8 = data[offset+3]
+        
+        color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
+        
         return color
     }
     
@@ -321,8 +311,8 @@ class PixelProcess{
         
         return context!
     }
-
-
+    
+    
     
     
 }

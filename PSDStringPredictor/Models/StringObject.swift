@@ -26,25 +26,25 @@ struct StringObject : Identifiable, Equatable, Hashable{
     
     var hashValue: Int {
         return id.hashValue
-      }
+    }
     
     static func == (lhs: StringObject, rhs: StringObject) -> Bool {
         return
-        lhs.id == rhs.id &&
-        lhs.content == rhs.content &&
-        lhs.tracking == rhs.tracking &&
-        lhs.trackingPS == rhs.trackingPS &&
-        lhs.fontSize == rhs.fontSize &&
-        lhs.fontWeight == rhs.fontWeight &&
-        lhs.stringRect == rhs.stringRect &&
-        lhs.observation == rhs.observation &&
-        lhs.color == rhs.color &&
-        lhs.charArray == rhs.charArray &&
-        lhs.charRects == rhs.charRects &&
-        lhs.charSizeList == rhs.charSizeList &&
-        lhs.charImageList == rhs.charImageList &&
-        lhs.isPredictedList == rhs.isPredictedList &&
-        lhs.isForbidden == rhs.isForbidden
+            lhs.id == rhs.id &&
+            lhs.content == rhs.content &&
+            lhs.tracking == rhs.tracking &&
+            lhs.trackingPS == rhs.trackingPS &&
+            lhs.fontSize == rhs.fontSize &&
+            lhs.fontWeight == rhs.fontWeight &&
+            lhs.stringRect == rhs.stringRect &&
+            lhs.observation == rhs.observation &&
+            lhs.color == rhs.color &&
+            lhs.charArray == rhs.charArray &&
+            lhs.charRects == rhs.charRects &&
+            lhs.charSizeList == rhs.charSizeList &&
+            lhs.charImageList == rhs.charImageList &&
+            lhs.isPredictedList == rhs.isPredictedList &&
+            lhs.isForbidden == rhs.isForbidden
     }
     
     
@@ -67,7 +67,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var isForbidden: Bool
     var confidence: CGFloat
     var colorMode: Int
-
+    var charColorModeList: [Int]
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
@@ -92,6 +92,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         charFontWeightList = []
         confidence = 0
         isForbidden = false
+        charColorModeList = []
         self.trackingPS = 0
         isPredictedList = []
         self.fontWeight = PredictFontWeight()
@@ -119,6 +120,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = []
         self.trackingPS = 0
         isForbidden = false
+        charColorModeList = []
         self.fontWeight = PredictFontWeight()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
@@ -130,17 +132,18 @@ struct StringObject : Identifiable, Equatable, Hashable{
         colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     }
-
-    func CalcColorMode() -> Int{
+    
+    mutating func CalcColorMode() -> Int{
         var result = -1
-        var colorModeList = [Int]()
         for img in charImageList{
+            let bw = SetGrayScale(img)
+            
             let charColorMode = CharColorModeClassifier()
-            let result = charColorMode.Prediction(fromImage: img)
-            colorModeList.append(result)
+            let result = charColorMode.Prediction(fromImage: bw!)
+            charColorModeList.append(result)
         }
-        if colorModeList.count > 0 {
-            result = colorModeList.MajorityElement()
+        if charColorModeList.count > 0 {
+            result = charColorModeList.MajorityElement()
         }
         return result
     }
@@ -190,21 +193,17 @@ struct StringObject : Identifiable, Equatable, Hashable{
         var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
         var maxC: CGColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
         var minC: CGColor =  CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-        //print("Char Image List: \(charImageList.count)")
         if charImageList.count > 0{
             if colorMode == 1{
-                let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
-                //let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: stringRect)
-                
-                //strImg?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/Test/\(content)\(strImg?.extent.width)-\(stringRect.width)"))
+                var strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                strImg = NoiseReduction(strImg!)
                 result = Minimun(strImg!).cgColor
-                print("result min:\(Minimun(strImg!).description),for \(content)")
-
+                
             }
             if colorMode == 2{
-                let strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) - 3, height: stringRect.height.rounded(.towardZero)))
+                var strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                strImg = NoiseReduction(strImg!)
                 result = Maximum(strImg!).cgColor
-                //print("result max:\(Maximum(strImg!).description),for \(content)")
             }
         }
         return result
@@ -285,7 +284,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 hasLongTail = true
             }
         }
-
+        
         var descent: CGFloat = 0
         if hasLongTail == true{
             let fontName = CalcFontFullName()
@@ -305,11 +304,9 @@ struct StringObject : Identifiable, Equatable, Hashable{
         
         var keyvalues: [String: AnyObject] = [:]
         keyvalues["char"] = char as AnyObject
-        //keyvalues["fontSize"] = fontSize as AnyObject
         keyvalues["width"] = width as AnyObject
         keyvalues["height"] = height as AnyObject
         keyvalues["fontWeight"] = fontWeight as AnyObject
-        //keyvalues["fontWeight"] = fontWeight as AnyObject
         let objList = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
         
         if (objList.count == 0){
@@ -339,7 +336,6 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 else if fontWeight == .semibold{
                     _fontWeight = "semibold"
                 }
-                //print("  \(charRects[index].width)")
                 var singleChar = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), _fontWeight)
                 var tempweight = singleChar.0
                 if (tempweight != 0){
@@ -360,12 +356,12 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
         var size = FindBestSizeFromArray(FromArray: weightArray)
-//        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize))
-//        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize)) //Fetch nearest item from standard table
-//        return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave, predictList)
+        //        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize))
+        //        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize)) //Fetch nearest item from standard table
+        //        return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave, predictList)
         return (size, weightArrayForSave, predictList)
     }
-
+    
     private func FindBestSizeFromArray(FromArray sizeArray: [Int16]) -> Int16{
         var sizeDict: [Int16: Int16] = [:]
         for w in sizeArray{
@@ -380,11 +376,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
         let sortedValues = sizeDict.values.sorted(by: >)
         let filtered = sizeDict.filter { $0.1 ==  sortedValues[0] }
-//        var result: Float = 0.0
-//        for (key, value) in filtered{
-//            result = result + Float(key)
-//        }
-//        result = result / Float(filtered.count)
+        
         var res: Int16 = 0
         for item in sizeDict.keys{
             if sizeDict[item] == sortedValues[0]{
@@ -394,7 +386,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         return res
         
     }
-
+    
     func PredictStringObjects(FromCIImage img: CIImage) -> [StringObject]{
         //data.targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
         
@@ -412,7 +404,8 @@ struct StringObject : Identifiable, Equatable, Hashable{
     mutating func PredictFontWeight()->Font.Weight{
         charFontWeightList.removeAll()
         for img in charImageList{
-            let temp = FontWeightPredict().Prediction(ciImage: img)
+            let bw = SetGrayScale(img)
+            let temp = FontWeightPredict().Prediction(ciImage: bw!)
             if (temp == "semibold"){
                 charFontWeightList.append(Font.Weight.semibold)
             }else if (temp == "regular"){
