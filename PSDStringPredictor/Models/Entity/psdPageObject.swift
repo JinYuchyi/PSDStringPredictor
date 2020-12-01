@@ -14,4 +14,8 @@ struct psdPage: Identifiable {
     var name: String = "PSD File Name"
     var image: CIImage = CIImage.init()
     var isCommitted: Bool = false
+    
+//     func ToggleCommit(){
+//        self.isCommitted =  !self.isCommitted
+//    }
 }

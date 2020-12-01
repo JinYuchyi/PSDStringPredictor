@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct psdPageView: View {
-    var psdPageObjectList: psdPage
+    var psdPageObject: psdPage
+    @State var isCommitted = false
     //let tmpObj = psdPage(id: UUID(), name: "xxxx.psd", image: CIImage.init(), isCommitted: false)
     var body: some View {
         //GeometryReader { geometry in
@@ -18,15 +19,26 @@ struct psdPageView: View {
                     Rectangle()
                         .frame(width: 100, height: 150, alignment: .center)
                         .foregroundColor(Color.gray)
-                    Text(psdPageObjectList.name)
+                    Text(psdPageObject.name)
                         .foregroundColor(Color.gray)
                 }
+                Text("􀁢")
+                    .font(.system(size: 30))
+                    .frame(width: 300, alignment: .topTrailing)
+                    .offset(x: -20, y: 0)
+                    .foregroundColor(self.isCommitted == true ? .green : .gray)
+                    .onTapGesture {
+                        isCommitted = !isCommitted
+                    }
 //                Text("􀁣")
 //                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
             }
             
         
     }
+    
+   
+    
 }
 
 //struct psdPageView_Previews: PreviewProvider {

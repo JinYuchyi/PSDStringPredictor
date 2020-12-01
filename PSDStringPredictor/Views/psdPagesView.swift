@@ -18,13 +18,16 @@ struct psdPagesView: View {
             ForEach (stringObjectVM.psdPageObjectList) { item in
                 VStack{
                     ZStack{
-                        psdPageView(psdPageObjectList: item)
+                        psdPageView(psdPageObject: item)
                         .frame(width: 300, alignment: .center)
-                        Text("􀁢")
-                            .font(.system(size: 30))
-                            .frame(width: 300, alignment: .topTrailing)
-                            .offset(x: -20, y: 0)
-                            .foregroundColor(item.isCommitted == true ? .green : .gray)
+//                        Text("􀁢")
+//                            .font(.system(size: 30))
+//                            .frame(width: 300, alignment: .topTrailing)
+//                            .offset(x: -20, y: 0)
+//                            .foregroundColor(item.isCommitted == true ? .green : .gray)
+//                            .onTapGesture {
+//                                item.ToggleCommit()
+//                            }
                     }
                     Divider()
                 }

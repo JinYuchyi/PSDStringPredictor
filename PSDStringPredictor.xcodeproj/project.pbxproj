@@ -27,6 +27,7 @@
 		3F440FFD250C72AD00EDAF3F /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F440FFC250C72AD00EDAF3F /* default_image.png */; };
 		3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4445C925392FC300BB2745 /* OSStandardManager.swift */; };
 		3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4471BA25735459003AE7B6 /* ColorExtension.swift */; };
+		3F4471BF2575D76E003AE7B6 /* PSDObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4471BE2575D76E003AE7B6 /* PSDObjectViewModel.swift */; };
 		3F44C63D2570D60400E438CA /* CharColorMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C63C2570D60400E438CA /* CharColorMode.swift */; };
 		3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */; };
 		3F44C6452570EB0C00E438CA /* CharColorMode.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C6442570EB0C00E438CA /* CharColorMode.mlmodel */; };
@@ -125,6 +126,7 @@
 		3F440FFC250C72AD00EDAF3F /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_image.png; path = ../../../../../Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/default_image.png; sourceTree = DEVELOPER_DIR; };
 		3F4445C925392FC300BB2745 /* OSStandardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStandardManager.swift; sourceTree = "<group>"; };
 		3F4471BA25735459003AE7B6 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		3F4471BE2575D76E003AE7B6 /* PSDObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSDObjectViewModel.swift; sourceTree = "<group>"; };
 		3F44C63C2570D60400E438CA /* CharColorMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharColorMode.swift; sourceTree = "<group>"; };
 		3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharColorModeClassifier.swift; sourceTree = "<group>"; };
 		3F44C6442570EB0C00E438CA /* CharColorMode.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = CharColorMode.mlmodel; sourceTree = "<group>"; };
@@ -173,7 +175,7 @@
 		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
-		3FA5047C2574CADA00F4A77A /* fontSize.csv */ = {isa = PBXFileReference; lastKnownFileType = file; name = fontSize.csv; path = PSDStringPredictor/Resources/fontSize.csv; sourceTree = SOURCE_ROOT; };
+		3FA5047C2574CADA00F4A77A /* fontSize.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = fontSize.csv; path = PSDStringPredictor/Resources/fontSize.csv; sourceTree = SOURCE_ROOT; };
 		3FAAB485251341A600CB89B1 /* CharacterFrameListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFrameListView.swift; sourceTree = "<group>"; };
 		3FAAB4962514BD6600CB89B1 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
 		3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				3F4CB5A4250A23E200E41082 /* ImageProcess.swift */,
 				3F50A7AF253DC5D900C10810 /* ImagePropertyViewModel.swift */,
 				3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */,
+				3F4471BE2575D76E003AE7B6 /* PSDObjectViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				3F3EFFA8253596140047E4E5 /* CharDataManager.swift in Sources */,
 				3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */,
 				3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */,
+				3F4471BF2575D76E003AE7B6 /* PSDObjectViewModel.swift in Sources */,
 				3F44C6482570F42500E438CA /* CGColorExtension.swift in Sources */,
 				3FAAB486251341A600CB89B1 /* CharacterFrameListView.swift in Sources */,
 				3F44C63D2570D60400E438CA /* CharColorMode.swift in Sources */,

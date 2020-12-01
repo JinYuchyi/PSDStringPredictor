@@ -39,9 +39,9 @@ struct ContentView: View {
         VStack{
         Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
             Text("Load Image")
-                .frame(minWidth: 250,  maxWidth: .infinity)
+                //.frame(minWidth: 250,  maxWidth: .infinity)
         }
-        .frame( maxWidth: .infinity)
+        .frame(width: 300, alignment: .center)
         .padding()
         
         Divider()
@@ -101,9 +101,9 @@ struct ContentView: View {
             
             ControlPanel(showImage: $showImage)
             
-            Button(action: {self.Debug()}){
-                Text("Debug")
-            }
+//            Button(action: {self.Debug()}){
+//                Text("Debug")
+//            }
 
         }
         

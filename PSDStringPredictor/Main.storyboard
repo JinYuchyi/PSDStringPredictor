@@ -11,7 +11,7 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="StringGenerator" id="1Xt-HY-uBw">
+                            <menuItem title="StringGenerator" state="mixed" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="StringGenerator" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>

@@ -1,11 +1,11 @@
         var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSample.png"
-        var contentList = ["9:41", "Beaches", "lu Photos", "See All", "Moments", "See All", "Jul 22, 2019", "25", "Lisboa", "11", "Photos", "For You", "Albums", "Search", "ancel", "Essaouira", "olc"]
-        var colorList = [[0, 0, 0], [142, 142, 147], [0, 0, 0], [0, 122, 247], [0, 0, 0], [0, 122, 247], [152, 152, 159], [152, 152, 159], [0, 0, 0], [152, 152, 159], [138, 134, 133], [147, 147, 147], [148, 148, 148], [0, 122, 245], [0, 122, 251], [0, 0, 0], [0, 122, 147]]
-        var fontSizeList = [48, 47, 69, 50, 68, 51, 38, 50, 52, 47, 30, 30, 29, 30, 47, 49, 91]
-        var fontNameList= ["SFProText-Semibold", "SFProText-Semibold", "SFProDisplay-Semibold", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Semibold"]
-        var positionList = [[96, 86], [173, 230], [128, 430], [910, 429], [63, 1737], [910, 1737], [278, 1947], [929, 1916], [280, 2126], [943, 2154], [91, 2323], [369, 2323], [648, 2323], [933, 2323], [945, 227], [280, 1886], [801, 256]]
-        var trackingList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        var offsetList = []
+        var contentList = ["9:41", "Beaches", "Cancel", "See All", "Moments", "See All", "Jul 22, 2019", "25 >", "Lisboa", "11 >", "Photos", "For You", "Albums", "Search", "/olu Photos", "Essaouira"]
+        var colorList = [[0, 0, 0], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [0, 80, 246], [123, 123, 134], [255, 255, 255], [255, 255, 255], [126, 126, 136], [237, 236, 235], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255]]
+        var fontSizeList = [46, 49, 49, 51, 67, 51, 39, 50, 51, 50, 29, 29, 29, 30, 67, 51]
+        var fontNameList= ["SFProText-Semibold", "SFProText-Semibold", "SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProText-Semibold", "SFProText-Semibold", "SFProText-Semibold", "SFProDisplay-Semibold", "SFProText-Regular"]
+        var positionList = [[97, 85], [174, 229], [912, 226], [911, 428], [64, 1736], [911, 1736], [279, 1945], [930, 1915], [281, 2125], [944, 2153], [92, 2322], [370, 2322], [649, 2322], [934, 2322], [75, 429], [281, 1885]]
+        var trackingList = [-16, -20, -20, -26, -4, -26, -6, -26, -26, -26, 12, 12, 12, 12, -4, -26]
+        var offsetList = [[3, 6], [4, 7], [3, 7], [2, 7], [4, 10], [2, 7], [1, 5], [3, 6], [4, 6], [3, 5], [2, 4], [2, 4], [1, 4], [1, 4], [4, 6]]
 
         //PS Preferance Setting
 
@@ -37,7 +37,7 @@
             var artLayerRef = layerSetRef.artLayers.add()
             artLayerRef.kind = LayerKind.TEXT
             var textItemRef = artLayerRef.textItem
-            textItemRef.name = ["0.941", "1.Beaches", "2.luPhotos", "3.SeeAll", "4.Moments", "5.SeeAll", "6.Jul222019", "7.25", "8.Lisboa", "9.11", "10.Photos", "11.ForYou", "12.Albums", "13.Search", "14.ancel", "15.Essaouira", "16.olc"][i]
+            textItemRef.name = ["0.941", "1.Beaches", "2.Cancel", "3.SeeAll", "4.Moments", "5.SeeAll", "6.Jul222019", "7.25", "8.Lisboa", "9.11", "10.Photos", "11.ForYou", "12.Albums", "13.Search", "14.oluPhotos", "15.Essaouira"][i]
             textItemRef.contents = contentList[i]
             textColor = new SolidColor
             textColor.rgb.red = colorList[i][0]
