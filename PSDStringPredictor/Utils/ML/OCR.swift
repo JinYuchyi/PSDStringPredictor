@@ -133,23 +133,24 @@ class OCR: ObservableObject{
         var ignoreList: [StringObject] = []
         var index = 0
         
-        print("Original Count: \(objList.count)")
-        print("Fixed Count: \(stringObjectViewModel.stringObjectFixedDict.count)")
-        print("Ignored Count: \(stringObjectViewModel.stringObjectIgnoreDict.count)")
+        stringObjectViewModel.fixedStringObjectList.removeAll()
+        stringObjectViewModel.ignoreStringObjectList.removeAll()
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             if value == true {
                 ignoreList.append(key)
+                stringObjectViewModel.fixedStringObjectList.append(key)
             }
         }
         
         for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
             if value == true {
                 ignoreList.append(key)
+                stringObjectViewModel.ignoreStringObjectList.append(key)
             }
         }
         
-        print("Ignore List: \(ignoreList.count)")
+        //print("Ignore List: \(ignoreList.count)")
 
         //TODO: Update list error.
         for obj in objList{
@@ -159,17 +160,17 @@ class OCR: ObservableObject{
                     //print("\(key.content) is fixed")
                     //Compare ignore obj with new obj, if rect overlap, remove from newlist
                     if ignoreObj.stringRect.IsSame(target: obj.stringRect){
-                        print("Same: \(ignoreObj.content)")
-                        newList.remove(at: index)
+                        //print("Same: \(ignoreObj.content)")
+                        newList.remove(at: newList.firstIndex(of: obj)!)
                     }
-                    break
+                    //continue
                 //}
             }
             index += 1
         }
         
         stringObjectViewModel.updateStringObjectList = newList
-        print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
+        //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             newList.append(key)

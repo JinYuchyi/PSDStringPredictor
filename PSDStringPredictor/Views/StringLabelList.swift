@@ -14,11 +14,18 @@ struct LabelsOnImage: View {
     
     
     var body: some View {
-        
-        ForEach(stringObjectVM.updateStringObjectList, id:\.id){ item in
+        Group{
+            ForEach(stringObjectVM.updateStringObjectList, id:\.id){ item in
+                StringLabel(stringLabel: item, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
+            }
             
-            StringLabel(stringLabel: item)
-
+            ForEach(stringObjectVM.ignoreStringObjectList, id:\.id){ item in
+                StringLabel(stringLabel: item, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
+            }
+            
+            ForEach(stringObjectVM.fixedStringObjectList, id:\.id){ item in
+                StringLabel(stringLabel: item, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
+            }
         }
     }
     

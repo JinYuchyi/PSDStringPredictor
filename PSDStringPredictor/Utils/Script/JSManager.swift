@@ -51,6 +51,7 @@ class JSManager{
                 var positionList = \(positionList)
                 var trackingList = \(trackingList)
                 var offsetList = \(offsetList)
+                var names = \(names)
 
                 //PS Preferance Setting
 
@@ -77,12 +78,20 @@ class JSManager{
                 var layerSetRef = app.activeDocument.layerSets.add()
                 layerSetRef.name = "StringLayerGroup"
 
+
                 //Add Text layer
-                for (var i = 0; i < contentList.length; i++){
+                const num = contentList.length
+
+                //for (var i = 0; i < num; i++){
+                    //var artLayerRef = layerSetRef.artLayers.add()
+                    //artLayerRef.kind = LayerKind.TEXT
+                    //var textItemRef = artLayerRef.textItem
+                //}
+
+                for (var i = 0; i < num; i++){
                     var artLayerRef = layerSetRef.artLayers.add()
                     artLayerRef.kind = LayerKind.TEXT
                     var textItemRef = artLayerRef.textItem
-                    textItemRef.name = \(names)[i]
                     textItemRef.contents = contentList[i]
                     textColor = new SolidColor
                     textColor.rgb.red = colorList[i][0]
@@ -91,7 +100,6 @@ class JSManager{
                     textItemRef.color = textColor
                     textItemRef.font = fontNameList[i]
                     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
-                    //textItemRef.position = Array(positionList[i][0] - offsetList[i][0], positionList[i][1] - offsetList[i][1])
                     textItemRef.position = Array(positionList[i][0] - offsetList[i][0], positionList[i][1]  - offsetList[i][1] / 4)
                     textItemRef.tracking = trackingList[i]
                 }

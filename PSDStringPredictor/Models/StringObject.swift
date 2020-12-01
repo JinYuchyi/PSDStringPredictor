@@ -68,6 +68,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var confidence: CGFloat
     var colorMode: Int
     var charColorModeList: [Int]
+    
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()

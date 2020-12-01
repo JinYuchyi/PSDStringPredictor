@@ -38,6 +38,8 @@ class StringObjectViewModel: ObservableObject{
     @Published var stringObjectIgnoreDict: [StringObject: Bool] = [:]
     @Published var stringObjectFixedDict: [StringObject: Bool] = [:]
     @Published var updateStringObjectList: [StringObject] = []
+    @Published var ignoreStringObjectList: [StringObject] = []
+    @Published var fixedStringObjectList: [StringObject] = []
     
     @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
     
@@ -106,7 +108,7 @@ class StringObjectViewModel: ObservableObject{
             //Calc the offset
             var keyvalues: [String: AnyObject] = [:]
             let char = (obj.content.first)
-            if (char!.isNumber || char!.isLetter){
+            //if (char!.isNumber || char!.isLetter){
                 keyvalues["char"] = String(char!) as AnyObject
                 keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
                 let items = CharBoundsDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
@@ -114,8 +116,10 @@ class StringObjectViewModel: ObservableObject{
                    let offset = [items[0].x1, Int16((Float(items[0].y2 - items[0].y1)/10).rounded())]
                     //let offset = [items[0].x1, ((items[0].y2 - items[0].y1))]
                     offsetList.append(offset)
+                }else{
+                    offsetList.append([0,0])
                 }
-            }
+            //}
             
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((DataStore.targetNSImage.size.height - obj.stringRect.minY).rounded())])

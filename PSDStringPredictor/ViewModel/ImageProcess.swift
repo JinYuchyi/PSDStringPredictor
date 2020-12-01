@@ -12,12 +12,14 @@ import Vision
 import SwiftUI
 
 class ImageProcess: ObservableObject{
+   
 //    @Published var targetImage: CIImage  = CIImage.init()
 //    @Published var targetImageName: String = "default_image"
 //    @Published var targetImageSize: [Int64] = []
     //@EnvironmentObject var data: DataStore
     let colorModeClassifier = ColorModeClassifier()
-    var stringObject: StringObject = StringObject()
+    var strObjVM = stringObjectViewModel
+    //var stringObject: StringObject = StringObject()
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetNSImage = NSImage()
     @Published var targetCIImage = CIImage()
@@ -115,8 +117,11 @@ class ImageProcess: ObservableObject{
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
             if result == .OK{
-                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd") )
+                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
                 {
+                    //Reset stringobject list
+                    self.strObjVM.stringObjectListData.removeAll()
+                    DataStore.charFrameList.removeAll()
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.SetTargetNSImage(tmp)
                     self.showImage = true

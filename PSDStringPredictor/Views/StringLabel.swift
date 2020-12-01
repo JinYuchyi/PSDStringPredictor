@@ -17,16 +17,16 @@ struct StringLabel: View {
     //    var tracking: CGFloat
     //    var content: String
     //    var color: Color
-    
+    //var myState: Int // 1 is fixed, 2 is ignored, 0 is none
+    var stringLabel: StringObject
+    @State var fixed: Bool
+    @State var ignored: Bool
+    @State var fixedEnabled: Bool
+    @State var ignoredEnabled: Bool
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @State var width: CGFloat = 0
-    @State var fixed: Bool = false
-    @State var ignored: Bool = false
-    @State var fixedDisabled: Bool = false
-    @State var ignoredDisabled: Bool = false
-    
-    var stringLabel: StringObject
+
     
     func makeView(_ geometry: GeometryProxy) -> some View {
         //print(geometry.size.width, geometry.size.height)
@@ -43,16 +43,23 @@ struct StringLabel: View {
     func FixedBtnTapped(){
         fixed = !fixed
         stringObjectVM.stringObjectFixedDict[stringLabel] = fixed
-        ignoredDisabled = fixed
+//        if ignored == true {
+//            ignored = false
+//        }
+        ignoredEnabled = !fixed
         //print("Fixed List: \(stringObjectVM.stringObjectFixedDict)")
     }
     
     func IgnoreBtnTapped(){
         ignored = !ignored
         stringObjectVM.stringObjectIgnoreDict[stringLabel] = ignored
-        fixedDisabled = ignored
-        
+//        if fixed == true {
+//            fixed = false
+//        }
+        fixedEnabled = !ignored
     }
+    
+
     
     var body: some View {
         
@@ -71,7 +78,7 @@ struct StringLabel: View {
             }
             
             Rectangle()
-                .stroke(stringObjectVM.selectedStringObject.id == stringLabel.id ? Color.green : Color.red, lineWidth: stringObjectVM.selectedStringObject.id == stringLabel.id ? 4 : 1)
+                .stroke(stringObjectVM.selectedStringObject.id == stringLabel.id ? Color.green.opacity(0.6) : Color.red, lineWidth: stringObjectVM.selectedStringObject.id == stringLabel.id ? 3 : 1)
                 .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
             
@@ -93,7 +100,7 @@ struct StringLabel: View {
                 .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(-4)
 
-                //Button for lock
+                //Button for fix
                 Button(action: {self.FixedBtnTapped()}){
                     CustomImage( name: fixed ? "tick-active" : "tick-round")
                         //.frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -102,7 +109,7 @@ struct StringLabel: View {
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(-4)
-                .IsHidden(condition: !fixedDisabled)
+                .IsHidden(condition: fixedEnabled)
                 //.position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
                 
                 //Button for delete
@@ -114,7 +121,7 @@ struct StringLabel: View {
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(-4)
-                .IsHidden(condition: !ignoredDisabled)
+                .IsHidden(condition: ignoredEnabled)
                 //.position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
             }
             .frame(width: 30, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .trailing)
