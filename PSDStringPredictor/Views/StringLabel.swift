@@ -20,10 +20,7 @@ struct StringLabel: View {
     
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
-    //    @Binding var showPredictString: Bool
-    //    @Binding var showDebugOverlay: Bool
     @State var width: CGFloat = 0
-    //@State var detailed: Bool = false
     @State var fixed: Bool = false
     @State var ignored: Bool = false
     @State var fixedDisabled: Bool = false
@@ -41,8 +38,6 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
-        //print(stringLabel.color)
-        //stringLabel.PredictTracking()
     }
     
     func FixedBtnTapped(){
@@ -56,32 +51,13 @@ struct StringLabel: View {
         ignored = !ignored
         stringObjectVM.stringObjectIgnoreDict[stringLabel] = ignored
         fixedDisabled = ignored
-//        if ignored == true {
-//            if fixed == true{
-//                fixed = false
-//                stringObjectVM.stringObjectFixedDict[stringLabel.id] = false
-//            }
-//        }
-        //Remove
-//        let index = stringObjectVM.stringObjectListData.firstIndex(where: {$0.id == stringLabel.id} )
-//        if index != nil {
-//            //In case it is the selected object, we have to make the selected object empty first.
-//            if stringObjectVM.selectedStringObject.id == stringLabel.id{
-//                stringObjectVM.selectedStringObject = StringObject.init()
-//            }
-//            stringObjectVM.stringObjectListData.remove(at: index!)
-//        }
-        //print("Ignore List: \(stringObjectVM.stringObjectIgnoreDict)")
         
     }
     
     var body: some View {
         
         ZStack {
-//            Rectangle()
-//                .fill(Color.red.opacity(1))
-//                .frame(width: 4, height: 4)
-//                .position(x: stringLabel.stringRect.origin.x , y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y )
+
             if stringLabel.colorMode == 1{
                 Rectangle()
                     .fill( Color.white.opacity(0.3))
@@ -144,38 +120,8 @@ struct StringLabel: View {
             .frame(width: 30, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .trailing)
             .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY - 5 )
         }
-
-        
-        
     }
 }
-//
-//func SetPosition() -> [CGFloat] {
-//    //let x = Int.random(in: 0..<100)
-//    //let y = Int.random(in: 0..<100)
-//    return [200, 200]
-//}
-//
-//func SetHeight() -> CGFloat {
-//    return 20
-//}
-//
-//func SetWidth() -> CGFloat {
-//    return 20
-//}
-//
-//func SetFontSize() -> CGFloat {
-//    return 50
-//}
-//
-//func SetTracking() -> CGFloat {
-//    return 20
-//}
-//
-//func SetContent() -> String{
-//    return "Default " +  SetPosition()[0].description  + ", " +  SetPosition()[1].description
-//}
-
 
 struct StringLabel_Previews: PreviewProvider {
     static var previews: some View {

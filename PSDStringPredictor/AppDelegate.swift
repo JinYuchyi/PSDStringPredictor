@@ -33,11 +33,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             styleMask: [.titled, .closable, .miniaturizable],
             backing: .buffered, defer: false)
         window.center()
-        window.setFrameAutosaveName("Main Window")
+        window.setFrameAutosaveName("StringGeneratorMain")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
+        window.title = "StringGenerator"
         
+        //Prepare the config settinh
+        PreSettingConfig()
         
+    }
+    
+    func PreSettingConfig(){
+        stringObjectVM.frameOverlay = false
+        stringObjectVM.stringOverlay = true
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

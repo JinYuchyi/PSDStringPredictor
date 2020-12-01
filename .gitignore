@@ -16,3 +16,4 @@ PSDStringPredictor.xcodeproj/project.pbxproj
 PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcschemes/xcschememanagement.plist
 PSDStringPredictor/Resources/CharColorMode.mlmodel
 PSDStringPredictor/Resources/CharColorMode.swift
+.DS_Store

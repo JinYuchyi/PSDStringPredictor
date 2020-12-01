@@ -12,25 +12,6 @@ import Vision
 
 class OCR: ObservableObject{
     
-    //let imageProcess = ImageProcess()
-    
-//    func GetObservations(fromImage image: CIImage, withRecognitionLevel recognitionLevel: VNRequestTextRecognitionLevel, usesLanguageCorrection: Bool)->[VNRecognizedTextObservation]{
-//        let requestHandler = VNImageRequestHandler(ciImage: image, options: [:])
-//        let TextRecognitionRequest = VNRecognizeTextRequest()
-//        TextRecognitionRequest.recognitionLevel = recognitionLevel
-//        TextRecognitionRequest.usesLanguageCorrection = true
-//        TextRecognitionRequest.recognitionLanguages = ["en_US"]
-//        //TextRecognitionRequest.customWords = ["Photos"]
-//        //Send request to request handler
-//        do {
-//            try requestHandler.perform([TextRecognitionRequest])
-//        } catch {
-//            print(error)
-//        }
-//        guard let results = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-//        return results
-//    }
-    
     func GetRectsFromObservations(_ observations : [VNRecognizedTextObservation], _ width : Int, _ height : Int)->[CGRect]{
         var rects : [CGRect] = []
         for observation in observations{
@@ -141,14 +122,7 @@ class OCR: ObservableObject{
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
         }
-        
-        //Add back the fixed
-//        for (key, value) in stringObjectViewModel.stringObjectFixedDict {
-//            if value == true{
-//                let index = stringObjectViewModel.stringObjectListData.firstIndex(where: {$0.id == key} )!
-//                strobjs.append(stringObjectViewModel.stringObjectListData[index])
-//            }
-//        }
+
         strobjs = FiltStringObjects(originalList: strobjs)
         
         return strobjs
@@ -159,8 +133,9 @@ class OCR: ObservableObject{
         var ignoreList: [StringObject] = []
         var index = 0
         
-        //ignoreList.append(contentsOf: stringObjectViewModel.stringObjectFixedDict.keys)
-        //ignoreList.append(contentsOf: stringObjectViewModel.stringObjectIgnoreDict.keys)
+        print("Original Count: \(objList.count)")
+        print("Fixed Count: \(stringObjectViewModel.stringObjectFixedDict.count)")
+        print("Ignored Count: \(stringObjectViewModel.stringObjectIgnoreDict.count)")
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             if value == true {
@@ -173,7 +148,10 @@ class OCR: ObservableObject{
                 ignoreList.append(key)
             }
         }
+        
+        print("Ignore List: \(ignoreList.count)")
 
+        //TODO: Update list error.
         for obj in objList{
             //Find the ignore object
             for ignoreObj in ignoreList{
@@ -181,7 +159,7 @@ class OCR: ObservableObject{
                     //print("\(key.content) is fixed")
                     //Compare ignore obj with new obj, if rect overlap, remove from newlist
                     if ignoreObj.stringRect.IsSame(target: obj.stringRect){
-                        //print("Same: \(key.content)")
+                        print("Same: \(ignoreObj.content)")
                         newList.remove(at: index)
                     }
                     break
@@ -190,8 +168,8 @@ class OCR: ObservableObject{
             index += 1
         }
         
-        //var updateList = newList
-        
+        stringObjectViewModel.updateStringObjectList = newList
+        print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             newList.append(key)

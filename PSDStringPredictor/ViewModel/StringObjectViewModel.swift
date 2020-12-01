@@ -37,6 +37,7 @@ class StringObjectViewModel: ObservableObject{
 
     @Published var stringObjectIgnoreDict: [StringObject: Bool] = [:]
     @Published var stringObjectFixedDict: [StringObject: Bool] = [:]
+    @Published var updateStringObjectList: [StringObject] = []
     
     @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
     
@@ -52,6 +53,8 @@ class StringObjectViewModel: ObservableObject{
         FetchCharFrameListData()
         FetchCharFrameListRects()
     }
+    
+
     
     func CreatePSD(){
         UpdatePSD()
