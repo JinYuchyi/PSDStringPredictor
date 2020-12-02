@@ -15,7 +15,7 @@ This tool aiming to help designers recreating Photoshop string layers from plain
   - [x] Select string highlight will cover string bug.
   - [x] Open image, cleanup the former string objects.
   - [ ] Test in projects.
-- [x] v1.0
+- [x] v0.9
   - [ ] Drag mouse to adjust tracking and font size.
   - [ ] Add Mask layer, with same color of orignal background.
   - [ ] Batch process function.
