@@ -19,3 +19,4 @@ This tool aiming to help designers recreating Photoshop string layers from plain
   - [ ] Drag mouse to adjust tracking and font size.
   - [ ] Add Mask layer, with same color of orignal background.
   - [ ] Batch process function.
+  - [ ] Adjust data in UI.
