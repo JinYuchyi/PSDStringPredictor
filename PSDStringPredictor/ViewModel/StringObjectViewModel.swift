@@ -56,7 +56,22 @@ class StringObjectViewModel: ObservableObject{
         FetchCharFrameListRects()
     }
     
-
+    func CleanAll(){
+        stringObjectListData = []
+        charFrameListData = []
+        charFrameListRects = []
+        selectedStringObject = StringObject.init()
+        selectedCharImageListObjectList = [CharImageThumbnailObject]()
+        stringObjectIgnoreDict = [:]
+        stringObjectFixedDict = [:]
+        updateStringObjectList = []
+        ignoreStringObjectList = []
+        fixedStringObjectList = []
+        stringObjectOutputList = []
+        stringOverlay = true
+        frameOverlay = true
+        
+    }
     
     func CreatePSD(){
         UpdatePSD()

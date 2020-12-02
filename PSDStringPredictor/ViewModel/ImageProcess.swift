@@ -120,8 +120,8 @@ class ImageProcess: ObservableObject{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
                 {
                     //Reset stringobject list
-                    self.strObjVM.stringObjectListData.removeAll()
-                    DataStore.charFrameList.removeAll()
+                    self.strObjVM.CleanAll()
+                    
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.SetTargetNSImage(tmp)
                     self.showImage = true
