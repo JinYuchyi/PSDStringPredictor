@@ -24,11 +24,9 @@ struct CharacterFrameView: View {
                     Rectangle().stroke(Color.pink, lineWidth: 1)
                 )
                 .frame(width: charFrame.rect.width, height: charFrame.rect.height)
-                //.position(x: charFrame.rect.midX, y: charFrame.rect.midY)
-            Text(charFrame.char)
-                .font(.custom("SF Pro Text", size: 18))
-                .foregroundColor(Color.pink.opacity(0.5))
-                //.position(x: charFrame.rect.midX, y: charFrame.rect.midY)
+//            Text(charFrame.char)
+//                .font(.custom("SF Pro Text", size: 18))
+//                .foregroundColor(Color.pink.opacity(0.5))
             //Hover Window
             if(overText == true){
                 HoverOnCharView(width: charFrame.rect.width, height: charFrame.rect.height, predictSize: String(charFrame.predictedSize), isVisible: true, positionX: charFrame.rect.midX, positionY: imgProcess.GetTargetImageSize()[1] - (self.charFrame.rect.minY ))

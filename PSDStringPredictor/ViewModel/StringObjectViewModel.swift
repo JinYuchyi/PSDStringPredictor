@@ -72,7 +72,6 @@ class StringObjectViewModel: ObservableObject{
         stringObjectOutputList = []
         stringOverlay = true
         frameOverlay = true
-        
     }
     
 

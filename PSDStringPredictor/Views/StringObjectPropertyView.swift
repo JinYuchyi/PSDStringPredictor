@@ -24,6 +24,22 @@ struct StringObjectPropertyView: View {
         
     }
     
+    func CalcOffsetTracking() -> CGFloat{
+        var offset: CGFloat = 0
+        if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
+            offset = stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject]!.width
+        }
+        return stringObjectVM.selectedStringObject.tracking + offset
+    }
+    
+    func CalcOffsetSize() -> CGFloat{
+        var offset: CGFloat = 0
+        if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
+            offset = stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject]!.height
+        }
+        return stringObjectVM.selectedStringObject.tracking + offset
+    }
+    
     var body: some View {
         List{
             Section(header: Text("String Properties")){
@@ -72,7 +88,7 @@ struct StringObjectPropertyView: View {
                     Text("Size")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.fontSize)")
+                    Text("\(CalcOffsetSize())")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -82,7 +98,7 @@ struct StringObjectPropertyView: View {
                     Text("Tracking")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.tracking)")
+                    Text("\(CalcOffsetTracking())")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -168,8 +184,6 @@ struct StringObjectPropertyView: View {
                                     
                                     Button(action: {CharSaveBtnPressed(index)}){
                                         Text("􀈄")
-                                        
-                                        
                                     }
                                     
                                 }

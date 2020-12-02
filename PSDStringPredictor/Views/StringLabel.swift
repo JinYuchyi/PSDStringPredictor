@@ -106,11 +106,10 @@ struct StringLabel: View {
                 .font(.custom(stringLabel.CalcFontFullName(), size: CalcSizeAfterOffset()))
                 .tracking(CalcTrackingAfterOffset())
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-            //.shadow(color: .white, radius: 10, x: 5, y: 5)
             
             //Drag layer
             Rectangle()
-                .fill( Color.yellow.opacity(0.3))
+                .fill( Color.yellow.opacity(0.0))
                 .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 .gesture(DragGesture()
@@ -154,7 +153,6 @@ struct StringLabel: View {
                 .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(-4)
                 .IsHidden(condition: ignoredEnabled)
-                //.position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY   )
             }
             .frame(width: 30, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .trailing)
             .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY - 5 )
