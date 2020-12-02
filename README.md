@@ -19,4 +19,4 @@
   - [ ] Drag mouse to adjust tracking and font size.
   - [ ] Add Mask layer, with same color of orignal background.
   - [ ] Batch process function.
-  - [ ] Manual Adjusting data function in UI.
+  - [ ] Manually Adjusting data function in UI.

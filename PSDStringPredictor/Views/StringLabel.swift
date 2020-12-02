@@ -26,7 +26,26 @@ struct StringLabel: View {
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @State var width: CGFloat = 0
-
+    
+    //@State private var newOffset: CGSize = .zero
+    
+    
+    func CalcTrackingAfterOffset() -> CGFloat {
+       // var offset : CGSize = .zero
+        var d : CGFloat = 0
+        if stringObjectVM.DragOffsetDict[stringLabel] != nil{
+            d = stringObjectVM.DragOffsetDict[stringLabel]!.width / 10
+        }
+        return stringLabel.tracking + d
+    }
+    
+    func CalcSizeAfterOffset() -> CGFloat {
+        var d : CGFloat = 0
+        if stringObjectVM.DragOffsetDict[stringLabel] != nil{
+            d = stringObjectVM.DragOffsetDict[stringLabel]!.height / 20
+        }
+        return stringLabel.fontSize - d
+    }
     
     func makeView(_ geometry: GeometryProxy) -> some View {
         //print(geometry.size.width, geometry.size.height)
@@ -43,9 +62,9 @@ struct StringLabel: View {
     func FixedBtnTapped(){
         fixed = !fixed
         stringObjectVM.stringObjectFixedDict[stringLabel] = fixed
-//        if ignored == true {
-//            ignored = false
-//        }
+        //        if ignored == true {
+        //            ignored = false
+        //        }
         ignoredEnabled = !fixed
         //print("Fixed List: \(stringObjectVM.stringObjectFixedDict)")
     }
@@ -53,18 +72,18 @@ struct StringLabel: View {
     func IgnoreBtnTapped(){
         ignored = !ignored
         stringObjectVM.stringObjectIgnoreDict[stringLabel] = ignored
-//        if fixed == true {
-//            fixed = false
-//        }
+        //        if fixed == true {
+        //            fixed = false
+        //        }
         fixedEnabled = !ignored
     }
     
-
+    
     
     var body: some View {
         
         ZStack {
-
+            
             if stringLabel.colorMode == 1{
                 Rectangle()
                     .fill( Color.white.opacity(0.3))
@@ -84,11 +103,24 @@ struct StringLabel: View {
             
             Text(stringLabel.content)
                 .foregroundColor(stringLabel.color.ToColor())
-                .font(.custom(stringLabel.CalcFontFullName(), size: stringLabel.fontSize))
-                .tracking(stringLabel.tracking)
+                .font(.custom(stringLabel.CalcFontFullName(), size: CalcSizeAfterOffset()))
+                .tracking(CalcTrackingAfterOffset())
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-                //.shadow(color: .white, radius: 10, x: 5, y: 5)
-
+            //.shadow(color: .white, radius: 10, x: 5, y: 5)
+            
+            //Drag layer
+            Rectangle()
+                .fill( Color.yellow.opacity(0.3))
+                .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
+                .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+                .gesture(DragGesture()
+                            .onChanged { gesture in
+                                stringObjectVM.DragOffsetDict[stringLabel] = gesture.translation
+                                //self.newOffset = gesture.translation
+                                //print(self.newOffset)
+                            }
+                )
+            
             HStack{
                 //Button for show detail
                 Button(action: {self.InfoBtnTapped()}){
@@ -99,7 +131,7 @@ struct StringLabel: View {
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(-4)
-
+                
                 //Button for fix
                 Button(action: {self.FixedBtnTapped()}){
                     CustomImage( name: fixed ? "tick-active" : "tick-round")

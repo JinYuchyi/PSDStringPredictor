@@ -41,6 +41,8 @@ class StringObjectViewModel: ObservableObject{
     @Published var ignoreStringObjectList: [StringObject] = []
     @Published var fixedStringObjectList: [StringObject] = []
     
+    @Published var DragOffsetDict: [StringObject: CGSize] = [:]
+    
     @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
     
     @Published var stringObjectOutputList: [StringObject] = []
@@ -72,6 +74,8 @@ class StringObjectViewModel: ObservableObject{
         frameOverlay = true
         
     }
+    
+
     
     func CreatePSD(){
         UpdatePSD()

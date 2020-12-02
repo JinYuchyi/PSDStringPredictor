@@ -32,8 +32,7 @@ struct ContentView: View {
     
     //var sta = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray
     
-    
-    
+
     
     fileprivate func LeftViewGroup() -> some View {
         VStack{
@@ -129,6 +128,8 @@ var body: some View {
         print("\(rect)")
         print("\(testImg.extent)")
     }
+    
+    
 
 
 }

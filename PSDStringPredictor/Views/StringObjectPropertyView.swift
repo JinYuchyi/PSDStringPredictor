@@ -92,8 +92,15 @@ struct StringObjectPropertyView: View {
                     Text("Font")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
-                        .frame(width:200, alignment: .topLeading)
+                    VStack{
+                        Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
+                            .frame(width:200, alignment: .topLeading)
+                        Picker(selection: $stringObjectVM.selectedStringObject.fontWeight, label: Text("Weight")) {
+                            Text("Regular")
+                            Text("Semibold")
+                        }
+                    }
+                    
                 }
                 
                 HStack{
