@@ -34,7 +34,7 @@ struct StringLabel: View {
        // var offset : CGSize = .zero
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[stringLabel] != nil{
-            d = stringObjectVM.DragOffsetDict[stringLabel]!.width / 10
+            d = stringObjectVM.DragOffsetDict[stringLabel]!.width
         }
         return stringLabel.tracking + d
     }
@@ -42,7 +42,7 @@ struct StringLabel: View {
     func CalcSizeAfterOffset() -> CGFloat {
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[stringLabel] != nil{
-            d = stringObjectVM.DragOffsetDict[stringLabel]!.height / 20
+            d = stringObjectVM.DragOffsetDict[stringLabel]!.height
         }
         return stringLabel.fontSize - d
     }
@@ -109,12 +109,12 @@ struct StringLabel: View {
             
             //Drag layer
             Rectangle()
-                .fill( Color.yellow.opacity(0.0))
+                .fill( Color.yellow.opacity(0.1))
                 .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 .gesture(DragGesture()
                             .onChanged { gesture in
-                                stringObjectVM.DragOffsetDict[stringLabel] = gesture.translation
+                                stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: gesture.translation.width / 10, height: gesture.translation.height / 20)
                                 //self.newOffset = gesture.translation
                                 //print(self.newOffset)
                             }

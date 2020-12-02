@@ -24,6 +24,8 @@ struct StringObjectPropertyView: View {
         
     }
     
+    
+    
     func CalcOffsetTracking() -> CGFloat{
         var offset: CGFloat = 0
         if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
@@ -37,7 +39,7 @@ struct StringObjectPropertyView: View {
         if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
             offset = stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject]!.height
         }
-        return stringObjectVM.selectedStringObject.tracking + offset
+        return stringObjectVM.selectedStringObject.fontSize - offset
     }
     
     var body: some View {
