@@ -13,7 +13,7 @@ This tool aiming to help designers recreating Photoshop string layers from plain
   - [x] Fix ignored list and fixed list bug.
   - [x] The last string object from JS to PS is incorrect.
   - [x] Select string highlight will cover string bug.
-  - [ ] Open image, cleanup the former string objects.
+  - [x] Open image, cleanup the former string objects.
   - [ ] Test in projects.
 - [x] v1.0
   - [ ] Drag mouse to adjust tracking and font size.
