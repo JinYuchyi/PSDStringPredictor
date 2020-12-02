@@ -1,4 +1,10 @@
 # PSD String Generator
+## What is this
+This tool aiming to help designers recreating Photoshop string layers from plain image, with same font style, font size, color and content.
+
+## How to use
+
+## Todo
 - [x] v0.5
   - [x] Disable rectangle frame in default.
   - [x] Character frame to indicate colormode in string info.
