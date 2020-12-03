@@ -22,11 +22,8 @@ struct ImageProcessView: View {
 
         
         VStack{
-            //CIConvolution3x3
             HStack{
-                //Text("Convolution3x3")
                 ToggleConv()
-
             }
             
             HStack{
@@ -46,9 +43,6 @@ struct ImageProcessView: View {
                 ).disabled(self.imageViewModel.GetTargetCIImage().IsValid() == false)
                 Button(action: { imageViewModel.gammaValue = 1; self.SetFilter() }){
                     Text("Reset")
-                    //.padding(.horizontal, 40.0)
-                    //.frame(minWidth: 200, maxWidth: .infinity)
-
                 }
             }
             .padding(.horizontal)

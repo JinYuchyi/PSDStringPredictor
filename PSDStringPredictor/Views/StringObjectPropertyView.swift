@@ -13,6 +13,7 @@ struct StringObjectPropertyView: View {
     @ObservedObject var stringObjectVM = stringObjectViewModel
     @ObservedObject var imageProcess = imageProcessViewModel
     @State var stringField: String = ""
+    @State var weight: String
     let pixelMgr = PixelProcess()
     
     fileprivate func FontSizeView(index: Int) -> some View {
@@ -65,13 +66,11 @@ struct StringObjectPropertyView: View {
                                     .frame(height: 40)
                                     .border(Color.blue, width: 1)
                             }
-                            
-                            //.padding(.vertical, -20)
-                            
+
                             TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
                             
                             Text("\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
-                            Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index].ToString()))
+                            Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index]))
                             
                             FontSizeView(index: index)
                             
@@ -159,10 +158,13 @@ struct StringObjectPropertyView: View {
                     VStack{
                         Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
                             .frame(width:200, alignment: .topLeading)
-                        Picker(selection: $stringObjectVM.selectedStringObject.fontWeight, label: Text("Weight")) {
-                            Text("Regular")
-                            Text("Semibold")
+                        Picker(selection: $weight, label: Text("")) {
+                            Text("Regular").tag("Regular")
+                            Text("Semibold").tag("Semibold")
                         }
+                        .onChange(of: weight, perform: { (value) in
+                            stringObjectVM.selectedStringObject.fontWeight = weight
+                                                })
                     }
                     
                 }

@@ -101,13 +101,10 @@ class StringObjectViewModel: ObservableObject{
             let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObject.charArray[index]), weight: selectedStringObject.charFontWeightList[index], size: Int(selectedStringObject.charSizeList[index]))
             selectedCharImageListObjectList.append( temp )
         }
-        print("Color: \(selectedStringObject.color.components![0]), \(selectedStringObject.color.components![1]), \(selectedStringObject.color.components![2])")
+        //print("Color: \(selectedStringObject.color.components![0]), \(selectedStringObject.color.components![1]), \(selectedStringObject.color.components![2])")
     }
-    
-    
-    
+
     func UpdatePSD(){
-        
         var psdPath = DataStore.imagePath
         var contentList = [String]()
         var colorList = [[Int]]()
