@@ -113,10 +113,10 @@ class StringObjectViewModel: ObservableObject{
         var psdPath = DataStore.imagePath
         var contentList = [String]()
         var colorList = [[Int]]()
-        var fontSizeList:[Int] = []
+        var fontSizeList:[Float] = []
         var fontNameList: [String] = []
         var positionList = [[Int]]()
-        var trackingList = [Int]()
+        var trackingList = [Float]()
         var offsetList = [[Int16]]()
         var trackingOffsetList = [Float]()
         var sizeOffsetList = [Float]()
@@ -132,19 +132,20 @@ class StringObjectViewModel: ObservableObject{
             colorList.append(tmpColor)
             
             //calc tracking and font size offset
-//            var o1: CGFloat = 0
-//            var o2: CGFloat = 0
-//            if DragOffsetDict[obj] != nil {
-//                o1 = DragOffsetDict[obj]!.width
-//                o2 = DragOffsetDict[obj]!.height
-//            }
-//            let tmpSize: Float = Float(obj.fontSize - o2)
+            var o1: CGFloat = 0
+            var o2: CGFloat = 0
+            if DragOffsetDict[obj] != nil {
+                o1 = DragOffsetDict[obj]!.width
+                o2 = DragOffsetDict[obj]!.height
+            }
+            let tmpSize: CGFloat = CGFloat(obj.fontSize - o2)
 //            fontSizeList.append(Int(tmpSize.rounded()))
 //            let tmpTracking = Float(obj.trackingPS + Int16(o1.rounded())) * 1000 / tmpSize
 //            trackingList.append(Int(tmpTracking.rounded()))
-            fontSizeList.append(Int(obj.fontSize.rounded()))
-            let tmpTracking = obj.fontSize * 1000 / obj.tracking
-            trackingList.append(Int(obj.tracking.rounded()))
+            fontSizeList.append(Float(tmpSize))
+            //let tmpTracking = obj.fontSize * 1000 / obj.tracking
+            let tmpTracking = Float((obj.tracking + o1) * 1000 / tmpSize)
+            trackingList.append(tmpTracking)
             
             
             //Calc the offset of String

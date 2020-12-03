@@ -26,9 +26,7 @@ struct StringLabel: View {
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @State var width: CGFloat = 0
-    
-    //@State private var newOffset: CGSize = .zero
-    
+        
     
     func CalcTrackingAfterOffset() -> CGFloat {
        // var offset : CGSize = .zero
@@ -114,7 +112,8 @@ struct StringLabel: View {
                 .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 .gesture(DragGesture()
                             .onChanged { gesture in
-                                stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: gesture.translation.width / 10, height: gesture.translation.height / 20)
+                                stringObjectVM.DragOffsetDict[stringLabel] = gesture.translation
+                                    //CGSize(width: gesture.translation.width / 10, height: gesture.translation.height / 20)
                                 //self.newOffset = gesture.translation
                                 //print(self.newOffset)
                             }
