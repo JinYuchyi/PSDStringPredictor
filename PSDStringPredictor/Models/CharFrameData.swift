@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CharFrame: Identifiable{
+struct CharFrame: Identifiable, Hashable{
     var id: UUID = UUID()
     var rect: CGRect
     var char: String

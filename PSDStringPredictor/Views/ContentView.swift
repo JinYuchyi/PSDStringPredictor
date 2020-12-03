@@ -56,10 +56,10 @@ struct ContentView: View {
                 ZStack{
                     ImageView(imageViewModel:imageViewModel)
                     
-                    LabelsOnImage()
+                    LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
                         .IsHidden(condition: stringObjectVM.stringOverlay)
-                    CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
-                        .IsHidden(condition: stringObjectVM.frameOverlay)
+                    //CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
+                    //    .IsHidden(condition: stringObjectVM.frameOverlay)
                 }
             }
             

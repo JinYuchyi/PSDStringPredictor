@@ -7,8 +7,12 @@
 //
 
 import Foundation
-extension CGRect{
+extension CGRect: Hashable{
 
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.minX)
+        hasher.combine(self.minY)
+    }
     
     func IsSame(target rect: CGRect) -> Bool {
         if ( abs(self.midX - rect.midX) < 20 && abs(self.midY - rect.midY) < 20 ) {

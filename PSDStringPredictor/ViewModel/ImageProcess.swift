@@ -23,6 +23,7 @@ class ImageProcess: ObservableObject{
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetNSImage = NSImage()
     @Published var targetCIImage = CIImage()
+    @Published var maskList = [CGRect]()
     
     var showImage: Bool = false
 

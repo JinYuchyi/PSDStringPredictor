@@ -11,20 +11,20 @@ import SwiftUI
 struct LabelsOnImage: View {
     @ObservedObject var imageProcess: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM : StringObjectViewModel = stringObjectViewModel
-    
+    let charFrameList: [CharFrame]
     
     var body: some View {
         Group{
             ForEach(stringObjectVM.updateStringObjectList, id:\.id){ item in
-                StringLabel(stringLabel: item, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
+                StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
             }
             
             ForEach(stringObjectVM.ignoreStringObjectList, id:\.id){ item in
-                StringLabel(stringLabel: item, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
+                StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
             }
             
             ForEach(stringObjectVM.fixedStringObjectList, id:\.id){ item in
-                StringLabel(stringLabel: item, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
+                StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
             }
         }
     }
