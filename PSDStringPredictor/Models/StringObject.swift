@@ -196,13 +196,13 @@ struct StringObject : Identifiable, Equatable, Hashable{
         var minC: CGColor =  CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
             if colorMode == 1{
-                var strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                var strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
                 strImg = NoiseReduction(strImg!)
                 result = Minimun(strImg!).cgColor
                 
             }
             if colorMode == 2{
-                var strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                var strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
                 strImg = NoiseReduction(strImg!)
                 result = Maximum(strImg!).cgColor
             }

@@ -54,7 +54,7 @@ class StringObjectViewModel: ObservableObject{
     //    @Published var SizeToPSDList: [Float] = []
     
     func PredictStrings()  {
-        stringObjectListData = stringObject.PredictStringObjects(FromCIImage: DataStore.targetImageProcessed)
+        stringObjectListData = stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
         //stringObjectListData = DataStore.stringObjectList
         DataStore.FillCharFrameList()
         FetchCharFrameListData()
@@ -76,9 +76,7 @@ class StringObjectViewModel: ObservableObject{
         stringOverlay = true
         frameOverlay = true
     }
-    
-    
-    
+
     func CreatePSD(){
         UpdatePSD()
     }
@@ -139,14 +137,10 @@ class StringObjectViewModel: ObservableObject{
                 o2 = DragOffsetDict[obj]!.height
             }
             let tmpSize: CGFloat = CGFloat(obj.fontSize - o2)
-//            fontSizeList.append(Int(tmpSize.rounded()))
-//            let tmpTracking = Float(obj.trackingPS + Int16(o1.rounded())) * 1000 / tmpSize
-//            trackingList.append(Int(tmpTracking.rounded()))
             fontSizeList.append(Float(tmpSize))
             //let tmpTracking = obj.fontSize * 1000 / obj.tracking
             let tmpTracking = Float((obj.tracking + o1) * 1000 / tmpSize)
             trackingList.append(tmpTracking)
-            
             
             //Calc the offset of String
             var keyvalues: [String: AnyObject] = [:]
@@ -162,14 +156,10 @@ class StringObjectViewModel: ObservableObject{
                 offsetList.append([0,0])
             }
             //}
-            
             fontNameList.append(obj.CalcFontPostScriptName())
-            positionList.append([Int(obj.stringRect.minX.rounded()), Int((DataStore.targetNSImage.size.height - obj.stringRect.minY).rounded())])
-            
+            positionList.append([Int(obj.stringRect.minX.rounded()), Int((imageProcessViewModel.targetNSImage.size.height - obj.stringRect.minY).rounded())])
         }
-        
-        
-        
+
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList)
         if success == true{
             let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"

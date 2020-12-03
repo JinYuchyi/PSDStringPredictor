@@ -88,8 +88,8 @@ struct ImageProcessView: View {
     }
     
     func SetFilter(){
-        if (self.imageViewModel.GetTargetCIImage().IsValid()){
-            var tmp = ChangeGamma(self.imageViewModel.GetTargetCIImage(), CGFloat(gammaValue))!
+        if (self.imageViewModel.targetImageMasked.IsValid()){
+            var tmp = ChangeGamma(self.imageViewModel.targetImageMasked, CGFloat(gammaValue))!
             tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
             if isConvolution == true{
                 tmp = SetConv(tmp)!

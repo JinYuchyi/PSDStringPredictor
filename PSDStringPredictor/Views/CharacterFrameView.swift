@@ -25,29 +25,60 @@ struct CharacterFrameView: View {
                 )
                 .frame(width: charFrame.width, height: charFrame.height)
 
-            //Hover Window
-//            if(overText == true){
-//                HoverOnCharView(width: charFrame.rect.width, height: charFrame.rect.height, predictSize: String(charFrame.predictedSize), isVisible: true, positionX: charFrame.rect.midX, positionY: imgProcess.GetTargetImageSize()[1] - (self.charFrame.rect.minY ))
-//                    .offset(x: 0, y: -60)
-//            }
-
         }
         .onTapGesture {
-            self.imgProcess.FetchImage()
-            var tmpImg: CIImage = CIImage.init()
-            if DataStore.colorMode == 1{
-                tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.minX, PositionY: self.charFrame.minY, Width: self.charFrame.width, Height: self.charFrame.height, MaskColor: CIColor.white)
-            }else if DataStore.colorMode == 2 {
-                tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.minX, PositionY: self.charFrame.minY, Width: self.charFrame.width, Height: self.charFrame.height, MaskColor: CIColor.gray)
-            }
-            
-            self.imgProcess.SetTargetProcessedImage(tmpImg)
+            Tapped(rect: charFrame)
         }
-//        .onHover{over in
-//            self.overText = over
-//        }
         
     }
+    
+    func Tapped(rect: CGRect){
+        let index = imgProcess.maskList.firstIndex(of: rect)
+        if index == nil {
+            imgProcess.maskList.append(rect)
+            print("Add: \(rect), \(imgProcess.maskList.count) in list")
+
+        }else{
+            //Delete rect in list
+            imgProcess.maskList.remove(at: index!)
+            print("Remove: \(rect), \(imgProcess.maskList.count) in list")
+
+        }
+        
+        if imgProcess.maskList.count == 0 {
+            AddCharRectMask()
+        }
+        
+        if DataStore.colorMode == 1{
+            for rect in imgProcess.maskList{
+                AddCharRectMask()
+                
+            }
+        }else if DataStore.colorMode == 2 {
+            for rect in imgProcess.maskList{
+                AddCharRectMask()
+                
+            }
+        }
+        
+    }
+    
+    func AddCharRectMask(){
+        //self.imgProcess.FetchImage()
+        self.imgProcess.targetImageMasked = self.imgProcess.targetNSImage.ToCIImage()!
+        if DataStore.colorMode == 1{
+            for rect in imgProcess.maskList{
+                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
+            }
+        }else if DataStore.colorMode == 2 {
+            for rect in imgProcess.maskList{
+                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.gray)
+//                self.imgProcess.SetTargetMaskedImage(tmpImg)
+            }
+        }
+        
+    }
+    
 }
 
 //struct CharacterFrameView_Previews: PreviewProvider {

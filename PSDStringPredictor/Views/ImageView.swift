@@ -31,15 +31,15 @@ struct ImageView: View {
                 //Show Image if we have loaded image
                 else{
                     ZStack{
-                        Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
-                        VStack{
-                            Text("Tracking1")
-                                .font(.custom("SFProText-Regular", size: 67))
-                                .tracking(-0.26)
-                            Text("Tracking1")
-                                .font(.custom("SFProText-Regular", size: 67))
-                                .tracking(0)
-                        }
+                        Image(nsImage: imageViewModel.targetImageMasked.ToNSImage())
+//                        VStack{
+//                            Text("Tracking1")
+//                                .font(.custom("SFProText-Regular", size: 67))
+//                                .tracking(-0.26)
+//                            Text("Tracking1")
+//                                .font(.custom("SFProText-Regular", size: 67))
+//                                .tracking(0)
+//                        }
                     }
                 }
         }
