@@ -15,6 +15,7 @@ struct CharacterFrameView: View {
     let imgUtil = ImageUtil()
     @ObservedObject var imgProcess = imageProcessViewModel
     @State var overText: Bool = false
+    //@State var isMasked: Bool = false
 
     var body: some View {
         ZStack{
@@ -36,12 +37,14 @@ struct CharacterFrameView: View {
         let index = imgProcess.maskList.firstIndex(of: rect)
         if index == nil {
             imgProcess.maskList.append(rect)
-            print("Add: \(rect), \(imgProcess.maskList.count) in list")
+            //isMasked = true
+            print("add")
 
         }else{
             //Delete rect in list
             imgProcess.maskList.remove(at: index!)
-            print("Remove: \(rect), \(imgProcess.maskList.count) in list")
+            //isMasked = false
+            print("remove")
 
         }
         
@@ -52,12 +55,10 @@ struct CharacterFrameView: View {
         if DataStore.colorMode == 1{
             for rect in imgProcess.maskList{
                 AddCharRectMask()
-                
             }
         }else if DataStore.colorMode == 2 {
             for rect in imgProcess.maskList{
                 AddCharRectMask()
-                
             }
         }
         
@@ -76,6 +77,8 @@ struct CharacterFrameView: View {
 //                self.imgProcess.SetTargetMaskedImage(tmpImg)
             }
         }
+        
+        self.imgProcess.SetFilter()
         
     }
     

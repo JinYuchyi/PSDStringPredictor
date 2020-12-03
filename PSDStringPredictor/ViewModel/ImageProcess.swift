@@ -25,15 +25,34 @@ class ImageProcess: ObservableObject{
     @Published var targetNSImage = NSImage()
     @Published var targetCIImage = CIImage()
     @Published var maskList = [CGRect]()
-    
+    @Published var gammaValue: CGFloat = 1
+    @Published var exposureValue: CGFloat = 0
+    @Published var isConvolution: Bool = false
+
     var showImage: Bool = false
 
+    func SetFilter(){
+        if (targetImageMasked.IsValid()){
+            var tmp = ChangeGamma(targetImageMasked, CGFloat(gammaValue))!
+            tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
+            if isConvolution == true{
+                tmp = SetConv(tmp)!
+            }
+            
+            targetImageProcessed = tmp
+        }
+    }
+    
     func FetchImage() {
         //targetNSImage = DataStore.targetNSImage
         targetCIImage = targetNSImage.ToCIImage()!
         if targetImageMasked.IsValid() == false || targetImageMasked.extent.width == 0 {
             targetImageMasked = targetCIImage
         }
+        if targetImageProcessed.extent.width == 0 || targetImageProcessed.extent.width == 0 {
+            targetImageProcessed = targetImageMasked
+        }
+        
         //targetImageProcessed = DataStore.targetImageProcessed
     }
     

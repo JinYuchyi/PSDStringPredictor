@@ -11,9 +11,9 @@ import SwiftUI
 struct ImageProcessView: View {
     //@EnvironmentObject var data: DataStore
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @State private  var gammaValue: CGFloat = 1
-    @State private  var exposureValue: CGFloat = 0
-    @State   var isConvolution: Bool = false
+    //@State private  var gammaValue: CGFloat = 1
+    //@State private  var exposureValue: CGFloat = 0
+    @State var isConvolution: Bool = false
     
 
     
@@ -34,17 +34,17 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            self.gammaValue
+                            imageViewModel.gammaValue
                         },
                         set: {(newValue) in
-                            self.gammaValue = newValue
+                            imageViewModel.gammaValue = newValue
                             self.SetFilter()
                         }
                     ),
                     in: 0...10
                     
                 ).disabled(self.imageViewModel.GetTargetCIImage().IsValid() == false)
-                Button(action: { self.gammaValue = 1; self.SetFilter() }){
+                Button(action: { imageViewModel.gammaValue = 1; self.SetFilter() }){
                     Text("Reset")
                     //.padding(.horizontal, 40.0)
                     //.frame(minWidth: 200, maxWidth: .infinity)
@@ -59,23 +59,18 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            self.exposureValue
+                            imageViewModel.exposureValue
                         },
                         set: {(newValue) in
-                            self.exposureValue = newValue
-                            //let tmp = ChangeExposure(self.imageViewModel.GetTargetCIImage(), CGFloat(newValue))!
-                            //self.imageViewModel.SetTargetProcessedImage(tmp)
+                            imageViewModel.exposureValue = newValue
                             self.SetFilter()
                         }
                     ),
                     in: 0...10
                     
                 ).disabled(self.imageViewModel.GetTargetCIImage().IsValid() == false)
-                Button(action: { self.exposureValue = 0; self.SetFilter() }){
+                Button(action: { imageViewModel.exposureValue = 0; self.SetFilter() }){
                     Text("Reset")
-                    //.padding(.horizontal, 40.0)
-                    //.frame(minWidth: 200, maxWidth: .infinity)
-
                 }
             }
             .padding(.horizontal)
@@ -87,16 +82,20 @@ struct ImageProcessView: View {
         }
     }
     
+//    func SetFilter(){
+//        if (self.imageViewModel.targetImageMasked.IsValid()){
+//            var tmp = ChangeGamma(self.imageViewModel.targetImageMasked, CGFloat(gammaValue))!
+//            tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
+//            if isConvolution == true{
+//                tmp = SetConv(tmp)!
+//            }
+//            
+//            self.imageViewModel.SetTargetProcessedImage(tmp)
+//        }
+//    }
+    
     func SetFilter(){
-        if (self.imageViewModel.targetImageMasked.IsValid()){
-            var tmp = ChangeGamma(self.imageViewModel.targetImageMasked, CGFloat(gammaValue))!
-            tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
-            if isConvolution == true{
-                tmp = SetConv(tmp)!
-            }
-            
-            self.imageViewModel.SetTargetProcessedImage(tmp)
-        }
+        imageViewModel.SetFilter()
     }
     
     func ToggleConv() -> some View{

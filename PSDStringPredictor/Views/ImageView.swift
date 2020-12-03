@@ -31,7 +31,7 @@ struct ImageView: View {
                 //Show Image if we have loaded image
                 else{
                     ZStack{
-                        Image(nsImage: imageViewModel.targetImageMasked.ToNSImage())
+                        Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
 //                        VStack{
 //                            Text("Tracking1")
 //                                .font(.custom("SFProText-Regular", size: 67))
