@@ -68,6 +68,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var confidence: CGFloat
     var colorMode: Int
     var charColorModeList: [Int]
+    var FontName: String
     
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
@@ -96,9 +97,11 @@ struct StringObject : Identifiable, Equatable, Hashable{
         charColorModeList = []
         self.trackingPS = 0
         isPredictedList = []
+        FontName = ""
         self.fontWeight = PredictFontWeight()
         colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
@@ -122,6 +125,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.trackingPS = 0
         isForbidden = false
         charColorModeList = []
+        FontName = ""
         self.fontWeight = PredictFontWeight()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
@@ -148,6 +152,8 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
         return result
     }
+    
+
     
     func FixContent(_ target: String) -> String{
         var res: String = target
@@ -220,7 +226,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
     }
     
-    func CalcFontFullName() -> String{
+     func CalcFontFullName() -> String{
         var family = ""
         var style = ""
 //        if (fontWeight == .regular){
@@ -235,10 +241,13 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }else{
             family = "Display"
         }
-        return "SF Pro " + family + " " + fontWeight
+        
+        let name = "SF Pro " + family + " " + fontWeight
+        //FontName = name
+        return name
     }
     
-    func CalcFontFullName(weight: String) -> String{
+     func CalcFontFullName(weight: String) -> String{
         var family = ""
         var style = ""
         
@@ -249,7 +258,9 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }else{
             family = "Display"
         }
-        return "SF Pro " + family + " " + style
+        let name =  "SF Pro " + family + " " + style
+        //FontName = name
+        return name
     }
     
     func CalcFontPostScriptName() -> String{

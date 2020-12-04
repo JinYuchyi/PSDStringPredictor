@@ -13,7 +13,7 @@ struct StringObjectPropertyView: View {
     @ObservedObject var stringObjectVM = stringObjectViewModel
     @ObservedObject var imageProcess = imageProcessViewModel
     @State var stringField: String = ""
-    @State var weight: String
+    @State var weight: String = "Regular"
     let pixelMgr = PixelProcess()
     
     fileprivate func FontSizeView(index: Int) -> some View {
@@ -155,16 +155,36 @@ struct StringObjectPropertyView: View {
                     Text("Font")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
+                    
                     VStack{
-                        Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
-                            .frame(width:200, alignment: .topLeading)
-                        Picker(selection: $weight, label: Text("")) {
-                            Text("Regular").tag("Regular")
-                            Text("Semibold").tag("Semibold")
+                        if stringObjectVM.selectedStringObject.fontSize != 0 {
+                            Text("\(stringObjectVM.StringObjectNameDict[stringObjectVM.selectedStringObject.id]!)")
+                                .frame(width:200, alignment: .topLeading)
+                                .onTapGesture {
+                                    if stringObjectVM.selectedStringObject.fontSize != 0 {
+                                        print("Tapped")
+
+                                        let id = stringObjectVM.selectedStringObject.id
+                                        let fName = stringObjectVM.StringObjectNameDict[id]
+                                        let endIndex = fName!.lastIndex(of: " ")
+                                        let startIndex = fName!.startIndex
+                                        let particialName = fName![startIndex..<endIndex!]
+                                        let weightName = fName![endIndex!..<fName!.endIndex]
+                                        
+                                        if weightName == " Regular"  {
+                                            stringObjectVM.StringObjectNameDict[id] = particialName + " Semibold"
+                                            print("\(stringObjectVM.StringObjectNameDict[id])")
+                                        }else {
+                                            stringObjectVM.StringObjectNameDict[id] = particialName + " Regular"
+                                            print("\(stringObjectVM.StringObjectNameDict[id])")
+                                        }
+                                    }
+                                }
+//                        Picker(selection: $weight, label: Text("")) {
+//                            Text("Regular").tag("Regular")
+//                            Text("Semibold").tag("Semibold")
                         }
-                        .onChange(of: weight, perform: { (value) in
-                            stringObjectVM.selectedStringObject.fontWeight = weight
-                                                })
+
                     }
                     
                 }

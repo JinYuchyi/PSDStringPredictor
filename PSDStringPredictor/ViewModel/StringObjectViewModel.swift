@@ -34,12 +34,14 @@ class StringObjectViewModel: ObservableObject{
     //@Published var StringLabelListData: [StringLabelObject] = []
     @Published var selectedStringObject: StringObject = StringObject.init()
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
+    //@Published var selectedStringObjectFontName: String = ""
     
     @Published var stringObjectIgnoreDict: [StringObject: Bool] = [:]
     @Published var stringObjectFixedDict: [StringObject: Bool] = [:]
     @Published var updateStringObjectList: [StringObject] = []
     @Published var ignoreStringObjectList: [StringObject] = []
     @Published var fixedStringObjectList: [StringObject] = []
+    @Published var StringObjectNameDict: [UUID:String] = [:]
     
     @Published var DragOffsetDict: [StringObject: CGSize] = [:]
     
@@ -50,8 +52,7 @@ class StringObjectViewModel: ObservableObject{
     @Published var stringOverlay: Bool = true
     @Published var frameOverlay: Bool = true
     
-    //    @Published var trackingToPSDList: [Float] =  []
-    //    @Published var SizeToPSDList: [Float] = []
+    
     
     func PredictStrings()  {
         stringObjectListData = stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
@@ -59,6 +60,7 @@ class StringObjectViewModel: ObservableObject{
         DataStore.FillCharFrameList()
         FetchCharFrameListData()
         FetchCharFrameListRects()
+        FetchStringObjectFontNameDict()
     }
     
     func CleanAll(){
@@ -73,8 +75,15 @@ class StringObjectViewModel: ObservableObject{
         ignoreStringObjectList = []
         fixedStringObjectList = []
         stringObjectOutputList = []
+        StringObjectNameDict = [:]
         stringOverlay = true
         frameOverlay = true
+    }
+    
+    func FetchStringObjectFontNameDict(){
+        for obj in stringObjectListData{
+            StringObjectNameDict[obj.id] = obj.CalcFontFullName()
+        }
     }
 
     func CreatePSD(){
@@ -101,7 +110,6 @@ class StringObjectViewModel: ObservableObject{
             let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObject.charArray[index]), weight: selectedStringObject.charFontWeightList[index], size: Int(selectedStringObject.charSizeList[index]))
             selectedCharImageListObjectList.append( temp )
         }
-        //print("Color: \(selectedStringObject.color.components![0]), \(selectedStringObject.color.components![1]), \(selectedStringObject.color.components![2])")
     }
 
     func UpdatePSD(){

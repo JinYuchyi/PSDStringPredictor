@@ -78,6 +78,21 @@ struct StringLabel: View {
     
     
     
+    fileprivate func TextLayerView() -> some View {
+        
+        //Text(stringLabel.content)
+        //if stringObjectVM.selectedStringObject.fontSize != 0  {
+            Text(stringLabel.content)
+                .foregroundColor(stringLabel.color.ToColor())
+                .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id]!, size: CalcSizeAfterOffset()))
+                .tracking(CalcTrackingAfterOffset())
+                .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
+//        }else{
+//
+//        }
+        return AnyView(EmptyView())
+    }
+    
     var body: some View {
         
         ZStack {
@@ -100,11 +115,13 @@ struct StringLabel: View {
                     .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 
-                Text(stringLabel.content)
-                    .foregroundColor(stringLabel.color.ToColor())
-                    .font(.custom(stringLabel.CalcFontFullName(), size: CalcSizeAfterOffset()))
-                    .tracking(CalcTrackingAfterOffset())
-                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
+                if stringObjectVM.selectedStringObject.fontSize != 0  {
+                    Text(stringLabel.content)
+                        .foregroundColor(stringLabel.color.ToColor())
+                        .font(.custom(stringObjectVM.StringObjectNameDict[stringObjectVM.selectedStringObject.id]!, size: CalcSizeAfterOffset()))
+                        .tracking(CalcTrackingAfterOffset())
+                        .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
+                }
                 
                 //Drag layer
                 Rectangle()
@@ -118,7 +135,6 @@ struct StringLabel: View {
                                     } else {
                                         stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: 0, height: gesture.translation.height / 10)
                                     }
-                                    
                                 }
                     )
                 
