@@ -115,13 +115,13 @@ struct StringLabel: View {
                     .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 
-                if stringObjectVM.selectedStringObject.fontSize != 0  {
+                //if stringObjectVM.selectedStringObject.fontSize != 0  {
                     Text(stringLabel.content)
                         .foregroundColor(stringLabel.color.ToColor())
-                        .font(.custom(stringObjectVM.StringObjectNameDict[stringObjectVM.selectedStringObject.id]!, size: CalcSizeAfterOffset()))
+                        .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id]!, size: CalcSizeAfterOffset()))
                         .tracking(CalcTrackingAfterOffset())
                         .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-                }
+                //}
                 
                 //Drag layer
                 Rectangle()

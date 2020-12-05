@@ -161,8 +161,8 @@ struct StringObjectPropertyView: View {
                             Text("\(stringObjectVM.StringObjectNameDict[stringObjectVM.selectedStringObject.id]!)")
                                 .frame(width:200, alignment: .topLeading)
                                 .onTapGesture {
-                                    if stringObjectVM.selectedStringObject.fontSize != 0 {
-                                        print("Tapped")
+                                    //if stringObjectVM.selectedStringObject.fontSize != 0 {
+                                        //print("Tapped")
 
                                         let id = stringObjectVM.selectedStringObject.id
                                         let fName = stringObjectVM.StringObjectNameDict[id]
@@ -178,7 +178,7 @@ struct StringObjectPropertyView: View {
                                             stringObjectVM.StringObjectNameDict[id] = particialName + " Regular"
                                             print("\(stringObjectVM.StringObjectNameDict[id])")
                                         }
-                                    }
+                                    //}
                                 }
 //                        Picker(selection: $weight, label: Text("")) {
 //                            Text("Regular").tag("Regular")

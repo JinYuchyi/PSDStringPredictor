@@ -22,9 +22,9 @@ struct ImageProcessView: View {
 
         
         VStack{
-            HStack{
-                ToggleConv()
-            }
+//            HStack{
+//                ToggleConv()
+//            }
             
             HStack{
                 Text("Gamma")

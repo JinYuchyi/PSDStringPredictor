@@ -20,3 +20,6 @@ PSDStringPredictor/Resources/CharColorMode.swift
 PSDStringPredictor.xcodeproj/project.xcworkspace/xcuserdata/ipdesign.xcuserdatad/UserInterfaceState.xcuserstate
 PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 PSDStringPredictor.xcodeproj/project.xcworkspace/xcuserdata/ipdesign.xcuserdatad/UserInterfaceState.xcuserstate
+.DS_Store
+PSDStringPredictor/Resources/fontSizeRegressor.mlproj/Model Containers/fontSizeRegressor 4 copy 2.json
+PSDStringPredictor/Resources/fontSizeRegressor.mlproj/Data Sources/fontSize.csv.json
