@@ -54,7 +54,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var tracking: CGFloat
     var trackingPS: Int16
     var fontSize: CGFloat
-    var fontWeight:  Font.Weight
+    var fontWeight:  String
     var stringRect: CGRect
     var observation : VNRecognizedTextObservation
     var color: CGColor
@@ -62,12 +62,13 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var charRects: [CGRect]
     var charSizeList: [Int16]
     var charImageList: [CIImage]
-    var charFontWeightList: [Font.Weight]
+    var charFontWeightList: [String]
     var isPredictedList: [Int]
     var isForbidden: Bool
     var confidence: CGFloat
     var colorMode: Int
     var charColorModeList: [Int]
+    var FontName: String
     
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
@@ -82,7 +83,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         tracking = 0
         fontSize = 0
         colorMode = -1
-        fontWeight =  Font.Weight.regular
+        fontWeight =  ""
         charImageList = []
         stringRect = CGRect()
         observation = VNRecognizedTextObservation.init()
@@ -96,9 +97,11 @@ struct StringObject : Identifiable, Equatable, Hashable{
         charColorModeList = []
         self.trackingPS = 0
         isPredictedList = []
+        FontName = ""
         self.fontWeight = PredictFontWeight()
         colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
@@ -107,7 +110,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.stringRect = stringRect
         self.content = content
         self.fontSize = 0.0
-        self.fontWeight = Font.Weight.regular
+        self.fontWeight = "Regular"
         //self.position = [0,0]
         self.observation = observation
         self.charArray = charArray
@@ -122,6 +125,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.trackingPS = 0
         isForbidden = false
         charColorModeList = []
+        FontName = ""
         self.fontWeight = PredictFontWeight()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
@@ -148,6 +152,8 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
         return result
     }
+    
+
     
     func FixContent(_ target: String) -> String{
         var res: String = target
@@ -196,13 +202,13 @@ struct StringObject : Identifiable, Equatable, Hashable{
         var minC: CGColor =  CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
             if colorMode == 1{
-                var strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                var strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
                 strImg = NoiseReduction(strImg!)
                 result = Minimun(strImg!).cgColor
                 
             }
             if colorMode == 2{
-                var strImg = DataStore.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                var strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
                 strImg = NoiseReduction(strImg!)
                 result = Maximum(strImg!).cgColor
             }
@@ -220,40 +226,59 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
     }
     
-    func CalcFontFullName() -> String{
+     func CalcFontFullName() -> String{
         var family = ""
         var style = ""
-        if (fontWeight == .regular){
-            style = "Regular"
-        }
-        else if fontWeight == .semibold{
-            style = "Semibold"
-        }
+//        if (fontWeight == .regular){
+//            style = "Regular"
+//        }
+//        else if fontWeight == .semibold{
+//            style = "Semibold"
+//        }
         
         if fontSize/3 < 20 {
             family = "Text"
         }else{
             family = "Display"
         }
-        return "SF Pro " + family + " " + style
+        
+        let name = "SF Pro " + family + " " + fontWeight
+        //FontName = name
+        return name
+    }
+    
+     func CalcFontFullName(weight: String) -> String{
+        var family = ""
+        var style = ""
+        
+        style = weight
+        
+        if fontSize/3 < 20 {
+            family = "Text"
+        }else{
+            family = "Display"
+        }
+        let name =  "SF Pro " + family + " " + style
+        //FontName = name
+        return name
     }
     
     func CalcFontPostScriptName() -> String{
         var family = ""
         var style = ""
-        if (fontWeight == .regular){
-            style = "Regular"
-        }
-        else if fontWeight == .semibold{
-            style = "Semibold"
-        }
+//        if (fontWeight == .regular){
+//            style = "Regular"
+//        }
+//        else if fontWeight == .semibold{
+//            style = "Semibold"
+//        }
         
         if fontSize/3 < 20 {
             family = "Text"
         }else{
             family = "Display"
         }
-        return "SFPro" + family + "-" + style
+        return "SFPro" + family + "-" + fontWeight
     }
     
     mutating func DeleteDescentForRect()  {
@@ -331,13 +356,13 @@ struct StringObject : Identifiable, Equatable, Hashable{
             if char.isNumber || char.isLetter{
                 //font.weight to fontWeight string, for searching
                 var _fontWeight = ""
-                if fontWeight == .regular {
-                    _fontWeight = "regular"
-                }
-                else if fontWeight == .semibold{
-                    _fontWeight = "semibold"
-                }
-                var singleChar = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), _fontWeight)
+//                if fontWeight == .regular {
+//                    _fontWeight = "regular"
+//                }
+//                else if fontWeight == .semibold{
+//                    _fontWeight = "semibold"
+//                }
+                var singleChar = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), fontWeight)
                 var tempweight = singleChar.0
                 if (tempweight != 0){
                     weightArray.append((tempweight))
@@ -402,20 +427,20 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
     }
     
-    mutating func PredictFontWeight()->Font.Weight{
+    mutating func PredictFontWeight()->String{
         charFontWeightList.removeAll()
         for img in charImageList{
             let bw = SetGrayScale(img)
             let temp = FontWeightPredict().Prediction(ciImage: bw!)
             if (temp == "semibold"){
-                charFontWeightList.append(Font.Weight.semibold)
+                charFontWeightList.append("Semibold")
             }else if (temp == "regular"){
-                charFontWeightList.append(Font.Weight.regular)
+                charFontWeightList.append("Regular")
             }else{
-                charFontWeightList.append(Font.Weight.black)
+                charFontWeightList.append("Black")
             }
         }
-        var result: Font.Weight = Font.Weight.regular
+        var result: String = "Regular"
         
         if (charFontWeightList.count > 0){
             result = charFontWeightList.MajorityElement()

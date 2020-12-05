@@ -118,7 +118,7 @@ class OCR: ObservableObject{
         let strs = GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
             var (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: DataStore.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
+            var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
         }

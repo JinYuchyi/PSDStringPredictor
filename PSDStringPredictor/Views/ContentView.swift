@@ -32,8 +32,7 @@ struct ContentView: View {
     
     //var sta = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray
     
-    
-    
+
     
     fileprivate func LeftViewGroup() -> some View {
         VStack{
@@ -56,11 +55,10 @@ struct ContentView: View {
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView(imageViewModel:imageViewModel)
-                    
-                    LabelsOnImage()
+                    LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
                         .IsHidden(condition: stringObjectVM.stringOverlay)
-                    CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
-                        .IsHidden(condition: stringObjectVM.frameOverlay)
+                    //CharacterFrameListView(frameList: stringObjectVM.charFrameListData, imageViewModel: imageViewModel)
+                    //    .IsHidden(condition: stringObjectVM.frameOverlay)
                 }
             }
             
@@ -125,10 +123,12 @@ var body: some View {
 //        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageViewModel.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 10, Height: 10, MaskColor: CIColor.red)
 //        imageViewModel.SetTargetProcessedImage(tmpImg)
         let rect = CGRect.init(x: 10, y: 10, width: 100, height: 100)
-        let testImg = DataStore.targetImageProcessed.cropped(to: rect)
+        let testImg = imageViewModel.targetImageProcessed.cropped(to: rect)
         print("\(rect)")
         print("\(testImg.extent)")
     }
+    
+    
 
 
 }

@@ -13,7 +13,7 @@ import SwiftUI
 struct CharImageThumbnailObject {
     var image: CIImage = CIImage.init()
     var char: String
-    var weight: Font.Weight
+    var weight: String
     var size: Int
     var id: UUID = UUID()
 }

@@ -19,8 +19,8 @@ class DataStore{
     static var csvPath: String = ""
     static var fontCsvPath: String = ""
     //ImageProcess
-    static var targetNSImage: NSImage  = NSImage.init()
-    static var targetImageProcessed: CIImage  = CIImage.init()
+    //static var targetNSImage: NSImage  = NSImage.init()
+    //static var targetImageProcessed: CIImage  = CIImage.init()
     static var colorLightModeList: [NSColor] = [
         NSColor.init(red: 0, green: 122, blue: 255, alpha: 255),
         NSColor.init(red: 52, green: 199, blue: 89, alpha: 255),

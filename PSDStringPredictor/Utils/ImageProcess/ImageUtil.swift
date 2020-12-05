@@ -65,12 +65,10 @@ class ImageUtil{
         let rect = CGRect(x: 0, y: 0, width: w, height: h)
         mask = mask.cropped(to: rect)
 
-        let img = ImageOntop(OverlayImage: mask, BGImage: &img, OffsetX: x, OffsetY: y)
+        var img = ImageOntop(OverlayImage: mask, BGImage: &img, OffsetX: x, OffsetY: y)
         
         return img
-        //Save Image
-//        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
-//        img.ToPNG(url: url)
+
         
     }
     

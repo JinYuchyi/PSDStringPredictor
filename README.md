@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 # PSD String Generator
 ## What is this
 This tool aiming to help designers recreating Photoshop string layers from plain image, with same font style, font size, color and content.
+=======
+# PSD-String-Generator
+## What is this
+>>>>>>> 52ed6476088c32370bfe0b459a06908bfbb8cb33
 
 ## How to use
 
@@ -15,8 +20,16 @@ This tool aiming to help designers recreating Photoshop string layers from plain
   - [x] Select string highlight will cover string bug.
   - [x] Open image, cleanup the former string objects.
   - [ ] Test in projects.
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 52ed6476088c32370bfe0b459a06908bfbb8cb33
 - [x] v0.9
   - [ ] Drag mouse to adjust tracking and font size.
   - [ ] Add Mask layer, with same color of orignal background.
   - [ ] Batch process function.
+<<<<<<< HEAD
   - [ ] Adjust data in UI.
+=======
+  - [ ] Manually Adjusting data function in UI.
+>>>>>>> 52ed6476088c32370bfe0b459a06908bfbb8cb33

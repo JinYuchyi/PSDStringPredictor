@@ -10,48 +10,78 @@ import SwiftUI
 
 struct CharacterFrameView: View {
     
-    var charFrame: CharFrame
-    
+    //var charFrame: CharFrame
+    var charFrame: CGRect
     let imgUtil = ImageUtil()
     @ObservedObject var imgProcess = imageProcessViewModel
     @State var overText: Bool = false
+    //@State var isMasked: Bool = false
 
     var body: some View {
         ZStack{
             Rectangle()
-                .fill(Color.pink).opacity(0.3)
+                .fill(Color.pink).opacity(0.1)
                 .overlay(
                     Rectangle().stroke(Color.pink, lineWidth: 1)
                 )
-                .frame(width: charFrame.rect.width, height: charFrame.rect.height)
-                //.position(x: charFrame.rect.midX, y: charFrame.rect.midY)
-            Text(charFrame.char)
-                .font(.custom("SF Pro Text", size: 18))
-                .foregroundColor(Color.pink.opacity(0.5))
-                //.position(x: charFrame.rect.midX, y: charFrame.rect.midY)
-            //Hover Window
-            if(overText == true){
-                HoverOnCharView(width: charFrame.rect.width, height: charFrame.rect.height, predictSize: String(charFrame.predictedSize), isVisible: true, positionX: charFrame.rect.midX, positionY: imgProcess.GetTargetImageSize()[1] - (self.charFrame.rect.minY ))
-                    .offset(x: 0, y: -60)
-            }
+                .frame(width: charFrame.width, height: charFrame.height)
 
         }
         .onTapGesture {
-            self.imgProcess.FetchImage()
-            var tmpImg: CIImage = CIImage.init()
-            if DataStore.colorMode == 1{
-                tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.rect.minX, PositionY: self.charFrame.rect.minY, Width: self.charFrame.rect.width, Height: self.charFrame.rect.height, MaskColor: CIColor.white)
-            }else if DataStore.colorMode == 2 {
-                tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageProcessed), PositionX: self.charFrame.rect.minX, PositionY: self.charFrame.rect.minY, Width: self.charFrame.rect.width, Height: self.charFrame.rect.height, MaskColor: CIColor.gray)
-            }
-            
-            self.imgProcess.SetTargetProcessedImage(tmpImg)
+            Tapped(rect: charFrame)
         }
-//        .onHover{over in
-//            self.overText = over
-//        }
         
     }
+    
+    func Tapped(rect: CGRect){
+        let index = imgProcess.maskList.firstIndex(of: rect)
+        if index == nil {
+            imgProcess.maskList.append(rect)
+            //isMasked = true
+            print("add")
+
+        }else{
+            //Delete rect in list
+            imgProcess.maskList.remove(at: index!)
+            //isMasked = false
+            print("remove")
+
+        }
+        
+        if imgProcess.maskList.count == 0 {
+            AddCharRectMask()
+        }
+        
+        if DataStore.colorMode == 1{
+            for rect in imgProcess.maskList{
+                AddCharRectMask()
+            }
+        }else if DataStore.colorMode == 2 {
+            for rect in imgProcess.maskList{
+                AddCharRectMask()
+            }
+        }
+        
+    }
+    
+    func AddCharRectMask(){
+        //self.imgProcess.FetchImage()
+        self.imgProcess.targetImageMasked = self.imgProcess.targetNSImage.ToCIImage()!
+        if DataStore.colorMode == 1{
+            for rect in imgProcess.maskList{
+                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
+            }
+        }else if DataStore.colorMode == 2 {
+            for rect in imgProcess.maskList{
+                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.gray)
+//                self.imgProcess.SetTargetMaskedImage(tmpImg)
+            }
+        }
+        
+        self.imgProcess.SetFilter()
+        
+    }
+    
 }
 
 //struct CharacterFrameView_Previews: PreviewProvider {

@@ -21,15 +21,39 @@ class ImageProcess: ObservableObject{
     var strObjVM = stringObjectViewModel
     //var stringObject: StringObject = StringObject()
     @Published var targetImageProcessed = CIImage.init()
+    @Published var targetImageMasked = CIImage.init()
     @Published var targetNSImage = NSImage()
     @Published var targetCIImage = CIImage()
-    
+    @Published var maskList = [CGRect]()
+    @Published var gammaValue: CGFloat = 1
+    @Published var exposureValue: CGFloat = 0
+    @Published var isConvolution: Bool = false
+
     var showImage: Bool = false
 
+    func SetFilter(){
+        if (targetImageMasked.IsValid()){
+            var tmp = ChangeGamma(targetImageMasked, CGFloat(gammaValue))!
+            tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
+            if isConvolution == true{
+                tmp = SetConv(tmp)!
+            }
+            
+            targetImageProcessed = tmp
+        }
+    }
+    
     func FetchImage() {
-        targetNSImage = DataStore.targetNSImage
+        //targetNSImage = DataStore.targetNSImage
         targetCIImage = targetNSImage.ToCIImage()!
-        targetImageProcessed = DataStore.targetImageProcessed
+        if targetImageMasked.IsValid() == false || targetImageMasked.extent.width == 0 {
+            targetImageMasked = targetCIImage
+        }
+        if targetImageProcessed.extent.width == 0 || targetImageProcessed.extent.width == 0 {
+            targetImageProcessed = targetImageMasked
+        }
+        
+        //targetImageProcessed = DataStore.targetImageProcessed
     }
     
      func GetTargetCIImage() -> CIImage{
@@ -47,32 +71,37 @@ class ImageProcess: ObservableObject{
     }
     
      func GetProcessedNSImage() -> NSImage{
-        if DataStore.targetImageProcessed.extent.width > 0 {
+        if targetImageProcessed.extent.width > 0 {
             //return targetImageProcessed = DataStore.targetImageProcessed
         }
         else{
-            DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+            targetImageProcessed = targetNSImage.ToCIImage()!
             //targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
         }
-        return DataStore.targetImageProcessed.ToNSImage()
+        return targetImageProcessed.ToNSImage()
     }
     
     func GetTargetImageSize() -> [CGFloat]{
-        return [DataStore.targetNSImage.size.width, DataStore.targetNSImage.size.height]
+        return [targetNSImage.size.width, targetNSImage.size.height]
     }
     
     func SetTargetNSImage(_ img: NSImage){
-        DataStore.targetNSImage = img
-        DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
-        if(DataStore.targetImageProcessed.extent.width > 0){}
+        targetNSImage = img
+        targetImageProcessed = targetNSImage.ToCIImage()!
+        if(targetImageProcessed.extent.width > 0){}
         else{
-            DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+            targetImageProcessed = targetNSImage.ToCIImage()!
         }
         FetchImage()
     }
     
+    func SetTargetMaskedImage(_ img: CIImage) {
+        targetImageMasked = img
+        FetchImage()
+    }
+    
     func SetTargetProcessedImage(_ img: CIImage) {
-        DataStore.targetImageProcessed = img
+        targetImageProcessed = img
         FetchImage()
     }
     
@@ -89,11 +118,7 @@ class ImageProcess: ObservableObject{
         
         return image
     }
-    
-//    func GetTargetImageSize() -> [Int]{
-//        let img : CGImage = ImageStore.loadImage(name: targetImageName)
-//        return [img.width, img.height]
-//    }
+
 
     func LoadCIImage(FileName: String) -> CIImage?{
        let fileURL = Bundle.main.url(forResource: FileName, withExtension: "png")
@@ -120,13 +145,13 @@ class ImageProcess: ObservableObject{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
                 {
                     //Reset stringobject list
-                    self.strObjVM.stringObjectListData.removeAll()
-                    DataStore.charFrameList.removeAll()
+                    self.strObjVM.CleanAll()
+                    
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.SetTargetNSImage(tmp)
                     self.showImage = true
                     
-                    self.colorModeClassifier.Prediction(fromImage: DataStore.targetImageProcessed)
+                    self.colorModeClassifier.Prediction(fromImage: self.targetImageProcessed)
                     imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
                     DataStore.imagePath = panel.url!.path
                 }
@@ -230,7 +255,6 @@ func Maximum(_ image: CIImage) -> NSColor{
     filter?.setValue(image.extent, forKey: "inputExtent")
     let filteredImage = filter?.outputImage
     let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
-    //filteredImage?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/pix_max.png"))
     
     return c
 }
@@ -243,17 +267,14 @@ func Minimun(_ image: CIImage) -> NSColor{
     filter?.setValue(image.extent, forKey: "inputExtent")
     let filteredImage = filter?.outputImage
     
-    //filteredImage?.ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/pix_min.png"))
     let img = filteredImage!.ToCGImage()
     let size = filteredImage!.extent
     let c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
-    //img?.ToCIImage().ToPNG(url: URL(fileURLWithPath: "/Users/ipdesign/Downloads/test/\(c.redComponent)-\(c.greenComponent)-\(c.blueComponent)"))
-    //print("Test: \(c.blueComponent)")
+
     return c
 }
 
 func NoiseReduction(_ image: CIImage) -> CIImage?{
-    //let pixelProcess = PixelProcess()
 
     let filter = CIFilter(name: "CINoiseReduction")
     filter?.setValue(0.3, forKey: "inputSharpness")
@@ -273,24 +294,6 @@ func ChangeSharpen(_ image: CIImage, _ value: CGFloat = 0.4)-> CIImage?{
     let filteredImage = filter?.outputImage
     return filteredImage
 }
-
-//func CompareImages(img1: CIImage, img2: CIImage) -> CIImage {
-//    if CIIExist(img: img1) && CIIExist(img: img2) == true{
-//        let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
-//        let request = VNGenerateImageFeaturePrintRequest()
-//        do {
-//            try requestHandler.perform([request])
-//            let result = request.results?.first as? VNFeaturePrintObservation
-//            var distance = Float(0)
-//            try result?.computeDistance(&distance, to: sourceResult)
-//        }catch{
-//        }
-//    }
-//    else{
-//        return CIImage.init()
-//    }
-//    
-//}
 
 func CIIExist(img: CIImage) -> Bool {
     if img.extent.width > 0 {

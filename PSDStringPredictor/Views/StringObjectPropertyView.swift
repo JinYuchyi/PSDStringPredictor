@@ -11,8 +11,9 @@ import SwiftUI
 struct StringObjectPropertyView: View {
     
     @ObservedObject var stringObjectVM = stringObjectViewModel
-    @ObservedObject var imageProcess = ImageProcess()
+    @ObservedObject var imageProcess = imageProcessViewModel
     @State var stringField: String = ""
+    @State var weight: String = "Regular"
     let pixelMgr = PixelProcess()
     
     fileprivate func FontSizeView(index: Int) -> some View {
@@ -22,6 +23,68 @@ struct StringObjectPropertyView: View {
             return Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description)).fixedSize()
         }
         
+    }
+
+    func CalcOffsetTracking() -> CGFloat{
+        var offset: CGFloat = 0
+        if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
+            offset = stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject]!.width
+        }
+        return stringObjectVM.selectedStringObject.tracking + offset
+    }
+    
+    func CalcOffsetSize() -> CGFloat{
+        var offset: CGFloat = 0
+        if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
+            offset = stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject]!.height
+        }
+        return stringObjectVM.selectedStringObject.fontSize - offset
+    }
+    
+    fileprivate func StringComponents() -> some View {
+        VStack(alignment: .leading){
+            Text("Components")
+                .foregroundColor(Color.gray)
+            ScrollView ( .horizontal, showsIndicators: true) {
+                
+                HStack {
+                    
+                    ForEach(0..<stringObjectVM.selectedStringObject.charImageList.count, id: \.self){ index in
+                        
+                        VStack{
+                            if stringObjectVM.selectedStringObject.charColorModeList[index] == 1{
+                                
+                                Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 40)
+                                    .border(Color.yellow, width: 1)
+                            }else if  stringObjectVM.selectedStringObject.charColorModeList[index] == 2{
+                                Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 40)
+                                    .border(Color.blue, width: 1)
+                            }
+
+                            TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
+                            
+                            Text("\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
+                            Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index]))
+                            
+                            FontSizeView(index: index)
+                            
+                            Button(action: {CharSaveBtnPressed(index)}){
+                                Text("􀈄")
+                            }
+                            
+                        }
+                        
+                    }
+                }
+                .fixedSize()
+            }
+        }
     }
     
     var body: some View {
@@ -38,7 +101,7 @@ struct StringObjectPropertyView: View {
                 
                 if stringObjectVM.selectedStringObject.content != "No content." {
                     HStack{
-                        let targetImg = DataStore.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObject.stringRect).ToNSImage()
+                        let targetImg = imageProcess.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObject.stringRect).ToNSImage()
                         Image(nsImage: targetImg ?? NSImage.init())
                             .resizable()
                             .scaledToFit()
@@ -72,7 +135,7 @@ struct StringObjectPropertyView: View {
                     Text("Size")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.fontSize)")
+                    Text("\(CalcOffsetSize())")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -82,7 +145,7 @@ struct StringObjectPropertyView: View {
                     Text("Tracking")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.tracking)")
+                    Text("\(CalcOffsetTracking())")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -92,8 +155,38 @@ struct StringObjectPropertyView: View {
                     Text("Font")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
-                        .frame(width:200, alignment: .topLeading)
+                    
+                    VStack{
+                        if stringObjectVM.selectedStringObject.fontSize != 0 {
+                            Text("\(stringObjectVM.StringObjectNameDict[stringObjectVM.selectedStringObject.id]!)")
+                                .frame(width:200, alignment: .topLeading)
+                                .onTapGesture {
+                                    if stringObjectVM.selectedStringObject.fontSize != 0 {
+                                        print("Tapped")
+
+                                        let id = stringObjectVM.selectedStringObject.id
+                                        let fName = stringObjectVM.StringObjectNameDict[id]
+                                        let endIndex = fName!.lastIndex(of: " ")
+                                        let startIndex = fName!.startIndex
+                                        let particialName = fName![startIndex..<endIndex!]
+                                        let weightName = fName![endIndex!..<fName!.endIndex]
+                                        
+                                        if weightName == " Regular"  {
+                                            stringObjectVM.StringObjectNameDict[id] = particialName + " Semibold"
+                                            print("\(stringObjectVM.StringObjectNameDict[id])")
+                                        }else {
+                                            stringObjectVM.StringObjectNameDict[id] = particialName + " Regular"
+                                            print("\(stringObjectVM.StringObjectNameDict[id])")
+                                        }
+                                    }
+                                }
+//                        Picker(selection: $weight, label: Text("")) {
+//                            Text("Regular").tag("Regular")
+//                            Text("Semibold").tag("Semibold")
+                        }
+
+                    }
+                    
                 }
                 
                 HStack{
@@ -111,7 +204,6 @@ struct StringObjectPropertyView: View {
                     //                        .frame(width:200, alignment: .topLeading)
                 }
                 
-                //Spacer().frame(height: 10)
                 
                 HStack{
                     Text("Bounds")
@@ -122,56 +214,7 @@ struct StringObjectPropertyView: View {
                         .frame(width:200, alignment: .topLeading)
                 }
                 
-                //Spacer().frame(height: 10)
-                //Spacer()
-                
-                VStack(alignment: .leading){
-                    Text("Components")
-                        .foregroundColor(Color.gray)
-                    ScrollView ( .horizontal, showsIndicators: true) {
-                        
-                        HStack {
-                            
-                            ForEach(0..<stringObjectVM.selectedStringObject.charImageList.count, id: \.self){ index in
-                                
-                                VStack{
-                                    if stringObjectVM.selectedStringObject.charColorModeList[index] == 1{
-
-                                    Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 40)
-                                        .border(Color.yellow, width: 1)
-                                    }else if  stringObjectVM.selectedStringObject.charColorModeList[index] == 2{
-                                        Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: 40)
-                                            .border(Color.blue, width: 1)
-                                    }
-                                        
-                                    //.padding(.vertical, -20)
-                                    
-                                    TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
-                                    
-                                    Text("\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
-                                    Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index].ToString()))
-                                    
-                                    FontSizeView(index: index)
-                                    
-                                    Button(action: {CharSaveBtnPressed(index)}){
-                                        Text("􀈄")
-                                        
-                                        
-                                    }
-                                    
-                                }
-                                
-                            }
-                        }
-                        .fixedSize()
-                    }
-                }
+                StringComponents()
                 
             }
         }
@@ -196,7 +239,7 @@ struct StringObjectPropertyView: View {
     }
     
     func StringSaveBtnPressed(){
-        let tergetImg = DataStore.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObject.stringRect)
+        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObject.stringRect)
         let denoise = NoiseReduction(tergetImg)
         let tergetImgBW = SetGrayScale(denoise!)
 

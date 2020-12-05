@@ -1,12 +1,12 @@
         var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSample.png"
-        var contentList = ["9:41", "Beaches", "Cancel", "See All", "Moments", "See All", "25 >", "Lisboa", "11 >", "Search", "/olu Photos", "Essaouira"]
-        var colorList = [[0, 0, 0], [107, 107, 116], [0, 69, 250], [0, 76, 246], [0, 0, 0], [0, 76, 246], [123, 123, 134], [0, 0, 0], [126, 126, 136], [0, 78, 245], [0, 0, 0], [0, 0, 0]]
-        var fontSizeList = [45, 51, 49, 51, 67, 51, 54, 49, 52, 29, 66, 49]
-        var fontNameList= ["SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
-        var positionList = [[96, 86], [173, 230], [911, 227], [911, 429], [64, 1737], [911, 1737], [928, 1916], [280, 2126], [942, 2154], [934, 2323], [74, 430], [280, 1886]]
-        var trackingList = [-16, -26, -20, -26, -4, -26, -25, -20, -26, 12, -4, -20]
-        var offsetList = [[2, 6], [4, 7], [3, 7], [2, 7], [4, 10], [2, 7], [4, 7], [4, 6], [3, 6], [1, 4], [0, 0], [4, 6]]
-        var names = ["0.941", "1.Beaches", "2.Cancel", "3.SeeAll", "4.Moments", "5.SeeAll", "6.25", "7.Lisboa", "8.11", "9.Search", "10.oluPhotos", "11.Essaouira"]
+        var contentList = ["Beaches", "lu Photos", "Moments", "Jul 22, 2019", "Search", "Cancel", "11", "See All", "For You", "Lisboa", "Essaouira", "Albums", "25", "Photos", "See All", "9:41"]
+        var colorList = [[255, 255, 255], [0, 0, 0], [0, 0, 0], [123, 123, 134], [0, 78, 245], [0, 69, 250], [135, 135, 144], [0, 76, 246], [122, 122, 122], [0, 0, 0], [0, 0, 0], [123, 123, 124], [123, 123, 134], [116, 113, 111], [0, 76, 246], [0, 0, 0]]
+        var fontSizeList = [50.0, 67.0, 68.0, 38.55703, 28.0, 49.0, 50.0, 51.0, 30.0, 49.0, 49.0, 29.0, 51.0, 30.0, 51.0, 45.0]
+        var fontNameList= ["SFProText-Regular", "SFProDisplay-Semibold", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold"]
+        var positionList = [[173, 230], [128, 430], [63, 1737], [278, 1946], [933, 2323], [911, 227], [943, 2154], [911, 429], [369, 2322], [280, 2126], [280, 1886], [648, 2322], [929, 1916], [91, 2323], [911, 1737], [96, 86]]
+        var trackingList = [-26.52, -3.8805969, -1.4705882, -2.0748484, 53.197544, -6.3265305, -26.52, -26.0, 4.0, -6.3265305, -6.3265305, 54.20528, -26.0, 4.0, -26.0, -5.111111]
+        var offsetList = [[4, 7], [4, 6], [4, 10], [1, 5], [1, 4], [3, 7], [3, 5], [2, 7], [2, 4], [4, 6], [4, 6], [1, 4], [3, 7], [2, 4], [2, 7], [2, 6]]
+        var names = ["0.Beaches", "1.luPhotos", "2.Moments", "3.Jul222019", "4.Search", "5.Cancel", "6.11", "7.SeeAll", "8.ForYou", "9.Lisboa", "10.Essaouira", "11.Albums", "12.25", "13.Photos", "14.SeeAll", "15.941"]
 
         //PS Preferance Setting
 

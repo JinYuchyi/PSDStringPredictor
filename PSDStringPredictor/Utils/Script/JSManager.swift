@@ -39,7 +39,7 @@ class JSManager{
         return res
     }
     
-    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Int], trackingList: [Int], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]])->Bool{
+    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]])->Bool{
         let names = NamesNormalize(names: contentList)
         //TODO: offsetList empty bug
         var jsStr = """
