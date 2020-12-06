@@ -27,6 +27,7 @@ struct StringLabel: View {
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @State var width: CGFloat = 0
+    @State var alignmentIconName = "alignLeft-round"
     
     func CalcTrackingAfterOffset() -> CGFloat {
         // var offset : CGSize = .zero
@@ -76,7 +77,19 @@ struct StringLabel: View {
         fixedEnabled = !ignored
     }
     
-    
+    func alignmentTapped() {
+        stringObjectVM.alignmentDict[stringLabel.id]  = (stringObjectVM.alignmentDict[stringLabel.id]! + 1) % 3
+        switch stringObjectVM.alignmentDict[stringLabel.id] {
+        case 0:
+            alignmentIconName  = "alignLeft-round"
+        case 1:
+            alignmentIconName  = "alignCenter-round"
+        case 2:
+            alignmentIconName  = "alignRight-round"
+        default:
+            alignmentIconName  = "alignLeft-round"
+        }
+    }
     
     fileprivate func TextLayerView() -> some View {
         
@@ -147,13 +160,22 @@ struct StringLabel: View {
             }.IsHidden(condition: fixedEnabled && ignoredEnabled)
             
             HStack{
+                //Button for alignment
+                Button(action: {alignmentTapped()}){
+                    CustomImage( name: alignmentIconName)
+                        .scaledToFit()
+                }
+                .buttonStyle(RoundButtonStyle())
+                .frame(width: 20, height: 20)
+                .padding(-4)
+                
                 //Button for show detail
                 Button(action: {self.InfoBtnTapped()}){
                     CustomImage( name: "detail-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
-                .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 20, height: 20)
                 .padding(-4)
                 
                 //Button for fix
@@ -162,7 +184,7 @@ struct StringLabel: View {
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
-                .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 20, height: 20)
                 .padding(-4)
                 .IsHidden(condition: fixedEnabled)
                 
@@ -172,12 +194,13 @@ struct StringLabel: View {
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
-                .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 20, height: 20)
                 .padding(-4)
                 .IsHidden(condition: ignoredEnabled)
             }
-            .frame(width: 30, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .trailing)
-            .position(x: stringLabel.stringRect.maxX, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.maxY - 5 )
+            .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height, alignment: .bottomTrailing)
+            //.position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  )
+            .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2 , y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  )
         }
     }
 }

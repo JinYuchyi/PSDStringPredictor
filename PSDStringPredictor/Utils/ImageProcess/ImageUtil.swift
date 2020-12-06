@@ -87,16 +87,16 @@ class ImageUtil{
         
     }
     
-    func OutputAllStringPng(FromImage img: CIImage, ToFolder path: String){
-        
-        for e in DataStore.stringObjectList {
-            let filePath = path + String(e.id.hashValue) + ".png"
-            let url = URL(fileURLWithPath: filePath)
-
-            let tmp = img.cropped(to: e.stringRect)
-            tmp.ToPNG(url: url)
-        }
-    }
+//    func OutputAllStringPng(FromImage img: CIImage, ToFolder path: String){
+//        
+//        for e in DataStore.stringObjectList {
+//            let filePath = path + String(e.id.hashValue) + ".png"
+//            let url = URL(fileURLWithPath: filePath)
+//
+//            let tmp = img.cropped(to: e.stringRect)
+//            tmp.ToPNG(url: url)
+//        }
+//    }
 
     
     

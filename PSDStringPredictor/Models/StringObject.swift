@@ -69,7 +69,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var colorMode: Int
     var charColorModeList: [Int]
     var FontName: String
-    
+    var alignment: Int
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
@@ -98,6 +98,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.trackingPS = 0
         isPredictedList = []
         FontName = ""
+        alignment = 0
         self.fontWeight = PredictFontWeight()
         colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
@@ -126,6 +127,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         isForbidden = false
         charColorModeList = []
         FontName = ""
+        alignment = 0
         self.fontWeight = PredictFontWeight()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
@@ -418,7 +420,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         
         if img.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
-            DataStore.stringObjectList = stringObjects
+            //DataStore.stringObjectList = stringObjects
             return stringObjects
         }
         else{

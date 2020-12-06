@@ -44,7 +44,7 @@ class StringObjectViewModel: ObservableObject{
     @Published var StringObjectNameDict: [UUID:String] = [:]
     
     @Published var DragOffsetDict: [StringObject: CGSize] = [:]
-    
+    @Published var alignmentDict: [UUID:Int] = [:]
     @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
     
     @Published var stringObjectOutputList: [StringObject] = []
@@ -83,8 +83,11 @@ class StringObjectViewModel: ObservableObject{
     func FetchStringObjectFontNameDict(){
         for obj in stringObjectListData{
             StringObjectNameDict[obj.id] = obj.CalcFontFullName()
+            alignmentDict[obj.id] = obj.alignment
         }
     }
+    
+
 
     func CreatePSD(){
         UpdatePSD()
@@ -123,8 +126,8 @@ class StringObjectViewModel: ObservableObject{
         var offsetList = [[Int16]]()
         var trackingOffsetList = [Float]()
         var sizeOffsetList = [Float]()
-        
-        for obj in DataStore.stringObjectList{
+        var alignmentList = [Int]()
+        for obj in stringObjectListData{
             contentList.append(obj.content)
             var tmpColor: [Int] = []
             
@@ -163,9 +166,10 @@ class StringObjectViewModel: ObservableObject{
             //}
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((imageProcessViewModel.targetNSImage.size.height - obj.stringRect.minY).rounded())])
+            //alignmentList.append(1)
         }
 
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList)
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList)
         if success == true{
             let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
             PythonScriptManager.RunScript(str: cmd)
