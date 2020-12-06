@@ -127,6 +127,7 @@ class StringObjectViewModel: ObservableObject{
         var trackingOffsetList = [Float]()
         var sizeOffsetList = [Float]()
         var alignmentList = [Int]()
+        var widthList = [Float]()
         for obj in stringObjectListData{
             contentList.append(obj.content)
             var tmpColor: [Int] = []
@@ -166,10 +167,18 @@ class StringObjectViewModel: ObservableObject{
             //}
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((imageProcessViewModel.targetNSImage.size.height - obj.stringRect.minY).rounded())])
-            //alignmentList.append(1)
+            widthList.append(Float(obj.stringRect.width))
+            
+            //alignment
+            if alignmentDict[obj.id] == nil {
+                alignmentList.append(0)
+            }else {
+                alignmentList.append(alignmentDict[obj.id]!)
+            }
         }
+        
 
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList)
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, widthList: widthList)
         if success == true{
             let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
             PythonScriptManager.RunScript(str: cmd)
