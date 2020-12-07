@@ -14,6 +14,8 @@ class OCR: ObservableObject{
     
     func GetRectsFromObservations(_ observations : [VNRecognizedTextObservation], _ width : Int, _ height : Int)->[CGRect]{
         var rects : [CGRect] = []
+        //var total = observations.count
+        var index = 0
         for observation in observations{
             // Find the top observation.
             guard let candidate = observation.topCandidates(1).first else { continue }
@@ -31,6 +33,7 @@ class OCR: ObservableObject{
             let normBox = VNImageRectForNormalizedRect(boundingBox, width, height)
             let newBox = CGRect.init(x: Int(normBox.origin.x.rounded()), y: Int(normBox.origin.y.rounded()), width: Int(normBox.width.rounded()), height: Int(normBox.height.rounded()))
             rects.append(newBox)
+            index += 1
             //return VNImageRectForNormalizedRect(boundingBox, width, height)
         }
         return rects

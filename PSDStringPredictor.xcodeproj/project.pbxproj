@@ -61,6 +61,7 @@
 		3F820854251112BA00832192 /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F820853251112BA00832192 /* FontTracking.swift */; };
 		3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8208552516068100832192 /* StringObjectViewModel.swift */; };
 		3F8460A2251057FF00788176 /* CompareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8460A1251057FF00788176 /* CompareImage.swift */; };
+		3F853B6C257E6C0C002507C4 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B6B257E6C0C002507C4 /* IndicatorView.swift */; };
 		3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7D250F2855003B652C /* DataStore.swift */; };
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
 		3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */; };
@@ -159,6 +160,7 @@
 		3F820853251112BA00832192 /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		3F8208552516068100832192 /* StringObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectViewModel.swift; sourceTree = "<group>"; };
 		3F8460A1251057FF00788176 /* CompareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareImage.swift; sourceTree = "<group>"; };
+		3F853B6B257E6C0C002507C4 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		3F9B3A7D250F2855003B652C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
 		3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessControlView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */,
 				3F9C3959256F895F00F686A7 /* psdPageView.swift */,
 				3F9C395C256F8A0C00F686A7 /* psdPagesView.swift */,
+				3F853B6B257E6C0C002507C4 /* IndicatorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
 				3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */,
 				3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */,
+				3F853B6C257E6C0C002507C4 /* IndicatorView.swift in Sources */,
 				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
 				3FA1C5B225567D5500FC6DC3 /* FontSizeTabularRegressor.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,

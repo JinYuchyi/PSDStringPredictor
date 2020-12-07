@@ -29,6 +29,10 @@ class ImageProcess: ObservableObject{
     @Published var exposureValue: CGFloat = 0
     @Published var isConvolution: Bool = false
     
+    //Indicator
+    @Published var indicatorIndex: Int = 0
+    @Published var indicatorTitle: String = "Title"
+    
     var lightModeHSVList: [[CGFloat]] = []
     var darkModeHSVList: [[CGFloat]] = []
 
