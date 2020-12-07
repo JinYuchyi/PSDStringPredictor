@@ -28,11 +28,11 @@ struct ControlPanel: View {
     
     var body: some View {
         
-
+        
         
         VStack{
             
-     
+            
             
             Text("Caculate String Layers")
                 .foregroundColor(.gray)
@@ -70,19 +70,30 @@ struct ControlPanel: View {
             .frame( maxWidth: .infinity)
             .padding(.bottom)
             .padding(.bottom)
+            
+            Button(action: {self.Debug()}){
+                Text("Test")
+                    .frame(minWidth: 200,  maxWidth: .infinity)
+                
+            }
         }
         .padding()
-
+        
     }
     
     
     
     
     func Debug(){
-//        pixelProcess.FindStrongestColor(img: imageProcessVM.targetCIImage)
-//        imageProcessVM.FetchImage()
-//        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageProcessVM.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 3, Height: 3, MaskColor: .red)
-//        imageProcessVM.SetTargetProcessedImage(tmpImg)
+        for c in DataStore.colorLightModeList{
+            let color = NSColor(red: c[0]/255, green: c[1]/255, blue: c[2]/255, alpha: 1)
+            print("\(color.getHSV())")
+            
+        }
+        //        pixelProcess.FindStrongestColor(img: imageProcessVM.targetCIImage)
+        //        imageProcessVM.FetchImage()
+        //        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageProcessVM.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 3, Height: 3, MaskColor: .red)
+        //        imageProcessVM.SetTargetProcessedImage(tmpImg)
     }
     
 }

@@ -80,23 +80,10 @@ class ImageUtil{
             mask = mask.cropped(to: rects[i])
             ImageOntop(OverlayImage: mask, BGImage: &img )
         }
-        //return img
-        //Save Image
-//        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtextmask.png")
-//        img.ToPNG(url: url)
         
     }
     
-//    func OutputAllStringPng(FromImage img: CIImage, ToFolder path: String){
-//        
-//        for e in DataStore.stringObjectList {
-//            let filePath = path + String(e.id.hashValue) + ".png"
-//            let url = URL(fileURLWithPath: filePath)
-//
-//            let tmp = img.cropped(to: e.stringRect)
-//            tmp.ToPNG(url: url)
-//        }
-//    }
+
 
     
     

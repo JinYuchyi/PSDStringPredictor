@@ -18,7 +18,7 @@ class ImageProcess: ObservableObject{
 //    @Published var targetImageSize: [Int64] = []
     //@EnvironmentObject var data: DataStore
     let colorModeClassifier = ColorModeClassifier()
-    var strObjVM = stringObjectViewModel
+    //var strObjVM = stringObjectViewModel
     //var stringObject: StringObject = StringObject()
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetImageMasked = CIImage.init()
@@ -28,6 +28,10 @@ class ImageProcess: ObservableObject{
     @Published var gammaValue: CGFloat = 1
     @Published var exposureValue: CGFloat = 0
     @Published var isConvolution: Bool = false
+    
+    var lightModeHSVList: [[CGFloat]] = []
+    var darkModeHSVList: [[CGFloat]] = []
+
 
     var showImage: Bool = false
 
@@ -38,10 +42,73 @@ class ImageProcess: ObservableObject{
             if isConvolution == true{
                 tmp = SetConv(tmp)!
             }
-            
             targetImageProcessed = tmp
         }
     }
+    
+    func FetchStandardHSVList(){
+        for c in DataStore.colorLightModeList{
+            let color = NSColor(red: c[0]/255, green: c[1]/255, blue: c[2]/255, alpha: 1)
+            lightModeHSVList.append([color.getHSV().0, color.getHSV().1, color.getHSV().2])
+            
+        }
+        for c in DataStore.colorDarkModeList{
+            let color = NSColor(red: c[0]/255, green: c[1]/255, blue: c[2]/255, alpha: 1)
+            darkModeHSVList.append([color.getHSV().0, color.getHSV().1, color.getHSV().2])
+        }
+        //print(lightModeHSVList)
+    }
+    
+    func FindNearestStandardHSV(_ cl: NSColor) -> NSColor{
+       //Find the color in list where hue is most close
+        var min: CGFloat = 100
+        var targetList: [[CGFloat]] = []
+        var index = 0
+        var resultIndex = 0
+        
+        if DataStore.colorMode == 1 {
+            targetList = lightModeHSVList
+        }else if DataStore.colorMode == 2 {
+            targetList = darkModeHSVList
+        }
+        for c in targetList{
+            let gap = (cl.redComponent - c[0]) * (cl.redComponent - c[0])  + (cl.greenComponent - c[1])*(cl.greenComponent - c[1])  + (cl.blueComponent - c[2])*(cl.blueComponent - c[2])
+            if gap < min {
+                min = gap
+                resultIndex = index
+            }
+            index += 1
+        }
+        return NSColor(red: targetList[resultIndex][0], green: targetList[resultIndex][1], blue: targetList[resultIndex][2], alpha: 1)
+        //return resultIndex
+    }
+    
+    func FindNearestStandardRGB(_ cl: CGColor) -> [CGFloat]{
+       //Find the color in list where hue is most close
+        var min: CGFloat = 100
+        var targetList: [[CGFloat]] = []
+        var index = 0
+        var resultIndex = 0
+        
+        if DataStore.colorMode == 1 {
+            targetList = DataStore.colorLightModeList
+        }else if DataStore.colorMode == 2 {
+            targetList = DataStore.colorDarkModeList
+        }
+        for c in targetList{
+            let gap = (cl.components![0] - c[0]/255)*(cl.components![0] - c[0]/255) + (cl.components![1] - c[1]/255)*(cl.components![1] - c[1]/255) + (cl.components![2] - c[2]/255)*(cl.components![2] - c[2]/255)
+            if gap < min {
+                min = gap
+                resultIndex = index
+            }
+            index += 1
+        }
+
+        //return CGColor(red: targetList[resultIndex][0], green: targetList[resultIndex][1], blue: targetList[resultIndex][2], alpha: 1)
+        return targetList[resultIndex]
+    }
+    
+ 
     
     func FetchImage() {
         //targetNSImage = DataStore.targetNSImage
@@ -145,7 +212,7 @@ class ImageProcess: ObservableObject{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
                 {
                     //Reset stringobject list
-                    self.strObjVM.CleanAll()
+                    stringObjectViewModel.CleanAll()
                     
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.SetTargetNSImage(tmp)

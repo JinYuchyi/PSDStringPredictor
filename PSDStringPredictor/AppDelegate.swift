@@ -38,7 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.makeKeyAndOrderFront(nil)
         window.title = "StringGenerator"
         
-        //Prepare the config settinh
+        //Prepare the config setting
         PreSettingConfig()
         
     }
@@ -46,6 +46,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func PreSettingConfig(){
         stringObjectVM.frameOverlay = false
         stringObjectVM.stringOverlay = true
+        //Load color data
+        imageProcessViewModel.FetchStandardHSVList()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

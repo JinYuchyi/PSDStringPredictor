@@ -45,77 +45,90 @@ function setTextAlignment(alignment){
 }
 
 function createRectangle(layerSet, layerName, posX, posY, width, height, color1){
+    var artLayerRef = layerSet.artLayers.add()
+    artLayerRef.name = layerName
+    var selRegion = Array(Array(posX, posY),
+                    Array(posX + width, posY), 
+                    Array(posX + width, posY + height), 
+                    Array(posX, posY + height),
+                    Array(posX, posY))
+
+    app.activeDocument.selection.select(selRegion)
+    fillColor = new SolidColor
+    fillColor.rgb.red = color1[0]
+    fillColor.rgb.green = color1[1]
+    fillColor.rgb.blue = color1[2]
+    app.activeDocument.selection.fill(fillColor)
    //var y = arguments.length;
-   var i = 0;
+//    var i = 0;
 
-   var lineArray = [];
-   lineArray[0] = new PathPointInfo;
-   lineArray[0].kind = PointKind.CORNERPOINT;
-   lineArray[0].anchor = [posX, posY];
-   lineArray[0].leftDirection = lineArray[0].anchor;
-   lineArray[0].rightDirection = lineArray[0].anchor;
+//    var lineArray = [];
+//    lineArray[0] = new PathPointInfo;
+//    lineArray[0].kind = PointKind.CORNERPOINT;
+//    lineArray[0].anchor = [posX, posY];
+//    lineArray[0].leftDirection = lineArray[0].anchor;
+//    lineArray[0].rightDirection = lineArray[0].anchor;
 
-   lineArray[1] = new PathPointInfo;
-   lineArray[1].kind = PointKind.CORNERPOINT;
-   lineArray[1].anchor = [posX + width, posY];
-   lineArray[1].leftDirection = lineArray[1].anchor;
-   lineArray[1].rightDirection = lineArray[1].anchor;
+//    lineArray[1] = new PathPointInfo;
+//    lineArray[1].kind = PointKind.CORNERPOINT;
+//    lineArray[1].anchor = [posX + width, posY];
+//    lineArray[1].leftDirection = lineArray[1].anchor;
+//    lineArray[1].rightDirection = lineArray[1].anchor;
 
-   lineArray[2] = new PathPointInfo;
-   lineArray[2].kind = PointKind.CORNERPOINT;
-   lineArray[2].anchor = [posX + width, posY + height];
-   lineArray[2].leftDirection = lineArray[2].anchor;
-   lineArray[2].rightDirection = lineArray[2].anchor;
+//    lineArray[2] = new PathPointInfo;
+//    lineArray[2].kind = PointKind.CORNERPOINT;
+//    lineArray[2].anchor = [posX + width, posY + height];
+//    lineArray[2].leftDirection = lineArray[2].anchor;
+//    lineArray[2].rightDirection = lineArray[2].anchor;
 
-   lineArray[3] = new PathPointInfo;
-   lineArray[3].kind = PointKind.CORNERPOINT;
-   lineArray[3].anchor = [posX, posY + height];
-   lineArray[3].leftDirection = lineArray[3].anchor;
-   lineArray[3].rightDirection = lineArray[3].anchor;
+//    lineArray[3] = new PathPointInfo;
+//    lineArray[3].kind = PointKind.CORNERPOINT;
+//    lineArray[3].anchor = [posX, posY + height];
+//    lineArray[3].leftDirection = lineArray[3].anchor;
+//    lineArray[3].rightDirection = lineArray[3].anchor;
 
-   var lineSubPathArray = new SubPathInfo();
-   lineSubPathArray.closed = true;
-   lineSubPathArray.operation = ShapeOperation.SHAPEADD;
-   lineSubPathArray.entireSubPath = lineArray;
-   var myPathItem = docRef.pathItems.add(layerName, [lineSubPathArray]);
-   
+//    var lineSubPathArray = new SubPathInfo();
+//    lineSubPathArray.closed = true;
+//    lineSubPathArray.operation = ShapeOperation.SHAPEADD;
+//    lineSubPathArray.entireSubPath = lineArray;
+//    var myPathItem = docRef.pathItems.add(layerName, [lineSubPathArray]);
 
-   var desc88 = new ActionDescriptor();
-   var ref60 = new ActionReference();
-   ref60.putClass(stringIDToTypeID("contentLayer"));
-   desc88.putReference(charIDToTypeID("null"), ref60);
-   var desc89 = new ActionDescriptor();
-   var desc90 = new ActionDescriptor();
-   var desc91 = new ActionDescriptor();
-   desc91.putDouble(charIDToTypeID("Rd  "), color1[0]); // R
-   desc91.putDouble(charIDToTypeID("Grn "), color1[1]); // G
-   desc91.putDouble(charIDToTypeID("Bl  "), color1[2]); // B
-   var id481 = charIDToTypeID("RGBC");
-   desc90.putObject(charIDToTypeID("Clr "), id481, desc91);
-   desc89.putObject(charIDToTypeID("Type"), stringIDToTypeID("solidColorLayer"), desc90);
-   desc88.putObject(charIDToTypeID("Usng"), stringIDToTypeID("contentLayer"), desc89);
-   executeAction(charIDToTypeID("Mk  "), desc88, DialogModes.NO);
-   rename(layerName)
-   myPathItem.remove();
-}
+//    var desc88 = new ActionDescriptor();
+//    var ref60 = new ActionReference();
+//    ref60.putClass(stringIDToTypeID("contentLayer"));
+//    desc88.putReference(charIDToTypeID("null"), ref60);
+//    var desc89 = new ActionDescriptor();
+//    var desc90 = new ActionDescriptor();
+//    var desc91 = new ActionDescriptor();
+//    desc91.putDouble(charIDToTypeID("Rd  "), color1[0]); // R
+//    desc91.putDouble(charIDToTypeID("Grn "), color1[1]); // G
+//    desc91.putDouble(charIDToTypeID("Bl  "), color1[2]); // B
+//    var id481 = charIDToTypeID("RGBC");
+//    desc90.putObject(charIDToTypeID("Clr "), id481, desc91);
+//    desc89.putObject(charIDToTypeID("Type"), stringIDToTypeID("solidColorLayer"), desc90);
+//    desc88.putObject(charIDToTypeID("Usng"), stringIDToTypeID("contentLayer"), desc89);
+//    executeAction(charIDToTypeID("Mk  "), desc88, DialogModes.NO);
+//    //rename(layerName)
+//    myPathItem.remove();
+// }
 
-function rename(name){
-    var idset = stringIDToTypeID( "set" );
-    var desc920 = new ActionDescriptor();
-    var idnull = stringIDToTypeID( "null" );
-        var ref264 = new ActionReference();
-        var idlayer = stringIDToTypeID( "layer" );
-        var idordinal = stringIDToTypeID( "ordinal" );
-        var idtargetEnum = stringIDToTypeID( "targetEnum" );
-        ref264.putEnumerated( idlayer, idordinal, idtargetEnum );
-    desc920.putReference( idnull, ref264 );
-    var idto = stringIDToTypeID( "to" );
-        var desc921 = new ActionDescriptor();
-        var idname = stringIDToTypeID( "name" );
-        desc921.putString( idname, name );
-    var idlayer = stringIDToTypeID( "layer" );
-    desc920.putObject( idto, idlayer, desc921 );
-executeAction( idset, desc920, DialogModes.NO );
+// function rename(name){
+//     var idset = stringIDToTypeID( "set" );
+//     var desc920 = new ActionDescriptor();
+//     var idnull = stringIDToTypeID( "null" );
+//         var ref264 = new ActionReference();
+//         var idlayer = stringIDToTypeID( "layer" );
+//         var idordinal = stringIDToTypeID( "ordinal" );
+//         var idtargetEnum = stringIDToTypeID( "targetEnum" );
+//         ref264.putEnumerated( idlayer, idordinal, idtargetEnum );
+//     desc920.putReference( idnull, ref264 );
+//     var idto = stringIDToTypeID( "to" );
+//         var desc921 = new ActionDescriptor();
+//         var idname = stringIDToTypeID( "name" );
+//         desc921.putString( idname, name );
+//     var idlayer = stringIDToTypeID( "layer" );
+//     desc920.putObject( idto, idlayer, desc921 );
+// executeAction( idset, desc920, DialogModes.NO );
 }
 
 // =======================================================

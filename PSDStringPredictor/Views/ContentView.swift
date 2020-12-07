@@ -102,7 +102,7 @@ struct ContentView: View {
 //            Button(action: {self.Debug()}){
 //                Text("Debug")
 //            }
-
+            
         }
         
     }

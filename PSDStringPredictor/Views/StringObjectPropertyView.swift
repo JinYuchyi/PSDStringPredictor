@@ -197,6 +197,8 @@ struct StringObjectPropertyView: View {
                     Rectangle()
                         .fill(stringObjectVM.selectedStringObject.color.ToColor())
                         .frame(width:10, height:10, alignment: .center)
+                    
+                    Text("\(String(format: "%.2f", stringObjectVM.selectedStringObject.color.components![0] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObject.color.components![1] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObject.color.components![2] * 255))")
                     //                    Text("\(stringObjectVM.selectedStringObject.color.ToColor())")
                     //                        .foregroundColor(Color.gray)
                     //                        .frame(width:80, alignment: .topLeading)

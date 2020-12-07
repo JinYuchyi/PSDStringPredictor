@@ -23,11 +23,10 @@ if(len >= 1){
 }
 
 //Add new folder
-var layerSetRef = app.activeDocument.layerSets.add()
-layerSetRef.name = "StringLayersGroup"
 var layerSetRef1 = app.activeDocument.layerSets.add()
 layerSetRef1.name = "MaskLayersGroup"
-
+var layerSetRef = app.activeDocument.layerSets.add()
+layerSetRef.name = "StringLayersGroup"
 
 //Add Text layer
 const num = contentList.length
@@ -59,11 +58,10 @@ for (var i = 0; i < num; i++){
     artLayerRef.name = names[i]
     selectLayer(artLayerRef.name)
     setTextAlignment(alignName)
+
+    //Create Mask Layers
+    offset = 5
+    fillColor = bgColorList[i]
+    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - offset,positionList[i][1] - rectList[i][3] - offset, rectList[i][2] + offset, rectList[i][3] + offset, fillColor)
 }
 
-//Add BG Layer
-for (var i = 0; i < num; i++){
-    offset = 5
-    textColor = bgColorList[i]
-    createRectangle(layerSetRef1, names[i], positionList[i][0] - offset,positionList[i][1] - rectList[i][3] - offset, rectList[i][2] + offset, rectList[i][3] + offset, textColor)
-}

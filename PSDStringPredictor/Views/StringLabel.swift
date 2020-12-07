@@ -56,7 +56,7 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
-        //stringObjectVM.CreateBGLayer(obj: self.stringLabel)
+        imageProcessViewModel.FindNearestStandardRGB(stringLabel.color)
     }
     
     func FixedBtnTapped(){
