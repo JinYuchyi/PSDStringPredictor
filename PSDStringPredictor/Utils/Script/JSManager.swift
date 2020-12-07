@@ -51,7 +51,7 @@ class JSManager{
         return inString
     }
     
-    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [Int], widthList: [Float])->Bool{
+    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [Int], rectList: [[Float]], bgColorList:[[Float]])->Bool{
         let names = NamesNormalize(names: contentList)
         let functionJSStr = ReadJSToString(jsPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Functions.js")
         var variablesStr = """
@@ -64,8 +64,9 @@ class JSManager{
                 var trackingList = \(trackingList)
                 var offsetList = \(offsetList)
                 var alignmentList = \(alignmentList)
-                var widthList = \(widthList)
+                var rectList = \(rectList)
                 var names = \(names)
+                var bgColorList = \(bgColorList)
         """
         let mainJSStr = ReadJSToString(jsPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Main.js")
 

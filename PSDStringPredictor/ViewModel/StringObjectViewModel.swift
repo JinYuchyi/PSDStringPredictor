@@ -25,7 +25,7 @@ import Foundation
 class StringObjectViewModel: ObservableObject{
     let jsMgr = JSManager()
     var stringObject: StringObject = StringObject()
-    
+    let pixelProcess = PixelProcess()
     //@ObservedObject var imageViewModel: ImageProcess = ImageProcess()
     //var data: DataStore = DataStore()
     @Published var stringObjectListData: [StringObject] = []
@@ -46,12 +46,12 @@ class StringObjectViewModel: ObservableObject{
     @Published var DragOffsetDict: [StringObject: CGSize] = [:]
     @Published var alignmentDict: [UUID:Int] = [:]
     @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
-    
     @Published var stringObjectOutputList: [StringObject] = []
     
     @Published var stringOverlay: Bool = true
     @Published var frameOverlay: Bool = true
-    
+    //var bgColorDict: [UUID:[[Float]]] = [:]
+
     
     
     func PredictStrings()  {
@@ -114,6 +114,12 @@ class StringObjectViewModel: ObservableObject{
             selectedCharImageListObjectList.append( temp )
         }
     }
+    
+    func CalcBGColor(obj: StringObject) -> [Float]{
+        let img = imageProcessViewModel.targetCIImage.ToCGImage()!
+        let color1 = pixelProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(imageProcessViewModel.targetNSImage.size.height - obj.stringRect.origin.y), img: img)
+        return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
+    }
 
     func UpdatePSD(){
         var psdPath = DataStore.imagePath
@@ -127,7 +133,8 @@ class StringObjectViewModel: ObservableObject{
         var trackingOffsetList = [Float]()
         var sizeOffsetList = [Float]()
         var alignmentList = [Int]()
-        var widthList = [Float]()
+        var rectList = [[Float]]()
+        var bgClolorList = [[Float]]()
         for obj in stringObjectListData{
             contentList.append(obj.content)
             var tmpColor: [Int] = []
@@ -154,7 +161,6 @@ class StringObjectViewModel: ObservableObject{
             //Calc the offset of String
             var keyvalues: [String: AnyObject] = [:]
             let char = (obj.content.first)
-            //if (char!.isNumber || char!.isLetter){
             keyvalues["char"] = String(char!) as AnyObject
             keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
             let items = CharBoundsDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
@@ -164,10 +170,10 @@ class StringObjectViewModel: ObservableObject{
             }else{
                 offsetList.append([0,0])
             }
-            //}
+            
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((imageProcessViewModel.targetNSImage.size.height - obj.stringRect.minY).rounded())])
-            widthList.append(Float(obj.stringRect.width))
+            rectList.append([Float(obj.stringRect.minX), Float(obj.stringRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
             
             //alignment
             if alignmentDict[obj.id] == nil {
@@ -175,10 +181,14 @@ class StringObjectViewModel: ObservableObject{
             }else {
                 alignmentList.append(alignmentDict[obj.id]!)
             }
+            
+            //BGColor
+            let tmpBGColor = CalcBGColor(obj: obj)
+            bgClolorList.append(tmpBGColor)
         }
         
 
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, widthList: widthList)
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList)
         if success == true{
             let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
             PythonScriptManager.RunScript(str: cmd)

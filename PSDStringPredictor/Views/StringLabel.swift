@@ -56,16 +56,13 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
+        //stringObjectVM.CreateBGLayer(obj: self.stringLabel)
     }
     
     func FixedBtnTapped(){
         fixed = !fixed
         stringObjectVM.stringObjectFixedDict[stringLabel] = fixed
-        //        if ignored == true {
-        //            ignored = false
-        //        }
         ignoredEnabled = !fixed
-        //print("Fixed List: \(stringObjectVM.stringObjectFixedDict)")
     }
     
     func IgnoreBtnTapped(){
@@ -92,17 +89,13 @@ struct StringLabel: View {
     }
     
     fileprivate func TextLayerView() -> some View {
-        
-        //Text(stringLabel.content)
-        //if stringObjectVM.selectedStringObject.fontSize != 0  {
-            Text(stringLabel.content)
-                .foregroundColor(stringLabel.color.ToColor())
-                .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id]!, size: CalcSizeAfterOffset()))
-                .tracking(CalcTrackingAfterOffset())
-                .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-//        }else{
-//
-//        }
+
+        Text(stringLabel.content)
+            .foregroundColor(stringLabel.color.ToColor())
+            .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id]!, size: CalcSizeAfterOffset()))
+            .tracking(CalcTrackingAfterOffset())
+            .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
+
         return AnyView(EmptyView())
     }
     
@@ -128,13 +121,12 @@ struct StringLabel: View {
                     .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 
-                //if stringObjectVM.selectedStringObject.fontSize != 0  {
-                    Text(stringLabel.content)
-                        .foregroundColor(stringLabel.color.ToColor())
-                        .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id]!, size: CalcSizeAfterOffset()))
-                        .tracking(CalcTrackingAfterOffset())
-                        .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-                //}
+                Text(stringLabel.content)
+                    .foregroundColor(stringLabel.color.ToColor())
+                    .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id]!, size: CalcSizeAfterOffset()))
+                    .tracking(CalcTrackingAfterOffset())
+                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
+                
                 
                 //Drag layer
                 Rectangle()
@@ -160,18 +152,18 @@ struct StringLabel: View {
             }.IsHidden(condition: fixedEnabled && ignoredEnabled)
             
             HStack{
-                //Button for alignment
-                Button(action: {alignmentTapped()}){
-                    CustomImage( name: alignmentIconName)
+                //Button for show detail
+                Button(action: {self.InfoBtnTapped()}){
+                    CustomImage( name: "detail-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: 20, height: 20)
                 .padding(-4)
                 
-                //Button for show detail
-                Button(action: {self.InfoBtnTapped()}){
-                    CustomImage( name: "detail-round")
+                //Button for alignment
+                Button(action: {alignmentTapped()}){
+                    CustomImage( name: alignmentIconName)
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
