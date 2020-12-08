@@ -50,17 +50,26 @@ class StringObjectViewModel: ObservableObject{
     
     @Published var stringOverlay: Bool = true
     @Published var frameOverlay: Bool = true
-    //var bgColorDict: [UUID:[[Float]]] = [:]
 
-    
+    @Published var indicatorTitle: String = ""
+
+    func indicatorTitleTest(){
+        self.indicatorTitle = ""
+    }
     
     func PredictStrings()  {
-        stringObjectListData = stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
-        //stringObjectListData = DataStore.stringObjectList
-        DataStore.FillCharFrameList()
-        FetchCharFrameListData()
-        FetchCharFrameListRects()
-        FetchStringObjectFontNameDict()
+        //DispatchQueue.global().sync {
+            UpdataIndicatorTitle("Predicting Strings...")
+            print("任务")
+        //}
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self.stringObjectListData = self.stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
+            DataStore.FillCharFrameList()
+            self.FetchCharFrameListData()
+            self.FetchCharFrameListRects()
+            self.FetchStringObjectFontNameDict()
+            self.indicatorTitle = ""
+        }
     }
     
     func CleanAll(){
@@ -121,6 +130,10 @@ class StringObjectViewModel: ObservableObject{
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
 
+    func UpdataIndicatorTitle(_ str: String){
+        indicatorTitle = str
+    }
+    
     func UpdatePSD(){
         var psdPath = DataStore.imagePath
         var contentList = [String]()

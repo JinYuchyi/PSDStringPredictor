@@ -92,7 +92,6 @@ class OCR: ObservableObject{
     
     func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObject]{
         var strobjs : [StringObject] = []
-        
         //Get Observations
         let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
@@ -127,7 +126,6 @@ class OCR: ObservableObject{
         }
 
         strobjs = FiltStringObjects(originalList: strobjs)
-        
         return strobjs
     }
     
@@ -187,6 +185,8 @@ class OCR: ObservableObject{
 
         return (newList)
     }
+    
+
     
 
     

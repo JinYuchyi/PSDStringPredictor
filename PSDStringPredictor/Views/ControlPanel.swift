@@ -41,7 +41,7 @@ struct ControlPanel: View {
             
             HStack{
                 Button(action: {self.stringObjectVM.PredictStrings()}){
-                    Text("Single Page")
+                    Text("Single PSD")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
                 Button(action: {self.stringObjectVM.PredictStrings()}){
@@ -57,7 +57,7 @@ struct ControlPanel: View {
                 .frame(width: 300, alignment: .leading)
             HStack{
                 Button(action: {self.stringObjectVM.CreatePSD()}){
-                    Text("Single Page")
+                    Text("Single PSD")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                     
                 }
@@ -85,11 +85,9 @@ struct ControlPanel: View {
     
     
     func Debug(){
-        for c in DataStore.colorLightModeList{
-            let color = NSColor(red: c[0]/255, green: c[1]/255, blue: c[2]/255, alpha: 1)
-            print("\(color.getHSV())")
-            
-        }
+        stringObjectVM.UpdataIndicatorTitle("HiHI")
+        //imageProcessVM.indicatorTitle = "ttest"
+        //imageProcessVM.indicatorTitle += "ttest"
         //        pixelProcess.FindStrongestColor(img: imageProcessVM.targetCIImage)
         //        imageProcessVM.FetchImage()
         //        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageProcessVM.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 3, Height: 3, MaskColor: .red)
