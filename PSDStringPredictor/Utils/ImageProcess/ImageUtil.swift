@@ -1,5 +1,6 @@
 import SwiftUI
 import Vision
+
 //extension View {
 //    func takeScreenshot(origin: CGPoint, size: CGSize) -> NSImage {
 //        let window = NSWindow(frame: CGRect(origin: origin, size: size))
@@ -83,9 +84,18 @@ class ImageUtil{
         
     }
     
+    func imageDataProperties(_ imageData: Data) -> NSDictionary? {
+        if let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil)
+        {
+          if let dictionary = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) {
+            return dictionary
+          }
+        }
+        return nil
+      }
 
 
-    
+
     
     
     

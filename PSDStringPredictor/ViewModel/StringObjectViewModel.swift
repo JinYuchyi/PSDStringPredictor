@@ -44,6 +44,7 @@ class StringObjectViewModel: ObservableObject{
     @Published var frameOverlay: Bool = true
 
     @Published var indicatorTitle: String = ""
+    @Published var warningContent: String = ""
 
 //    private var workItem: DispatchWorkItem?
     

@@ -73,7 +73,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
-    let db = DB.shared
+    //let db = DB.shared
     //var stringObjectList: [StringObject]
     
     init(){

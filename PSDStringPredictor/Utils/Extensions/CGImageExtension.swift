@@ -12,4 +12,6 @@ extension CGImage{
     func ToCIImage() -> CIImage{
         return CIImage.init(cgImage: self)
     }
+    
+
 }

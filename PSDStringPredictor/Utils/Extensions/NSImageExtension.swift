@@ -64,5 +64,7 @@ extension NSImage {
         result.unlockFocus()
         return result
     }
+    
+
  
 }

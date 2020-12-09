@@ -10,12 +10,12 @@ import Foundation
 import CoreImage
 import Vision
 import AppKit
-import SQLite
+//import SQLite
 
 class DataStore{
     static var stringObjectList: [StringObject] = []
     //DB
-    static var dbConnection: Connection!
+//    static var dbConnection: Connection!
     static var csvPath: String = ""
     static var fontCsvPath: String = ""
     //ImageProcess

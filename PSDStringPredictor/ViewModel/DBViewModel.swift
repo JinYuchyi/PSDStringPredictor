@@ -8,20 +8,20 @@
 
 import Foundation
 import SwiftUI
-import GRDB
+//import GRDB
 
 class DBViewModel: ObservableObject{
     //var dbModel = DB()
     let imgUtil = ImageUtil()
     let csv = CSVManager()
-    @Published private var dbPathString = "db.sqlite3"
+    //@Published private var dbPathString = "db.sqlite3"
     @Environment(\.managedObjectContext) private var viewContext
 
     
     func ConnectDB()  {
         //imgUtil.RenderText("Text123!")
         //imgUtil.RenderTextToImage("Text123")
-        DB.shared.connectDatabase(DBFilePath: dbPathString)
+//        DB.shared.connectDatabase(DBFilePath: dbPathString)
         //imgUtil.RenderTextToImage(Content: "Text123!", Color: NSColor.init(red: 1, green: 0, blue: 0, alpha: 1) , Size: 100)
 
     }

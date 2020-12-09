@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "GRDB",
-        "repositoryURL": "https://github.com/groue/GRDB.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "948e91126a70ae703e5fe600ca3183161009bc4b",
-          "version": "5.0.2"
-        }
-      },
-      {
         "package": "LoggerKit",
         "repositoryURL": "https://github.com/pvieito/LoggerKit.git",
         "state": {
@@ -38,30 +29,12 @@
         }
       },
       {
-        "package": "SQLite.swift",
-        "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
-          "version": "0.12.2"
-        }
-      },
-      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": "main",
           "revision": "53555a04503c175eaffcf587e4b8c380a7c41a5c",
           "version": null
-        }
-      },
-      {
-        "package": "SnapshotTesting",
-        "repositoryURL": "https://github.com/pointfreeco/swift-snapshot-testing",
-        "state": {
-          "branch": null,
-          "revision": "c466812aa2e22898f27557e2e780d3aad7a27203",
-          "version": "1.8.2"
         }
       }
     ]

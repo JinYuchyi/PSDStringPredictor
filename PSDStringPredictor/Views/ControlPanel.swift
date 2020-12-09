@@ -11,14 +11,14 @@ import CoreData
 
 struct ControlPanel: View {
     
-    var dbvm = DBViewModel()
+    //var dbvm = DBViewModel()
     let ternimalScriptMgr = TernimalScriptManager()
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @ObservedObject var strObjVM = stringObjectViewModel
     @ObservedObject var imageProcessVM = imageProcessViewModel
     var imgUtil: ImageUtil = ImageUtil()
     var pixelProcess = PixelProcess()
-    var db = DB()
+//    var db = DB()
     var training = MLTraining()
     let imagePropertyVM = imagePropertyViewModel
     @Binding var showImage: Bool
@@ -85,7 +85,24 @@ struct ControlPanel: View {
     
     
     func Debug(){
-        stringObjectVM.indicatorTitle = "Heyhey"
+        let url = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
+        var imageData: NSData =  NSData.init()
+        do{
+        try imageData = NSData.init(contentsOf: url)
+        }catch{}
+        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
+                    let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
+                    let dpi = metaData["DPIWidth"] as? Int else {
+                        return
+                }
+
+         print(dpi)
+       
+//        let properties: [String: Any] = imageProcessVM.targetCIImage.properties
+//        print(imageProcessVM.targetCIImage.extent)
+//        let exif = properties["{Exif}"] as! [String: Any]
+//        print(exif)
+        //stringObjectVM.indicatorTitle = "Heyhey"
         //imageProcessVM.indicatorTitle = "ttest"
         //imageProcessVM.indicatorTitle += "ttest"
         //        pixelProcess.FindStrongestColor(img: imageProcessVM.targetCIImage)

@@ -72,6 +72,8 @@ struct ContentView: View {
             //            }
             IndicatorView()
                 .frame(height: 1000, alignment: .center)
+            WarningView()
+                .frame(height: 1000, alignment: .center)
                 
         }
         .frame(width: 1100)

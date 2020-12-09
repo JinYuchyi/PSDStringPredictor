@@ -20,7 +20,6 @@
 		3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308028251DFA3500550DEA /* NSColorExtension.swift */; };
 		3F3E0009253DCA9D0047E4E5 /* ColorMode.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */; };
 		3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */; };
-		3F3EFFA32533479D0047E4E5 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3EFFA22533479D0047E4E5 /* GRDB */; };
 		3F3EFFA8253596140047E4E5 /* CharDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFA7253596140047E4E5 /* CharDataManager.swift */; };
 		3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */; };
 		3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */; };
@@ -55,10 +54,10 @@
 		3F68B707252EA8A900CCFCE5 /* FontData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B705252EA8A900CCFCE5 /* FontData.xcdatamodeld */; };
 		3F68B709252EAB6F00CCFCE5 /* TrackingDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68B708252EAB6F00CCFCE5 /* TrackingDataManager.swift */; };
 		3F6B455425133BD100BE6F76 /* CharacterFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */; };
+		3F6C3CE62580CF5200AB7A19 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C3CE52580CF5200AB7A19 /* WarningView.swift */; };
 		3F7239F1257F2EAE003EC998 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3F7239F0257F2EAE003EC998 /* README.md */; };
 		3F7239F4257F318C003EC998 /* IndicatorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */; };
 		3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */; };
-		3F7E6AA625175CE20082D3FF /* DBViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7E6AA525175CE20082D3FF /* DBViewModel.swift */; };
 		3F8208502510F8CE00832192 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82084F2510F8CE00832192 /* File.swift */; };
 		3F820854251112BA00832192 /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F820853251112BA00832192 /* FontTracking.swift */; };
 		3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8208552516068100832192 /* StringObjectViewModel.swift */; };
@@ -81,6 +80,7 @@
 		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
 		3FA5047D2574CADA00F4A77A /* fontSize.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FA5047C2574CADA00F4A77A /* fontSize.csv */; };
 		3FAAB4972514BD6600CB89B1 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB4962514BD6600CB89B1 /* Training.swift */; };
+		3FABE4E12580DA4C00287086 /* DBViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FABE4E02580DA4C00287086 /* DBViewModel.swift */; };
 		3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */; };
 		3FBA3A7C2510AFC900F041DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA3A7B2510AFC900F041DC /* String.swift */; };
 		3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */; };
@@ -96,7 +96,6 @@
 		3FD9957F2518B48D007E3D05 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD9957E2518B48D007E3D05 /* ImageUtil.swift */; };
 		3FDA0D3A2534111D007792C0 /* TrackingDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA0D392534111D007792C0 /* TrackingDataObject.swift */; };
 		3FE881292532E6DD0088A1CD /* FontDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE881282532E6DD0088A1CD /* FontDataExtension.swift */; };
-		3FE8812D25332A8D0088A1CD /* DB_Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8812C25332A8D0088A1CD /* DB_Character.swift */; };
 		3FE8813D25333D080088A1CD /* StringObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813C25333D080088A1CD /* StringObjectListView.swift */; };
 		3FE8814025333D820088A1CD /* StringObjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813F25333D820088A1CD /* StringObjectRow.swift */; };
 		3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F8208512511129200832192 /* TrackingRegressor.mlmodel */; };
@@ -104,7 +103,6 @@
 		3FEBA6C4251CA522002D8EC1 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEBA6C3251CA522002D8EC1 /* Control.swift */; };
 		3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEBA6C6251CA87C002D8EC1 /* StringLabelObject.swift */; };
 		3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9122507200400AEF1C8 /* ControlPanel.swift */; };
-		3FEFE9182507276F00AEF1C8 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 3FEFE9172507276F00AEF1C8 /* SQLite */; };
 		3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91D25072F8300AEF1C8 /* OCR.swift */; };
 		3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9232507900500AEF1C8 /* LogListData.swift */; };
 /* End PBXBuildFile section */
@@ -155,10 +153,10 @@
 		3F68B706252EA8A900CCFCE5 /* FontDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FontDataModel.xcdatamodel; sourceTree = "<group>"; };
 		3F68B708252EAB6F00CCFCE5 /* TrackingDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDataManager.swift; sourceTree = "<group>"; };
 		3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFrameView.swift; sourceTree = "<group>"; };
+		3F6C3CE52580CF5200AB7A19 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 		3F7239F0257F2EAE003EC998 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorCircleView.swift; sourceTree = "<group>"; };
 		3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImageExtension.swift; sourceTree = "<group>"; };
-		3F7E6AA525175CE20082D3FF /* DBViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBViewModel.swift; sourceTree = "<group>"; };
 		3F82084F2510F8CE00832192 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		3F8208512511129200832192 /* TrackingRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TrackingRegressor.mlmodel; sourceTree = "<group>"; };
 		3F820853251112BA00832192 /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
@@ -182,6 +180,7 @@
 		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
 		3FA5047C2574CADA00F4A77A /* fontSize.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = fontSize.csv; path = PSDStringPredictor/Resources/fontSize.csv; sourceTree = SOURCE_ROOT; };
 		3FAAB4962514BD6600CB89B1 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
+		3FABE4E02580DA4C00287086 /* DBViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBViewModel.swift; sourceTree = "<group>"; };
 		3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		3FBA3A7B2510AFC900F041DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharFrameData.swift; sourceTree = "<group>"; };
@@ -199,7 +198,6 @@
 		3FD9957E2518B48D007E3D05 /* ImageUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		3FDA0D392534111D007792C0 /* TrackingDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDataObject.swift; sourceTree = "<group>"; };
 		3FE881282532E6DD0088A1CD /* FontDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontDataExtension.swift; sourceTree = "<group>"; };
-		3FE8812C25332A8D0088A1CD /* DB_Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB_Character.swift; sourceTree = "<group>"; };
 		3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRegressor.swift; sourceTree = "<group>"; };
 		3FE8813C25333D080088A1CD /* StringObjectListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringObjectListView.swift; sourceTree = "<group>"; };
 		3FE8813F25333D820088A1CD /* StringObjectRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringObjectRow.swift; sourceTree = "<group>"; };
@@ -216,8 +214,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FEFE9182507276F00AEF1C8 /* SQLite in Frameworks */,
-				3F3EFFA32533479D0047E4E5 /* GRDB in Frameworks */,
 				3F66F86F2567BCE800BD48C3 /* PythonKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,6 +289,7 @@
 		3F56E3EA25060CD300E64337 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3F6C3CE52580CF5200AB7A19 /* WarningView.swift */,
 				3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */,
 				3FE8813F25333D820088A1CD /* StringObjectRow.swift */,
 				3FE8813C25333D080088A1CD /* StringObjectListView.swift */,
@@ -322,7 +319,6 @@
 		3F5892A7251F7683001CAF6E /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				3FE8812C25332A8D0088A1CD /* DB_Character.swift */,
 				3F68B708252EAB6F00CCFCE5 /* TrackingDataManager.swift */,
 				3F3EFFA7253596140047E4E5 /* CharDataManager.swift */,
 				3F4445C925392FC300BB2745 /* OSStandardManager.swift */,
@@ -352,7 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				3F8208552516068100832192 /* StringObjectViewModel.swift */,
-				3F7E6AA525175CE20082D3FF /* DBViewModel.swift */,
+				3FABE4E02580DA4C00287086 /* DBViewModel.swift */,
 				3F4CB5A4250A23E200E41082 /* ImageProcess.swift */,
 				3F50A7AF253DC5D900C10810 /* ImagePropertyViewModel.swift */,
 				3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */,
@@ -508,8 +504,6 @@
 			);
 			name = PSDStringPredictor;
 			packageProductDependencies = (
-				3FEFE9172507276F00AEF1C8 /* SQLite */,
-				3F3EFFA22533479D0047E4E5 /* GRDB */,
 				3F66F86E2567BCE800BD48C3 /* PythonKit */,
 			);
 			productName = UITest;
@@ -541,9 +535,6 @@
 			);
 			mainGroup = 3FD401E62500F2FB00525E67;
 			packageReferences = (
-				3FEFE9162507276F00AEF1C8 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
-				3F5C304425199E9600A1FF45 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
-				3F3EFFA12533479D0047E4E5 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				3F66F86D2567BCE800BD48C3 /* XCRemoteSwiftPackageReference "PythonKit" */,
 			);
 			productRefGroup = 3FD401F02500F2FB00525E67 /* Products */;
@@ -609,6 +600,7 @@
 				3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */,
 				3FEFE9242507900500AEF1C8 /* LogListData.swift in Sources */,
 				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
+				3F6C3CE62580CF5200AB7A19 /* WarningView.swift in Sources */,
 				3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */,
 				3F8208502510F8CE00832192 /* File.swift in Sources */,
 				3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */,
@@ -625,7 +617,6 @@
 				3FD24803253ED7B0007EBE36 /* FontWeight.swift in Sources */,
 				3F9ED7AB25667E9400F950BC /* CGRectExtension.swift in Sources */,
 				3F308027251DD96600550DEA /* PixelProcess.swift in Sources */,
-				3FE8812D25332A8D0088A1CD /* DB_Character.swift in Sources */,
 				3F9ED7A825662CD600F950BC /* ButtonStyleView.swift in Sources */,
 				3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */,
 				3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */,
@@ -636,6 +627,7 @@
 				3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
 				3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */,
+				3FABE4E12580DA4C00287086 /* DBViewModel.swift in Sources */,
 				3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */,
 				3F5218182521E89200646F91 /* TestView.swift in Sources */,
 				3F9ED7A52566090100F950BC /* ImageResourceView.swift in Sources */,
@@ -663,7 +655,6 @@
 				3F3E0009253DCA9D0047E4E5 /* ColorMode.mlmodel in Sources */,
 				3FE8813D25333D080088A1CD /* StringObjectListView.swift in Sources */,
 				3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */,
-				3F7E6AA625175CE20082D3FF /* DBViewModel.swift in Sources */,
 				3F7239F4257F318C003EC998 /* IndicatorCircleView.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
@@ -884,22 +875,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3F3EFFA12533479D0047E4E5 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/groue/GRDB.swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.2;
-			};
-		};
-		3F5C304425199E9600A1FF45 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.2;
-			};
-		};
 		3F66F86D2567BCE800BD48C3 /* XCRemoteSwiftPackageReference "PythonKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pvieito/PythonKit.git";
@@ -908,31 +883,13 @@
 				kind = branch;
 			};
 		};
-		3FEFE9162507276F00AEF1C8 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.12.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3F3EFFA22533479D0047E4E5 /* GRDB */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3F3EFFA12533479D0047E4E5 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
-			productName = GRDB;
-		};
 		3F66F86E2567BCE800BD48C3 /* PythonKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3F66F86D2567BCE800BD48C3 /* XCRemoteSwiftPackageReference "PythonKit" */;
 			productName = PythonKit;
-		};
-		3FEFE9172507276F00AEF1C8 /* SQLite */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3FEFE9162507276F00AEF1C8 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
-			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
 

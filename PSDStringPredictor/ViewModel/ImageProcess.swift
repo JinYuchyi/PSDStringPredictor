@@ -12,10 +12,10 @@ import Vision
 import SwiftUI
 
 class ImageProcess: ObservableObject{
-   
-//    @Published var targetImage: CIImage  = CIImage.init()
-//    @Published var targetImageName: String = "default_image"
-//    @Published var targetImageSize: [Int64] = []
+    
+    //    @Published var targetImage: CIImage  = CIImage.init()
+    //    @Published var targetImageName: String = "default_image"
+    //    @Published var targetImageSize: [Int64] = []
     //@EnvironmentObject var data: DataStore
     let colorModeClassifier = ColorModeClassifier()
     //var strObjVM = stringObjectViewModel
@@ -28,14 +28,13 @@ class ImageProcess: ObservableObject{
     @Published var gammaValue: CGFloat = 1
     @Published var exposureValue: CGFloat = 0
     @Published var isConvolution: Bool = false
-
+    
     
     var lightModeHSVList: [[CGFloat]] = []
     var darkModeHSVList: [[CGFloat]] = []
-
-
+    
     var showImage: Bool = false
-
+    
     func SetFilter(){
         if (targetImageMasked.IsValid()){
             var tmp = ChangeGamma(targetImageMasked, CGFloat(gammaValue))!
@@ -45,6 +44,26 @@ class ImageProcess: ObservableObject{
             }
             targetImageProcessed = tmp
         }
+    }
+    
+    func GetImageProperty(keyName: String, path: String) -> Int{
+        //DPIWidth, ProfileName, HasAlpha, PixelHeight...
+        print(path)
+        //let url1 = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
+        let url = URL.init(fileURLWithPath: path)
+        var imageData: NSData =  NSData.init()
+        do{
+            try imageData = NSData.init(contentsOf: url)
+        }catch{}
+        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
+              let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
+              let dpi = metaData["DPIWidth"] as? Int else {
+            return 0
+        }
+        print(keyName)
+        print(path)
+        print(dpi)
+        return 0
     }
     
     func FetchStandardHSVList(){
@@ -61,7 +80,7 @@ class ImageProcess: ObservableObject{
     }
     
     func FindNearestStandardHSV(_ cl: NSColor) -> NSColor{
-       //Find the color in list where hue is most close
+        //Find the color in list where hue is most close
         var min: CGFloat = 100
         var targetList: [[CGFloat]] = []
         var index = 0
@@ -85,7 +104,7 @@ class ImageProcess: ObservableObject{
     }
     
     func FindNearestStandardRGB(_ cl: CGColor) -> [CGFloat]{
-       //Find the color in list where hue is most close
+        //Find the color in list where hue is most close
         var min: CGFloat = 100
         var targetList: [[CGFloat]] = []
         var index = 0
@@ -104,12 +123,12 @@ class ImageProcess: ObservableObject{
             }
             index += 1
         }
-
+        
         //return CGColor(red: targetList[resultIndex][0], green: targetList[resultIndex][1], blue: targetList[resultIndex][2], alpha: 1)
         return targetList[resultIndex]
     }
     
- 
+    
     
     func FetchImage() {
         //targetNSImage = DataStore.targetNSImage
@@ -121,24 +140,23 @@ class ImageProcess: ObservableObject{
             targetImageProcessed = targetImageMasked
         }
         
-        //targetImageProcessed = DataStore.targetImageProcessed
     }
     
-     func GetTargetCIImage() -> CIImage{
+    func GetTargetCIImage() -> CIImage{
         //UpdateTargetImageInfo()
         return targetCIImage
     }
     
-     func GetProcessedImage() -> CIImage{
-//        if DataStore.targetImageProcessed.extent.width > 0 {
-//        }
-//        else{
-//            DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
-//        }
+    func GetProcessedImage() -> CIImage{
+        //        if DataStore.targetImageProcessed.extent.width > 0 {
+        //        }
+        //        else{
+        //            DataStore.targetImageProcessed = DataStore.targetNSImage.ToCIImage()!
+        //        }
         return targetImageProcessed
     }
     
-     func GetProcessedNSImage() -> NSImage{
+    func GetProcessedNSImage() -> NSImage{
         if targetImageProcessed.extent.width > 0 {
             //return targetImageProcessed = DataStore.targetImageProcessed
         }
@@ -177,7 +195,7 @@ class ImageProcess: ObservableObject{
         let ciImage = CIImage(cgImage: inputImage)
         return ciImage
     }
-
+    
     //name: only the file name, path string and "png" do not included.
     func GetImage(name: String) -> Image{
         var image: Image {
@@ -186,11 +204,11 @@ class ImageProcess: ObservableObject{
         
         return image
     }
-
-
+    
+    
     func LoadCIImage(FileName: String) -> CIImage?{
-       let fileURL = Bundle.main.url(forResource: FileName, withExtension: "png")
-
+        let fileURL = Bundle.main.url(forResource: FileName, withExtension: "png")
+        
         let img = CIImage(contentsOf: fileURL!)
         return img
     }
@@ -222,12 +240,19 @@ class ImageProcess: ObservableObject{
                     self.colorModeClassifier.Prediction(fromImage: self.targetImageProcessed)
                     imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
                     DataStore.imagePath = panel.url!.path
+                    
+                    let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
+                    print(dpi)
+                    if dpi != 72 {
+                        
+                        stringObjectViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
+                    }
                 }
             }
         }
         
     }
-
+    
     
 }
 
@@ -235,7 +260,7 @@ func LoadNSImage(imageUrlPath: String) -> NSImage {
     var  newImg :NSImage = NSImage.init()
     if FileManager.default.fileExists(atPath: imageUrlPath) {
         let url = URL.init(fileURLWithPath: imageUrlPath)
-
+        
         let data = NSData(contentsOf: url)!
         newImg = NSImage(data: data as Data)!
         //print(newImg.isValid)
@@ -246,7 +271,7 @@ func LoadNSImage(imageUrlPath: String) -> NSImage {
 final class ImageStore {
     typealias _ImageDictionary = [String: CGImage]
     fileprivate var images: _ImageDictionary = [:]
-
+    
     fileprivate static var scale = 1
     
     static var shared = ImageStore()
@@ -256,7 +281,7 @@ final class ImageStore {
         
         return Image(images.values[index], scale: CGFloat(ImageStore.scale), label: Text(name))
     }
-
+    
     static func loadImage(name: String) -> CGImage {
         guard
             let url = Bundle.main.url(forResource: name, withExtension: "png"),
@@ -275,7 +300,7 @@ final class ImageStore {
         return images.index(forKey: name)!
     }
     
-
+    
 }
 
 func ChangeGamma(_ image: CIImage, _ value: CGFloat) -> CIImage? {
@@ -317,7 +342,7 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
 
 func Maximum(_ image: CIImage) -> NSColor{
     let pixelProcess = PixelProcess()
-
+    
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent, forKey: "inputExtent")
@@ -329,7 +354,7 @@ func Maximum(_ image: CIImage) -> NSColor{
 
 func Minimun(_ image: CIImage) -> NSColor{
     let pixelProcess = PixelProcess()
-
+    
     let filter = CIFilter(name: "CIAreaMinimum")
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent, forKey: "inputExtent")
@@ -338,12 +363,12 @@ func Minimun(_ image: CIImage) -> NSColor{
     let img = filteredImage!.ToCGImage()
     let size = filteredImage!.extent
     let c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
-
+    
     return c
 }
 
 func NoiseReduction(_ image: CIImage) -> CIImage?{
-
+    
     let filter = CIFilter(name: "CINoiseReduction")
     filter?.setValue(0.3, forKey: "inputSharpness")
     filter?.setValue(0.1, forKey: "inputNoiseLevel")

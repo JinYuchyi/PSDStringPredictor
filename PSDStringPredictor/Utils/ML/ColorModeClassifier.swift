@@ -49,7 +49,7 @@ class ColorModeClassifier{
                 // Display top classifications ranked by confidence in the UI.
                 //let topClassifications = classifications.prefix(2)
                 let topClassification = classifications[0]
-                print("Predict result: \(topClassification.identifier)" )
+                //print("Predict result: \(topClassification.identifier)" )
                 if (topClassification.identifier == "light"){
                     DataStore.colorMode = 1
                 }
