@@ -8,5 +8,6 @@ This tool helps graphics designer to do the string layering work automatically.
 - [ ] v0.9
   - [x] Modify font size and tracking on interface.
   - [x] Mask layers with the same color as original. 
+  - [x] Read PPI.
   - [ ] Paragraph text.
   - [ ] Load multiple images and process.

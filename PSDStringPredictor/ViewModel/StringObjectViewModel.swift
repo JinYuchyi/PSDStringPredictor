@@ -11,15 +11,7 @@ import CoreImage
 import Vision
 import Foundation
 
-//struct StringObject: Hashable, Codable, Identifiable {
-//    var id: Int
-//    var content: String
-//    var position: [CGFloat]
-//    var width: CGFloat
-//    var height: CGFloat
-//    var tracking: CGFloat
-//    var fontSize: CGFloat
-//}
+
 
 //struct StringObject: Hashable, Codable, Identifiable {
 class StringObjectViewModel: ObservableObject{
@@ -53,23 +45,30 @@ class StringObjectViewModel: ObservableObject{
 
     @Published var indicatorTitle: String = ""
 
+//    private var workItem: DispatchWorkItem?
+    
     func indicatorTitleTest(){
         self.indicatorTitle = ""
     }
     
+
+    
     func PredictStrings()  {
-        //DispatchQueue.global().sync {
-            UpdataIndicatorTitle("Predicting Strings...")
-            print("任务")
-        //}
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+//        DispatchQueue.global(qos: .userInteractive).async (execute: workItem!)
+//        workItem = DispatchWorkItem {
             self.stringObjectListData = self.stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
-            DataStore.FillCharFrameList()
-            self.FetchCharFrameListData()
-            self.FetchCharFrameListRects()
-            self.FetchStringObjectFontNameDict()
-            self.indicatorTitle = ""
-        }
+//        }
+        DataStore.FillCharFrameList()
+        self.FetchCharFrameListData()
+        self.FetchCharFrameListRects()
+        self.FetchStringObjectFontNameDict()
+        self.indicatorTitle = ""
+        
+        //DispatchQueue.global(qos: .userInteractive).async {
+//        self.indicatorTitle = ("Predicting Strings...")
+            //print("任务")
+        //}
+        
     }
     
     func CleanAll(){

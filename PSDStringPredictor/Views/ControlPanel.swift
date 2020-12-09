@@ -85,7 +85,7 @@ struct ControlPanel: View {
     
     
     func Debug(){
-        stringObjectVM.UpdataIndicatorTitle("HiHI")
+        stringObjectVM.indicatorTitle = "Heyhey"
         //imageProcessVM.indicatorTitle = "ttest"
         //imageProcessVM.indicatorTitle += "ttest"
         //        pixelProcess.FindStrongestColor(img: imageProcessVM.targetCIImage)

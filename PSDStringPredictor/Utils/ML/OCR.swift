@@ -11,12 +11,14 @@ import CoreImage
 import Vision
 
 class OCR: ObservableObject{
-    
+    private var workItem: DispatchWorkItem?
+
     func GetRectsFromObservations(_ observations : [VNRecognizedTextObservation], _ width : Int, _ height : Int)->[CGRect]{
         var rects : [CGRect] = []
         //var total = observations.count
         var index = 0
         for observation in observations{
+
             // Find the top observation.
             guard let candidate = observation.topCandidates(1).first else { continue }
             // Find the bounding-box observation for the string range.
@@ -39,6 +41,11 @@ class OCR: ObservableObject{
         return rects
     }
     
+    func StopBackendWork(){
+        print("Try to Stop")
+        workItem?.cancel()
+    }
+    
     func GetStringArrayFromObservations(_ observations : [VNRecognizedTextObservation])->[String]{
         var strs:[String] = []
         for visionResult in observations{
@@ -52,7 +59,8 @@ class OCR: ObservableObject{
     func GetCharsInfoFromObservation(_ observation: VNRecognizedTextObservation, _ width: Int, _ height: Int) -> ([CGRect], [Character]){
         var rects: [CGRect] = []
         var chars: [Character] = []
-        //let obsrs = GetMyObservations()
+        
+
 
         //for obsr in obsrs{
         let candidate = observation.topCandidates(1).first!
@@ -93,19 +101,22 @@ class OCR: ObservableObject{
     func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObject]{
         var strobjs : [StringObject] = []
         //Get Observations
+        
         let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         TextRecognitionRequest.usesLanguageCorrection = true
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
         TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
-        DispatchQueue.global(qos: .userInteractive).async {
+        //DispatchQueue.global(qos: .userInteractive).async {
         do {
+            print("In Thread.")
+
             try requestHandler.perform([TextRecognitionRequest])
         } catch {
             print(error)
         }
-        }
+        //}
         guard let results_accurate = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
@@ -115,18 +126,25 @@ class OCR: ObservableObject{
             print(error)
         }
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-        
-        var stringsRects = GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
+        workItem = DispatchWorkItem {
+            var stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
         //stringsRects = FiltRects(targetList: stringsRects)
 
-        let strs = GetStringArrayFromObservations(results_fast)
+            let strs = self.GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
-            var (charRects, chars) = GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
+            DispatchQueue.main.async{
+                stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
+            }
+            var (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
         }
-
+            DispatchQueue.main.async{
+                stringObjectViewModel.indicatorTitle = ""
+            }
+        }
+        DispatchQueue.global(qos: .userInteractive).async (execute: workItem!)
         strobjs = FiltStringObjects(originalList: strobjs)
         return strobjs
     }

@@ -71,7 +71,8 @@ struct ContentView: View {
             //                .frame(width: 1000, height: 950, alignment: .topTrailing)
             //            }
             IndicatorView()
-                .frame(height: 1000, alignment: .bottom)
+                .frame(height: 1000, alignment: .center)
+                
         }
         .frame(width: 1100)
     }
