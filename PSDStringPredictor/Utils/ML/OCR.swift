@@ -99,10 +99,12 @@ class OCR: ObservableObject{
         TextRecognitionRequest.usesLanguageCorrection = true
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
         TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
+        DispatchQueue.global(qos: .userInteractive).async {
         do {
             try requestHandler.perform([TextRecognitionRequest])
         } catch {
             print(error)
+        }
         }
         guard let results_accurate = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
