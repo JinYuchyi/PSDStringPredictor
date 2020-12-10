@@ -11,25 +11,25 @@ import CoreImage
 import Vision
 
 class OCR: ObservableObject{
-    private var workItem: DispatchWorkItem?
-
+    //private var workItem: DispatchWorkItem?
+    
     func GetRectsFromObservations(_ observations : [VNRecognizedTextObservation], _ width : Int, _ height : Int)->[CGRect]{
         var rects : [CGRect] = []
         //var total = observations.count
         var index = 0
         for observation in observations{
-
+            
             // Find the top observation.
             guard let candidate = observation.topCandidates(1).first else { continue }
             // Find the bounding-box observation for the string range.
             let stringRange = candidate.string.startIndex..<candidate.string.endIndex
-
+            
             let boxObservation = try? candidate.boundingBox(for: stringRange)
             //let boxObservation = try? candidate.boundingBox(for: stringRange)
-
+            
             // Get the normalized CGRect value.
             let boundingBox = boxObservation?.boundingBox ?? .zero
-
+            
             // Convert the rectangle from normalized coordinates to image coordinates.
             //return VNImageRectForNormalizedRect(boundingBox, 100, 100)
             let normBox = VNImageRectForNormalizedRect(boundingBox, width, height)
@@ -43,7 +43,7 @@ class OCR: ObservableObject{
     
     func StopBackendWork(){
         print("Try to Stop")
-        workItem?.cancel()
+        //        workItem?.cancel()
     }
     
     func GetStringArrayFromObservations(_ observations : [VNRecognizedTextObservation])->[String]{
@@ -60,8 +60,8 @@ class OCR: ObservableObject{
         var rects: [CGRect] = []
         var chars: [Character] = []
         
-
-
+        
+        
         //for obsr in obsrs{
         let candidate = observation.topCandidates(1).first!
         
@@ -75,7 +75,7 @@ class OCR: ObservableObject{
             // Get the normalized CGRect value.
             let boundingBox = boxObservation?.boundingBox ?? .zero
             //let Rect = VNImageRectForNormalizedRect(boundingBox, width, height)
-
+            
             //print(boundingBox)
             // Convert the rectangle from normalized coordinates to image coordinates.
             //return VNImageRectForNormalizedRect(boundingBox, 100, 100)
@@ -89,12 +89,12 @@ class OCR: ObservableObject{
             rects.append(fixRect)
             //print("\(offset) \(candidate.string[index_start]) \(boundingBox)")
             let char = candidate.string[index_start]
-//            if (char == "B"){
-//                print("B: \(VNImageRectForNormalizedRect(boundingBox, width, height))")
-//            }
+            //            if (char == "B"){
+            //                print("B: \(VNImageRectForNormalizedRect(boundingBox, width, height))")
+            //            }
             chars.append(char)
         }
-
+        
         return (rects, chars)
     }
     
@@ -108,52 +108,63 @@ class OCR: ObservableObject{
         TextRecognitionRequest.usesLanguageCorrection = true
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
         TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
-        //DispatchQueue.global(qos: .userInteractive).async {
-        do {
-            print("In Thread.")
-
-            try requestHandler.perform([TextRecognitionRequest])
-        } catch {
-            print(error)
-        }
-        //}
-        guard let results_accurate = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         
-        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
-        do {
-            try requestHandler.perform([TextRecognitionRequest])
-        } catch {
-            print(error)
-        }
-        guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-        workItem = DispatchWorkItem {
-            var stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
-        //stringsRects = FiltRects(targetList: stringsRects)
-
-            let strs = self.GetStringArrayFromObservations(results_fast)
-        for i in 0..<stringsRects.count{
-            DispatchQueue.main.async{
-                stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
+        let group = DispatchGroup()
+        let t1q = DispatchQueue(label: "t1")
+        //t1q.async(group: group) {
+            //stringObjectViewModel.indicatorTitle = "Processing..."
+            TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
+            do {
+                print("In Thread.")
+                try requestHandler.perform([TextRecognitionRequest])
+            } catch {
+                print(error)
             }
+        //}
+//        DispatchQueue.global(qos: .userInteractive).async {
+//            do {
+//                print("In Thread.")
+//
+//                try requestHandler.perform([TextRecognitionRequest])
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        guard let results_accurate = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
+//        DispatchQueue.global(qos: .userInteractive).async {
+//            TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
+//            do {
+//                try requestHandler.perform([TextRecognitionRequest])
+//            } catch {
+//                print(error)
+//            }
+//        }
+        //group.notify(queue: DispatchQueue.main) {
+            
+        //group.wait()
+        
+        guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
+        var stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
+        let strs = self.GetStringArrayFromObservations(results_fast)
+        
+        for i in 0..<stringsRects.count{
+            stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
             var (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
         }
-            DispatchQueue.main.async{
-                stringObjectViewModel.indicatorTitle = ""
-            }
-        }
-        DispatchQueue.global(qos: .userInteractive).async (execute: workItem!)
-        strobjs = FiltStringObjects(originalList: strobjs)
+        stringObjectViewModel.indicatorTitle = ""
+        strobjs = self.FiltStringObjects(originalList: strobjs)
+
         return strobjs
+        //}
     }
     
     func FiltStringObjects(originalList objList: [StringObject]) -> ([StringObject]){
         var newList : [StringObject] = objList
         var ignoreList: [StringObject] = []
         var index = 0
-        
         stringObjectViewModel.fixedStringObjectList.removeAll()
         stringObjectViewModel.ignoreStringObjectList.removeAll()
         
@@ -172,24 +183,23 @@ class OCR: ObservableObject{
         }
         
         //print("Ignore List: \(ignoreList.count)")
-
+        
         //TODO: Update list error.
         for obj in objList{
             //Find the ignore object
             for ignoreObj in ignoreList{
                 //if value == true {
-                    //print("\(key.content) is fixed")
-                    //Compare ignore obj with new obj, if rect overlap, remove from newlist
-                    if ignoreObj.stringRect.IsSame(target: obj.stringRect){
-                        //print("Same: \(ignoreObj.content)")
-                        newList.remove(at: newList.firstIndex(of: obj)!)
-                    }
-                    //continue
+                //print("\(key.content) is fixed")
+                //Compare ignore obj with new obj, if rect overlap, remove from newlist
+                if ignoreObj.stringRect.IsSame(target: obj.stringRect){
+                    //print("Same: \(ignoreObj.content)")
+                    newList.remove(at: newList.firstIndex(of: obj)!)
+                }
+                //continue
                 //}
             }
             index += 1
         }
-        
         stringObjectViewModel.updateStringObjectList = newList
         //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
@@ -202,12 +212,12 @@ class OCR: ObservableObject{
         for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
             newList.append(key)
         }
-
+        
         return (newList)
     }
     
-
     
-
+    
+    
     
 }

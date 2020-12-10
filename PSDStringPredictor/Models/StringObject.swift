@@ -432,18 +432,26 @@ struct StringObject : Identifiable, Equatable, Hashable{
         
     }
     
-    func PredictStringObjects(FromCIImage img: CIImage) -> [StringObject]{
+    func PredictStringObjects(FromCIImage img: CIImage) {
+        var strObjs = [StringObject]()
         //data.targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
-        
+
         if img.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
-            //DataStore.stringObjectList = stringObjects
-            return stringObjects
+
+            //DispatchQueue.main.async{
+                stringObjectViewModel.stringObjectListData = stringObjects
+            //}
+            //return stringObjects
         }
         else{
             print("Load Image failed.")
-            return []
+            //DispatchQueue.main.async{
+                stringObjectViewModel.stringObjectListData = []
+            //}
+            //return []
         }
+        
     }
     
     mutating func PredictFontWeight()->String{

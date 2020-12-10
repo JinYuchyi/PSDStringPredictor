@@ -27,13 +27,8 @@ struct ControlPanel: View {
     let colorModeClassifier = ColorModeClassifier()
     
     var body: some View {
-        
-        
-        
+
         VStack{
-            
-            
-            
             Text("Caculate String Layers")
                 .foregroundColor(.gray)
                 .padding(.top)
@@ -85,10 +80,7 @@ struct ControlPanel: View {
         .padding()
         
     }
-    
-    
-    
-    
+
     func Debug(){
         let url = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
         var imageData: NSData =  NSData.init()

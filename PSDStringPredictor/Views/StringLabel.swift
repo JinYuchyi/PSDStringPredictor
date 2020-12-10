@@ -55,6 +55,7 @@ struct StringLabel: View {
     }
     
     func InfoBtnTapped(){
+        print("stringLabel.id: \(stringLabel.content)")
         stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
         imageProcessViewModel.FindNearestStandardRGB(stringLabel.color)
     }
@@ -121,12 +122,17 @@ struct StringLabel: View {
                     .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 
+//                RoundedRectangle(cornerRadius: 5, style: .continuous)
+//                    .fill(Color.green)
+//                    //.stroke(stringObjectVM.selectedStringObject.id == stringLabel.id ? Color.green.opacity(0.6) : Color.red, lineWidth: stringObjectVM.selectedStringObject.id == stringLabel.id ? 3 : 1)
+//                    .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
+//                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+//
                 Text(stringLabel.content)
                     .foregroundColor(stringLabel.color.ToColor())
                     .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id] ?? "", size: CalcSizeAfterOffset()))
                     .tracking(CalcTrackingAfterOffset())
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-                
                 
                 //Drag layer
                 Rectangle()

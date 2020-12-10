@@ -173,10 +173,10 @@ struct StringObjectPropertyView: View {
                                         
                                         if weightName == " Regular"  {
                                             stringObjectVM.StringObjectNameDict[id] = particialName + " Semibold"
-                                            print("\(stringObjectVM.StringObjectNameDict[id])")
+                                            //print("\(stringObjectVM.StringObjectNameDict[id])")
                                         }else {
                                             stringObjectVM.StringObjectNameDict[id] = particialName + " Regular"
-                                            print("\(stringObjectVM.StringObjectNameDict[id])")
+                                            //print("\(stringObjectVM.StringObjectNameDict[id])")
                                         }
                                     //}
                                 }
@@ -250,7 +250,7 @@ struct StringObjectPropertyView: View {
             let result = panel.runModal()
             if result == .OK{
                 imageProcess.SaveCIIToPNG(CIImage: tergetImg, filePath: panel.url!.path )
-                imageProcess.SaveCIIToPNG(CIImage: tergetImgBW!, filePath: panel.url!.path + "_BW" )
+                imageProcess.SaveCIIToPNG(CIImage: tergetImgBW!, filePath: panel.url!.path + "_BW.bmp" )
                 
             }
         }

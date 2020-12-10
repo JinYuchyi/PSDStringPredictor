@@ -15,6 +15,8 @@ import Foundation
 
 //struct StringObject: Hashable, Codable, Identifiable {
 class StringObjectViewModel: ObservableObject{
+    private var workItem: DispatchWorkItem?
+
     let jsMgr = JSManager()
     var stringObject: StringObject = StringObject()
     let pixelProcess = PixelProcess()
@@ -58,15 +60,20 @@ class StringObjectViewModel: ObservableObject{
     
     func PredictStrings()  {
 //        DispatchQueue.global(qos: .userInteractive).async (execute: workItem!)
-//        workItem = DispatchWorkItem {
-            self.stringObjectListData = self.stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
-//        }
-        DataStore.FillCharFrameList()
-        self.FetchCharFrameListData()
-        self.FetchCharFrameListRects()
-        self.FetchStringObjectFontNameDict()
-        self.indicatorTitle = ""
+        //workItem = DispatchWorkItem {
+            self.stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
+        //}
+        //DispatchQueue.main.async{
+            DataStore.FillCharFrameList()
+            self.FetchCharFrameListData()
+            self.FetchCharFrameListRects()
+            self.FetchStringObjectFontNameDict()
+            self.indicatorTitle = ""
+        //}
         
+        //DispatchQueue.global(qos: .userInteractive).sync (execute: workItem!)
+
+        //print("stringObjectVM.updateStringObjectList: \(updateStringObjectList.count)")
         //DispatchQueue.global(qos: .userInteractive).async {
 //        self.indicatorTitle = ("Predicting Strings...")
             //print("任务")

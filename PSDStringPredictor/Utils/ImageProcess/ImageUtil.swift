@@ -41,10 +41,10 @@ class ImageUtil{
 
         let stringsObjectPredicted = ocr.CreateAllStringObjects(FromCIImage: newimg)
 
-        let clampedImg = newimg.cropped(to: stringsObjectPredicted[0].stringRect)
+        //let clampedImg = newimg.cropped(to: stringsObjectPredicted[0].stringRect)
         //print(clampedImg.extent.size)
-        let url1 = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext_clamped.png")
-        clampedImg.ToPNG(url: url1)
+        //let url1 = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext_clamped.png")
+        //clampedImg.ToPNG(url: url1)
         
         return newimg
     }

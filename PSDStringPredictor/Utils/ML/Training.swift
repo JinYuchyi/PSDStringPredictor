@@ -33,7 +33,7 @@ class MLTraining {
                     let nsImg = NSImage(byReferencing: url!)
                     let ciImg = nsImg.ToCIImage()!
                     let line = self.ocr.CreateAllStringObjects(FromCIImage: ciImg)
-                    print(line[0].charArray.count)
+                    //print(line[0].charArray.count)
                    //print("We have \(lines.count) lines.")
                 }
             }

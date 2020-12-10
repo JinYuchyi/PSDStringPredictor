@@ -48,26 +48,31 @@ class ImageProcess: ObservableObject{
     
     func GetImageProperty(keyName: String, path: String) -> Int{
         //DPIWidth, ProfileName, HasAlpha, PixelHeight...
-
+       
         //let url1 = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
         let url = URL.init(fileURLWithPath: path)
-        print("url:\(url)")
-        var imageData: NSData =  NSData.init()
-        do{
-            try imageData = NSData.init(contentsOf: url)
-        }catch{
-            print("Image data generate error in getting DPI function.")
-        }
+        //print("url:\(url)")
+        //if targetNSImage.isValid{
+            //let imgData = targetNSImage.tiffRepresentation!
+            var imageData: NSData =  NSData.init()
+            do{
+                try imageData = NSData.init(contentsOf: url)
+            }catch{
+                print("Image data generate error in getting DPI function.")
+            }
+            
+            //print("keyName: \(keyName), path: \(path)")
+
+            guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
+                  let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
+                  let dpi = metaData[keyName] as? Int else {
+                return 0
+            }
         
-        print("keyName: \(keyName), path: \(path)")
-
-        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
-              let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
-              let dpi = metaData[keyName] as? Int else {
-            return 0
-        }
-
-        return dpi
+            return dpi
+//        }else{
+//            return 0
+//        }
     }
     
     func FetchStandardHSVList(){
