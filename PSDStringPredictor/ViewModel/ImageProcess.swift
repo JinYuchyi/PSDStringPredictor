@@ -48,13 +48,15 @@ class ImageProcess: ObservableObject{
     
     func GetImageProperty(keyName: String, path: String) -> Int{
         //DPIWidth, ProfileName, HasAlpha, PixelHeight...
-       
+        var imgData: Data = Data.init()
         //let url1 = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
         let url = URL.init(fileURLWithPath: path)
         //print("url:\(url)")
-        //if targetNSImage.isValid{
-            //let imgData = targetNSImage.tiffRepresentation!
-            var imageData: NSData =  NSData.init()
+        if targetNSImage.isValid{
+            imgData = targetNSImage.tiffRepresentation!
+
+        }
+        var imageData: NSData =  NSData.init()
             do{
                 try imageData = NSData.init(contentsOf: url)
             }catch{
@@ -63,12 +65,12 @@ class ImageProcess: ObservableObject{
             
             //print("keyName: \(keyName), path: \(path)")
 
-            guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
+        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
                   let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
                   let dpi = metaData[keyName] as? Int else {
                 return 0
             }
-        
+        print(metaData)
             return dpi
 //        }else{
 //            return 0

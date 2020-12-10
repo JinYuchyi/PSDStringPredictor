@@ -46,13 +46,13 @@ struct StringLabel: View {
         return stringLabel.fontSize - d
     }
     
-    func makeView(_ geometry: GeometryProxy) -> some View {
-        //print(geometry.size.width, geometry.size.height)
-        DispatchQueue.main.async { self.width = geometry.size.width }
-        
-        return Text("Test")
-            .frame(width: geometry.size.width)
-    }
+//    func makeView(_ geometry: GeometryProxy) -> some View {
+//        //print(geometry.size.width, geometry.size.height)
+//        DispatchQueue.main.async { self.width = geometry.size.width }
+//        
+//        return Text("Test")
+//            .frame(width: geometry.size.width)
+//    }
     
     func InfoBtnTapped(){
         print("stringLabel.id: \(stringLabel.content)")

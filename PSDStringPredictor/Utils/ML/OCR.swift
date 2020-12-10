@@ -109,112 +109,34 @@ class OCR: ObservableObject{
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
         TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
         
-        let group = DispatchGroup()
-        let t1q = DispatchQueue(label: "t1")
-        //t1q.async(group: group) {
-            //stringObjectViewModel.indicatorTitle = "Processing..."
-            TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
-            do {
-                print("In Thread.")
-                try requestHandler.perform([TextRecognitionRequest])
-            } catch {
-                print(error)
-            }
-        //}
-//        DispatchQueue.global(qos: .userInteractive).async {
-//            do {
-//                print("In Thread.")
-//
-//                try requestHandler.perform([TextRecognitionRequest])
-//            } catch {
-//                print(error)
-//            }
-//        }
-//        guard let results_accurate = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-//        DispatchQueue.global(qos: .userInteractive).async {
-//            TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
-//            do {
-//                try requestHandler.perform([TextRecognitionRequest])
-//            } catch {
-//                print(error)
-//            }
-//        }
-        //group.notify(queue: DispatchQueue.main) {
-            
-        //group.wait()
+        
+        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
+        do {
+            print("In Thread.")
+            try requestHandler.perform([TextRecognitionRequest])
+        } catch {
+            print(error)
+        }
+ 
         
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         var stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
         let strs = self.GetStringArrayFromObservations(results_fast)
         
         for i in 0..<stringsRects.count{
-            stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
+            //stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
             var (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
-            newStrObj.DeleteDescentForRect()
+            //newStrObj.DeleteDescentForRect()
             strobjs.append(newStrObj)
         }
-        stringObjectViewModel.indicatorTitle = ""
-        strobjs = self.FiltStringObjects(originalList: strobjs)
-
+        //strobjs = self.FiltStringObjects(originalList: strobjs)
+        
         return strobjs
-        //}
+      
     }
     
-    func FiltStringObjects(originalList objList: [StringObject]) -> ([StringObject]){
-        var newList : [StringObject] = objList
-        var ignoreList: [StringObject] = []
-        var index = 0
-        stringObjectViewModel.fixedStringObjectList.removeAll()
-        stringObjectViewModel.ignoreStringObjectList.removeAll()
-        
-        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
-            if value == true {
-                ignoreList.append(key)
-                stringObjectViewModel.fixedStringObjectList.append(key)
-            }
-        }
-        
-        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
-            if value == true {
-                ignoreList.append(key)
-                stringObjectViewModel.ignoreStringObjectList.append(key)
-            }
-        }
-        
-        //print("Ignore List: \(ignoreList.count)")
-        
-        //TODO: Update list error.
-        for obj in objList{
-            //Find the ignore object
-            for ignoreObj in ignoreList{
-                //if value == true {
-                //print("\(key.content) is fixed")
-                //Compare ignore obj with new obj, if rect overlap, remove from newlist
-                if ignoreObj.stringRect.IsSame(target: obj.stringRect){
-                    //print("Same: \(ignoreObj.content)")
-                    newList.remove(at: newList.firstIndex(of: obj)!)
-                }
-                //continue
-                //}
-            }
-            index += 1
-        }
-        stringObjectViewModel.updateStringObjectList = newList
-        //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
-        
-        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
-            newList.append(key)
-        }
-        
-        stringObjectViewModel.stringObjectOutputList = newList
-        
-        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
-            newList.append(key)
-        }
-        
-        return (newList)
-    }
+  
     
     
     

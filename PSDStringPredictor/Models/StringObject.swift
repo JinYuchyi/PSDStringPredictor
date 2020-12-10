@@ -99,6 +99,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         isPredictedList = []
         FontName = ""
         alignment = 0
+        self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
@@ -133,7 +134,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontSize = CGFloat(sizeFunc.0)
         self.tracking = FetchTrackingFromDB(self.fontSize).0
         self.trackingPS = FetchTrackingFromDB(self.fontSize).1
-        
+        self.FontName = CalcFontFullName()
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
         colorMode = CalcColorMode()
@@ -300,48 +301,48 @@ struct StringObject : Identifiable, Equatable, Hashable{
         return "SFPro" + family + "-" + fontWeight
     }
     
-    mutating func DeleteDescentForRect()  {
-        var highLetterEvenHeight: CGFloat = 0
-        var lowerLetterEvenHeight: CGFloat = 0
-        var fontName: String = ""
-        if (fontSize >= 20) {
-            fontName = "SFProDisplay-Regular"
-        }
-        else{
-            fontName = "SFProText-Regular"
-        }
-        
-        //Condition of if has p,q,g,y,j character in string,
-        //We have to adjust string position and size
-        var n: CGFloat = 0
-        var n1: CGFloat = 0
-        var hasLongTail = false
-        for (index, c) in charArray.enumerated() {
-            if (
-                c == "p" ||
-                    c == "q" ||
-                    c == "g" ||
-                    c == "y" ||
-                    c == "j" ||
-                    c == "," ||
-                    c == ";"
-            ) {
-                hasLongTail = true
-            }
-        }
-        
-        var descent: CGFloat = 0
-        if hasLongTail == true{
-            let fontName = CalcFontFullName()
-            descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
-            descent = descent * 0.8
-        }
-        
-        
-        stringRect = CGRect(x: stringRect.origin.x, y: stringRect.origin.y + descent, width: stringRect.width, height: stringRect.height - descent)
-        
-        
-    }
+//    mutating func DeleteDescentForRect()  {
+//        var highLetterEvenHeight: CGFloat = 0
+//        var lowerLetterEvenHeight: CGFloat = 0
+//        var fontName: String = ""
+//        if (fontSize >= 20) {
+//            fontName = "SFProDisplay-Regular"
+//        }
+//        else{
+//            fontName = "SFProText-Regular"
+//        }
+//        
+//        //Condition of if has p,q,g,y,j character in string,
+//        //We have to adjust string position and size
+//        var n: CGFloat = 0
+//        var n1: CGFloat = 0
+//        var hasLongTail = false
+//        for (index, c) in charArray.enumerated() {
+//            if (
+//                c == "p" ||
+//                    c == "q" ||
+//                    c == "g" ||
+//                    c == "y" ||
+//                    c == "j" ||
+//                    c == "," ||
+//                    c == ";"
+//            ) {
+//                hasLongTail = true
+//            }
+//        }
+//        
+//        var descent: CGFloat = 0
+//        if hasLongTail == true{
+//            let fontName = CalcFontFullName()
+//            descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
+//            descent = descent * 0.8
+//        }
+//        
+//        
+//        stringRect = CGRect(x: stringRect.origin.x, y: stringRect.origin.y + descent, width: stringRect.width, height: stringRect.height - descent)
+//        
+//        
+//    }
     
     func CalcSizeForSingleChar(_ char: String, _ width: Int16, _ height: Int16, _ fontWeight: String) -> (Int16, Int){
         var isPredicted = 0
@@ -432,27 +433,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         
     }
     
-    func PredictStringObjects(FromCIImage img: CIImage) {
-        var strObjs = [StringObject]()
-        //data.targetImageSize = [Int64(img.extent.width), Int64(img.extent.height)]
 
-        if img.extent.width > 0{
-            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
-
-            //DispatchQueue.main.async{
-                stringObjectViewModel.stringObjectListData = stringObjects
-            //}
-            //return stringObjects
-        }
-        else{
-            print("Load Image failed.")
-            //DispatchQueue.main.async{
-                stringObjectViewModel.stringObjectListData = []
-            //}
-            //return []
-        }
-        
-    }
     
     mutating func PredictFontWeight()->String{
         charFontWeightList.removeAll()

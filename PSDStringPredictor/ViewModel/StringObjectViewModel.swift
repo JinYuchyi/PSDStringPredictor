@@ -16,10 +16,11 @@ import Foundation
 //struct StringObject: Hashable, Codable, Identifiable {
 class StringObjectViewModel: ObservableObject{
     private var workItem: DispatchWorkItem?
-
+    
     let jsMgr = JSManager()
     var stringObject: StringObject = StringObject()
     let pixelProcess = PixelProcess()
+    let ocr = OCR()
     //@ObservedObject var imageViewModel: ImageProcess = ImageProcess()
     //var data: DataStore = DataStore()
     @Published var stringObjectListData: [StringObject] = []
@@ -44,41 +45,52 @@ class StringObjectViewModel: ObservableObject{
     
     @Published var stringOverlay: Bool = true
     @Published var frameOverlay: Bool = true
-
+    
     @Published var indicatorTitle: String = ""
     @Published var warningContent: String = ""
     
     @Published var OKForProcess: Bool = false
-
-//    private var workItem: DispatchWorkItem?
+    
+    //    private var workItem: DispatchWorkItem?
     
     func indicatorTitleTest(){
         self.indicatorTitle = ""
     }
     
-
+    func PredictStringObjects(FromCIImage img: CIImage) -> [StringObject] {
+        var strObjs = [StringObject]()
+        
+        if img.extent.width > 0{
+            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
+            return stringObjects
+        }
+        else{
+            print("Load Image failed.")
+        }
+        return []
+    }
     
-    func PredictStrings()  {
-//        DispatchQueue.global(qos: .userInteractive).async (execute: workItem!)
-        //workItem = DispatchWorkItem {
-            self.stringObject.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
-        //}
-        //DispatchQueue.main.async{
-            DataStore.FillCharFrameList()
-            self.FetchCharFrameListData()
-            self.FetchCharFrameListRects()
-            self.FetchStringObjectFontNameDict()
-            self.indicatorTitle = ""
+    func FetchStringObjectsInfo()  {
+        let group = DispatchGroup()
+        
+        let queueCalc = DispatchQueue(label: "calc")
+        //queueCalc.async(group: group) {
+        let allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
         //}
         
-        //DispatchQueue.global(qos: .userInteractive).sync (execute: workItem!)
-
-        //print("stringObjectVM.updateStringObjectList: \(updateStringObjectList.count)")
-        //DispatchQueue.global(qos: .userInteractive).async {
-//        self.indicatorTitle = ("Predicting Strings...")
-            //print("任务")
-        //}
+        stringObjectListData = allStrObjs
+        //        group.notify(queue: DispatchQueue.main) {
+        //            print("all task done")
+        //        }
+        stringObjectListData = DeleteDescentForStringObjects(stringObjectListData)
+        stringObjectListData = FiltStringObjects(originalList: stringObjectListData)
+        //DataStore.FillCharFrameList()
+        self.FetchCharFrameListData()
+        self.FetchCharFrameListRects()
+        self.FetchStringObjectFontNameDict()
         
+        
+        print("updateStringObjectList: \(updateStringObjectList.count)")
     }
     
     func CleanAll(){
@@ -105,20 +117,121 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
-
-
+    func DeleteDescentForStringObjects(_ objs: [StringObject]) -> [StringObject] {
+        var result: [StringObject] = []
+        for obj in objs{
+            var highLetterEvenHeight: CGFloat = 0
+            var lowerLetterEvenHeight: CGFloat = 0
+            var fontName: String = ""
+            if (obj.fontSize >= 20) {
+                fontName = "SFProDisplay-Regular"
+            }
+            else{
+                fontName = "SFProText-Regular"
+            }
+            //Condition of if has p,q,g,y,j character in string,
+            //We have to adjust string position and size
+            var n: CGFloat = 0
+            var n1: CGFloat = 0
+            var hasLongTail = false
+            for (index, c) in obj.charArray.enumerated() {
+                if (
+                    c == "p" ||
+                        c == "q" ||
+                        c == "g" ||
+                        c == "y" ||
+                        c == "j" ||
+                        c == "," ||
+                        c == ";"
+                ) {
+                    hasLongTail = true
+                }
+            }
+            
+            var descent: CGFloat = 0
+            if hasLongTail == true{
+                //let fontName = fontName
+                descent = FontUtils.GetFontInfo(Font: fontName, Content: obj.content, Size: obj.fontSize).descent
+                descent = descent * 0.8
+            }
+            
+            let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
+            let tmpObj = StringObject(obj.content, newStringRect, obj.observation, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
+            result.append(tmpObj)
+        }
+        return result
+    }
+    
+    func FiltStringObjects(originalList objList: [StringObject]) -> ([StringObject]){
+        var newList : [StringObject] = objList
+        var ignoreList: [StringObject] = []
+        var index = 0
+        fixedStringObjectList.removeAll()
+        ignoreStringObjectList.removeAll()
+        
+        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
+            if value == true {
+                ignoreList.append(key)
+                fixedStringObjectList.append(key)
+            }
+        }
+        
+        for (key, value) in stringObjectIgnoreDict{
+            if value == true {
+                ignoreList.append(key)
+                ignoreStringObjectList.append(key)
+            }
+        }
+        //TODO: Update list error.
+        for obj in objList{
+            //Find the ignore object
+            for ignoreObj in ignoreList{
+                //if value == true {
+                //print("\(key.content) is fixed")
+                //Compare ignore obj with new obj, if rect overlap, remove from newlist
+                if ignoreObj.stringRect.IsSame(target: obj.stringRect){
+                    //print("Same: \(ignoreObj.content)")
+                    newList.remove(at: newList.firstIndex(of: obj)!)
+                }
+                //continue
+                //}
+            }
+            index += 1
+        }
+        updateStringObjectList = newList
+        //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
+        
+        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
+            newList.append(key)
+        }
+        
+        stringObjectViewModel.stringObjectOutputList = newList
+        
+        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
+            newList.append(key)
+        }
+        
+        return (newList)
+    }
+    
     func CreatePSD(){
         UpdatePSD()
     }
     
     func FetchCharFrameListData() {
+        //        charFrameListData.removeAll()
+        //        charFrameListData.append(contentsOf: DataStore.charFrameList)
         charFrameListData.removeAll()
-        charFrameListData.append(contentsOf: DataStore.charFrameList)
-        
+        for i in 0 ..< stringObjectListData.count {
+            for j in 0 ..< stringObjectListData[i].charRects.count{
+                let tmp = CharFrame(rect: stringObjectListData[i].charRects[j], char: String(stringObjectListData[i].charArray[j]), predictedSize: (stringObjectListData[i].charSizeList[j]))
+                charFrameListData.append(tmp)
+            }
+        }
     }
     
     func FetchCharFrameListRects(){
-        for element in DataStore.charFrameList{
+        for element in charFrameListData{
             charFrameListRects.append(element.rect)
         }
     }
@@ -138,7 +251,7 @@ class StringObjectViewModel: ObservableObject{
         let color1 = pixelProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(imageProcessViewModel.targetNSImage.size.height - obj.stringRect.origin.y), img: img)
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
-
+    
     func UpdataIndicatorTitle(_ str: String){
         indicatorTitle = str
     }
@@ -209,7 +322,7 @@ class StringObjectViewModel: ObservableObject{
             bgClolorList.append(tmpBGColor)
         }
         
-
+        
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList)
         if success == true{
             let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"

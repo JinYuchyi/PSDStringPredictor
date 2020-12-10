@@ -35,13 +35,13 @@ struct ControlPanel: View {
                 .frame(width: 300, alignment: .leading)
             
             HStack{
-                Button(action: {self.stringObjectVM.PredictStrings()}){
+                Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
                     Text("Single PSD")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
                 .disabled(!self.stringObjectVM.OKForProcess)
                 
-                Button(action: {self.stringObjectVM.PredictStrings()}){
+                Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }

@@ -57,7 +57,6 @@ struct ContentView: View {
                     ImageView(imageViewModel:imageViewModel)
                     LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
                         .IsHidden(condition: stringObjectVM.stringOverlay)
-                    
                 }
             }
             
