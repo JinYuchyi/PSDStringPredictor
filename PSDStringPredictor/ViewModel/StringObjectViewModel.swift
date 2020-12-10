@@ -45,6 +45,8 @@ class StringObjectViewModel: ObservableObject{
 
     @Published var indicatorTitle: String = ""
     @Published var warningContent: String = ""
+    
+    @Published var OKForProcess: Bool = false
 
 //    private var workItem: DispatchWorkItem?
     

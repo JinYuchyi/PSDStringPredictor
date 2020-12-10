@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ImagePropertyView: View {
     @ObservedObject var imagePropertyVM = imagePropertyViewModel
+    let imageProcessVM = ImageProcess()
     //@State var colorState = -1
     var body: some View {
         List{
@@ -30,12 +31,21 @@ struct ImagePropertyView: View {
                         
                 }
                 HStack{
+                    Text("DPI")
+                        .frame(width:80, alignment: .topLeading)
+                        .foregroundColor(Color.gray)
+                    
+                    Text(String(imageProcessVM.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)))
+                        .frame(width: 200, alignment: .topLeading)
+                }
+                
+                HStack{
                     HStack{
                         Text("Path")
                             .frame(width:80, alignment: .topLeading)
                             .foregroundColor(Color.gray)
                         Text(DataStore.imagePath)
-                            .frame(width: 200, alignment: .topLeading)
+                            .frame(alignment: .topLeading)
                     }
                 }
             }

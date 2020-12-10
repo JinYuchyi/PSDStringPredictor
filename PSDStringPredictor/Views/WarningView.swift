@@ -21,6 +21,9 @@ struct WarningView: View {
                     .foregroundColor(.red)
                     .bold()
                     .shadow(color: Color.black.opacity(0.5), radius: 1, y: 2 )
+                
+                    .padding()
+                
                 Text(stringObjectVM.warningContent)
                     .bold()
                     .shadow(color: Color.black.opacity(0.5), radius: 1, y: 2 )

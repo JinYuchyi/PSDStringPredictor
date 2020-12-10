@@ -44,10 +44,14 @@ struct ControlPanel: View {
                     Text("Single PSD")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
+                .disabled(!self.stringObjectVM.OKForProcess)
+                
                 Button(action: {self.stringObjectVM.PredictStrings()}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }
+                .disabled(!self.stringObjectVM.OKForProcess)
+                
             }
             .frame( maxWidth: .infinity)
             
@@ -59,13 +63,14 @@ struct ControlPanel: View {
                 Button(action: {self.stringObjectVM.CreatePSD()}){
                     Text("Single PSD")
                         .frame(minWidth: 200,  maxWidth: .infinity)
-                    
                 }
+                .disabled(!self.stringObjectVM.OKForProcess)
+                
                 Button(action: {self.stringObjectVM.CreatePSD()}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
-                    
                 }
+                .disabled(!self.stringObjectVM.OKForProcess)
             }
             .frame( maxWidth: .infinity)
             .padding(.bottom)
