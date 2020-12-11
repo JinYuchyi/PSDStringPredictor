@@ -32,6 +32,7 @@ struct ImageView: View {
                 else{
                     ZStack{
                         Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
+                        SelectionOverlayView()
 //                        VStack{
 //                            Text("Tracking1")
 //                                .font(.custom("SFProText-Regular", size: 67))
