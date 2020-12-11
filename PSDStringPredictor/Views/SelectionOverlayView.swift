@@ -9,16 +9,27 @@
 import SwiftUI
 
 struct SelectionOverlayView: View {
-    
+    @ObservedObject var interactive = InteractiveViewModel()
+    @State var startPos = CGPoint.zero
+    @State var posY = 0
+    @State var width = 0
+    @State var height = 0
     var body: some View {
         
         Rectangle()
+            .gesture(
+                DragGesture()
+                    .onChanged { gesture in
+                        startPos = gesture.startLocation
+                        //interactive.CalcSelectionRect(gesture.translation)
+                    }
+            )
         
     }
 }
 
-struct SelectionOverlayView_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectionOverlayView()
-    }
-}
+//struct SelectionOverlayView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SelectionOverlayView()
+//    }
+//}

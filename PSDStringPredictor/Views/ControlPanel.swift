@@ -82,18 +82,21 @@ struct ControlPanel: View {
     }
 
     func Debug(){
-        let url = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
-        var imageData: NSData =  NSData.init()
-        do{
-        try imageData = NSData.init(contentsOf: url)
-        }catch{}
-        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
-                    let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
-                    let dpi = metaData["DPIWidth"] as? Int else {
-                        return
-                }
-
-         print(dpi)
+        let plistM =  PlistManager()
+        let item = plistM.Load(plistName: "AppSettings")
+        print(item)
+//        let url = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
+//        var imageData: NSData =  NSData.init()
+//        do{
+//        try imageData = NSData.init(contentsOf: url)
+//        }catch{}
+//        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
+//                    let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
+//                    let dpi = metaData["DPIWidth"] as? Int else {
+//                        return
+//                }
+//
+//         print(dpi)
        
 //        let properties: [String: Any] = imageProcessVM.targetCIImage.properties
 //        print(imageProcessVM.targetCIImage.extent)

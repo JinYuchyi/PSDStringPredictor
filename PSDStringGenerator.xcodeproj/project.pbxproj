@@ -96,6 +96,13 @@
 		3FD401FA2500F2FB00525E67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD401F92500F2FB00525E67 /* Preview Assets.xcassets */; };
 		3FD9957F2518B48D007E3D05 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD9957E2518B48D007E3D05 /* ImageUtil.swift */; };
 		3FDA0D3A2534111D007792C0 /* TrackingDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA0D392534111D007792C0 /* TrackingDataObject.swift */; };
+		3FDBC4B02583114C00E9C2DC /* AppSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4AF2583114C00E9C2DC /* AppSettingsItem.swift */; };
+		3FDBC4B32583121800E9C2DC /* AppSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FDBC4B22583121800E9C2DC /* AppSettings.plist */; };
+		3FDBC4BA25831B7D00E9C2DC /* PlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4B925831B7D00E9C2DC /* PlistManager.swift */; };
+		3FDBC4C4258324F900E9C2DC /* PreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4C3258324F900E9C2DC /* PreferenceView.swift */; };
+		3FDBC4C8258346C400E9C2DC /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4C7258346C400E9C2DC /* NSWindow.swift */; };
+		3FDBC4CD2583535E00E9C2DC /* InteractiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4CC2583535E00E9C2DC /* InteractiveViewModel.swift */; };
+		3FDBC4D12583613800E9C2DC /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4D02583613800E9C2DC /* SettingViewModel.swift */; };
 		3FE881292532E6DD0088A1CD /* FontDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE881282532E6DD0088A1CD /* FontDataExtension.swift */; };
 		3FE8813D25333D080088A1CD /* StringObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813C25333D080088A1CD /* StringObjectListView.swift */; };
 		3FE8814025333D820088A1CD /* StringObjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813F25333D820088A1CD /* StringObjectRow.swift */; };
@@ -191,7 +198,7 @@
 		3FD24802253ED7B0007EBE36 /* FontWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontWeight.swift; sourceTree = "<group>"; };
 		3FD24806253EDDAE007EBE36 /* FontWeightClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FontWeightClassifier.mlmodel; sourceTree = "<group>"; };
 		3FD24809253EDED0007EBE36 /* FontWeightClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontWeightClassifier.swift; sourceTree = "<group>"; };
-		3FD401EF2500F2FB00525E67 /* PSDStringPredictor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSDStringPredictor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FD401EF2500F2FB00525E67 /* PSDStringGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSDStringGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD401F22500F2FB00525E67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD401F42500F2FB00525E67 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3FD401F62500F2FB00525E67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -199,6 +206,13 @@
 		3FD401FE2500F2FB00525E67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FD9957E2518B48D007E3D05 /* ImageUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		3FDA0D392534111D007792C0 /* TrackingDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDataObject.swift; sourceTree = "<group>"; };
+		3FDBC4AF2583114C00E9C2DC /* AppSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsItem.swift; sourceTree = "<group>"; };
+		3FDBC4B22583121800E9C2DC /* AppSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppSettings.plist; sourceTree = "<group>"; };
+		3FDBC4B925831B7D00E9C2DC /* PlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManager.swift; sourceTree = "<group>"; };
+		3FDBC4C3258324F900E9C2DC /* PreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceView.swift; sourceTree = "<group>"; };
+		3FDBC4C7258346C400E9C2DC /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
+		3FDBC4CC2583535E00E9C2DC /* InteractiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveViewModel.swift; sourceTree = "<group>"; };
+		3FDBC4D02583613800E9C2DC /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3FE881282532E6DD0088A1CD /* FontDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontDataExtension.swift; sourceTree = "<group>"; };
 		3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRegressor.swift; sourceTree = "<group>"; };
 		3FE8813C25333D080088A1CD /* StringObjectListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringObjectListView.swift; sourceTree = "<group>"; };
@@ -315,6 +329,7 @@
 				3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */,
 				3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */,
 				3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */,
+				3FDBC4C3258324F900E9C2DC /* PreferenceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -353,9 +368,11 @@
 				3F8208552516068100832192 /* StringObjectViewModel.swift */,
 				3FABE4E02580DA4C00287086 /* DBViewModel.swift */,
 				3F4CB5A4250A23E200E41082 /* ImageProcess.swift */,
+				3FDBC4D02583613800E9C2DC /* SettingViewModel.swift */,
 				3F50A7AF253DC5D900C10810 /* ImagePropertyViewModel.swift */,
 				3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */,
 				3F4471BE2575D76E003AE7B6 /* PSDObjectViewModel.swift */,
+				3FDBC4CC2583535E00E9C2DC /* InteractiveViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -394,6 +411,7 @@
 				3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */,
 				3F44C6472570F42500E438CA /* CGColorExtension.swift */,
 				3F4471BA25735459003AE7B6 /* ColorExtension.swift */,
+				3FDBC4C7258346C400E9C2DC /* NSWindow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -401,6 +419,7 @@
 		3FBA3A7A2510AFAB00F041DC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3FDBC4AE2583113400E9C2DC /* plist */,
 				3F662AF825677D29008F1879 /* Script */,
 				3F1A629625230CED006DC9F9 /* Font */,
 				3FAEC5CA25219A90008ECA23 /* Extensions */,
@@ -425,7 +444,7 @@
 		3FD401F02500F2FB00525E67 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3FD401EF2500F2FB00525E67 /* PSDStringPredictor.app */,
+				3FD401EF2500F2FB00525E67 /* PSDStringGenerator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -445,6 +464,7 @@
 				3FD401F22500F2FB00525E67 /* AppDelegate.swift */,
 				3FD401F62500F2FB00525E67 /* Assets.xcassets */,
 				3FD401FE2500F2FB00525E67 /* Info.plist */,
+				3FDBC4B22583121800E9C2DC /* AppSettings.plist */,
 			);
 			path = PSDStringPredictor;
 			sourceTree = "<group>";
@@ -455,6 +475,14 @@
 				3FD401F92500F2FB00525E67 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3FDBC4AE2583113400E9C2DC /* plist */ = {
+			isa = PBXGroup;
+			children = (
+				3FDBC4B925831B7D00E9C2DC /* PlistManager.swift */,
+			);
+			path = plist;
 			sourceTree = "<group>";
 		};
 		3FEBA6C2251CA4F7002D8EC1 /* Control */ = {
@@ -468,6 +496,7 @@
 		3FEBA6C5251CA831002D8EC1 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				3FDBC4AF2583114C00E9C2DC /* AppSettingsItem.swift */,
 				3FD247FC253E9BDD007EBE36 /* CharImageThumbnailObject.swift */,
 				3FEBA6C6251CA87C002D8EC1 /* StringLabelObject.swift */,
 				3FDA0D392534111D007792C0 /* TrackingDataObject.swift */,
@@ -492,9 +521,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3FD401EE2500F2FB00525E67 /* PSDStringPredictor */ = {
+		3FD401EE2500F2FB00525E67 /* PSDStringGenerator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3FD402022500F2FB00525E67 /* Build configuration list for PBXNativeTarget "PSDStringPredictor" */;
+			buildConfigurationList = 3FD402022500F2FB00525E67 /* Build configuration list for PBXNativeTarget "PSDStringGenerator" */;
 			buildPhases = (
 				3FD401EB2500F2FB00525E67 /* Sources */,
 				3FD401EC2500F2FB00525E67 /* Frameworks */,
@@ -505,12 +534,12 @@
 			);
 			dependencies = (
 			);
-			name = PSDStringPredictor;
+			name = PSDStringGenerator;
 			packageProductDependencies = (
 				3F66F86E2567BCE800BD48C3 /* PythonKit */,
 			);
 			productName = UITest;
-			productReference = 3FD401EF2500F2FB00525E67 /* PSDStringPredictor.app */;
+			productReference = 3FD401EF2500F2FB00525E67 /* PSDStringGenerator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -528,7 +557,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3FD401EA2500F2FB00525E67 /* Build configuration list for PBXProject "PSDStringPredictor" */;
+			buildConfigurationList = 3FD401EA2500F2FB00525E67 /* Build configuration list for PBXProject "PSDStringGenerator" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -544,7 +573,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3FD401EE2500F2FB00525E67 /* PSDStringPredictor */,
+				3FD401EE2500F2FB00525E67 /* PSDStringGenerator */,
 			);
 		};
 /* End PBXProject section */
@@ -556,6 +585,7 @@
 			files = (
 				3FA5047D2574CADA00F4A77A /* fontSize.csv in Resources */,
 				3F9C3956256F496400F686A7 /* Main.storyboard in Resources */,
+				3FDBC4B32583121800E9C2DC /* AppSettings.plist in Resources */,
 				3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */,
 				3F68B702252D7D8900CCFCE5 /* FontSizeTrackingTable.csv in Resources */,
 				3F440FFD250C72AD00EDAF3F /* default_image.png in Resources */,
@@ -621,9 +651,13 @@
 				3FD24803253ED7B0007EBE36 /* FontWeight.swift in Sources */,
 				3F9ED7AB25667E9400F950BC /* CGRectExtension.swift in Sources */,
 				3F308027251DD96600550DEA /* PixelProcess.swift in Sources */,
+				3FDBC4C4258324F900E9C2DC /* PreferenceView.swift in Sources */,
 				3F9ED7A825662CD600F950BC /* ButtonStyleView.swift in Sources */,
+				3FDBC4BA25831B7D00E9C2DC /* PlistManager.swift in Sources */,
+				3FDBC4C8258346C400E9C2DC /* NSWindow.swift in Sources */,
 				3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */,
 				3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */,
+				3FDBC4CD2583535E00E9C2DC /* InteractiveViewModel.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3F9C395D256F8A0C00F686A7 /* psdPagesView.swift in Sources */,
@@ -659,6 +693,7 @@
 				3F3E0009253DCA9D0047E4E5 /* ColorMode.mlmodel in Sources */,
 				3FE8813D25333D080088A1CD /* StringObjectListView.swift in Sources */,
 				3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */,
+				3FDBC4B02583114C00E9C2DC /* AppSettingsItem.swift in Sources */,
 				3F7239F4257F318C003EC998 /* IndicatorCircleView.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
@@ -678,6 +713,7 @@
 				3FA1C5B52557E7B100FC6DC3 /* TrackingRegressor.swift in Sources */,
 				3F50A7B4253DC64600C10810 /* ColorModeClassifier.swift in Sources */,
 				3F44C6452570EB0C00E438CA /* CharColorMode.mlmodel in Sources */,
+				3FDBC4D12583613800E9C2DC /* SettingViewModel.swift in Sources */,
 				3F56E3E42505F0B400E64337 /* Data.swift in Sources */,
 				3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */,
 				3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */,
@@ -812,7 +848,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = BBP29J5Z9W;
+				DEVELOPMENT_TEAM = 5N7U97AKYG;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = PSDStringPredictor/Info.plist;
@@ -821,8 +857,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.9;
 				MTL_COMPILER_FLAGS = "-cikernel";
-				PRODUCT_BUNDLE_IDENTIFIER = jin.PSDStringPredictor;
+				PRODUCT_BUNDLE_IDENTIFIER = jin.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -838,7 +875,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = BBP29J5Z9W;
+				DEVELOPMENT_TEAM = 5N7U97AKYG;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = PSDStringPredictor/Info.plist;
@@ -847,8 +884,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.9;
 				MTL_COMPILER_FLAGS = "-cikernel";
-				PRODUCT_BUNDLE_IDENTIFIER = jin.PSDStringPredictor;
+				PRODUCT_BUNDLE_IDENTIFIER = jin.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -858,7 +896,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3FD401EA2500F2FB00525E67 /* Build configuration list for PBXProject "PSDStringPredictor" */ = {
+		3FD401EA2500F2FB00525E67 /* Build configuration list for PBXProject "PSDStringGenerator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3FD402002500F2FB00525E67 /* Debug */,
@@ -867,7 +905,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3FD402022500F2FB00525E67 /* Build configuration list for PBXNativeTarget "PSDStringPredictor" */ = {
+		3FD402022500F2FB00525E67 /* Build configuration list for PBXNativeTarget "PSDStringGenerator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3FD402032500F2FB00525E67 /* Debug */,

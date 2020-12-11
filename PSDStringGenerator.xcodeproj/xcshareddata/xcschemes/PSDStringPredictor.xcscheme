@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3FD401EE2500F2FB00525E67"
-               BuildableName = "PSDStringPredictor.app"
-               BlueprintName = "PSDStringPredictor"
-               ReferencedContainer = "container:PSDStringPredictor.xcodeproj">
+               BuildableName = "PSDStringGenerator.app"
+               BlueprintName = "PSDStringGenerator"
+               ReferencedContainer = "container:PSDStringGenerator.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3FD401EE2500F2FB00525E67"
-            BuildableName = "PSDStringPredictor.app"
-            BlueprintName = "PSDStringPredictor"
-            ReferencedContainer = "container:PSDStringPredictor.xcodeproj">
+            BuildableName = "PSDStringGenerator.app"
+            BlueprintName = "PSDStringGenerator"
+            ReferencedContainer = "container:PSDStringGenerator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3FD401EE2500F2FB00525E67"
-            BuildableName = "PSDStringPredictor.app"
-            BlueprintName = "PSDStringPredictor"
-            ReferencedContainer = "container:PSDStringPredictor.xcodeproj">
+            BuildableName = "PSDStringGenerator.app"
+            BlueprintName = "PSDStringGenerator"
+            ReferencedContainer = "container:PSDStringGenerator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
