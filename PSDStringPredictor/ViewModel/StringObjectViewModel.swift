@@ -74,20 +74,29 @@ class StringObjectViewModel: ObservableObject{
         let group = DispatchGroup()
         
         let queueCalc = DispatchQueue(label: "calc")
-        //queueCalc.async(group: group) {
-        let allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
-        //}
+        queueCalc.async(group: group) {
+            
+            var allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
+            allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
+//            allStrObjs = self.FiltStringObjects(originalList: allStrObjs)
+            
+            DispatchQueue.main.async{
+                self.stringObjectListData = allStrObjs
+            }
+        }
         
-        stringObjectListData = allStrObjs
-        //        group.notify(queue: DispatchQueue.main) {
-        //            print("all task done")
-        //        }
-        stringObjectListData = DeleteDescentForStringObjects(stringObjectListData)
-        stringObjectListData = FiltStringObjects(originalList: stringObjectListData)
-        //DataStore.FillCharFrameList()
-        self.FetchCharFrameListData()
-        self.FetchCharFrameListRects()
-        self.FetchStringObjectFontNameDict()
+        
+        group.notify(queue: DispatchQueue.main) {
+//            self.stringObjectListData = self.DeleteDescentForStringObjects(self.stringObjectListData)
+            self.stringObjectListData = self.FiltStringObjects(originalList: self.stringObjectListData)
+            //DataStore.FillCharFrameList()
+            self.FetchCharFrameListData()
+            self.FetchCharFrameListRects()
+            self.FetchStringObjectFontNameDict()
+            
+            stringObjectViewModel.indicatorTitle = ""
+        }
+
         
         
         print("updateStringObjectList: \(updateStringObjectList.count)")
@@ -119,7 +128,9 @@ class StringObjectViewModel: ObservableObject{
     
     func DeleteDescentForStringObjects(_ objs: [StringObject]) -> [StringObject] {
         var result: [StringObject] = []
+        var index = 0
         for obj in objs{
+            indicatorTitle = "Processing on font offset for strings \(index)/\(objs.count)"
             var highLetterEvenHeight: CGFloat = 0
             var lowerLetterEvenHeight: CGFloat = 0
             var fontName: String = ""
@@ -158,6 +169,7 @@ class StringObjectViewModel: ObservableObject{
             let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
             let tmpObj = StringObject(obj.content, newStringRect, obj.observation, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
             result.append(tmpObj)
+            index += 1
         }
         return result
     }
@@ -184,6 +196,8 @@ class StringObjectViewModel: ObservableObject{
         }
         //TODO: Update list error.
         for obj in objList{
+            
+            indicatorTitle = "Processing on fixed and removed list \(index)/\(objList.count)"
             //Find the ignore object
             for ignoreObj in ignoreList{
                 //if value == true {

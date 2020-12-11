@@ -124,7 +124,9 @@ class OCR: ObservableObject{
         let strs = self.GetStringArrayFromObservations(results_fast)
         
         for i in 0..<stringsRects.count{
-            //stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
+            DispatchQueue.main.async{
+                stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
+            }
             var (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             var newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             //newStrObj.DeleteDescentForRect()
