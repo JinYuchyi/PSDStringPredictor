@@ -27,35 +27,32 @@ struct SelectionOverlayView: View {
                             startPos = gesture.startLocation
                             width = gesture.translation.width
                             height = gesture.translation.height
-                            interactive.selectionRect = CGRect.init(x: startPos.x + width/2, y: startPos.y + height/2, width: width, height: height)
+                            interactive.selectionRect = CGRect.init(x: startPos.x , y: startPos.y , width: width, height: height)
                             interactive.selectionRect = interactive.selectionRect.standardized
-
+                            
                         }
                         .onEnded{ value in
-//                            interactive.selectionRect = CGRect.init(x: startPos.x + width/2, y: startPos.y + height/2, width: width, height: height)
-//                            interactive.selectionRect = interactive.selectionRect.standardized
                             show = false
                             CalcSelectedObject()
-
+                            
                             print(interactive.selectionRect)
+                        }
+                )
+                .gesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            objVM.selectedStringObjectList.removeAll()
                         }
                 )
             Rectangle()
                 //interactive.selectionRect
                 .fill(Color.green.opacity(0.3))
                 .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
-                .position(x: interactive.selectionRect.minX, y: interactive.selectionRect.minY)
+                .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
                 //.frame(width: width, height: height)
                 //.position(x: startPos.x + width/2, y: startPos.y + height/2)
                 .IsHidden(condition: show)
             
-            ForEach (objVM.stringObjectListData) { item in
-                Rectangle()
-                    .fill(Color.red)
-                    .frame(width: item.stringRect.width, height: item.stringRect.height)
-                    .position(x: (item.stringRect.origin.x + item.stringRect.width/2), y: (imageVM.GetTargetImageSize()[1] - item.stringRect.origin.y - item.stringRect.height/2))
-                    
-            }
             
         }
     }
@@ -63,11 +60,10 @@ struct SelectionOverlayView: View {
     func CalcSelectedObject(){
         objVM.selectedStringObjectList.removeAll()
         for obj in objVM.stringObjectListData {
-            //print("checking: \(obj.stringRect), \(interactive.selectionRect)")
-//            var tempRect = CGRect.init(x: interactive.selectionRect.minX, y:  interactive.selectionRect.minY, width: interactive.selectionRect.width, height: interactive.selectionRect.height)
+            
             let tmpRect = CGRect.init(x: (obj.stringRect.origin.x + obj.stringRect.width/2), y: (imageVM.GetTargetImageSize()[1] - obj.stringRect.origin.y - obj.stringRect.height/2), width: obj.stringRect.width, height: obj.stringRect.height)
             if tmpRect.intersects(interactive.selectionRect) {
-                print("intersects: \(tmpRect), \(interactive.selectionRect)")
+                //print("intersects: \(tmpRect), \(interactive.selectionRect)")
                 objVM.selectedStringObjectList.append(obj)
             }
         }
