@@ -31,4 +31,17 @@ extension CGRect: Hashable{
         return false
 
     }
+    
+    func FlipPosition( forX: Bool, forY: Bool) -> CGRect{
+        var x = self.minX
+        var y = self.minY
+        if forX == true {
+            x = imageProcessViewModel.targetNSImage.size.width - x
+        }
+        if forY == true {
+            y = imageProcessViewModel.targetNSImage.size.height - y
+        }
+        
+        return CGRect.init(x: x, y: y, width: self.width, height: self.height)
+    }
 }

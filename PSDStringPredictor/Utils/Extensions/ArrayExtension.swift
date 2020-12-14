@@ -35,3 +35,14 @@ extension Array  {
     }
     
 }
+
+extension Array where Element == StringObject {
+    func LastValidItem()-> StringObject {
+        if self.count > 0 {
+            return self.last!
+        }else{
+            let obj = StringObject()
+            return obj
+        }
+    }
+}

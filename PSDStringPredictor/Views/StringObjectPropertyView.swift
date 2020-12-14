@@ -17,28 +17,28 @@ struct StringObjectPropertyView: View {
     let pixelMgr = PixelProcess()
     
     fileprivate func FontSizeView(index: Int) -> some View {
-        if stringObjectVM.selectedStringObject.isPredictedList[index] == 1 {
-            return Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description)+"􀫥").fixedSize()
+        if stringObjectVM.selectedStringObjectList.LastValidItem().isPredictedList[index] == 1 {
+            return Text(String(stringObjectVM.selectedStringObjectList.LastValidItem().charSizeList[index].description)+"􀫥").fixedSize()
         }else{
-            return Text(String(stringObjectVM.selectedStringObject.charSizeList[index].description)).fixedSize()
+            return Text(String(stringObjectVM.selectedStringObjectList.LastValidItem().charSizeList[index].description)).fixedSize()
         }
         
     }
 
-    func CalcOffsetTracking() -> CGFloat{
+    func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{
         var offset: CGFloat = 0
-        if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
-            offset = stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject]!.width
+        if stringObjectVM.DragOffsetDict[targetObj] != nil{
+            offset = stringObjectVM.DragOffsetDict[targetObj]!.width
         }
-        return stringObjectVM.selectedStringObject.tracking + offset
+        return targetObj.tracking + offset
     }
     
-    func CalcOffsetSize() -> CGFloat{
+    func CalcOffsetSize(targetObj: StringObject) -> CGFloat{
         var offset: CGFloat = 0
-        if stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject] != nil{
-            offset = stringObjectVM.DragOffsetDict[stringObjectVM.selectedStringObject]!.height
+        if stringObjectVM.DragOffsetDict[targetObj] != nil{
+            offset = stringObjectVM.DragOffsetDict[targetObj]!.height
         }
-        return stringObjectVM.selectedStringObject.fontSize - offset
+        return targetObj.fontSize - offset
     }
     
     fileprivate func StringComponents() -> some View {
@@ -49,28 +49,28 @@ struct StringObjectPropertyView: View {
                 
                 HStack {
                     
-                    ForEach(0..<stringObjectVM.selectedStringObject.charImageList.count, id: \.self){ index in
+                    ForEach(0..<stringObjectVM.selectedStringObjectList.LastValidItem().charImageList.count, id: \.self){ index in
                         
                         VStack{
-                            if stringObjectVM.selectedStringObject.charColorModeList[index] == 1{
+                            if stringObjectVM.selectedStringObjectList.LastValidItem().charColorModeList[index] == 1{
                                 
-                                Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
+                                Image(nsImage: stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index].ToNSImage())
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 40)
                                     .border(Color.yellow, width: 1)
-                            }else if  stringObjectVM.selectedStringObject.charColorModeList[index] == 2{
-                                Image(nsImage: stringObjectVM.selectedStringObject.charImageList[index].ToNSImage())
+                            }else if  stringObjectVM.selectedStringObjectList.LastValidItem().charColorModeList[index] == 2{
+                                Image(nsImage: stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index].ToNSImage())
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 40)
                                     .border(Color.blue, width: 1)
                             }
 
-                            TextField(String(stringObjectVM.selectedStringObject.charArray[index]), text: $stringField)
+                            TextField(String(stringObjectVM.selectedStringObjectList.LastValidItem().charArray[index]), text: $stringField)
                             
-                            Text("\(Int(stringObjectVM.selectedStringObject.charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObject.charRects[index].height.rounded()))")
-                            Text(String(stringObjectVM.selectedStringObject.charFontWeightList[index]))
+                            Text("\(Int(stringObjectVM.selectedStringObjectList.LastValidItem().charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObjectList.LastValidItem().charRects[index].height.rounded()))")
+                            Text(String(stringObjectVM.selectedStringObjectList.LastValidItem().charFontWeightList[index]))
                             
                             FontSizeView(index: index)
                             
@@ -95,14 +95,14 @@ struct StringObjectPropertyView: View {
                     Text("Content")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObject.content)")
+                    Text("\(stringObjectVM.selectedStringObjectList.LastValidItem().content)")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
-                if stringObjectVM.selectedStringObject.content != "No content." {
+                if stringObjectVM.selectedStringObjectList.LastValidItem().content != "No content." {
                     HStack{
-                        let targetImg = imageProcess.targetCIImage.cropped(to: stringObjectVM.selectedStringObject.stringRect).ToNSImage()
-                        Image(nsImage: targetImg ?? NSImage.init())
+                        let targetImg = imageProcess.targetCIImage.cropped(to: stringObjectVM.selectedStringObjectList.LastValidItem().stringRect).ToNSImage()
+                        Image(nsImage: targetImg )
                             .resizable()
                             .scaledToFit()
                             .frame(width: 200)
@@ -119,10 +119,10 @@ struct StringObjectPropertyView: View {
                     Text("Color Mode")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    if stringObjectVM.selectedStringObject.colorMode == 1 {
+                    if stringObjectVM.selectedStringObjectList.LastValidItem().colorMode == 1 {
                         Text("􀆮")
                             .frame(width:200, alignment: .topLeading)
-                    }else if stringObjectVM.selectedStringObject.colorMode == 2 {
+                    }else if stringObjectVM.selectedStringObjectList.LastValidItem().colorMode == 2 {
                         Text("􀆺")
                             .frame(width:200, alignment: .topLeading)
                     }else{}
@@ -135,7 +135,7 @@ struct StringObjectPropertyView: View {
                     Text("Size")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(CalcOffsetSize())")
+                    Text("\(CalcOffsetSize(targetObj: stringObjectVM.selectedStringObjectList.LastValidItem()))")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -145,7 +145,7 @@ struct StringObjectPropertyView: View {
                     Text("Tracking")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(CalcOffsetTracking())")
+                    Text("\(CalcOffsetTracking(targetObj: stringObjectVM.selectedStringObjectList.LastValidItem()))")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -157,14 +157,14 @@ struct StringObjectPropertyView: View {
                         .frame(width:80, alignment: .topLeading)
                     
                     VStack{
-                        if stringObjectVM.selectedStringObject.fontSize != 0 {
-                            Text("\(stringObjectVM.StringObjectNameDict[stringObjectVM.selectedStringObject.id]!)")
+                        if stringObjectVM.selectedStringObjectList.LastValidItem().fontSize != 0 {
+                            Text("\(stringObjectVM.selectedStringObjectList.LastValidItem().FontName)" )
                                 .frame(width:200, alignment: .topLeading)
                                 .onTapGesture {
                                     //if stringObjectVM.selectedStringObject.fontSize != 0 {
                                         //print("Tapped")
 
-                                        let id = stringObjectVM.selectedStringObject.id
+                                    let id = stringObjectVM.selectedStringObjectList.LastValidItem().id
                                         let fName = stringObjectVM.StringObjectNameDict[id]
                                         let endIndex = fName!.lastIndex(of: " ")
                                         let startIndex = fName!.startIndex
@@ -195,10 +195,10 @@ struct StringObjectPropertyView: View {
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
                     Rectangle()
-                        .fill(stringObjectVM.selectedStringObject.color.ToColor())
+                        .fill(Color.white)
                         .frame(width:10, height:10, alignment: .center)
                     
-                    Text("\(String(format: "%.2f", stringObjectVM.selectedStringObject.color.components![0] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObject.color.components![1] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObject.color.components![2] * 255))")
+                    Text("\(String(format: "%.2f", stringObjectVM.selectedStringObjectList.LastValidItem().color.components![0] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObjectList.LastValidItem().color.components![1] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObjectList.LastValidItem().color.components![2] * 255))")
                     //                    Text("\(stringObjectVM.selectedStringObject.color.ToColor())")
                     //                        .foregroundColor(Color.gray)
                     //                        .frame(width:80, alignment: .topLeading)
@@ -211,7 +211,7 @@ struct StringObjectPropertyView: View {
                     Text("Bounds")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("X: \(Int(stringObjectVM.selectedStringObject.stringRect.minX.rounded())), Y: \(Int(stringObjectVM.selectedStringObject.stringRect.minY.rounded())), W: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), H: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
+                    Text("X: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.minX.rounded() )), Y: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.minY.rounded())), W: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.width.rounded() )), H: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.height.rounded()))")
                         //Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
                         .frame(width:200, alignment: .topLeading)
                 }
@@ -229,8 +229,8 @@ struct StringObjectPropertyView: View {
             let result = panel.runModal()
             if result == .OK{
                 //let img = stringObjectVM.selectedStringObject.charImageList[index]
-                imageProcess.SaveCIIToPNG(CIImage: stringObjectVM.selectedStringObject.charImageList[index], filePath: panel.url!.path )
-                let bw = SetGrayScale(stringObjectVM.selectedStringObject.charImageList[index])
+                imageProcess.SaveCIIToPNG(CIImage: stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index], filePath: panel.url!.path )
+                let bw = SetGrayScale(stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index] )
                 imageProcess.SaveCIIToPNG(CIImage: bw!, filePath: panel.url!.path + "_bw" )
                 //let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
                 //let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
@@ -241,7 +241,7 @@ struct StringObjectPropertyView: View {
     }
     
     func StringSaveBtnPressed(){
-        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObject.stringRect)
+        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObjectList.LastValidItem().stringRect)
         let denoise = NoiseReduction(tergetImg)
         let tergetImgBW = SetGrayScale(denoise!)
 

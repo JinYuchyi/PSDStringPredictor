@@ -21,15 +21,14 @@ class StringObjectViewModel: ObservableObject{
     var stringObject: StringObject = StringObject()
     let pixelProcess = PixelProcess()
     let ocr = OCR()
-    //@ObservedObject var imageViewModel: ImageProcess = ImageProcess()
-    //var data: DataStore = DataStore()
+
     @Published var stringObjectListData: [StringObject] = []
     @Published var charFrameListData: [CharFrame] = []
     @Published var charFrameListRects: [CGRect] = []
     //@Published var StringLabelListData: [StringLabelObject] = []
-    @Published var selectedStringObject: StringObject = StringObject.init()
+    @Published var selectedStringObjectList: [StringObject] = []
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
-    //@Published var selectedStringObjectFontName: String = ""
+    
     
     @Published var stringObjectIgnoreDict: [StringObject: Bool] = [:]
     @Published var stringObjectFixedDict: [StringObject: Bool] = [:]
@@ -106,7 +105,7 @@ class StringObjectViewModel: ObservableObject{
         stringObjectListData = []
         charFrameListData = []
         charFrameListRects = []
-        selectedStringObject = StringObject.init()
+        selectedStringObjectList = []
         selectedCharImageListObjectList = [CharImageThumbnailObject]()
         stringObjectIgnoreDict = [:]
         stringObjectFixedDict = [:]
@@ -253,12 +252,16 @@ class StringObjectViewModel: ObservableObject{
     }
     
     
-    func UpdateSelectedStringObject(selectedStringObject: StringObject ){
-        selectedCharImageListObjectList = []
-        self.selectedStringObject = selectedStringObject
-        for (index, img) in (selectedStringObject.charImageList).enumerated(){
-            let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObject.charArray[index]), weight: selectedStringObject.charFontWeightList[index], size: Int(selectedStringObject.charSizeList[index]))
-            selectedCharImageListObjectList.append( temp )
+    func UpdateSelectedStringObjectList(selectedStringObjectList: [StringObject] ){
+        if selectedStringObjectList.count == 0 {
+            self.selectedStringObjectList = []
+        }else{
+            selectedCharImageListObjectList = []
+            self.selectedStringObjectList = selectedStringObjectList
+            for (index, img) in (selectedStringObjectList.last!.charImageList).enumerated(){
+                let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObjectList.last!.charArray[index]), weight: selectedStringObjectList.last!.charFontWeightList[index], size: Int(selectedStringObjectList.last!.charSizeList[index]))
+                selectedCharImageListObjectList.append( temp )
+            }
         }
     }
     

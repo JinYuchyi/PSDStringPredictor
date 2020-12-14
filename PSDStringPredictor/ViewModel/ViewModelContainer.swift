@@ -11,4 +11,5 @@ import SwiftUI
 var imageProcessViewModel: ImageProcess = ImageProcess()
 var stringObjectViewModel = StringObjectViewModel()
 var imagePropertyViewModel = ImagePropertyViewModel()
+var interactiveViewModel = InteractiveViewModel()
 

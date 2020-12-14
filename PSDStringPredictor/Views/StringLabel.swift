@@ -46,17 +46,17 @@ struct StringLabel: View {
         return stringLabel.fontSize - d
     }
     
-//    func makeView(_ geometry: GeometryProxy) -> some View {
-//        //print(geometry.size.width, geometry.size.height)
-//        DispatchQueue.main.async { self.width = geometry.size.width }
-//        
-//        return Text("Test")
-//            .frame(width: geometry.size.width)
-//    }
+    //    func makeView(_ geometry: GeometryProxy) -> some View {
+    //        //print(geometry.size.width, geometry.size.height)
+    //        DispatchQueue.main.async { self.width = geometry.size.width }
+    //
+    //        return Text("Test")
+    //            .frame(width: geometry.size.width)
+    //    }
     
     func InfoBtnTapped(){
         print("stringLabel.id: \(stringLabel.content)")
-        stringObjectVM.UpdateSelectedStringObject(selectedStringObject: self.stringLabel)
+        stringObjectVM.UpdateSelectedStringObjectList(selectedStringObjectList: [self.stringLabel])
         imageProcessViewModel.FindNearestStandardRGB(stringLabel.color)
     }
     
@@ -90,72 +90,74 @@ struct StringLabel: View {
     }
     
     fileprivate func TextLayerView() -> some View {
-
+        
         Text(stringLabel.content)
             .foregroundColor(stringLabel.color.ToColor())
             .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id]!, size: CalcSizeAfterOffset()))
             .tracking(CalcTrackingAfterOffset())
             .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
-
+        
         return AnyView(EmptyView())
     }
     
     var body: some View {
-        
         ZStack {
-            
-            Group{
-                if stringLabel.colorMode == 1{
+            ZStack { //Debug
+                
+                Group{
+                    if stringLabel.colorMode == 1{
+                        Rectangle()
+                            .fill( Color.white.opacity(0.2))
+                            .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
+                            .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+                    }else if stringLabel.colorMode == 2 {
+                        Rectangle()
+                            .fill( Color.black.opacity(0.2))
+                            .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
+                            .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
+                    }
+                    
+                    //String debug frame
                     Rectangle()
-                        .fill( Color.white.opacity(0.3))
+                        .stroke(Color.red, lineWidth: 1)
                         .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                         .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
-                }else if stringLabel.colorMode == 2 {
+
+                    
+                    //Drag layer
                     Rectangle()
-                        .fill( Color.black.opacity(0.3))
+                        .fill( Color.yellow.opacity(0.1))
                         .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                         .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
-                }
+                        .gesture(DragGesture()
+                                    .onChanged { gesture in
+                                        if abs(gesture.translation.width / gesture.translation.height) > 1 {
+                                            stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: gesture.translation.width / 10, height: 0)
+                                        } else {
+                                            stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: 0, height: gesture.translation.height / 10)
+                                        }
+                                    }
+                        )
+                    
+                    //Debug Rect for each character
+                    ForEach (stringLabel.charRects, id:\.self){ item in
+                        CharacterFrameView(charFrame: item)
+                            .position(x: item.midX, y: self.imageViewModel.GetTargetImageSize()[1] - item.midY)
+                    }
+                    
+                }.IsHidden(condition: fixedEnabled && ignoredEnabled)
                 
-                Rectangle()
-                    .stroke(stringObjectVM.selectedStringObject.id == stringLabel.id ? Color.green.opacity(0.6) : Color.red, lineWidth: stringObjectVM.selectedStringObject.id == stringLabel.id ? 3 : 1)
-                    .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
-                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
                 
-//                RoundedRectangle(cornerRadius: 5, style: .continuous)
-//                    .fill(Color.green)
-//                    //.stroke(stringObjectVM.selectedStringObject.id == stringLabel.id ? Color.green.opacity(0.6) : Color.red, lineWidth: stringObjectVM.selectedStringObject.id == stringLabel.id ? 3 : 1)
-//                    .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
-//                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
-//
+                
+                //Text content
                 Text(stringLabel.content)
                     .foregroundColor(stringLabel.color.ToColor())
                     .font(.custom(stringObjectVM.StringObjectNameDict[stringLabel.id] ?? "", size: CalcSizeAfterOffset()))
                     .tracking(CalcTrackingAfterOffset())
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
                 
-                //Drag layer
-                Rectangle()
-                    .fill( Color.yellow.opacity(0.1))
-                    .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
-                    .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
-                    .gesture(DragGesture()
-                                .onChanged { gesture in
-                                    if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                        stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: gesture.translation.width / 10, height: 0)
-                                    } else {
-                                        stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: 0, height: gesture.translation.height / 10)
-                                    }
-                                }
-                    )
-                
-                //Rect for each character
-                ForEach (stringLabel.charRects, id:\.self){ item in
-                    CharacterFrameView(charFrame: item)
-                        .position(x: item.midX, y: self.imageViewModel.GetTargetImageSize()[1] - item.midY)
-                }
-                
-            }.IsHidden(condition: fixedEnabled && ignoredEnabled)
+
+            }
             
             HStack{
                 //Button for show detail
