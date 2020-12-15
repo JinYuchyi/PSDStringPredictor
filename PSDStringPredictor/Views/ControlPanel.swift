@@ -82,9 +82,7 @@ struct ControlPanel: View {
     }
 
     func Debug(){
-        let plistM =  PlistManager()
-        let item = plistM.Load(plistName: "AppSettings")
-        print(item)
+        stringObjectVM.CombineStrings()
 //        let url = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
 //        var imageData: NSData =  NSData.init()
 //        do{

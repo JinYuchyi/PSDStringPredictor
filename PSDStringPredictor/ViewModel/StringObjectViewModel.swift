@@ -349,6 +349,37 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
+    func CombineStrings(){
+        var newObj: StringObject
+        var orderedYList: [UUID:CGFloat] = [:]
+        var content: String = ""
+        var rect: CGRect = CGRect.init()
+
+        if selectedStringObjectList.count > 0{
+            rect = selectedStringObjectList[0].stringRect
+        }
+        for obj in selectedStringObjectList{
+            rect = rect.union(obj.stringRect)
+            orderedYList[obj.id] = obj.stringRect.minY
+        }
+        let resultIDList = orderedYList.sorted {$0.1 < $1.1}
+        for d in resultIDList{
+            let str = selectedStringObjectList.first(where: {$0.id == d.key})!.content
+            content += " " + str
+        }
+        
+        var resultObj: StringObject = StringObject.init(content, rect, VNRecognizedTextObservation.init(), ["0"], [CGRect.init()], charImageList: [CIImage.init()], 1)
+        
+        selectedStringObjectList.removeAll()
+        selectedStringObjectList.append(resultObj)
+        
+        for d in resultIDList{
+            stringObjectListData.removeAll(where: {$0.id == d.key})
+        }
+        stringObjectListData.append(resultObj)
+        
+    }
+    
 }
 
 
