@@ -174,10 +174,10 @@ class CharColorMode {
           - configuration: the desired model configuration
           - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
     */
-    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
-    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<CharColorMode, Error>) -> Void) {
-        return self.load(contentsOf: self.urlOfModelInThisBundle, configuration: configuration, completionHandler: handler)
-    }
+//    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+//    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<CharColorMode, Error>) -> Void) {
+//        return self.load(contentsOf: self.urlOfModelInThisBundle, configuration: configuration, completionHandler: handler)
+//    }
 
     /**
         Construct CharColorMode instance asynchronously with URL of the .mlmodelc directory with optional configuration.
@@ -189,18 +189,18 @@ class CharColorMode {
           - configuration: the desired model configuration
           - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
     */
-    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
-    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<CharColorMode, Error>) -> Void) {
-        MLModel.__loadContents(of: modelURL, configuration: configuration) { (model, error) in
-            if let error = error {
-                handler(.failure(error))
-            } else if let model = model {
-                handler(.success(CharColorMode(model: model)))
-            } else {
-                fatalError("SPI failure: -[MLModel loadContentsOfURL:configuration::completionHandler:] vends nil for both model and error.")
-            }
-        }
-    }
+//    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+//    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<CharColorMode, Error>) -> Void) {
+//        MLModel.__loadContents(of: modelURL, configuration: configuration) { (model, error) in
+//            if let error = error {
+//                handler(.failure(error))
+//            } else if let model = model {
+//                handler(.success(CharColorMode(model: model)))
+//            } else {
+//                fatalError("SPI failure: -[MLModel loadContentsOfURL:configuration::completionHandler:] vends nil for both model and error.")
+//            }
+//        }
+//    }
 
     /**
         Make a prediction using the structured interface

@@ -13,6 +13,7 @@ struct SelectionOverlayView: View {
     @ObservedObject var objVM = stringObjectViewModel
     @ObservedObject var imageVM = imageProcessViewModel
     @State var startPos = CGPoint.zero
+    @State var endPos = CGPoint.zero
     @State var width: CGFloat = 0
     @State var height: CGFloat = 0
     @State var show: Bool = false
@@ -25,6 +26,7 @@ struct SelectionOverlayView: View {
                         .onChanged { gesture in
                             show = true
                             startPos = gesture.startLocation
+                            
                             width = gesture.translation.width
                             height = gesture.translation.height
                             interactive.selectionRect = CGRect.init(x: startPos.x , y: startPos.y , width: width, height: height)
@@ -33,15 +35,17 @@ struct SelectionOverlayView: View {
                         }
                         .onEnded{ value in
                             show = false
+                            endPos = value.location
                             CalcSelectedObject()
                             
-                            print(interactive.selectionRect)
+                            
                         }
                 )
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
                             objVM.selectedStringObjectList.removeAll()
+
                         }
                 )
             Rectangle()
@@ -59,10 +63,27 @@ struct SelectionOverlayView: View {
     
     func CalcSelectedObject(){
         objVM.selectedStringObjectList.removeAll()
+
+            for obj in objVM.stringObjectListData {
+                if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
+                    
+                }
+                let tmpRect = CGRect.init(x: (obj.stringRect.origin.x ), y: (imageVM.GetTargetImageSize()[1] - obj.stringRect.origin.y - obj.stringRect.height/2), width: obj.stringRect.width, height: obj.stringRect.height)
+                if tmpRect.intersects(interactive.selectionRect)  {
+                    //print("intersects: \(tmpRect), \(interactive.selectionRect)")
+                    objVM.selectedStringObjectList.append(obj)
+                }
+            }
+        
+    }
+    
+    func CalcTap(tapPoint: CGPoint){
+        objVM.selectedStringObjectList.removeAll()
+        
         for obj in objVM.stringObjectListData {
             
-            let tmpRect = CGRect.init(x: (obj.stringRect.origin.x + obj.stringRect.width/2), y: (imageVM.GetTargetImageSize()[1] - obj.stringRect.origin.y - obj.stringRect.height/2), width: obj.stringRect.width, height: obj.stringRect.height)
-            if tmpRect.intersects(interactive.selectionRect) {
+            //let tmpRect = CGRect.init(x: (tapPoint.x ), y: (imageVM.GetTargetImageSize()[1] - tapPoint.y - 2), width: 4, height: 4)
+            if obj.stringRect.contains(tapPoint) {
                 //print("intersects: \(tmpRect), \(interactive.selectionRect)")
                 objVM.selectedStringObjectList.append(obj)
             }

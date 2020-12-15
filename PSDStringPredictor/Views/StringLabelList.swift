@@ -17,6 +17,13 @@ struct LabelsOnImage: View {
         Group{
             ForEach(stringObjectVM.updateStringObjectList, id:\.id){ item in
                 StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
+                    .gesture(TapGesture()
+                                .onEnded({ (loc) in
+                                    print("On tapped.")
+                                    stringObjectVM.selectedStringObjectList.removeAll()
+                                    stringObjectVM.selectedStringObjectList.append(item)
+                                })
+                )
             }
             
             ForEach(stringObjectVM.ignoreStringObjectList, id:\.id){ item in
@@ -27,6 +34,7 @@ struct LabelsOnImage: View {
                 StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
             }
         }
+        
     }
     
 

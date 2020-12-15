@@ -55,9 +55,10 @@ struct ContentView: View {
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView(imageViewModel:imageViewModel)
+
+                    HighlightView(objList: stringObjectVM.selectedStringObjectList)
                     LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
                         .IsHidden(condition: stringObjectVM.stringOverlay)
-                    HighlightView(objList: stringObjectVM.selectedStringObjectList)
                 }
             }
             

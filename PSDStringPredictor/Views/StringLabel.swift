@@ -129,21 +129,25 @@ struct StringLabel: View {
                         .fill( Color.yellow.opacity(0.1))
                         .frame(width: stringLabel.stringRect.width, height: stringLabel.stringRect.height)
                         .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y - stringLabel.stringRect.height/2  )
-                        .gesture(DragGesture()
-                                    .onChanged { gesture in
-                                        if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                            stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: gesture.translation.width / 10, height: 0)
-                                        } else {
-                                            stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: 0, height: gesture.translation.height / 10)
-                                        }
-                                    }
-                        )
+//                        .gesture(DragGesture()
+//                                    .onChanged { gesture in
+//                                        if abs(gesture.translation.width / gesture.translation.height) > 1 {
+//                                            stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: gesture.translation.width / 10, height: 0)
+//                                        } else {
+//                                            stringObjectVM.DragOffsetDict[stringLabel] = CGSize(width: 0, height: gesture.translation.height / 10)
+//                                        }
+//                                    }
+//
+//                        )
+
+                                 
+//                    )
                     
                     //Debug Rect for each character
-                    ForEach (stringLabel.charRects, id:\.self){ item in
-                        CharacterFrameView(charFrame: item)
-                            .position(x: item.midX, y: self.imageViewModel.GetTargetImageSize()[1] - item.midY)
-                    }
+//                    ForEach (stringLabel.charRects, id:\.self){ item in
+//                        CharacterFrameView(charFrame: item)
+//                            .position(x: item.midX, y: self.imageViewModel.GetTargetImageSize()[1] - item.midY)
+//                    }
                     
                 }.IsHidden(condition: fixedEnabled && ignoredEnabled)
                 
@@ -156,7 +160,7 @@ struct StringLabel: View {
                     .tracking(CalcTrackingAfterOffset())
                     .position(x: stringLabel.stringRect.origin.x + stringLabel.stringRect.width/2, y: imageViewModel.GetTargetImageSize()[1] - stringLabel.stringRect.origin.y  - stringLabel.stringRect.height/2  )
                 
-
+                
             }
             
             HStack{
