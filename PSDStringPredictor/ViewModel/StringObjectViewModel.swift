@@ -26,9 +26,9 @@ class StringObjectViewModel: ObservableObject{
     @Published var charFrameListData: [CharFrame] = []
     @Published var charFrameListRects: [CGRect] = []
     //@Published var StringLabelListData: [StringLabelObject] = []
-    @Published var selectedStringObjectList: [StringObject] = []
+    @Published var selectedIDList: [UUID] = []
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
-    
+    //@Published var paragraphTextObjectList = [StringObject]()
     
     @Published var stringObjectIgnoreDict: [StringObject: Bool] = [:]
     @Published var stringObjectFixedDict: [StringObject: Bool] = [:]
@@ -37,7 +37,7 @@ class StringObjectViewModel: ObservableObject{
     @Published var fixedStringObjectList: [StringObject] = []
     @Published var StringObjectNameDict: [UUID:String] = [:]
     
-    @Published var DragOffsetDict: [StringObject: CGSize] = [:]
+    @Published var DragOffsetDict: [UUID: CGSize] = [:]
     @Published var alignmentDict: [UUID:Int] = [:]
     @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
     @Published var stringObjectOutputList: [StringObject] = []
@@ -105,7 +105,7 @@ class StringObjectViewModel: ObservableObject{
         stringObjectListData = []
         charFrameListData = []
         charFrameListRects = []
-        selectedStringObjectList = []
+        selectedIDList = []
         selectedCharImageListObjectList = [CharImageThumbnailObject]()
         stringObjectIgnoreDict = [:]
         stringObjectFixedDict = [:]
@@ -252,18 +252,27 @@ class StringObjectViewModel: ObservableObject{
     }
     
     
-    func UpdateSelectedStringObjectList(selectedStringObjectList: [StringObject] ){
-        if selectedStringObjectList.count == 0 {
-            self.selectedStringObjectList = []
+    func UpdateSelectedIDList(idList: [UUID] ){
+        if selectedIDList.count == 0 {
+            self.selectedIDList = []
         }else{
             selectedCharImageListObjectList = []
-            self.selectedStringObjectList = selectedStringObjectList
-            for (index, img) in (selectedStringObjectList.last!.charImageList).enumerated(){
-                let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObjectList.last!.charArray[index]), weight: selectedStringObjectList.last!.charFontWeightList[index], size: Int(selectedStringObjectList.last!.charSizeList[index]))
-                selectedCharImageListObjectList.append( temp )
-            }
+            self.selectedIDList = idList
+            
+            // TODO: Update selectedCharImage
+//            for (index, img) in (selectedStringObjectList.last!.charImageList).enumerated(){
+//                let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObjectList.last!.charArray[index]), weight: selectedStringObjectList.last!.charFontWeightList[index], size: Int(selectedStringObjectList.last!.charSizeList[index]))
+//                selectedCharImageListObjectList.append( temp )
+//            }
         }
     }
+    
+    
+    
+//    func FindStrObjectByID(objs: [StringObject], id:UUID)->StringObject?{
+//        return objs.first(where: {$0.id == id})
+//
+//    }
     
     func CalcBGColor(obj: StringObject) -> [Float]{
         let img = imageProcessViewModel.targetCIImage.ToCGImage()!
@@ -302,9 +311,9 @@ class StringObjectViewModel: ObservableObject{
             //calc tracking and font size offset
             var o1: CGFloat = 0
             var o2: CGFloat = 0
-            if DragOffsetDict[obj] != nil {
-                o1 = DragOffsetDict[obj]!.width
-                o2 = DragOffsetDict[obj]!.height
+            if DragOffsetDict[obj.id] != nil {
+                o1 = DragOffsetDict[obj.id]!.width
+                o2 = DragOffsetDict[obj.id]!.height
             }
             let tmpSize: CGFloat = CGFloat(obj.fontSize - o2)
             fontSizeList.append(Float(tmpSize))
@@ -354,30 +363,44 @@ class StringObjectViewModel: ObservableObject{
         var orderedYList: [UUID:CGFloat] = [:]
         var content: String = ""
         var rect: CGRect = CGRect.init()
+        var color: CGColor = CGColor.white
+        var fontSize: CGFloat = 0
+        var fontTracking: CGFloat = 0
+        var fontLeading: Int = 0
 
-        if selectedStringObjectList.count > 0{
-            rect = selectedStringObjectList[0].stringRect
+        if selectedIDList.count > 0{
+            rect = stringObjectListData.FindByID(selectedIDList[0])!.stringRect
+            color = stringObjectListData.FindByID(selectedIDList[0])!.color
+            fontSize = stringObjectListData.FindByID(selectedIDList[0])!.fontSize
+            fontTracking = stringObjectListData.FindByID(selectedIDList[0])!.tracking
+            
         }
-        for obj in selectedStringObjectList{
+        for id in selectedIDList{
+            let obj = stringObjectListData.FindByID(id)!
             rect = rect.union(obj.stringRect)
             orderedYList[obj.id] = obj.stringRect.minY
         }
         let resultIDList = orderedYList.sorted {$0.1 < $1.1}
         for d in resultIDList{
-            let str = selectedStringObjectList.first(where: {$0.id == d.key})!.content
+            let str = stringObjectListData.FindByID(selectedIDList[0])!.content
             content += " " + str
         }
         
-        var resultObj: StringObject = StringObject.init(content, rect, VNRecognizedTextObservation.init(), ["0"], [CGRect.init()], charImageList: [CIImage.init()], 1)
+        var resultObj: StringObject = stringObjectListData.FindByID(selectedIDList[0])! //StringObject.init(content, rect, VNRecognizedTextObservation.init(), ["0"], [CGRect.init()], charImageList: [CIImage.init()], 1)
+        resultObj.stringRect = rect
+        resultObj.color = color
+        resultObj.fontSize = fontSize
+        resultObj.tracking = fontTracking
         
-        selectedStringObjectList.removeAll()
-        selectedStringObjectList.append(resultObj)
+        selectedIDList.removeAll()
+        selectedIDList.append(resultObj.id)
         
         for d in resultIDList{
             stringObjectListData.removeAll(where: {$0.id == d.key})
         }
         stringObjectListData.append(resultObj)
-        
+        selectedIDList.append(resultObj.id)
+        //updateStringObjectList.append(resultObj)
     }
     
 }

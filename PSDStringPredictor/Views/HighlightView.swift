@@ -12,21 +12,21 @@ struct HighlightView: View {
     @ObservedObject var imageVM = imageProcessViewModel
     @ObservedObject var stringObjectVM = stringObjectViewModel
     //imageProcessViewModel.targetNSImage.size.height - obj.stringRect.origin.y
-    let objList: [StringObject]
+    //let ids: [UUID]
     var body: some View {
-        ForEach(objList, id:\.id){ obj in
+        ForEach(stringObjectVM.selectedIDList, id:\.self){ theid in
             ZStack{
                 RoundedRectangle(cornerRadius: 5, style: .continuous)
-                    .frame(width: obj.stringRect.width, height: obj.stringRect.height)
-                    .position(x: obj.stringRect.midX, y: imageVM.targetNSImage.size.height - obj.stringRect.midY)
+                    .frame(width:  GetStringObject(theid).stringRect.width, height: GetStringObject(theid).stringRect.height)
+                    .position(x: GetStringObject(theid).stringRect.midX, y: imageVM.targetNSImage.size.height - GetStringObject(theid).stringRect.midY)
                     .foregroundColor(Color.green.opacity(0.3))
-                    .shadow(color: .green, radius: 5, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 0)
+                    .shadow(color: .green, radius: 5, x: 0, y: 0)
                     .gesture(DragGesture()
                                 .onChanged { gesture in
                                     if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                        stringObjectVM.DragOffsetDict[obj] = CGSize(width: gesture.translation.width / 10, height: 0)
+                                        stringObjectVM.DragOffsetDict[theid] = CGSize(width: gesture.translation.width / 10, height: 0)
                                     } else {
-                                        stringObjectVM.DragOffsetDict[obj] = CGSize(width: 0, height: gesture.translation.height / 10)
+                                        stringObjectVM.DragOffsetDict[theid] = CGSize(width: 0, height: gesture.translation.height / 10)
                                     }
                                 }
                     
@@ -36,14 +36,18 @@ struct HighlightView: View {
                 
                 RoundedRectangle(cornerRadius: 5, style: .continuous)
                     .stroke(Color.green, lineWidth: 1)
-                    .frame(width: obj.stringRect.width, height: obj.stringRect.height)
-                    .position(x: obj.stringRect.midX, y: imageVM.targetNSImage.size.height - obj.stringRect.midY)
+                    .frame(width: GetStringObject(theid).stringRect.width, height: GetStringObject(theid).stringRect.height)
+                    .position(x: GetStringObject(theid).stringRect.midX, y: imageVM.targetNSImage.size.height - GetStringObject(theid).stringRect.midY)
                     .blendMode(.lighten)
             }
         }
 
         
         
+    }
+    
+    func GetStringObject(_ id: UUID) -> StringObject{
+        return stringObjectVM.stringObjectListData.FindByID(id)!
     }
 }
 

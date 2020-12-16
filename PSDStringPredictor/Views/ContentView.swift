@@ -56,7 +56,7 @@ struct ContentView: View {
                 ZStack{
                     ImageView(imageViewModel:imageViewModel)
 
-                    HighlightView(objList: stringObjectVM.selectedStringObjectList)
+                    HighlightView()
                     LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
                         .IsHidden(condition: stringObjectVM.stringOverlay)
                 }

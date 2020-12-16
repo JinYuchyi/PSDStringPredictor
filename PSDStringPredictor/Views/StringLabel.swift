@@ -32,16 +32,16 @@ struct StringLabel: View {
     func CalcTrackingAfterOffset() -> CGFloat {
         // var offset : CGSize = .zero
         var d : CGFloat = 0
-        if stringObjectVM.DragOffsetDict[stringLabel] != nil{
-            d = stringObjectVM.DragOffsetDict[stringLabel]!.width
+        if stringObjectVM.DragOffsetDict[stringLabel.id] != nil{
+            d = stringObjectVM.DragOffsetDict[stringLabel.id]!.width
         }
         return stringLabel.tracking + d
     }
     
     func CalcSizeAfterOffset() -> CGFloat {
         var d : CGFloat = 0
-        if stringObjectVM.DragOffsetDict[stringLabel] != nil{
-            d = stringObjectVM.DragOffsetDict[stringLabel]!.height
+        if stringObjectVM.DragOffsetDict[stringLabel.id] != nil{
+            d = stringObjectVM.DragOffsetDict[stringLabel.id]!.height
         }
         return stringLabel.fontSize - d
     }
@@ -55,8 +55,8 @@ struct StringLabel: View {
     //    }
     
     func InfoBtnTapped(){
-        print("stringLabel.id: \(stringLabel.content)")
-        stringObjectVM.UpdateSelectedStringObjectList(selectedStringObjectList: [self.stringLabel])
+        //print("stringLabel.id: \(stringLabel.content)")
+        stringObjectVM.UpdateSelectedIDList(idList: [stringLabel.id])
         imageProcessViewModel.FindNearestStandardRGB(stringLabel.color)
     }
     

@@ -20,8 +20,8 @@ struct LabelsOnImage: View {
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
                                     print("On tapped.")
-                                    stringObjectVM.selectedStringObjectList.removeAll()
-                                    stringObjectVM.selectedStringObjectList.append(item)
+                                    stringObjectVM.selectedIDList.removeAll()
+                                    stringObjectVM.selectedIDList.append(item.id)
                                 })
                 )
             }
@@ -33,6 +33,8 @@ struct LabelsOnImage: View {
             ForEach(stringObjectVM.fixedStringObjectList, id:\.id){ item in
                 StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
             }
+            
+
         }
         
     }

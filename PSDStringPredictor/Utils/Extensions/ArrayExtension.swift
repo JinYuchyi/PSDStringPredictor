@@ -45,4 +45,8 @@ extension Array where Element == StringObject {
             return obj
         }
     }
+    
+    func FindByID(_ id: UUID) -> StringObject? {
+        return self.first(where: {$0.id == id})
+    }
 }

@@ -44,7 +44,7 @@ struct SelectionOverlayView: View {
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
-                            objVM.selectedStringObjectList.removeAll()
+                            objVM.selectedIDList.removeAll()
 
                         }
                 )
@@ -62,7 +62,7 @@ struct SelectionOverlayView: View {
     }
     
     func CalcSelectedObject(){
-        objVM.selectedStringObjectList.removeAll()
+        objVM.selectedIDList.removeAll()
 
             for obj in objVM.stringObjectListData {
                 if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
@@ -71,21 +71,21 @@ struct SelectionOverlayView: View {
                 let tmpRect = CGRect.init(x: (obj.stringRect.origin.x ), y: (imageVM.GetTargetImageSize()[1] - obj.stringRect.origin.y - obj.stringRect.height/2), width: obj.stringRect.width, height: obj.stringRect.height)
                 if tmpRect.intersects(interactive.selectionRect)  {
                     //print("intersects: \(tmpRect), \(interactive.selectionRect)")
-                    objVM.selectedStringObjectList.append(obj)
+                    objVM.selectedIDList.append(obj.id)
                 }
             }
         
     }
     
     func CalcTap(tapPoint: CGPoint){
-        objVM.selectedStringObjectList.removeAll()
+        objVM.selectedIDList.removeAll()
         
         for obj in objVM.stringObjectListData {
             
             //let tmpRect = CGRect.init(x: (tapPoint.x ), y: (imageVM.GetTargetImageSize()[1] - tapPoint.y - 2), width: 4, height: 4)
             if obj.stringRect.contains(tapPoint) {
                 //print("intersects: \(tmpRect), \(interactive.selectionRect)")
-                objVM.selectedStringObjectList.append(obj)
+                objVM.selectedIDList.append(obj.id)
             }
         }
     }

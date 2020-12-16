@@ -141,6 +141,8 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
+    
+    
     mutating func CalcColorMode() -> Int{
         var result = -1
         for img in charImageList{

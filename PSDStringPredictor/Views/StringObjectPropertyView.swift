@@ -16,27 +16,22 @@ struct StringObjectPropertyView: View {
     @State var weight: String = "Regular"
     let pixelMgr = PixelProcess()
     
-    fileprivate func FontSizeView(index: Int) -> some View {
-        if stringObjectVM.selectedStringObjectList.LastValidItem().isPredictedList[index] == 1 {
-            return Text(String(stringObjectVM.selectedStringObjectList.LastValidItem().charSizeList[index].description)+"􀫥").fixedSize()
-        }else{
-            return Text(String(stringObjectVM.selectedStringObjectList.LastValidItem().charSizeList[index].description)).fixedSize()
-        }
-        
+    func GetLastSelectObject() -> StringObject{
+        return stringObjectVM.stringObjectListData.FindByID(stringObjectVM.selectedIDList.last!)!
     }
 
     func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{
         var offset: CGFloat = 0
-        if stringObjectVM.DragOffsetDict[targetObj] != nil{
-            offset = stringObjectVM.DragOffsetDict[targetObj]!.width
+        if stringObjectVM.DragOffsetDict[targetObj.id] != nil{
+            offset = stringObjectVM.DragOffsetDict[targetObj.id]!.width
         }
         return targetObj.tracking + offset
     }
     
     func CalcOffsetSize(targetObj: StringObject) -> CGFloat{
         var offset: CGFloat = 0
-        if stringObjectVM.DragOffsetDict[targetObj] != nil{
-            offset = stringObjectVM.DragOffsetDict[targetObj]!.height
+        if stringObjectVM.DragOffsetDict[targetObj.id] != nil{
+            offset = stringObjectVM.DragOffsetDict[targetObj.id]!.height
         }
         return targetObj.fontSize - offset
     }
@@ -49,28 +44,28 @@ struct StringObjectPropertyView: View {
                 
                 HStack {
                     
-                    ForEach(0..<stringObjectVM.selectedStringObjectList.LastValidItem().charImageList.count, id: \.self){ index in
+                    ForEach(0..<GetLastSelectObject().charImageList.count, id: \.self){ index in
                         
                         VStack{
-                            if stringObjectVM.selectedStringObjectList.LastValidItem().charColorModeList[index] == 1{
+                            if GetLastSelectObject().charColorModeList[index] == 1{
                                 
-                                Image(nsImage: stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index].ToNSImage())
+                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 40)
                                     .border(Color.yellow, width: 1)
-                            }else if  stringObjectVM.selectedStringObjectList.LastValidItem().charColorModeList[index] == 2{
-                                Image(nsImage: stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index].ToNSImage())
+                            }else if  GetLastSelectObject().charColorModeList[index] == 2{
+                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 40)
                                     .border(Color.blue, width: 1)
                             }
 
-                            TextField(String(stringObjectVM.selectedStringObjectList.LastValidItem().charArray[index]), text: $stringField)
+                            TextField(String(GetLastSelectObject().charArray[index]), text: $stringField)
                             
-                            Text("\(Int(stringObjectVM.selectedStringObjectList.LastValidItem().charRects[index].width.rounded()))/\(Int(stringObjectVM.selectedStringObjectList.LastValidItem().charRects[index].height.rounded()))")
-                            Text(String(stringObjectVM.selectedStringObjectList.LastValidItem().charFontWeightList[index]))
+                            Text("\(Int(GetLastSelectObject().charRects[index].width.rounded()))/\(Int(GetLastSelectObject().charRects[index].height.rounded()))")
+                            Text(String(GetLastSelectObject().charFontWeightList[index]))
                             
                             FontSizeView(index: index)
                             
@@ -83,6 +78,18 @@ struct StringObjectPropertyView: View {
                     }
                 }
                 .fixedSize()
+            }
+        }
+    }
+    
+    func FontSizeView(index: Int) -> some View {
+        if stringObjectVM.selectedIDList.count == 0 {
+             Text(" ")
+        }else{
+            if GetLastSelectObject().isPredictedList[index] == 1 {
+                 Text(String(GetLastSelectObject().charSizeList[index].description)+"􀫥").fixedSize()
+            }else{
+                 Text(String(GetLastSelectObject().charSizeList[index].description)).fixedSize()
             }
         }
     }
@@ -128,8 +135,7 @@ struct StringObjectPropertyView: View {
                     }else{}
                     
                 }
-                
-                //Spacer().frame(height: 10)
+
                 
                 HStack{
                     Text("Size")
