@@ -1,16 +1,16 @@
-        var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSample.png"
-        var contentList = ["9:41", "Beaches", "Moments", "See All", "25 >", "Lisboa", "11 >", "Search", "/olu Photos", "Essaouira", "Cancel\nSee All"]
-        var colorList = [[0, 0, 0], [242, 242, 247], [0, 0, 0], [0, 122, 255], [142, 142, 147], [0, 0, 0], [142, 142, 147], [0, 122, 255], [0, 0, 0], [0, 0, 0], [0, 122, 255]]
-        var fontSizeList = [45.0, 50.0, 67.0, 50.0, 53.0, 48.0, 52.0, 29.0, 66.0, 48.0, 47.0]
-        var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Regular"]
-        var positionList = [[96, 86], [173, 230], [64, 1737], [911, 1737], [928, 1916], [280, 2126], [942, 2154], [934, 2323], [74, 430], [280, 1886], [911, 429]]
-        var trackingList = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
-        var alignmentList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        var rectList = [[96.0, 2350.0, 86.0, 34.0], [173.0, 2206.0, 192.0, 39.0], [64.0, 699.0, 276.0, 48.0], [911.0, 699.0, 149.0, 39.0], [928.0, 520.0, 147.0, 39.0], [280.0, 310.0, 144.0, 39.0], [942.0, 282.0, 133.0, 37.0], [934.0, 113.0, 98.0, 23.0], [74.0, 2006.0, 329.0, 50.0], [280.0, 550.0, 214.0, 39.0], [911.0, 2007.0, 149.0, 241.0]]
-        var names = ["0.941", "1.Beaches", "2.Moments", "3.SeeAll", "4.25", "5.Lisboa", "6.11", "7.Search", "8.oluPhotos", "9.Essaouira", "10.CancelSeeAll"]
-        var bgColorList = [[251.0, 251.0, 252.0], [142.0, 142.0, 147.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [247.0, 247.0, 246.0], [242.0, 242.0, 247.0], [254.0, 255.0, 254.0], [242.0, 242.0, 247.0]]
-        var isParagraphList = [false, false, false, false, false, false, false, false, false, false, true]
+        var psdPath = "/Users/yuchyi/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSampleMini.png"
+        var contentList = ["9:41", "Beaches", "/olu Photos", "Cancel\nSee All"]
+        var colorList = [[0, 0, 0], [242, 242, 247], [0, 0, 0], [0, 122, 255]]
+        var fontSizeList = [44.0, 48.0, 66.0, 47.0]
+        var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
+        var positionList = [[96, 85], [173, 230], [74, 430], [911, 429]]
+        var trackingList = [0.0, 0.0, 0.0, 0.0]
+        var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0]]
+        var alignmentList = [0, 0, 0, 0]
+        var rectList = [[96.0, 390.0, 86.0, 33.0], [173.0, 245.0, 192.0, 39.0], [74.0, 45.0, 329.0, 50.0], [911.0, 46.0, 149.0, 241.0]]
+        var names = ["0.941", "1.Beaches", "2.oluPhotos", "3.CancelSeeAll"]
+        var bgColorList = [[250.0, 251.0, 252.0], [142.0, 142.0, 147.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0]]
+        var isParagraphList = [false, false, false, true]
 // ========================= Load from Main.js ==============================
 
 //PS Preferance Setting
@@ -48,12 +48,12 @@ for (var i = 0; i < num; i++){
     artLayerRef.kind = LayerKind.TEXT
     var textItemRef = artLayerRef.textItem
     if (isParagraphList[i] == true) {
-        textItemRef.kind == TextType.PARAGRAPHTEXT
+        textItemRef.kind = TextType.PARAGRAPHTEXT
         textItemRef.leading = fontSizeList[i]/(600/72)
         textItemRef.width = rectList[i][2]
         textItemRef.height = rectList[i][3]
     }else{
-        textItemRef.kind == TextType.POINTTEXT 
+        textItemRef.kind = TextType.POINTTEXT 
     }
     textItemRef.contents = contentList[i]
     textColor = new SolidColor

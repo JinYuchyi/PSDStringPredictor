@@ -28,4 +28,9 @@ func FileAtPathExist(PathString path: String) -> Bool{
     return fileExists
 }
 
+func GetDocumentsPath() -> String{
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+    return documentsDirectory.path
+}
 

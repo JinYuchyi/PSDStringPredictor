@@ -53,7 +53,7 @@ class JSManager{
     
     func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [Int], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool])->Bool{
         let names = NamesNormalize(names: contentList)
-        let functionJSStr = ReadJSToString(jsPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Functions.js")
+        let functionJSStr = ReadJSToString(jsPath: GetDocumentsPath() +  "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Functions.js")
         var variablesStr = """
                 var psdPath = "\(psdPath)"
                 var contentList = \(contentList)
@@ -69,8 +69,8 @@ class JSManager{
                 var bgColorList = \(bgColorList)
                 var isParagraphList = \(isParagraphList)
         """
-        let mainJSStr = ReadJSToString(jsPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Main.js")
-
+        //let mainJSStr = ReadJSToString(jsPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Main.js")
+        let mainJSStr = ReadJSToString(jsPath: GetDocumentsPath() +  "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Main.js")
         
         var outputStr: String = ""
         outputStr.append(variablesStr)
@@ -78,7 +78,7 @@ class JSManager{
         outputStr.append(functionJSStr)
         
         do {
-            let path = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx"
+            let path = GetDocumentsPath() + "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx"
             let url = URL.init(fileURLWithPath: path)
             try outputStr.write(to: url, atomically: false, encoding: .utf8)
         }

@@ -48,7 +48,7 @@ struct HighlightView: View {
     }
     
     func GetStringObject(_ id: UUID) -> StringObject{
-        return stringObjectVM.stringObjectListData.FindByID(id)!
+        return stringObjectVM.stringObjectListData.FindByID(id) ?? StringObject()
     }
 }
 

@@ -36,12 +36,12 @@ for (var i = 0; i < num; i++){
     artLayerRef.kind = LayerKind.TEXT
     var textItemRef = artLayerRef.textItem
     if (isParagraphList[i] == true) {
-        textItemRef.kind == TextType.PARAGRAPHTEXT
+        textItemRef.kind = TextType.PARAGRAPHTEXT
         textItemRef.leading = fontSizeList[i]/(600/72)
         textItemRef.width = rectList[i][2]
         textItemRef.height = rectList[i][3]
     }else{
-        textItemRef.kind == TextType.POINTTEXT 
+        textItemRef.kind = TextType.POINTTEXT 
     }
     textItemRef.contents = contentList[i]
     textColor = new SolidColor
