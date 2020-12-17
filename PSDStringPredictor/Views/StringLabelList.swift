@@ -15,23 +15,23 @@ struct LabelsOnImage: View {
     
     var body: some View {
         Group{
-            ForEach(stringObjectVM.updateStringObjectList, id:\.id){ item in
-                StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
+            ForEach(stringObjectVM.updateStringObjectList, id:\.self){ _id in
+                StringLabel(id: _id , charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
                                     print("On tapped.")
                                     stringObjectVM.selectedIDList.removeAll()
-                                    stringObjectVM.selectedIDList.append(item.id)
+                                    stringObjectVM.selectedIDList.append(_id)
                                 })
                 )
             }
             
-            ForEach(stringObjectVM.ignoreStringObjectList, id:\.id){ item in
-                StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
+            ForEach(stringObjectVM.ignoreStringObjectList, id:\.self){ _id in
+                StringLabel(id: _id, charFrameList: charFrameList, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
             }
             
-            ForEach(stringObjectVM.fixedStringObjectList, id:\.id){ item in
-                StringLabel(stringLabel: item, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
+            ForEach(stringObjectVM.fixedStringObjectList, id:\.self){ _id in
+                StringLabel(id: _id, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
             }
             
 

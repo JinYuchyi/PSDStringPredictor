@@ -18,10 +18,13 @@ class StringObjectViewModel: ObservableObject{
     private var workItem: DispatchWorkItem?
     
     let jsMgr = JSManager()
-    var stringObject: StringObject = StringObject()
+    //var stringObject: StringObject = StringObject()
+    var stringObjectZero: StringObject = StringObject()
     let pixelProcess = PixelProcess()
     let ocr = OCR()
 
+    let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
+    
     @Published var stringObjectListData: [StringObject] = []
     @Published var charFrameListData: [CharFrame] = []
     @Published var charFrameListRects: [CGRect] = []
@@ -30,11 +33,11 @@ class StringObjectViewModel: ObservableObject{
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
     //@Published var paragraphTextObjectList = [StringObject]()
     
-    @Published var stringObjectIgnoreDict: [StringObject: Bool] = [:]
-    @Published var stringObjectFixedDict: [StringObject: Bool] = [:]
-    @Published var updateStringObjectList: [StringObject] = []
-    @Published var ignoreStringObjectList: [StringObject] = []
-    @Published var fixedStringObjectList: [StringObject] = []
+    @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
+    @Published var stringObjectFixedDict: [UUID: Bool] = [:]
+    @Published var updateStringObjectList: [UUID] = []
+    @Published var ignoreStringObjectList: [UUID] = []
+    @Published var fixedStringObjectList: [UUID] = []
     @Published var StringObjectNameDict: [UUID:String] = [:]
     
     @Published var DragOffsetDict: [UUID: CGSize] = [:]
@@ -51,6 +54,30 @@ class StringObjectViewModel: ObservableObject{
     @Published var OKForProcess: Bool = false
     
     //    private var workItem: DispatchWorkItem?
+    
+    func GetFontLeading(fontSize: Float) -> Float{
+        var index = 0
+        var result: Float = 0
+        for e in fontLeadingTable{
+            if fontLeadingTable.count > (index + 1) {
+                if fontSize < Float(fontLeadingTable.last![0]){
+                    result = Float(fontLeadingTable.last![1])
+                }
+                if fontSize > Float(fontLeadingTable.first![0]){
+                    result = Float(fontLeadingTable.first![1])
+                }
+                if ( fontSize < Float(fontLeadingTable[index][0]) && fontSize > Float(fontLeadingTable[index + 1][0]) ) {
+                    let f0 = Float(fontLeadingTable[index][0])
+                    let f1 = Float(fontLeadingTable[index+1][0])
+                    let z0 = Float(fontLeadingTable[index][1])
+                    let z1 = Float(fontLeadingTable[index+1][1])
+                    result = z0 - ((f0 - fontSize) * (z0 - z1) / (f0 - f1))
+                }
+                index += 1
+            }
+        }
+        return result
+    }
     
     func indicatorTitleTest(){
         self.indicatorTitle = ""
@@ -86,9 +113,7 @@ class StringObjectViewModel: ObservableObject{
         
         
         group.notify(queue: DispatchQueue.main) {
-//            self.stringObjectListData = self.DeleteDescentForStringObjects(self.stringObjectListData)
             self.stringObjectListData = self.FiltStringObjects(originalList: self.stringObjectListData)
-            //DataStore.FillCharFrameList()
             self.FetchCharFrameListData()
             self.FetchCharFrameListRects()
             self.FetchStringObjectFontNameDict()
@@ -117,6 +142,7 @@ class StringObjectViewModel: ObservableObject{
         stringOverlay = true
         frameOverlay = true
     }
+    
     
     func FetchStringObjectFontNameDict(){
         for obj in stringObjectListData{
@@ -176,11 +202,12 @@ class StringObjectViewModel: ObservableObject{
     }
     
     func FiltStringObjects(originalList objList: [StringObject]) -> ([StringObject]){
-        var newList : [StringObject] = objList
-        var ignoreList: [StringObject] = []
+        var newList : [StringObject] = []
+        var ignoreList: [UUID] = []
         var index = 0
         fixedStringObjectList.removeAll()
         ignoreStringObjectList.removeAll()
+        newList = objList
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             if value == true {
@@ -200,11 +227,12 @@ class StringObjectViewModel: ObservableObject{
             
             indicatorTitle = "Processing on fixed and removed list \(index)/\(objList.count)"
             //Find the ignore object
-            for ignoreObj in ignoreList{
+            for ignoreID in ignoreList{
                 //if value == true {
                 //print("\(key.content) is fixed")
                 //Compare ignore obj with new obj, if rect overlap, remove from newlist
-                if ignoreObj.stringRect.IsSame(target: obj.stringRect){
+                if ignoreID == obj.id{
+                //if ignoreObj.stringRect.IsSame(target: obj.stringRect){
                     //print("Same: \(ignoreObj.content)")
                     newList.remove(at: newList.firstIndex(of: obj)!)
                 }
@@ -213,17 +241,17 @@ class StringObjectViewModel: ObservableObject{
             }
             index += 1
         }
-        updateStringObjectList = newList
-        //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
+        updateStringObjectList = newList.map{$0.id}
+        print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
-            newList.append(key)
+            newList.append(FindStringObjectByID(id: key)! )
         }
         
         stringObjectViewModel.stringObjectOutputList = newList
         
         for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
-            newList.append(key)
+            newList.append(FindStringObjectByID(id: key)!)
         }
         
         return (newList)
@@ -269,10 +297,9 @@ class StringObjectViewModel: ObservableObject{
     
     
     
-//    func FindStrObjectByID(objs: [StringObject], id:UUID)->StringObject?{
-//        return objs.first(where: {$0.id == id})
-//
-//    }
+    func FindStringObjectByID(id: UUID) -> StringObject?{
+        return stringObjectListData.FindByID(id)
+    }
     
     func CalcBGColor(obj: StringObject) -> [Float]{
         let img = imageProcessViewModel.targetCIImage.ToCGImage()!
@@ -298,6 +325,8 @@ class StringObjectViewModel: ObservableObject{
         var alignmentList = [Int]()
         var rectList = [[Float]]()
         var bgClolorList = [[Float]]()
+        var isParagraphList = [Bool]()
+        
         for obj in stringObjectListData{
             contentList.append(obj.content)
             var tmpColor: [Int] = []
@@ -307,6 +336,8 @@ class StringObjectViewModel: ObservableObject{
                          Int((Float(obj.color.components![2]) * 255).rounded())
             ]
             colorList.append(tmpColor)
+            
+            isParagraphList.append(obj.isParagraph)
             
             //calc tracking and font size offset
             var o1: CGFloat = 0
@@ -351,7 +382,7 @@ class StringObjectViewModel: ObservableObject{
         }
         
         
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList)
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList)
         if success == true{
             let cmd = "open /Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
             PythonScriptManager.RunScript(str: cmd)
@@ -367,30 +398,37 @@ class StringObjectViewModel: ObservableObject{
         var fontSize: CGFloat = 0
         var fontTracking: CGFloat = 0
         var fontLeading: Int = 0
-
+        var resultObj: StringObject = StringObject()
+        
         if selectedIDList.count > 0{
+            //If have selection, we get the first object's information as the paragraph infomation
             rect = stringObjectListData.FindByID(selectedIDList[0])!.stringRect
             color = stringObjectListData.FindByID(selectedIDList[0])!.color
             fontSize = stringObjectListData.FindByID(selectedIDList[0])!.fontSize
             fontTracking = stringObjectListData.FindByID(selectedIDList[0])!.tracking
-            
+            resultObj = stringObjectListData.FindByID(selectedIDList[0])!
         }
+        
+        //Calc and sort each object's Y position, for gettomg the order of string
         for id in selectedIDList{
             let obj = stringObjectListData.FindByID(id)!
             rect = rect.union(obj.stringRect)
             orderedYList[obj.id] = obj.stringRect.minY
         }
-        let resultIDList = orderedYList.sorted {$0.1 < $1.1}
-        for d in resultIDList{
-            let str = stringObjectListData.FindByID(selectedIDList[0])!.content
-            content += " " + str
+        let resultIDList = orderedYList.sorted {$0.1 > $1.1}
+        var index = 0
+        for (_key, _value) in resultIDList{
+            let str = stringObjectListData.FindByID(_key)!.content
+            content += (index == 0 ? "" : "\n") + str
+            index += 1
         }
-        
-        var resultObj: StringObject = stringObjectListData.FindByID(selectedIDList[0])! //StringObject.init(content, rect, VNRecognizedTextObservation.init(), ["0"], [CGRect.init()], charImageList: [CIImage.init()], 1)
+
         resultObj.stringRect = rect
         resultObj.color = color
         resultObj.fontSize = fontSize
         resultObj.tracking = fontTracking
+        resultObj.content = content
+        resultObj.isParagraph = true
         
         selectedIDList.removeAll()
         selectedIDList.append(resultObj.id)
@@ -398,12 +436,15 @@ class StringObjectViewModel: ObservableObject{
         for d in resultIDList{
             stringObjectListData.removeAll(where: {$0.id == d.key})
         }
+        
         stringObjectListData.append(resultObj)
         selectedIDList.append(resultObj.id)
-        //updateStringObjectList.append(resultObj)
+        updateStringObjectList.append(resultObj.id)
     }
     
 }
+
+
 
 
 

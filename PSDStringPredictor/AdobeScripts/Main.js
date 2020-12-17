@@ -32,8 +32,17 @@ layerSetRef.name = "StringLayersGroup"
 const num = contentList.length
 for (var i = 0; i < num; i++){
     var artLayerRef = layerSetRef.artLayers.add()
+    
     artLayerRef.kind = LayerKind.TEXT
     var textItemRef = artLayerRef.textItem
+    if (isParagraphList[i] == true) {
+        textItemRef.kind == TextType.PARAGRAPHTEXT
+        textItemRef.leading = fontSizeList[i]/(600/72)
+        textItemRef.width = rectList[i][2]
+        textItemRef.height = rectList[i][3]
+    }else{
+        textItemRef.kind == TextType.POINTTEXT 
+    }
     textItemRef.contents = contentList[i]
     textColor = new SolidColor
     textColor.rgb.red = colorList[i][0]
@@ -42,6 +51,7 @@ for (var i = 0; i < num; i++){
     textItemRef.color = textColor
     textItemRef.font = fontNameList[i]
     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
+    
     var alignmentOffset = 0
     var alignName = "left"
     if (alignmentList[i] == 1) {

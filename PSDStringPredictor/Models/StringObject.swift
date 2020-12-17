@@ -70,6 +70,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var charColorModeList: [Int]
     var FontName: String
     var alignment: Int
+    var isParagraph: Bool = false
     //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()

@@ -17,6 +17,9 @@ struct StringObjectPropertyView: View {
     let pixelMgr = PixelProcess()
     
     func GetLastSelectObject() -> StringObject{
+        if stringObjectVM.selectedIDList.count == 0{
+            return StringObject.init()
+        }
         return stringObjectVM.stringObjectListData.FindByID(stringObjectVM.selectedIDList.last!)!
     }
 
@@ -82,16 +85,18 @@ struct StringObjectPropertyView: View {
         }
     }
     
+    @ViewBuilder
     func FontSizeView(index: Int) -> some View {
         if stringObjectVM.selectedIDList.count == 0 {
-             Text(" ")
-        }else{
-            if GetLastSelectObject().isPredictedList[index] == 1 {
-                 Text(String(GetLastSelectObject().charSizeList[index].description)+"􀫥").fixedSize()
+            Text("")
             }else{
+                if GetLastSelectObject().isPredictedList[index] == 1 {
+                     Text(String(GetLastSelectObject().charSizeList[index].description)+"􀫥").fixedSize()
+                }else{
                  Text(String(GetLastSelectObject().charSizeList[index].description)).fixedSize()
             }
         }
+        
     }
     
     var body: some View {
@@ -102,13 +107,13 @@ struct StringObjectPropertyView: View {
                     Text("Content")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(stringObjectVM.selectedStringObjectList.LastValidItem().content)")
+                    Text("\(GetLastSelectObject().content)")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
-                if stringObjectVM.selectedStringObjectList.LastValidItem().content != "No content." {
+                if GetLastSelectObject().content != "No content." {
                     HStack{
-                        let targetImg = imageProcess.targetCIImage.cropped(to: stringObjectVM.selectedStringObjectList.LastValidItem().stringRect).ToNSImage()
+                        let targetImg = imageProcess.targetCIImage.cropped(to: GetLastSelectObject().stringRect).ToNSImage()
                         Image(nsImage: targetImg )
                             .resizable()
                             .scaledToFit()
@@ -126,10 +131,10 @@ struct StringObjectPropertyView: View {
                     Text("Color Mode")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    if stringObjectVM.selectedStringObjectList.LastValidItem().colorMode == 1 {
+                    if GetLastSelectObject().colorMode == 1 {
                         Text("􀆮")
                             .frame(width:200, alignment: .topLeading)
-                    }else if stringObjectVM.selectedStringObjectList.LastValidItem().colorMode == 2 {
+                    }else if GetLastSelectObject().colorMode == 2 {
                         Text("􀆺")
                             .frame(width:200, alignment: .topLeading)
                     }else{}
@@ -141,7 +146,7 @@ struct StringObjectPropertyView: View {
                     Text("Size")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(CalcOffsetSize(targetObj: stringObjectVM.selectedStringObjectList.LastValidItem()))")
+                    Text("\(CalcOffsetSize(targetObj: GetLastSelectObject()))")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -151,7 +156,7 @@ struct StringObjectPropertyView: View {
                     Text("Tracking")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(CalcOffsetTracking(targetObj: stringObjectVM.selectedStringObjectList.LastValidItem()))")
+                    Text("\(CalcOffsetTracking(targetObj: GetLastSelectObject()))")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
@@ -163,14 +168,14 @@ struct StringObjectPropertyView: View {
                         .frame(width:80, alignment: .topLeading)
                     
                     VStack{
-                        if stringObjectVM.selectedStringObjectList.LastValidItem().fontSize != 0 {
-                            Text("\(stringObjectVM.selectedStringObjectList.LastValidItem().FontName)" )
+                        if GetLastSelectObject().fontSize != 0 {
+                            Text("\(GetLastSelectObject().FontName)" )
                                 .frame(width:200, alignment: .topLeading)
                                 .onTapGesture {
                                     //if stringObjectVM.selectedStringObject.fontSize != 0 {
                                         //print("Tapped")
 
-                                    let id = stringObjectVM.selectedStringObjectList.LastValidItem().id
+                                    let id = GetLastSelectObject().id
                                         let fName = stringObjectVM.StringObjectNameDict[id]
                                         let endIndex = fName!.lastIndex(of: " ")
                                         let startIndex = fName!.startIndex
@@ -204,7 +209,7 @@ struct StringObjectPropertyView: View {
                         .fill(Color.white)
                         .frame(width:10, height:10, alignment: .center)
                     
-                    Text("\(String(format: "%.2f", stringObjectVM.selectedStringObjectList.LastValidItem().color.components![0] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObjectList.LastValidItem().color.components![1] * 255)), \(String(format: "%.2f", stringObjectVM.selectedStringObjectList.LastValidItem().color.components![2] * 255))")
+                    Text("\(String(format: "%.2f", GetLastSelectObject().color.components![0] * 255)), \(String(format: "%.2f", GetLastSelectObject().color.components![1] * 255)), \(String(format: "%.2f", GetLastSelectObject().color.components![2] * 255))")
                     //                    Text("\(stringObjectVM.selectedStringObject.color.ToColor())")
                     //                        .foregroundColor(Color.gray)
                     //                        .frame(width:80, alignment: .topLeading)
@@ -217,7 +222,7 @@ struct StringObjectPropertyView: View {
                     Text("Bounds")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("X: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.minX.rounded() )), Y: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.minY.rounded())), W: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.width.rounded() )), H: \(Int(stringObjectVM.selectedStringObjectList.LastValidItem().stringRect.height.rounded()))")
+                    Text("X: \(Int(GetLastSelectObject().stringRect.minX.rounded() )), Y: \(Int(GetLastSelectObject().stringRect.minY.rounded())), W: \(Int(GetLastSelectObject().stringRect.width.rounded() )), H: \(Int(GetLastSelectObject().stringRect.height.rounded()))")
                         //Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
                         .frame(width:200, alignment: .topLeading)
                 }
@@ -235,8 +240,8 @@ struct StringObjectPropertyView: View {
             let result = panel.runModal()
             if result == .OK{
                 //let img = stringObjectVM.selectedStringObject.charImageList[index]
-                imageProcess.SaveCIIToPNG(CIImage: stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index], filePath: panel.url!.path )
-                let bw = SetGrayScale(stringObjectVM.selectedStringObjectList.LastValidItem().charImageList[index] )
+                imageProcess.SaveCIIToPNG(CIImage: GetLastSelectObject().charImageList[index], filePath: panel.url!.path )
+                let bw = SetGrayScale(GetLastSelectObject().charImageList[index] )
                 imageProcess.SaveCIIToPNG(CIImage: bw!, filePath: panel.url!.path + "_bw" )
                 //let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
                 //let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
@@ -247,7 +252,7 @@ struct StringObjectPropertyView: View {
     }
     
     func StringSaveBtnPressed(){
-        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: stringObjectVM.selectedStringObjectList.LastValidItem().stringRect)
+        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: GetLastSelectObject().stringRect)
         let denoise = NoiseReduction(tergetImg)
         let tergetImgBW = SetGrayScale(denoise!)
 
