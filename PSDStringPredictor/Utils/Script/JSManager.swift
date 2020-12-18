@@ -55,19 +55,21 @@ class JSManager{
         let names = NamesNormalize(names: contentList)
         let functionJSStr = ReadJSToString(jsPath: GetDocumentsPath() +  "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Functions.js")
         var variablesStr = """
-                var psdPath = "\(psdPath)"
-                var contentList = \(contentList)
-                var colorList = \(colorList)
-                var fontSizeList = \(fontSizeList)
-                var fontNameList= \(fontNameList)
-                var positionList = \(positionList)
-                var trackingList = \(trackingList)
-                var offsetList = \(offsetList)
-                var alignmentList = \(alignmentList)
-                var rectList = \(rectList)
-                var names = \(names)
-                var bgColorList = \(bgColorList)
-                var isParagraphList = \(isParagraphList)
+        ////Variables
+        var psdPath = "\(psdPath)"
+        var contentList = \(contentList)
+        var colorList = \(colorList)
+        var fontSizeList = \(fontSizeList)
+        var fontNameList= \(fontNameList)
+        var positionList = \(positionList)
+        var trackingList = \(trackingList)
+        var offsetList = \(offsetList)
+        var alignmentList = \(alignmentList)
+        var rectList = \(rectList)
+        var names = \(names)
+        var bgColorList = \(bgColorList)
+        var isParagraphList = \(isParagraphList)
+        var widthExtend = 5
         """
         //let mainJSStr = ReadJSToString(jsPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Main.js")
         let mainJSStr = ReadJSToString(jsPath: GetDocumentsPath() +  "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Main.js")

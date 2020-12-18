@@ -38,7 +38,7 @@ for (var i = 0; i < num; i++){
     if (isParagraphList[i] == true) {
         textItemRef.kind = TextType.PARAGRAPHTEXT
         textItemRef.leading = fontSizeList[i]/(600/72)
-        textItemRef.width = rectList[i][2]
+        textItemRef.width = rectList[i][2] + widthExtend
         textItemRef.height = rectList[i][3]
     }else{
         textItemRef.kind = TextType.POINTTEXT 
@@ -62,8 +62,11 @@ for (var i = 0; i < num; i++){
         alignmentOffset = rectList[i][2]
         alignName = "right"
     }
-
-    textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1]  - offsetList[i][1] / 4)
+    if (isParagraphList[i] == true) {
+        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][2]  - offsetList[i][1] / 4)
+    }else{
+        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1]  - offsetList[i][1] / 4)
+    }
     textItemRef.tracking = trackingList[i]
     artLayerRef.name = names[i]
     selectLayer(artLayerRef.name)

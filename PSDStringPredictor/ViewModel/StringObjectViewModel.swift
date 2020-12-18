@@ -11,8 +11,6 @@ import CoreImage
 import Vision
 import Foundation
 
-
-
 //struct StringObject: Hashable, Codable, Identifiable {
 class StringObjectViewModel: ObservableObject{
     private var workItem: DispatchWorkItem?
@@ -222,7 +220,8 @@ class StringObjectViewModel: ObservableObject{
                 ignoreStringObjectList.append(key)
             }
         }
-        //TODO: Update list error.
+        
+        
         for obj in objList{
             
             indicatorTitle = "Processing on fixed and removed list \(index)/\(objList.count)"
@@ -328,7 +327,8 @@ class StringObjectViewModel: ObservableObject{
         var isParagraphList = [Bool]()
         
         for obj in stringObjectListData{
-            contentList.append(obj.content)
+            let newString = obj.content.replacingOccurrences(of: "\n", with: " ")
+            contentList.append(newString)
             var tmpColor: [Int] = []
             
             tmpColor = [ Int((Float(obj.color.components![0]) * 255).rounded()),
@@ -381,10 +381,9 @@ class StringObjectViewModel: ObservableObject{
             bgClolorList.append(tmpBGColor)
         }
         
-        
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList)
         if success == true{
-            let cmd = GetDocumentsPath() + "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
+            let cmd = "open " + GetDocumentsPath() + "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app'"
             PythonScriptManager.RunScript(str: cmd)
         }
     }
@@ -423,13 +422,13 @@ class StringObjectViewModel: ObservableObject{
             index += 1
         }
 
-        resultObj.stringRect = rect
+        resultObj.stringRect = rect //CGRect.init(x: rect.minX, y: rect.minY - rect.height, width: rect.width, height: rect.height)
         resultObj.color = color
         resultObj.fontSize = fontSize
         resultObj.tracking = fontTracking
         resultObj.content = content
         resultObj.isParagraph = true
-        
+                
         selectedIDList.removeAll()
         selectedIDList.append(resultObj.id)
         

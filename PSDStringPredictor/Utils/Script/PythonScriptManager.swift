@@ -13,6 +13,5 @@ class PythonScriptManager{
     static func RunScript(str: String){
         let os = try Python.import("os")
         let systemOut = os.system(str)
-        //print("Python Version: \(sys.version)")
     }
 }

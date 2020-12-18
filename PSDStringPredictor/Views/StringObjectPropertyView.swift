@@ -17,10 +17,10 @@ struct StringObjectPropertyView: View {
     let pixelMgr = PixelProcess()
     
     func GetLastSelectObject() -> StringObject{
-        if stringObjectVM.selectedIDList.count == 0{
+        if stringObjectVM.selectedIDList.last == nil || stringObjectVM.stringObjectListData.count == 0 {
             return StringObject.init()
         }
-        return stringObjectVM.stringObjectListData.FindByID(stringObjectVM.selectedIDList.last!)!
+        return stringObjectVM.stringObjectListData.FindByID(stringObjectVM.selectedIDList.last!) ?? StringObject.init()
     }
 
     func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{
