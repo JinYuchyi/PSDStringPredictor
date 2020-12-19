@@ -9,15 +9,6 @@
 import SwiftUI
 
 struct StringLabel: View {
-    //    var id : UUID = UUID()
-    //    var position: [CGFloat]
-    //    var height: CGFloat
-    //    var width: CGFloat
-    //    var fontsize: CGFloat = 50//SetFontSize()
-    //    var tracking: CGFloat
-    //    var content: String
-    //    var color: Color
-    //var myState: Int // 1 is fixed, 2 is ignored, 0 is none
     var id: UUID
     var charFrameList: [CharFrame]
     @State var fixed: Bool

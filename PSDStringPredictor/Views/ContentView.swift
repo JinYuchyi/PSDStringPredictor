@@ -24,14 +24,13 @@ struct ContentView: View {
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     @State var showImage = false
+    @State var showPatchLayer = false
     //@State var showDebugOverlay = true
     @State private var showPredictString = true
     @State private var showDebugOverlay = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
-    
-    //var sta = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray
-    
+        
     
     
     fileprivate func LeftViewGroup() -> some View {
@@ -58,11 +57,15 @@ struct ContentView: View {
 
                     LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
                         .IsHidden(condition: stringObjectVM.stringOverlay)
+                    CharacterFrameView()
+                        .IsHidden(condition: showPatchLayer)
                     HighlightView()
-
                 }
             }
-            
+            GeometryReader{ geo in
+                UIOverlayView(showPatchLayer: $showPatchLayer)
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
+            }
             //            VStack(alignment: .trailing){
             //                Toggle(isOn: $showPredictString) {
             //                    Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
@@ -104,10 +107,7 @@ struct ContentView: View {
             Divider()
             
             ControlPanel(showImage: $showImage)
-            
-            //            Button(action: {self.Debug()}){
-            //                Text("Debug")
-            //            }
+
             
         }
         

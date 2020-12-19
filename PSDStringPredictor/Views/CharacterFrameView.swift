@@ -9,27 +9,39 @@
 import SwiftUI
 
 struct CharacterFrameView: View {
+    //Constant
+    let cornerRadious: CGFloat = 5
+    let fillColor: Color = Color.purple.opacity(0.3)
     
-    //var charFrame: CharFrame
-    var charFrame: CGRect
+    //var charFrame: CGRect
+    //var IDList: [UUID]
     let imgUtil = ImageUtil()
     @ObservedObject var imgProcess = imageProcessViewModel
+    @ObservedObject var stringObjectVM = stringObjectViewModel
     @State var overText: Bool = false
     //@State var isMasked: Bool = false
 
     var body: some View {
         ZStack{
-            Rectangle()
-                .fill(Color.pink).opacity(0.1)
-                .overlay(
-                    Rectangle().stroke(Color.pink, lineWidth: 1)
-                )
-                .frame(width: charFrame.width, height: charFrame.height)
+            ForEach(stringObjectVM.charFrameListData, id:\.id){item in
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(fillColor)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.white, lineWidth: 1)
+                            .shadow(radius: 0.5)
+                    )
+                    //.shadow(radius: 1)
+                    .frame(width: item.rect.width, height: item.rect.height)
+                    .position(x: item.rect.minX + item.rect.width/2, y: imgProcess.targetNSImage.size.height - item.rect.minY - item.rect.height/2)
+                    .onTapGesture {
+                        Tapped(rect: item.rect)
+                    }
+            }
+            
 
         }
-        .onTapGesture {
-            Tapped(rect: charFrame)
-        }
+        
         
     }
     
@@ -38,13 +50,13 @@ struct CharacterFrameView: View {
         if index == nil {
             imgProcess.maskList.append(rect)
             //isMasked = true
-            print("add")
+            //print("add")
 
         }else{
             //Delete rect in list
             imgProcess.maskList.remove(at: index!)
             //isMasked = false
-            print("remove")
+            //print("remove")
 
         }
         

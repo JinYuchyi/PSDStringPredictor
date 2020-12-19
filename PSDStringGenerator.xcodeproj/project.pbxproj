@@ -13,6 +13,7 @@
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */; };
 		3F1B2B21256CDB7C00D9BA0F /* CharBoundsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */; };
+		3F1CC56D258DB5230084F4EC /* UIOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1CC56C258DB5230084F4EC /* UIOverlayView.swift */; };
 		3F1ED7DA2538453100D59EC0 /* FontStandardObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */; };
 		3F25BC65250DC45C00E105A6 /* FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC64250DC45C00E105A6 /* FontSize.swift */; };
 		3F25BC67250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */; };
@@ -122,6 +123,7 @@
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsDataManager.swift; sourceTree = "<group>"; };
 		3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsObject.swift; sourceTree = "<group>"; };
+		3F1CC56C258DB5230084F4EC /* UIOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIOverlayView.swift; sourceTree = "<group>"; };
 		3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardObject.swift; sourceTree = "<group>"; };
 		3F25BC64250DC45C00E105A6 /* FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSize.swift; sourceTree = "<group>"; };
 		3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FontSizeTabularRegressor.mlmodel; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */,
 				3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */,
 				3FDBC4C3258324F900E9C2DC /* PreferenceView.swift */,
+				3F1CC56C258DB5230084F4EC /* UIOverlayView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 				3FDBC4C8258346C400E9C2DC /* NSWindow.swift in Sources */,
 				3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */,
 				3F8208562516068100832192 /* StringObjectViewModel.swift in Sources */,
+				3F1CC56D258DB5230084F4EC /* UIOverlayView.swift in Sources */,
 				3FDBC4CD2583535E00E9C2DC /* InteractiveViewModel.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,

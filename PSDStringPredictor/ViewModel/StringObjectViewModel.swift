@@ -24,8 +24,9 @@ class StringObjectViewModel: ObservableObject{
     let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
     
     @Published var stringObjectListData: [StringObject] = []
+    @Published var stringObjectIDList: [UUID] = []
     @Published var charFrameListData: [CharFrame] = []
-    @Published var charFrameListRects: [CGRect] = []
+    //@Published var charFrameListRects: [CGRect] = []
     //@Published var StringLabelListData: [StringLabelObject] = []
     @Published var selectedIDList: [UUID] = []
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
@@ -52,6 +53,14 @@ class StringObjectViewModel: ObservableObject{
     @Published var OKForProcess: Bool = false
     
     //    private var workItem: DispatchWorkItem?
+    
+    func GetAllID() -> [UUID] {
+        var res: [UUID] = []
+        for obj in stringObjectListData{
+            res.append(obj.id)
+        }
+        return res
+    }
     
     func GetFontLeading(fontSize: Float) -> Float{
         var index = 0
@@ -102,10 +111,10 @@ class StringObjectViewModel: ObservableObject{
             
             var allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
             allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
-//            allStrObjs = self.FiltStringObjects(originalList: allStrObjs)
             
             DispatchQueue.main.async{
                 self.stringObjectListData = allStrObjs
+                self.stringObjectIDList = self.GetAllID()
             }
         }
         
@@ -113,7 +122,7 @@ class StringObjectViewModel: ObservableObject{
         group.notify(queue: DispatchQueue.main) {
             self.stringObjectListData = self.FiltStringObjects(originalList: self.stringObjectListData)
             self.FetchCharFrameListData()
-            self.FetchCharFrameListRects()
+            //self.FetchCharFrameListRects()
             self.FetchStringObjectFontNameDict()
             
             stringObjectViewModel.indicatorTitle = ""
@@ -127,7 +136,7 @@ class StringObjectViewModel: ObservableObject{
     func CleanAll(){
         stringObjectListData = []
         charFrameListData = []
-        charFrameListRects = []
+        //charFrameListRects = []
         selectedIDList = []
         selectedCharImageListObjectList = [CharImageThumbnailObject]()
         stringObjectIgnoreDict = [:]
@@ -272,11 +281,11 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
-    func FetchCharFrameListRects(){
-        for element in charFrameListData{
-            charFrameListRects.append(element.rect)
-        }
-    }
+//    func FetchCharFrameListRects(){
+//        for element in charFrameListData{
+//            charFrameListRects.append(element.rect)
+//        }
+//    }
     
     
     func UpdateSelectedIDList(idList: [UUID] ){

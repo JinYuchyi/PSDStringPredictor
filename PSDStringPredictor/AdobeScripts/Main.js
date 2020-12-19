@@ -37,9 +37,11 @@ for (var i = 0; i < num; i++){
     var textItemRef = artLayerRef.textItem
     if (isParagraphList[i] == true) {
         textItemRef.kind = TextType.PARAGRAPHTEXT
-        textItemRef.leading = fontSizeList[i]/(600/72)
+        textItemRef.useAutoLeading = false
+        textItemRef.leading = fontSizeList[i] * 10 /(600/72)
         textItemRef.width = rectList[i][2] + widthExtend
         textItemRef.height = rectList[i][3]
+        
     }else{
         textItemRef.kind = TextType.POINTTEXT 
     }
@@ -63,7 +65,7 @@ for (var i = 0; i < num; i++){
         alignName = "right"
     }
     if (isParagraphList[i] == true) {
-        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][2]  - offsetList[i][1] / 4)
+        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][3]  - offsetList[i][1] / 4)
     }else{
         textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1]  - offsetList[i][1] / 4)
     }

@@ -1,18 +1,18 @@
 ////Variables
 var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSampleMini.png"
-var contentList = ["9:41", "Beaches", "/olu Photos", "Cancel See All"]
-var colorList = [[0, 0, 0], [242, 242, 247], [0, 0, 0], [0, 122, 255]]
-var fontSizeList = [44.0, 50.0, 67.0, 47.0]
-var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
-var positionList = [[96, 85], [173, 230], [74, 430], [911, 429]]
-var trackingList = [0.0, 0.0, 0.0, 0.0]
-var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0]]
-var alignmentList = [0, 0, 0, 0]
-var rectList = [[96.0, 390.0, 86.0, 33.0], [173.0, 245.0, 192.0, 39.0], [74.0, 45.0, 329.0, 50.0], [911.0, 46.0, 149.0, 241.0]]
-var names = ["0.941", "1.Beaches", "2.oluPhotos", "3.CancelSeeAll"]
-var bgColorList = [[250.0, 251.0, 252.0], [142.0, 142.0, 147.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0]]
-var isParagraphList = [false, false, false, true]
-var widthExtend = 30
+var contentList = ["9:41", "Beaches", "Cancel", "See All", "/olu Photos"]
+var colorList = [[0, 0, 0], [242, 242, 247], [0, 122, 255], [0, 122, 255], [0, 0, 0]]
+var fontSizeList = [44.0, 48.0, 47.0, 50.0, 66.0]
+var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold"]
+var positionList = [[96, 85], [173, 230], [911, 227], [911, 429], [74, 430]]
+var trackingList = [0.0, 0.0, 0.0, 0.0, 0.0]
+var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+var alignmentList = [0, 0, 0, 0, 0]
+var rectList = [[96.0, 390.0, 86.0, 33.0], [173.0, 245.0, 192.0, 39.0], [911.0, 248.0, 149.0, 39.0], [911.0, 46.0, 149.0, 39.0], [74.0, 45.0, 329.0, 50.0]]
+var names = ["0.941", "1.Beaches", "2.Cancel", "3.SeeAll", "4.oluPhotos"]
+var bgColorList = [[250.0, 251.0, 252.0], [142.0, 142.0, 147.0], [251.0, 251.0, 252.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0]]
+var isParagraphList = [false, false, false, false, false]
+var widthExtend = 5
 // ========================= Load from Main.js ==============================
 
 //PS Preferance Setting
@@ -51,9 +51,11 @@ for (var i = 0; i < num; i++){
     var textItemRef = artLayerRef.textItem
     if (isParagraphList[i] == true) {
         textItemRef.kind = TextType.PARAGRAPHTEXT
-        textItemRef.leading = fontSizeList[i]/(600/72)
+        textItemRef.useAutoLeading = false
+        textItemRef.leading = fontSizeList[i] * 10 /(600/72)
         textItemRef.width = rectList[i][2] + widthExtend
         textItemRef.height = rectList[i][3]
+        
     }else{
         textItemRef.kind = TextType.POINTTEXT 
     }
@@ -77,7 +79,7 @@ for (var i = 0; i < num; i++){
         alignName = "right"
     }
     if (isParagraphList[i] == true) {
-        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][2]  - offsetList[i][1] / 4)
+        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][3]  - offsetList[i][1] / 4)
     }else{
         textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1]  - offsetList[i][1] / 4)
     }
