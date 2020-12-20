@@ -35,6 +35,7 @@ struct ContentView: View {
     
     fileprivate func LeftViewGroup() -> some View {
         VStack{
+            Text(String(settingViewModel.checkDPISelection) )
             Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
                 Text("Load Image")
                 //.frame(minWidth: 250,  maxWidth: .infinity)

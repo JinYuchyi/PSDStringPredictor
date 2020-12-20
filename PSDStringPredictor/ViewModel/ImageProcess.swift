@@ -253,10 +253,14 @@ class ImageProcess: ObservableObject{
                     DataStore.imagePath = panel.url!.path
                     
                     let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
-
-                    if dpi != 72 {
-                        stringObjectViewModel.OKForProcess = false
-                        stringObjectViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
+                    if settingViewModel.checkDPISelection == 1 {
+                        if (dpi != 72 ) {
+                            stringObjectViewModel.OKForProcess = false
+                            stringObjectViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
+                        }else{
+                            stringObjectViewModel.OKForProcess = true
+                            stringObjectViewModel.warningContent = ""
+                        }
                     }else{
                         stringObjectViewModel.OKForProcess = true
                         stringObjectViewModel.warningContent = ""

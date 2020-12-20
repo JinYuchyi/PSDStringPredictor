@@ -10,20 +10,31 @@ import Foundation
 
 class SettingViewModel: ObservableObject {
     @Published var appSettingItem: AppSettingsItem =  AppSettingsItem()
-    @Published var debugItems = ["true", "false"]
+    @Published var debugItems = ["false", "true"]
+    @Published var checkDPIItems = ["false", "true"]
     @Published var debugItemsSelection = 0
+    @Published var checkDPISelection = 1
     let plistM = PlistManager()
     
     init(){
         appSettingItem = LoadPList(name: "AppSettings")
         debugItemsSelection = GetDebugSelectionList(appSettingItem)
+        checkDPISelection = GetDPISelectionList(appSettingItem)
     }
     
     func GetDebugSelectionList(_ item: AppSettingsItem) -> Int{
         if item.Debug == true{
-            return 0
-        }else{
             return 1
+        }else{
+            return 0
+        }
+    }
+    
+    func GetDPISelectionList(_ item: AppSettingsItem) -> Int{
+        if item.DPICheck == true{
+            return 1
+        }else{
+            return 0
         }
     }
 

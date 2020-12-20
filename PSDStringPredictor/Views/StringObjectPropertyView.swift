@@ -102,7 +102,7 @@ struct StringObjectPropertyView: View {
     var body: some View {
         List{
             Section(header: Text("String Properties")){
-
+                Text("id:\(stringObjectVM.selectedIDList.last ?? UUID.init())")
                 HStack{
                     Text("Content")
                         .foregroundColor(Color.gray)
@@ -206,7 +206,7 @@ struct StringObjectPropertyView: View {
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
                     Rectangle()
-                        .fill(Color.white)
+                        .fill(Color.init(red: Double(GetLastSelectObject().color.components![0]), green: Double(GetLastSelectObject().color.components![1]), blue: Double(GetLastSelectObject().color.components![2])))
                         .frame(width:10, height:10, alignment: .center)
                     
                     Text("\(String(format: "%.2f", GetLastSelectObject().color.components![0] * 255)), \(String(format: "%.2f", GetLastSelectObject().color.components![1] * 255)), \(String(format: "%.2f", GetLastSelectObject().color.components![2] * 255))")

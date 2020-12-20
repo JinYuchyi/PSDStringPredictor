@@ -11,7 +11,7 @@ import Foundation
 struct AppSettingsItem : Codable {
     
     var Debug: Bool = false
-    
+    var DPICheck: Bool = true
 //    func encode(with coder: NSCoder) {
 //        coder.encode(ShowDebugInfo, forKey: "ShowDebugInfo")
 //    }

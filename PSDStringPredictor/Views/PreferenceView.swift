@@ -11,7 +11,9 @@ import SwiftUI
 struct SettingsView: View {
     let plistM = PlistManager()
     var item: AppSettingsItem
-    @ObservedObject var settingsVM = SettingViewModel()
+    @ObservedObject var settingsVM = settingViewModel
+    @State var DPICheck: Int = 1
+    @State var debugMode: Int = 0
     //@State private var selectedFrameworkIndex = 0
     
     
@@ -30,14 +32,23 @@ struct SettingsView: View {
     var options: some View {
         VStack{
             HStack{
-                Text("Debug Mode")
+                
+                Text("Debug Mode \(DPICheck)")
                     .frame(width: 100, alignment: .leading)
-                
-                
-                
-                Picker(selection: $settingsVM.debugItemsSelection, label: Text("")){
-                    ForEach(0..<settingsVM.debugItems.count) {
+                Picker(selection: $debugMode, label: Text("")){
+                    ForEach(0..<settingsVM.debugItems.count, id: \.self) {
                         Text(settingsVM.debugItems[$0])
+                    }
+                }
+                .frame(width: 200, alignment: .leading)
+            }
+            
+            HStack{
+                Text("Check Load Image DPI")
+                    .frame(width: 100, alignment: .leading)
+                Picker(selection: $DPICheck, label: Text("")){
+                    ForEach(0..<settingsVM.checkDPIItems.count, id: \.self) {
+                        Text(settingsVM.checkDPIItems[$0])
                     }
                 }
                 .frame(width: 200, alignment: .leading)
@@ -51,12 +62,16 @@ struct SettingsView: View {
             Button("Confirm", action: {
                 
                 plistM.Write(settingItem: CreateItem(), plistName: "AppSettings")
+                settingsVM.debugItemsSelection = debugMode
+                settingsVM.checkDPISelection = DPICheck
             })
         }
     }
     
     func CreateItem() -> AppSettingsItem{
-        var item = AppSettingsItem(Debug: settingsVM.debugItemsSelection == 0 ? true : false)
+        var item = AppSettingsItem(Debug: debugMode == 1 ? true : false,
+                                   DPICheck: DPICheck == 1 ? true : false
+                                   )
         return item
     }
 //

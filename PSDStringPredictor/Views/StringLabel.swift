@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct StringLabel: View {
+    //Constant
+    let smallBtnSize: CGFloat = 20
+    
     var id: UUID
     var charFrameList: [CharFrame]
     @State var fixed: Bool
@@ -54,13 +57,26 @@ struct StringLabel: View {
         fixed = !fixed
         stringObjectVM.stringObjectFixedDict[id] = fixed
         ignoredEnabled = !fixed
+//        if fixedEnabled == true {
+//            if stringObjectVM.fixedStringObjectList.contains(where: {$0.id == id}){
+//                stringObjectVM.fixedStringObjectList.append(stringObjectVM.FindStringObjectByID(id: id)!)
+//            }
+//        }else{
+//            stringObjectVM.fixedStringObjectList.removeAll(where: {$0.id == id})
+//        }
     }
     
     func IgnoreBtnTapped(){
         ignored = !ignored
         stringObjectVM.stringObjectIgnoreDict[id] = ignored
-        
         fixedEnabled = !ignored
+//        if ignoredEnabled == true {
+//            if stringObjectVM.ignoreStringObjectList.contains(where: {$0.id == id}){
+//                stringObjectVM.ignoreStringObjectList.append(stringObjectVM.FindStringObjectByID(id: id)!)
+//            }
+//        }else{
+//            stringObjectVM.ignoreStringObjectList.removeAll(where: {$0.id == id})
+//        }
     }
     
     func alignmentTapped() {
@@ -96,7 +112,6 @@ struct StringLabel: View {
     }
     
     fileprivate func StringFrameLayerView()-> some View {
-        
         //String debug frame
         Rectangle()
             .stroke(Color.red, lineWidth: 1)
@@ -129,7 +144,7 @@ struct StringLabel: View {
                     .font(.custom(stringObjectVM.StringObjectNameDict[id] ?? " ", size: CalcSizeAfterOffset()))
                     .tracking(CalcTrackingAfterOffset())
                     .position(x: GetPosition().x, y: GetPosition().y  )
-                
+                    //.blendMode(.difference)
                     //.lineLimit(nil)
                     //.frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height, alignment: .center)
                     //
@@ -146,12 +161,13 @@ struct StringLabel: View {
 //                .padding(-4)
                 
                 //Button for alignment
+                
                 Button(action: {alignmentTapped()}){
                     CustomImage( name: alignmentIconName)
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
-                .frame(width: 20, height: 20)
+                .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
                 
                 //Button for fix
@@ -160,7 +176,7 @@ struct StringLabel: View {
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
-                .frame(width: 20, height: 20)
+                .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
                 .IsHidden(condition: fixedEnabled)
                 
@@ -170,12 +186,12 @@ struct StringLabel: View {
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
-                .frame(width: 20, height: 20)
+                .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
                 .IsHidden(condition: ignoredEnabled)
             }
             .frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height ?? 0, alignment: .bottomTrailing)
-            .position(x: GetPosition().x , y: GetPosition().y )
+            .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )
         }
     }
 }

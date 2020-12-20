@@ -49,4 +49,13 @@ extension Array where Element == StringObject {
     func FindByID(_ id: UUID) -> StringObject? {
         return self.first(where: {$0.id == id})
     }
+    
+    func ContainsSame(_ obj: StringObject) -> Bool {
+        for item in self{
+            if item.stringRect.intersects(obj.stringRect){
+                return true
+            }
+        }
+        return false
+    }
 }

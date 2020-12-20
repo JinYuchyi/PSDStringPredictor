@@ -24,6 +24,7 @@ class StringObjectViewModel: ObservableObject{
     let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
     
     @Published var stringObjectListData: [StringObject] = []
+    
     @Published var stringObjectIDList: [UUID] = []
     @Published var charFrameListData: [CharFrame] = []
     //@Published var charFrameListRects: [CGRect] = []
@@ -31,7 +32,6 @@ class StringObjectViewModel: ObservableObject{
     @Published var selectedIDList: [UUID] = []
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
     //@Published var paragraphTextObjectList = [StringObject]()
-    
     @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
     @Published var stringObjectFixedDict: [UUID: Bool] = [:]
     @Published var updateStringObjectList: [UUID] = []
@@ -113,24 +113,36 @@ class StringObjectViewModel: ObservableObject{
             allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
             
             DispatchQueue.main.async{
-                self.stringObjectListData = allStrObjs
+                for (key,value) in self.stringObjectFixedDict{
+                    if value == false {
+                        self.stringObjectListData.removeAll(where: {$0.id == key})
+                    }
+                }
+                for obj in allStrObjs {
+                    if self.stringObjectListData.ContainsSame(obj) == false {
+                        self.stringObjectListData.append(obj)
+                    }
+                }
+                //Todo: May cause previous obj lost
+                //self.stringObjectListData = allStrObjs
                 self.stringObjectIDList = self.GetAllID()
             }
         }
-        
-        
+
         group.notify(queue: DispatchQueue.main) {
-            self.stringObjectListData = self.FiltStringObjects(originalList: self.stringObjectListData)
+            //self.stringObjectListData = self.FiltStringObjects(originalList: self.stringObjectListData)
             self.FetchCharFrameListData()
-            //self.FetchCharFrameListRects()
             self.FetchStringObjectFontNameDict()
-            
             stringObjectViewModel.indicatorTitle = ""
         }
-
-        
-        
-        print("updateStringObjectList: \(updateStringObjectList.count)")
+    }
+    
+    func FetchStringObjectOutputList()-> [StringObject]{
+        var finalList: [StringObject] = stringObjectListData
+        for id in ignoreStringObjectList {
+            finalList.removeAll(where: {$0.id == id})
+        }
+        return finalList
     }
     
     func CleanAll(){
@@ -158,7 +170,7 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
-    func DeleteDescentForStringObjects(_ objs: [StringObject]) -> [StringObject] {
+    func DeleteDescentForStringObjects(_ objs:  [StringObject]) -> [StringObject] {
         var result: [StringObject] = []
         var index = 0
         for obj in objs{
@@ -202,11 +214,16 @@ class StringObjectViewModel: ObservableObject{
             
             let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
             let tmpObj = StringObject(obj.content, newStringRect, obj.observation, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
+            //&obj.stringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
             result.append(tmpObj)
             index += 1
         }
         return result
     }
+    
+//    func FiltStringObjects1(originalList objList: [StringObject]) -> (updateL: [StringObject], redrawList: [StringObject]){
+//
+//    }
     
     func FiltStringObjects(originalList objList: [StringObject]) -> ([StringObject]){
         var newList : [StringObject] = []
@@ -229,18 +246,17 @@ class StringObjectViewModel: ObservableObject{
                 ignoreStringObjectList.append(key)
             }
         }
-        
-        
+        //print("stringObjectIgnoreDict: \(stringObjectViewModel.stringObjectIgnoreDict.count)")
+
         for obj in objList{
-            
             indicatorTitle = "Processing on fixed and removed list \(index)/\(objList.count)"
             //Find the ignore object
             for ignoreID in ignoreList{
                 //if value == true {
                 //print("\(key.content) is fixed")
                 //Compare ignore obj with new obj, if rect overlap, remove from newlist
-                if ignoreID == obj.id{
-                //if ignoreObj.stringRect.IsSame(target: obj.stringRect){
+                //if ignoreID == obj.id{
+                if FindStringObjectByID(id: ignoreID)!.stringRect.IsSame(target: obj.stringRect){
                     //print("Same: \(ignoreObj.content)")
                     newList.remove(at: newList.firstIndex(of: obj)!)
                 }
@@ -250,7 +266,7 @@ class StringObjectViewModel: ObservableObject{
             index += 1
         }
         updateStringObjectList = newList.map{$0.id}
-        print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
+        //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             newList.append(FindStringObjectByID(id: key)! )
@@ -335,7 +351,13 @@ class StringObjectViewModel: ObservableObject{
         var bgClolorList = [[Float]]()
         var isParagraphList = [Bool]()
         
-        for obj in stringObjectListData{
+        var updateList = stringObjectListData
+        for (key,value) in stringObjectIgnoreDict{
+            if value == true{
+                updateList.removeAll(where: {$0.id == key})
+            }
+        }
+        for obj in updateList{
             let newString = obj.content.replacingOccurrences(of: "\n", with: " ")
             contentList.append(newString)
             var tmpColor: [Int] = []

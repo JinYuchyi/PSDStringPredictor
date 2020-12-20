@@ -16,6 +16,7 @@ struct ControlPanel: View {
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @ObservedObject var strObjVM = stringObjectViewModel
     @ObservedObject var imageProcessVM = imageProcessViewModel
+    @ObservedObject var settingsVM = settingViewModel
     var imgUtil: ImageUtil = ImageUtil()
     var pixelProcess = PixelProcess()
 //    var db = DB()

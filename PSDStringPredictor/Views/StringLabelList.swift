@@ -15,13 +15,13 @@ struct LabelsOnImage: View {
     
     var body: some View {
         Group{
-            ForEach(stringObjectVM.updateStringObjectList, id:\.self){ _id in
-                StringLabel(id: _id , charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
+            ForEach(stringObjectVM.FetchStringObjectOutputList(), id:\.id){ obj in
+                StringLabel(id: obj.id , charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
-                                    print("On tapped.")
+                                    //print("On tapped.")
                                     stringObjectVM.selectedIDList.removeAll()
-                                    stringObjectVM.selectedIDList.append(_id)
+                                    stringObjectVM.selectedIDList.append(obj.id)
                                 })
                 )
             }
