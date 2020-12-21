@@ -70,7 +70,7 @@ class ImageProcess: ObservableObject{
                   let dpi = metaData[keyName] as? Int else {
                 return 0
             }
-        print(metaData)
+        //print(metaData)
             return dpi
 //        }else{
 //            return 0
@@ -245,7 +245,7 @@ class ImageProcess: ObservableObject{
                     stringObjectViewModel.CleanAll()
                     
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
-                    self.SetTargetNSImage(tmp)
+                    self.SetTargetNSImage(tmp) //Reset images
                     self.showImage = true
                     
                     self.colorModeClassifier.Prediction(fromImage: self.targetImageProcessed)

@@ -1,17 +1,17 @@
 ////Variables
-var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSampleMini.png"
-var contentList = ["9:41", "Beaches", "/olu Photos", "Cancel See All"]
-var colorList = [[0, 0, 0], [242, 242, 247], [0, 0, 0], [0, 122, 255]]
-var fontSizeList = [44.0, 50.0, 66.0, 47.0]
-var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
-var positionList = [[96, 85], [173, 230], [74, 430], [911, 429]]
-var trackingList = [0.0, 0.0, 0.0, 0.0]
-var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0]]
-var alignmentList = [0, 0, 0, 0]
-var rectList = [[96.0, 390.0, 86.0, 33.0], [173.0, 245.0, 192.0, 39.0], [74.0, 45.0, 329.0, 50.0], [911.0, 46.0, 149.0, 241.0]]
-var names = ["0.941", "1.Beaches", "2.oluPhotos", "3.CancelSeeAll"]
-var bgColorList = [[250.0, 251.0, 252.0], [142.0, 142.0, 147.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0]]
-var isParagraphList = [false, false, false, true]
+var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/IMG_0019.PNG"
+var contentList = ["4:12", "WED", "10", "31", "Wednesday, December 31", "Camera", "280", "Find My", "No content available", "tv", "WEDNESDAY", "31", "No more events", "today", "No Recently", "100%", "ol", "Plaved Music"]
+var colorList = [[255, 255, 255], [255, 255, 255], [255, 255, 255], [28, 28, 30], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [28, 28, 30], [99, 99, 102], [28, 28, 30], [255, 255, 255], [142, 142, 147], [255, 255, 255], [255, 255, 255]]
+var fontSizeList = [109.0, 23.0, 14.0, 75.0, 40.19414, 23.0, 15.0, 23.0, 25.386328, 54.0, 25.0, 66.0, 32.12617, 32.0, 27.281641, 23.0, 55.0, 28.041016]
+var fontNameList= ["SFProDisplay-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular"]
+var positionList = [[139, 236], [1193, 174], [1423, 187], [1185, 243], [140, 294], [2158, 297], [1974, 505], [2158, 557], [163, 663], [1708, 742], [162, 789], [164, 855], [164, 936], [162, 976], [511, 1302], [2236, 33], [2187, 478], [511, 1335]]
+var trackingList = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+var alignmentList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+var rectList = [[139.0, 1432.0, 195.0, 79.0], [1193.0, 1494.0, 53.0, 17.0], [1423.0, 1481.0, 13.0, 10.0], [1185.0, 1425.0, 64.0, 55.0], [140.0, 1373.9117, 490.0, 32.08828], [2158.0, 1371.0, 87.0, 19.0], [1974.0, 1163.0, 27.0, 11.0], [2158.0, 1111.4382, 88.0, 18.561718], [163.0, 1005.0, 237.0, 18.0], [1708.0, 926.0, 47.0, 38.0], [162.0, 879.0, 163.0, 20.0], [164.0, 813.0, 57.0, 50.0], [164.0, 732.0, 235.0, 24.0], [162.0, 691.78906, 83.0, 25.210938], [511.0, 365.82422, 153.0, 21.175781], [2236.0, 1635.0, 63.0, 18.0], [2187.0, 1190.0, 47.0, 43.0], [511.0, 333.0, 167.0, 20.0]]
+var names = ["0.412", "1.WED", "2.10", "3.31", "4.WednesdayDecember31", "5.Camera", "6.280", "7.FindMy", "8.Nocontentavailable", "9.tv", "10.WEDNESDAY", "11.31", "12.Nomoreevents", "13.today", "14.NoRecently", "15.100", "16.ol", "17.PlavedMusic"]
+var bgColorList = [[219.0, 104.0, 69.0], [254.0, 255.0, 254.0], [246.0, 247.0, 247.0], [254.0, 255.0, 254.0], [217.0, 100.0, 67.0], [166.0, 175.0, 191.0], [0.0, 116.0, 218.0], [155.0, 164.0, 182.0], [121.0, 121.0, 125.0], [29.0, 29.0, 29.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [250.0, 51.0, 74.0], [171.0, 181.0, 196.0], [67.0, 210.0, 92.0], [213.0, 63.0, 75.0]]
+var isParagraphList = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 var widthExtend = 5
 // ========================= Load from Main.js ==============================
 

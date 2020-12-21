@@ -28,7 +28,7 @@ struct StringLabel: View {
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[id] != nil{
             d = stringObjectVM.DragOffsetDict[id]!.width
-            return stringObjectVM.FindStringObjectByID(id: id)!.tracking + d
+            return stringObjectVM.FindStringObjectByID(id: id)?.tracking ?? 0 + d
         }else{
             return 0
         }

@@ -13,6 +13,7 @@ import Foundation
 
 //struct StringObject: Hashable, Codable, Identifiable {
 class StringObjectViewModel: ObservableObject{
+    
     private var workItem: DispatchWorkItem?
     
     let jsMgr = JSManager()
@@ -108,15 +109,22 @@ class StringObjectViewModel: ObservableObject{
         
         let queueCalc = DispatchQueue(label: "calc")
         queueCalc.async(group: group) {
-            
             var allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
             allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
             
             DispatchQueue.main.async{
-                for (key,value) in self.stringObjectFixedDict{
-                    if value == false {
-                        self.stringObjectListData.removeAll(where: {$0.id == key})
+                //TODO: Recalc the masked string not work.
+                //Refrash the stringobject list
+                for obj in self.stringObjectListData {
+                    if self.stringObjectFixedDict[obj.id] != true {
+                        print("Removing \(obj.id)")
+                        self.stringObjectListData.removeAll(where: {$0.id == obj.id})
                     }
+                //for (key,value) in self.stringObjectFixedDict{
+//                    if value == false {
+//                        print("Removing \(key)")
+//                        self.stringObjectListData.removeAll(where: {$0.id == key})
+//                    }
                 }
                 for obj in allStrObjs {
                     if self.stringObjectListData.ContainsSame(obj) == false {

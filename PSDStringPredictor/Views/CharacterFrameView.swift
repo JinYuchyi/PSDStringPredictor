@@ -85,7 +85,7 @@ struct CharacterFrameView: View {
             }
         }else if DataStore.colorMode == 2 {
             for rect in imgProcess.maskList{
-                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.gray)
+                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.black)
 //                self.imgProcess.SetTargetMaskedImage(tmpImg)
             }
         }
