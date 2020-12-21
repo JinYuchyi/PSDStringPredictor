@@ -28,7 +28,8 @@ struct StringLabel: View {
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[id] != nil{
             d = stringObjectVM.DragOffsetDict[id]!.width
-            return stringObjectVM.FindStringObjectByID(id: id)?.tracking ?? 0 + d
+            //print("d: \((stringObjectVM.FindStringObjectByID(id: id)?.tracking ?? 0) + d)")
+            return (stringObjectVM.FindStringObjectByID(id: id)?.tracking ?? 0) + d
         }else{
             return 0
         }
@@ -104,7 +105,8 @@ struct StringLabel: View {
     }
     
     func TextLayerView() -> some View {
-        Text(stringObjectVM.FindStringObjectByID(id: id)?.content ?? " ")
+        //TODO: Debug
+        Text(stringObjectVM.FindStringObjectByID(id: id)!.content  ?? " ")
             .tracking(CalcTrackingAfterOffset())
             .position(x: GetPosition().x, y: GetPosition().y)
             .foregroundColor(stringObjectVM.FindStringObjectByID(id: id)?.color.ToColor() ?? Color.white)
@@ -139,15 +141,7 @@ struct StringLabel: View {
                 .IsHidden(condition: fixedEnabled && ignoredEnabled)
                 
                 //Text content
-                Text(stringObjectVM.FindStringObjectByID(id: id)?.content ?? " ")
-                    .foregroundColor(stringObjectVM.FindStringObjectByID(id: id)?.color.ToColor())
-                    .font(.custom(stringObjectVM.StringObjectNameDict[id] ?? " ", size: CalcSizeAfterOffset()))
-                    .tracking(CalcTrackingAfterOffset())
-                    .position(x: GetPosition().x, y: GetPosition().y  )
-                    //.blendMode(.difference)
-                    //.lineLimit(nil)
-                    //.frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height, alignment: .center)
-                    //
+                TextLayerView()
             }
             
             HStack{

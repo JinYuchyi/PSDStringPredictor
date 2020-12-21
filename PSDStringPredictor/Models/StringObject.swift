@@ -184,22 +184,20 @@ struct StringObject : Identifiable, Equatable, Hashable{
         return (CGFloat(item.fontTrackingPoints), item.fontTracking)
     }
     
-    func PredictTracking()->Double{
-        var trackings: [Double] = []
-        for index in 0..<charArray.count{
-            if (index + 1 < charArray.count && charArray[index].isLetter && charArray[index+1].isLetter){
-                let strs: String = String(charArray[index]) + String(charArray[index+1])
-                let _width = fabs(charRects[index].minX - charRects[index+1].maxX) / fontSize * 12
-                let _fontWeight = "SFProText-Regular"
-                let tmp = PredictFontTracking(str: strs, fontSize: Double(fontSize), width: Double(_width), fontWeight: _fontWeight)
-                //print("Predicting \(strs) - fontsize: \(fontSize) - width: \(_width) - result: \(tmp) ")
-                trackings.append(tmp)
-            }
-        }
-        let result: Double = trackings.MajorityElement()
-        //print("Predict tracking: \(result)")
-        return result
-    }
+//    func PredictTracking()->Double{
+//        var trackings: [Double] = []
+//        for index in 0..<charArray.count{
+//            if (index + 1 < charArray.count && charArray[index].isLetter && charArray[index+1].isLetter){
+//                let strs: String = String(charArray[index]) + String(charArray[index+1])
+//                let _width = fabs(charRects[index].minX - charRects[index+1].maxX) / fontSize * 12
+//                let _fontWeight = "SFProText-Regular"
+//                let tmp = PredictFontTracking(str: strs, fontSize: Double(fontSize), width: Double(_width), fontWeight: _fontWeight)
+//                trackings.append(tmp)
+//            }
+//        }
+//        let result: Double = trackings.MajorityElement()
+//        return result
+//    }
     
     func CalcColor() -> CGColor? {
         var colorList: [NSColor] = []
