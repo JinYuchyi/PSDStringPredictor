@@ -41,8 +41,8 @@ struct StringObjectPropertyView: View {
     
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
-            Text("Components")
-                .foregroundColor(Color.gray)
+//            Text("Components")
+//                .foregroundColor(Color.gray)
             ScrollView ( .horizontal, showsIndicators: true) {
                 
                 HStack {
@@ -102,7 +102,7 @@ struct StringObjectPropertyView: View {
     var body: some View {
         List{
             Section(header: Text("String Properties")){
-                Text("id:\(stringObjectVM.selectedIDList.last ?? UUID.init())")
+                //Text("id:\(stringObjectVM.selectedIDList.last ?? UUID.init())")
                 HStack{
                     Text("Content")
                         .foregroundColor(Color.gray)

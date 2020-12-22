@@ -6,5 +6,7 @@
 	<false/>
 	<key>Debug</key>
 	<false/>
+	<key>PSPath</key>
+	<string>/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app</string>
 </dict>
 </plist>

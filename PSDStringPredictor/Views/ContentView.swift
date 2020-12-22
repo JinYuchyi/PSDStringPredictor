@@ -30,20 +30,19 @@ struct ContentView: View {
     @State private var showDebugOverlay = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
-        
+    @State var viewScale: CGFloat = 1
     
     
     fileprivate func LeftViewGroup() -> some View {
         VStack{
-            Text(String(settingViewModel.checkDPISelection) )
-            Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
-                Text("Load Image")
-                //.frame(minWidth: 250,  maxWidth: .infinity)
-            }
-            .frame(width: 300, alignment: .center)
-            .padding()
-            
-            Divider()
+//            Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
+//                Text("Load Image")
+//                //.frame(minWidth: 250,  maxWidth: .infinity)
+//            }
+//            .frame(width: 300, alignment: .center)
+//            .padding()
+//
+//            Divider()
             
             psdPagesView()
                 .frame(width: 300, alignment: .center)
@@ -58,14 +57,22 @@ struct ContentView: View {
 
                     LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
                         .IsHidden(condition: stringObjectVM.stringOverlay)
+
                     CharacterFrameView()
                         .IsHidden(condition: showPatchLayer)
+                    
                     HighlightView()
                 }
+                .scaleEffect(viewScale)
+                .frame(width: 1100 * viewScale)
+
             }
+            
             GeometryReader{ geo in
                 UIOverlayView(showPatchLayer: $showPatchLayer)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
+//                ScaleSliderView(scale: $viewScale)
+//                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
             }
             //            VStack(alignment: .trailing){
             //                Toggle(isOn: $showPredictString) {
@@ -77,12 +84,12 @@ struct ContentView: View {
             //                .frame(width: 1000, height: 950, alignment: .topTrailing)
             //            }
             IndicatorView()
-                .frame(height: 1000, alignment: .center)
+                .frame(width: 1100, height: 1000, alignment: .center)
             WarningView()
-                .frame(height: 1000, alignment: .center)
+                .frame(width: 1100, height: 1000, alignment: .center)
                 
         }
-        .frame(width: 1100)
+        //.frame(width: 1100)
     }
     
     fileprivate func RightViewGroup() -> some View {

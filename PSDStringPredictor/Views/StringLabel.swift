@@ -105,11 +105,14 @@ struct StringLabel: View {
     }
     
     func TextLayerView() -> some View {
-        Text(stringObjectVM.FindStringObjectByID(id: id)!.content  ?? " ")
+        Text(stringObjectVM.FindStringObjectByID(id: id)?.content ?? " " )
             .tracking(CalcTrackingAfterOffset())
             .position(x: GetPosition().x, y: GetPosition().y)
             .foregroundColor(stringObjectVM.FindStringObjectByID(id: id)?.color.ToColor() ?? Color.white)
-            .font(.custom(stringObjectVM.StringObjectNameDict[id]!, size: CalcSizeAfterOffset()))
+            .font(.custom(stringObjectVM.StringObjectNameDict[id] ?? "", size: CalcSizeAfterOffset()))
+            .shadow(radius: 2)
+            //.blendMode(.difference)
+
     }
     
     fileprivate func StringFrameLayerView()-> some View {
@@ -135,12 +138,14 @@ struct StringLabel: View {
                 Group{
                     //Frames
                     StringFrameLayerView()
+
                     DragLayerView()
                 }
                 .IsHidden(condition: fixedEnabled && ignoredEnabled)
                 
                 //Text content
                 TextLayerView()
+
             }
             
             HStack{
@@ -189,18 +194,18 @@ struct StringLabel: View {
     }
 }
 
-struct StringLabel_Previews: PreviewProvider {
-    static var previews: some View {
-        Button(action: {}){
-            //            Text("􀍢")
-            //
-            //                //.background(Color.black)
-            //                .foregroundColor(Color.white)
-            //                //.border(Color.black, width: 1)
-            //                //.shadow(radius: 0.1)
-            //                .cornerRadius(10)
-        }
-        .frame(width: 15, height: 15, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-        .shadow(radius: 10)
-    }
-}
+//struct StringLabel_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Button(action: {}){
+//            //            Text("􀍢")
+//            //
+//            //                //.background(Color.black)
+//            //                .foregroundColor(Color.white)
+//            //                //.border(Color.black, width: 1)
+//            //                //.shadow(radius: 0.1)
+//            //                .cornerRadius(10)
+//        }
+//        .frame(width: 15, height: 15, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//        .shadow(radius: 10)
+//    }
+//}

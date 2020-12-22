@@ -19,6 +19,8 @@
 		3F25BC67250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */; };
 		3F308027251DD96600550DEA /* PixelProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308026251DD96600550DEA /* PixelProcess.swift */; };
 		3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F308028251DFA3500550DEA /* NSColorExtension.swift */; };
+		3F38DB3B2591A65E00EB6CFB /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38DB3A2591A65E00EB6CFB /* KeyboardManager.swift */; };
+		3F38DB3E2591AA9300EB6CFB /* ScaleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38DB3D2591AA9300EB6CFB /* ScaleSliderView.swift */; };
 		3F3E0009253DCA9D0047E4E5 /* ColorMode.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */; };
 		3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */; };
 		3F3EFFA8253596140047E4E5 /* CharDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFA7253596140047E4E5 /* CharDataManager.swift */; };
@@ -129,6 +131,8 @@
 		3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FontSizeTabularRegressor.mlmodel; sourceTree = "<group>"; };
 		3F308026251DD96600550DEA /* PixelProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelProcess.swift; sourceTree = "<group>"; };
 		3F308028251DFA3500550DEA /* NSColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColorExtension.swift; sourceTree = "<group>"; };
+		3F38DB3A2591A65E00EB6CFB /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		3F38DB3D2591AA9300EB6CFB /* ScaleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleSliderView.swift; sourceTree = "<group>"; };
 		3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ColorMode.mlmodel; sourceTree = "<group>"; };
 		3F3EFFA7253596140047E4E5 /* CharDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharDataManager.swift; sourceTree = "<group>"; };
 		3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharDataObject.swift; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 				3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */,
 				3FDBC4C3258324F900E9C2DC /* PreferenceView.swift */,
 				3F1CC56C258DB5230084F4EC /* UIOverlayView.swift */,
+				3F38DB3D2591AA9300EB6CFB /* ScaleSliderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -492,6 +497,7 @@
 			isa = PBXGroup;
 			children = (
 				3FEBA6C3251CA522002D8EC1 /* Control.swift */,
+				3F38DB3A2591A65E00EB6CFB /* KeyboardManager.swift */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -674,6 +680,7 @@
 				3F5218182521E89200646F91 /* TestView.swift in Sources */,
 				3F9ED7A52566090100F950BC /* ImageResourceView.swift in Sources */,
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
+				3F38DB3E2591AA9300EB6CFB /* ScaleSliderView.swift in Sources */,
 				3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */,
 				3F50A7B0253DC5D900C10810 /* ImagePropertyViewModel.swift in Sources */,
 				3F68B709252EAB6F00CCFCE5 /* TrackingDataManager.swift in Sources */,
@@ -686,6 +693,7 @@
 				3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */,
 				3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */,
 				3F4471BF2575D76E003AE7B6 /* PSDObjectViewModel.swift in Sources */,
+				3F38DB3B2591A65E00EB6CFB /* KeyboardManager.swift in Sources */,
 				3F44C6482570F42500E438CA /* CGColorExtension.swift in Sources */,
 				3F44C63D2570D60400E438CA /* CharColorMode.swift in Sources */,
 				3F1A629825230D0F006DC9F9 /* Font.swift in Sources */,
@@ -863,7 +871,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.9;
 				MTL_COMPILER_FLAGS = "-cikernel";
-				PRODUCT_BUNDLE_IDENTIFIER = jin.PSDStringGenerator;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -890,7 +898,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.9;
 				MTL_COMPILER_FLAGS = "-cikernel";
-				PRODUCT_BUNDLE_IDENTIFIER = jin.PSDStringGenerator;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

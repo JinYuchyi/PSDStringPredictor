@@ -14,12 +14,11 @@ struct LabelsOnImage: View {
     let charFrameList: [CharFrame]
     
     var body: some View {
-        Group{
+        ZStack{
             ForEach(stringObjectVM.FetchStringObjectOutputList(), id:\.id){ obj in
                 StringLabel(id: obj.id , charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
-                                    //print("On tapped.")
                                     stringObjectVM.selectedIDList.removeAll()
                                     stringObjectVM.selectedIDList.append(obj.id)
                                 })

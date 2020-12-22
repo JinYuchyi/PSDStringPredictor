@@ -37,7 +37,7 @@ class ImageUtil{
         let newimg = filter!.outputImage!
         
         let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext.png")
-        newimg.ToPNG(url: url)
+        //newimg.ToPNG(url: url)
 
         let stringsObjectPredicted = ocr.CreateAllStringObjects(FromCIImage: newimg)
 

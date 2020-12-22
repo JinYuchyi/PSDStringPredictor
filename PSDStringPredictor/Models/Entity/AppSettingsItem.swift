@@ -12,6 +12,7 @@ struct AppSettingsItem : Codable {
     
     var Debug: Bool = false
     var DPICheck: Bool = true
+    var PSPath: String = "/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app"
 //    func encode(with coder: NSCoder) {
 //        coder.encode(ShowDebugInfo, forKey: "ShowDebugInfo")
 //    }

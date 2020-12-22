@@ -58,13 +58,13 @@ class PixelProcess{
                     yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
                     let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
                     let tmp = imageProcessViewModel.targetImageProcessed.cropped(to: resultRect)
-                    tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description  ))
+                    //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description  ))
                 }else{
                     y1 = y1 + 1
                     yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
                     let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
                     let tmp = imageProcessViewModel.targetImageProcessed.cropped(to: resultRect)
-                    tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description))
+                    //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description))
                 }
                 CheckEdgeT()
                 

@@ -14,6 +14,7 @@ struct SettingsView: View {
     @ObservedObject var settingsVM = settingViewModel
     @State var DPICheck: Int = 1
     @State var debugMode: Int = 0
+    @State var PSPath: String 
     //@State private var selectedFrameworkIndex = 0
     
     
@@ -53,6 +54,15 @@ struct SettingsView: View {
                 }
                 .frame(width: 200, alignment: .leading)
             }
+            
+            HStack{
+                Text("Photoshop Path")
+                    .frame(width: 100, alignment: .leading)
+                TextField("Input Photoshop Path...", text: $PSPath, onCommit: { settingsVM.PSPath = PSPath; print(settingsVM.PSPath) })
+                    .fixedSize()
+                .frame(width: 400, alignment: .leading)
+            }
+            
         }
         .frame(width: 600, height: 800, alignment: .top)
     }
@@ -64,13 +74,16 @@ struct SettingsView: View {
                 plistM.Write(settingItem: CreateItem(), plistName: "AppSettings")
                 settingsVM.debugItemsSelection = debugMode
                 settingsVM.checkDPISelection = DPICheck
+                //settingsVM.PSPath = PSPath
             })
         }
     }
     
     func CreateItem() -> AppSettingsItem{
+        //print("PSPath: \(PSPath)")
         var item = AppSettingsItem(Debug: debugMode == 1 ? true : false,
-                                   DPICheck: DPICheck == 1 ? true : false
+                                   DPICheck: DPICheck == 1 ? true : false,
+                                   PSPath: PSPath
                                    )
         return item
     }

@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.setFrameAutosaveName("StringGeneratorMain")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
-        window.title = "StringGenerator"
+        window.title = "PSD String Generator"
         
         //        //Preference window
         //        settingWindow = NSWindow(
@@ -208,15 +208,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let plistM = PlistManager()
         self.window = ClosableWindow (contentRect: NSMakeRect (0, 0, 480, 300), styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView], backing: NSWindow.BackingStoreType.buffered, defer: false)
         let item = plistM.Load(plistName: "AppSettings")
-        print(item.Debug)
+        //print(item.Debug)
         //self.window! .title = "new window"
         self.window! .isOpaque = false
         self.window! .center ()
-        self.window! .contentView = NSHostingView (rootView: SettingsView(item: item))
+        self.window! .contentView = NSHostingView (rootView: SettingsView(item: item, PSPath: settingViewModel.LoadPList(name: "AppSettings").PSPath))
         self.window! .isMovableByWindowBackground = true
         self.window! .makeKeyAndOrderFront (nil)
         //self.window.contentView = NSWindowController (window: self.window)
         
+    }
+    
+    @IBAction func LoadFile(_ sender: Any) {
+        
+    }
+    
+    @IBAction func LoadImage(_ sender: Any) {
+        imageProcessViewModel.LoadImageBtnPressed()
     }
     
 }

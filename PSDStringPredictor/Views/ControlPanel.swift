@@ -30,6 +30,13 @@ struct ControlPanel: View {
     var body: some View {
 
         VStack{
+            
+            Button(action: {stringObjectVM.CombineStrings()}){
+                Text("Combine To Paragraph")
+                    .frame(minWidth: 200,  maxWidth: .infinity)
+            }
+            Divider()
+            
             Text("Caculate String Layers")
                 .foregroundColor(.gray)
                 .padding(.top)
@@ -72,11 +79,11 @@ struct ControlPanel: View {
             .padding(.bottom)
             .padding(.bottom)
             
-            Button(action: {self.Debug()}){
-                Text("Test")
-                    .frame(minWidth: 200,  maxWidth: .infinity)
-                
-            }
+//            Button(action: {self.Debug()}){
+//                Text("Test")
+//                    .frame(minWidth: 200,  maxWidth: .infinity)
+//
+//            }
         }
         .padding()
         

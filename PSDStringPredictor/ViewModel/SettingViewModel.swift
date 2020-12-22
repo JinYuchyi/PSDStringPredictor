@@ -14,12 +14,14 @@ class SettingViewModel: ObservableObject {
     @Published var checkDPIItems = ["false", "true"]
     @Published var debugItemsSelection = 0
     @Published var checkDPISelection = 1
+    @Published var PSPath = "/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app"
     let plistM = PlistManager()
     
     init(){
         appSettingItem = LoadPList(name: "AppSettings")
         debugItemsSelection = GetDebugSelectionList(appSettingItem)
         checkDPISelection = GetDPISelectionList(appSettingItem)
+        PSPath = GetPSPath(appSettingItem)
     }
     
     func GetDebugSelectionList(_ item: AppSettingsItem) -> Int{
@@ -36,6 +38,10 @@ class SettingViewModel: ObservableObject {
         }else{
             return 0
         }
+    }
+    
+    func GetPSPath(_ item: AppSettingsItem) -> String{
+        return item.PSPath
     }
 
     func LoadPList(name: String) -> AppSettingsItem{

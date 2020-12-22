@@ -1,17 +1,17 @@
 ////Variables
-var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/IMG_0019.PNG"
-var contentList = ["4:12", "WED", "10", "31", "Wednesday, December 31", "Camera", "280", "Find My", "No content available", "tv", "WEDNESDAY", "31", "No more events", "today", "No Recently", "100%", "ol", "Plaved Music"]
-var colorList = [[255, 255, 255], [255, 255, 255], [255, 255, 255], [28, 28, 30], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [28, 28, 30], [99, 99, 102], [28, 28, 30], [255, 255, 255], [142, 142, 147], [255, 255, 255], [255, 255, 255]]
-var fontSizeList = [109.0, 23.0, 14.0, 75.0, 40.19414, 23.0, 15.0, 23.0, 25.386328, 54.0, 25.0, 66.0, 32.12617, 32.0, 27.281641, 23.0, 55.0, 28.041016]
-var fontNameList= ["SFProDisplay-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular"]
-var positionList = [[139, 236], [1193, 174], [1423, 187], [1185, 243], [140, 294], [2158, 297], [1974, 505], [2158, 557], [163, 663], [1708, 742], [162, 789], [164, 855], [164, 936], [162, 976], [511, 1302], [2236, 33], [2187, 478], [511, 1335]]
-var trackingList = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
-var alignmentList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-var rectList = [[139.0, 1432.0, 195.0, 79.0], [1193.0, 1494.0, 53.0, 17.0], [1423.0, 1481.0, 13.0, 10.0], [1185.0, 1425.0, 64.0, 55.0], [140.0, 1373.9117, 490.0, 32.08828], [2158.0, 1371.0, 87.0, 19.0], [1974.0, 1163.0, 27.0, 11.0], [2158.0, 1111.4382, 88.0, 18.561718], [163.0, 1005.0, 237.0, 18.0], [1708.0, 926.0, 47.0, 38.0], [162.0, 879.0, 163.0, 20.0], [164.0, 813.0, 57.0, 50.0], [164.0, 732.0, 235.0, 24.0], [162.0, 691.78906, 83.0, 25.210938], [511.0, 365.82422, 153.0, 21.175781], [2236.0, 1635.0, 63.0, 18.0], [2187.0, 1190.0, 47.0, 43.0], [511.0, 333.0, 167.0, 20.0]]
-var names = ["0.412", "1.WED", "2.10", "3.31", "4.WednesdayDecember31", "5.Camera", "6.280", "7.FindMy", "8.Nocontentavailable", "9.tv", "10.WEDNESDAY", "11.31", "12.Nomoreevents", "13.today", "14.NoRecently", "15.100", "16.ol", "17.PlavedMusic"]
-var bgColorList = [[219.0, 104.0, 69.0], [254.0, 255.0, 254.0], [246.0, 247.0, 247.0], [254.0, 255.0, 254.0], [217.0, 100.0, 67.0], [166.0, 175.0, 191.0], [0.0, 116.0, 218.0], [155.0, 164.0, 182.0], [121.0, 121.0, 125.0], [29.0, 29.0, 29.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [250.0, 51.0, 74.0], [171.0, 181.0, 196.0], [67.0, 210.0, 92.0], [213.0, 63.0, 75.0]]
-var isParagraphList = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSample.png"
+var contentList = ["9:41", "Beaches", "Cancel", "See All", "Moments", "See All", "25 >", "Lisboa", "11 >", "Search", "/olu Photos", "Essaouira"]
+var colorList = [[0, 0, 0], [254, 255, 254], [0, 122, 251], [0, 122, 247], [0, 0, 0], [0, 122, 247], [152, 152, 159], [0, 0, 0], [152, 152, 159], [0, 122, 246], [0, 0, 0], [0, 0, 0]]
+var fontSizeList = [45.0, 50.0, 47.0, 50.0, 66.0, 50.0, 53.0, 48.0, 52.0, 29.0, 66.0, 48.0]
+var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
+var positionList = [[96, 86], [173, 230], [911, 227], [911, 429], [64, 1737], [911, 1737], [928, 1916], [280, 2126], [942, 2154], [934, 2323], [74, 430], [280, 1886]]
+var trackingList = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+var offsetList = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+var alignmentList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+var rectList = [[96.0, 2350.0, 86.0, 34.0], [173.0, 2206.0, 192.0, 39.0], [911.0, 2209.0, 149.0, 39.0], [911.0, 2007.0, 149.0, 39.0], [64.0, 699.0, 276.0, 48.0], [911.0, 699.0, 149.0, 39.0], [928.0, 520.0, 147.0, 39.0], [280.0, 310.0, 144.0, 39.0], [942.0, 282.0, 133.0, 37.0], [934.0, 113.0, 98.0, 23.0], [74.0, 2006.0, 329.0, 50.0], [280.0, 550.0, 214.0, 39.0]]
+var names = ["0.941", "1.Beaches", "2.Cancel", "3.SeeAll", "4.Moments", "5.SeeAll", "6.25", "7.Lisboa", "8.11", "9.Search", "10.oluPhotos", "11.Essaouira"]
+var bgColorList = [[251.0, 251.0, 252.0], [142.0, 142.0, 147.0], [251.0, 251.0, 252.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [247.0, 247.0, 246.0], [242.0, 242.0, 247.0], [254.0, 255.0, 254.0]]
+var isParagraphList = [false, false, false, false, false, false, false, false, false, false, false, false]
 var widthExtend = 5
 // ========================= Load from Main.js ==============================
 
