@@ -221,7 +221,9 @@ class StringObjectViewModel: ObservableObject{
             }
             
             let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
-            let tmpObj = StringObject(obj.content, newStringRect, obj.observation, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
+            
+            var tmpObj = obj
+            tmpObj.stringRect = newStringRect
             //&obj.stringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
             result.append(tmpObj)
             index += 1

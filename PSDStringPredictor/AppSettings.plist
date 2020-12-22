@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>DPICheck</key>
-	<true/>
+	<false/>
 	<key>Debug</key>
 	<false/>
 </dict>

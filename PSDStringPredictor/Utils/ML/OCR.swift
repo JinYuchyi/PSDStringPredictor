@@ -112,7 +112,7 @@ class OCR: ObservableObject{
         
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
         do {
-            print("In Thread.")
+            //print("In Thread.")
             try requestHandler.perform([TextRecognitionRequest])
         } catch {
             print(error)

@@ -105,7 +105,6 @@ struct StringLabel: View {
     }
     
     func TextLayerView() -> some View {
-        //TODO: Debug
         Text(stringObjectVM.FindStringObjectByID(id: id)!.content  ?? " ")
             .tracking(CalcTrackingAfterOffset())
             .position(x: GetPosition().x, y: GetPosition().y)

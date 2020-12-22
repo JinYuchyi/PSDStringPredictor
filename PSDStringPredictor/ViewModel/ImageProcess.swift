@@ -376,10 +376,11 @@ func Minimun(_ image: CIImage) -> NSColor{
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent, forKey: "inputExtent")
     let filteredImage = filter?.outputImage
-    
     let img = filteredImage!.ToCGImage()
     let size = filteredImage!.extent
     let c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
+    let str = String(c.redComponent.description) + "|" + String(c.greenComponent.description) + "|" + String(c.blueComponent.description)
+    filteredImage?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/1111/" + str + ".bmp"))
     
     return c
 }
