@@ -46,8 +46,8 @@ class OSStandardManager{
         
         context.perform {
             let insertRequest = NSBatchInsertRequest(entityName: "Standard", objects: objects)
-            let insertResult = try? context.execute(insertRequest) as! NSBatchInsertResult
-            let success = insertResult?.result as! Bool
+            let insertResult = try? context.execute(insertRequest) as? NSBatchInsertResult
+            _ = insertResult?.result as! Bool
             //print("Batch insert \(success)")
         }
     }

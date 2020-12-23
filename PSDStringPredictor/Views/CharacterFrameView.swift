@@ -65,11 +65,11 @@ struct CharacterFrameView: View {
         }
         
         if DataStore.colorMode == 1{
-            for rect in imgProcess.maskList{
+            for _ in imgProcess.maskList{
                 AddCharRectMask()
             }
         }else if DataStore.colorMode == 2 {
-            for rect in imgProcess.maskList{
+            for _ in imgProcess.maskList{
                 AddCharRectMask()
             }
         }

@@ -66,7 +66,7 @@ class StringObjectViewModel: ObservableObject{
     func GetFontLeading(fontSize: Float) -> Float{
         var index = 0
         var result: Float = 0
-        for e in fontLeadingTable{
+        for _ in fontLeadingTable{
             if fontLeadingTable.count > (index + 1) {
                 if fontSize < Float(fontLeadingTable.last![0]){
                     result = Float(fontLeadingTable.last![1])
@@ -92,7 +92,7 @@ class StringObjectViewModel: ObservableObject{
     }
     
     func PredictStringObjects(FromCIImage img: CIImage) -> [StringObject] {
-        var strObjs = [StringObject]()
+        //var strObjs = [StringObject]()
         
         if img.extent.width > 0{
             let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
@@ -185,8 +185,8 @@ class StringObjectViewModel: ObservableObject{
             DispatchQueue.main.async{
                 self.indicatorTitle = "Correcting strings' position \(index)/\(objs.count)"
             }
-            var highLetterEvenHeight: CGFloat = 0
-            var lowerLetterEvenHeight: CGFloat = 0
+//            var highLetterEvenHeight: CGFloat = 0
+//            var lowerLetterEvenHeight: CGFloat = 0
             var fontName: String = ""
             if (obj.fontSize >= 20) {
                 fontName = "SFProDisplay-Regular"
@@ -196,10 +196,10 @@ class StringObjectViewModel: ObservableObject{
             }
             //Condition of if has p,q,g,y,j character in string,
             //We have to adjust string position and size
-            var n: CGFloat = 0
-            var n1: CGFloat = 0
+//            var n: CGFloat = 0
+//            var n1: CGFloat = 0
             var hasLongTail = false
-            for (index, c) in obj.charArray.enumerated() {
+            for (_, c) in obj.charArray.enumerated() {
                 if (
                     c == "p" ||
                         c == "q" ||
@@ -278,13 +278,13 @@ class StringObjectViewModel: ObservableObject{
         updateStringObjectList = newList.map{$0.id}
         //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
-        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
+        for (key, _) in stringObjectViewModel.stringObjectFixedDict{
             newList.append(FindStringObjectByID(id: key)! )
         }
         
         stringObjectViewModel.stringObjectOutputList = newList
         
-        for (key, value) in stringObjectViewModel.stringObjectIgnoreDict{
+        for (key, _) in stringObjectViewModel.stringObjectIgnoreDict{
             newList.append(FindStringObjectByID(id: key)!)
         }
         
@@ -346,7 +346,7 @@ class StringObjectViewModel: ObservableObject{
     }
     
     func UpdatePSD(){
-        var psdPath = DataStore.imagePath
+        let psdPath = DataStore.imagePath
         var contentList = [String]()
         var colorList = [[Int]]()
         var fontSizeList:[Float] = []
@@ -354,8 +354,8 @@ class StringObjectViewModel: ObservableObject{
         var positionList = [[Int]]()
         var trackingList = [Float]()
         var offsetList = [[Int16]]()
-        var trackingOffsetList = [Float]()
-        var sizeOffsetList = [Float]()
+//        var trackingOffsetList = [Float]()
+//        var sizeOffsetList = [Float]()
         var alignmentList = [Int]()
         var rectList = [[Float]]()
         var bgClolorList = [[Float]]()
@@ -430,14 +430,14 @@ class StringObjectViewModel: ObservableObject{
     }
     
     func CombineStrings(){
-        var newObj: StringObject
+        //var newObj: StringObject
         var orderedYList: [UUID:CGFloat] = [:]
         var content: String = ""
         var rect: CGRect = CGRect.init()
         var color: CGColor = CGColor.white
         var fontSize: CGFloat = 0
         var fontTracking: CGFloat = 0
-        var fontLeading: Int = 0
+       // var fontLeading: Int = 0
         var resultObj: StringObject = StringObject()
         
         if selectedIDList.count > 0{
@@ -457,7 +457,7 @@ class StringObjectViewModel: ObservableObject{
         }
         let resultIDList = orderedYList.sorted {$0.1 > $1.1}
         var index = 0
-        for (_key, _value) in resultIDList{
+        for (_key, _) in resultIDList{
             let str = stringObjectListData.FindByID(_key)!.content
             content += (index == 0 ? "" : "\n") + str
             index += 1

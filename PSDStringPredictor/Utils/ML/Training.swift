@@ -15,7 +15,7 @@ class MLTraining {
     let ocr = OCR()
     
     func CreateTrackingData(){
-        var contentStr: String = ""
+        //var contentStr: String = ""
         
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true
@@ -25,17 +25,17 @@ class MLTraining {
             let result = panel.runModal()
             if result == .OK{
                 //if ((?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
-                let allFilePath = try? FileManager.default.contentsOfDirectory(at: panel.url!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+               // let allFilePath = try? FileManager.default.contentsOfDirectory(at: panel.url!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                 
-                for i in 0..<10{
-                    print(allFilePath![i].absoluteString)
-                    let url = try?URL(resolvingAliasFileAt: allFilePath![i])
-                    let nsImg = NSImage(byReferencing: url!)
-                    let ciImg = nsImg.ToCIImage()!
-                    let line = self.ocr.CreateAllStringObjects(FromCIImage: ciImg)
-                    //print(line[0].charArray.count)
-                   //print("We have \(lines.count) lines.")
-                }
+//                for i in 0..<10{
+//                    print(allFilePath![i].absoluteString)
+//                    let url = try?URL(resolvingAliasFileAt: allFilePath![i])
+//                    let nsImg = NSImage(byReferencing: url!)
+//                    let ciImg = nsImg.ToCIImage()!
+//                    let line = self.ocr.CreateAllStringObjects(FromCIImage: ciImg)
+//                    //print(line[0].charArray.count)
+//                   //print("We have \(lines.count) lines.")
+//                }
             }
             
         }

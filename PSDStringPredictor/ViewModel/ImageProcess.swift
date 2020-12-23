@@ -47,15 +47,12 @@ class ImageProcess: ObservableObject{
     }
     
     func GetImageProperty(keyName: String, path: String) -> Int{
-        //DPIWidth, ProfileName, HasAlpha, PixelHeight...
-        var imgData: Data = Data.init()
-        //let url1 = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
+//        var imgData: Data = Data.init()
         let url = URL.init(fileURLWithPath: path)
-        //print("url:\(url)")
-        if targetNSImage.isValid{
-            imgData = targetNSImage.tiffRepresentation!
-
-        }
+//        if targetNSImage.isValid{
+//            imgData = targetNSImage.tiffRepresentation!
+//
+//        }
         var imageData: NSData =  NSData.init()
             do{
                 try imageData = NSData.init(contentsOf: url)
@@ -340,7 +337,7 @@ func ChangeExposure(_ image: CIImage, _ value: CGFloat = 0.5)-> CIImage?{
 }
 
 func SetConv(_ image: CIImage)-> CIImage?{
-    let weights:[CGFloat] = [0,-1,0,-1,4,-1,0,-1,0]
+    //let weights:[CGFloat] = [0,-1,0,-1,4,-1,0,-1,0]
     let filter = CIFilter(name: "CIConvolution3X3")
     //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
     filter?.setValue(image, forKey: "inputImage")
@@ -377,7 +374,7 @@ func Minimun(_ image: CIImage) -> NSColor{
     filter?.setValue(image.extent, forKey: "inputExtent")
     let filteredImage = filter?.outputImage
     let img = filteredImage!.ToCGImage()
-    let size = filteredImage!.extent
+    //let size = filteredImage!.extent
     let c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
     let str = String(c.redComponent.description) + "|" + String(c.greenComponent.description) + "|" + String(c.blueComponent.description)
     filteredImage?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/1111/" + str + ".bmp"))

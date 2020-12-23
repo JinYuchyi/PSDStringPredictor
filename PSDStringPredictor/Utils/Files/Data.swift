@@ -77,7 +77,7 @@ class ReadTextFromFile{
             let itemArray = objArray[index].components(separatedBy: ",")
             let a = Int(itemArray[0])!
             let b = Int(itemArray[1])!
-            var tmp = [a,b]
+            let tmp = [a,b]
             _array.append(tmp)
         }
         return _array

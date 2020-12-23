@@ -41,7 +41,7 @@ class JSManager{
     
     func ReadJSToString(jsPath: String) -> String{
         var inString = ""
-        var url = URL.init(fileURLWithPath: jsPath)
+        let url = URL.init(fileURLWithPath: jsPath)
         do {
             inString = try String(contentsOf: url)
         } catch {
@@ -54,7 +54,7 @@ class JSManager{
     func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [Int], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool])->Bool{
         let names = NamesNormalize(names: contentList)
         let functionJSStr = ReadJSToString(jsPath: GetDocumentsPath() +  "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Functions.js")
-        var variablesStr = """
+        let variablesStr = """
         ////Variables
         var psdPath = "\(psdPath)"
         var contentList = \(contentList)

@@ -24,8 +24,12 @@ import Foundation
 //struct StringObject: Hashable, Codable, Identifiable {
 struct StringObject : Identifiable, Equatable, Hashable{
     
-    var hashValue: Int {
-        return id.hashValue
+//    var hashValue: Int {
+//        return id.hashValue
+//    }
+//
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     static func == (lhs: StringObject, rhs: StringObject) -> Bool {
@@ -78,68 +82,67 @@ struct StringObject : Identifiable, Equatable, Hashable{
     //var stringObjectList: [StringObject]
     
     init(){
-        id = UUID()
-        content = "No content."
+        self.id = UUID()
+        self.content = "No content."
         //position = []
-        tracking = 0
-        fontSize = 0
-        colorMode = -1
-        fontWeight =  ""
-        charImageList = []
-        stringRect = CGRect()
-        observation = VNRecognizedTextObservation.init()
-        color = CGColor.black
-        charArray = []
-        charRects = []
-        charSizeList = []
-        charFontWeightList = []
-        confidence = 0
-        isForbidden = false
-        charColorModeList = []
+        self.tracking = 0
+        self.fontSize = 0
+        self.colorMode = -1
+        self.fontWeight =  ""
+        self.charImageList = []
+        self.stringRect = CGRect()
+        self.observation = VNRecognizedTextObservation.init()
+        self.color = CGColor.black
+        self.charArray = []
+        self.charRects = []
+        self.charSizeList = []
+        self.charFontWeightList = []
+        self.confidence = 0
+        self.isForbidden = false
+        self.charColorModeList = []
         self.trackingPS = 0
-        isPredictedList = []
-        FontName = ""
-        alignment = 0
+        self.isPredictedList = []
+        self.FontName = ""
+        self.alignment = 0
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
-        colorMode = CalcColorMode()
+        self.colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
 
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
         id = UUID()
-        colorMode = -1
-        self.stringRect = stringRect
         self.content = content
+        self.tracking = 10
         self.fontSize = 0.0
+        self.colorMode = -1
         self.fontWeight = "Regular"
-        //self.position = [0,0]
+        self.charImageList = charImageList
+        self.stringRect = stringRect
         self.observation = observation
+        self.color = CGColor.black
         self.charArray = charArray
         self.charRects = charRacts
         self.charSizeList = []
-        self.charImageList = charImageList
         self.charFontWeightList = []
-        self.tracking = 10
-        self.color = CGColor.black
         self.confidence = confidence
-        self.isPredictedList = []
+        self.isForbidden = false
+        self.charColorModeList = []
         self.trackingPS = 0
-        isForbidden = false
-        charColorModeList = []
-        FontName = ""
-        alignment = 0
-        self.fontWeight = PredictFontWeight()
-        let sizeFunc = CalcBestSizeForString()
-        self.fontSize = CGFloat(sizeFunc.0)
-        self.tracking = FetchTrackingFromDB(self.fontSize).0
-        self.trackingPS = FetchTrackingFromDB(self.fontSize).1
+        self.isPredictedList = []
+        self.FontName = ""
+        self.alignment = 0
         self.FontName = CalcFontFullName()
-        self.charSizeList = sizeFunc.1
-        self.isPredictedList = sizeFunc.2
-        colorMode = CalcColorMode()
+        self.fontWeight = PredictFontWeight()
+        self.colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+//        let sizeFunc = CalcBestSizeForString()
+//        self.fontSize = CGFloat(sizeFunc.0)
+//        self.tracking = FetchTrackingFromDB(self.fontSize).0
+//        self.trackingPS = FetchTrackingFromDB(self.fontSize).1
+//        self.charSizeList = sizeFunc.1
+//        self.isPredictedList = sizeFunc.2
     }
     
     
@@ -204,22 +207,22 @@ struct StringObject : Identifiable, Equatable, Hashable{
         //var colorList: [NSColor] = []
         
         var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
-        var maxC: CGColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-        var minC: CGColor =  CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+//        var maxC: CGColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+//        var minC: CGColor =  CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
         var nsColor = NSColor.init()
         if charImageList.count > 0{
             if colorMode == 1{
-                var strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                let strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
 //                if content == "< Settings" {
 //                    strImg?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/colortest.bmp"))
 //                }
                 //strImg = NoiseReduction(strImg!)
-                print("Calc for: \(content), \(nsColor)")
+                //print("Calc for: \(content), \(nsColor)")
                  nsColor = Minimun(strImg!)
-                let fixNSColor = imageProcessViewModel.FindNearestStandardHSV(Minimun(strImg!))
+                //let fixNSColor = imageProcessViewModel.FindNearestStandardHSV(Minimun(strImg!))
 
                 result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
-                let fixed  = imageProcessViewModel.FindNearestStandardRGB(result)
+                //let fixed  = imageProcessViewModel.FindNearestStandardRGB(result)
 
 //                print("original: \(Int(nsColor.redComponent * 255)),\(Int(nsColor.greenComponent * 255)),\(Int(nsColor.blueComponent * 255))")
 //                print("Fixed: \(fixed)")
@@ -227,17 +230,17 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 
             }
             if colorMode == 2{
-                var strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                let strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
                 //strImg = NoiseReduction(strImg!)
                  nsColor = Maximum(strImg!)
-                let fixNSColor = imageProcessViewModel.FindNearestStandardHSV(Maximum(strImg!))
+                //let fixNSColor = imageProcessViewModel.FindNearestStandardHSV(Maximum(strImg!))
                 result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
                 //let fixed  = imageProcessViewModel.FindNearestStandardRGB(result)
                 //result =  CGColor.init(red: fixed[0]/255, green: fixed[1]/255, blue: fixed[2]/255, alpha: 1)
             }
         }
         //SnapToNearestStandardColor(result)
-        print("content: \(content), ns: \(nsColor), re: \(result)")
+        //print("content: \(content), ns: \(nsColor), re: \(result)")
         return result
     }
     
@@ -258,7 +261,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     
      func CalcFontFullName() -> String{
         var family = ""
-        var style = ""
+        //var style = ""
 //        if (fontWeight == .regular){
 //            style = "Regular"
 //        }
@@ -295,7 +298,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     
     func CalcFontPostScriptName() -> String{
         var family = ""
-        var style = ""
+        //var style = ""
 //        if (fontWeight == .regular){
 //            style = "Regular"
 //        }
@@ -356,7 +359,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     
     func CalcSizeForSingleChar(_ char: String, _ width: Int16, _ height: Int16, _ fontWeight: String) -> (Int16, Int){
         var isPredicted = 0
-        var result: Int16 = 0
+        //var result: Int16 = 0
         
         var keyvalues: [String: AnyObject] = [:]
         keyvalues["char"] = char as AnyObject
@@ -385,15 +388,15 @@ struct StringObject : Identifiable, Equatable, Hashable{
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
                 //font.weight to fontWeight string, for searching
-                var _fontWeight = ""
+                //var _fontWeight = ""
 //                if fontWeight == .regular {
 //                    _fontWeight = "regular"
 //                }
 //                else if fontWeight == .semibold{
 //                    _fontWeight = "semibold"
 //                }
-                var singleChar = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), fontWeight)
-                var tempweight = singleChar.0
+                let singleChar = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), fontWeight)
+                let tempweight = singleChar.0
                 if (tempweight != 0){
                     weightArray.append((tempweight))
                 }
@@ -411,7 +414,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
             }
         }
         //return FindBestWeightFromWeightArray(FromArray: weightArray)
-        var size = FindBestSizeFromArray(FromArray: weightArray)
+        let size = FindBestSizeFromArray(FromArray: weightArray)
         //        let nearResult = CharDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize))
         //        let nearResult1 = OSStandardManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: (floatSize)) //Fetch nearest item from standard table
         //        return  (nearResult1.fontSize == 0 ? nearResult.fontSize : nearResult1.fontSize, weightArrayForSave, predictList)
@@ -431,7 +434,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
             }
         }
         let sortedValues = sizeDict.values.sorted(by: >)
-        let filtered = sizeDict.filter { $0.1 ==  sortedValues[0] }
+        //let filtered = sizeDict.filter { $0.1 ==  sortedValues[0] }
         
         var res: Int16 = 0
         for item in sizeDict.keys{

@@ -63,7 +63,7 @@ extension String{
         }
         
         //大写转小写
-        var chStr = String(self)  // 将字符转为字符串
+        let chStr = String(self)  // 将字符转为字符串
         var num:UInt32 = 0    // 用于接收字符整数值的变量
         for item in chStr.unicodeScalars {
             num = item.value   // 循环只执行一次，获取字符的整数值
@@ -74,7 +74,7 @@ extension String{
         // 如果是大写字母，转换为小写
         if (num >= 65 && num <= 90) {
             num += 32
-            var newChNum = String(UnicodeScalar(num)!)
+            let newChNum = String(UnicodeScalar(num)!)
             return newChNum
         }
         
@@ -84,7 +84,7 @@ extension String{
     }
     
     func isEnglishLowerCase() ->Bool{
-        var chStr = String(self)  // 将字符转为字符串
+        let chStr = String(self)  // 将字符转为字符串
         var num:UInt32 = 0    // 用于接收字符整数值的变量
         for item in chStr.unicodeScalars {
             num = item.value   // 循环只执行一次，获取字符的整数值

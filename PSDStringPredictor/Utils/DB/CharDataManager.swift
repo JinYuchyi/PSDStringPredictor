@@ -54,7 +54,7 @@ class CharDataManager{
         
         context.perform {
             let insertRequest = NSBatchInsertRequest(entityName: "CharacterData", objects: objects)
-            let insertResult = try? context.execute(insertRequest) as! NSBatchInsertResult
+            let insertResult = try? context.execute(insertRequest) as? NSBatchInsertResult
             let success = insertResult?.result as! Bool
             print("Batch insert \(success)")
         }

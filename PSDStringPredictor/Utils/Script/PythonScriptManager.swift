@@ -11,7 +11,8 @@ import PythonKit
 
 class PythonScriptManager{
     static func RunScript(str: String){
+        
         let os = try Python.import("os")
-        let systemOut = os.system(str)
+        _ = os.system(str)
     }
 }

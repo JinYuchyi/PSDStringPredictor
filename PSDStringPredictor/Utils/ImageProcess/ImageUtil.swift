@@ -31,15 +31,15 @@ class ImageUtil{
         //var mystr = str
         let myfont = CTFontCreateWithName("SFPro-Medium" as CFString, size, nil)
 
-        var attrString = NSAttributedString(string: str, attributes: [NSAttributedString.Key.foregroundColor: color, NSAttributedString.Key.font: myfont, NSAttributedString.Key.expansion: 0 ])
+        let attrString = NSAttributedString(string: str, attributes: [NSAttributedString.Key.foregroundColor: color, NSAttributedString.Key.font: myfont, NSAttributedString.Key.expansion: 0 ])
 
         let filter = attributedTextImageGenerator(inputText: attrString, inputScaleFactor: NSNumber.init(value: 1))
         let newimg = filter!.outputImage!
         
-        let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext.png")
+        //let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext.png")
         //newimg.ToPNG(url: url)
 
-        let stringsObjectPredicted = ocr.CreateAllStringObjects(FromCIImage: newimg)
+        //let stringsObjectPredicted = ocr.CreateAllStringObjects(FromCIImage: newimg)
 
         //let clampedImg = newimg.cropped(to: stringsObjectPredicted[0].stringRect)
         //print(clampedImg.extent.size)
@@ -66,7 +66,7 @@ class ImageUtil{
         let rect = CGRect(x: 0, y: 0, width: w, height: h)
         mask = mask.cropped(to: rect)
 
-        var img = ImageOntop(OverlayImage: mask, BGImage: &img, OffsetX: x, OffsetY: y)
+        let img = ImageOntop(OverlayImage: mask, BGImage: &img, OffsetX: x, OffsetY: y)
         
         return img
 
@@ -79,7 +79,7 @@ class ImageUtil{
             var mask = CIImage.init(color: color)
             //let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
             mask = mask.cropped(to: rects[i])
-            ImageOntop(OverlayImage: mask, BGImage: &img )
+            _ = ImageOntop(OverlayImage: mask, BGImage: &img )
         }
         
     }

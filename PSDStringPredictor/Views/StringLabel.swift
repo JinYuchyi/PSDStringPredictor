@@ -51,7 +51,7 @@ struct StringLabel: View {
     func InfoBtnTapped(){
         //print("stringLabel.id: \(stringLabel.content)")
         stringObjectVM.UpdateSelectedIDList(idList: [id])
-        imageProcessViewModel.FindNearestStandardRGB(stringObjectVM.FindStringObjectByID(id: id)?.color ?? CGColor.white)
+        //imageProcessViewModel.FindNearestStandardRGB(stringObjectVM.FindStringObjectByID(id: id)?.color ?? CGColor.white)
     }
     
     func FixedBtnTapped(){

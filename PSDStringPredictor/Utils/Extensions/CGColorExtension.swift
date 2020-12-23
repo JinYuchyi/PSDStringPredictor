@@ -56,7 +56,7 @@ extension CGColor: Comparable{
     }
     
     func ToString()->String{
-        return "\(self.colorSpace?.name),\(self.components![0])-\(self.components![1])-\(self.components![2])"
+        return "\(String(describing: self.colorSpace?.name)),\(self.components![0])-\(self.components![1])-\(self.components![2])"
 //        let str = String(self.components[0]!) + "," + String(self.components[1]!) + "," + String(self.components[2]!)
 //        return str
     }

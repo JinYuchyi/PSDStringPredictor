@@ -81,7 +81,7 @@ struct SettingsView: View {
     
     func CreateItem() -> AppSettingsItem{
         //print("PSPath: \(PSPath)")
-        var item = AppSettingsItem(Debug: debugMode == 1 ? true : false,
+        let item = AppSettingsItem(Debug: debugMode == 1 ? true : false,
                                    DPICheck: DPICheck == 1 ? true : false,
                                    PSPath: PSPath
                                    )

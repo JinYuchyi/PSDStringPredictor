@@ -60,7 +60,7 @@ class CharBoundsDataManager{
         
         context.perform {
             let insertRequest = NSBatchInsertRequest(entityName: "CharBounds", objects: objects)
-            let insertResult = try? context.execute(insertRequest) as! NSBatchInsertResult
+            let insertResult = try? context.execute(insertRequest) as? NSBatchInsertResult
             let success = insertResult?.result as! Bool
             print("Batch insert \(success)")
         }

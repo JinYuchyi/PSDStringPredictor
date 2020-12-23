@@ -19,8 +19,8 @@ class InteractiveViewModel: ObservableObject{
         }
         var _x = 0
         var _y = 0
-        var _w = Int(abs(p.x - selectStartLocation.x))
-        var _h = Int(abs(p.x - selectStartLocation.x))
+        let _w = Int(abs(p.x - selectStartLocation.x))
+        let _h = Int(abs(p.x - selectStartLocation.x))
         if p.x < selectStartLocation.x {
             _x = Int(p.x)
         }else{
