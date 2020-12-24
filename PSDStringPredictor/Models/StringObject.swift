@@ -112,21 +112,24 @@ struct StringObject : Identifiable, Equatable, Hashable{
     }
     
     init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
+
         id = UUID()
         self.content = content
         self.tracking = 10
         self.fontSize = 0.0
         self.colorMode = -1
         self.fontWeight = "Regular"
-        self.charImageList = charImageList
         self.stringRect = stringRect
         self.observation = observation
         self.color = CGColor.black
         self.charArray = charArray
+        //TODO: Make app crash
         self.charRects = charRacts
+        self.charImageList = []
+        
         self.charSizeList = []
         self.charFontWeightList = []
-        self.confidence = confidence
+        self.confidence = 0
         self.isForbidden = false
         self.charColorModeList = []
         self.trackingPS = 0
@@ -137,6 +140,31 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+//        id = UUID()
+//        self.content = content
+//        self.tracking = 10
+//        self.fontSize = 0.0
+//        self.colorMode = -1
+//        self.fontWeight = "Regular"
+//        self.charImageList = charImageList
+//        self.stringRect = stringRect
+//        self.observation = observation
+//        self.color = CGColor.black
+//        self.charArray = charArray
+//        self.charRects = charRacts
+//        self.charSizeList = []
+//        self.charFontWeightList = []
+//        self.confidence = confidence
+//        self.isForbidden = false
+//        self.charColorModeList = []
+//        self.trackingPS = 0
+//        self.isPredictedList = []
+//        self.FontName = ""
+//        self.alignment = 0
+//        self.FontName = CalcFontFullName()
+//        self.fontWeight = PredictFontWeight()
+//        self.colorMode = CalcColorMode()
+//        self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
 //        let sizeFunc = CalcBestSizeForString()
 //        self.fontSize = CGFloat(sizeFunc.0)
 //        self.tracking = FetchTrackingFromDB(self.fontSize).0
@@ -203,7 +231,6 @@ struct StringObject : Identifiable, Equatable, Hashable{
 //    }
     
     func CalcColor() -> CGColor? {
-        //TODO: 0/43/88 will be calc as 000
         //var colorList: [NSColor] = []
         
         var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
@@ -434,7 +461,6 @@ struct StringObject : Identifiable, Equatable, Hashable{
             }
         }
         let sortedValues = sizeDict.values.sorted(by: >)
-        //let filtered = sizeDict.filter { $0.1 ==  sortedValues[0] }
         
         var res: Int16 = 0
         for item in sizeDict.keys{

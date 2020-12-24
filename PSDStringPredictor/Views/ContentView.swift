@@ -94,9 +94,7 @@ struct ContentView: View {
     
     fileprivate func RightViewGroup() -> some View {
         return VStack{
-            
-            
-            
+
             //Divider()
             
             ImageProcessView(imageViewModel: imageViewModel)

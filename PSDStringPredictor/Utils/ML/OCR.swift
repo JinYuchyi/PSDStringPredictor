@@ -129,7 +129,12 @@ class OCR: ObservableObject{
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             //TODO: This code make the app crash
-            let newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
+            //var charRects1: [CGRect] = []
+//            for _ in chars {
+//                charRects1.append(CGRect.init(x: 1, y: 1, width: 1, height: 1))
+//            }
+            let charRects1: [CGRect] = []
+            let newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects1, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             //let newStrObj = StringObject()
             strobjs.append(newStrObj)
         }

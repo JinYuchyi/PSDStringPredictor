@@ -28,7 +28,7 @@ extension NSImage {
     func pngWrite(atUrl url: URL) {
         guard
             let cgImage = self.cgImage(forProposedRect: nil, context: nil, hints: nil)
-            else { return } // TODO: handle error
+            else { return } 
         let newRep = NSBitmapImageRep(cgImage: cgImage)
         //newRep.size = self.size // if you want the same size
         guard

@@ -113,7 +113,6 @@ class StringObjectViewModel: ObservableObject{
             allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
             
             DispatchQueue.main.async{
-                //TODO: Recalc the masked string not work.
                 //Refrash the stringobject list
                 for obj in self.stringObjectListData {
                     if self.stringObjectFixedDict[obj.id] != true {
@@ -131,7 +130,6 @@ class StringObjectViewModel: ObservableObject{
                         self.stringObjectListData.append(obj)
                     }
                 }
-                //Todo: May cause previous obj lost
                 //self.stringObjectListData = allStrObjs
                 self.stringObjectIDList = self.GetAllID()
             }
@@ -321,7 +319,6 @@ class StringObjectViewModel: ObservableObject{
             selectedCharImageListObjectList = []
             self.selectedIDList = idList
             
-            // TODO: Update selectedCharImage
 //            for (index, img) in (selectedStringObjectList.last!.charImageList).enumerated(){
 //                let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObjectList.last!.charArray[index]), weight: selectedStringObjectList.last!.charFontWeightList[index], size: Int(selectedStringObjectList.last!.charSizeList[index]))
 //                selectedCharImageListObjectList.append( temp )

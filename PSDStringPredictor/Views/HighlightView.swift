@@ -22,7 +22,6 @@ struct HighlightView: View {
                     .foregroundColor(Color.green.opacity(0.3))
                     .shadow(color: .green, radius: 5, x: 0, y: 0)
                     .gesture(DragGesture()
-                                //TODO: May not targeted on the right object
                                 .onChanged { gesture in
                                     if abs(gesture.translation.width / gesture.translation.height) > 1 {
                                         stringObjectVM.DragOffsetDict[theid] = CGSize(width: gesture.translation.width / 10, height: 0)
