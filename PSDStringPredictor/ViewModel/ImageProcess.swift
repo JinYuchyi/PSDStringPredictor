@@ -359,7 +359,7 @@ func Maximum(_ image: CIImage) -> NSColor{
     
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
-    filter?.setValue(image.extent, forKey: "inputExtent")
+    filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
     let filteredImage = filter?.outputImage
     let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
     
@@ -368,16 +368,21 @@ func Maximum(_ image: CIImage) -> NSColor{
 
 func Minimun(_ image: CIImage) -> NSColor{
     let pixelProcess = PixelProcess()
-    
-    let filter = CIFilter(name: "CIAreaMinimum")
-    filter?.setValue(image, forKey: "inputImage")
-    filter?.setValue(image.extent, forKey: "inputExtent")
-    let filteredImage = filter?.outputImage
-    let img = filteredImage!.ToCGImage()
-    //let size = filteredImage!.extent
-    let c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
-    let str = String(c.redComponent.description) + "|" + String(c.greenComponent.description) + "|" + String(c.blueComponent.description)
-    filteredImage?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/1111/" + str + ".bmp"))
+    var c: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+    if image.extent.width > 0 {
+        guard let filter = CIFilter(name: "CIAreaMinimum") else {
+            return c
+        }
+        filter.setValue(image, forKey: kCIInputImageKey)
+        filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
+        //TODO: Crash
+        
+        let filteredImage = filter.outputImage
+        let img = filteredImage!.ToCGImage()
+        c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
+    }
+    //let str = String(c.redComponent.description) + "|" + String(c.greenComponent.description) + "|" + String(c.blueComponent.description)
+    //filteredImage?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/1111/" + str + ".bmp"))
     
     return c
 }

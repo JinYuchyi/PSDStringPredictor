@@ -257,12 +257,15 @@ class PixelProcess{
     func colorAt(x: Int, y: Int, img: CGImage)->NSColor {
         
         let context = self.createBitmapContext(img: img)
+        var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+
+//        assert(0<=x && x < context.width)
+//        assert(0<=y && y < context.height)
+        if (x < 0 || x >= context.width || y < 0 || y >= context.height){
+            return color
+        }
         
-        assert(0<=x && x < context.width)
-        assert(0<=y && y < context.height)
-        var color: NSColor = NSColor.init()
-        
-        guard let pixelBuffer = context.data else { return .white }
+        guard let pixelBuffer = context.data else { return color }
         let data = pixelBuffer.bindMemory(to: UInt8.self, capacity: context.width * context.height)
         
         let offset = 4 * (y * context.width + x)

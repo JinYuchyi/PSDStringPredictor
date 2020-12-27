@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreImage
 extension CGRect: Hashable{
 
     public func hash(into hasher: inout Hasher) {
@@ -43,5 +44,9 @@ extension CGRect: Hashable{
         }
         
         return CGRect.init(x: x, y: y, width: self.width, height: self.height)
+    }
+    
+    func ToCIVector() -> CIVector{
+        return CIVector.init(x: self.minX, y: self.minY, z: self.width, w: self.height)
     }
 }
