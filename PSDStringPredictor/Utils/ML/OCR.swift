@@ -135,7 +135,7 @@ class OCR: ObservableObject{
             //let charRects1: [CGRect] = []
             let newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             //let newStrObj = StringObject()
-            strobjs.append(newStrObj)
+            strobjs.append(newStrObj) 
             
         }
         

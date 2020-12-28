@@ -37,7 +37,7 @@ struct ControlPanel: View {
             }
             Divider()
             
-            Text("Caculate String Layers")
+            Text("Calculate String Layers")
                 .foregroundColor(.gray)
                 .padding(.top)
                 .frame(width: 300, alignment: .leading)

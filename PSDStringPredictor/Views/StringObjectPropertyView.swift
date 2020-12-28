@@ -169,7 +169,7 @@ struct StringObjectPropertyView: View {
                     
                     VStack{
                         if GetLastSelectObject().fontSize != 0 {
-                            Text("\(GetLastSelectObject().FontName)" )
+                            Text("\(stringObjectVM.StringObjectNameDict[GetLastSelectObject().id]!)" )
                                 .frame(width:200, alignment: .topLeading)
                                 .onTapGesture {
                                     //if stringObjectVM.selectedStringObject.fontSize != 0 {
