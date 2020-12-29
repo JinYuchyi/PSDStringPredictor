@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //let data = DataStore()
         //let context = (NSApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let contentView = ContentView().environment(\.managedObjectContext, persistentContainer.viewContext)
+        
         //.environmentObject(data)
         
         // Create the window and set the content view. 

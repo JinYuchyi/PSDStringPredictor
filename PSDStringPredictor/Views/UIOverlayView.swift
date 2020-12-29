@@ -12,7 +12,7 @@ struct UIOverlayView: View {
     @Binding var showPatchLayer: Bool
     var body: some View {
         Toggle(isOn: $showPatchLayer) {
-            Text("Show Patch layer")
+            Text("Show Block layers")
                 .fixedSize()
                 .shadow(radius: 1)
         }

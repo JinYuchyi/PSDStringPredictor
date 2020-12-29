@@ -114,6 +114,7 @@
 		3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEBA6C6251CA87C002D8EC1 /* StringLabelObject.swift */; };
 		3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9122507200400AEF1C8 /* ControlPanel.swift */; };
 		3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91D25072F8300AEF1C8 /* OCR.swift */; };
+		3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FF51B5A259ADF2800D11575 /* charBounds.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -227,6 +228,7 @@
 		3FEBA6C6251CA87C002D8EC1 /* StringLabelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabelObject.swift; sourceTree = "<group>"; };
 		3FEFE9122507200400AEF1C8 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
 		3FEFE91D25072F8300AEF1C8 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
+		3FF51B5A259ADF2800D11575 /* charBounds.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = charBounds.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +268,7 @@
 		3F4D13E725021AFB008F846B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3FF51B5A259ADF2800D11575 /* charBounds.csv */,
 				3F44C63C2570D60400E438CA /* CharColorMode.swift */,
 				3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */,
 				3FD24809253EDED0007EBE36 /* FontWeightClassifier.swift */,
@@ -591,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FA5047D2574CADA00F4A77A /* fontSize.csv in Resources */,
+				3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */,
 				3F9C3956256F496400F686A7 /* Main.storyboard in Resources */,
 				3FDBC4B32583121800E9C2DC /* AppSettings.plist in Resources */,
 				3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */,
