@@ -16,7 +16,6 @@ struct LabelsOnImage: View {
     var body: some View {
         ZStack{
             
-            //TODO: Test text
             ForEach(stringObjectVM.FetchStringObjectOutputIDList(), id:\.self){ myid in
                 StringLabel(id:myid, charFrameList: charFrameList )
                     .gesture(TapGesture()

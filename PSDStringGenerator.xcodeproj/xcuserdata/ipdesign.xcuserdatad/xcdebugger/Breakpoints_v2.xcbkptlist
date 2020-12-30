@@ -78,10 +78,10 @@
             filePath = "PSDStringPredictor/Models/StringObject.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
-            landmarkName = "PredictFontWeight()"
-            landmarkType = "7">
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "StringObject"
+            landmarkType = "14">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -142,8 +142,8 @@
             filePath = "PSDStringPredictor/ViewModel/StringObjectViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450"
+            startingLineNumber = "464"
+            endingLineNumber = "464"
             landmarkName = "SetSelectionToFixed()"
             landmarkType = "7">
          </BreakpointContent>

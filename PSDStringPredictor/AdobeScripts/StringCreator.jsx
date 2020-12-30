@@ -1,17 +1,17 @@
 ////Variables
 var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSampleMini copy.png"
-var contentList = ["9:41", "See All"]
-var colorList = [[0, 0, 0], [0, 122, 247]]
-var fontSizeList = [44.0, 47.0]
-var fontNameList= ["SFProText-Semibold", "SFProText-Regular"]
-var positionList = [[96, 85], [911, 689]]
-var trackingList = [-5.227273, -6.5957446]
-var offsetList = [[2, 6], [2, 6]]
-var alignmentList = [0, 0]
-var rectList = [[96.0, 746.0, 86.0, 33.0], [911.0, 142.0, 149.0, 39.0]]
-var names = ["0.941", "1.SeeAll"]
-var bgColorList = [[250.0, 251.0, 252.0], [242.0, 242.0, 247.0]]
-var isParagraphList = [false, false]
+var contentList = ["9:41", "See All", "/olu Photos"]
+var colorList = [[0, 0, 0], [0, 122, 247], [255, 255, 255]]
+var fontSizeList = [44.0, 50.0, 67.0]
+var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProDisplay-Semibold"]
+var positionList = [[96, 85], [911, 689], [382, 395]]
+var trackingList = [-5.227273, -26.52, -3.8805969]
+var offsetList = [[2, 6], [2, 7], [0, 0]]
+var alignmentList = [0, 0, 0]
+var rectList = [[96.0, 746.0, 86.0, 33.0], [911.0, 142.0, 149.0, 39.0], [382.0, 436.0, 329.0, 50.0]]
+var names = ["0.941", "1.SeeAll", "2.oluPhotos"]
+var bgColorList = [[250.0, 251.0, 252.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0]]
+var isParagraphList = [false, false, false]
 var widthExtend = 5
 // ========================= Load from Main.js ==============================
 

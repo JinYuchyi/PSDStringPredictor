@@ -39,6 +39,26 @@ struct StringObjectPropertyView: View {
         return targetObj.fontSize - offset
     }
     
+    func ToggleColorMode(){
+        print("Tapped")
+        var obj = GetLastSelectObject()
+        var preId = GetLastSelectObject().id
+        if obj.colorMode == 1 {
+            obj.colorMode = 2
+        }else if obj.colorMode == 2{
+            obj.colorMode = 1
+        }
+        obj.color = obj.CalcColor()
+        stringObjectVM.SwapLastSelectionWithObject(obj: obj)
+        
+//            if GetLastSelectObject().colorMode == 1{
+//                GetLastSelectObject().colorMode = 2
+//            }else if GetLastSelectObject().colorMode == 2{
+//                GetLastSelectObject().ToggleColorMode()
+//            }
+       
+    }
+    
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
 //            Text("Components")
@@ -137,6 +157,7 @@ struct StringObjectPropertyView: View {
                     }else if GetLastSelectObject().colorMode == 2 {
                         Text("􀆺")
                             .frame(width:200, alignment: .topLeading)
+                        
                     }else{}
                     
                 }
@@ -215,6 +236,8 @@ struct StringObjectPropertyView: View {
                     //                        .frame(width:80, alignment: .topLeading)
                     //                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
                     //                        .frame(width:200, alignment: .topLeading)
+                }.onTapGesture {
+                    ToggleColorMode()
                 }
                 
                 

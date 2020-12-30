@@ -173,7 +173,13 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = sizeFunc.2
     }
     
-    
+    mutating func ToggleColorMode(){
+        if colorMode == 1 {
+            colorMode = 2
+        }else if colorMode == 2{
+            colorMode = 1
+        }
+    }
     
     mutating func CalcColorMode() -> Int{
         var result = -1
@@ -230,7 +236,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
 //        return result
 //    }
     
-    func CalcColor() -> CGColor? {
+    func CalcColor() -> CGColor {
         //var colorList: [NSColor] = []
         
         var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)

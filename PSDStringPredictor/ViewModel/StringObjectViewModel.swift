@@ -26,11 +26,11 @@ class StringObjectViewModel: ObservableObject{
     
     @Published var stringObjectListData: [StringObject] = []
     
-    @Published var stringObjectIDList: [UUID] = []
+    //@Published var stringObjectIDList: [UUID] = []
     @Published var charFrameListData: [CharFrame] = []
 
     @Published var selectedIDList: [UUID] = []
-    @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
+    //@Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
     @Published var stringObjectStatusDict: [UUID: Int] = [:] //0 normal, 1 fixed, 2 ignored
 //    @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
 //    @Published var stringObjectFixedDict: [UUID: Bool] = [:]
@@ -103,6 +103,20 @@ class StringObjectViewModel: ObservableObject{
         return []
     }
     
+    func SwapLastSelectionWithObject(obj: StringObject){
+        
+        let id = selectedIDList.last
+        //Add to original list
+        
+        //selectedIDList.append(obj.id)
+        //Remove from original list
+        if id != nil {
+            stringObjectListData.removeAll(where: {$0.id == id})
+            //selectedIDList.removeAll(where: {$0 == id})
+        }
+        stringObjectListData.append(obj)
+    }
+    
     func FetchStringObjectsInfo()  {
         let group = DispatchGroup()
         
@@ -126,7 +140,7 @@ class StringObjectViewModel: ObservableObject{
                     }
                 }
                 //self.stringObjectListData = allStrObjs
-                self.stringObjectIDList = self.GetAllID()
+                //self.stringObjectIDList = self.GetAllID()
             }
         }
 
@@ -156,7 +170,7 @@ class StringObjectViewModel: ObservableObject{
         charFrameListData = []
         //charFrameListRects = []
         selectedIDList = []
-        selectedCharImageListObjectList = [CharImageThumbnailObject]()
+        //selectedCharImageListObjectList = [CharImageThumbnailObject]()
         stringObjectStatusDict = [:]
         //stringObjectFixedDict = [:]
         updateStringObjectList = []
@@ -308,7 +322,7 @@ class StringObjectViewModel: ObservableObject{
         if selectedIDList.count == 0 {
             self.selectedIDList = []
         }else{
-            selectedCharImageListObjectList = []
+            //selectedCharImageListObjectList = []
             self.selectedIDList = idList
             
 //            for (index, img) in (selectedStringObjectList.last!.charImageList).enumerated(){

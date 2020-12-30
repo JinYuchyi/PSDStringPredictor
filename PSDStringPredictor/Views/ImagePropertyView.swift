@@ -26,9 +26,8 @@ struct ImagePropertyView: View {
                     }else if imagePropertyVM.colorModeString == "Light Mode" {
                         Text("􀆮")
                             .frame(width: 200, alignment: .topLeading)
+                        
                     }else{}
-                        
-                        
                 }
                 HStack{
                     Text("DPI")
