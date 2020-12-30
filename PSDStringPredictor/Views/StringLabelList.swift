@@ -25,12 +25,12 @@ struct LabelsOnImage: View {
                 )
             }
             
-            ForEach(stringObjectVM.ignoreStringObjectList, id:\.self){ _id in
-                StringLabel(id: _id, charFrameList: charFrameList, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
+            ForEach(stringObjectVM.GetIngoreObjectList(), id:\.id){ obj in
+                StringLabel(id: obj.id, charFrameList: charFrameList, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
             }
             
-            ForEach(stringObjectVM.fixedStringObjectList, id:\.self){ _id in
-                StringLabel(id: _id, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
+            ForEach(stringObjectVM.GetFixedObjectList(), id:\.id){ obj in
+                StringLabel(id: obj.id, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
             }
             
 

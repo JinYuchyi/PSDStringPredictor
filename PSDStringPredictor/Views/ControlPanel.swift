@@ -33,8 +33,22 @@ struct ControlPanel: View {
             
             Button(action: {stringObjectVM.CombineStrings()}){
                 Text("Combine To Paragraph")
-                    .frame(minWidth: 200,  maxWidth: .infinity)
+                    .frame(minWidth: 270,  maxWidth: .infinity)
             }
+            //HStack{
+
+                Button(action: {stringObjectVM.SetSelectionFix()}){
+                    Text("Fix")
+                        .frame(minWidth: 270,  maxWidth: .infinity)
+                    
+                }
+                
+                Button(action: {stringObjectVM.SetSelectionIgnore()}){
+                    Text("Block")
+                        .frame(minWidth: 270,  maxWidth: .infinity)
+                }
+            //}
+
             Divider()
             
             Text("Calculate String Layers")

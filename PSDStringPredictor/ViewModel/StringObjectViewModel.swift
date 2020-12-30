@@ -28,16 +28,14 @@ class StringObjectViewModel: ObservableObject{
     
     @Published var stringObjectIDList: [UUID] = []
     @Published var charFrameListData: [CharFrame] = []
-    //@Published var charFrameListRects: [CGRect] = []
-    //@Published var StringLabelListData: [StringLabelObject] = []
+
     @Published var selectedIDList: [UUID] = []
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
-    //@Published var paragraphTextObjectList = [StringObject]()
     @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
     @Published var stringObjectFixedDict: [UUID: Bool] = [:]
     @Published var updateStringObjectList: [UUID] = []
-    @Published var ignoreStringObjectList: [UUID] = []
-    @Published var fixedStringObjectList: [UUID] = []
+//    @Published var ignoreStringObjectList: [UUID] = []
+//    @Published var fixedStringObjectList: [UUID] = []
     @Published var StringObjectNameDict: [UUID:String] = [:]
     
     @Published var DragOffsetDict: [UUID: CGSize] = [:]
@@ -145,8 +143,10 @@ class StringObjectViewModel: ObservableObject{
     
     func FetchStringObjectOutputList()-> [StringObject]{
         var finalList: [StringObject] = stringObjectListData
-        for id in ignoreStringObjectList {
-            finalList.removeAll(where: {$0.id == id})
+        for (k,v) in stringObjectIgnoreDict {
+            if v == true{
+                finalList.removeAll(where: {$0.id == k})
+            }
         }
         return finalList
     }
@@ -160,8 +160,8 @@ class StringObjectViewModel: ObservableObject{
         stringObjectIgnoreDict = [:]
         stringObjectFixedDict = [:]
         updateStringObjectList = []
-        ignoreStringObjectList = []
-        fixedStringObjectList = []
+//        ignoreStringObjectList = []
+//        fixedStringObjectList = []
         stringObjectOutputList = []
         StringObjectNameDict = [:]
         stringOverlay = true
@@ -237,24 +237,23 @@ class StringObjectViewModel: ObservableObject{
         var newList : [StringObject] = []
         var ignoreList: [UUID] = []
         var index = 0
-        fixedStringObjectList.removeAll()
-        ignoreStringObjectList.removeAll()
+//        fixedStringObjectList.removeAll()
+//        ignoreStringObjectList.removeAll()
         newList = objList
         
         for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             if value == true {
                 ignoreList.append(key)
-                fixedStringObjectList.append(key)
+//                fixedStringObjectList.append(key)
             }
         }
         
         for (key, value) in stringObjectIgnoreDict{
             if value == true {
                 ignoreList.append(key)
-                ignoreStringObjectList.append(key)
+//                ignoreStringObjectList.append(key)
             }
         }
-        //print("stringObjectIgnoreDict: \(stringObjectViewModel.stringObjectIgnoreDict.count)")
 
         for obj in objList{
             indicatorTitle = "Processing on fixed and removed list \(index)/\(objList.count)"
@@ -326,7 +325,26 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
+    func GetIngoreObjectList() -> [StringObject]{
+        var result: [StringObject] = []
+        for (k, v) in stringObjectIgnoreDict {
+            if (v == true && FindStringObjectByID(id: k) != nil) {
+                result.append(FindStringObjectByID(id: k)!)
+            }
+        }
+        return result
+    }
     
+    func GetFixedObjectList() -> [StringObject]{
+        var result: [StringObject] = []
+        for (k, v) in stringObjectFixedDict {
+            if (v == true && FindStringObjectByID(id: k) != nil) {
+                result.append(FindStringObjectByID(id: k)!)
+            }
+        }
+        return result
+
+    }
     
     func FindStringObjectByID(id: UUID) -> StringObject?{
         return stringObjectListData.FindByID(id)
@@ -351,8 +369,6 @@ class StringObjectViewModel: ObservableObject{
         var positionList = [[Int]]()
         var trackingList = [Float]()
         var offsetList = [[Int16]]()
-//        var trackingOffsetList = [Float]()
-//        var sizeOffsetList = [Float]()
         var alignmentList = [Int]()
         var rectList = [[Float]]()
         var bgClolorList = [[Float]]()
@@ -424,6 +440,42 @@ class StringObjectViewModel: ObservableObject{
             let cmd = "open " + GetDocumentsPath() + "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '\(settingViewModel.PSPath)'"
             PythonScriptManager.RunScript(str: cmd)
         }
+    }
+    
+    func SetSelectionFix(){
+        var resDict = [UUID:Bool]()
+        for _id in selectedIDList {
+            //Check if it is in ignore list
+            if stringObjectIgnoreDict[_id] != nil && stringObjectIgnoreDict[_id] == true {
+                //skip next step, go to next obj id
+                continue
+            }
+            //Toggle the t/f status in fix list
+            if stringObjectFixedDict[_id] != nil && stringObjectFixedDict[_id] == true {
+                resDict[_id] = false
+            }else {
+                resDict[_id] = true
+            }
+        }
+        stringObjectFixedDict = resDict
+    }
+    
+    func SetSelectionIgnore(){
+        var resDict = [UUID:Bool]()
+        for _id in selectedIDList {
+            //Check if it is in ignore list
+            if stringObjectFixedDict[_id] != nil && stringObjectFixedDict[_id] == true {
+                //skip next step, go to next obj id
+                continue
+            }
+            //Toggle the t/f status in fix list
+            if stringObjectIgnoreDict[_id] != nil && stringObjectIgnoreDict[_id] == true {
+                resDict[_id] = false
+            }else {
+                resDict[_id] = true
+            }
+        }
+        stringObjectIgnoreDict = resDict
     }
     
     func CombineStrings(){

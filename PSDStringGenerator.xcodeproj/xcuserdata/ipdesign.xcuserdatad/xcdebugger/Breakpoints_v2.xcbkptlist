@@ -104,7 +104,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "910309C3-BCF9-4262-906F-4E1BB2ACBFD2"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PSDStringPredictor/ViewModel/ImageProcess.swift"
@@ -129,6 +129,22 @@
             startingLineNumber = "75"
             endingLineNumber = "75"
             landmarkName = "CreateJSFile(psdPath:contentList:colorList:fontSizeList:trackingList:fontNameList:positionList:offsetList:alignmentList:rectList:bgColorList:isParagraphList:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6508CC61-554F-430C-919C-A5AC99D2E43A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PSDStringPredictor/ViewModel/StringObjectViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
+            landmarkName = "SetSelectionFix()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -36,6 +36,12 @@ struct StringLabel: View {
         
     }
     
+    func Status() -> Int {
+        //0 normal, 1 fixed, 2 ignored
+        
+        return 0
+    }
+    
     func CalcSizeAfterOffset() -> CGFloat {
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[id] != nil{
@@ -71,13 +77,6 @@ struct StringLabel: View {
         ignored = !ignored
         stringObjectVM.stringObjectIgnoreDict[id] = ignored
         fixedEnabled = !ignored
-//        if ignoredEnabled == true {
-//            if stringObjectVM.ignoreStringObjectList.contains(where: {$0.id == id}){
-//                stringObjectVM.ignoreStringObjectList.append(stringObjectVM.FindStringObjectByID(id: id)!)
-//            }
-//        }else{
-//            stringObjectVM.ignoreStringObjectList.removeAll(where: {$0.id == id})
-//        }
     }
     
     func alignmentTapped() {

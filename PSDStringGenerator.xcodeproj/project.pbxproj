@@ -115,6 +115,7 @@
 		3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9122507200400AEF1C8 /* ControlPanel.swift */; };
 		3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91D25072F8300AEF1C8 /* OCR.swift */; };
 		3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FF51B5A259ADF2800D11575 /* charBounds.csv */; };
+		3FF51B95259C1F5D00D11575 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF51B94259C1F5D00D11575 /* Button.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -229,6 +230,7 @@
 		3FEFE9122507200400AEF1C8 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
 		3FEFE91D25072F8300AEF1C8 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
 		3FF51B5A259ADF2800D11575 /* charBounds.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = charBounds.csv; sourceTree = "<group>"; };
+		3FF51B94259C1F5D00D11575 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,6 +422,7 @@
 				3F44C6472570F42500E438CA /* CGColorExtension.swift */,
 				3F4471BA25735459003AE7B6 /* ColorExtension.swift */,
 				3FDBC4C7258346C400E9C2DC /* NSWindow.swift */,
+				3FF51B94259C1F5D00D11575 /* Button.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				3F853B712585BEAE002507C4 /* HighlightView.swift in Sources */,
 				3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
+				3FF51B95259C1F5D00D11575 /* Button.swift in Sources */,
 				3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */,
 				3FABE4E12580DA4C00287086 /* DBViewModel.swift in Sources */,
 				3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */,
