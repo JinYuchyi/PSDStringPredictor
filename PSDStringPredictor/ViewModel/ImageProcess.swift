@@ -375,7 +375,6 @@ func Minimun(_ image: CIImage) -> NSColor{
         }
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
-        //TODO: Crash
         
         let filteredImage = filter.outputImage
         let img = filteredImage!.ToCGImage()

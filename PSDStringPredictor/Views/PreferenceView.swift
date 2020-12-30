@@ -34,7 +34,7 @@ struct SettingsView: View {
         VStack{
             HStack{
                 
-                Text("Debug Mode \(DPICheck)")
+                Text("Debug Mode")
                     .frame(width: 100, alignment: .leading)
                 Picker(selection: $debugMode, label: Text("")){
                     ForEach(0..<settingsVM.debugItems.count, id: \.self) {

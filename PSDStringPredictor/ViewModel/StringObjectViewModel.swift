@@ -31,8 +31,9 @@ class StringObjectViewModel: ObservableObject{
 
     @Published var selectedIDList: [UUID] = []
     @Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
-    @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
-    @Published var stringObjectFixedDict: [UUID: Bool] = [:]
+    @Published var stringObjectStatusDict: [UUID: Int] = [:] //0 normal, 1 fixed, 2 ignored
+//    @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
+//    @Published var stringObjectFixedDict: [UUID: Bool] = [:]
     @Published var updateStringObjectList: [UUID] = []
 //    @Published var ignoreStringObjectList: [UUID] = []
 //    @Published var fixedStringObjectList: [UUID] = []
@@ -113,19 +114,15 @@ class StringObjectViewModel: ObservableObject{
             DispatchQueue.main.async{
                 //Refrash the stringobject list
                 for obj in self.stringObjectListData {
-                    if self.stringObjectFixedDict[obj.id] != true {
-                        print("Removing \(obj.id)")
+                    if self.stringObjectStatusDict[obj.id] != 1 {
                         self.stringObjectListData.removeAll(where: {$0.id == obj.id})
                     }
-                //for (key,value) in self.stringObjectFixedDict{
-//                    if value == false {
-//                        print("Removing \(key)")
-//                        self.stringObjectListData.removeAll(where: {$0.id == key})
-//                    }
+
                 }
                 for obj in allStrObjs {
                     if self.stringObjectListData.ContainsSame(obj) == false {
                         self.stringObjectListData.append(obj)
+                        self.stringObjectStatusDict[obj.id] = 0
                     }
                 }
                 //self.stringObjectListData = allStrObjs
@@ -141,11 +138,14 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
-    func FetchStringObjectOutputList()-> [StringObject]{
-        var finalList: [StringObject] = stringObjectListData
-        for (k,v) in stringObjectIgnoreDict {
-            if v == true{
-                finalList.removeAll(where: {$0.id == k})
+    func FetchStringObjectOutputIDList()-> [UUID]{
+        var finalList: [UUID] = []
+        for obj in stringObjectListData{
+            finalList.append(obj.id)
+        }
+        for (k,v) in stringObjectStatusDict {
+            if v == 2 {
+                finalList.removeAll(where: {$0 == k})
             }
         }
         return finalList
@@ -157,8 +157,8 @@ class StringObjectViewModel: ObservableObject{
         //charFrameListRects = []
         selectedIDList = []
         selectedCharImageListObjectList = [CharImageThumbnailObject]()
-        stringObjectIgnoreDict = [:]
-        stringObjectFixedDict = [:]
+        stringObjectStatusDict = [:]
+        //stringObjectFixedDict = [:]
         updateStringObjectList = []
 //        ignoreStringObjectList = []
 //        fixedStringObjectList = []
@@ -233,25 +233,14 @@ class StringObjectViewModel: ObservableObject{
 //
 //    }
     
-    func FiltStringObjects(originalList objList: [StringObject]) -> ([StringObject]){
-        var newList : [StringObject] = []
+    func FiltStringObjectsForUpdate(originalList objList: [StringObject]) -> ([StringObject]){
+        var newList : [StringObject] = objList
         var ignoreList: [UUID] = []
         var index = 0
-//        fixedStringObjectList.removeAll()
-//        ignoreStringObjectList.removeAll()
-        newList = objList
-        
-        for (key, value) in stringObjectViewModel.stringObjectFixedDict{
-            if value == true {
+        for (key, value) in stringObjectViewModel.stringObjectStatusDict{
+        //for (key, value) in stringObjectViewModel.stringObjectFixedDict{
+            if value == 1 && value == 2 {
                 ignoreList.append(key)
-//                fixedStringObjectList.append(key)
-            }
-        }
-        
-        for (key, value) in stringObjectIgnoreDict{
-            if value == true {
-                ignoreList.append(key)
-//                ignoreStringObjectList.append(key)
             }
         }
 
@@ -275,14 +264,18 @@ class StringObjectViewModel: ObservableObject{
         updateStringObjectList = newList.map{$0.id}
         //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
-        for (key, _) in stringObjectViewModel.stringObjectFixedDict{
-            newList.append(FindStringObjectByID(id: key)! )
+        for (key, value) in stringObjectViewModel.stringObjectStatusDict{
+            if value == 1{
+                newList.append(FindStringObjectByID(id: key)! )
+            }
         }
         
         stringObjectViewModel.stringObjectOutputList = newList
         
-        for (key, _) in stringObjectViewModel.stringObjectIgnoreDict{
-            newList.append(FindStringObjectByID(id: key)!)
+        for (key, value) in stringObjectViewModel.stringObjectStatusDict{
+            if value == 2{
+                newList.append(FindStringObjectByID(id: key)!)
+            }
         }
         
         return (newList)
@@ -325,21 +318,21 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
-    func GetIngoreObjectList() -> [StringObject]{
-        var result: [StringObject] = []
-        for (k, v) in stringObjectIgnoreDict {
-            if (v == true && FindStringObjectByID(id: k) != nil) {
-                result.append(FindStringObjectByID(id: k)!)
+    func GetIngoreObjectIDList() -> [UUID]{
+        var result: [UUID] = []
+        for (k, v) in stringObjectStatusDict {
+            if (v == 2 && FindStringObjectByID(id: k) != nil) {
+                result.append(k)
             }
         }
         return result
     }
     
-    func GetFixedObjectList() -> [StringObject]{
-        var result: [StringObject] = []
-        for (k, v) in stringObjectFixedDict {
-            if (v == true && FindStringObjectByID(id: k) != nil) {
-                result.append(FindStringObjectByID(id: k)!)
+    func GetFixedObjectIDList() -> [UUID]{
+        var result: [UUID] = []
+        for (k, v) in stringObjectStatusDict {
+            if (v == 1 && FindStringObjectByID(id: k) != nil) {
+                result.append(k)
             }
         }
         return result
@@ -375,8 +368,8 @@ class StringObjectViewModel: ObservableObject{
         var isParagraphList = [Bool]()
         
         var updateList = stringObjectListData
-        for (key,value) in stringObjectIgnoreDict{
-            if value == true{
+        for (key,value) in stringObjectStatusDict{
+            if value == 2{
                 updateList.removeAll(where: {$0.id == key})
             }
         }
@@ -442,40 +435,40 @@ class StringObjectViewModel: ObservableObject{
         }
     }
     
-    func SetSelectionFix(){
-        var resDict = [UUID:Bool]()
+    func SetSelectionToFixed(){
+        var resDict = [UUID:Int]()
         for _id in selectedIDList {
             //Check if it is in ignore list
-            if stringObjectIgnoreDict[_id] != nil && stringObjectIgnoreDict[_id] == true {
+            if stringObjectStatusDict[_id] != nil && stringObjectStatusDict[_id] == 2 {
                 //skip next step, go to next obj id
                 continue
             }
             //Toggle the t/f status in fix list
-            if stringObjectFixedDict[_id] != nil && stringObjectFixedDict[_id] == true {
-                resDict[_id] = false
-            }else {
-                resDict[_id] = true
+            else {
+                stringObjectStatusDict[_id] = 1
             }
         }
-        stringObjectFixedDict = resDict
+        //stringObjectStatusDict = resDict
     }
     
-    func SetSelectionIgnore(){
-        var resDict = [UUID:Bool]()
+    func SetSelectionToIgnored(){
+        var resDict = [UUID:Int]()
         for _id in selectedIDList {
             //Check if it is in ignore list
-            if stringObjectFixedDict[_id] != nil && stringObjectFixedDict[_id] == true {
-                //skip next step, go to next obj id
-                continue
-            }
+//            if stringObjectStatusDict[_id] != nil && stringObjectStatusDict[_id] == 1 {
+//                //skip next step, go to next obj id
+//                continue
+//            }
             //Toggle the t/f status in fix list
-            if stringObjectIgnoreDict[_id] != nil && stringObjectIgnoreDict[_id] == true {
-                resDict[_id] = false
-            }else {
-                resDict[_id] = true
+            //else {
+            if stringObjectStatusDict[_id] != 2{
+                resDict[_id] = 2
+            }else{
+                resDict[_id] = 0
             }
+            //}
         }
-        stringObjectIgnoreDict = resDict
+        stringObjectStatusDict = resDict
     }
     
     func CombineStrings(){

@@ -77,9 +77,7 @@
 		3F9ED7A825662CD600F950BC /* ButtonStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */; };
 		3F9ED7AB25667E9400F950BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */; };
 		3FA1C5B225567D5500FC6DC3 /* FontSizeTabularRegressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */; };
-		3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B36250874390093EBD2 /* LogObjectView.swift */; };
 		3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B382508B0D40093EBD2 /* LogObject.swift */; };
-		3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA49B3A2508EAE90093EBD2 /* LogListView.swift */; };
 		3FA5047D2574CADA00F4A77A /* fontSize.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FA5047C2574CADA00F4A77A /* fontSize.csv */; };
 		3FAAB4972514BD6600CB89B1 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB4962514BD6600CB89B1 /* Training.swift */; };
 		3FABE4E12580DA4C00287086 /* DBViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FABE4E02580DA4C00287086 /* DBViewModel.swift */; };
@@ -115,7 +113,6 @@
 		3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE9122507200400AEF1C8 /* ControlPanel.swift */; };
 		3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEFE91D25072F8300AEF1C8 /* OCR.swift */; };
 		3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FF51B5A259ADF2800D11575 /* charBounds.csv */; };
-		3FF51B95259C1F5D00D11575 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF51B94259C1F5D00D11575 /* Button.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,9 +187,7 @@
 		3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontSizeTabularRegressor.swift; sourceTree = "<group>"; };
 		3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingRegressor.swift; path = PSDStringPredictor/Resources/TrackingRegressor.swift; sourceTree = SOURCE_ROOT; };
-		3FA49B36250874390093EBD2 /* LogObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObjectView.swift; sourceTree = "<group>"; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
-		3FA49B3A2508EAE90093EBD2 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
 		3FA5047C2574CADA00F4A77A /* fontSize.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = fontSize.csv; path = PSDStringPredictor/Resources/fontSize.csv; sourceTree = SOURCE_ROOT; };
 		3FAAB4962514BD6600CB89B1 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
 		3FABE4E02580DA4C00287086 /* DBViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBViewModel.swift; sourceTree = "<group>"; };
@@ -230,7 +225,6 @@
 		3FEFE9122507200400AEF1C8 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
 		3FEFE91D25072F8300AEF1C8 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
 		3FF51B5A259ADF2800D11575 /* charBounds.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = charBounds.csv; sourceTree = "<group>"; };
-		3FF51B94259C1F5D00D11575 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,8 +319,6 @@
 				3F4D13EA2502220D008F846B /* StringLabelList.swift */,
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
 				3FEFE9122507200400AEF1C8 /* ControlPanel.swift */,
-				3FA49B36250874390093EBD2 /* LogObjectView.swift */,
-				3FA49B3A2508EAE90093EBD2 /* LogListView.swift */,
 				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
 				3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */,
 				3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */,
@@ -422,7 +414,6 @@
 				3F44C6472570F42500E438CA /* CGColorExtension.swift */,
 				3F4471BA25735459003AE7B6 /* ColorExtension.swift */,
 				3FDBC4C7258346C400E9C2DC /* NSWindow.swift */,
-				3FF51B94259C1F5D00D11575 /* Button.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -640,11 +631,9 @@
 				3FD2480A253EDED0007EBE36 /* FontWeightClassifier.swift in Sources */,
 				3F4D13E42501FB9E008F846B /* ImageView.swift in Sources */,
 				3FD9957F2518B48D007E3D05 /* ImageUtil.swift in Sources */,
-				3FA49B3B2508EAE90093EBD2 /* LogListView.swift in Sources */,
 				3F4CB5A5250A23E200E41082 /* ImageProcess.swift in Sources */,
 				3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */,
 				3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */,
-				3FA49B37250874390093EBD2 /* LogObjectView.swift in Sources */,
 				3F6C3CE62580CF5200AB7A19 /* WarningView.swift in Sources */,
 				3FD1FBB42581C116004EF1FB /* SelectionOverlayView.swift in Sources */,
 				3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */,
@@ -678,7 +667,6 @@
 				3F853B712585BEAE002507C4 /* HighlightView.swift in Sources */,
 				3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
-				3FF51B95259C1F5D00D11575 /* Button.swift in Sources */,
 				3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */,
 				3FABE4E12580DA4C00287086 /* DBViewModel.swift in Sources */,
 				3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */,
@@ -866,6 +854,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 5N7U97AKYG;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -893,6 +882,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 5N7U97AKYG;
 				ENABLE_HARDENED_RUNTIME = YES;

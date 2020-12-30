@@ -37,13 +37,13 @@ struct ControlPanel: View {
             }
             //HStack{
 
-                Button(action: {stringObjectVM.SetSelectionFix()}){
+                Button(action: {stringObjectVM.SetSelectionToFixed()}){
                     Text("Fix")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                     
                 }
                 
-                Button(action: {stringObjectVM.SetSelectionIgnore()}){
+                Button(action: {stringObjectVM.SetSelectionToIgnored()}){
                     Text("Block")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                 }
@@ -58,7 +58,7 @@ struct ControlPanel: View {
             
             HStack{
                 Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
-                    Text("Single PSD")
+                    Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
                 .disabled(!self.stringObjectVM.OKForProcess)
@@ -67,7 +67,7 @@ struct ControlPanel: View {
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }
-                .disabled(!self.stringObjectVM.OKForProcess)
+                .disabled(true)
                 
             }
             .frame( maxWidth: .infinity)
@@ -78,7 +78,7 @@ struct ControlPanel: View {
                 .frame(width: 300, alignment: .leading)
             HStack{
                 Button(action: {self.stringObjectVM.CreatePSD()}){
-                    Text("Single PSD")
+                    Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
                 .disabled(!self.stringObjectVM.OKForProcess)
@@ -87,7 +87,7 @@ struct ControlPanel: View {
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }
-                .disabled(!self.stringObjectVM.OKForProcess)
+                .disabled(true)
             }
             .frame( maxWidth: .infinity)
             .padding(.bottom)

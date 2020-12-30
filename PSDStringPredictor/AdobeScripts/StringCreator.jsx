@@ -1,17 +1,17 @@
 ////Variables
-var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSample.png"
-var contentList = ["9:41", "Beaches", "Cancel", "See All", "Moments", "Lisboa", "11 >", "Search", "/olu Photos", "Essaouira"]
-var colorList = [[0, 0, 0], [255, 255, 255], [0, 122, 251], [0, 122, 247], [0, 0, 0], [0, 0, 0], [152, 152, 159], [0, 122, 246], [0, 0, 0], [0, 0, 0]]
-var fontSizeList = [45.0, 50.0, 47.0, 50.0, 67.0, 48.0, 52.0, 29.0, 66.0, 48.0]
-var fontNameList= ["SFProText-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular", "SFProText-Regular", "SFProText-Regular", "SFProDisplay-Semibold", "SFProText-Regular"]
-var positionList = [[96, 86], [173, 230], [911, 227], [911, 429], [64, 1737], [280, 2126], [942, 2154], [934, 2323], [74, 430], [280, 1886]]
-var trackingList = [-5.111111, -26.52, -6.5957446, -26.52, -3.8805969, -6.4583335, -25.5, 4.137931, -3.9393938, -6.4583335]
-var offsetList = [[2, 6], [4, 7], [3, 7], [2, 7], [4, 10], [4, 6], [3, 6], [1, 4], [0, 0], [4, 6]]
-var alignmentList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-var rectList = [[96.0, 2350.0, 86.0, 34.0], [173.0, 2206.0, 192.0, 39.0], [911.0, 2209.0, 149.0, 39.0], [911.0, 2007.0, 149.0, 39.0], [64.0, 699.0, 276.0, 48.0], [280.0, 310.0, 144.0, 39.0], [942.0, 282.0, 133.0, 37.0], [934.0, 113.0, 98.0, 23.0], [74.0, 2006.0, 329.0, 50.0], [280.0, 550.0, 214.0, 39.0]]
-var names = ["0.941", "1.Beaches", "2.Cancel", "3.SeeAll", "4.Moments", "5.Lisboa", "6.11", "7.Search", "8.oluPhotos", "9.Essaouira"]
-var bgColorList = [[251.0, 251.0, 252.0], [142.0, 142.0, 147.0], [251.0, 251.0, 252.0], [242.0, 242.0, 247.0], [242.0, 242.0, 247.0], [254.0, 255.0, 254.0], [254.0, 255.0, 254.0], [247.0, 247.0, 246.0], [242.0, 242.0, 247.0], [254.0, 255.0, 254.0]]
-var isParagraphList = [false, false, false, false, false, false, false, false, false, false]
+var psdPath = "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/Resources/TestImages/LocSampleMini copy.png"
+var contentList = ["9:41", "See All"]
+var colorList = [[0, 0, 0], [0, 122, 247]]
+var fontSizeList = [44.0, 47.0]
+var fontNameList= ["SFProText-Semibold", "SFProText-Regular"]
+var positionList = [[96, 85], [911, 689]]
+var trackingList = [-5.227273, -6.5957446]
+var offsetList = [[2, 6], [2, 6]]
+var alignmentList = [0, 0]
+var rectList = [[96.0, 746.0, 86.0, 33.0], [911.0, 142.0, 149.0, 39.0]]
+var names = ["0.941", "1.SeeAll"]
+var bgColorList = [[250.0, 251.0, 252.0], [242.0, 242.0, 247.0]]
+var isParagraphList = [false, false]
 var widthExtend = 5
 // ========================= Load from Main.js ==============================
 

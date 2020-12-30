@@ -14,10 +14,10 @@ struct StringLabel: View {
     
     var id: UUID
     var charFrameList: [CharFrame]
-    @State var fixed: Bool
-    @State var ignored: Bool
-    @State var fixedEnabled: Bool
-    @State var ignoredEnabled: Bool
+    //@State var status: Int
+   // @State var ignored: Bool
+//    @State var fixedEnabled: Bool
+//    @State var ignoredEnabled: Bool
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
     @State var width: CGFloat = 0
@@ -28,7 +28,6 @@ struct StringLabel: View {
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[id] != nil{
             d = stringObjectVM.DragOffsetDict[id]!.width
-            //print("d: \((stringObjectVM.FindStringObjectByID(id: id)?.tracking ?? 0) + d)")
             return (stringObjectVM.FindStringObjectByID(id: id)?.tracking ?? 0) + d
         }else{
             return 0
@@ -36,11 +35,11 @@ struct StringLabel: View {
         
     }
     
-    func Status() -> Int {
-        //0 normal, 1 fixed, 2 ignored
-        
-        return 0
-    }
+//    func Status() -> Int {
+//        //0 normal, 1 fixed, 2 ignored
+//
+//        return 0
+//    }
     
     func CalcSizeAfterOffset() -> CGFloat {
         var d : CGFloat = 0
@@ -61,22 +60,21 @@ struct StringLabel: View {
     }
     
     func FixedBtnTapped(){
-        fixed = !fixed
-        stringObjectVM.stringObjectFixedDict[id] = fixed
-        ignoredEnabled = !fixed
-//        if fixedEnabled == true {
-//            if stringObjectVM.fixedStringObjectList.contains(where: {$0.id == id}){
-//                stringObjectVM.fixedStringObjectList.append(stringObjectVM.FindStringObjectByID(id: id)!)
-//            }
-//        }else{
-//            stringObjectVM.fixedStringObjectList.removeAll(where: {$0.id == id})
-//        }
+        //fixed = !fixed
+        if stringObjectVM.stringObjectStatusDict[id] == 1 {
+            stringObjectVM.stringObjectStatusDict[id] = 0
+        }else {
+            stringObjectVM.stringObjectStatusDict[id] = 1
+        }
+
     }
     
     func IgnoreBtnTapped(){
-        ignored = !ignored
-        stringObjectVM.stringObjectIgnoreDict[id] = ignored
-        fixedEnabled = !ignored
+        if stringObjectVM.stringObjectStatusDict[id] == 2 {
+            stringObjectVM.stringObjectStatusDict[id] = 0
+        }else {
+            stringObjectVM.stringObjectStatusDict[id] = 2
+        }
     }
     
     func alignmentTapped() {
@@ -133,14 +131,14 @@ struct StringLabel: View {
     var body: some View {
         ZStack {
             ZStack { //Debug
-                
+                //Text(stringObjectVM.FindStringObjectByID(id: id)!.content)
                 Group{
                     //Frames
                     StringFrameLayerView()
 
-                    DragLayerView()
+                    //DragLayerView()
                 }
-                .IsHidden(condition: fixedEnabled && ignoredEnabled)
+                //.IsHidden(condition: stringObjectVM.stringObjectStatusDict[id] == 0)
                 
                 //Text content
                 TextLayerView()
@@ -169,23 +167,23 @@ struct StringLabel: View {
                 
                 //Button for fix
                 Button(action: {self.FixedBtnTapped()}){
-                    CustomImage( name: fixed ? "tick-active" : "tick-round")
+                    CustomImage( name: stringObjectVM.stringObjectStatusDict[id] == 1 ? "tick-active" : "tick-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
-                .IsHidden(condition: fixedEnabled)
+                //.IsHidden(condition: fixedEnabled)
                 
                 //Button for delete
                 Button(action: {self.IgnoreBtnTapped()}){
-                    CustomImage( name: ignored ? "forbidden-active" : "forbidden-round")
+                    CustomImage( name: stringObjectVM.stringObjectStatusDict[id] == 2 ? "forbidden-active" : "forbidden-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
-                .IsHidden(condition: ignoredEnabled)
+                //.IsHidden(condition: ignoredEnabled)
             }
             .frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height ?? 0, alignment: .bottomTrailing)
             .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )

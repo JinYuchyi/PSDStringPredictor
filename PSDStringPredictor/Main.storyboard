@@ -346,23 +346,23 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Data" id="jxT-CU-nIS" userLabel="Data">
+                            <menuItem title="Data" hidden="YES" enabled="NO" id="jxT-CU-nIS" userLabel="Data">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Data" id="GEO-Iw-cKr">
                                     <items>
-                                        <menuItem title="Load FontSize Table" id="Fjm-iW-Yut">
+                                        <menuItem title="Load FontSize Table" enabled="NO" id="Fjm-iW-Yut">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="LoadFontSizeTable:" target="Voe-Tx-rLC" id="BoP-Jm-53e"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Load FontTracking Table" id="KOL-P4-rKs" userLabel="Load FontTracking Table">
+                                        <menuItem title="Load FontTracking Table" enabled="NO" id="KOL-P4-rKs" userLabel="Load FontTracking Table">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="LoadFontTrackingTable:" target="Voe-Tx-rLC" id="sKK-B0-ueR"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Load Bounds Table" id="Jld-US-uYx" userLabel="Load Bounds Table">
+                                        <menuItem title="Load Bounds Table" enabled="NO" id="Jld-US-uYx" userLabel="Load Bounds Table">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="LoadBoundsTable:" target="Voe-Tx-rLC" id="laX-y9-GbV"/>

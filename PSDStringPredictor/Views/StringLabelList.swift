@@ -15,22 +15,26 @@ struct LabelsOnImage: View {
     
     var body: some View {
         ZStack{
-            ForEach(stringObjectVM.FetchStringObjectOutputList(), id:\.id){ obj in
-                StringLabel(id: obj.id , charFrameList: charFrameList, fixed: false, ignored: false, fixedEnabled: true, ignoredEnabled: true )
+            
+            //TODO: Test text
+            ForEach(stringObjectVM.FetchStringObjectOutputIDList(), id:\.self){ myid in
+                StringLabel(id:myid, charFrameList: charFrameList )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
                                     stringObjectVM.selectedIDList.removeAll()
-                                    stringObjectVM.selectedIDList.append(obj.id)
+                                    stringObjectVM.selectedIDList.append(myid)
                                 })
                 )
             }
             
-            ForEach(stringObjectVM.GetIngoreObjectList(), id:\.id){ obj in
-                StringLabel(id: obj.id, charFrameList: charFrameList, fixed: false, ignored: true, fixedEnabled: false, ignoredEnabled: true  )
+
+            
+            ForEach(stringObjectVM.GetIngoreObjectIDList(), id:\.self){ myid in
+                StringLabel(id: myid, charFrameList: charFrameList)
             }
             
-            ForEach(stringObjectVM.GetFixedObjectList(), id:\.id){ obj in
-                StringLabel(id: obj.id, charFrameList: charFrameList, fixed: true, ignored: false, fixedEnabled: true, ignoredEnabled: false )
+            ForEach(stringObjectVM.GetFixedObjectIDList(), id:\.self){ myid in
+                StringLabel(id: myid, charFrameList: charFrameList)
             }
             
 
