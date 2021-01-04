@@ -40,7 +40,7 @@ struct ImageProcessView: View {
                     ),
                     in: 0...10
                     
-                ).disabled(self.imageViewModel.GetTargetCIImage().IsValid() == false)
+                ).disabled(imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
                 Button(action: { imageViewModel.gammaValue = 1; self.SetFilter() }){
                     Text("Reset")
                 }
@@ -62,7 +62,7 @@ struct ImageProcessView: View {
                     ),
                     in: 0...10
                     
-                ).disabled(self.imageViewModel.GetTargetCIImage().IsValid() == false)
+                ).disabled(self.imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
                 Button(action: { imageViewModel.exposureValue = 0; self.SetFilter() }){
                     Text("Reset")
                 }

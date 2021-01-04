@@ -133,7 +133,7 @@ struct StringObjectPropertyView: View {
                 
                 if GetLastSelectObject().content != "No content." {
                     HStack{
-                        let targetImg = imageProcess.targetCIImage.cropped(to: GetLastSelectObject().stringRect).ToNSImage()
+                        let targetImg = imageProcess.targetNSImage.ToCIImage()!.cropped(to: GetLastSelectObject().stringRect).ToNSImage()
                         Image(nsImage: targetImg )
                             .resizable()
                             .scaledToFit()

@@ -23,7 +23,7 @@ class ImageProcess: ObservableObject{
     @Published var targetImageProcessed = CIImage.init()
     @Published var targetImageMasked = CIImage.init()
     @Published var targetNSImage = NSImage()
-    @Published var targetCIImage = CIImage()
+    //@Published var targetCIImage = CIImage()
     @Published var maskList = [CGRect]()
     @Published var gammaValue: CGFloat = 1
     @Published var exposureValue: CGFloat = 0
@@ -140,9 +140,9 @@ class ImageProcess: ObservableObject{
     
     func FetchImage() {
         //targetNSImage = DataStore.targetNSImage
-        targetCIImage = targetNSImage.ToCIImage()!
+        //targetCIImage = targetNSImage.ToCIImage()!
         if targetImageMasked.IsValid() == false || targetImageMasked.extent.width == 0 {
-            targetImageMasked = targetCIImage
+            targetImageMasked = targetNSImage.ToCIImage()!
         }
         if targetImageProcessed.extent.width == 0 || targetImageProcessed.extent.width == 0 {
             targetImageProcessed = targetImageMasked
@@ -150,10 +150,10 @@ class ImageProcess: ObservableObject{
         
     }
     
-    func GetTargetCIImage() -> CIImage{
-        //UpdateTargetImageInfo()
-        return targetCIImage
-    }
+//    func GetTargetCIImage() -> CIImage{
+//        //UpdateTargetImageInfo()
+//        return targetCIImage
+//    }
     
     func GetProcessedImage() -> CIImage{
         //        if DataStore.targetImageProcessed.extent.width > 0 {
@@ -181,11 +181,13 @@ class ImageProcess: ObservableObject{
     
     func SetTargetNSImage(_ img: NSImage){
         targetNSImage = img
-        targetImageProcessed = targetNSImage.ToCIImage()!
-        if(targetImageProcessed.extent.width > 0){}
-        else{
-            targetImageProcessed = targetNSImage.ToCIImage()!
-        }
+        targetImageProcessed = CIImage.init()
+        targetImageMasked = CIImage.init()
+        //targetImageProcessed = targetNSImage.ToCIImage()!
+//        if(targetImageProcessed.extent.width > 0){}
+//        else{
+//            targetImageProcessed = targetNSImage.ToCIImage()!
+//        }
         FetchImage()
     }
     
@@ -212,7 +214,6 @@ class ImageProcess: ObservableObject{
         
         return image
     }
-    
     
     func LoadCIImage(FileName: String) -> CIImage?{
         let fileURL = Bundle.main.url(forResource: FileName, withExtension: "png")

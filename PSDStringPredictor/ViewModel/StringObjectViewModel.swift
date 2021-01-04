@@ -139,8 +139,7 @@ class StringObjectViewModel: ObservableObject{
                         self.stringObjectStatusDict[obj.id] = 0
                     }
                 }
-                //self.stringObjectListData = allStrObjs
-                //self.stringObjectIDList = self.GetAllID()
+
             }
         }
 
@@ -358,7 +357,7 @@ class StringObjectViewModel: ObservableObject{
     }
     
     func CalcBGColor(obj: StringObject) -> [Float]{
-        let img = imageProcessViewModel.targetCIImage.ToCGImage()!
+        let img = imageProcessViewModel.targetNSImage.ToCGImage()!
         let color1 = pixelProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(imageProcessViewModel.targetNSImage.size.height - obj.stringRect.origin.y), img: img)
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
@@ -444,30 +443,48 @@ class StringObjectViewModel: ObservableObject{
         
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList)
         if success == true{
-            let cmd = "open " + GetDocumentsPath() + "/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/StringCreator.jsx  -a '\(settingViewModel.PSPath)'"
+            let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
+            let cmd = "open " + jsPath + "  -a '\(settingViewModel.PSPath)'"
             PythonScriptManager.RunScript(str: cmd)
         }
     }
     
     func SetSelectionToFixed(){
-        var resDict = [UUID:Int]()
+        var allFix = true
+        var resDict = stringObjectStatusDict
         for _id in selectedIDList {
+//            if resDict[_id] == 1{
+//                allFix = false
+//            }
+            
             //Check if it is in ignore list
-            if stringObjectStatusDict[_id] != nil && stringObjectStatusDict[_id] == 2 {
+            if stringObjectStatusDict[_id] != 1 {
                 //skip next step, go to next obj id
-                continue
+                resDict[_id] = 1
+                allFix = false
             }
             //Toggle the t/f status in fix list
             else {
-                stringObjectStatusDict[_id] = 1
+                
+               
             }
         }
-        //stringObjectStatusDict = resDict
+        
+        if allFix == true{
+            for _id in selectedIDList {
+                resDict[_id] = 0
+            }
+        }
+        
+        stringObjectStatusDict = resDict
     }
     
     func SetSelectionToIgnored(){
-        var resDict = [UUID:Int]()
+        var allIgnored = true
+        var resDict = stringObjectStatusDict
         for _id in selectedIDList {
+            
+
             //Check if it is in ignore list
 //            if stringObjectStatusDict[_id] != nil && stringObjectStatusDict[_id] == 1 {
 //                //skip next step, go to next obj id
@@ -477,11 +494,21 @@ class StringObjectViewModel: ObservableObject{
             //else {
             if stringObjectStatusDict[_id] != 2{
                 resDict[_id] = 2
+                allIgnored = false
             }else{
-                resDict[_id] = 0
+                
+                //resDict[_id] = 0
             }
+            
             //}
         }
+        
+        if allIgnored == true{
+            for _id in selectedIDList {
+                resDict[_id] = 0
+            }
+        }
+        
         stringObjectStatusDict = resDict
     }
     

@@ -13,14 +13,23 @@ var docRef = app.open(fileRef)
 var len = docRef.layerSets.length
 
 //Remove the previous folder
-var i
-if(len >= 1){
-    for (i = 0; i < len; i++){
-        if (docRef.layerSets[i].name == "StringLayerGroup"){
-            docRef.layerSets[i].remove()
-        }
+var listToRemove=[]
+var i = 0
+var console = new ConsoleLog();
+
+//if(len >= 1){
+    while ( i < docRef.layerSets.length ){
+        //console.log(docRef.layerSets.length+"-"+docRef.layerSets[i].name)
+        if (docRef.layerSets[i].name == "StringLayersGroup" || docRef.layerSets[i].name == "MaskLayersGroup"){
+            //listToRemove.push(i)
+                console.log(i)
+                docRef.layerSets[i].remove()
+            }else{
+                i++
+            }
+
     }
-}
+
 
 //Add new folder
 var layerSetRef1 = app.activeDocument.layerSets.add()

@@ -62,8 +62,8 @@ struct ContentView: View {
                     
                     HighlightView()
                 }
-                .scaleEffect(viewScale)
-                .frame(width: 1100 * viewScale)
+                //.scaleEffect(viewScale)
+                //.frame(width: 1100 * viewScale)
 
             }
             

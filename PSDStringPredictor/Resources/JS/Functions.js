@@ -62,4 +62,23 @@ function createRectangle(layerSet, layerName, posX, posY, width, height, color1)
 
 }
 
+function ConsoleLog() {
+    //To view log from OSX terminal, execute:
+    //$ nc -lvk <port> (listens on localhost:<port>)
+    this.socket = new Socket();
+    this.estkIsRunning = BridgeTalk.isRunning ('estoolkit');
+    this.hostPort = "127.0.0.1:8000";
+    this.log = function(logMessage){
+            if (this.estkIsRunning){
+               $.writeln(logMessage);
+            }
+            else{
+                if (this.socket.open(this.hostPort)){
+                  this.socket.write (logMessage + "\n");
+                  this.socket.close();
+                }
+            }
+         }
+    }
+
 // =======================================================

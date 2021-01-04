@@ -35,12 +35,6 @@ struct StringLabel: View {
         
     }
     
-//    func Status() -> Int {
-//        //0 normal, 1 fixed, 2 ignored
-//
-//        return 0
-//    }
-    
     func CalcSizeAfterOffset() -> CGFloat {
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[id] != nil{
@@ -107,7 +101,7 @@ struct StringLabel: View {
             .position(x: GetPosition().x, y: GetPosition().y)
             .foregroundColor(stringObjectVM.FindStringObjectByID(id: id)?.color.ToColor() ?? Color.white)
             .font(.custom(stringObjectVM.StringObjectNameDict[id] ?? "", size: CalcSizeAfterOffset()))
-            .shadow(radius: 2)
+            .shadow(color: stringObjectVM.FindStringObjectByID(id: id)?.colorMode == 2 ?  .black : .white, radius: 2, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
             //.blendMode(.difference)
 
     }
@@ -115,9 +109,13 @@ struct StringLabel: View {
     fileprivate func StringFrameLayerView()-> some View {
         //String debug frame
         Rectangle()
-            .stroke(Color.red, lineWidth: 1)
+        
+            .stroke(stringObjectVM.stringObjectStatusDict[id] == 2 ? Color.red : Color.green, lineWidth: 2)
             .frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
+        
+            //.shadow(color: stringObjectVM.FindStringObjectByID(id: id)?.colorMode == 1 ?  .black : .white, radius: 2, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
+            //.blendMode(.difference)
     }
     
     fileprivate func DragLayerView()-> some View {
@@ -187,6 +185,7 @@ struct StringLabel: View {
             }
             .frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height ?? 0, alignment: .bottomTrailing)
             .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )
+            .IsHidden(condition: stringObjectVM.selectedIDList.contains(id)==true)
         }
     }
 }
