@@ -142,8 +142,8 @@
             filePath = "PSDStringPredictor/ViewModel/StringObjectViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
             landmarkName = "SetSelectionToFixed()"
             landmarkType = "7">
          </BreakpointContent>

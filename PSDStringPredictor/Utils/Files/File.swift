@@ -34,3 +34,29 @@ func GetDocumentsPath() -> String{
     return documentsDirectory.path
 }
 
+func TempPath()-> String{
+    var tmpFolder = NSTemporaryDirectory()
+    let folderName = "StringLayersGenerator/"
+    tmpFolder = tmpFolder + folderName
+    if FileManager.default.fileExists(atPath: tmpFolder) == false {
+        //Create path
+        try! FileManager.default.createDirectory(atPath: tmpFolder, withIntermediateDirectories: true)
+    }
+    return tmpFolder
+}
+
+func DuplicateFileToTempPath(at srcURL: URL) ->Bool {
+    let tempURL = URL.init(string: TempPath())
+    let dstURL = tempURL?.appendingPathComponent(srcURL.lastPathComponent)
+    do {
+        if FileManager.default.fileExists(atPath: dstURL!.path) {
+            try FileManager.default.removeItem(at: dstURL!)
+        }
+        try FileManager.default.copyItem(at: srcURL, to: dstURL!)
+    } catch (let error) {
+        print("Cannot copy item at \(srcURL) to \(dstURL): \(error)")
+        return false
+    }
+    return true
+}
+

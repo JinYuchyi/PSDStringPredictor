@@ -52,6 +52,9 @@ class StringObjectViewModel: ObservableObject{
     
     @Published var OKForProcess: Bool = false
     
+    //Constant
+    let fontDecentOffsetScale: CGFloat = 0.6
+    
     //    private var workItem: DispatchWorkItem?
     
     func GetAllID() -> [UUID] {
@@ -118,6 +121,7 @@ class StringObjectViewModel: ObservableObject{
     }
     
     func FetchStringObjectsInfo()  {
+        //print("temp Path: \(NSTemporaryDirectory())")
         let group = DispatchGroup()
         
         let queueCalc = DispatchQueue(label: "calc")
@@ -228,7 +232,7 @@ class StringObjectViewModel: ObservableObject{
             if hasLongTail == true{
                 //let fontName = fontName
                 descent = FontUtils.GetFontInfo(Font: fontName, Content: obj.content, Size: obj.fontSize).descent
-                descent = descent * 0.8
+                descent = descent * fontDecentOffsetScale
             }
             
             let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)

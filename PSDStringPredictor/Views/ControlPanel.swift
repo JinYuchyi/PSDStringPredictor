@@ -38,13 +38,13 @@ struct ControlPanel: View {
             //HStack{
 
                 Button(action: {stringObjectVM.SetSelectionToFixed()}){
-                    Text("Fix")
+                    Text("Ready")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                     
                 }
                 
                 Button(action: {stringObjectVM.SetSelectionToIgnored()}){
-                    Text("Block")
+                    Text("Ignore")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                 }
             //}
@@ -104,7 +104,7 @@ struct ControlPanel: View {
     }
 
     func Debug(){
-        stringObjectVM.CombineStrings()
+        //stringObjectVM.CombineStrings()
 //        let url = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
 //        var imageData: NSData =  NSData.init()
 //        do{
