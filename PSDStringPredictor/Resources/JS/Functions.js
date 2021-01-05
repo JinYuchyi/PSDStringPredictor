@@ -48,8 +48,8 @@ function createRectangle(layerSet, layerName, posX, posY, width, height, color1)
     var artLayerRef = layerSet.artLayers.add()
     artLayerRef.name = layerName
     var selRegion = Array(Array(posX, posY),
-                    Array(posX + width, posY), 
-                    Array(posX + width, posY + height), 
+                    Array(posX + width, posY),
+                    Array(posX + width, posY + height),
                     Array(posX, posY + height),
                     Array(posX, posY))
 

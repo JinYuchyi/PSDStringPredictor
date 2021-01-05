@@ -385,11 +385,13 @@ class StringObjectViewModel: ObservableObject{
         var isParagraphList = [Bool]()
         
         var updateList = stringObjectListData
+        
         for (key,value) in stringObjectStatusDict{
             if value == 2{
                 updateList.removeAll(where: {$0.id == key})
             }
         }
+        
         for obj in updateList{
             let newString = obj.content.replacingOccurrences(of: "\n", with: " ")
             contentList.append(newString)

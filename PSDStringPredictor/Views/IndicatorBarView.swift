@@ -16,7 +16,7 @@ struct IndicatorView: View {
         ZStack {
             Group{
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(DataStore.colorMode == 2 ? Color.black : Color.white).opacity(0.5)
+                    .fill(DataStore.colorMode == 1 ? Color.black : Color.white).opacity(0.5)
                 Text(stringObjectVM.indicatorTitle)
                     .bold()
                     //.shadow(color: Color.black.opacity(0.5), radius: 1, y: 2 )

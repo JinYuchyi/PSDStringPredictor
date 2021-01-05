@@ -66,6 +66,7 @@
 		3F8460A2251057FF00788176 /* CompareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8460A1251057FF00788176 /* CompareImage.swift */; };
 		3F853B6C257E6C0C002507C4 /* IndicatorBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */; };
 		3F853B712585BEAE002507C4 /* HighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B702585BEAE002507C4 /* HighlightView.swift */; };
+		3F8E6CF725A4249F00B383C9 /* StringCreator.jsx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E6CF625A4249F00B383C9 /* StringCreator.jsx */; };
 		3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7D250F2855003B652C /* DataStore.swift */; };
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
 		3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */; };
@@ -177,6 +178,7 @@
 		3F8460A1251057FF00788176 /* CompareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareImage.swift; sourceTree = "<group>"; };
 		3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorBarView.swift; sourceTree = "<group>"; };
 		3F853B702585BEAE002507C4 /* HighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightView.swift; sourceTree = "<group>"; };
+		3F8E6CF625A4249F00B383C9 /* StringCreator.jsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = StringCreator.jsx; sourceTree = "<group>"; };
 		3F9B3A7D250F2855003B652C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
 		3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessControlView.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 		3FF51BA025A2C65C00D11575 /* JS */ = {
 			isa = PBXGroup;
 			children = (
+				3F8E6CF625A4249F00B383C9 /* StringCreator.jsx */,
 				3FF51B9C25A2C65500D11575 /* Functions.js */,
 				3FF51B9B25A2C65500D11575 /* Main.js */,
 			);
@@ -604,6 +607,7 @@
 				3FA5047D2574CADA00F4A77A /* fontSize.csv in Resources */,
 				3FF51B9E25A2C65500D11575 /* Functions.js in Resources */,
 				3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */,
+				3F8E6CF725A4249F00B383C9 /* StringCreator.jsx in Resources */,
 				3F9C3956256F496400F686A7 /* Main.storyboard in Resources */,
 				3FDBC4B32583121800E9C2DC /* AppSettings.plist in Resources */,
 				3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */,
