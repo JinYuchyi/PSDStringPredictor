@@ -263,6 +263,9 @@ class ImageProcess: ObservableObject{
                         stringObjectViewModel.OKForProcess = true
                         stringObjectViewModel.warningContent = ""
                     }
+                    
+                    //Convert to 72 DPI and save to tmp path
+                    DuplicateFileToTempPath(at: panel.url!)
                 }
             }
         }
