@@ -14,24 +14,24 @@ struct PSD {
     
     struct PSDObject: Identifiable{
         var id: Int
-        var name: String
-        var thumbnail: CIImage
+        //var name: String
+        //var thumbnail: CIImage
         var stringObjects: [StringObject]
+        var imageURL: URL
         
-        fileprivate init(id: Int, name: String, thumbnail: CIImage, stringObjects: [StringObject]){
+        fileprivate init(id: Int, stringObjects: [StringObject], imageURL: URL){
             self.id = id
-            self.name = name
-            self.thumbnail = thumbnail
+            //self.thumbnail = thumbnail
             self.stringObjects = stringObjects
+            self.imageURL = imageURL
         }
     }
     
     fileprivate var uniqID = 0
     
-    mutating func addPSDObject( name: String, thumbnail: CIImage, stringObjects: [StringObject]){
-        PSDObjects.append(PSDObject(id: uniqID, name: name, thumbnail:thumbnail, stringObjects:stringObjects))
+    mutating func addPSDObject( imageURL: URL, stringObjects: [StringObject]){
+        PSDObjects.append(PSDObject(id: uniqID, stringObjects: stringObjects, imageURL: imageURL))
         uniqID = (uniqID + 1) % 1000000
-        
     }
     
     mutating func removePSDObject( id: Int)  {

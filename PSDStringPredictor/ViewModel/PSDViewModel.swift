@@ -17,8 +17,6 @@ class PSDViewModel: ObservableObject{
     private var workItem: DispatchWorkItem?
     
     let jsMgr = JSManager()
-    //var stringObject: StringObject = StringObject()
-    var stringObjectZero: StringObject = StringObject()
     let pixelProcess = PixelProcess()
     let ocr = OCR()
     
@@ -28,14 +26,11 @@ class PSDViewModel: ObservableObject{
     
     @Published var stringObjectListData: [StringObject] = []
     
-    //@Published var stringObjectIDList: [UUID] = []
     @Published var charFrameListData: [CharFrame] = []
-
     @Published var selectedIDList: [UUID] = []
     @Published var stringObjectStatusDict: [UUID: Int] = [:] //0 normal, 1 fixed, 2 ignored
     @Published var updateStringObjectList: [UUID] = []
     @Published var StringObjectNameDict: [UUID:String] = [:]
-    
     @Published var DragOffsetDict: [UUID: CGSize] = [:]
     @Published var alignmentDict: [UUID:Int] = [:]
     @Published var stringObjectOutputList: [StringObject] = []
@@ -117,7 +112,6 @@ class PSDViewModel: ObservableObject{
     }
     
     func FetchStringObjectsInfo()  {
-        //print("temp Path: \(NSTemporaryDirectory())")
         let group = DispatchGroup()
         
         let queueCalc = DispatchQueue(label: "calc")
@@ -144,7 +138,6 @@ class PSDViewModel: ObservableObject{
         }
 
         group.notify(queue: DispatchQueue.main) {
-            //self.stringObjectListData = self.FiltStringObjects(originalList: self.stringObjectListData)
             self.FetchCharFrameListData()
             self.FetchStringObjectFontNameDict()
             psdViewModel.indicatorTitle = ""
@@ -167,14 +160,9 @@ class PSDViewModel: ObservableObject{
     func CleanAll(){
         stringObjectListData = []
         charFrameListData = []
-        //charFrameListRects = []
         selectedIDList = []
-        //selectedCharImageListObjectList = [CharImageThumbnailObject]()
         stringObjectStatusDict = [:]
-        //stringObjectFixedDict = [:]
         updateStringObjectList = []
-//        ignoreStringObjectList = []
-//        fixedStringObjectList = []
         stringObjectOutputList = []
         StringObjectNameDict = [:]
         stringOverlay = true
@@ -300,8 +288,6 @@ class PSDViewModel: ObservableObject{
     }
     
     func FetchCharFrameListData() {
-        //        charFrameListData.removeAll()
-        //        charFrameListData.append(contentsOf: DataStore.charFrameList)
         charFrameListData.removeAll()
         for i in 0 ..< stringObjectListData.count {
             for j in 0 ..< stringObjectListData[i].charRects.count{
@@ -311,14 +297,9 @@ class PSDViewModel: ObservableObject{
         }
     }
     
-//    func FetchCharFrameListRects(){
-//        for element in charFrameListData{
-//            charFrameListRects.append(element.rect)
-//        }
-//    }
     
     
-    func UpdateSelectedIDList(idList: [UUID] ){
+    func FetchSelectedIDList(idList: [UUID] ){
         if selectedIDList.count == 0 {
             self.selectedIDList = []
         }else{

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct psdPageView: View {
-    var psdPageObject: psdPage
+    //var psdPageObject: psdPage
     @State var isCommitted = false
     //let tmpObj = psdPage(id: UUID(), name: "xxxx.psd", image: CIImage.init(), isCommitted: false)
     var body: some View {

@@ -70,6 +70,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var charColorModeList: [Int]
     var FontName: String
     var alignment: Int
+    var status: Int //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
@@ -97,6 +98,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = []
         self.FontName = ""
         self.alignment = 0
+        self.status = 0
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
@@ -126,6 +128,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = []
         self.FontName = ""
         self.alignment = 0
+        self.status = 0
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
@@ -170,6 +173,10 @@ struct StringObject : Identifiable, Equatable, Hashable{
         charRects = result
         
         stringRect = CGRect.init(x: stringRect.minX + x, y: stringRect.minY + y, width: stringRect.width, height: stringRect.height)
+    }
+    
+    mutating func SetStatus(status: Int){
+        self.status = status
     }
     
     func FixContent(_ target: String) -> String{

@@ -49,16 +49,17 @@ struct StringLabel: View {
     
     func InfoBtnTapped(){
         //print("stringLabel.id: \(stringLabel.content)")
-        stringObjectVM.UpdateSelectedIDList(idList: [id])
+        stringObjectVM.FetchSelectedIDList(idList: [id])
         //imageProcessViewModel.FindNearestStandardRGB(stringObjectVM.FindStringObjectByID(id: id)?.color ?? CGColor.white)
     }
     
     func FixedBtnTapped(){
         //fixed = !fixed
-        if stringObjectVM.stringObjectStatusDict[id] == 1 {
-            stringObjectVM.stringObjectStatusDict[id] = 0
+        
+        if stringObjectVM.FindStringObjectByID(id: id)!.status == 1 {
+            stringObjectVM.FindStringObjectByID(id: id)!.SetStatus(status: 0)
         }else {
-            stringObjectVM.stringObjectStatusDict[id] = 1
+            stringObjectVM.FindStringObjectByID(id: id)!.SetStatus(status: 1)
         }
 
     }
