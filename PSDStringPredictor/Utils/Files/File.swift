@@ -45,7 +45,7 @@ func TempPath()-> String{
     return tmpFolder
 }
 
-func DuplicateFileToTempPath(at srcURL: URL) ->Bool {
+func DuplicateFileToTempPath(at srcURL: URL) ->String {
     print("Temp Folder: \(TempPath())")
     let tempURL = URL.init(string: TempPath())
     let dstURL = URL.init(fileURLWithPath: tempURL!.appendingPathComponent(srcURL.lastPathComponent).path)
@@ -56,8 +56,8 @@ func DuplicateFileToTempPath(at srcURL: URL) ->Bool {
         try FileManager.default.copyItem(at: srcURL, to: dstURL)
     } catch (let error) {
         print("Cannot copy item at \(srcURL) to \(dstURL): \(error)")
-        return false
+        return ""
     }
-    return true
+    return dstURL.path
 }
 

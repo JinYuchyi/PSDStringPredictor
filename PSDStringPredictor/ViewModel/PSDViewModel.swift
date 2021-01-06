@@ -12,7 +12,7 @@ import Vision
 import Foundation
 
 //struct StringObject: Hashable, Codable, Identifiable {
-class StringObjectViewModel: ObservableObject{
+class PSDViewModel: ObservableObject{
     
     private var workItem: DispatchWorkItem?
     
@@ -21,6 +21,8 @@ class StringObjectViewModel: ObservableObject{
     var stringObjectZero: StringObject = StringObject()
     let pixelProcess = PixelProcess()
     let ocr = OCR()
+    
+    //@Published var psds = PSD()
 
     let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
     
@@ -30,18 +32,12 @@ class StringObjectViewModel: ObservableObject{
     @Published var charFrameListData: [CharFrame] = []
 
     @Published var selectedIDList: [UUID] = []
-    //@Published var selectedCharImageListObjectList = [CharImageThumbnailObject]()
     @Published var stringObjectStatusDict: [UUID: Int] = [:] //0 normal, 1 fixed, 2 ignored
-//    @Published var stringObjectIgnoreDict: [UUID: Bool] = [:]
-//    @Published var stringObjectFixedDict: [UUID: Bool] = [:]
     @Published var updateStringObjectList: [UUID] = []
-//    @Published var ignoreStringObjectList: [UUID] = []
-//    @Published var fixedStringObjectList: [UUID] = []
     @Published var StringObjectNameDict: [UUID:String] = [:]
     
     @Published var DragOffsetDict: [UUID: CGSize] = [:]
     @Published var alignmentDict: [UUID:Int] = [:]
-    @Published var psdPageObjectList: [psdPage] = Array(repeating: psdPage(), count: 10)
     @Published var stringObjectOutputList: [StringObject] = []
     
     @Published var stringOverlay: Bool = true
@@ -50,7 +46,7 @@ class StringObjectViewModel: ObservableObject{
     @Published var indicatorTitle: String = ""
     @Published var warningContent: String = ""
     
-    @Published var OKForProcess: Bool = false
+    //@Published var OKForProcess: Bool = false
     
     //Constant
     let fontDecentOffsetScale: CGFloat = 0.6
@@ -151,7 +147,7 @@ class StringObjectViewModel: ObservableObject{
             //self.stringObjectListData = self.FiltStringObjects(originalList: self.stringObjectListData)
             self.FetchCharFrameListData()
             self.FetchStringObjectFontNameDict()
-            stringObjectViewModel.indicatorTitle = ""
+            psdViewModel.indicatorTitle = ""
         }
     }
     
@@ -235,6 +231,7 @@ class StringObjectViewModel: ObservableObject{
                 descent = descent * fontDecentOffsetScale
             }
             
+            
             let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
             
             var tmpObj = obj
@@ -254,7 +251,7 @@ class StringObjectViewModel: ObservableObject{
         var newList : [StringObject] = objList
         var ignoreList: [UUID] = []
         var index = 0
-        for (key, value) in stringObjectViewModel.stringObjectStatusDict{
+        for (key, value) in psdViewModel.stringObjectStatusDict{
         //for (key, value) in stringObjectViewModel.stringObjectFixedDict{
             if value == 1 && value == 2 {
                 ignoreList.append(key)
@@ -281,15 +278,15 @@ class StringObjectViewModel: ObservableObject{
         updateStringObjectList = newList.map{$0.id}
         //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
         
-        for (key, value) in stringObjectViewModel.stringObjectStatusDict{
+        for (key, value) in psdViewModel.stringObjectStatusDict{
             if value == 1{
                 newList.append(FindStringObjectByID(id: key)! )
             }
         }
         
-        stringObjectViewModel.stringObjectOutputList = newList
+        psdViewModel.stringObjectOutputList = newList
         
-        for (key, value) in stringObjectViewModel.stringObjectStatusDict{
+        for (key, value) in psdViewModel.stringObjectStatusDict{
             if value == 2{
                 newList.append(FindStringObjectByID(id: key)!)
             }

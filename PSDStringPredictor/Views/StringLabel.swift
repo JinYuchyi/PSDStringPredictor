@@ -19,7 +19,7 @@ struct StringLabel: View {
 //    @State var fixedEnabled: Bool
 //    @State var ignoredEnabled: Bool
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
+    @ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     @State var width: CGFloat = 0
     @State var alignmentIconName = "alignLeft-round"
     

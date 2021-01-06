@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct IndicatorView: View {
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var ocrVM = OCR()
     @State var start = false
     var body: some View {

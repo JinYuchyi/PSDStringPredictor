@@ -20,7 +20,7 @@ struct ContentView: View {
     let data = DataStore()
     let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     @State var showImage = false

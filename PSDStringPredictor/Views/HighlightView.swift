@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HighlightView: View {
     @ObservedObject var imageVM = imageProcessViewModel
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     //imageProcessViewModel.targetNSImage.size.height - obj.stringRect.origin.y
     //let ids: [UUID]
     var body: some View {

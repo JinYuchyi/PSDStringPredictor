@@ -13,11 +13,11 @@ import AppKit
 //import SQLite
 
 class DataStore{
-    static var stringObjectList: [StringObject] = []
+    //static var stringObjectList: [StringObject] = []
     //DB
 //    static var dbConnection: Connection!
-    static var csvPath: String = ""
-    static var fontCsvPath: String = ""
+//    static var csvPath: String = ""
+//    static var fontCsvPath: String = ""
     //ImageProcess
     //static var targetNSImage: NSImage  = NSImage.init()
     //static var targetImageProcessed: CIImage  = CIImage.init()
@@ -100,7 +100,7 @@ class DataStore{
     ]
     
     //UI
-    static var charFrameIndex = 0
+    //static var charFrameIndex = 0
     static var charFrameList: [CharFrame] = []
     static var fontStandardObjectList: [FontStandardObject] = []
     
@@ -109,20 +109,20 @@ class DataStore{
     static var colorMode = -1 // 1 = Light mode, 2 = Dark Mode
     static var imagePath = ""
 
-    static var logListData = [
-        LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
-        LogObject(content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
-    ]
+//    static var logListData = [
+//        LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),
+//        LogObject(content: "Log 2", time: "xxx-xxx", category: LogObject.Category.normal)
+//    ]
     
-    static func FillCharFrameList() {
-        charFrameList.removeAll()
-        for i in 0 ..< stringObjectList.count {
-            for j in 0 ..< stringObjectList[i].charRects.count{
-                let tmp = CharFrame(rect: stringObjectList[i].charRects[j], char: String(stringObjectList[i].charArray[j]), predictedSize: (stringObjectList[i].charSizeList[j]))
-                charFrameList.append(tmp)
-            }
-        }
-    }
+//    static func FillCharFrameList() {
+//        charFrameList.removeAll()
+//        for i in 0 ..< stringObjectList.count {
+//            for j in 0 ..< stringObjectList[i].charRects.count{
+//                let tmp = CharFrame(rect: stringObjectList[i].charRects[j], char: String(stringObjectList[i].charArray[j]), predictedSize: (stringObjectList[i].charSizeList[j]))
+//                charFrameList.append(tmp)
+//            }
+//        }
+//    }
     
     
     

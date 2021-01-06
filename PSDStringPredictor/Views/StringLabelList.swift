@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LabelsOnImage: View {
     @ObservedObject var imageProcess: ImageProcess = imageProcessViewModel
-    @ObservedObject var stringObjectVM : StringObjectViewModel = stringObjectViewModel
+    @ObservedObject var stringObjectVM : PSDViewModel = psdViewModel
     let charFrameList: [CharFrame]
     
     var body: some View {

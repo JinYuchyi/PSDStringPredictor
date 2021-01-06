@@ -240,7 +240,7 @@ class ImageProcess: ObservableObject{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
                 {
                     //Reset stringobject list
-                    stringObjectViewModel.CleanAll()
+                    psdViewModel.CleanAll()
                     
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.SetTargetNSImage(tmp) //Reset images
@@ -251,21 +251,21 @@ class ImageProcess: ObservableObject{
                     DataStore.imagePath = panel.url!.path
                     
                     let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
+                    
                     if settingViewModel.checkDPISelection == 1 {
                         if (dpi != 72 ) {
-                            stringObjectViewModel.OKForProcess = false
-                            stringObjectViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
+                            //stringObjectViewModel.OKForProcess = false
+                            psdViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
                         }else{
-                            stringObjectViewModel.OKForProcess = true
-                            stringObjectViewModel.warningContent = ""
+                            //stringObjectViewModel.OKForProcess = true
+                            psdViewModel.warningContent = ""
                         }
                     }else{
-                        stringObjectViewModel.OKForProcess = true
-                        stringObjectViewModel.warningContent = ""
+                        //stringObjectViewModel.OKForProcess = true
+                        psdViewModel.warningContent = ""
                     }
                     
-                    //Convert to 72 DPI and save to tmp path
-                    DuplicateFileToTempPath(at: panel.url!)
+
                 }
             }
         }

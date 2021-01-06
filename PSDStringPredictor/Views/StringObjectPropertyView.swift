@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StringObjectPropertyView: View {
     
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var imageProcess = imageProcessViewModel
     @State var stringField: String = ""
     @State var weight: String = "Regular"

@@ -13,8 +13,8 @@ struct ControlPanel: View {
     
     //var dbvm = DBViewModel()
     let ternimalScriptMgr = TernimalScriptManager()
-    @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
-    @ObservedObject var strObjVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
+    @ObservedObject var strObjVM = psdViewModel
     @ObservedObject var imageProcessVM = imageProcessViewModel
     @ObservedObject var settingsVM = settingViewModel
     var imgUtil: ImageUtil = ImageUtil()
@@ -38,13 +38,13 @@ struct ControlPanel: View {
             //HStack{
 
                 Button(action: {stringObjectVM.SetSelectionToFixed()}){
-                    Text("Ready")
+                    Text("Mark Strings as Ready")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                     
                 }
                 
                 Button(action: {stringObjectVM.SetSelectionToIgnored()}){
-                    Text("Ignore")
+                    Text("Mark Strings as Ignore")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                 }
             //}
@@ -61,7 +61,7 @@ struct ControlPanel: View {
                     Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
-                .disabled(!self.stringObjectVM.OKForProcess)
+                //.disabled(!self.stringObjectVM.OKForProcess)
                 
                 Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
                     Text("All")
@@ -81,7 +81,7 @@ struct ControlPanel: View {
                     Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
-                .disabled(!self.stringObjectVM.OKForProcess)
+                //.disabled(!self.stringObjectVM.OKForProcess)
                 
                 Button(action: {self.stringObjectVM.CreatePSD()}){
                     Text("All")

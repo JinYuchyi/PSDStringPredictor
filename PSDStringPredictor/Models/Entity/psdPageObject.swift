@@ -9,13 +9,33 @@
 import Foundation
 import CoreImage
 
-struct psdPage: Identifiable {
-    var id: UUID = UUID()
-    var name: String = "PSD File Name"
-    var image: CIImage = CIImage.init()
-    var isCommitted: Bool = false
+struct PSD {
+    var PSDObjects = [PSDObject]()
     
-//     func ToggleCommit(){
-//        self.isCommitted =  !self.isCommitted
-//    }
+    struct PSDObject: Identifiable{
+        var id: Int
+        var name: String
+        var thumbnail: CIImage
+        var stringObjects: [StringObject]
+        
+        fileprivate init(id: Int, name: String, thumbnail: CIImage, stringObjects: [StringObject]){
+            self.id = id
+            self.name = name
+            self.thumbnail = thumbnail
+            self.stringObjects = stringObjects
+        }
+    }
+    
+    fileprivate var uniqID = 0
+    
+    mutating func addPSDObject( name: String, thumbnail: CIImage, stringObjects: [StringObject]){
+        PSDObjects.append(PSDObject(id: uniqID, name: name, thumbnail:thumbnail, stringObjects:stringObjects))
+        uniqID = (uniqID + 1) % 1000000
+        
+    }
+    
+    mutating func removePSDObject( id: Int)  {
+        let r = PSDObjects.removeAll(where: {$0.id == id})
+    }
+
 }

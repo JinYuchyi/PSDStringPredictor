@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SelectionOverlayView: View {
     @ObservedObject var interactive = interactiveViewModel
-    @ObservedObject var objVM = stringObjectViewModel
+    @ObservedObject var objVM = psdViewModel
     @ObservedObject var imageVM = imageProcessViewModel
     @State var startPos = CGPoint.zero
     @State var endPos = CGPoint.zero

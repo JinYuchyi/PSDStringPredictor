@@ -23,11 +23,7 @@ import Foundation
 
 //struct StringObject: Hashable, Codable, Identifiable {
 struct StringObject : Identifiable, Equatable, Hashable{
-    
-//    var hashValue: Int {
-//        return id.hashValue
-//    }
-//
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -41,14 +37,14 @@ struct StringObject : Identifiable, Equatable, Hashable{
             lhs.fontSize == rhs.fontSize &&
             lhs.fontWeight == rhs.fontWeight &&
             lhs.stringRect == rhs.stringRect &&
-            lhs.observation == rhs.observation &&
+            //lhs.observation == rhs.observation &&
             lhs.color == rhs.color &&
             lhs.charArray == rhs.charArray &&
             lhs.charRects == rhs.charRects &&
             lhs.charSizeList == rhs.charSizeList &&
             lhs.charImageList == rhs.charImageList &&
-            lhs.isPredictedList == rhs.isPredictedList &&
-            lhs.isForbidden == rhs.isForbidden
+            lhs.isPredictedList == rhs.isPredictedList
+            //lhs.isForbidden == rhs.isForbidden
     }
     
     
@@ -60,7 +56,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var fontSize: CGFloat
     var fontWeight:  String
     var stringRect: CGRect
-    var observation : VNRecognizedTextObservation
+    //var observation : VNRecognizedTextObservation
     var color: CGColor
     var charArray: [Character]
     var charRects: [CGRect]
@@ -68,19 +64,16 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var charImageList: [CIImage]
     var charFontWeightList: [String]
     var isPredictedList: [Int]
-    var isForbidden: Bool
+    //var isForbidden: Bool
     var confidence: CGFloat
     var colorMode: Int
     var charColorModeList: [Int]
     var FontName: String
     var alignment: Int
     var isParagraph: Bool = false
-    //@EnvironmentObject var db: DB
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
-    //let db = DB.shared
-    //var stringObjectList: [StringObject]
-    
+
     init(){
         self.id = UUID()
         self.content = "No content."
@@ -91,14 +84,14 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontWeight =  ""
         self.charImageList = []
         self.stringRect = CGRect()
-        self.observation = VNRecognizedTextObservation.init()
+        //self.observation = VNRecognizedTextObservation.init()
         self.color = CGColor.black
         self.charArray = []
         self.charRects = []
         self.charSizeList = []
         self.charFontWeightList = []
         self.confidence = 0
-        self.isForbidden = false
+        //self.isForbidden = false
         self.charColorModeList = []
         self.trackingPS = 0
         self.isPredictedList = []
@@ -108,37 +101,9 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
         self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-
     }
     
-    init(_ content: String, _ stringRect: CGRect, _ observation: VNRecognizedTextObservation, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
-
-//        id = UUID()
-//        self.content = content
-//        self.tracking = 10
-//        self.fontSize = 0.0
-//        self.colorMode = -1
-//        self.fontWeight = "Regular"
-//        self.stringRect = stringRect
-//        self.observation = observation
-//        self.color = CGColor.black
-//        self.charArray = charArray
-//        self.charRects = charRacts
-//        self.charImageList = []
-//
-//        self.charSizeList = []
-//        self.charFontWeightList = []
-//        self.confidence = 0
-//        self.isForbidden = false
-//        self.charColorModeList = []
-//        self.trackingPS = 0
-//        self.isPredictedList = []
-//        self.FontName = ""
-//        self.alignment = 0
-//        self.FontName = CalcFontFullName()
-//        self.fontWeight = PredictFontWeight()
-//        self.colorMode = CalcColorMode()
-//        self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+    init(_ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
         
         id = UUID()
         self.content = content
@@ -148,14 +113,14 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontWeight = "Regular"
         self.charImageList = charImageList
         self.stringRect = stringRect
-        self.observation = observation
+        //self.observation = observation
         self.color = CGColor.black
         self.charArray = charArray
         self.charRects = charRacts
         self.charSizeList = []
         self.charFontWeightList = []
         self.confidence = confidence
-        self.isForbidden = false
+        //self.isForbidden = false
         self.charColorModeList = []
         self.trackingPS = 0
         self.isPredictedList = []
@@ -196,7 +161,16 @@ struct StringObject : Identifiable, Equatable, Hashable{
         return result
     }
     
-
+    mutating func SetOffset(x: CGFloat, y: CGFloat){
+        var result: [CGRect] = []
+        for cr in charRects {
+            let tmp = CGRect.init(x: cr.minX + x, y: cr.minY + y, width: cr.width, height: cr.height)
+            result.append(tmp)
+        }
+        charRects = result
+        
+        stringRect = CGRect.init(x: stringRect.minX + x, y: stringRect.minY + y, width: stringRect.width, height: stringRect.height)
+    }
     
     func FixContent(_ target: String) -> String{
         var res: String = target
@@ -502,9 +476,9 @@ struct StringObject : Identifiable, Equatable, Hashable{
         return result
     }
     
-    mutating func SetForbidden(_ f: Bool){
-        isForbidden = f
-    }
+//    mutating func SetForbidden(_ f: Bool){
+//        isForbidden = f
+//    }
     
 }
 

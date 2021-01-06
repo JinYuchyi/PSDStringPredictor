@@ -17,7 +17,7 @@ struct CharacterFrameView: View {
     //var IDList: [UUID]
     let imgUtil = ImageUtil()
     @ObservedObject var imgProcess = imageProcessViewModel
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     @State var overText: Bool = false
     //@State var isMasked: Bool = false
 
