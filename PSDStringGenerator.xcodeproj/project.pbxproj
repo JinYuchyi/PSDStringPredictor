@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F0007BC252EF8AC0047574A /* Csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0007BB252EF8AC0047574A /* Csv.swift */; };
+		3F040A2825A69C4F0054E124 /* StringObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F040A2725A69C4F0054E124 /* StringObjectExtension.swift */; };
 		3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0782822541B9F0007163D6 /* FontExtension.swift */; };
 		3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0DE2F425694E5A00BD3A3A /* JSManager.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
@@ -119,6 +120,7 @@
 
 /* Begin PBXFileReference section */
 		3F0007BB252EF8AC0047574A /* Csv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Csv.swift; sourceTree = "<group>"; };
+		3F040A2725A69C4F0054E124 /* StringObjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectExtension.swift; sourceTree = "<group>"; };
 		3F0782822541B9F0007163D6 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		3F0DE2F425694E5A00BD3A3A /* JSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSManager.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */,
 				3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */,
 				3FE881282532E6DD0088A1CD /* FontDataExtension.swift */,
+				3F040A2725A69C4F0054E124 /* StringObjectExtension.swift */,
 				3F0782822541B9F0007163D6 /* FontExtension.swift */,
 				3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */,
 				3F44C6472570F42500E438CA /* CGColorExtension.swift */,
@@ -708,6 +711,7 @@
 				3F1A629825230D0F006DC9F9 /* Font.swift in Sources */,
 				3F68B707252EA8A900CCFCE5 /* FontData.xcdatamodeld in Sources */,
 				3F68B704252DCAC700CCFCE5 /* ArrayExtension.swift in Sources */,
+				3F040A2825A69C4F0054E124 /* StringObjectExtension.swift in Sources */,
 				3F0007BC252EF8AC0047574A /* Csv.swift in Sources */,
 				3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */,
 				3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */,

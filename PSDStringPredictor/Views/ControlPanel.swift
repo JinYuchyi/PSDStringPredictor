@@ -57,13 +57,13 @@ struct ControlPanel: View {
                 .frame(width: 300, alignment: .leading)
             
             HStack{
-                Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
+                Button(action: {self.stringObjectVM.ProcessOnePSD()}){
                     Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
                 //.disabled(!self.stringObjectVM.OKForProcess)
                 
-                Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
+                Button(action: {self.stringObjectVM.ProcessOnePSD()}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }

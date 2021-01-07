@@ -20,40 +20,45 @@ class PSDViewModel: ObservableObject{
     let pixelProcess = PixelProcess()
     let ocr = OCR()
     
-    //@Published var psds = PSD()
+    @Published var psds = PSD()
 
-    let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
-    
-    @Published var stringObjectListData: [StringObject] = []
-    
-    @Published var charFrameListData: [CharFrame] = []
-    @Published var selectedIDList: [UUID] = []
-    @Published var stringObjectStatusDict: [UUID: Int] = [:] //0 normal, 1 fixed, 2 ignored
-    @Published var updateStringObjectList: [UUID] = []
+    @Published var stringObjectListData: [Int:[StringObject]] = [:]
+    @Published var charFrameListData: [Int:[CharFrame]] = [:]
+    @Published var stringObjectStatusDict: [Int:[UUID: Int]] = [:] //0 normal, 1 fixed, 2 ignored
+    @Published var updateStringObjectList: [Int:[UUID]] = [:]
     @Published var StringObjectNameDict: [UUID:String] = [:]
     @Published var DragOffsetDict: [UUID: CGSize] = [:]
     @Published var alignmentDict: [UUID:Int] = [:]
-    @Published var stringObjectOutputList: [StringObject] = []
+    @Published var stringObjectOutputList: [Int:[StringObject]] = [:]
     
+    //Global
+    @Published var selectedPSDID: Int = 0
+    @Published var selectedIDList: [UUID] = []
     @Published var stringOverlay: Bool = true
     @Published var frameOverlay: Bool = true
     
     @Published var indicatorTitle: String = ""
     @Published var warningContent: String = ""
-    
-    //@Published var OKForProcess: Bool = false
-    
+        
     //Constant
     let fontDecentOffsetScale: CGFloat = 0.6
-    
+    let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
+
     //    private var workItem: DispatchWorkItem?
     
-    func GetAllID() -> [UUID] {
-        var res: [UUID] = []
-        for obj in stringObjectListData{
-            res.append(obj.id)
+//    func GetAllID() -> [UUID] {
+//        var res: [UUID] = []
+//        for obj in stringObjectListData{
+//            res.append(obj.id)
+//        }
+//        return res
+//    }
+    
+    func FetchStringObjectListDict(){
+        stringObjectListData = [:]
+        for obj in psds.PSDObjects{
+            stringObjectListData[obj.id] = obj.stringObjects
         }
-        return res
     }
     
     func GetFontLeading(fontSize: Float) -> Float{
@@ -80,9 +85,9 @@ class PSDViewModel: ObservableObject{
         return result
     }
     
-    func indicatorTitleTest(){
-        self.indicatorTitle = ""
-    }
+//    func indicatorTitleTest(){
+//        self.indicatorTitle = ""
+//    }
     
     func PredictStringObjects(FromCIImage img: CIImage) -> [StringObject] {
         //var strObjs = [StringObject]()
@@ -98,20 +103,23 @@ class PSDViewModel: ObservableObject{
     }
     
     func SwapLastSelectionWithObject(obj: StringObject){
-        
+        //psds.PSDObjects[]
         let id = selectedIDList.last
         //Add to original list
         
         //selectedIDList.append(obj.id)
         //Remove from original list
         if id != nil {
-            stringObjectListData.removeAll(where: {$0.id == id})
+            stringObjectListData[selectedPSDID]!.removeAll(where: {$0.id == id})
             //selectedIDList.removeAll(where: {$0 == id})
         }
-        stringObjectListData.append(obj)
+        stringObjectListData[selectedPSDID]!.append(obj)
+        
     }
     
-    func FetchStringObjectsInfo()  {
+    //Intention
+    
+    func ProcessOnePSD(_id: Int)  {
         let group = DispatchGroup()
         
         let queueCalc = DispatchQueue(label: "calc")
@@ -119,59 +127,61 @@ class PSDViewModel: ObservableObject{
             var allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
             allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
             
-            DispatchQueue.main.async{
+            DispatchQueue.main.async{ [self] in
                 //Refrash the stringobject list
-                for obj in self.stringObjectListData {
-                    if self.stringObjectStatusDict[obj.id] != 1 {
-                        self.stringObjectListData.removeAll(where: {$0.id == obj.id})
+                var tmpList = self.stringObjectListData[_id]!
+                for obj in self.stringObjectListData[_id]! {
+                    if self.stringObjectStatusDict[_id]![obj.id] != 1 {
+                        tmpList.removeAll(where: {$0.id == obj.id})
+                        //self.stringObjectListData.removeAll(where: {$0.id == obj.id})
                     }
-
                 }
                 for obj in allStrObjs {
-                    if self.stringObjectListData.ContainsSame(obj) == false {
-                        self.stringObjectListData.append(obj)
+                    if self.stringObjectListData[_id]!.ContainsSame(obj) == false {
+                        tmpList.append(obj)
                         self.stringObjectStatusDict[obj.id] = 0
                     }
                 }
-
+                self.stringObjectListData[self.selectedPSDID]! = allStrObjs
+                self.FetchStringObjectListDict()
             }
         }
 
         group.notify(queue: DispatchQueue.main) {
-            self.FetchCharFrameListData()
-            self.FetchStringObjectFontNameDict()
+            self.FetchCharFrameListDataForOnePSD()
+            self.FetchStringObjectFontNameDictForOnePSD()
             psdViewModel.indicatorTitle = ""
         }
     }
     
-    func FetchStringObjectOutputIDList()-> [UUID]{
-        var finalList: [UUID] = []
-        for obj in stringObjectListData{
-            finalList.append(obj.id)
-        }
-        for (k,v) in stringObjectStatusDict {
-            if v == 2 {
+    func FetchStringObjectOutputIDListOnePSD(_id: Int)-> [UUID]{
+        var finalList: [UUID] = self.stringObjectListData[_id]!.map({$0.id})
+//        for obj in stringObjectListData{
+//            finalList.append(obj.id)
+//        }
+        for (k,v) in stringObjectStatusDict[_id]! {
+            if v == 2 { //Ignore
                 finalList.removeAll(where: {$0 == k})
             }
         }
         return finalList
     }
     
-    func CleanAll(){
-        stringObjectListData = []
-        charFrameListData = []
+    func CleanAllForOnePSD(){
+        stringObjectListData[selectedPSDID] = []
+        charFrameListData = [:]
         selectedIDList = []
         stringObjectStatusDict = [:]
-        updateStringObjectList = []
-        stringObjectOutputList = []
+        updateStringObjectList[selectedPSDID] = []
+        stringObjectOutputList = [:]
         StringObjectNameDict = [:]
         stringOverlay = true
         frameOverlay = true
     }
     
     
-    func FetchStringObjectFontNameDict(){
-        for obj in stringObjectListData{
+    func FetchStringObjectFontNameDictForOnePSD(){
+        for obj in stringObjectListData[selectedPSDID]!{
             StringObjectNameDict[obj.id] = obj.CalcFontFullName()
             alignmentDict[obj.id] = obj.alignment
         }
@@ -263,8 +273,7 @@ class PSDViewModel: ObservableObject{
             }
             index += 1
         }
-        updateStringObjectList = newList.map{$0.id}
-        //print("UpdateList count: \(stringObjectViewModel.updateStringObjectList.count)")
+        updateStringObjectList[selectedPSDID] = newList.map{$0.id}
         
         for (key, value) in psdViewModel.stringObjectStatusDict{
             if value == 1{
@@ -272,7 +281,7 @@ class PSDViewModel: ObservableObject{
             }
         }
         
-        psdViewModel.stringObjectOutputList = newList
+        psdViewModel.stringObjectOutputList[selectedPSDID] = newList
         
         for (key, value) in psdViewModel.stringObjectStatusDict{
             if value == 2{
@@ -283,16 +292,16 @@ class PSDViewModel: ObservableObject{
         return (newList)
     }
     
-    func CreatePSD(){
-        UpdatePSD()
-    }
+//    func CreatePSD(){
+//        UpdatePSD()
+//    }
     
-    func FetchCharFrameListData() {
+    func FetchCharFrameListDataForOnePSD() {
         charFrameListData.removeAll()
-        for i in 0 ..< stringObjectListData.count {
-            for j in 0 ..< stringObjectListData[i].charRects.count{
-                let tmp = CharFrame(rect: stringObjectListData[i].charRects[j], char: String(stringObjectListData[i].charArray[j]), predictedSize: (stringObjectListData[i].charSizeList[j]))
-                charFrameListData.append(tmp)
+        for i in 0 ..< stringObjectListData[selectedPSDID]!.count {
+            for j in 0 ..< stringObjectListData[selectedPSDID]![i].charRects.count{
+                let tmp = CharFrame(rect: stringObjectListData[selectedPSDID]![i].charRects[j], char: String(stringObjectListData[selectedPSDID]![i].charArray[j]), predictedSize: (stringObjectListData[selectedPSDID]![i].charSizeList[j]))
+                charFrameListData[selectedPSDID]!.append(tmp)
             }
         }
     }
@@ -303,13 +312,7 @@ class PSDViewModel: ObservableObject{
         if selectedIDList.count == 0 {
             self.selectedIDList = []
         }else{
-            //selectedCharImageListObjectList = []
             self.selectedIDList = idList
-            
-//            for (index, img) in (selectedStringObjectList.last!.charImageList).enumerated(){
-//                let temp = CharImageThumbnailObject(image: img, char: String(selectedStringObjectList.last!.charArray[index]), weight: selectedStringObjectList.last!.charFontWeightList[index], size: Int(selectedStringObjectList.last!.charSizeList[index]))
-//                selectedCharImageListObjectList.append( temp )
-//            }
         }
     }
     
@@ -323,7 +326,7 @@ class PSDViewModel: ObservableObject{
         return result
     }
     
-    func GetFixedObjectIDList() -> [UUID]{
+    func GetFixedObjectIDListForOnePSD(_id: Int) -> [UUID]{
         var result: [UUID] = []
         for (k, v) in stringObjectStatusDict {
             if (v == 1 && FindStringObjectByID(id: k) != nil) {
@@ -335,7 +338,13 @@ class PSDViewModel: ObservableObject{
     }
     
     func FindStringObjectByID(id: UUID) -> StringObject?{
-        return stringObjectListData.FindByID(id)
+        for i in 0..<stringObjectListData.count{
+            let find = stringObjectListData[i]?.FindByID(id)
+            if find != nil{
+               return find
+            }
+        }
+        return nil
     }
     
     func CalcBGColor(obj: StringObject) -> [Float]{
@@ -348,8 +357,8 @@ class PSDViewModel: ObservableObject{
         indicatorTitle = str
     }
     
-    func UpdatePSD(){
-        let psdPath = DataStore.imagePath
+    func CreatePSDForOnePSD(_id: Int){
+        let psdPath = psds.PSDObjects[_id].imageURL.path
         var contentList = [String]()
         var colorList = [[Int]]()
         var fontSizeList:[Float] = []
@@ -362,15 +371,15 @@ class PSDViewModel: ObservableObject{
         var bgClolorList = [[Float]]()
         var isParagraphList = [Bool]()
         
-        var updateList = stringObjectListData
+        var updateList = stringObjectListData[_id]
         
-        for (key,value) in stringObjectStatusDict{
-            if value == 2{
-                updateList.removeAll(where: {$0.id == key})
+        for (key,value) in stringObjectStatusDict[_id]{
+            if  value == 2{
+                updateList!.removeAll(where: {$0.id == key})
             }
         }
         
-        for obj in updateList{
+        for obj in updateList!{
             let newString = obj.content.replacingOccurrences(of: "\n", with: " ")
             contentList.append(newString)
             var tmpColor: [Int] = []

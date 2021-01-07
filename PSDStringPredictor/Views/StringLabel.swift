@@ -18,6 +18,7 @@ struct StringLabel: View {
    // @State var ignored: Bool
 //    @State var fixedEnabled: Bool
 //    @State var ignoredEnabled: Bool
+    var psd = PSD()
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     @ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     @State var width: CGFloat = 0
@@ -53,10 +54,11 @@ struct StringLabel: View {
         //imageProcessViewModel.FindNearestStandardRGB(stringObjectVM.FindStringObjectByID(id: id)?.color ?? CGColor.white)
     }
     
-    func FixedBtnTapped(){
+    mutating func FixedBtnTapped(){
         //fixed = !fixed
         
         if stringObjectVM.FindStringObjectByID(id: id)!.status == 1 {
+            psd.PSDObjects[0].stringObjects[0].SetStatus(status: 0)
             stringObjectVM.FindStringObjectByID(id: id)!.SetStatus(status: 0)
         }else {
             stringObjectVM.FindStringObjectByID(id: id)!.SetStatus(status: 1)

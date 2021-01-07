@@ -175,9 +175,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         stringRect = CGRect.init(x: stringRect.minX + x, y: stringRect.minY + y, width: stringRect.width, height: stringRect.height)
     }
     
-    mutating func SetStatus(status: Int){
-        self.status = status
-    }
+
     
     func FixContent(_ target: String) -> String{
         var res: String = target

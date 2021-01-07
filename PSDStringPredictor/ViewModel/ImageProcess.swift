@@ -240,7 +240,7 @@ class ImageProcess: ObservableObject{
                 if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
                 {
                     //Reset stringobject list
-                    psdViewModel.CleanAll()
+                    psdViewModel.CleanAllForOnePSD()
                     
                     let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
                     self.SetTargetNSImage(tmp) //Reset images
