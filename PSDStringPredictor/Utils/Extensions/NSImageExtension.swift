@@ -65,6 +65,42 @@ extension NSImage {
         return result
     }
     
+    func resize(_ to: Int, isPixels: Bool = false) -> NSImage {
+        
+//        var toSize = to
+//        let screenScale: CGFloat = NSScreen.main?.backingScaleFactor ?? 1.0
+
+//        if isPixels {
+//
+//            toSize.width = to.width / screenScale
+//            toSize.height = to.height / screenScale
+//        }
+//        var nw = size.width
+//        var nh = size.height
+        var tw: Int = 0
+        var th: Int = 0
+        if size.width >= size.height {
+            tw = to
+            let r: CGFloat = CGFloat(to) / size.width
+            th = Int((r * size.height).rounded())
+        }else {
+            th = to
+            let r: CGFloat = CGFloat(to) / size.height
+            tw = Int((r * size.width).rounded())
+        }
+        
+    
+        let toRect = NSRect(x: 0, y: 0, width: tw, height: th)
+        let fromRect =  NSRect(x: 0, y: 0, width: size.width, height: size.height)
+        
+        let newImage = NSImage(size: toRect.size)
+        newImage.lockFocus()
+        draw(in: toRect, from: fromRect, operation: NSCompositingOperation.copy, fraction: 1.0)
+        newImage.unlockFocus()
+    
+        return newImage
+    }
+    
 
  
 }

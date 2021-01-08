@@ -60,6 +60,9 @@
 		3F7239F1257F2EAE003EC998 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3F7239F0257F2EAE003EC998 /* README.md */; };
 		3F7239F4257F318C003EC998 /* IndicatorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */; };
 		3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */; };
+		3F79184425A84459003F158E /* defaultImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F79184325A84459003F158E /* defaultImage.png */; };
+		3F79184925A85CD2003F158E /* PsdThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F79184825A85CD2003F158E /* PsdThumbnail.swift */; };
+		3F79184C25A86B24003F158E /* psdThumbnailList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F79184B25A86B24003F158E /* psdThumbnailList.swift */; };
 		3F8208502510F8CE00832192 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82084F2510F8CE00832192 /* File.swift */; };
 		3F820854251112BA00832192 /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F820853251112BA00832192 /* FontTracking.swift */; };
 		3F8208562516068100832192 /* PSDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8208552516068100832192 /* PSDViewModel.swift */; };
@@ -71,8 +74,6 @@
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
 		3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */; };
 		3F9C3956256F496400F686A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F9C3955256F496400F686A7 /* Main.storyboard */; };
-		3F9C395A256F895F00F686A7 /* psdPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C3959256F895F00F686A7 /* psdPageView.swift */; };
-		3F9C395D256F8A0C00F686A7 /* psdPagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C395C256F8A0C00F686A7 /* psdPagesView.swift */; };
 		3F9C3960256F8A9800F686A7 /* psdPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C395F256F8A9800F686A7 /* psdPageObject.swift */; };
 		3F9ED7A52566090100F950BC /* ImageResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9ED7A42566090100F950BC /* ImageResourceView.swift */; };
 		3F9ED7A825662CD600F950BC /* ButtonStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */; };
@@ -105,7 +106,6 @@
 		3FDBC4CD2583535E00E9C2DC /* InteractiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4CC2583535E00E9C2DC /* InteractiveViewModel.swift */; };
 		3FDBC4D12583613800E9C2DC /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDBC4D02583613800E9C2DC /* SettingViewModel.swift */; };
 		3FE881292532E6DD0088A1CD /* FontDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE881282532E6DD0088A1CD /* FontDataExtension.swift */; };
-		3FE8813D25333D080088A1CD /* StringObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813C25333D080088A1CD /* StringObjectListView.swift */; };
 		3FE8814025333D820088A1CD /* StringObjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8813F25333D820088A1CD /* StringObjectRow.swift */; };
 		3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F8208512511129200832192 /* TrackingRegressor.mlmodel */; };
 		3FEBA6C1251C93F7002D8EC1 /* ViewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */; };
@@ -171,6 +171,9 @@
 		3F7239F0257F2EAE003EC998 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorCircleView.swift; sourceTree = "<group>"; };
 		3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImageExtension.swift; sourceTree = "<group>"; };
+		3F79184325A84459003F158E /* defaultImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultImage.png; sourceTree = "<group>"; };
+		3F79184825A85CD2003F158E /* PsdThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdThumbnail.swift; sourceTree = "<group>"; };
+		3F79184B25A86B24003F158E /* psdThumbnailList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = psdThumbnailList.swift; sourceTree = "<group>"; };
 		3F82084F2510F8CE00832192 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		3F8208512511129200832192 /* TrackingRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TrackingRegressor.mlmodel; sourceTree = "<group>"; };
 		3F820853251112BA00832192 /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
@@ -183,8 +186,6 @@
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
 		3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessControlView.swift; sourceTree = "<group>"; };
 		3F9C3955256F496400F686A7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		3F9C3959256F895F00F686A7 /* psdPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = psdPageView.swift; sourceTree = "<group>"; };
-		3F9C395C256F8A0C00F686A7 /* psdPagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = psdPagesView.swift; sourceTree = "<group>"; };
 		3F9C395F256F8A9800F686A7 /* psdPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = psdPageObject.swift; sourceTree = "<group>"; };
 		3F9ED7A42566090100F950BC /* ImageResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceView.swift; sourceTree = "<group>"; };
 		3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleView.swift; sourceTree = "<group>"; };
@@ -221,7 +222,6 @@
 		3FDBC4D02583613800E9C2DC /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3FE881282532E6DD0088A1CD /* FontDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontDataExtension.swift; sourceTree = "<group>"; };
 		3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRegressor.swift; sourceTree = "<group>"; };
-		3FE8813C25333D080088A1CD /* StringObjectListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringObjectListView.swift; sourceTree = "<group>"; };
 		3FE8813F25333D820088A1CD /* StringObjectRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringObjectRow.swift; sourceTree = "<group>"; };
 		3FEBA6C0251C93F7002D8EC1 /* ViewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelContainer.swift; sourceTree = "<group>"; };
 		3FEBA6C3251CA522002D8EC1 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
@@ -270,6 +270,7 @@
 		3F4D13E725021AFB008F846B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3F79184625A84464003F158E /* Images */,
 				3FF51BA025A2C65C00D11575 /* JS */,
 				3FF51B5A259ADF2800D11575 /* charBounds.csv */,
 				3F44C63C2570D60400E438CA /* CharColorMode.swift */,
@@ -315,10 +316,11 @@
 			isa = PBXGroup;
 			children = (
 				3F6C3CE52580CF5200AB7A19 /* WarningView.swift */,
+				3F79184825A85CD2003F158E /* PsdThumbnail.swift */,
+				3F79184B25A86B24003F158E /* psdThumbnailList.swift */,
 				3F853B702585BEAE002507C4 /* HighlightView.swift */,
 				3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */,
 				3FE8813F25333D820088A1CD /* StringObjectRow.swift */,
-				3FE8813C25333D080088A1CD /* StringObjectListView.swift */,
 				3F50A7AD253DC5BA00C10810 /* ImagePropertyView.swift */,
 				3F5218172521E89200646F91 /* TestView.swift */,
 				3F4D13E32501FB9E008F846B /* ImageView.swift */,
@@ -331,8 +333,6 @@
 				3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */,
 				3F9ED7A42566090100F950BC /* ImageResourceView.swift */,
 				3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */,
-				3F9C3959256F895F00F686A7 /* psdPageView.swift */,
-				3F9C395C256F8A0C00F686A7 /* psdPagesView.swift */,
 				3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */,
 				3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */,
 				3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */,
@@ -369,6 +369,14 @@
 				3F0DE2F425694E5A00BD3A3A /* JSManager.swift */,
 			);
 			path = Script;
+			sourceTree = "<group>";
+		};
+		3F79184625A84464003F158E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				3F79184325A84459003F158E /* defaultImage.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		3FAAB49125146FCA00CB89B1 /* ViewModel */ = {
@@ -605,6 +613,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FA5047D2574CADA00F4A77A /* fontSize.csv in Resources */,
+				3F79184425A84459003F158E /* defaultImage.png in Resources */,
 				3FF51B9E25A2C65500D11575 /* Functions.js in Resources */,
 				3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */,
 				3F8E6CF725A4249F00B383C9 /* StringCreator.jsx in Resources */,
@@ -682,7 +691,6 @@
 				3FDBC4CD2583535E00E9C2DC /* InteractiveViewModel.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
-				3F9C395D256F8A0C00F686A7 /* psdPagesView.swift in Sources */,
 				3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */,
 				3F853B712585BEAE002507C4 /* HighlightView.swift in Sources */,
 				3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */,
@@ -695,10 +703,10 @@
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
 				3F38DB3E2591AA9300EB6CFB /* ScaleSliderView.swift in Sources */,
 				3F308029251DFA3500550DEA /* NSColorExtension.swift in Sources */,
+				3F79184925A85CD2003F158E /* PsdThumbnail.swift in Sources */,
 				3F50A7B0253DC5D900C10810 /* ImagePropertyViewModel.swift in Sources */,
 				3F68B709252EAB6F00CCFCE5 /* TrackingDataManager.swift in Sources */,
 				3FAAB4972514BD6600CB89B1 /* Training.swift in Sources */,
-				3F9C395A256F895F00F686A7 /* psdPageView.swift in Sources */,
 				3FA49B392508B0D40093EBD2 /* LogObject.swift in Sources */,
 				3F1B2B21256CDB7C00D9BA0F /* CharBoundsObject.swift in Sources */,
 				3F50A7BA253DC76500C10810 /* ColorMode.swift in Sources */,
@@ -715,8 +723,8 @@
 				3F0007BC252EF8AC0047574A /* Csv.swift in Sources */,
 				3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */,
 				3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */,
+				3F79184C25A86B24003F158E /* psdThumbnailList.swift in Sources */,
 				3F3E0009253DCA9D0047E4E5 /* ColorMode.mlmodel in Sources */,
-				3FE8813D25333D080088A1CD /* StringObjectListView.swift in Sources */,
 				3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */,
 				3FDBC4B02583114C00E9C2DC /* AppSettingsItem.swift in Sources */,
 				3F7239F4257F318C003EC998 /* IndicatorCircleView.swift in Sources */,

@@ -16,7 +16,7 @@ struct LabelsOnImage: View {
     var body: some View {
         ZStack{
             
-            ForEach(stringObjectVM.FetchStringObjectOutputIDList(), id:\.self){ myid in
+            ForEach(stringObjectVM.FetchStringObjectOutputIDListOnePSD(_id: GetSelectedPsdId() ), id:\.self){ myid in
                 StringLabel(id:myid, charFrameList: charFrameList )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
@@ -28,17 +28,21 @@ struct LabelsOnImage: View {
             
 
             
-            ForEach(stringObjectVM.GetIngoreObjectIDList(), id:\.self){ myid in
+            ForEach(stringObjectVM.GetIngoreObjectIDListOnePSD(psdId: GetSelectedPsdId() ), id:\.self){ myid in
                 StringLabel(id: myid, charFrameList: charFrameList)
             }
             
-            ForEach(stringObjectVM.GetFixedObjectIDList(), id:\.self){ myid in
+            ForEach(stringObjectVM.GetFixedObjectIDListForOnePSD(psdId: GetSelectedPsdId()), id:\.self){ myid in
                 StringLabel(id: myid, charFrameList: charFrameList)
             }
             
 
         }
         
+    }
+    
+    fileprivate func GetSelectedPsdId() -> Int{
+        return stringObjectVM.selectedPSDID
     }
     
 

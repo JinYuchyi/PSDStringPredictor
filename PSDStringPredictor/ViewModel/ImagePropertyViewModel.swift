@@ -13,10 +13,10 @@ class ImagePropertyViewModel: ObservableObject{
     @Published private(set) var colorModeString: String = "No Image"
     
     func FetchImageColorMode(){
-        if (DataStore.colorMode == 1){
+        if (psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1){
             colorModeString = "Light Mode"
         }
-        else if (DataStore.colorMode == 2){
+        else if (psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2){
             colorModeString = "Dark Mode"
         }else{
             colorModeString = "No Image"
@@ -24,7 +24,7 @@ class ImagePropertyViewModel: ObservableObject{
     }
     
     func SetImageColorMode(modeIndex: Int) {
-        DataStore.colorMode = modeIndex
+        psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  = modeIndex
         self.FetchImageColorMode()
     }
 }

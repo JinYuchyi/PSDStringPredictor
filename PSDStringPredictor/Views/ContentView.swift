@@ -34,7 +34,7 @@ struct ContentView: View {
     
     
     fileprivate func LeftViewGroup() -> some View {
-        VStack{
+       // VStack{
 //            Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
 //                Text("Load Image")
 //                //.frame(minWidth: 250,  maxWidth: .infinity)
@@ -44,9 +44,11 @@ struct ContentView: View {
 //
 //            Divider()
             
-            psdPagesView()
-                .frame(width: 300, alignment: .center)
-        }
+//            psdPagesView()
+//                .frame(width: 300, alignment: .center)
+        //}
+        psdThumbnailList()
+        //.frame(width: 300, alignment: .center)
     }
     
     fileprivate func MidViewGroup() -> some View {
@@ -55,7 +57,7 @@ struct ContentView: View {
                 ZStack{
                     ImageView(imageViewModel:imageViewModel)
 
-                    LabelsOnImage( charFrameList: stringObjectVM.charFrameListData)
+                    LabelsOnImage( charFrameList: stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID] ?? [])
 
                     CharacterFrameView()
                         .IsHidden(condition: showPatchLayer)

@@ -51,12 +51,12 @@ class ColorModeClassifier{
                 let topClassification = classifications[0]
                 //print("Predict result: \(topClassification.identifier)" )
                 if (topClassification.identifier == "light"){
-                    DataStore.colorMode = 1
+                    psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  = 1
                 }
                 else if (topClassification.identifier == "dark"){
-                    DataStore.colorMode = 2
+                    psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  = 2
                 }else{
-                    DataStore.colorMode = -1
+                    psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  = -1
                 }
                 
 //                let descriptions = topClassifications.map { classification in

@@ -12,21 +12,16 @@ import Vision
 import SwiftUI
 
 class ImageProcess: ObservableObject{
-    
-    //    @Published var targetImage: CIImage  = CIImage.init()
-    //    @Published var targetImageName: String = "default_image"
-    //    @Published var targetImageSize: [Int64] = []
-    //@EnvironmentObject var data: DataStore
+
     let colorModeClassifier = ColorModeClassifier()
-    //var strObjVM = stringObjectViewModel
-    //var stringObject: StringObject = StringObject()
-    @Published var targetImageProcessed = CIImage.init()
-    @Published var targetImageMasked = CIImage.init()
-    @Published var targetNSImage = NSImage()
-    //@Published var targetCIImage = CIImage()
-    @Published var maskList = [CGRect]()
-    @Published var gammaValue: CGFloat = 1
-    @Published var exposureValue: CGFloat = 0
+
+    @Published var targetImageProcessed = CIImage.init() //selected
+    @Published var targetImageMasked = CIImage.init()//selected
+    @Published var targetNSImage = NSImage()//selected
+    
+    @Published var maskList: [Int:[CGRect]] = [:]
+    @Published var gammaValue: [Int:CGFloat] = [:] // default 1
+    @Published var exposureValue: [Int:CGFloat] = [:] // default 0
     @Published var isConvolution: Bool = false
     
     
@@ -37,8 +32,8 @@ class ImageProcess: ObservableObject{
     
     func SetFilter(){
         if (targetImageMasked.IsValid()){
-            var tmp = ChangeGamma(targetImageMasked, CGFloat(gammaValue))!
-            tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
+            var tmp = ChangeGamma(targetImageMasked, CGFloat(gammaValue[psdViewModel.selectedPSDID] ?? 1))!
+            tmp = ChangeExposure(tmp, CGFloat(exposureValue[psdViewModel.selectedPSDID] ?? 0))!
             if isConvolution == true{
                 tmp = SetConv(tmp)!
             }
@@ -94,9 +89,9 @@ class ImageProcess: ObservableObject{
         var index = 0
         var resultIndex = 0
         
-        if DataStore.colorMode == 1 {
+        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 1 {
             targetList = lightModeHSVList
-        }else if DataStore.colorMode == 2 {
+        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
             targetList = darkModeHSVList
         }
         for c in targetList{
@@ -118,9 +113,9 @@ class ImageProcess: ObservableObject{
         var index = 0
         var resultIndex = 0
         
-        if DataStore.colorMode == 1 {
+        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1 {
             targetList = DataStore.colorLightModeList
-        }else if DataStore.colorMode == 2 {
+        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 2 {
             targetList = DataStore.colorDarkModeList
         }
         for c in targetList{
@@ -269,6 +264,46 @@ class ImageProcess: ObservableObject{
                 }
             }
         }
+        
+    }
+    
+    func LoadImageBtnPressed1()  {
+
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//            let result = panel.runModal()
+//            if result == .OK{
+//                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
+//                {
+//                    //Reset stringobject list
+//                    //psdViewModel.CleanAllForOnePSD()
+//
+
+//                    self.showImage = true
+//
+//                    self.colorModeClassifier.Prediction(fromImage: self.targetImageProcessed)
+//                    imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
+//                    DataStore.imagePath = panel.url!.path
+//
+//                    let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
+//
+//                    if settingViewModel.checkDPISelection == 1 {
+//                        if (dpi != 72 ) {
+//                            //stringObjectViewModel.OKForProcess = false
+//                            psdViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
+//                        }else{
+//                            //stringObjectViewModel.OKForProcess = true
+//                            psdViewModel.warningContent = ""
+//                        }
+//                    }else{
+//                        //stringObjectViewModel.OKForProcess = true
+//                        psdViewModel.warningContent = ""
+//                    }
+//
+//
+//                }
+//            }
+//        }
         
     }
     

@@ -8,24 +8,36 @@
 
 import Foundation
 import CoreImage
+import SwiftUI
+
+struct PSDObject: Identifiable{
+    var id: Int
+    //var name: String
+    //var thumbnail: CIImage
+    var stringObjects: [StringObject]
+    var imageURL: URL
+    var thumbnail: NSImage = NSImage.init()
+    
+    fileprivate init(id: Int, stringObjects: [StringObject], imageURL: URL){
+        self.id = id
+        //self.thumbnail = thumbnail
+        self.stringObjects = stringObjects
+        self.imageURL = imageURL
+        self.thumbnail = FetchThumbnail()
+    }
+    
+    fileprivate func FetchThumbnail() -> NSImage{
+        let imgData = (try? Data(contentsOf: imageURL))
+        if imgData != nil {
+            let rowImage = NSImage.init(data: imgData!)
+            return rowImage!.resize(100)
+        }
+        return NSImage.init()
+    }
+}
 
 struct PSD {
     var PSDObjects = [PSDObject]()
-    
-    struct PSDObject: Identifiable{
-        var id: Int
-        //var name: String
-        //var thumbnail: CIImage
-        var stringObjects: [StringObject]
-        var imageURL: URL
-        
-        fileprivate init(id: Int, stringObjects: [StringObject], imageURL: URL){
-            self.id = id
-            //self.thumbnail = thumbnail
-            self.stringObjects = stringObjects
-            self.imageURL = imageURL
-        }
-    }
     
     fileprivate var uniqID = 0
     
@@ -37,5 +49,17 @@ struct PSD {
     mutating func removePSDObject( id: Int)  {
         let r = PSDObjects.removeAll(where: {$0.id == id})
     }
+    
+    mutating func removePSDObject( imageUrl: URL)  {
+         PSDObjects.removeAll(where: {$0.imageURL == imageUrl})
+    }
+
+}
+
+extension PSDObject {
+    func CalcColorMode() -> Int{
+        return 0
+    }
+    
 
 }

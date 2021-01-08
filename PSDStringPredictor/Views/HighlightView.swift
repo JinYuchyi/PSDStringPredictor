@@ -47,7 +47,7 @@ struct HighlightView: View {
     }
     
     func GetStringObject(_ id: UUID) -> StringObject{
-        return stringObjectVM.stringObjectListData.FindByID(id) ?? StringObject()
+        return stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!
     }
 }
 

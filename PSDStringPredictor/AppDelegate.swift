@@ -225,7 +225,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func LoadImage(_ sender: Any) {
-        imageProcessViewModel.LoadImageBtnPressed()
+        stringObjectVM.LoadImageBtnPressed()
     }
     
 }
