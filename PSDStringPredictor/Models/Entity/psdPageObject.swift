@@ -14,16 +14,16 @@ struct PSDObject: Identifiable{
     var id: Int
     //var name: String
     //var thumbnail: CIImage
-    var stringObjects: [StringObject]
+    //var stringObjects: [StringObject]
     var imageURL: URL
     var thumbnail: NSImage = NSImage.init()
     
 
     
-    fileprivate init(id: Int, stringObjects: [StringObject], imageURL: URL){
+    fileprivate init(id: Int, imageURL: URL){
         self.id = id
         //self.thumbnail = thumbnail
-        self.stringObjects = stringObjects
+        //self.stringObjects = stringObjects
         self.imageURL = imageURL
         self.thumbnail = FetchThumbnail(size: sizeOfThumbnail)
     }
@@ -43,8 +43,8 @@ struct PSD {
     
     fileprivate var uniqID = 0
     
-    mutating func addPSDObject( imageURL: URL, stringObjects: [StringObject]){
-        PSDObjects.append(PSDObject(id: uniqID, stringObjects: stringObjects, imageURL: imageURL))
+    mutating func addPSDObject( imageURL: URL){
+        PSDObjects.append(PSDObject(id: uniqID, imageURL: imageURL))
         uniqID = (uniqID + 1) % 1000000
     }
     

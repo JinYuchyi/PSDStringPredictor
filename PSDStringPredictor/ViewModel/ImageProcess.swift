@@ -62,6 +62,7 @@ class ImageProcess: ObservableObject{
                   let dpi = metaData[keyName] as? Int else {
                 return 0
             }
+            print (dpi)
         //print(metaData)
             return dpi
 //        }else{

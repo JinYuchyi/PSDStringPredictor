@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ImagePropertyView: View {
     @ObservedObject var imagePropertyVM = imagePropertyViewModel
+    @ObservedObject var  psdvm = psdViewModel
     let imageProcessVM = ImageProcess()
     //@State var colorState = -1
     var body: some View {
@@ -20,10 +21,10 @@ struct ImagePropertyView: View {
                     Text("Color Mode")
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
-                    if imagePropertyVM.colorModeString == "Dark Mode"{
+                    if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 2{
                         Text("􀆺")
                             .frame(width: 200, alignment: .topLeading)
-                    }else if imagePropertyVM.colorModeString == "Light Mode" {
+                    }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 1 {
                         Text("􀆮")
                             .frame(width: 200, alignment: .topLeading)
                         
@@ -34,7 +35,7 @@ struct ImagePropertyView: View {
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
                     
-                    Text(String(imageProcessVM.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)))
+                    Text(String(imageProcessVM.GetImageProperty(keyName: "DPIWidth" , path: psdvm.imageUrlDict[psdViewModel.selectedPSDID]?.path ?? "")))
                         .frame(width: 200, alignment: .topLeading)
                 }
                 

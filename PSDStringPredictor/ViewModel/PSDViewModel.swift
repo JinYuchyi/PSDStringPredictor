@@ -24,6 +24,7 @@ class PSDViewModel: ObservableObject{
 
     @Published var stringObjectListData: [Int:[StringObject]] = [:]
     @Published var charFrameListData: [Int:[CharFrame]] = [:]
+    @Published var imageUrlDict: [Int: URL] = [:]
     @Published var stringObjectStatusDict: [Int:[UUID: Int]] = [:] //0 normal, 1 fixed, 2 ignored
     @Published var updateStringObjectList: [Int:[UUID]] = [:]
     @Published var StringObjectNameDict: [UUID:String] = [:]
@@ -59,9 +60,10 @@ class PSDViewModel: ObservableObject{
     }
     
     func FetchAllData(){
-        FetchStringObjectListDict()
+        //FetchStringObjectListDict()
         FetchCharFrameListDataForOnePSD(_id: selectedPSDID)
         FetchAllThumb()
+        FetchAllUrl()
         //print("\(stringObjectListData.count)")
         
     }
@@ -72,6 +74,12 @@ class PSDViewModel: ObservableObject{
         }
     }
     
+    func FetchAllUrl(){
+        for obj in psds.PSDObjects {
+            imageUrlDict[obj.id] = obj.imageURL
+        }
+    }
+    
     
 //    private func FetchThumbnailFromURL(imageUrl: URL) -> NSImage{
 //        let imgData = (try? Data(contentsOf: imageUrl))!
@@ -79,24 +87,24 @@ class PSDViewModel: ObservableObject{
 //        return rowImage!.resize(100)
 //    }
     
-    func FetchStringObjectListDict(){
-        //From psdObject fetch stringObjects
-        var tmpStringObjectListData:[Int : [StringObject]] = [:]
-        var tmpList: [StringObject] = []
-        if psds.PSDObjects.count <= 0 {
-            psds.addPSDObject(imageURL: Bundle.main.url(forResource: "defaultImage", withExtension: "png")!, stringObjects: [StringObject.init()])
-        }else{
-            //Demove the default obj
-            psds.removePSDObject(imageUrl: Bundle.main.url(forResource: "defaultImage", withExtension: "png")!)
-        }
-        //Add new psd objs
-        for obj in psds.PSDObjects{
-            tmpStringObjectListData[obj.id] = obj.stringObjects
-        }
-        print("psds.PSDObjects: \(psds.PSDObjects.first?.stringObjects.count)")
-        stringObjectListData = tmpStringObjectListData
-
-    }
+//    func FetchStringObjectListDict(){
+//        //From psdObject fetch stringObjects
+//        var tmpStringObjectListData:[Int : [StringObject]] = [:]
+//        var tmpList: [StringObject] = []
+//        if psds.PSDObjects.count <= 0 {
+//            psds.addPSDObject(imageURL: Bundle.main.url(forResource: "defaultImage", withExtension: "png")! )
+//        }else{
+//            //Demove the default obj
+//            psds.removePSDObject(imageUrl: Bundle.main.url(forResource: "defaultImage", withExtension: "png")!)
+//        }
+//        //Add new psd objs
+//        for obj in psds.PSDObjects{
+//            tmpStringObjectListData[obj.id] = obj.stringObjects
+//        }
+//        //print("psds.PSDObjects: \(psds.PSDObjects.first?.stringObjects.count)")
+//        stringObjectListData = tmpStringObjectListData
+//
+//    }
     
     func FetchPsdColorMode(){
         psdColorMode = [:]
@@ -626,7 +634,7 @@ class PSDViewModel: ObservableObject{
                 let hasSame = psds.PSDObjects.contains(where: {$0.imageURL == result})
                 if hasSame == false {
                     //loadedFiles.append(result)
-                    psds.addPSDObject(imageURL: result, stringObjects: [StringObject()])
+                    psds.addPSDObject(imageURL: result)
                 }
             }
         } else {
