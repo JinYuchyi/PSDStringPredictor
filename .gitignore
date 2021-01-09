@@ -25,3 +25,5 @@ xcschememanagement.plist
 PSDStringPredictor.xcodeproj/project.xcworkspace/xcuserdata/ipdesign.xcuserdatad/UserInterfaceState.xcuserstate
 PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcschemes/xcschememanagement.plist
 PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcschemes/xcschememanagement.plist.orig
+.DS_Store
+TestImages/	
