@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StringObjectPropertyView: View {
     
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var imageProcess = imageProcessViewModel
     @State var stringField: String = ""
     @State var weight: String = "Regular"
@@ -20,7 +20,7 @@ struct StringObjectPropertyView: View {
         if stringObjectVM.selectedIDList.last == nil || stringObjectVM.stringObjectListData.count == 0 {
             return StringObject.init()
         }
-        return stringObjectVM.stringObjectListData.FindByID(stringObjectVM.selectedIDList.last!) ?? StringObject.init()
+        return stringObjectVM.stringObjectListData[stringObjectVM.selectedPSDID]!.FindByID(stringObjectVM.selectedIDList.last!) ?? StringObject.init()
     }
 
     func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{

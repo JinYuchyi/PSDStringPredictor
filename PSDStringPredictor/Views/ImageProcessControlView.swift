@@ -31,17 +31,17 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            imageViewModel.gammaValue
+                            (imageViewModel.gammaValue[psdViewModel.selectedPSDID] ?? 1)
                         },
                         set: {(newValue) in
-                            imageViewModel.gammaValue = newValue
+                            imageViewModel.gammaValue[psdViewModel.selectedPSDID]! = newValue
                             self.SetFilter()
                         }
                     ),
                     in: 0...10
                     
                 ).disabled(imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
-                Button(action: { imageViewModel.gammaValue = 1; self.SetFilter() }){
+                Button(action: { imageViewModel.gammaValue[psdViewModel.selectedPSDID] = 1; self.SetFilter() }){
                     Text("Reset")
                 }
             }
@@ -53,17 +53,17 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            imageViewModel.exposureValue
+                            imageViewModel.exposureValue[psdViewModel.selectedPSDID] ?? 0
                         },
                         set: {(newValue) in
-                            imageViewModel.exposureValue = newValue
+                            imageViewModel.exposureValue[psdViewModel.selectedPSDID] = newValue
                             self.SetFilter()
                         }
                     ),
                     in: 0...10
                     
                 ).disabled(self.imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
-                Button(action: { imageViewModel.exposureValue = 0; self.SetFilter() }){
+                Button(action: { imageViewModel.exposureValue[psdViewModel.selectedPSDID] = 0; self.SetFilter() }){
                     Text("Reset")
                 }
             }

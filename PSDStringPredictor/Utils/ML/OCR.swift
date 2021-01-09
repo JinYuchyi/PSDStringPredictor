@@ -59,9 +59,7 @@ class OCR: ObservableObject{
     func GetCharsInfoFromObservation(_ observation: VNRecognizedTextObservation, _ width: Int, _ height: Int) -> ([CGRect], [Character]){
         var rects: [CGRect] = []
         var chars: [Character] = []
-        
-        
-        
+
         //for obsr in obsrs{
         let candidate = observation.topCandidates(1).first!
         
@@ -117,19 +115,17 @@ class OCR: ObservableObject{
         } catch {
             print(error)
         }
- 
-        
+
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         let stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
         let strs = self.GetStringArrayFromObservations(results_fast)
         
         for i in 0..<stringsRects.count{
             DispatchQueue.main.async{
-                stringObjectViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
+                psdViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            let newStrObj = StringObject(strs[i], stringsRects[i], results_fast[i], chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
-            //let newStrObj = StringObject()
+            let newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             strobjs.append(newStrObj) 
             
         }

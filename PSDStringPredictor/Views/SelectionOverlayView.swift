@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SelectionOverlayView: View {
     @ObservedObject var interactive = interactiveViewModel
-    @ObservedObject var objVM = stringObjectViewModel
+    @ObservedObject var objVM = psdViewModel
     @ObservedObject var imageVM = imageProcessViewModel
     @State var startPos = CGPoint.zero
     @State var endPos = CGPoint.zero
@@ -64,7 +64,7 @@ struct SelectionOverlayView: View {
     func CalcSelectedObject(){
         objVM.selectedIDList.removeAll()
 
-            for obj in objVM.stringObjectListData {
+        for obj in objVM.stringObjectListData[objVM.selectedPSDID]! {
                 if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
                     
                 }
@@ -80,7 +80,7 @@ struct SelectionOverlayView: View {
     func CalcTap(tapPoint: CGPoint){
         objVM.selectedIDList.removeAll()
         
-        for obj in objVM.stringObjectListData {
+        for obj in objVM.stringObjectListData[objVM.selectedPSDID]! {
             
             //let tmpRect = CGRect.init(x: (tapPoint.x ), y: (imageVM.GetTargetImageSize()[1] - tapPoint.y - 2), width: 4, height: 4)
             if obj.stringRect.contains(tapPoint) {

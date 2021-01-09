@@ -24,46 +24,11 @@ class MLTraining {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
             if result == .OK{
-                //if ((?.pathExtension == "png" || panel.url?.pathExtension == "psd") )
-               // let allFilePath = try? FileManager.default.contentsOfDirectory(at: panel.url!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-                
-//                for i in 0..<10{
-//                    print(allFilePath![i].absoluteString)
-//                    let url = try?URL(resolvingAliasFileAt: allFilePath![i])
-//                    let nsImg = NSImage(byReferencing: url!)
-//                    let ciImg = nsImg.ToCIImage()!
-//                    let line = self.ocr.CreateAllStringObjects(FromCIImage: ciImg)
-//                    //print(line[0].charArray.count)
-//                   //print("We have \(lines.count) lines.")
-//                }
+
             }
             
         }
 
-        
-        //for  i in 0...allFilePath.count - 1 {
-   
-                
-//                for j in 0...stringObjects[0].charArray.count-2 {
-//                    if(String(stringObjects[0].charArray[j]).FixError().isEnglishLowerCase() && String(stringObjects[0].charArray[j+1]).FixError().isEnglishLowerCase() && String(stringObjects[0].charArray[j]).FixError() != String(stringObjects[0].charArray[j+1]).FixError()){
-//                        contentStr += String(stringObjects[0].charArray[j]).FixError() + ","
-//                        contentStr += String(stringObjects[0].charArray[j+1]).FixError() + ","
-//                        contentStr += allFilePath[i].GetFontSizeString() + ","
-//                        contentStr += allFilePath[i].GetTrackingString() + ","
-//                        contentStr += abs(stringObjects[0].charRects[j].midX - stringObjects[0].charRects[j + 1].midX).description + ","
-//                        contentStr += "\n"
-//                    }
-//                }
-               
-                //Load Image
-                //let nsImg = NSImage(imageUrlPath: allFilePath[i])
-               // let ciImg = nsImg.ToCIImage()!
-                //let lines = ocr.CreateAllStringObjects(FromCIImage: ciImg)
-                //print("We have \(lines.count) linse.")
-            
-
-        //Save Content
-        //SaveStringToFile(str: contentStr, path: filePath)
     }
     
     func ParseFileName(FileName nameStr: String) -> (char: String, size: Int, tracking: Int ){

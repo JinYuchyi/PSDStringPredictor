@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct StringObjectListView: View {
-    @ObservedObject var stringObjectList = stringObjectViewModel
+    @ObservedObject var psdVM = psdViewModel
     //let listData = stringObjectList.stringObjectListData
     var body: some View {
         List(stringObjectList.stringObjectListData, id: \.id){ item in

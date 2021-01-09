@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct psdPageView: View {
-    var psdPageObject: psdPage
+    //var psdPageObject: psdPage
     @State var isCommitted = false
+    @ObservedObject var psdVm = psdViewModel
     //let tmpObj = psdPage(id: UUID(), name: "xxxx.psd", image: CIImage.init(), isCommitted: false)
     var body: some View {
         //GeometryReader { geometry in
@@ -19,7 +20,7 @@ struct psdPageView: View {
                     Rectangle()
                         .frame(width: 100, height: 150, alignment: .center)
                         .foregroundColor(Color.gray)
-                    Text(psdPageObject.name)
+                    Text(psdVm. psdPageObject.name)
                         .foregroundColor(Color.gray)
                 }
                 Text("􀁢")

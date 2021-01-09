@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HighlightView: View {
     @ObservedObject var imageVM = imageProcessViewModel
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     //imageProcessViewModel.targetNSImage.size.height - obj.stringRect.origin.y
     //let ids: [UUID]
     var body: some View {
@@ -47,7 +47,7 @@ struct HighlightView: View {
     }
     
     func GetStringObject(_ id: UUID) -> StringObject{
-        return stringObjectVM.stringObjectListData.FindByID(id) ?? StringObject()
+        return stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!
     }
 }
 

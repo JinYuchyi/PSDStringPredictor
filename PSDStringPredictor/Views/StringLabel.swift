@@ -18,8 +18,9 @@ struct StringLabel: View {
    // @State var ignored: Bool
 //    @State var fixedEnabled: Bool
 //    @State var ignoredEnabled: Bool
+    //var psd = PSD()
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
+    @ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     @State var width: CGFloat = 0
     @State var alignmentIconName = "alignLeft-round"
     
@@ -28,7 +29,7 @@ struct StringLabel: View {
         var d : CGFloat = 0
         if stringObjectVM.DragOffsetDict[id] != nil{
             d = stringObjectVM.DragOffsetDict[id]!.width
-            return (stringObjectVM.FindStringObjectByID(id: id)?.tracking ?? 0) + d
+            return (stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.tracking ?? 0) + d
         }else{
             return 0
         }
@@ -40,34 +41,35 @@ struct StringLabel: View {
         if stringObjectVM.DragOffsetDict[id] != nil{
             d = stringObjectVM.DragOffsetDict[id]!.height
         }
-        if stringObjectVM.FindStringObjectByID(id: id) == nil {
+        if stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)  == nil {
             return 0
         }else{
-            return stringObjectVM.FindStringObjectByID(id: id)!.fontSize - d
+            return stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.fontSize - d
         }
     }
     
     func InfoBtnTapped(){
-        //print("stringLabel.id: \(stringLabel.content)")
-        stringObjectVM.UpdateSelectedIDList(idList: [id])
-        //imageProcessViewModel.FindNearestStandardRGB(stringObjectVM.FindStringObjectByID(id: id)?.color ?? CGColor.white)
+        stringObjectVM.FetchSelectedIDList(idList: [id])
     }
     
     func FixedBtnTapped(){
         //fixed = !fixed
-        if stringObjectVM.stringObjectStatusDict[id] == 1 {
-            stringObjectVM.stringObjectStatusDict[id] = 0
+        
+        if stringObjectVM.stringObjectStatusDict[stringObjectVM.selectedPSDID]![id]! == 1 {
+            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 0)
+            //stringObjectVM.FindStringObjectByID(id: id)!.SetStatus(status: 0)
         }else {
-            stringObjectVM.stringObjectStatusDict[id] = 1
+            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 1)
+
         }
 
     }
     
     func IgnoreBtnTapped(){
-        if stringObjectVM.stringObjectStatusDict[id] == 2 {
-            stringObjectVM.stringObjectStatusDict[id] = 0
+        if stringObjectVM.stringObjectStatusDict[stringObjectVM.selectedPSDID]![id]! == 2 {
+            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 0)
         }else {
-            stringObjectVM.stringObjectStatusDict[id] = 2
+            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 2)
         }
     }
     
@@ -85,10 +87,12 @@ struct StringLabel: View {
         }
     }
     
+    
+    
     func GetPosition() -> CGPoint{
-        if stringObjectVM.FindStringObjectByID(id: id) != nil{
-            let x = stringObjectVM.FindStringObjectByID(id: id)!.stringRect.origin.x + stringObjectVM.FindStringObjectByID(id: id)!.stringRect.width/2
-            let y = imageViewModel.GetTargetImageSize()[1] - stringObjectVM.FindStringObjectByID(id: id)!.stringRect.origin.y  - stringObjectVM.FindStringObjectByID(id: id)!.stringRect.height/2
+        if stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id) != nil{
+            let x = stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.origin.x + stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.width/2
+            let y = imageViewModel.GetTargetImageSize()[1] - stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.origin.y  - stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.height/2
             return CGPoint(x: x, y: y)
         }else{
             return CGPoint.zero
@@ -96,12 +100,12 @@ struct StringLabel: View {
     }
     
     func TextLayerView() -> some View {
-        Text(stringObjectVM.FindStringObjectByID(id: id)?.content ?? " " )
+        Text(stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.content ?? " " )
             .tracking(CalcTrackingAfterOffset())
             .position(x: GetPosition().x, y: GetPosition().y)
-            .foregroundColor(stringObjectVM.FindStringObjectByID(id: id)?.color.ToColor() ?? Color.white)
+            .foregroundColor(stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.color.ToColor() ?? Color.white)
             .font(.custom(stringObjectVM.StringObjectNameDict[id] ?? "", size: CalcSizeAfterOffset()))
-            .shadow(color: stringObjectVM.FindStringObjectByID(id: id)?.colorMode == 2 ?  .black : .white, radius: 2, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
+            .shadow(color: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.colorMode == 2 ?  .black : .white, radius: 2, x: 0, y: 0)
             //.blendMode(.difference)
 
     }
@@ -110,8 +114,8 @@ struct StringLabel: View {
         //String debug frame
         Rectangle()
         
-            .stroke(stringObjectVM.stringObjectStatusDict[id] == 2 ? Color.red : Color.green, lineWidth: 2)
-            .frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height ?? 0)
+            .stroke(stringObjectVM.stringObjectStatusDict[stringObjectVM.selectedPSDID]?[id] == 2 ? Color.red : Color.green, lineWidth: 2)
+            .frame(width: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
         
             //.shadow(color: stringObjectVM.FindStringObjectByID(id: id)?.colorMode == 1 ?  .black : .white, radius: 2, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
@@ -122,7 +126,7 @@ struct StringLabel: View {
         //Drag layer
         Rectangle()
             .fill( Color.yellow.opacity(0.1))
-            .frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height ?? 0)
+            .frame(width: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y)
     }
     
@@ -165,7 +169,7 @@ struct StringLabel: View {
                 
                 //Button for fix
                 Button(action: {self.FixedBtnTapped()}){
-                    CustomImage( name: stringObjectVM.stringObjectStatusDict[id] == 1 ? "tick-active" : "tick-round")
+                    CustomImage( name: stringObjectVM.stringObjectStatusDict[stringObjectVM.selectedPSDID]?[id] == 1 ? "tick-active" : "tick-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
@@ -175,7 +179,7 @@ struct StringLabel: View {
                 
                 //Button for delete
                 Button(action: {self.IgnoreBtnTapped()}){
-                    CustomImage( name: stringObjectVM.stringObjectStatusDict[id] == 2 ? "forbidden-active" : "forbidden-round")
+                    CustomImage( name: stringObjectVM.stringObjectStatusDict[stringObjectVM.selectedPSDID]?[id] == 2 ? "forbidden-active" : "forbidden-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
@@ -183,7 +187,7 @@ struct StringLabel: View {
                 .padding(-4)
                 //.IsHidden(condition: ignoredEnabled)
             }
-            .frame(width: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByID(id: id)?.stringRect.height ?? 0, alignment: .bottomTrailing)
+            .frame(width: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.stringRect.width ?? 0, height: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.stringRect.height ?? 0, alignment: .bottomTrailing)
             .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )
             .IsHidden(condition: stringObjectVM.selectedIDList.contains(id)==true)
         }

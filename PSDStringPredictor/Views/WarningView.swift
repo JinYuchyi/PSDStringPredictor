@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct WarningView: View {
-    @ObservedObject var stringObjectVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM = psdViewModel
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)

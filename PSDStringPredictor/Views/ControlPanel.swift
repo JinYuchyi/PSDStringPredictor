@@ -13,8 +13,8 @@ struct ControlPanel: View {
     
     //var dbvm = DBViewModel()
     let ternimalScriptMgr = TernimalScriptManager()
-    @ObservedObject var stringObjectVM: StringObjectViewModel = stringObjectViewModel
-    @ObservedObject var strObjVM = stringObjectViewModel
+    @ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
+    @ObservedObject var strObjVM = psdViewModel
     @ObservedObject var imageProcessVM = imageProcessViewModel
     @ObservedObject var settingsVM = settingViewModel
     var imgUtil: ImageUtil = ImageUtil()
@@ -31,20 +31,20 @@ struct ControlPanel: View {
 
         VStack{
             
-            Button(action: {stringObjectVM.CombineStrings()}){
+            Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
                 Text("Combine To Paragraph")
                     .frame(minWidth: 270,  maxWidth: .infinity)
             }
             //HStack{
 
-                Button(action: {stringObjectVM.SetSelectionToFixed()}){
-                    Text("Ready")
+                Button(action: {stringObjectVM.SetSelectionToFixedOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+                    Text("Mark Strings as Ready")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                     
                 }
                 
-                Button(action: {stringObjectVM.SetSelectionToIgnored()}){
-                    Text("Ignore")
+                Button(action: {stringObjectVM.SetSelectionToIgnoredOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+                    Text("Mark Strings as Ignore")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                 }
             //}
@@ -57,13 +57,13 @@ struct ControlPanel: View {
                 .frame(width: 300, alignment: .leading)
             
             HStack{
-                Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
+                Button(action: {self.stringObjectVM.ProcessOnePSD(_id: stringObjectVM.selectedPSDID)}){
                     Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
-                .disabled(!self.stringObjectVM.OKForProcess)
+                //.disabled(!self.stringObjectVM.OKForProcess)
                 
-                Button(action: {self.stringObjectVM.FetchStringObjectsInfo()}){
+                Button(action: {self.stringObjectVM.ProcessOnePSD(_id: stringObjectVM.selectedPSDID)}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }
@@ -77,13 +77,13 @@ struct ControlPanel: View {
                 .padding(.top)
                 .frame(width: 300, alignment: .leading)
             HStack{
-                Button(action: {self.stringObjectVM.CreatePSD()}){
+                Button(action: {self.stringObjectVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
                     Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
-                .disabled(!self.stringObjectVM.OKForProcess)
+                //.disabled(!self.stringObjectVM.OKForProcess)
                 
-                Button(action: {self.stringObjectVM.CreatePSD()}){
+                Button(action: {self.stringObjectVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }

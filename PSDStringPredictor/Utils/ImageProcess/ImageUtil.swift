@@ -36,16 +36,6 @@ class ImageUtil{
         let filter = attributedTextImageGenerator(inputText: attrString, inputScaleFactor: NSNumber.init(value: 1))
         let newimg = filter!.outputImage!
         
-        //let url = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext.png")
-        //newimg.ToPNG(url: url)
-
-        //let stringsObjectPredicted = ocr.CreateAllStringObjects(FromCIImage: newimg)
-
-        //let clampedImg = newimg.cropped(to: stringsObjectPredicted[0].stringRect)
-        //print(clampedImg.extent.size)
-        //let url1 = URL(fileURLWithPath: "/Users/ipdesign/Downloads/testtext_clamped.png")
-        //clampedImg.ToPNG(url: url1)
-        
         return newimg
     }
 

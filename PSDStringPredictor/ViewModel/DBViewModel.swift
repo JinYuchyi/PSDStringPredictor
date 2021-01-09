@@ -14,6 +14,7 @@ class DBViewModel: ObservableObject{
     //var dbModel = DB()
     let imgUtil = ImageUtil()
     let csv = CSVManager()
+    
     //@Published private var dbPathString = "db.sqlite3"
     @Environment(\.managedObjectContext) private var viewContext
 
