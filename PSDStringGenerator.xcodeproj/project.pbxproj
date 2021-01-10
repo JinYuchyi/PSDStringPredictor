@@ -84,6 +84,7 @@
 		3FAAB4972514BD6600CB89B1 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB4962514BD6600CB89B1 /* Training.swift */; };
 		3FABE4E12580DA4C00287086 /* DBViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FABE4E02580DA4C00287086 /* DBViewModel.swift */; };
 		3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */; };
+		3FB59B1425AAB5CD000FB170 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB59B1325AAB5CD000FB170 /* DataRepository.swift */; };
 		3FBA3A7C2510AFC900F041DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA3A7B2510AFC900F041DC /* String.swift */; };
 		3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */; };
 		3FD1FBB42581C116004EF1FB /* SelectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */; };
@@ -197,6 +198,7 @@
 		3FAAB4962514BD6600CB89B1 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
 		3FABE4E02580DA4C00287086 /* DBViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBViewModel.swift; sourceTree = "<group>"; };
 		3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		3FB59B1325AAB5CD000FB170 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		3FBA3A7B2510AFC900F041DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharFrameData.swift; sourceTree = "<group>"; };
 		3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionOverlayView.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				3FEBA6C5251CA831002D8EC1 /* Entity */,
 				3F9B3A7D250F2855003B652C /* DataStore.swift */,
 				3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */,
+				3FB59B1325AAB5CD000FB170 /* DataRepository.swift */,
 				3FA49B382508B0D40093EBD2 /* LogObject.swift */,
 				3F56E3E62506042D00E64337 /* StringObject.swift */,
 			);
@@ -664,6 +667,7 @@
 				3F3EFF9D253341480047E4E5 /* TrackingRegressor.swift in Sources */,
 				3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */,
 				3F6C3CE62580CF5200AB7A19 /* WarningView.swift in Sources */,
+				3FB59B1425AAB5CD000FB170 /* DataRepository.swift in Sources */,
 				3FD1FBB42581C116004EF1FB /* SelectionOverlayView.swift in Sources */,
 				3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */,
 				3F8208502510F8CE00832192 /* File.swift in Sources */,

@@ -19,7 +19,7 @@ class PSDViewModel: ObservableObject{
     let jsMgr = JSManager()
     let pixelProcess = PixelProcess()
     let ocr = OCR()
-    
+    let dataResp = DataRepository()
     @Published var psds = PSD()
 
     @Published var stringObjectListData: [Int:[StringObject]] = [:]
@@ -46,15 +46,6 @@ class PSDViewModel: ObservableObject{
     let fontDecentOffsetScale: CGFloat = 0.6
     let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
 
-    //    private var workItem: DispatchWorkItem?
-    
-//    func GetAllID() -> [UUID] {
-//        var res: [UUID] = []
-//        for obj in stringObjectListData{
-//            res.append(obj.id)
-//        }
-//        return res
-//    }
     init(){
         FetchAllData()
     }
@@ -79,33 +70,7 @@ class PSDViewModel: ObservableObject{
             imageUrlDict[obj.id] = obj.imageURL
         }
     }
-    
-    
-//    private func FetchThumbnailFromURL(imageUrl: URL) -> NSImage{
-//        let imgData = (try? Data(contentsOf: imageUrl))!
-//        let rowImage = NSImage.init(data: imgData)
-//        return rowImage!.resize(100)
-//    }
-    
-//    func FetchStringObjectListDict(){
-//        //From psdObject fetch stringObjects
-//        var tmpStringObjectListData:[Int : [StringObject]] = [:]
-//        var tmpList: [StringObject] = []
-//        if psds.PSDObjects.count <= 0 {
-//            psds.addPSDObject(imageURL: Bundle.main.url(forResource: "defaultImage", withExtension: "png")! )
-//        }else{
-//            //Demove the default obj
-//            psds.removePSDObject(imageUrl: Bundle.main.url(forResource: "defaultImage", withExtension: "png")!)
-//        }
-//        //Add new psd objs
-//        for obj in psds.PSDObjects{
-//            tmpStringObjectListData[obj.id] = obj.stringObjects
-//        }
-//        //print("psds.PSDObjects: \(psds.PSDObjects.first?.stringObjects.count)")
-//        stringObjectListData = tmpStringObjectListData
-//
-//    }
-    
+
     func FetchPsdColorMode(){
         psdColorMode = [:]
         for obj in psds.PSDObjects{
@@ -168,51 +133,7 @@ class PSDViewModel: ObservableObject{
         stringObjectListData[selectedPSDID]!.append(obj)
         
     }
-    
-    //Intention
-    
-    func ProcessOnePSD(_id: Int)  {
-        let group = DispatchGroup()
-        
-        let queueCalc = DispatchQueue(label: "calc")
-        queueCalc.async(group: group) {
-            var allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
-            allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
-            
-            DispatchQueue.main.async{ [self] in
-                //Refrash the stringobject list
-                if self.stringObjectListData[_id] == nil {
-                    self.stringObjectListData[_id] = []
-                }
-                if self.stringObjectStatusDict[_id] == nil {
-                    self.stringObjectStatusDict[_id] = [:]
-                }
-                var tmpList = self.stringObjectListData[_id]!
-                for obj in self.stringObjectListData[_id]! {
-                    if  self.stringObjectStatusDict[_id]![obj.id] != 1 {
-                        tmpList.removeAll(where: {$0.id == obj.id})
-                    }
-                }
-                for obj in allStrObjs {
-                    if self.stringObjectListData[_id]!.ContainsSame(obj) == false {
-                        tmpList.append(obj)
-                        self.stringObjectStatusDict[_id]![obj.id] = 0
-                    }
-                }
-                self.stringObjectListData[_id]! = tmpList
-                
-                //self.FetchStringObjectListDict()
-            }
-        }
 
-        group.notify(queue: DispatchQueue.main) {
-            self.FetchCharFrameListDataForOnePSD(_id: self.selectedPSDID)
-            print(self.stringObjectListData.count)
-            self.FetchStringObjectFontNameDictForOnePSD()
-            psdViewModel.indicatorTitle = ""
-        }
-    }
-    
     func FetchStringObjectOutputIDListOnePSD(_id: Int)-> [UUID]{
         if self.stringObjectListData[_id] == nil{
             return []
@@ -307,11 +228,7 @@ class PSDViewModel: ObservableObject{
         }
         return result
     }
-    
-//    func FiltStringObjects1(originalList objList: [StringObject]) -> (updateL: [StringObject], redrawList: [StringObject]){
-//
-//    }
-    
+
     func FiltStringObjectsForUpdate(id _id: Int, originalList objList: [StringObject]) -> ([StringObject]){
         var newList : [StringObject] = objList
         var ignoreList: [UUID] = []
@@ -351,11 +268,7 @@ class PSDViewModel: ObservableObject{
         
         return (newList)
     }
-    
-//    func CreatePSD(){
-//        UpdatePSD()
-//    }
-    
+
     func FetchCharFrameListDataForOnePSD(_id: Int) {
         
         charFrameListData.removeAll()
@@ -562,6 +475,48 @@ class PSDViewModel: ObservableObject{
         stringObjectStatusDict[psdId]![objId] = value
     }
     
+    //MARK: Intensions
+    func ProcessOnePSD(_id: Int)  {
+        let group = DispatchGroup()
+        
+        let queueCalc = DispatchQueue(label: "calc")
+        queueCalc.async(group: group) {
+            var allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
+            allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
+            
+            DispatchQueue.main.async{ [self] in
+                //Refrash the stringobject list
+                if self.stringObjectListData[_id] == nil {
+                    self.stringObjectListData[_id] = []
+                }
+                if self.stringObjectStatusDict[_id] == nil {
+                    self.stringObjectStatusDict[_id] = [:]
+                }
+                var tmpList = self.stringObjectListData[_id]!
+                for obj in self.stringObjectListData[_id]! {
+                    if  self.stringObjectStatusDict[_id]![obj.id] != 1 {
+                        tmpList.removeAll(where: {$0.id == obj.id})
+                    }
+                }
+                for obj in allStrObjs {
+                    if self.stringObjectListData[_id]!.ContainsSame(obj) == false {
+                        tmpList.append(obj)
+                        self.stringObjectStatusDict[_id]![obj.id] = 0
+                    }
+                }
+                self.stringObjectListData[_id]! = tmpList
+                
+            }
+        }
+
+        group.notify(queue: DispatchQueue.main) {
+            self.FetchCharFrameListDataForOnePSD(_id: self.selectedPSDID)
+            print(self.stringObjectListData.count)
+            self.FetchStringObjectFontNameDictForOnePSD()
+            psdViewModel.indicatorTitle = ""
+        }
+    }
+    
     func CombineStringsOnePSD(psdId: Int){
         //var newObj: StringObject
         var orderedYList: [UUID:CGFloat] = [:]
@@ -614,10 +569,7 @@ class PSDViewModel: ObservableObject{
         selectedIDList.append(resultObj.id)
         updateStringObjectList[psdId]!.append(resultObj.id)
     }
-    
 
-    
-    //Intension
     func LoadImageBtnPressed(){
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = true
