@@ -17,7 +17,7 @@ struct PSDObject: Identifiable{
     //var stringObjects: [StringObject]
     var imageURL: URL
     var thumbnail: NSImage = NSImage.init()
-    
+    var commited: Bool = false
 
     
     fileprivate init(id: Int, imageURL: URL){
@@ -36,6 +36,8 @@ struct PSDObject: Identifiable{
         }
         return NSImage.init()
     }
+    
+    
 }
 
 struct PSD {

@@ -15,18 +15,23 @@ class DataRepository {
     private var stringObjectListDict: [Int:[StringObject]] = [:]
     private var charFrameListDict: [Int:[CharFrame]] = [:]
     private var imageUrlDict: [Int: URL] = [:]
-    private var stringObjectStatusDict: [Int:[UUID: Int]] = [:] //0 normal, 1 fixed, 2 ignored
     private var updateStringObjectList: [Int:[UUID]] = [:]
     private var StringObjectNameDict: [UUID:String] = [:]
     private var DragOffsetDict: [UUID: CGSize] = [:]
     private var alignmentDict: [UUID:Int] = [:]
     private var stringObjectOutputList: [Int:[StringObject]] = [:]
     private var psdColorMode : [Int:Int] = [:]
-    private var thumbnailList: [Int: NSImage] = [:]
+    //private var thumbnailList: [Int: NSImage] = [:]
+    //private var psdCommitedList: [Int: Bool] = [:]
+    //private var psdObjectList: [PSDObject] = []
+    
+    private var targetImageProcessed = CIImage.init() //selected
+    private var targetImageMasked = CIImage.init()//selected
+    private var selectedNSImage = NSImage()//selected
     
     //Global
-    private var selectedPSDID: Int = 0
-    private var selectedIDList: [UUID] = []
+    private var selectedPsdId: Int = 0
+    private var selectedStrIDList: [UUID] = []
     private var stringOverlay: Bool = true
     private var frameOverlay: Bool = true
     private var indicatorTitle: String = ""
@@ -36,7 +41,11 @@ class DataRepository {
     static let fontDecentOffsetScale: CGFloat = 0.6
     static let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
     
-    func StringObjectListDictAppend(psdId: Int, stringObject: StringObject){
+    private init(){}
+    
+    static let shared = DataRepository()
+    
+    func AppendStringObjectListDict(psdId: Int, stringObject: StringObject){
         if stringObjectListDict[psdId] == nil {
             stringObjectListDict[psdId] = []
         }
@@ -45,11 +54,67 @@ class DataRepository {
         }
     }
     
-    func GetStringObjectFromOnePSD(psdId: Int, objId: UUID)->StringObject?{
+    func GetStringObject(psdId: Int, objId: UUID)->StringObject?{
         if stringObjectListDict[psdId] == nil  {
             return nil
         }else{
             return stringObjectListDict[psdId]!.FindByID(objId)
         }
     }
+    
+    func GetStringObjectsForOnePsd(psdId: Int)->[StringObject]{
+        if stringObjectListDict[psdId] == nil  {
+            return []
+        }else{
+            return stringObjectListDict[psdId]!
+        }
+    }
+    
+    func GetSelectedStringObject()->StringObject?{
+        if selectedStrIDList.count > 0 {
+            return GetStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!)
+        }else{
+            return nil
+        }
+    }
+    
+    func RemoveStringObject(psdId: Int, objId: UUID) -> Bool{
+        if (stringObjectListDict[psdId] == nil || stringObjectListDict[psdId]!.contains(where: {$0.id == objId}) == false){
+            return false
+        }
+        else {
+            stringObjectListDict[psdId]!.removeAll(where: {$0.id == objId})
+            return true
+        }
+    }
+    
+    func GetSelectedPsdId()->Int {
+        return selectedPsdId
+    }
+    
+    func SetSelectedPsdId(newId: Int) {
+          selectedPsdId = newId
+    }
+    
+    func GetSelectedNSImage() -> NSImage{
+        return selectedNSImage
+    }
+    
+    func SetSelectedNSImage(image: NSImage) {
+        selectedNSImage = image
+    }
+    
+//    func GetThumbnailDict() -> [Int:NSImage]{
+//        return thumbnailList
+//    }
+//
+//
+//    func GetPsdCommitedList() -> [Int: Bool]{
+//        return psdCommitedList
+//    }
+    
+    func GetPsdObjectList() -> [PSDObject]{
+        return psds.PSDObjects
+    }
+    
 }

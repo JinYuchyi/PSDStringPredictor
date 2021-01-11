@@ -19,7 +19,7 @@ class PSDViewModel: ObservableObject{
     let jsMgr = JSManager()
     let pixelProcess = PixelProcess()
     let ocr = OCR()
-    let dataResp = DataRepository()
+    //let dataResp = DataRepository.shared
     @Published var psds = PSD()
 
     @Published var stringObjectListData: [Int:[StringObject]] = [:]
@@ -120,18 +120,14 @@ class PSDViewModel: ObservableObject{
     }
     
     func SwapLastSelectionWithObject(obj: StringObject){
-        //psds.PSDObjects[]
         let id = selectedIDList.last
-        //Add to original list
-        
-        //selectedIDList.append(obj.id)
         //Remove from original list
         if id != nil {
-            stringObjectListData[selectedPSDID]!.removeAll(where: {$0.id == id})
-            //selectedIDList.removeAll(where: {$0 == id})
+            DataRepository.shared.RemoveStringObject(psdId: DataRepository.shared.GetSelectedPsdId(), objId: id!)
+            //stringObjectListData[selectedPSDID]!.removeAll(where: {$0.id == id})
         }
-        stringObjectListData[selectedPSDID]!.append(obj)
-        
+        DataRepository.shared.AppendStringObjectListDict(psdId: DataRepository.shared.GetSelectedPsdId(), stringObject: obj)
+        //stringObjectListData[selectedPSDID]!.append(obj)
     }
 
     func FetchStringObjectOutputIDListOnePSD(_id: Int)-> [UUID]{
@@ -139,9 +135,7 @@ class PSDViewModel: ObservableObject{
             return []
         }
         var finalList: [UUID] = self.stringObjectListData[_id]!.map{$0.id} as! [UUID]
-//        for obj in stringObjectListData{
-//            finalList.append(obj.id)
-//        }
+
         if stringObjectStatusDict.count > 0{
             for (k,v) in stringObjectStatusDict[_id]! {
                 if v == 2 { //Ignore
