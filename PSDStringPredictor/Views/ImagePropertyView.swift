@@ -12,23 +12,18 @@ struct ImagePropertyView: View {
     @ObservedObject var imagePropertyVM = imagePropertyViewModel
     @ObservedObject var  psdvm = psdViewModel
     let imageProcessVM = ImageProcess()
+    
+    @ObservedObject var imageVM : ImageVM
     //@State var colorState = -1
     var body: some View {
         List{
             Section(header: Text("Image Properties")){
                 
                 HStack{
-                    Text("Color Mode")
+                    Text("Mode")
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
-                    if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 2{
-                        Text("􀆺")
-                            .frame(width: 200, alignment: .topLeading)
-                    }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 1 {
-                        Text("􀆮")
-                            .frame(width: 200, alignment: .topLeading)
-                        
-                    }else{}
+                    Text(imageVM.colorMode)
                 }
                 HStack{
                     Text("DPI")
@@ -54,8 +49,8 @@ struct ImagePropertyView: View {
     }
 }
 
-struct ImagePropertyView_Previews: PreviewProvider {
-    static var previews: some View {
-        ImagePropertyView()
-    }
-}
+//struct ImagePropertyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ImagePropertyView()
+//    }
+//}

@@ -83,6 +83,30 @@ class ImageUtil{
         }
         return nil
       }
+    
+    static func GetImageProperty(keyName: String, path: String) -> Int?{
+
+        let url = URL.init(fileURLWithPath: path)
+
+        var imageData: NSData =  NSData.init()
+            do{
+                try imageData = NSData.init(contentsOf: url)
+            }catch{
+                print("Image data generate error in getting DPI function.")
+            }
+            
+            //print("keyName: \(keyName), path: \(path)")
+
+        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
+                  let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
+                  let dpi = metaData[keyName] as? Int else {
+                return nil
+            }
+            print (dpi)
+        //print(metaData)
+            return dpi
+
+    }
 
 
 

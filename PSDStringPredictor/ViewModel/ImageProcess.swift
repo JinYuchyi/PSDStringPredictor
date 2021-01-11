@@ -13,7 +13,6 @@ import SwiftUI
 
 class ImageProcess: ObservableObject{
 
-    let colorModeClassifier = ColorModeClassifier()
 
     @Published var targetImageProcessed = CIImage.init() //selected
     @Published var targetImageMasked = CIImage.init()//selected
@@ -29,6 +28,8 @@ class ImageProcess: ObservableObject{
     var darkModeHSVList: [[CGFloat]] = []
     
     var showImage: Bool = false
+    
+
     
     func SetFilter(){
         if (targetImageMasked.IsValid()){
@@ -229,6 +230,8 @@ class ImageProcess: ObservableObject{
     }
     
     func LoadImageBtnPressed()  {
+        let colorModeClassifier = ColorModeClassifier(image: targetNSImage.ToCIImage()!)
+
         let panel = NSOpenPanel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
@@ -242,7 +245,8 @@ class ImageProcess: ObservableObject{
                     self.SetTargetNSImage(tmp) //Reset images
                     self.showImage = true
                     
-                    self.colorModeClassifier.Prediction(fromImage: self.targetImageProcessed)
+                    //TODO: color mode classifier not work
+                    //colorModeClassifier.output
                     imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
                     DataStore.imagePath = panel.url!.path
                     

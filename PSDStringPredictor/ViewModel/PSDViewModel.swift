@@ -576,10 +576,8 @@ class PSDViewModel: ObservableObject{
             // Do whatever you need with every selected file
             // in this case, print on the terminal every path
             for result in results {
-                // /Users/ourcodeworld/Desktop/fileA.txt
                 let hasSame = psds.PSDObjects.contains(where: {$0.imageURL == result})
                 if hasSame == false {
-                    //loadedFiles.append(result)
                     psds.addPSDObject(imageURL: result)
                 }
             }
@@ -599,9 +597,11 @@ class PSDViewModel: ObservableObject{
         if targetObj != nil {
             imageProcessViewModel.SetTargetNSImage(LoadNSImage(imageUrlPath: targetObj!.imageURL.path))
             imageProcessViewModel.showImage = true
-            print(imageProcessViewModel.targetNSImage.size)
+            //print(imageProcessViewModel.targetNSImage.size)
         }
     }
+    
+    
     
 }
 

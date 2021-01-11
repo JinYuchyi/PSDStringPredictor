@@ -13,6 +13,11 @@ import Vision
 import ImageIO
 
 class ColorModeClassifier{
+    var output: Int = -1
+    
+    init(image: CIImage){
+        Prediction(image: image)
+    }
     
     lazy var classificationRequest: VNCoreMLRequest = {
         do {
@@ -27,6 +32,7 @@ class ColorModeClassifier{
                 self?.processClassifications(for: request, error: error)
             })
             //request.imageCropAndScaleOption = .centerCrop
+            
             return request
         } catch {
             fatalError("Failed to load Vision ML model: \(error)")
@@ -51,12 +57,12 @@ class ColorModeClassifier{
                 let topClassification = classifications[0]
                 //print("Predict result: \(topClassification.identifier)" )
                 if (topClassification.identifier == "light"){
-                    psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  = 1
+                    output = 1
                 }
                 else if (topClassification.identifier == "dark"){
-                    psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  = 2
+                    output = 2
                 }else{
-                    psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  = -1
+                    output = -1
                 }
                 
 //                let descriptions = topClassifications.map { classification in
@@ -69,9 +75,9 @@ class ColorModeClassifier{
         //}
     }
     
-    func Prediction(fromImage ciImage: CIImage){
+    private func Prediction( image: CIImage ){
         //DispatchQueue.global(qos: .userInitiated).async {
-            let handler = VNImageRequestHandler(ciImage: ciImage, orientation: .up)
+            let handler = VNImageRequestHandler(ciImage: image, orientation: .up)
             do {
                 try handler.perform([self.classificationRequest])
             } catch {

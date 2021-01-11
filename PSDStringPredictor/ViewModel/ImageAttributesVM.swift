@@ -7,28 +7,49 @@
 //
 
 import Foundation
+import CoreImage
+import SwiftUI
 
-class ImageAttributesVM : ObservableObject {
+class ImageVM : ObservableObject {
     @Published var dpi: Int = 0
     @Published var path: String = ""
     @Published var colorMode: String = ""
     @Published var psdId = DataRepository.shared.GetSelectedPsdId()
+    @Published var imageForShow: NSImage = NSImage.init()
     
-    func FetchAll(){
+    
+    
+    func FetchInfo(){
         FetchDpi()
         FetchPath()
-        FetchColorMode()
-    } 
+        FetchColorModeString()
+        FetchProcessedImage()
+    }
     
     func FetchDpi(){
-        //TODO:
+        dpi = DataRepository.shared.GetDPI()
     }
     
-    func FetchPath(){
-        //TODO:
+    func FetchPath()-> String{
+        guard let p = DataRepository.shared.GetPsdObject(psdId: DataRepository.shared.GetSelectedPsdId())?.imageURL.path else{
+            return ""
+        }
+        return p
     }
     
-    func FetchColorMode(){
-        //TODO:
+    func FetchColorModeString(){
+        let cm = DataRepository.shared.GetColorMode(psdId:  DataRepository.shared.GetSelectedPsdId())
+        if cm == 1{
+            colorMode = "􀆮"
+        }else if cm == 2{
+            colorMode = "􀆺"
+        }else{
+            colorMode = ""
+        }
+    }
+    
+    func FetchProcessedImage(){
+        imageForShow = DataRepository.shared.GetProcessedImage().ToNSImage()
+        print(imageForShow.size)
     }
 }

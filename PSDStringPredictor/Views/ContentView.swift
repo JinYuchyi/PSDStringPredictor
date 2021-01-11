@@ -21,6 +21,8 @@ struct ContentView: View {
     let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
     @ObservedObject var stringObjectVM = psdViewModel
+    @ObservedObject var psdVM: PsdListVM
+    @ObservedObject var imgVM: ImageVM
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     @State var showImage = false
@@ -47,7 +49,7 @@ struct ContentView: View {
 //            psdPagesView()
 //                .frame(width: 300, alignment: .center)
         //}
-        psdThumbnailList()
+        psdThumbnailList(psdListVM: psdVM, imageVM: imgVM)
         //.frame(width: 300, alignment: .center)
     }
     
@@ -55,7 +57,7 @@ struct ContentView: View {
         return ZStack{
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
-                    ImageView(imageViewModel:imageViewModel)
+                    ImageView(imageVM:imgVM)
 
                     LabelsOnImage( charFrameList: stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID] ?? [])
 
@@ -103,7 +105,7 @@ struct ContentView: View {
             
             Divider()
             
-            ImagePropertyView()
+            ImagePropertyView(imageVM: imgVM)
                 .frame(width: 300, height: 150)
             
             Divider()

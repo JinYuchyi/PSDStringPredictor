@@ -28,6 +28,7 @@ class DataRepository {
     private var targetImageProcessed = CIImage.init() //selected
     private var targetImageMasked = CIImage.init()//selected
     private var selectedNSImage = NSImage()//selected
+    private var colorModeDict: [Int: Int] = [:]
     
     //Global
     private var selectedPsdId: Int = 0
@@ -44,6 +45,8 @@ class DataRepository {
     private init(){}
     
     static let shared = DataRepository()
+    
+ 
     
     func AppendStringObjectListDict(psdId: Int, stringObject: StringObject){
         if stringObjectListDict[psdId] == nil {
@@ -94,27 +97,53 @@ class DataRepository {
     
     func SetSelectedPsdId(newId: Int) {
           selectedPsdId = newId
+        
     }
     
     func GetSelectedNSImage() -> NSImage{
         return selectedNSImage
     }
     
-    func SetSelectedNSImage(image: NSImage) {
-        selectedNSImage = image
+    func GetProcessedImage() -> CIImage{
+        return targetImageProcessed
     }
     
-//    func GetThumbnailDict() -> [Int:NSImage]{
-//        return thumbnailList
-//    }
-//
-//
-//    func GetPsdCommitedList() -> [Int: Bool]{
-//        return psdCommitedList
-//    }
+    func SetSelectedNSImage(image: NSImage) {
+        selectedNSImage = image
+        targetImageMasked = selectedNSImage.ToCIImage() ?? CIImage.init()
+        targetImageProcessed = selectedNSImage.ToCIImage() ?? CIImage.init()
+        //targetImageMasked = selectedNSImage.ToCIImage()
+    }
+
+    func GetColorMode(psdId: Int) -> Int{
+        let obj = GetPsdObject(psdId: psdId)
+        let classifier = ColorModeClassifier(image: obj!.thumbnail.ToCIImage()!)
+        let result = classifier.output
+        return result
+    }
     
     func GetPsdObjectList() -> [PSDObject]{
         return psds.PSDObjects
+    }
+    
+    func GetPsdObject(psdId: Int) -> PSDObject?{
+        if psds.PSDObjects.contains(where: {$0.id == psdId}) == false{
+            return nil
+        }else{
+            return psds.PSDObjects.first(where: {$0.id == psdId})
+        }
+    }
+    
+    func AppendPsdObjectList(url: URL) {
+        psds.addPSDObject(imageURL: url)
+    }
+    
+    func GetDPI()->Int{
+        let obj = GetPsdObject(psdId: selectedPsdId)
+        guard let dpi = ImageUtil.GetImageProperty(keyName: "DPIWidth" , path: (obj?.imageURL.path)!) else {
+            return 0
+        }
+        return dpi
     }
     
 }

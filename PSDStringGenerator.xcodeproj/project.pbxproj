@@ -87,7 +87,7 @@
 		3FB59B1425AAB5CD000FB170 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB59B1325AAB5CD000FB170 /* DataRepository.swift */; };
 		3FB59B1725AAE841000FB170 /* StringLabelsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB59B1625AAE841000FB170 /* StringLabelsVM.swift */; };
 		3FBA3A7C2510AFC900F041DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA3A7B2510AFC900F041DC /* String.swift */; };
-		3FC9067E25AB3AD700120DE2 /* ThumbnailListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9067D25AB3AD700120DE2 /* ThumbnailListVM.swift */; };
+		3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */; };
 		3FC9068125AB455E00120DE2 /* ImageAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */; };
 		3FC9068425ABF4DF00120DE2 /* StringAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */; };
 		3FC9068825AC02C200120DE2 /* ControlVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068725AC02C200120DE2 /* ControlVM.swift */; };
@@ -206,7 +206,7 @@
 		3FB59B1325AAB5CD000FB170 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		3FB59B1625AAE841000FB170 /* StringLabelsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabelsVM.swift; sourceTree = "<group>"; };
 		3FBA3A7B2510AFC900F041DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		3FC9067D25AB3AD700120DE2 /* ThumbnailListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailListVM.swift; sourceTree = "<group>"; };
+		3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdListVM.swift; sourceTree = "<group>"; };
 		3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAttributesVM.swift; sourceTree = "<group>"; };
 		3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringAttributesVM.swift; sourceTree = "<group>"; };
 		3FC9068725AC02C200120DE2 /* ControlVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlVM.swift; sourceTree = "<group>"; };
@@ -397,7 +397,7 @@
 			children = (
 				3F8208552516068100832192 /* PSDViewModel.swift */,
 				3FB59B1625AAE841000FB170 /* StringLabelsVM.swift */,
-				3FC9067D25AB3AD700120DE2 /* ThumbnailListVM.swift */,
+				3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */,
 				3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */,
 				3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */,
 				3FC9068725AC02C200120DE2 /* ControlVM.swift */,
@@ -757,7 +757,7 @@
 				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
 				3FA1C5B225567D5500FC6DC3 /* FontSizeTabularRegressor.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,
-				3FC9067E25AB3AD700120DE2 /* ThumbnailListVM.swift in Sources */,
+				3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */,
 				3FEBA6C1251C93F7002D8EC1 /* ViewModelContainer.swift in Sources */,
 				3FD24807253EDDAF007EBE36 /* FontWeightClassifier.mlmodel in Sources */,
 				3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */,

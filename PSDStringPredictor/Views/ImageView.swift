@@ -12,26 +12,27 @@ import SwiftUI
 struct ImageView: View {
 //var imageProcess: ImageProcess
 //@EnvironmentObject var data: DataStore
-    let imgUtil = ImageUtil()
-    let control = Controller()
+//    let imgUtil = ImageUtil()
+//    let control = Controller()
     //let imgProcess = ImageProcess()
-    @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
+    //@ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
+    @ObservedObject var imageVM: ImageVM
 //    @Binding var showImage: Bool
     
     var body: some View{
-            ZStack{
+            //ZStack{
                 //Show button before we have image loaded
                 
-                if(imageProcessViewModel.showImage == false){
-//                    Button(action: {self.control.LoadImageBtnPressed()}){
-//                        Text("Load Image")
-//                    }
-                    
-                }
+//                if(imageProcessViewModel.showImage == false){
+////                    Button(action: {self.control.LoadImageBtnPressed()}){
+////                        Text("Load Image")
+////                    }
+//
+//                }
                 //Show Image if we have loaded image
-                else{
+                //else{
                     ZStack{
-                        Image(nsImage: imageViewModel.targetImageProcessed.ToNSImage())
+                        Image(nsImage: imageVM.imageForShow)
                         SelectionOverlayView()
 //                        VStack{
 //                            Text("Tracking1")
@@ -42,8 +43,8 @@ struct ImageView: View {
 //                                .tracking(0)
 //                        }
                     }
-                }
-        }
+                //}
+        //}
     }
 
 }
