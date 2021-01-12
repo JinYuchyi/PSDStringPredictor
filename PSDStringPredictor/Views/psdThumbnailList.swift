@@ -25,7 +25,7 @@ struct psdThumbnailList: View {
                             .onTapGesture {
                                 print("tapped \(psd.id)")
                                 psdListVM.ThumbnailClicked(psdId: psd.id)
-                                imageVM.FetchAll()
+                                imageVM.FetchInfo()
                                 //psdvm.PsdSelected(psdId: id)
                             }
                         

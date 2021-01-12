@@ -46,8 +46,6 @@ class PsdListVM: ObservableObject{
             return
         }
         Refresh()
-        
-
     }
     
     func ThumbnailClicked(psdId: Int){

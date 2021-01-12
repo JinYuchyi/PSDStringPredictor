@@ -27,14 +27,15 @@ class ImageVM : ObservableObject {
     }
     
     func FetchDpi(){
-        dpi = DataRepository.shared.GetDPI()
+        dpi = DataRepository.shared.GetDPIForOne(psdId: DataRepository.shared.GetSelectedPsdId())
     }
     
-    func FetchPath()-> String{
-        guard let p = DataRepository.shared.GetPsdObject(psdId: DataRepository.shared.GetSelectedPsdId())?.imageURL.path else{
-            return ""
-        }
-        return p
+    func FetchPath(){
+//        guard let p = DataRepository.shared.GetPsdObject(psdId: DataRepository.shared.GetSelectedPsdId())?.imageURL.path else{
+//            return ""
+//        }
+//        return p
+        path =  DataRepository.shared.GetPsdObject(psdId: DataRepository.shared.GetSelectedPsdId())!.imageURL.path ?? "-"
     }
     
     func FetchColorModeString(){
@@ -49,7 +50,7 @@ class ImageVM : ObservableObject {
     }
     
     func FetchProcessedImage(){
-        imageForShow = DataRepository.shared.GetProcessedImage().ToNSImage()
-        print(imageForShow.size)
+        imageForShow = DataRepository.shared.GetProcessedImage(psdId: DataRepository.shared.GetSelectedPsdId()).ToNSImage()
+        //print(imageForShow.size)
     }
 }

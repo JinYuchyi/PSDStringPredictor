@@ -9,10 +9,13 @@
 import Foundation
 import CoreImage
 import Vision
+import SwiftUI
 
 class OCR: ObservableObject{
     //private var workItem: DispatchWorkItem?
-    
+    //@EnvironmentObject var warningVM: WarningVM
+    //Constant
+    let fontDecentOffsetScale: CGFloat = 0.6
     func GetRectsFromObservations(_ observations : [VNRecognizedTextObservation], _ width : Int, _ height : Int)->[CGRect]{
         var rects : [CGRect] = []
         //var total = observations.count
@@ -96,6 +99,46 @@ class OCR: ObservableObject{
         return (rects, chars)
     }
     
+
+    
+    func DeleteDecent(obj: StringObject) -> StringObject{
+        //Delete the decent height
+        var hasLongTail = false
+        for (_, c) in obj.charArray.enumerated() {
+            if (
+                c == "p" ||
+                    c == "q" ||
+                    c == "g" ||
+                    c == "y" ||
+                    c == "j" ||
+                    c == "," ||
+                    c == ";"
+            ) {
+                hasLongTail = true
+            }
+        }
+        
+        var fontName: String = ""
+        if (obj.fontSize >= 20) {
+            fontName = "SFProDisplay-Regular"
+        }
+        else{
+            fontName = "SFProText-Regular"
+        }
+        
+        var descent: CGFloat = 0
+        if hasLongTail == true{
+            //let fontName = fontName
+            descent = FontUtils.GetFontInfo(Font: fontName, Content: obj.content, Size: obj.fontSize).descent
+            descent = descent * fontDecentOffsetScale
+        }
+        
+        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
+        var tmpObj = StringObject.init(obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
+        //tmpObj.stringRect = newStringRect
+        return tmpObj
+    }
+    
     func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObject]{
         var strobjs : [StringObject] = []
         //Get Observations
@@ -119,17 +162,19 @@ class OCR: ObservableObject{
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
         let stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
         let strs = self.GetStringArrayFromObservations(results_fast)
-        
         for i in 0..<stringsRects.count{
             DispatchQueue.main.async{
-                psdViewModel.indicatorTitle = "Processing \(i) of \(stringsRects.count) strings..."
+                warningVM.indicatorTitle = "Processing \(i+1) of \(stringsRects.count) strings..."
+                //DataRepository.shared.SetIndicator(title: "Processing \(i+1) of \(stringsRects.count) strings...")
+                //print ("\(self.warningVM.indicatorTitle)")
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            let newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: imageProcessViewModel.targetImageProcessed.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
+            //print("\(i) - charRects count: \(charRects.count), chars count: \(chars.count)")
+            var newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
+            newStrObj = DeleteDecent(obj: newStrObj)
             strobjs.append(newStrObj) 
             
         }
-        
         return strobjs
       
     }

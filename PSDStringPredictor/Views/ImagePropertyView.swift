@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct ImagePropertyView: View {
-    @ObservedObject var imagePropertyVM = imagePropertyViewModel
-    @ObservedObject var  psdvm = psdViewModel
-    let imageProcessVM = ImageProcess()
+//    @ObservedObject var imagePropertyVM = imagePropertyViewModel
+//    @ObservedObject var  psdvm = psdViewModel
+//    let imageProcessVM = ImageProcess()
     
     @ObservedObject var imageVM : ImageVM
     //@State var colorState = -1
@@ -30,7 +30,7 @@ struct ImagePropertyView: View {
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
                     
-                    Text(String(imageProcessVM.GetImageProperty(keyName: "DPIWidth" , path: psdvm.imageUrlDict[psdViewModel.selectedPSDID]?.path ?? "")))
+                    Text(String(imageVM.dpi))
                         .frame(width: 200, alignment: .topLeading)
                 }
                 
@@ -39,8 +39,11 @@ struct ImagePropertyView: View {
                         Text("Path")
                             .frame(width:80, alignment: .topLeading)
                             .foregroundColor(Color.gray)
-                        Text(DataStore.imagePath)
+                        ScrollView(.horizontal){
+                        Text(imageVM.path)
                             .frame(alignment: .topLeading)
+                            .fixedSize(horizontal: true, vertical: false)
+                        }
                     }
                 }
             }

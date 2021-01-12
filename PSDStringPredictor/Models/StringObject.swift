@@ -149,6 +149,10 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
     }
     
+//    func FetchCharImageList(){
+//        targetImageProcessed.GetCroppedImages(rects: charRects)
+//    }
+    
     mutating func CalcColorMode() -> Int{
         var result = -1
         for img in charImageList{
@@ -224,7 +228,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         var nsColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
             if colorMode == 1{
-                let strImg = imageProcessViewModel.targetNSImage.ToCIImage()!.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                let strImg = DataRepository.shared.GetSelectedNSImage().ToCIImage()!.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
 //                if content == "< Settings" {
 //                    strImg?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/colortest.bmp"))
 //                }
@@ -243,7 +247,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 
             }
             if colorMode == 2{
-                let strImg = imageProcessViewModel.targetNSImage.ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+                let strImg = DataRepository.shared.GetSelectedNSImage().ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
                 //strImg = NoiseReduction(strImg!)
                  //nsColor = Maximum(strImg!)
                 //let fixNSColor = imageProcessViewModel.FindNearestStandardHSV(Maximum(strImg!))

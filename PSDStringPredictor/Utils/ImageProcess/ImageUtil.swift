@@ -39,7 +39,7 @@ class ImageUtil{
         return newimg
     }
 
-    func ImageOntop(OverlayImage img1: CIImage, BGImage img2: inout CIImage, OffsetX x: CGFloat = 0, OffsetY y: CGFloat = 0) ->CIImage {
+    func ImageOntop(OverlayImage img1: CIImage, BGImage img2: CIImage, OffsetX x: CGFloat = 0, OffsetY y: CGFloat = 0) ->CIImage {
         //Filter Creation
         let filter = CIFilter(name: "CISourceOverCompositing")
         let movedImage = img1.transformed(by: CGAffineTransform(translationX: x, y: y))
@@ -50,29 +50,31 @@ class ImageUtil{
         return  filter!.outputImage!
     }
     
-    func AddRectangleMask(BGImage img: inout CIImage, PositionX x: CGFloat, PositionY y: CGFloat, Width w: CGFloat, Height h: CGFloat, MaskColor color: CIColor) -> CIImage{
+    func AddRectangleMask(BGImage img:  CIImage, PositionX x: CGFloat, PositionY y: CGFloat, Width w: CGFloat, Height h: CGFloat, MaskColor color: CIColor) -> CIImage{
         //Create mask
-        var mask = CIImage.init(color: color)
+        let pixelProcess = PixelProcess()
+        let nsC = pixelProcess.colorAt(x: Int(x), y: Int(y), img: DataRepository.shared.GetSelectedNSImage().ToCGImage()!)
+        let c: CIColor = CIColor.init(red: nsC.redComponent, green: nsC.greenComponent, blue: nsC.blueComponent)
+        
+        var mask = CIImage.init(color: c)
         let rect = CGRect(x: 0, y: 0, width: w, height: h)
         mask = mask.cropped(to: rect)
 
-        let img = ImageOntop(OverlayImage: mask, BGImage: &img, OffsetX: x, OffsetY: y)
+        let res = ImageOntop(OverlayImage: mask, BGImage: img, OffsetX: x, OffsetY: y)
         
-        return img
-
-        
+        return res
     }
     
-    func AddRectangleMask(BGImage img: inout CIImage, Rects rects: [CGRect], MaskColor color: CIColor){
-        for i in 0..<rects.count{
-            //Create mask
-            var mask = CIImage.init(color: color)
-            //let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
-            mask = mask.cropped(to: rects[i])
-            _ = ImageOntop(OverlayImage: mask, BGImage: &img )
-        }
-        
-    }
+//    func AddRectangleMask(BGImage img: inout CIImage, Rects rects: [CGRect], MaskColor color: CIColor) -> CIImage{
+//        for i in 0..<rects.count{
+//            //Create mask
+//            var mask = CIImage.init(color: color)
+//            //let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+//            mask = mask.cropped(to: rects[i])
+//            return  ImageOntop(OverlayImage: mask, BGImage: img )
+//        }
+//
+//    }
     
     func imageDataProperties(_ imageData: Data) -> NSDictionary? {
         if let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil)
@@ -84,7 +86,7 @@ class ImageUtil{
         return nil
       }
     
-    static func GetImageProperty(keyName: String, path: String) -> Int?{
+    static func GetImageProperty(keyName: String, path: String) -> String{
 
         let url = URL.init(fileURLWithPath: path)
 
@@ -95,20 +97,47 @@ class ImageUtil{
                 print("Image data generate error in getting DPI function.")
             }
             
-            //print("keyName: \(keyName), path: \(path)")
 
-        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
-                  let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
-                  let dpi = metaData[keyName] as? Int else {
-                return nil
-            }
-            print (dpi)
-        //print(metaData)
+        let imageSource = CGImageSourceCreateWithData(imageData, nil)
+        let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource!, 0, nil) as? [String: Any]
+        let dpi = metaData![keyName] as! String
+        print(dpi)
             return dpi
 
     }
+    
+    func ApplyFilters(target: CIImage, gamma: CGFloat, exp: CGFloat)->CIImage{
+        if (target.IsValid()){
+            var tmp = ChangeGamma(target, gamma)!
+            tmp = ChangeExposure(tmp, exp)!
+//            if isConvolution == true{
+//                tmp = SetConv(tmp)!
+//            }
+            return tmp
+        }
+        return target
+    }
 
-
+    func ApplyBlockMasks(target: CIImage, psdId: Int ) -> CIImage{
+        var result: CIImage = CIImage.init()
+        //self.imgProcess.FetchImage()
+        //self.imgProcess.targetImageMasked = self.imgProcess.targetNSImage.ToCIImage()!
+        if DataRepository.shared.GetBlockMaskListDict()[psdId] == nil || DataRepository.shared.GetBlockMaskListDict()[psdId]!.count == 0{
+            return target
+        }
+        if DataRepository.shared.GetColorMode(psdId: psdId) == 1{
+            for rect in DataRepository.shared.GetBlockMaskListDict()[psdId]!{
+                result = AddRectangleMask(BGImage: (target), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
+            }
+        }else if psdViewModel.psdColorMode[psdId]  == 2 {
+            for rect in DataRepository.shared.GetBlockMaskListDict()[psdId]!{
+                result = AddRectangleMask(BGImage: (target), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.gray)
+//                self.imgProcess.SetTargetMaskedImage(tmpImg)
+            }
+        }
+        return result
+        
+    }
 
     
     

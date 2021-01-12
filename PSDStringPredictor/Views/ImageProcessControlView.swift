@@ -15,7 +15,8 @@ struct ImageProcessView: View {
     //@State private  var exposureValue: CGFloat = 0
     @State var isConvolution: Bool = false
     
-
+    @ObservedObject var controlVM: ControlVM
+    @ObservedObject var imageVM: ImageVM
     
     var body: some View {
         
@@ -31,17 +32,17 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            (imageViewModel.gammaValue[psdViewModel.selectedPSDID] ?? 1)
+                            controlVM.GetGamma()
                         },
                         set: {(newValue) in
-                            imageViewModel.gammaValue[psdViewModel.selectedPSDID]! = newValue
-                            self.SetFilter()
+                            controlVM.SetGamma(val: newValue)
+                            imageVM.FetchInfo()
                         }
                     ),
                     in: 0...10
                     
                 ).disabled(imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
-                Button(action: { imageViewModel.gammaValue[psdViewModel.selectedPSDID] = 1; self.SetFilter() }){
+                Button(action: { ResetGamma() }){
                     Text("Reset")
                 }
             }
@@ -53,17 +54,17 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            imageViewModel.exposureValue[psdViewModel.selectedPSDID] ?? 0
+                            controlVM.GetExp()
                         },
                         set: {(newValue) in
-                            imageViewModel.exposureValue[psdViewModel.selectedPSDID] = newValue
-                            self.SetFilter()
+                            controlVM.SetExp(val: newValue)
+                            imageVM.FetchInfo()
                         }
                     ),
                     in: 0...10
                     
                 ).disabled(self.imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
-                Button(action: { imageViewModel.exposureValue[psdViewModel.selectedPSDID] = 0; self.SetFilter() }){
+                Button(action: { ResetExp() }){
                     Text("Reset")
                 }
             }
@@ -76,17 +77,16 @@ struct ImageProcessView: View {
         }
     }
     
-//    func SetFilter(){
-//        if (self.imageViewModel.targetImageMasked.IsValid()){
-//            var tmp = ChangeGamma(self.imageViewModel.targetImageMasked, CGFloat(gammaValue))!
-//            tmp = ChangeExposure(tmp, CGFloat(exposureValue))!
-//            if isConvolution == true{
-//                tmp = SetConv(tmp)!
-//            }
-//            
-//            self.imageViewModel.SetTargetProcessedImage(tmp)
-//        }
-//    }
+    func ResetGamma(){
+        controlVM.SetGamma(val: 1)
+        imageVM.FetchInfo()
+    }
+    
+    func ResetExp(){
+        controlVM.SetExp(val: 0)
+        imageVM.FetchInfo()
+    }
+
     
     func SetFilter(){
         imageViewModel.SetFilter()

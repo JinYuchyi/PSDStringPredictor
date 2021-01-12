@@ -23,6 +23,7 @@ struct ContentView: View {
     @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var psdVM: PsdListVM
     @ObservedObject var imgVM: ImageVM
+    @ObservedObject var controlVM: ControlVM = ControlVM()
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     @State var showImage = false
@@ -100,7 +101,7 @@ struct ContentView: View {
 
             //Divider()
             
-            ImageProcessView(imageViewModel: imageViewModel)
+            ImageProcessView(imageViewModel: imageViewModel, controlVM: controlVM, imageVM: imgVM)
                 .padding(.top, 20.0)
             
             Divider()
@@ -115,7 +116,7 @@ struct ContentView: View {
             
             Divider()
             
-            ControlPanel(showImage: $showImage)
+            ControlPanel(showImage: $showImage, controlVM: controlVM)
 
             
         }

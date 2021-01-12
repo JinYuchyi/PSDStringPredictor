@@ -45,6 +45,7 @@ class PSDViewModel: ObservableObject{
     //Constant
     let fontDecentOffsetScale: CGFloat = 0.6
     let fontLeadingTable = [[34,41], [28,41], [22,28], [20,25], [17,22], [16,21], [15,20], [13,18], [12,16], [11,13]]
+    
 
     init(){
         FetchAllData()
@@ -476,7 +477,7 @@ class PSDViewModel: ObservableObject{
         let queueCalc = DispatchQueue(label: "calc")
         queueCalc.async(group: group) {
             var allStrObjs = self.PredictStringObjects(FromCIImage: imageProcessViewModel.targetImageProcessed)
-            allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
+            //allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
             
             DispatchQueue.main.async{ [self] in
                 //Refrash the stringobject list

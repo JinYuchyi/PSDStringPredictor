@@ -9,8 +9,10 @@
 import Foundation
 import SwiftUI
 
-class DataRepository {
+class DataRepository  {
+    let ocr = OCR()
     var psds = PSD()
+    let imageUtil = ImageUtil()
 
     private var stringObjectListDict: [Int:[StringObject]] = [:]
     private var charFrameListDict: [Int:[CharFrame]] = [:]
@@ -21,6 +23,7 @@ class DataRepository {
     private var alignmentDict: [UUID:Int] = [:]
     private var stringObjectOutputList: [Int:[StringObject]] = [:]
     private var psdColorMode : [Int:Int] = [:]
+    private var blockMaskListDict: [Int: [CGRect]] = [:] //Required
     //private var thumbnailList: [Int: NSImage] = [:]
     //private var psdCommitedList: [Int: Bool] = [:]
     //private var psdObjectList: [PSDObject] = []
@@ -29,14 +32,16 @@ class DataRepository {
     private var targetImageMasked = CIImage.init()//selected
     private var selectedNSImage = NSImage()//selected
     private var colorModeDict: [Int: Int] = [:]
+    private var gammaDict: [Int: CGFloat] = [:]
+    private var expDict: [Int: CGFloat] = [:]
     
     //Global
     private var selectedPsdId: Int = 0
     private var selectedStrIDList: [UUID] = []
     private var stringOverlay: Bool = true
     private var frameOverlay: Bool = true
-    private var indicatorTitle: String = ""
-    private var warningContent: String = ""
+    //private var indicatorTitle: String = ""
+    //private var warningContent: String = ""
         
     //Constant
     static let fontDecentOffsetScale: CGFloat = 0.6
@@ -45,9 +50,7 @@ class DataRepository {
     private init(){}
     
     static let shared = DataRepository()
-    
- 
-    
+
     func AppendStringObjectListDict(psdId: Int, stringObject: StringObject){
         if stringObjectListDict[psdId] == nil {
             stringObjectListDict[psdId] = []
@@ -56,6 +59,32 @@ class DataRepository {
             stringObjectListDict[psdId]!.append(stringObject)
         }
     }
+    
+    func SetStringObjectsForOnePsd(psdId: Int, objs: [StringObject]) {
+        stringObjectListDict[psdId] = objs
+    }
+
+    func UpdateBlockMaskListDict(tappedRect: CGRect, psdId: Int){
+        if blockMaskListDict[psdId] == nil{
+            blockMaskListDict[psdId] = []
+        }
+        let contain = blockMaskListDict[psdId]!.contains(tappedRect)
+        if contain == false {
+            blockMaskListDict[psdId]!.append(tappedRect)
+
+        }else{
+            //Delete rect in list
+            blockMaskListDict[psdId]!.removeAll(where: {$0 == tappedRect})
+        }
+        
+        UpdateProcessedImage(psdId: psdId)
+
+    }
+    
+    func GetBlockMaskListDict() -> [Int: [CGRect]]{
+        return blockMaskListDict
+    }
+    
     
     func GetStringObject(psdId: Int, objId: UUID)->StringObject?{
         if stringObjectListDict[psdId] == nil  {
@@ -100,11 +129,17 @@ class DataRepository {
         
     }
     
+    func UpdateProcessedImage(psdId: Int){
+        targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId)
+        targetImageProcessed = imageUtil.ApplyFilters(target: targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
+    }
+    
     func GetSelectedNSImage() -> NSImage{
         return selectedNSImage
     }
     
-    func GetProcessedImage() -> CIImage{
+    func GetProcessedImage(psdId: Int) -> CIImage{
+        UpdateProcessedImage(psdId: psdId)
         return targetImageProcessed
     }
     
@@ -117,9 +152,14 @@ class DataRepository {
 
     func GetColorMode(psdId: Int) -> Int{
         let obj = GetPsdObject(psdId: psdId)
-        let classifier = ColorModeClassifier(image: obj!.thumbnail.ToCIImage()!)
-        let result = classifier.output
-        return result
+        if obj != nil {
+            let classifier = ColorModeClassifier(image: obj!.thumbnail.ToCIImage()!)
+            let result = classifier.output
+            return result
+        }else{
+            return -1
+        }
+        
     }
     
     func GetPsdObjectList() -> [PSDObject]{
@@ -138,12 +178,79 @@ class DataRepository {
         psds.addPSDObject(imageURL: url)
     }
     
-    func GetDPI()->Int{
-        let obj = GetPsdObject(psdId: selectedPsdId)
-        guard let dpi = ImageUtil.GetImageProperty(keyName: "DPIWidth" , path: (obj?.imageURL.path)!) else {
-            return 0
-        }
-        return dpi
+    func GetDPIForOne(psdId: Int)->Int{
+//        let obj = GetPsdObject(psdId: selectedPsdId)
+//        print(obj!.imageURL.path)
+//        guard let dpi = ImageUtil.GetImageProperty(keyName: "DPIWidth" , path: (obj!.imageURL.path)) else {
+//            return 0
+//        }
+//        print("DPI:\(dpi)")
+//        return dpi
+        return 1
     }
+    
+    func FetchStringObjects(image: CIImage){
+        let group = DispatchGroup()
+        
+        let queueCalc = DispatchQueue(label: "calc")
+        queueCalc.async(group: group) {
+            let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: self.GetProcessedImage(psdId: self.selectedPsdId))
+            //allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
+            
+            DispatchQueue.main.async{ [self] in
+                //Refrash the stringobject list
+                if self.stringObjectListDict[selectedPsdId] == nil {
+                    self.stringObjectListDict[selectedPsdId] = []
+                }
+//                if self.stringObjectStatusDict[selectedPsdId] == nil {
+//                    self.stringObjectStatusDict[selectedPsdId] = [:]
+//                }
+                var tmpList = self.stringObjectListDict[selectedPsdId]!.filter({$0.status == 1}) //Filter all fixed objects
+//                var tmpList = self.stringObjectListDict[_id]!
+//                for obj in self.stringObjectListDict[_id]! {
+//                    if  self.stringObjectStatusDict[_id]![obj.id] != 1 {
+//                        tmpList.removeAll(where: {$0.id == obj.id})
+//                    }
+//                }
+                for obj in allStrObjs {
+                    if self.stringObjectListDict[selectedPsdId]!.ContainsSame(obj) == false {
+                        tmpList.append(obj)
+                        //self.stringObjectStatusDict[_id]![obj.id] = 0
+                    }
+                }
+                self.stringObjectListDict[selectedPsdId]! = tmpList
+                
+            }
+        }
+    }
+    
+    func SetGamma(psdId: Int, value: CGFloat){
+        gammaDict[psdId] = value
+    }
+    
+    func GetGamma(psdId: Int) -> CGFloat{
+        if gammaDict[psdId] != nil {
+            return gammaDict[psdId]!
+        }else {
+            return 1.0
+        }
+    }
+    
+    func SetExp(psdId: Int, value: CGFloat){
+        expDict[psdId] = value
+    }
+    
+    func GetExp(psdId: Int) -> CGFloat{
+        if expDict[psdId] != nil {
+            return expDict[psdId]!
+        }else {
+            return 1.0
+        }
+    }
+    
+//    func SetIndicator(title: String){
+//        DataRepository.shared.SetIndicator(title: title)
+//    }
+
     
 }

@@ -94,19 +94,19 @@ struct CharacterFrameView: View {
     
     func AddCharRectMask(){
         //self.imgProcess.FetchImage()
-        self.imgProcess.targetImageMasked = self.imgProcess.targetNSImage.ToCIImage()!
-        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1{
-            for rect in imgProcess.maskList[stringObjectVM.selectedPSDID]!{
-                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
-            }
-        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
-            for rect in imgProcess.maskList[psdViewModel.selectedPSDID]! {
-                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.black)
-//                self.imgProcess.SetTargetMaskedImage(tmpImg)
-            }
-        }
-        
-        self.imgProcess.SetFilter()
+//        self.imgProcess.targetImageMasked = self.imgProcess.targetNSImage.ToCIImage()!
+//        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1{
+//            for rect in imgProcess.maskList[stringObjectVM.selectedPSDID]!{
+//                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
+//            }
+//        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
+//            for rect in imgProcess.maskList[psdViewModel.selectedPSDID]! {
+//                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.black)
+////                self.imgProcess.SetTargetMaskedImage(tmpImg)
+//            }
+//        }
+//        
+//        self.imgProcess.SetFilter()
         
     }
     
