@@ -64,7 +64,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "380"
             endingLineNumber = "380"
-            landmarkName = "Minimun(_:)"
+            landmarkName = "ChangeExposure(_:_:)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

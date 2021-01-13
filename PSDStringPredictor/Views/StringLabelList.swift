@@ -13,11 +13,13 @@ struct LabelsOnImage: View {
     @ObservedObject var stringObjectVM : PSDViewModel = psdViewModel
     let charFrameList: [CharFrame]
     
+    @ObservedObject var psdsVM: PsdsVM
+    
     var body: some View {
         ZStack{
             
             ForEach(stringObjectVM.FetchStringObjectOutputIDListOnePSD(_id: GetSelectedPsdId() ), id:\.self){ myid in
-                StringLabel(id:myid, charFrameList: charFrameList )
+                StringLabel(id:myid, charFrameList: charFrameList, psdsVM: psdsVM )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
                                     stringObjectVM.selectedIDList.removeAll()
@@ -29,11 +31,11 @@ struct LabelsOnImage: View {
 
             
             ForEach(stringObjectVM.GetIngoreObjectIDListOnePSD(psdId: GetSelectedPsdId() ), id:\.self){ myid in
-                StringLabel(id: myid, charFrameList: charFrameList)
+                StringLabel(id: myid, charFrameList: charFrameList, psdsVM: psdsVM)
             }
             
             ForEach(stringObjectVM.GetFixedObjectIDListForOnePSD(psdId: GetSelectedPsdId()), id:\.self){ myid in
-                StringLabel(id: myid, charFrameList: charFrameList)
+                StringLabel(id: myid, charFrameList: charFrameList, psdsVM: psdsVM)
             }
             
 

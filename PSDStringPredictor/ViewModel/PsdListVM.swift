@@ -18,6 +18,8 @@ class PsdsVM: ObservableObject{
     @Published var selectedPsdId: Int  //refacting
     @Published var gammaDict: [Int:CGFloat]//refacting
     @Published var expDict: [Int:CGFloat]//refacting
+    @Published var DragOffsetDict: [UUID: CGSize] 
+
     //Selected elements
     @Published var selectedNSImage: NSImage //refacting
     @Published var processedCIImage: CIImage //refacting
@@ -39,6 +41,7 @@ class PsdsVM: ObservableObject{
         gammaDict = [:]
         expDict = [:]
         selectedStrIDList = []
+        DragOffsetDict = [:]
     }
     
     //    func Refresh(){
@@ -66,9 +69,7 @@ class PsdsVM: ObservableObject{
     }
     
     func FetchStringObjects(psdId: Int){
-        
         let group = DispatchGroup()
-        
         let queueCalc = DispatchQueue(label: "calc")
         queueCalc.async(group: group) {
             let tmpImageUrl = self.psds.GetPSDObject(psdId: psdId)?.imageURL
@@ -76,22 +77,17 @@ class PsdsVM: ObservableObject{
             let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img)
             
             DispatchQueue.main.async{ [self] in
-
                 var tmpList = self.psds.psdObjects[psdId].stringObjects.filter({$0.status == 1}) //Filter all fixed objects
-                
                 for obj in allStrObjs {
                     if self.psds.psdObjects[psdId].stringObjects.ContainsSame(obj) == false {
                         tmpList.append(obj)
                     }
                 }
-                
                 psds.UpdateStringObjectsForOnePsd(psdId: psdId, objs: tmpList)
-                //self.stringObjectListDict[selectedPsdId]! = tmpList
-                
+                print("obj count: \(psds.GetPSDObject(psdId: psdId)!.stringObjects.count)")
             }
         }
         
-        print("obj count: \(psds.GetPSDObject(psdId: psdId)!.stringObjects.count)")
     }
     
     //    //MARK: Intents

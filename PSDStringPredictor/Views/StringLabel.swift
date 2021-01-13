@@ -24,6 +24,8 @@ struct StringLabel: View {
     @State var width: CGFloat = 0
     @State var alignmentIconName = "alignLeft-round"
     
+    @ObservedObject var psdsVM: PsdsVM
+    
     func CalcTrackingAfterOffset() -> CGFloat {
         // var offset : CGSize = .zero
         var d : CGFloat = 0
@@ -90,9 +92,9 @@ struct StringLabel: View {
     
     
     func GetPosition() -> CGPoint{
-        if stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id) != nil{
-            let x = stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.origin.x + stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.width/2
-            let y = imageViewModel.GetTargetImageSize()[1] - stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.origin.y  - stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.stringRect.height/2
+        if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) != nil{
+            let x = (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.origin.x)! + (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.width)!/2
+            let y = imageViewModel.GetTargetImageSize()[1] - (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.origin.y)!  - (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.height)!/2
             return CGPoint(x: x, y: y)
         }else{
             return CGPoint.zero
@@ -100,12 +102,13 @@ struct StringLabel: View {
     }
     
     func TextLayerView() -> some View {
-        Text(stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.content ?? " " )
+        
+        Text(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.content ?? " " )
             .tracking(CalcTrackingAfterOffset())
             .position(x: GetPosition().x, y: GetPosition().y)
-            .foregroundColor(stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.color.ToColor() ?? Color.white)
-            .font(.custom(stringObjectVM.StringObjectNameDict[id] ?? "", size: CalcSizeAfterOffset()))
-            .shadow(color: stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.colorMode == 2 ?  .black : .white, radius: 2, x: 0, y: 0)
+            .foregroundColor(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.color.ToColor() ?? Color.white)
+            .font(.custom(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.FontName ?? "", size: CalcSizeAfterOffset()))
+            .shadow(color: psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.colorMode == 2 ?  .black : .white, radius: 2, x: 0, y: 0)
             //.blendMode(.difference)
 
     }

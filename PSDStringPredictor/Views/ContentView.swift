@@ -60,7 +60,7 @@ struct ContentView: View {
                 ZStack{
                     ImageView(psds: psdsVM)
 
-                    LabelsOnImage( charFrameList: stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID] ?? [])
+                    LabelsOnImage( charFrameList: stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID] ?? [], psdsVM: psdsVM)
 
                     CharacterFrameView()
                         .IsHidden(condition: showPatchLayer)
