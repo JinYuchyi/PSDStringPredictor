@@ -18,7 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @ObservedObject var dbViewModel = DBViewModel()
     @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var imageVM = ImageVM()
-    @ObservedObject var psdListVM = PsdListVM()
+    
+    @ObservedObject var psdsVM = PsdsVM()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
@@ -26,8 +27,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //let stringObjectVM = StringObjectViewModel()
         //let data = DataStore()
         //let context = (NSApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let contentView = ContentView( psdVM: psdListVM, imgVM: imageVM)
-            .environment(\.managedObjectContext, persistentContainer.viewContext)
+        let contentView = ContentView( psdsVM: psdsVM, imgVM: imageVM)
+            //.environment(\.managedObjectContext, persistentContainer.viewContext)
             //.environmentObject(warningVM)
         //.environmentObject(data)
         
@@ -229,7 +230,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func LoadImage(_ sender: Any) {
         //stringObjectVM.LoadImageBtnPressed()
-        psdListVM.LoadImage()
+        psdsVM.LoadImage()
     }
     
 }

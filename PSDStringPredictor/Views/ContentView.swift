@@ -21,9 +21,9 @@ struct ContentView: View {
     let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
     @ObservedObject var stringObjectVM = psdViewModel
-    @ObservedObject var psdVM: PsdListVM
+    @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var imgVM: ImageVM
-    @ObservedObject var controlVM: ControlVM = ControlVM()
+    //@ObservedObject var controlVM: ControlVM = ControlVM()
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     @State var showImage = false
@@ -41,7 +41,7 @@ struct ContentView: View {
 //            Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
 //                Text("Load Image")
 //                //.frame(minWidth: 250,  maxWidth: .infinity)
-//            }
+//            }e
 //            .frame(width: 300, alignment: .center)
 //            .padding()
 //
@@ -50,7 +50,7 @@ struct ContentView: View {
 //            psdPagesView()
 //                .frame(width: 300, alignment: .center)
         //}
-        psdThumbnailList(psdListVM: psdVM, imageVM: imgVM)
+        psdThumbnailList(psdsVM: psdsVM)
         //.frame(width: 300, alignment: .center)
     }
     
@@ -58,14 +58,14 @@ struct ContentView: View {
         return ZStack{
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
-                    ImageView(imageVM:imgVM)
+                    ImageView(psds: psdsVM)
 
                     LabelsOnImage( charFrameList: stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID] ?? [])
 
                     CharacterFrameView()
                         .IsHidden(condition: showPatchLayer)
                     
-                    HighlightView()
+                    //HighlightView()
                 }
                 //.scaleEffect(viewScale)
                 //.frame(width: 1100 * viewScale)
@@ -87,7 +87,7 @@ struct ContentView: View {
             //                }
             //                .frame(width: 1000, height: 950, alignment: .topTrailing)
             //            }
-            IndicatorView()
+            IndicatorView( psdsVM: psdsVM)
                 .frame(width: 1100, height: 1000, alignment: .center)
             WarningView()
                 .frame(width: 1100, height: 1000, alignment: .center)
@@ -101,12 +101,12 @@ struct ContentView: View {
 
             //Divider()
             
-            ImageProcessView(imageViewModel: imageViewModel, controlVM: controlVM, imageVM: imgVM)
+            ImageProcessView(psdsVM: psdsVM)
                 .padding(.top, 20.0)
             
             Divider()
             
-            ImagePropertyView(imageVM: imgVM)
+            ImagePropertyView(psdvm: psdsVM)
                 .frame(width: 300, height: 150)
             
             Divider()
@@ -116,7 +116,7 @@ struct ContentView: View {
             
             Divider()
             
-            ControlPanel(showImage: $showImage, controlVM: controlVM)
+            ControlPanel(psdsVM: psdsVM)
 
             
         }

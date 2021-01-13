@@ -14,15 +14,17 @@ struct IndicatorView: View {
     @State var start = false
     
     @ObservedObject var warningvm = warningVM
+    
+    
+    @ObservedObject var psdsVM: PsdsVM
     var body: some View {
         ZStack {
             Group{
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(DataRepository.shared.GetColorMode(psdId: DataRepository.shared.GetSelectedPsdId()) == 1 ? Color.black : Color.white).opacity(0.5)
-                Text(warningvm.indicatorTitle)
+                    .fill(psdsVM.GetSelectedPsd()?.colorMode == MacColorMode.light ? Color.black : Color.white).opacity(0.5)
+                Text(psdsVM.IndicatorText)
                     .bold()
-                    //.shadow(color: Color.black.opacity(0.5), radius: 1, y: 2 )
-                    .foregroundColor(DataRepository.shared.GetColorMode(psdId: DataRepository.shared.GetSelectedPsdId()) == 1 ? Color.white : Color.black)
+                    .foregroundColor(psdsVM.GetSelectedPsd()?.colorMode == MacColorMode.light ? Color.white : Color.black)
                     .offset(x: 0, y: -25)
                 
                 RoundedRectangle(cornerRadius: 3)

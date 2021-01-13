@@ -10,22 +10,25 @@ import SwiftUI
 
 struct psdThumbnailList: View {
     //@ObservedObject var psdvm = psdViewModel
-    @ObservedObject var psdListVM: PsdListVM
-    @ObservedObject var imageVM: ImageVM
+    @ObservedObject var psdsVM: PsdsVM
+    //@ObservedObject var ControlVM: ControlVM
+    //@ObservedObject var imageVM: ImageVM
+    
 
     var body: some View {
         VStack{
-            Text("\(psdListVM.psdObjectList.count)")
+            Text("\(psdsVM.psds.psdObjects.count)")
             
             GeometryReader{geo in
-                List(psdListVM.psdObjectList, id:\.id) { psd in
+                List(psdsVM.psds.psdObjects, id:\.id) { psd in
                     VStack{
                         PsdThumbnail(id: psd.id, name: psd.imageURL.lastPathComponent, thumb: psd.thumbnail)
                         .frame(width: geo.size.width, height: CGFloat(sizeOfThumbnail), alignment: .center)
                             .onTapGesture {
                                 print("tapped \(psd.id)")
-                                psdListVM.ThumbnailClicked(psdId: psd.id)
-                                imageVM.FetchInfo()
+                                psdsVM.ThumbnailClicked(psdId: psd.id)
+                                //ControlVM.ThumbnailClicked(psdId: psd.id)
+                                //imageVM.FetchInfo()
                                 //psdvm.PsdSelected(psdId: id)
                             }
                         

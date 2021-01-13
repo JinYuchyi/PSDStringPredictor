@@ -10,13 +10,14 @@ import SwiftUI
 
 struct ImageProcessView: View {
     //@EnvironmentObject var data: DataStore
-    @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
+    //@ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     //@State private  var gammaValue: CGFloat = 1
     //@State private  var exposureValue: CGFloat = 0
-    @State var isConvolution: Bool = false
+    //@State var isConvolution: Bool = false
     
-    @ObservedObject var controlVM: ControlVM
-    @ObservedObject var imageVM: ImageVM
+//    @ObservedObject var controlVM: ControlVM
+//    @ObservedObject var imageVM: ImageVM
+    @ObservedObject var psdsVM: PsdsVM
     
     var body: some View {
         
@@ -32,16 +33,16 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            controlVM.GetGamma()
+                            (psdsVM.gammaDict[psdsVM.selectedPsdId] ?? 1)
                         },
                         set: {(newValue) in
-                            controlVM.SetGamma(val: newValue)
-                            imageVM.FetchInfo()
+                            psdsVM.gammaDict[psdsVM.selectedPsdId] = newValue
+                            psdsVM.UpdateProcessedImage(psdId: psdsVM.selectedPsdId)
                         }
                     ),
                     in: 0...10
                     
-                ).disabled(imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
+                ).disabled(psdsVM.selectedNSImage.ToCIImage()?.IsValid() == false)
                 Button(action: { ResetGamma() }){
                     Text("Reset")
                 }
@@ -54,16 +55,16 @@ struct ImageProcessView: View {
                 Slider(
                     value: Binding(
                         get: {
-                            controlVM.GetExp()
+                            (psdsVM.expDict[psdsVM.selectedPsdId] ?? 0)
                         },
                         set: {(newValue) in
-                            controlVM.SetExp(val: newValue)
-                            imageVM.FetchInfo()
+                            psdsVM.expDict[psdsVM.selectedPsdId] = newValue
+                            psdsVM.UpdateProcessedImage(psdId: psdsVM.selectedPsdId)
                         }
                     ),
                     in: 0...10
                     
-                ).disabled(self.imageViewModel.targetNSImage.ToCIImage()?.IsValid() == false)
+                ).disabled(psdsVM.selectedNSImage.ToCIImage()?.IsValid() == false)
                 Button(action: { ResetExp() }){
                     Text("Reset")
                 }
@@ -78,33 +79,33 @@ struct ImageProcessView: View {
     }
     
     func ResetGamma(){
-        controlVM.SetGamma(val: 1)
-        imageVM.FetchInfo()
+        psdsVM.gammaDict[psdsVM.selectedPsdId] = 1
+        psdsVM.UpdateProcessedImage(psdId: psdsVM.selectedPsdId)
     }
     
     func ResetExp(){
-        controlVM.SetExp(val: 0)
-        imageVM.FetchInfo()
+        psdsVM.expDict[psdsVM.selectedPsdId] = 0
+        psdsVM.UpdateProcessedImage(psdId: psdsVM.selectedPsdId)
     }
 
     
-    func SetFilter(){
-        imageViewModel.SetFilter()
-    }
+//    func SetFilter(){
+//        imageViewModel.SetFilter()
+//    }
     
-    func ToggleConv() -> some View{
-        let bind = Binding<Bool>(
-            get:{self.isConvolution},
-            set:{self.isConvolution = $0
-                SetFilter()
-            }
-          )
-        return Toggle(isOn: bind, label: {
-            Text("Sharpen Edge")
-            
-                })
-        .frame(width: 300, alignment: .leading)
-    }
+//    func ToggleConv() -> some View{
+//        let bind = Binding<Bool>(
+//            get:{self.isConvolution},
+//            set:{self.isConvolution = $0
+//                SetFilter()
+//            }
+//          )
+//        return Toggle(isOn: bind, label: {
+//            Text("Sharpen Edge")
+//
+//                })
+//        .frame(width: 300, alignment: .leading)
+//    }
 }
 
 //struct ImageProcessView_Previews: PreviewProvider {

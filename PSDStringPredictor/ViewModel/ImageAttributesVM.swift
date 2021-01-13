@@ -10,47 +10,51 @@ import Foundation
 import CoreImage
 import SwiftUI
 
-class ImageVM : ObservableObject {
+class ImageVM : PsdsVM {
     @Published var dpi: Int = 0
     @Published var path: String = ""
     @Published var colorMode: String = ""
-    @Published var psdId = DataRepository.shared.GetSelectedPsdId()
+    @Published var psdId = PsdsUtil.shared.GetSelectedPsdId()
     @Published var imageForShow: NSImage = NSImage.init()
     
     
     
     func FetchInfo(){
-        FetchDpi()
+        //FetchDpi()
         FetchPath()
         FetchColorModeString()
-        FetchProcessedImage()
+        //FetchProcessedImage()
     }
     
-    func FetchDpi(){
-        dpi = DataRepository.shared.GetDPIForOne(psdId: DataRepository.shared.GetSelectedPsdId())
-    }
+//    func FetchDpi(){
+//        dpi = PsdsUtil.shared.GetDPIForOne(psdId: PsdsUtil.shared.GetSelectedPsdId())
+//    }
     
     func FetchPath(){
 //        guard let p = DataRepository.shared.GetPsdObject(psdId: DataRepository.shared.GetSelectedPsdId())?.imageURL.path else{
 //            return ""
 //        }
 //        return p
-        path =  DataRepository.shared.GetPsdObject(psdId: DataRepository.shared.GetSelectedPsdId())!.imageURL.path ?? "-"
+        
+        
+        path =  psds.GetPSDObject(psdId: selectedPsdId)!.imageURL.path ?? "-"
     }
+    
+
     
     func FetchColorModeString(){
-        let cm = DataRepository.shared.GetColorMode(psdId:  DataRepository.shared.GetSelectedPsdId())
-        if cm == 1{
-            colorMode = "􀆮"
-        }else if cm == 2{
-            colorMode = "􀆺"
-        }else{
-            colorMode = ""
-        }
+//        let cm = PsdsUtil.shared.GetColorMode(psdId:  PsdsUtil.shared.GetSelectedPsdId())
+//        if cm == 1{
+//            colorMode = "􀆮"
+//        }else if cm == 2{
+//            colorMode = "􀆺"
+//        }else{
+//            colorMode = ""
+//        }
     }
     
-    func FetchProcessedImage(){
-        imageForShow = DataRepository.shared.GetProcessedImage(psdId: DataRepository.shared.GetSelectedPsdId()).ToNSImage()
-        //print(imageForShow.size)
-    }
+//    func FetchProcessedImage(){
+//        imageForShow = PsdsUtil.shared.GetProcessedImage(psdId: PsdsUtil.shared.GetSelectedPsdId()).ToNSImage()
+//        //print(imageForShow.size)
+//    }
 }

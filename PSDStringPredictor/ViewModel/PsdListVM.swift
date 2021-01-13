@@ -9,22 +9,92 @@
 import Foundation
 import SwiftUI
 
-class PsdListVM: ObservableObject{
+class PsdsVM: ObservableObject{
     
-//    @Published var thumbnailDict: [Int:NSImage] = [:]
-//    @Published var commitedList: [Int:Bool] = [:]
-//    @Published var pathList: [Int:String] = [:]
-    @Published var psdObjectList: [PSDObject] = []
+    let ocr = OCR()
     
-    func Refresh(){
-        FetchPsdObjectList()
+    @Published var psds: PSD //refacting
+    
+    @Published var selectedPsdId: Int  //refacting
+    @Published var gammaDict: [Int:CGFloat]//refacting
+    @Published var expDict: [Int:CGFloat]//refacting
+    //Selected elements
+    @Published var selectedNSImage: NSImage //refacting
+    @Published var processedCIImage: CIImage //refacting
+    @Published var selectedStrIDList: [UUID]//refacting
+    //Others
+    @Published var IndicatorText: String = ""
+    
+    let imageUtil = ImageUtil()
+    //    @Published var thumbnailDict: [Int:NSImage] = [:]
+    //    @Published var commitedList: [Int:Bool] = [:]
+    //    @Published var pathList: [Int:String] = [:]
+    //@Published var psdObjectList: [PSDObject] = []
+    
+    init(){
+        psds = PSD()
+        selectedPsdId = 0
+        selectedNSImage = NSImage.init()
+        processedCIImage = CIImage.init()
+        gammaDict = [:]
+        expDict = [:]
+        selectedStrIDList = []
     }
     
-    func FetchPsdObjectList(){
-        psdObjectList = DataRepository.shared.GetPsdObjectList()
+    //    func Refresh(){
+    //        FetchPsdObjectList()
+    //    }
+    //
+    //    func FetchPsdObjectList(){
+    //        psdObjectList = DataRepository.shared.GetPsdObjectList()
+    //    }
+    //
+    func InitDictForOnePsd(psdId: Int){
+        gammaDict[psdId] = 1
+        expDict[psdId] = 0
+        processedCIImage = selectedNSImage.ToCIImage() ?? CIImage.init()
     }
     
-    //MARK: Intents
+    func GetSelectedPsd() -> PSDObject?{
+        return psds.psdObjects.first(where: {$0.id == selectedPsdId})
+    }
+    
+    func UpdateProcessedImage(psdId: Int){
+        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, colorMode: GetSelectedPsd()!.colorMode)
+        processedCIImage = imageUtil.ApplyFilters(target: _targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
+        print("gamma: \(gammaDict[psdId]), exp: \(expDict[psdId])")
+    }
+    
+    func FetchStringObjects(psdId: Int){
+        
+        let group = DispatchGroup()
+        
+        let queueCalc = DispatchQueue(label: "calc")
+        queueCalc.async(group: group) {
+            let tmpImageUrl = self.psds.GetPSDObject(psdId: psdId)?.imageURL
+            let img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
+            let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img)
+            
+            DispatchQueue.main.async{ [self] in
+
+                var tmpList = self.psds.psdObjects[psdId].stringObjects.filter({$0.status == 1}) //Filter all fixed objects
+                
+                for obj in allStrObjs {
+                    if self.psds.psdObjects[psdId].stringObjects.ContainsSame(obj) == false {
+                        tmpList.append(obj)
+                    }
+                }
+                
+                psds.UpdateStringObjectsForOnePsd(psdId: psdId, objs: tmpList)
+                //self.stringObjectListDict[selectedPsdId]! = tmpList
+                
+            }
+        }
+        
+        print("obj count: \(psds.GetPSDObject(psdId: psdId)!.stringObjects.count)")
+    }
+    
+    //    //MARK: Intents
     func LoadImage(){
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = true
@@ -36,28 +106,33 @@ class PsdListVM: ObservableObject{
             // Do whatever you need with every selected file
             // in this case, print on the terminal every path
             for result in results {
-                let hasSame = DataRepository.shared.GetPsdObjectList().contains(where: {$0.imageURL == result})
+                
+                let hasSame = psds.psdObjects.contains(where: {$0.imageURL == result})
                 if hasSame == false {
-                    DataRepository.shared.AppendPsdObjectList(url: result)
+                    let outId = psds.addPSDObject(imageURL: result)
+                    InitDictForOnePsd(psdId: outId )
+                    //psds.psdObjects.AppendPsdObjectList(url: result)
                 }
             }
+            //print("psd count: \(psds.psdObjects.count)")
         } else {
             // User clicked on "Cancel"
             return
         }
-        Refresh()
     }
     
     func ThumbnailClicked(psdId: Int){
-        DataRepository.shared.SetSelectedPsdId(newId: psdId)
-        guard let psdObj = DataRepository.shared.GetPsdObject(psdId: psdId) else {
-            return
+        selectedPsdId = psdId
+        if psds.psdObjects.contains(where: {psdId == $0.id}) == true {
+            selectedNSImage = LoadNSImage(imageUrlPath: GetSelectedPsd()!.imageURL.path)
+            UpdateProcessedImage(psdId: psdId)
         }
-        let nsImg = LoadNSImage(imageUrlPath: psdObj.imageURL.path)
-        DataRepository.shared.SetSelectedNSImage(image: nsImg)
-         
+    }
+    
+    func ProcessForOnePsd(){
+        FetchStringObjects(psdId: selectedPsdId)
     }
     
     
-
+    
 }

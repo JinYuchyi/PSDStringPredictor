@@ -8,12 +8,12 @@
 
 import Foundation
 
-class ControlVM : ObservableObject {
+class ControlVM  {
     
 //    @Published var gamma : CGFloat = DataRepository.shared.GetGamma(psdId: DataRepository.shared.GetSelectedPsdId())
 //    @Published var exp : CGFloat = DataRepository.shared.GetExp(psdId: DataRepository.shared.GetSelectedPsdId())
     
-    
+    //@Published var selectedPsdId: Int = 0
     
     func CombineStrObjects(selectedIdList: [UUID]){
         
@@ -23,34 +23,30 @@ class ControlVM : ObservableObject {
     
     func IgnoreSelectedObjects(selectedIdList: [UUID]){}
     
-    func ProcessForOne(){
-        let img = DataRepository.shared.GetProcessedImage(psdId: DataRepository.shared.GetSelectedPsdId())
-        if img.extent.width > 0 {
-            DataRepository.shared.FetchStringObjects(image: img)
-            //print(DataRepository.shared.GetStringObjectsForOnePsd(psdId: DataRepository.shared.GetSelectedPsdId()).count)
-        }
-    }
+
     
     func CreatePsdForOne(){}
     
-    func SetGamma(val: CGFloat){
-        //gamma = val
-        DataRepository.shared.SetGamma(psdId: DataRepository.shared.GetSelectedPsdId(), value: val)
-        DataRepository.shared.UpdateProcessedImage(psdId: DataRepository.shared.GetSelectedPsdId())
-        //print(DataRepository.shared.GetGamma(psdId: DataRepository.shared.GetSelectedPsdId()))
-    }
+//    func SetGamma(val: CGFloat){
+//        //gamma = val
+//        PsdsUtil.shared.SetGamma(psdId: PsdsUtil.shared.GetSelectedPsdId(), value: val)
+//        PsdsUtil.shared.UpdateProcessedImage(psdId: PsdsUtil.shared.GetSelectedPsdId())
+//        //print(DataRepository.shared.GetGamma(psdId: DataRepository.shared.GetSelectedPsdId()))
+//    }
+//
+//    func GetGamma() -> CGFloat {
+//        PsdsUtil.shared.GetGamma(psdId: PsdsUtil.shared.GetSelectedPsdId())
+//    }
+//
+//    func SetExp(val: CGFloat){
+//        //exp = val
+//        PsdsUtil.shared.SetExp(psdId: PsdsUtil.shared.GetSelectedPsdId(), value: val)
+//        PsdsUtil.shared.UpdateProcessedImage(psdId: PsdsUtil.shared.GetSelectedPsdId())
+//    }
+//
+//    func GetExp() -> CGFloat{
+//        PsdsUtil.shared.GetExp(psdId: PsdsUtil.shared.GetSelectedPsdId())
+//    }
     
-    func GetGamma() -> CGFloat {
-        DataRepository.shared.GetGamma(psdId: DataRepository.shared.GetSelectedPsdId())
-    }
     
-    func SetExp(val: CGFloat){
-        //exp = val
-        DataRepository.shared.SetExp(psdId: DataRepository.shared.GetSelectedPsdId(), value: val)
-        DataRepository.shared.UpdateProcessedImage(psdId: DataRepository.shared.GetSelectedPsdId())
-    }
-    
-    func GetExp() -> CGFloat{
-        DataRepository.shared.GetExp(psdId: DataRepository.shared.GetSelectedPsdId())
-    }
 }

@@ -16,8 +16,9 @@ struct ImageView: View {
 //    let control = Controller()
     //let imgProcess = ImageProcess()
     //@ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @ObservedObject var imageVM: ImageVM
+    //@ObservedObject var imageVM: ImageVM
 //    @Binding var showImage: Bool
+    @ObservedObject var psds: PsdsVM
     
     var body: some View{
             //ZStack{
@@ -32,7 +33,7 @@ struct ImageView: View {
                 //Show Image if we have loaded image
                 //else{
                     ZStack{
-                        Image(nsImage: imageVM.imageForShow)
+                        Image(nsImage: psds.processedCIImage.ToNSImage())
                         SelectionOverlayView()
 //                        VStack{
 //                            Text("Tracking1")

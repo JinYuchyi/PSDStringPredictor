@@ -17,7 +17,7 @@ class StringAttributesVM : ObservableObject {
     @Published var charList: [Character] = []
     
     func FetchInfo() {
-        let selObj = DataRepository.shared.GetSelectedStringObject()
+        let selObj = PsdsUtil.shared.GetSelectedStringObject()
         content = selObj?.content ?? ""
         let cmode = selObj?.colorMode
         switch cmode {

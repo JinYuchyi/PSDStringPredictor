@@ -22,12 +22,13 @@ struct ControlPanel: View {
 //    var db = DB()
     var training = MLTraining()
     let imagePropertyVM = imagePropertyViewModel
-    @Binding var showImage: Bool
-    @Environment(\.managedObjectContext) private var viewContext
+    //@Binding var showImage: Bool
+    //@Environment(\.managedObjectContext) private var viewContext
     let trackingData = TrackingDataManager.shared
   //  let colorModeClassifier = ColorModeClassifier()
     
-    @ObservedObject var controlVM: ControlVM
+    //let controlVM = ControlVM()
+    let psdsVM: PsdsVM
     
     var body: some View {
 
@@ -59,7 +60,7 @@ struct ControlPanel: View {
                 .frame(width: 300, alignment: .leading)
             
             HStack{
-                Button(action: {controlVM.ProcessForOne()}){
+                Button(action: {psdsVM.ProcessForOnePsd()}){
                     Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }

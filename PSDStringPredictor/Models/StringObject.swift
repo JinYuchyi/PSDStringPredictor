@@ -221,39 +221,40 @@ struct StringObject : Identifiable, Equatable, Hashable{
     
     func CalcColor() -> CGColor {
         //var colorList: [NSColor] = []
-        
         var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
-//        var maxC: CGColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-//        var minC: CGColor =  CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+        var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+        var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
         var nsColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
             if colorMode == 1{
-                let strImg = DataRepository.shared.GetSelectedNSImage().ToCIImage()!.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
-//                if content == "< Settings" {
-//                    strImg?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/colortest.bmp"))
-//                }
-                //strImg = NoiseReduction(strImg!)
-                //print("Calc for: \(content), \(nsColor)")
-                nsColor = Minimun(strImg)
+                //old
+//                let strImg = PsdsUtil.shared.GetSelectedNSImage().ToCIImage()!.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+//                nsColor = Minimun(strImg)
+//                result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
+                
+                //New
 
-                //let fixNSColor = imageProcessViewModel.FindNearestStandardHSV(Minimun(strImg!))
-
-                result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
-                //let fixed  = imageProcessViewModel.FindNearestStandardRGB(result)
-
-//                print("original: \(Int(nsColor.redComponent * 255)),\(Int(nsColor.greenComponent * 255)),\(Int(nsColor.blueComponent * 255))")
-//                print("Fixed: \(fixed)")
-                //result =  CGColor.init(red: fixed[0]/255, green: fixed[1]/255, blue: fixed[2]/255, alpha: 1)
+                 
+                for img in charImageList{
+                    if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
+                        minc = Minimun(img)
+                    }
+                }
+                result = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 
             }
             if colorMode == 2{
-                let strImg = DataRepository.shared.GetSelectedNSImage().ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
-                //strImg = NoiseReduction(strImg!)
-                 //nsColor = Maximum(strImg!)
-                //let fixNSColor = imageProcessViewModel.FindNearestStandardHSV(Maximum(strImg!))
-                result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
-                //let fixed  = imageProcessViewModel.FindNearestStandardRGB(result)
-                //result =  CGColor.init(red: fixed[0]/255, green: fixed[1]/255, blue: fixed[2]/255, alpha: 1)
+                //old
+//                let strImg = PsdsUtil.shared.GetSelectedNSImage().ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
+//                result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
+                
+                //new
+                for img in charImageList{
+                    if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
+                        maxc = Maximum(img)
+                    }
+                }
+                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
             }
         }
         //SnapToNearestStandardColor(result)

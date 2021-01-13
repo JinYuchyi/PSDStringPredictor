@@ -9,9 +9,9 @@
 import Foundation
 import SwiftUI
 
-class DataRepository  {
+class PsdsUtil  {
     let ocr = OCR()
-    var psds = PSD()
+    //var psds: PSD
     let imageUtil = ImageUtil()
 
     private var stringObjectListDict: [Int:[StringObject]] = [:]
@@ -49,7 +49,7 @@ class DataRepository  {
     
     private init(){}
     
-    static let shared = DataRepository()
+    static let shared = PsdsUtil()
 
     func AppendStringObjectListDict(psdId: Int, stringObject: StringObject){
         if stringObjectListDict[psdId] == nil {
@@ -77,7 +77,7 @@ class DataRepository  {
             blockMaskListDict[psdId]!.removeAll(where: {$0 == tappedRect})
         }
         
-        UpdateProcessedImage(psdId: psdId)
+        //UpdateProcessedImage(psdId: psdId)
 
     }
     
@@ -124,24 +124,26 @@ class DataRepository  {
         return selectedPsdId
     }
     
+
+    
     func SetSelectedPsdId(newId: Int) {
           selectedPsdId = newId
         
     }
     
-    func UpdateProcessedImage(psdId: Int){
-        targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId)
-        targetImageProcessed = imageUtil.ApplyFilters(target: targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-    }
-    
+//    func UpdateProcessedImage(psdId: Int){
+//        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId)
+//        targetImageProcessed = imageUtil.ApplyFilters(target: _targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
+//    }
+//
     func GetSelectedNSImage() -> NSImage{
         return selectedNSImage
     }
     
-    func GetProcessedImage(psdId: Int) -> CIImage{
-        UpdateProcessedImage(psdId: psdId)
-        return targetImageProcessed
-    }
+//    func GetProcessedImage(psdId: Int) -> CIImage{
+//        UpdateProcessedImage(psdId: psdId)
+//        return targetImageProcessed
+//    }
     
     func SetSelectedNSImage(image: NSImage) {
         selectedNSImage = image
@@ -150,79 +152,47 @@ class DataRepository  {
         //targetImageMasked = selectedNSImage.ToCIImage()
     }
 
-    func GetColorMode(psdId: Int) -> Int{
-        let obj = GetPsdObject(psdId: psdId)
-        if obj != nil {
-            let classifier = ColorModeClassifier(image: obj!.thumbnail.ToCIImage()!)
-            let result = classifier.output
-            return result
-        }else{
-            return -1
+    func FetchColorMode(img: CIImage) -> MacColorMode{
+        let classifier = ColorModeClassifier(image: img)
+        let result = classifier.output
+        if result == 1 {
+            return .light
         }
-        
-    }
-    
-    func GetPsdObjectList() -> [PSDObject]{
-        return psds.PSDObjects
-    }
-    
-    func GetPsdObject(psdId: Int) -> PSDObject?{
-        if psds.PSDObjects.contains(where: {$0.id == psdId}) == false{
-            return nil
-        }else{
-            return psds.PSDObjects.first(where: {$0.id == psdId})
+        else {
+            return .dark
         }
     }
     
-    func AppendPsdObjectList(url: URL) {
-        psds.addPSDObject(imageURL: url)
-    }
+//    func GetPsdObjectList() -> [PSDObject]{
+//        return psds.psdObjects
+//    }
     
-    func GetDPIForOne(psdId: Int)->Int{
-//        let obj = GetPsdObject(psdId: selectedPsdId)
-//        print(obj!.imageURL.path)
-//        guard let dpi = ImageUtil.GetImageProperty(keyName: "DPIWidth" , path: (obj!.imageURL.path)) else {
-//            return 0
+//    func GetPsdObject(psdId: Int) -> PSDObject?{
+//        if psds.psdObjects.contains(where: {$0.id == psdId}) == false{
+//            return nil
+//        }else{
+//            return psds.psdObjects.first(where: {$0.id == psdId})
 //        }
-//        print("DPI:\(dpi)")
-//        return dpi
-        return 1
-    }
+//    }
     
-    func FetchStringObjects(image: CIImage){
-        let group = DispatchGroup()
-        
-        let queueCalc = DispatchQueue(label: "calc")
-        queueCalc.async(group: group) {
-            let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: self.GetProcessedImage(psdId: self.selectedPsdId))
-            //allStrObjs = self.DeleteDescentForStringObjects(allStrObjs)
-            
-            DispatchQueue.main.async{ [self] in
-                //Refrash the stringobject list
-                if self.stringObjectListDict[selectedPsdId] == nil {
-                    self.stringObjectListDict[selectedPsdId] = []
-                }
-//                if self.stringObjectStatusDict[selectedPsdId] == nil {
-//                    self.stringObjectStatusDict[selectedPsdId] = [:]
-//                }
-                var tmpList = self.stringObjectListDict[selectedPsdId]!.filter({$0.status == 1}) //Filter all fixed objects
-//                var tmpList = self.stringObjectListDict[_id]!
-//                for obj in self.stringObjectListDict[_id]! {
-//                    if  self.stringObjectStatusDict[_id]![obj.id] != 1 {
-//                        tmpList.removeAll(where: {$0.id == obj.id})
-//                    }
-//                }
-                for obj in allStrObjs {
-                    if self.stringObjectListDict[selectedPsdId]!.ContainsSame(obj) == false {
-                        tmpList.append(obj)
-                        //self.stringObjectStatusDict[_id]![obj.id] = 0
-                    }
-                }
-                self.stringObjectListDict[selectedPsdId]! = tmpList
-                
-            }
-        }
-    }
+//    func AppendPsdObjectList(url: URL) {
+//        psds.addPSDObject(imageURL: url)
+//    }
+    
+//    func GetDPIForOne(psdId: Int)->Int{
+////        let obj = GetPsdObject(psdId: selectedPsdId)
+////        print(obj!.imageURL.path)
+////        guard let dpi = ImageUtil.GetImageProperty(keyName: "DPIWidth" , path: (obj!.imageURL.path)) else {
+////            return 0
+////        }
+////        print("DPI:\(dpi)")
+////        return dpi
+//        return 1
+//    }
+    
+
+    
+    
     
     func SetGamma(psdId: Int, value: CGFloat){
         gammaDict[psdId] = value

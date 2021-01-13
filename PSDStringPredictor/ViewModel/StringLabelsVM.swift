@@ -15,14 +15,14 @@ class StringLabelsVM: ObservableObject {
     //@Published var statusList: [Int] = []
     
     func FetchStringObjectList(){
-        stringObjectList = DataRepository.shared.GetStringObjectsForOnePsd(psdId: DataRepository.shared.GetSelectedPsdId())
+        stringObjectList = PsdsUtil.shared.GetStringObjectsForOnePsd(psdId: PsdsUtil.shared.GetSelectedPsdId())
     }
     
     func FetchPositionList(){
         var result = [CGPoint]()
         for obj in stringObjectList{
             let x = obj.stringRect.origin.x + obj.stringRect.width/2
-            let y = DataRepository.shared.GetSelectedNSImage().size.height - obj.stringRect.origin.y - obj.stringRect.height / 2
+            let y = PsdsUtil.shared.GetSelectedNSImage().size.height - obj.stringRect.origin.y - obj.stringRect.height / 2
             result.append(CGPoint(x: x, y: y))
         }
         positionList = result

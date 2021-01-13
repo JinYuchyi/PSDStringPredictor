@@ -10,10 +10,10 @@ import SwiftUI
 
 struct ImagePropertyView: View {
 //    @ObservedObject var imagePropertyVM = imagePropertyViewModel
-//    @ObservedObject var  psdvm = psdViewModel
+    @ObservedObject var  psdvm: PsdsVM
 //    let imageProcessVM = ImageProcess()
     
-    @ObservedObject var imageVM : ImageVM
+    //@ObservedObject var imageVM : ImageVM
     //@State var colorState = -1
     var body: some View {
         List{
@@ -23,14 +23,15 @@ struct ImagePropertyView: View {
                     Text("Mode")
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
-                    Text(imageVM.colorMode)
+//                    psdvm.GetSelectedPsd()?.colorMode
+                    Text(psdvm.GetSelectedPsd()?.colorMode.toString() ?? "" )
                 }
                 HStack{
                     Text("DPI")
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
                     
-                    Text(String(imageVM.dpi))
+                    Text( psdvm.GetSelectedPsd()?.dpi.toString() ?? "" )  
                         .frame(width: 200, alignment: .topLeading)
                 }
                 
@@ -40,7 +41,7 @@ struct ImagePropertyView: View {
                             .frame(width:80, alignment: .topLeading)
                             .foregroundColor(Color.gray)
                         ScrollView(.horizontal){
-                        Text(imageVM.path)
+                            Text(psdvm.GetSelectedPsd()?.imageURL.path ?? "")
                             .frame(alignment: .topLeading)
                             .fixedSize(horizontal: true, vertical: false)
                         }

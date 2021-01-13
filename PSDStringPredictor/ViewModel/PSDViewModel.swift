@@ -61,20 +61,20 @@ class PSDViewModel: ObservableObject{
     }
     
     func FetchAllThumb(){
-        for obj in psds.PSDObjects {
+        for obj in psds.psdObjects {
             thumbnailList[obj.id] = obj.thumbnail
         }
     }
     
     func FetchAllUrl(){
-        for obj in psds.PSDObjects {
+        for obj in psds.psdObjects {
             imageUrlDict[obj.id] = obj.imageURL
         }
     }
 
     func FetchPsdColorMode(){
         psdColorMode = [:]
-        for obj in psds.PSDObjects{
+        for obj in psds.psdObjects{
             psdColorMode[obj.id] = obj.CalcColorMode()
         }
     }
@@ -124,10 +124,10 @@ class PSDViewModel: ObservableObject{
         let id = selectedIDList.last
         //Remove from original list
         if id != nil {
-            DataRepository.shared.RemoveStringObject(psdId: DataRepository.shared.GetSelectedPsdId(), objId: id!)
+            PsdsUtil.shared.RemoveStringObject(psdId: PsdsUtil.shared.GetSelectedPsdId(), objId: id!)
             //stringObjectListData[selectedPSDID]!.removeAll(where: {$0.id == id})
         }
-        DataRepository.shared.AppendStringObjectListDict(psdId: DataRepository.shared.GetSelectedPsdId(), stringObject: obj)
+        PsdsUtil.shared.AppendStringObjectListDict(psdId: PsdsUtil.shared.GetSelectedPsdId(), stringObject: obj)
         //stringObjectListData[selectedPSDID]!.append(obj)
     }
 
@@ -339,7 +339,7 @@ class PSDViewModel: ObservableObject{
     }
     
     func CreatePSDForOnePSD(_id: Int){
-        let psdPath = psds.PSDObjects[_id].imageURL.path
+        let psdPath = psds.psdObjects[_id].imageURL.path
         var contentList = [String]()
         var colorList = [[Int]]()
         var fontSizeList:[Float] = []
@@ -577,7 +577,7 @@ class PSDViewModel: ObservableObject{
             // Do whatever you need with every selected file
             // in this case, print on the terminal every path
             for result in results {
-                let hasSame = psds.PSDObjects.contains(where: {$0.imageURL == result})
+                let hasSame = psds.psdObjects.contains(where: {$0.imageURL == result})
                 if hasSame == false {
                     psds.addPSDObject(imageURL: result)
                 }
@@ -594,7 +594,7 @@ class PSDViewModel: ObservableObject{
     func PsdSelected(psdId: Int){
         selectedPSDID = psdId
         FetchAllData()
-        let targetObj = psds.PSDObjects.first(where: {$0.id == psdId})
+        let targetObj = psds.psdObjects.first(where: {$0.id == psdId})
         if targetObj != nil {
             imageProcessViewModel.SetTargetNSImage(LoadNSImage(imageUrlPath: targetObj!.imageURL.path))
             imageProcessViewModel.showImage = true
