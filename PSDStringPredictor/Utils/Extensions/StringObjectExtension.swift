@@ -9,7 +9,7 @@
 import Foundation
 
 extension StringObject{
-    mutating func SetStatus(status: Int){
-        self.status = status
-    }
+//    mutating func SetStatus(status: Int){
+//        self.status = status
+//    }
 }

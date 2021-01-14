@@ -87,7 +87,7 @@ class PsdsVM: ObservableObject{
             let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img)
             
             DispatchQueue.main.async{ [self] in
-                var tmpList = self.psds.psdObjects[psdId].stringObjects.filter({$0.status == 1}) //Filter all fixed objects
+                var tmpList = self.psds.psdObjects[psdId].stringObjects.filter({$0.status == .fixed}) //Filter all fixed objects
                 for obj in allStrObjs {
                     if self.psds.psdObjects[psdId].stringObjects.ContainsSame(obj) == false {
                         tmpList.append(obj)
@@ -140,8 +140,10 @@ class PsdsVM: ObservableObject{
     }
     
     func FixedBtnTapped(_ _id: UUID){
-        if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: _id)?.status == 1 {
-            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 0)
+        
+        if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: _id)?.status == StringObjectStatus.fixed {
+            psds.set
+            //stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 0)
         }else {
             stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 1)
 

@@ -55,9 +55,7 @@ struct PSDObject: Identifiable{
         return stringObjects.first(where: {$0.id == objId})
     }
     
-    func SetStatusForStrObj(objId: UUID, value: StringObjectStatus){
-        
-    }
+
     
 //    func FetchColorMode() -> MacColorMode{
 //        let classifier = ColorModeClassifier(image: thumbnail.ToCIImage()!)
@@ -97,7 +95,21 @@ struct PSD {
         return psdObjects.first(where: {$0.id == psdId})
     }
     
-    
+    mutating func SetStatus(psdId: Int, objId: UUID, value: StringObjectStatus){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.status = value
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.append(psd!)
+            }
+        }
+    }
     
     mutating func removePSDObject( id: Int)  {
         let r = psdObjects.removeAll(where: {$0.id == id})
