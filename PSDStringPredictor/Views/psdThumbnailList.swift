@@ -17,10 +17,10 @@ struct psdThumbnailList: View {
 
     var body: some View {
         VStack{
-            Text("\(psdsVM.psds.psdObjects.count)")
+            Text("\(psdsVM.psdModel.psdObjects.count)")
             
             GeometryReader{geo in
-                List(psdsVM.psds.psdObjects, id:\.id) { psd in
+                List(psdsVM.psdModel.psdObjects, id:\.id) { psd in
                     VStack{
                         PsdThumbnail(id: psd.id, name: psd.imageURL.lastPathComponent, thumb: psd.thumbnail)
                         .frame(width: geo.size.width, height: CGFloat(sizeOfThumbnail), alignment: .center)

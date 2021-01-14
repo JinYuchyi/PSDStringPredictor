@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct IndicatorView: View {
-    @ObservedObject var stringObjectVM = psdViewModel
-    @ObservedObject var ocrVM = OCR()
+//    @ObservedObject var stringObjectVM = psdViewModel
+//    @ObservedObject var ocrVM = OCR()
     @State var start = false
     
-    @ObservedObject var warningvm = warningVM
+//    @ObservedObject var warningvm = warningVM
     
     
     @ObservedObject var psdsVM: PsdsVM
@@ -34,7 +34,7 @@ struct IndicatorView: View {
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(Color.green, lineWidth: 3)
                     .frame(width: 500, height: 3)
-                    .offset(x: warningvm.indicatorTitle.isEmpty != false ? -500 : 500, y: 0)
+                    .offset(x: psdsVM.IndicatorText.isEmpty != false ? -500 : 500, y: 0)
                     .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: false))
                     .mask(
                         RoundedRectangle(cornerRadius: 3)
@@ -49,7 +49,7 @@ struct IndicatorView: View {
                 .padding()
                 
             }
-            //.opacity(warningVM.indicatorTitle == "" ? 0 : 1)
+            .opacity(psdsVM.IndicatorText == "" ? 0 : 1)
             
         }
         .frame(width: 550, height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)

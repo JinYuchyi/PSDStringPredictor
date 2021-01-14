@@ -220,6 +220,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.window! .contentView = NSHostingView (rootView: SettingsView(item: item, PSPath: settingViewModel.LoadPList(name: "AppSettings").PSPath))
         self.window! .isMovableByWindowBackground = true
         self.window! .makeKeyAndOrderFront (nil)
+        
         //self.window.contentView = NSWindowController (window: self.window)
         
     }

@@ -21,6 +21,7 @@ enum StringObjectStatus {
     case fixed, ignored, normal
 }
 
+
 struct PSDObject: Identifiable{
     var id: Int
     var stringObjects: [StringObject] = []
@@ -29,7 +30,7 @@ struct PSDObject: Identifiable{
     var colorMode: MacColorMode = .light
     var dpi: Int = 0
     var commited: Bool = false
-
+    
     
     fileprivate init(id: Int, imageURL: URL){
         self.id = id
@@ -55,28 +56,28 @@ struct PSDObject: Identifiable{
         return stringObjects.first(where: {$0.id == objId})
     }
     
-
     
-//    func FetchColorMode() -> MacColorMode{
-//        let classifier = ColorModeClassifier(image: thumbnail.ToCIImage()!)
-//        let result = classifier.output
-//        if result == 1 {
-//            return .light
-//        }
-//        else {
-//            return .dark
-//        }
-//    }
-//
-//    func FetchDpi()
     
-//    mutating func AppendStringObject(_ obj: StringObject) {
-//        if stringObjects.contains(obj) == false{
-//            stringObjects.append(obj)
-//        }
-//    }
+    func FetchColorMode() -> MacColorMode{
+        let classifier = ColorModeClassifier(image: thumbnail.ToCIImage()!)
+        let result = classifier.output
+        if result == 1 {
+            return .light
+        }
+        else {
+            return .dark
+        }
+    }
+    //
+    //    func FetchDpi()
     
-
+    //    mutating func AppendStringObject(_ obj: StringObject) {
+    //        if stringObjects.contains(obj) == false{
+    //            stringObjects.append(obj)
+    //        }
+    //    }
+    
+    
     
 }
 
@@ -111,6 +112,62 @@ struct PSD {
         }
     }
     
+    mutating func SetAlignment(psdId: Int, objId: UUID, value: StringAlignment){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.alignment = value
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.append(psd!)
+            }
+        }
+    }
+    
+    mutating func SetColorMode(psdId: Int, objId: UUID, value: MacColorMode){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.colorMode = value
+                strObj!.CalcColor()
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.append(psd!)
+            }
+        }
+    }
+    
+
+    
+    mutating func SetFontName(psdId: Int, objId: UUID, value: String){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.FontName = value
+                //strObj!.CalcColor()
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.append(psd!)
+            }
+        }
+    }
+    
+    
+
+    
+    
     mutating func removePSDObject( id: Int)  {
         let r = psdObjects.removeAll(where: {$0.id == id})
     }
@@ -144,13 +201,15 @@ struct PSD {
             psdObjects.append(tmpObj)
         }
     }
-
+    
 }
 
 extension PSDObject {
-    func CalcColorMode() -> Int{
-        return 0
+    func CalcColorMode() -> MacColorMode{
+        
+        //TODO:
+        return .light
     }
     
-
+    
 }

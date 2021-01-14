@@ -40,14 +40,14 @@ struct ControlPanel: View {
             }
             //HStack{
 
-                Button(action: {stringObjectVM.SetSelectionToFixedOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-                    Text("Mark Strings as Ready")
+            Button(action: {psdsVM.SetSelectionToFixed()}){
+                    Text("Mark Selection as Ready")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                     
                 }
                 
-                Button(action: {stringObjectVM.SetSelectionToIgnoredOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-                    Text("Mark Strings as Ignore")
+            Button(action: {psdsVM.SetSelectionToIgnored()}){
+                    Text("Mark Selection as Ignore")
                         .frame(minWidth: 270,  maxWidth: .infinity)
                 }
             //}

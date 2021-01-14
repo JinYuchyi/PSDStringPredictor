@@ -10,54 +10,37 @@ import SwiftUI
 
 struct StringObjectPropertyView: View {
     
-    @ObservedObject var stringObjectVM = psdViewModel
-    @ObservedObject var imageProcess = imageProcessViewModel
+//    @ObservedObject var stringObjectVM = psdViewModel
+//    @ObservedObject var imageProcess = imageProcessViewModel
     @State var stringField: String = ""
     @State var weight: String = "Regular"
     let pixelMgr = PixelProcess()
     
+    @ObservedObject var psdsVM: PsdsVM
+    
     func GetLastSelectObject() -> StringObject{
-        if stringObjectVM.selectedIDList.last == nil || stringObjectVM.stringObjectListData.count == 0 {
-            return StringObject.init()
-        }
-        return stringObjectVM.stringObjectListData[stringObjectVM.selectedPSDID]!.FindByID(stringObjectVM.selectedIDList.last!) ?? StringObject.init()
+        
+        guard let id = psdsVM.selectedStrIDList.last else {return StringObject.init()}
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? StringObject.init()
     }
 
     func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{
         var offset: CGFloat = 0
-        if stringObjectVM.DragOffsetDict[targetObj.id] != nil{
-            offset = stringObjectVM.DragOffsetDict[targetObj.id]!.width
+        if psdsVM.DragOffsetDict[targetObj.id] != nil{
+            offset = psdsVM.DragOffsetDict[targetObj.id]!.width
         }
         return targetObj.tracking + offset
     }
     
     func CalcOffsetSize(targetObj: StringObject) -> CGFloat{
         var offset: CGFloat = 0
-        if stringObjectVM.DragOffsetDict[targetObj.id] != nil{
-            offset = stringObjectVM.DragOffsetDict[targetObj.id]!.height
+        if psdsVM.DragOffsetDict[targetObj.id] != nil{
+            offset = psdsVM.DragOffsetDict[targetObj.id]!.height
         }
         return targetObj.fontSize - offset
     }
     
-    func ToggleColorMode(){
-        print("Tapped")
-        var obj = GetLastSelectObject()
-        var preId = GetLastSelectObject().id
-        if obj.colorMode == 1 {
-            obj.colorMode = 2
-        }else if obj.colorMode == 2{
-            obj.colorMode = 1
-        }
-        obj.color = obj.CalcColor()
-        stringObjectVM.SwapLastSelectionWithObject(obj: obj)
-        
-//            if GetLastSelectObject().colorMode == 1{
-//                GetLastSelectObject().colorMode = 2
-//            }else if GetLastSelectObject().colorMode == 2{
-//                GetLastSelectObject().ToggleColorMode()
-//            }
-       
-    }
+
     
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
@@ -107,7 +90,7 @@ struct StringObjectPropertyView: View {
     
     @ViewBuilder
     func FontSizeView(index: Int) -> some View {
-        if stringObjectVM.selectedIDList.count == 0 {
+        if psdsVM.selectedStrIDList.count == 0 {
             Text("")
             }else{
                 if GetLastSelectObject().isPredictedList[index] == 1 {
@@ -131,30 +114,28 @@ struct StringObjectPropertyView: View {
                         .frame(width:200, alignment: .topLeading)
                 }
                 
-                if GetLastSelectObject().content != "No content." {
-                    HStack{
-                        let targetImg = imageProcess.targetNSImage.ToCIImage()!.cropped(to: GetLastSelectObject().stringRect).ToNSImage()
-                        Image(nsImage: targetImg )
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200)
-                        Spacer()
-                        Button(action: {StringSaveBtnPressed()}){
-                            Text("􀈄")
-                                //.frame(minWidth: 250,  maxWidth: .infinity)
-                        }
-                        //.frame( maxWidth: .infinity)
-                    }
-                }
+//                if GetLastSelectObject().content != "No content." {
+//                    HStack{
+//                        let targetImg = imageProcess.targetNSImage.ToCIImage()!.cropped(to: GetLastSelectObject().stringRect).ToNSImage()
+//                        Image(nsImage: targetImg )
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 200)
+//                        Spacer()
+//                        Button(action: {StringSaveBtnPressed()}){
+//                            Text("􀈄")
+//                        }
+//                    }
+//                }
                 
                 HStack{
                     Text("Color Mode")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    if GetLastSelectObject().colorMode == 1 {
+                    if GetLastSelectObject().colorMode == MacColorMode.light {
                         Text("􀆮")
                             .frame(width:200, alignment: .topLeading)
-                    }else if GetLastSelectObject().colorMode == 2 {
+                    }else if GetLastSelectObject().colorMode == MacColorMode.dark {
                         Text("􀆺")
                             .frame(width:200, alignment: .topLeading)
                         
@@ -190,27 +171,10 @@ struct StringObjectPropertyView: View {
                     
                     VStack{
                         if GetLastSelectObject().fontSize != 0 {
-                            Text("\(stringObjectVM.StringObjectNameDict[GetLastSelectObject().id]!)" )
+                            Text("\(GetLastSelectObject().FontName)" )
                                 .frame(width:200, alignment: .topLeading)
                                 .onTapGesture {
-                                    //if stringObjectVM.selectedStringObject.fontSize != 0 {
-                                        //print("Tapped")
-
-                                    let id = GetLastSelectObject().id
-                                        let fName = stringObjectVM.StringObjectNameDict[id]
-                                        let endIndex = fName!.lastIndex(of: " ")
-                                        let startIndex = fName!.startIndex
-                                        let particialName = fName![startIndex..<endIndex!]
-                                        let weightName = fName![endIndex!..<fName!.endIndex]
-                                        
-                                        if weightName == " Regular"  {
-                                            stringObjectVM.StringObjectNameDict[id] = particialName + " Semibold"
-                                            //print("\(stringObjectVM.StringObjectNameDict[id])")
-                                        }else {
-                                            stringObjectVM.StringObjectNameDict[id] = particialName + " Regular"
-                                            //print("\(stringObjectVM.StringObjectNameDict[id])")
-                                        }
-                                    //}
+                                    psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
                                 }
 //                        Picker(selection: $weight, label: Text("")) {
 //                            Text("Regular").tag("Regular")
@@ -237,7 +201,7 @@ struct StringObjectPropertyView: View {
                     //                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
                     //                        .frame(width:200, alignment: .topLeading)
                 }.onTapGesture {
-                    ToggleColorMode()
+                    psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
                 }
                 
                 
@@ -263,9 +227,12 @@ struct StringObjectPropertyView: View {
             let result = panel.runModal()
             if result == .OK{
                 //let img = stringObjectVM.selectedStringObject.charImageList[index]
-                imageProcess.SaveCIIToPNG(CIImage: GetLastSelectObject().charImageList[index], filePath: panel.url!.path )
+                GetLastSelectObject().charImageList[index].ToPNG(url: panel.url!)
+                //imageProcess.SaveCIIToPNG(CIImage: GetLastSelectObject().charImageList[index], filePath: panel.url!.path )
                 let bw = SetGrayScale(GetLastSelectObject().charImageList[index] )
-                imageProcess.SaveCIIToPNG(CIImage: bw!, filePath: panel.url!.path + "_bw" )
+                let newUrl = URL.init(fileURLWithPath: panel.url!.path + "_bw.bmp")
+                bw!.ToPNG(url: newUrl)
+                //imageProcess.SaveCIIToPNG(CIImage: bw!, filePath: panel.url!.path + "_bw" )
                 //let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
                 //let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
                 //imageProcess.SaveCIIToPNG(CIImage: fixedImg, filePath: panel.url!.path+"_fixed" )
@@ -275,24 +242,24 @@ struct StringObjectPropertyView: View {
     }
     
     func StringSaveBtnPressed(){
-        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: GetLastSelectObject().stringRect)
-        let denoise = NoiseReduction(tergetImg)
-        let tergetImgBW = SetGrayScale(denoise!)
-
-        let panel = NSSavePanel()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let result = panel.runModal()
-            if result == .OK{
-                imageProcess.SaveCIIToPNG(CIImage: tergetImg, filePath: panel.url!.path )
-                imageProcess.SaveCIIToPNG(CIImage: tergetImgBW!, filePath: panel.url!.path + "_BW.bmp" )
-                
-            }
-        }
+//        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: GetLastSelectObject().stringRect)
+//        let denoise = NoiseReduction(tergetImg)
+//        let tergetImgBW = SetGrayScale(denoise!)
+//
+//        let panel = NSSavePanel()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//            let result = panel.runModal()
+//            if result == .OK{
+//                imageProcess.SaveCIIToPNG(CIImage: tergetImg, filePath: panel.url!.path )
+//                imageProcess.SaveCIIToPNG(CIImage: tergetImgBW!, filePath: panel.url!.path + "_BW.bmp" )
+//
+//            }
+//        }
     }
 }
 
-struct StringObjectPropertyView_Previews: PreviewProvider {
-    static var previews: some View {
-        StringObjectPropertyView()
-    }
-}
+//struct StringObjectPropertyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StringObjectPropertyView()
+//    }
+//}

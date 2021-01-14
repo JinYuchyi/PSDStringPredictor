@@ -60,7 +60,6 @@
 		3F6B455425133BD100BE6F76 /* CharacterFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */; };
 		3F6C3CE62580CF5200AB7A19 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C3CE52580CF5200AB7A19 /* WarningView.swift */; };
 		3F7239F1257F2EAE003EC998 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3F7239F0257F2EAE003EC998 /* README.md */; };
-		3F7239F4257F318C003EC998 /* IndicatorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */; };
 		3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */; };
 		3F79184425A84459003F158E /* defaultImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F79184325A84459003F158E /* defaultImage.png */; };
 		3F79184925A85CD2003F158E /* PsdThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F79184825A85CD2003F158E /* PsdThumbnail.swift */; };
@@ -89,6 +88,7 @@
 		3FB59B1425AAB5CD000FB170 /* PsdsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB59B1325AAB5CD000FB170 /* PsdsUtil.swift */; };
 		3FB59B1725AAE841000FB170 /* StringLabelsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB59B1625AAE841000FB170 /* StringLabelsVM.swift */; };
 		3FBA3A7C2510AFC900F041DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA3A7B2510AFC900F041DC /* String.swift */; };
+		3FBF5E1125AFEE6B009596A5 /* EnumExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBF5E1025AFEE6B009596A5 /* EnumExtension.swift */; };
 		3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */; };
 		3FC9068125AB455E00120DE2 /* ImageAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */; };
 		3FC9068425ABF4DF00120DE2 /* StringAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */; };
@@ -180,7 +180,6 @@
 		3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFrameView.swift; sourceTree = "<group>"; };
 		3F6C3CE52580CF5200AB7A19 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 		3F7239F0257F2EAE003EC998 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorCircleView.swift; sourceTree = "<group>"; };
 		3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImageExtension.swift; sourceTree = "<group>"; };
 		3F79184325A84459003F158E /* defaultImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultImage.png; sourceTree = "<group>"; };
 		3F79184825A85CD2003F158E /* PsdThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdThumbnail.swift; sourceTree = "<group>"; };
@@ -211,6 +210,7 @@
 		3FB59B1325AAB5CD000FB170 /* PsdsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdsUtil.swift; sourceTree = "<group>"; };
 		3FB59B1625AAE841000FB170 /* StringLabelsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabelsVM.swift; sourceTree = "<group>"; };
 		3FBA3A7B2510AFC900F041DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		3FBF5E1025AFEE6B009596A5 /* EnumExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumExtension.swift; sourceTree = "<group>"; };
 		3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdListVM.swift; sourceTree = "<group>"; };
 		3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAttributesVM.swift; sourceTree = "<group>"; };
 		3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringAttributesVM.swift; sourceTree = "<group>"; };
@@ -354,7 +354,6 @@
 				3F9ED7A42566090100F950BC /* ImageResourceView.swift */,
 				3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */,
 				3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */,
-				3F7239F3257F318C003EC998 /* IndicatorCircleView.swift */,
 				3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */,
 				3FDBC4C3258324F900E9C2DC /* PreferenceView.swift */,
 				3F1CC56C258DB5230084F4EC /* UIOverlayView.swift */,
@@ -442,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				3F4CB5A6250A324300E41082 /* CIImageExtension.swift */,
+				3FBF5E1025AFEE6B009596A5 /* EnumExtension.swift */,
 				3F50A7B1253DC61F00C10810 /* ViewExtension.swift */,
 				3F0550CF25AEE0C7003AF60A /* MacColorModeExtension.swift */,
 				3F4CB5A8250A327E00E41082 /* NSImageExtension.swift */,
@@ -718,6 +718,7 @@
 				3F1CC56D258DB5230084F4EC /* UIOverlayView.swift in Sources */,
 				3FDBC4CD2583535E00E9C2DC /* InteractiveViewModel.swift in Sources */,
 				3F56E3E72506042D00E64337 /* StringObject.swift in Sources */,
+				3FBF5E1125AFEE6B009596A5 /* EnumExtension.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */,
 				3F853B712585BEAE002507C4 /* HighlightView.swift in Sources */,
@@ -758,7 +759,6 @@
 				3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */,
 				3FB59B1725AAE841000FB170 /* StringLabelsVM.swift in Sources */,
 				3FDBC4B02583114C00E9C2DC /* AppSettingsItem.swift in Sources */,
-				3F7239F4257F318C003EC998 /* IndicatorCircleView.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
 				3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */,

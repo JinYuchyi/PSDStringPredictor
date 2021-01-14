@@ -73,10 +73,10 @@ class PSDViewModel: ObservableObject{
     }
 
     func FetchPsdColorMode(){
-        psdColorMode = [:]
-        for obj in psds.psdObjects{
-            psdColorMode[obj.id] = obj.CalcColorMode()
-        }
+//        psdColorMode = [:]
+//        for obj in psds.psdObjects{
+//            psdColorMode[obj.id] = obj.FetchColorMode()
+//        }
     }
     
     func GetFontLeading(fontSize: Float) -> Float{
@@ -108,15 +108,14 @@ class PSDViewModel: ObservableObject{
 //    }
     
     func PredictStringObjects(FromCIImage img: CIImage) -> [StringObject] {
-        //var strObjs = [StringObject]()
         
-        if img.extent.width > 0{
-            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
-            return stringObjects
-        }
-        else{
-            print("Load Image failed.")
-        }
+//        if img.extent.width > 0{
+//            let stringObjects = ocr.CreateAllStringObjects(FromCIImage: img )
+//            return stringObjects
+//        }
+//        else{
+//            print("Load Image failed.")
+//        }
         return []
     }
     
@@ -160,15 +159,15 @@ class PSDViewModel: ObservableObject{
         frameOverlay = true
     }
     
-    
+    //Obsolete
     func FetchStringObjectFontNameDictForOnePSD(){
-        if stringObjectListData[selectedPSDID] == nil {
-            stringObjectListData[selectedPSDID] = []
-        }
-        for obj in stringObjectListData[selectedPSDID]!{
-            StringObjectNameDict[obj.id] = obj.CalcFontFullName()
-            alignmentDict[obj.id] = obj.alignment
-        }
+//        if stringObjectListData[selectedPSDID] == nil {
+//            stringObjectListData[selectedPSDID] = []
+//        }
+//        for obj in stringObjectListData[selectedPSDID]!{
+//            StringObjectNameDict[obj.id] = obj.CalcFontFullName()
+//            alignmentDict[obj.id] = obj.alignment
+//        }
     }
     
     func DeleteDescentForStringObjects(_ objs:  [StringObject]) -> [StringObject] {
@@ -423,29 +422,7 @@ class PSDViewModel: ObservableObject{
         }
     }
     
-    func SetSelectionToFixedOnePSD(psdId _id: Int){
-        var allFix = true
-        var resDict = stringObjectStatusDict[_id]!
-        for selectID in selectedIDList {
-            
-            //Check if it is in ignore list
-            if stringObjectStatusDict[_id]![selectID] == 1 {
-                //skip next step, go to next obj id
-                resDict[selectID] = 1
-                allFix = false
-            }
-            //Toggle the t/f status in fix list
-            else {}
-        }
-        
-        if allFix == true{
-            for selectID in selectedIDList {
-                resDict[selectID] = 0
-            }
-        }
-        
-        stringObjectStatusDict[_id]! = resDict
-    }
+
     
     func SetSelectionToIgnoredOnePSD(psdId: Int){
         var allIgnored = true
@@ -466,9 +443,9 @@ class PSDViewModel: ObservableObject{
         stringObjectStatusDict[psdId]! = resDict
     }
     
-    func SetStatusForStringObject(psdId: Int, objId: UUID, value: Int) {
-        stringObjectStatusDict[psdId]![objId] = value
-    }
+//    func SetStatusForStringObject(psdId: Int, objId: UUID, value: Int) {
+//        stringObjectStatusDict[psdId]![objId] = value
+//    }
     
     //MARK: Intensions
     func ProcessOnePSD(_id: Int)  {

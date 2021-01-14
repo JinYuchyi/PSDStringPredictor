@@ -21,6 +21,10 @@ import Foundation
 //    var fontSize: CGFloat
 //}
 
+enum StringAlignment:String, CaseIterable{
+    case left, center, right
+}
+
 //struct StringObject: Hashable, Codable, Identifiable {
 struct StringObject : Identifiable, Equatable, Hashable{
 
@@ -66,10 +70,10 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var isPredictedList: [Int]
     //var isForbidden: Bool
     var confidence: CGFloat
-    var colorMode: Int
+    var colorMode: MacColorMode
     var charColorModeList: [Int]
     var FontName: String
-    var alignment: Int
+    var alignment: StringAlignment
     var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
     let ocr: OCR = OCR()
@@ -81,7 +85,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         //position = []
         self.tracking = 0
         self.fontSize = 0
-        self.colorMode = -1
+        self.colorMode = .light
         self.fontWeight =  ""
         self.charImageList = []
         self.stringRect = CGRect()
@@ -97,7 +101,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.trackingPS = 0
         self.isPredictedList = [0]
         self.FontName = ""
-        self.alignment = 0
+        self.alignment = .left
         self.status = .normal
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
@@ -111,7 +115,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.content = content
         self.tracking = 10
         self.fontSize = 0.0
-        self.colorMode = 1
+        self.colorMode = .light
         self.fontWeight = "Regular"
         self.charImageList = charImageList
         self.stringRect = stringRect
@@ -127,7 +131,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.trackingPS = 0
         self.isPredictedList = []
         self.FontName = ""
-        self.alignment = 0
+        self.alignment = .left
         self.status = .normal
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
@@ -141,19 +145,19 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = sizeFunc.2
     }
     
-    mutating func ToggleColorMode(){
-        if colorMode == 1 {
-            colorMode = 2
-        }else if colorMode == 2{
-            colorMode = 1
-        }
-    }
+//    mutating func ToggleColorMode(){
+//        if colorMode == 1 {
+//            colorMode = 2
+//        }else if colorMode == 2{
+//            colorMode = 1
+//        }
+//    }
     
 //    func FetchCharImageList(){
 //        targetImageProcessed.GetCroppedImages(rects: charRects)
 //    }
     
-    mutating func CalcColorMode() -> Int{
+    mutating func CalcColorMode() -> MacColorMode{
         var result = -1
         for img in charImageList{
             let bw = SetGrayScale(img)
@@ -165,7 +169,12 @@ struct StringObject : Identifiable, Equatable, Hashable{
         if charColorModeList.count > 0 {
             result = charColorModeList.MajorityElement()
         }
-        return result
+        if result == 1{
+            return .light
+        }else{
+            return .dark
+        }
+        //return result
     }
     
     mutating func SetOffset(x: CGFloat, y: CGFloat){
@@ -226,7 +235,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
         var nsColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
-            if colorMode == 1{
+            if colorMode == .light{
                 //old
 //                let strImg = PsdsUtil.shared.GetSelectedNSImage().ToCIImage()!.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
 //                nsColor = Minimun(strImg)
@@ -243,7 +252,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 result = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 
             }
-            if colorMode == 2{
+            if colorMode == .dark{
                 //old
 //                let strImg = PsdsUtil.shared.GetSelectedNSImage().ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
 //                result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)

@@ -139,7 +139,7 @@ class OCR: ObservableObject{
         return tmpObj
     }
     
-    func CreateAllStringObjects(FromCIImage ciImage: CIImage) -> [StringObject]{
+    func CreateAllStringObjects(FromCIImage ciImage: CIImage, psdsVM: PsdsVM) -> [StringObject]{
         var strobjs : [StringObject] = []
         //Get Observations
         
@@ -164,7 +164,8 @@ class OCR: ObservableObject{
         let strs = self.GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
             DispatchQueue.main.async{
-                warningVM.indicatorTitle = "Processing \(i+1) of \(stringsRects.count) strings..."
+                psdsVM.IndicatorText = "Processing \(i+1) of \(stringsRects.count) strings..."
+                
                 //DataRepository.shared.SetIndicator(title: "Processing \(i+1) of \(stringsRects.count) strings...")
                 //print ("\(self.warningVM.indicatorTitle)")
             }

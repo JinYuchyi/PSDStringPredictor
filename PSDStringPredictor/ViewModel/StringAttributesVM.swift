@@ -21,9 +21,9 @@ class StringAttributesVM : ObservableObject {
         content = selObj?.content ?? ""
         let cmode = selObj?.colorMode
         switch cmode {
-            case 1:
+            case .light:
                 colorMode = "Light Mode"
-            case 2:
+            case .dark:
                 colorMode = "Dark Mode"
             default:
                 colorMode = " "
