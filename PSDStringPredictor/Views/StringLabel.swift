@@ -20,7 +20,7 @@ struct StringLabel: View {
 //    @State var ignoredEnabled: Bool
     //var psd = PSD()
     @ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    @ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
+    //@ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     @State var width: CGFloat = 0
     @State var alignmentIconName = "alignLeft-round"
     
@@ -29,9 +29,10 @@ struct StringLabel: View {
     func CalcTrackingAfterOffset() -> CGFloat {
         // var offset : CGSize = .zero
         var d : CGFloat = 0
-        if stringObjectVM.DragOffsetDict[id] != nil{
-            d = stringObjectVM.DragOffsetDict[id]!.width
-            return (stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)?.tracking ?? 0) + d
+        if psdsVM.DragOffsetDict[id] != nil{
+            d = psdsVM.DragOffsetDict[id]!.width
+            
+            return (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.tracking ?? 0) + d
         }else{
             return 0
         }
@@ -40,32 +41,21 @@ struct StringLabel: View {
     
     func CalcSizeAfterOffset() -> CGFloat {
         var d : CGFloat = 0
-        if stringObjectVM.DragOffsetDict[id] != nil{
-            d = stringObjectVM.DragOffsetDict[id]!.height
+        if psdsVM.DragOffsetDict[id] != nil{
+            d = psdsVM.DragOffsetDict[id]!.height
         }
-        if stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)  == nil {
+        if psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)  == nil {
             return 0
         }else{
-            return stringObjectVM.FindStringObjectByIDOnePSD(psdId: stringObjectVM.selectedPSDID, objId: id)!.fontSize - d
+            return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)!.fontSize - d
         }
     }
-    
+    //Obsolete
     func InfoBtnTapped(){
-        stringObjectVM.FetchSelectedIDList(idList: [id])
+        //stringObjectVM.FetchSelectedIDList(idList: [id])
     }
     
-    func FixedBtnTapped(){
-        //fixed = !fixed
-        
-        if stringObjectVM.stringObjectStatusDict[stringObjectVM.selectedPSDID]![id]! == 1 {
-            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 0)
-            //stringObjectVM.FindStringObjectByID(id: id)!.SetStatus(status: 0)
-        }else {
-            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 1)
 
-        }
-
-    }
     
     func IgnoreBtnTapped(){
         if stringObjectVM.stringObjectStatusDict[stringObjectVM.selectedPSDID]![id]! == 2 {

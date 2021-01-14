@@ -17,6 +17,10 @@ enum MacColorMode: String {
     case dark = "􀆺"
 }
 
+enum StringObjectStatus {
+    case fixed, ignored, normal
+}
+
 struct PSDObject: Identifiable{
     var id: Int
     var stringObjects: [StringObject] = []
@@ -49,6 +53,10 @@ struct PSDObject: Identifiable{
     
     func GetStringObjectFromOnePsd(objId: UUID) -> StringObject?{
         return stringObjects.first(where: {$0.id == objId})
+    }
+    
+    func SetStatusForStrObj(objId: UUID, value: StringObjectStatus){
+        
     }
     
 //    func FetchColorMode() -> MacColorMode{
@@ -88,6 +96,8 @@ struct PSD {
     func GetPSDObject(psdId: Int) -> PSDObject?{
         return psdObjects.first(where: {$0.id == psdId})
     }
+    
+    
     
     mutating func removePSDObject( id: Int)  {
         let r = psdObjects.removeAll(where: {$0.id == id})

@@ -70,7 +70,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var charColorModeList: [Int]
     var FontName: String
     var alignment: Int
-    var status: Int //0: Normal 1: Fix 2: Ignore
+    var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
@@ -98,7 +98,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = [0]
         self.FontName = ""
         self.alignment = 0
-        self.status = 0
+        self.status = .normal
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
@@ -128,7 +128,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = []
         self.FontName = ""
         self.alignment = 0
-        self.status = 0
+        self.status = .normal
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()

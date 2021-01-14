@@ -62,6 +62,16 @@ class PsdsVM: ObservableObject{
         return psds.psdObjects.first(where: {$0.id == selectedPsdId})
     }
     
+    func GetStringObjectForOnePsd(psdId: Int, objId: UUID) -> StringObject?{
+        guard let _psd = psds.psdObjects.first(where: {$0.id == psdId}) else {
+            return nil
+        }
+        guard let _obj = _psd.stringObjects.first(where: {$0.id == objId}) else {
+            return nil
+        }
+        return _obj
+    }
+    
     func UpdateProcessedImage(psdId: Int){
         let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, colorMode: GetSelectedPsd()!.colorMode)
         processedCIImage = imageUtil.ApplyFilters(target: _targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
@@ -87,8 +97,8 @@ class PsdsVM: ObservableObject{
                 print("obj count: \(psds.GetPSDObject(psdId: psdId)!.stringObjects.count)")
             }
         }
-        
     }
+    
     
     //    //MARK: Intents
     func LoadImage(){
@@ -127,6 +137,16 @@ class PsdsVM: ObservableObject{
     
     func ProcessForOnePsd(){
         FetchStringObjects(psdId: selectedPsdId)
+    }
+    
+    func FixedBtnTapped(_ _id: UUID){
+        if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: _id)?.status == 1 {
+            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 0)
+        }else {
+            stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 1)
+
+        }
+
     }
     
     
