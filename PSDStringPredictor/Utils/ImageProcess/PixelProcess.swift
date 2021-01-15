@@ -257,7 +257,9 @@ class PixelProcess{
     func colorAt(x: Int, y: Int, img: CGImage)->NSColor {
         
         let context = self.createBitmapContext(img: img)
-        var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+        //let colorSpace: NSColorSpace = .genericRGB
+        var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+
 
 //        assert(0<=x && x < context.width)
 //        assert(0<=y && y < context.height)

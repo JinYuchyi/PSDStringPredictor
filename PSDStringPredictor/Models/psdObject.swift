@@ -68,16 +68,6 @@ struct PSDObject: Identifiable{
             return .dark
         }
     }
-    //
-    //    func FetchDpi()
-    
-    //    mutating func AppendStringObject(_ obj: StringObject) {
-    //        if stringObjects.contains(obj) == false{
-    //            stringObjects.append(obj)
-    //        }
-    //    }
-    
-    
     
 }
 
@@ -106,8 +96,9 @@ struct PSD {
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
                 psd!.stringObjects.append(strObj!)
                 //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
                 psdObjects.removeAll(where: {$0.id == psdId})
-                psdObjects.append(psd!)
+                psdObjects.insert(psd!, at: _index!)
             }
         }
     }
@@ -122,8 +113,9 @@ struct PSD {
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
                 psd!.stringObjects.append(strObj!)
                 //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
                 psdObjects.removeAll(where: {$0.id == psdId})
-                psdObjects.append(psd!)
+                psdObjects.insert(psd!, at: _index!)
             }
         }
     }
@@ -138,9 +130,10 @@ struct PSD {
                 //Replace strObj
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
                 psd!.stringObjects.append(strObj!)
-                //Replace psd
+                //Replace psd and save to the same place
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
                 psdObjects.removeAll(where: {$0.id == psdId})
-                psdObjects.append(psd!)
+                psdObjects.insert(psd!, at: _index!)
             }
         }
     }
@@ -158,8 +151,9 @@ struct PSD {
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
                 psd!.stringObjects.append(strObj!)
                 //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
                 psdObjects.removeAll(where: {$0.id == psdId})
-                psdObjects.append(psd!)
+                psdObjects.insert(psd!, at: _index!)
             }
         }
     }
@@ -183,10 +177,14 @@ struct PSD {
             //Create temp obj
             var tmpObj = psdObjects.first(where: {$0.id == psdId})!
             tmpObj.stringObjects += objs
-            //Remove Old one
+//            //Remove Old one
+//            psdObjects.removeAll(where: {$0.id == tmpObj.id})
+//            //Append new one
+//            psdObjects.append(tmpObj)
+            
+            let _index = psdObjects.firstIndex(where: {$0.id == tmpObj.id})
             psdObjects.removeAll(where: {$0.id == tmpObj.id})
-            //Append new one
-            psdObjects.append(tmpObj)
+            psdObjects.insert(tmpObj, at: _index!)
         }
     }
     
@@ -197,8 +195,11 @@ struct PSD {
             var tmpObj = psdObjects.first(where: {$0.id == psdId})!
             tmpObj.stringObjects.removeAll()
             tmpObj.stringObjects += objs
+//            psdObjects.removeAll(where: {$0.id == tmpObj.id})
+//            psdObjects.append(tmpObj)
+            let _index = psdObjects.firstIndex(where: {$0.id == tmpObj.id})
             psdObjects.removeAll(where: {$0.id == tmpObj.id})
-            psdObjects.append(tmpObj)
+            psdObjects.insert(tmpObj, at: _index!)
         }
     }
     

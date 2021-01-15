@@ -26,14 +26,14 @@ struct ImagePropertyView: View {
 //                    psdvm.GetSelectedPsd()?.colorMode
                     Text(psdvm.GetSelectedPsd()?.colorMode.toString() ?? "" )
                 }
-                HStack{
-                    Text("DPI")
-                        .frame(width:80, alignment: .topLeading)
-                        .foregroundColor(Color.gray)
-                    
-                    Text( psdvm.GetSelectedPsd()?.dpi.toString() ?? "" )  
-                        .frame(width: 200, alignment: .topLeading)
-                }
+//                HStack{
+//                    Text("DPI")
+//                        .frame(width:80, alignment: .topLeading)
+//                        .foregroundColor(Color.gray)
+//
+//                    Text( psdvm.GetSelectedPsd()?.dpi.toString() ?? "" )
+//                        .frame(width: 200, alignment: .topLeading)
+//                }
                 
                 HStack{
                     HStack{

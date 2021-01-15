@@ -80,13 +80,13 @@ struct ControlPanel: View {
                 .padding(.top)
                 .frame(width: 300, alignment: .leading)
             HStack{
-                Button(action: {self.stringObjectVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
+                Button(action: {psdsVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
                     Text("Current File")
                         .frame(minWidth: 200,  maxWidth: .infinity)
                 }
                 //.disabled(!self.stringObjectVM.OKForProcess)
                 
-                Button(action: {self.stringObjectVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
+                Button(action: {psdsVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }

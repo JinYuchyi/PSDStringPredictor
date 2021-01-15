@@ -28,6 +28,8 @@ class PsdsVM: ObservableObject{
     @Published var IndicatorText: String = ""
     
     let imageUtil = ImageUtil()
+    let pixProcess = PixelProcess()
+    let jsMgr = JSManager()
     //    @Published var thumbnailDict: [Int:NSImage] = [:]
     //    @Published var commitedList: [Int:Bool] = [:]
     //    @Published var pathList: [Int:String] = [:]
@@ -100,6 +102,10 @@ class PsdsVM: ObservableObject{
         }
     }
     
+    func FetchBGColor(obj: StringObject) -> [Float]{
+        let color1 = pixProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(selectedNSImage.size.height - obj.stringRect.origin.y), img: selectedNSImage.ToCGImage()!)
+        return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
+    }
     
 //    func SwapLastSelectionWithObject(obj: StringObject){
 //        let id = selectedStrIDList.last
@@ -151,7 +157,99 @@ class PsdsVM: ObservableObject{
     
     func ProcessForOnePsd(){
         FetchStringObjects(psdId: selectedPsdId)
+        print(selectedNSImage.size)
     }
+    
+    func ProcessForAll(){
+        
+    }
+    
+    func CreatePSDForOnePSD(_id: Int){
+        let psdPath = psdModel.GetPSDObject(psdId: _id)!.imageURL.path
+        var contentList = [String]()
+        var colorList = [[Int]]()
+        var fontSizeList:[Float] = []
+        var fontNameList: [String] = []
+        var positionList = [[Int]]()
+        var trackingList = [Float]()
+        var offsetList = [[Int16]]()
+        var alignmentList = [String]()
+        var rectList = [[Float]]()
+        var bgClolorList = [[Float]]()
+        var isParagraphList = [Bool]()
+        var updateList = psdModel.GetPSDObject(psdId: _id)!.stringObjects.filter{$0.status != .ignored}
+        
+//        for (key,value) in stringObjectStatusDict[_id]!{
+//            if  value == 2{
+//                updateList!.removeAll(where: {$0.id == key})
+//            }
+//        }
+        
+        for obj in updateList{
+            let newString = obj.content.replacingOccurrences(of: "\n", with: " ")
+            contentList.append(newString)
+            var tmpColor: [Int] = []
+            
+            tmpColor = [ Int((Float(obj.color.components![0]) * 255).rounded()),
+                         Int((Float(obj.color.components![1]) * 255).rounded()),
+                         Int((Float(obj.color.components![2]) * 255).rounded())
+            ]
+            colorList.append(tmpColor)
+            
+            isParagraphList.append(obj.isParagraph)
+            
+            //calc tracking and font size offset
+            var o1: CGFloat = 0
+            var o2: CGFloat = 0
+            if DragOffsetDict[obj.id] != nil {
+                o1 = DragOffsetDict[obj.id]!.width
+                o2 = DragOffsetDict[obj.id]!.height
+            }
+            let tmpSize: CGFloat = CGFloat(obj.fontSize - o2)
+            fontSizeList.append(Float(tmpSize))
+            //let tmpTracking = obj.fontSize * 1000 / obj.tracking
+            let tmpTracking = Float((obj.tracking + o1) * 1000 / tmpSize)
+            trackingList.append(tmpTracking)
+            
+            //Calc the offset of String
+            var keyvalues: [String: AnyObject] = [:]
+            let char = (obj.content.first)
+            keyvalues["char"] = String(char!) as AnyObject
+            keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
+            let items = CharBoundsDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
+            if items.count > 0 {
+                let offset = [items[0].x1, Int16((Float(items[0].y2 - items[0].y1)/10).rounded())]
+                offsetList.append(offset)
+            }else{
+                offsetList.append([0,0])
+            }
+            
+            fontNameList.append(obj.CalcFontPostScriptName())
+            positionList.append([Int(obj.stringRect.minX.rounded()), Int((selectedNSImage.size.height - obj.stringRect.minY).rounded())])
+            rectList.append([Float(obj.stringRect.minX), Float(obj.stringRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
+            
+            //alignment
+            if obj.alignment == nil {
+                alignmentList.append("left")
+            }else {
+                alignmentList.append(obj.alignment.rawValue)
+            }
+            
+            //BGColor
+            let tmpBGColor = FetchBGColor(obj: obj)
+            bgClolorList.append(tmpBGColor)
+        }
+        
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList)
+        if success == true{
+            let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
+            let cmd = "open " + jsPath + "  -a '\(settingViewModel.PSPath)'"
+            PythonScriptManager.RunScript(str: cmd)
+        }
+    }
+    
+    
+    //func GetRealResolution(){}
     
     func FixedBtnTapped(_ _id: UUID){
         if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: _id)?.status == StringObjectStatus.fixed {
@@ -188,8 +286,6 @@ class PsdsVM: ObservableObject{
         }
     }
 
-
-    
     func ColorModeTapped(){
         if selectedStrIDList.count == 0 {
             return

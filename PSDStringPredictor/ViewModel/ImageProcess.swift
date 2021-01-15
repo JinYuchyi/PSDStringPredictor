@@ -12,8 +12,8 @@ import Vision
 import SwiftUI
 
 class ImageProcess: ObservableObject{
-
-
+    
+    
     @Published var targetImageProcessed = CIImage.init() //selected
     @Published var targetImageMasked = CIImage.init()//selected
     @Published var targetNSImage = NSImage()//selected
@@ -29,7 +29,7 @@ class ImageProcess: ObservableObject{
     
     var showImage: Bool = false
     
-
+    
     
     func SetFilter(){
         if (targetImageMasked.IsValid()){
@@ -43,32 +43,32 @@ class ImageProcess: ObservableObject{
     }
     
     func GetImageProperty(keyName: String, path: String) -> Int{
-//        var imgData: Data = Data.init()
+        //        var imgData: Data = Data.init()
         let url = URL.init(fileURLWithPath: path)
-//        if targetNSImage.isValid{
-//            imgData = targetNSImage.tiffRepresentation!
-//
-//        }
+        //        if targetNSImage.isValid{
+        //            imgData = targetNSImage.tiffRepresentation!
+        //
+        //        }
         var imageData: NSData =  NSData.init()
-            do{
-                try imageData = NSData.init(contentsOf: url)
-            }catch{
-                print("Image data generate error in getting DPI function.")
-            }
-            
-            //print("keyName: \(keyName), path: \(path)")
-
+        do{
+            try imageData = NSData.init(contentsOf: url)
+        }catch{
+            print("Image data generate error in getting DPI function.")
+        }
+        
+        //print("keyName: \(keyName), path: \(path)")
+        
         guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
-                  let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
-                  let dpi = metaData[keyName] as? Int else {
-                return 0
-            }
-            print (dpi)
+              let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
+              let dpi = metaData[keyName] as? Int else {
+            return 0
+        }
+        print (dpi)
         //print(metaData)
-            return dpi
-//        }else{
-//            return 0
-//        }
+        return dpi
+        //        }else{
+        //            return 0
+        //        }
     }
     
     func FetchStandardHSVList(){
@@ -147,10 +147,10 @@ class ImageProcess: ObservableObject{
         
     }
     
-//    func GetTargetCIImage() -> CIImage{
-//        //UpdateTargetImageInfo()
-//        return targetCIImage
-//    }
+    //    func GetTargetCIImage() -> CIImage{
+    //        //UpdateTargetImageInfo()
+    //        return targetCIImage
+    //    }
     
     func GetProcessedImage() -> CIImage{
         //        if DataStore.targetImageProcessed.extent.width > 0 {
@@ -181,10 +181,10 @@ class ImageProcess: ObservableObject{
         targetImageProcessed = CIImage.init()
         targetImageMasked = CIImage.init()
         //targetImageProcessed = targetNSImage.ToCIImage()!
-//        if(targetImageProcessed.extent.width > 0){}
-//        else{
-//            targetImageProcessed = targetNSImage.ToCIImage()!
-//        }
+        //        if(targetImageProcessed.extent.width > 0){}
+        //        else{
+        //            targetImageProcessed = targetNSImage.ToCIImage()!
+        //        }
         FetchImage()
     }
     
@@ -231,7 +231,7 @@ class ImageProcess: ObservableObject{
     
     func LoadImageBtnPressed()  {
         let colorModeClassifier = ColorModeClassifier(image: targetNSImage.ToCIImage()!)
-
+        
         let panel = NSOpenPanel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
@@ -265,7 +265,7 @@ class ImageProcess: ObservableObject{
                         psdViewModel.warningContent = ""
                     }
                     
-
+                    
                 }
             }
         }
@@ -273,57 +273,85 @@ class ImageProcess: ObservableObject{
     }
     
     func LoadImageBtnPressed1()  {
-
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            let result = panel.runModal()
-//            if result == .OK{
-//                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
-//                {
-//                    //Reset stringobject list
-//                    //psdViewModel.CleanAllForOnePSD()
-//
-
-//                    self.showImage = true
-//
-//                    self.colorModeClassifier.Prediction(fromImage: self.targetImageProcessed)
-//                    imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
-//                    DataStore.imagePath = panel.url!.path
-//
-//                    let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
-//
-//                    if settingViewModel.checkDPISelection == 1 {
-//                        if (dpi != 72 ) {
-//                            //stringObjectViewModel.OKForProcess = false
-//                            psdViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
-//                        }else{
-//                            //stringObjectViewModel.OKForProcess = true
-//                            psdViewModel.warningContent = ""
-//                        }
-//                    }else{
-//                        //stringObjectViewModel.OKForProcess = true
-//                        psdViewModel.warningContent = ""
-//                    }
-//
-//
-//                }
-//            }
-//        }
+        
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        //            let result = panel.runModal()
+        //            if result == .OK{
+        //                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
+        //                {
+        //                    //Reset stringobject list
+        //                    //psdViewModel.CleanAllForOnePSD()
+        //
+        
+        //                    self.showImage = true
+        //
+        //                    self.colorModeClassifier.Prediction(fromImage: self.targetImageProcessed)
+        //                    imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
+        //                    DataStore.imagePath = panel.url!.path
+        //
+        //                    let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
+        //
+        //                    if settingViewModel.checkDPISelection == 1 {
+        //                        if (dpi != 72 ) {
+        //                            //stringObjectViewModel.OKForProcess = false
+        //                            psdViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
+        //                        }else{
+        //                            //stringObjectViewModel.OKForProcess = true
+        //                            psdViewModel.warningContent = ""
+        //                        }
+        //                    }else{
+        //                        //stringObjectViewModel.OKForProcess = true
+        //                        psdViewModel.warningContent = ""
+        //                    }
+        //
+        //
+        //                }
+        //            }
+        //        }
         
     }
     
     
 }
 
+
+
 func LoadNSImage(imageUrlPath: String) -> NSImage {
-    var  newImg :NSImage = NSImage.init()
-    if FileManager.default.fileExists(atPath: imageUrlPath) {
-        let url = URL.init(fileURLWithPath: imageUrlPath)
-        
-        let data = NSData(contentsOf: url)!
-        newImg = NSImage(data: data as Data)!
-        //print(newImg.isValid)
-    }
+    //var  newImg :NSImage = NSImage.init()
+    let url = URL.init(fileURLWithPath: imageUrlPath)
+    //    if FileManager.default.fileExists(atPath: imageUrlPath) {
+    //         url = URL.init(fileURLWithPath: imageUrlPath)
+    //
+    //        let data = NSData(contentsOf: url)!
+    //        newImg = NSImage(data: data as Data)!
+    //
+    //    }
+    let ci = CIImage.init(contentsOf: url)
+    var newImg = NSImage(contentsOf: url)!
+//    let scale = ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height / newImg.size.height
+//    let size: NSSize = NSSize(width: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.width, height: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height)
+//    newImg.lockFocus()
+//    NSGraphicsContext.current!.imageInterpolation = NSImageInterpolation.high
+//    let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
+//                               pixelsWide: Int(size.width),
+//                               pixelsHigh: Int(size.height),
+//                               bitsPerSample: 8,
+//                               samplesPerPixel: 4,
+//                               hasAlpha: true,
+//                               isPlanar: false,
+//                               colorSpaceName: .deviceRGB,
+//                               bytesPerRow: Int(size.width * 4),
+//                               bitsPerPixel: 32)
+//
+//    let ctx = NSGraphicsContext(bitmapImageRep: rep!)
+//    NSGraphicsContext.saveGraphicsState()
+//    NSGraphicsContext.current = ( ctx )
+//    newImg.draw(in: NSMakeRect(0, 0, size.width, size.height))
+//        ctx?.flushGraphics()
+//        NSGraphicsContext.restoreGraphicsState()
+//    print("size: \(newImg.size)")
+    newImg = ci!.ToNSImage()
     return newImg
 }
 
@@ -400,34 +428,45 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
 
 func Maximum(_ image: CIImage) -> NSColor{
     let pixelProcess = PixelProcess()
+    //let colorSpace: NSColorSpace = .genericRGB
+    var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
     
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
     let filteredImage = filter?.outputImage
-    let c = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
-    
-    return c
+    if filteredImage?.IsValid() == true
+    {color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
+        
+        return color}
+    else {
+        return color
+    }
 }
 
 func Minimun(_ image: CIImage) -> NSColor{
     let pixelProcess = PixelProcess()
-    var c: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+    //let colorSpace: NSColorSpace = .genericRGB
+    var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
-            return c
+            return color
         }
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         
         let filteredImage = filter.outputImage
-        let img = filteredImage!.ToCGImage()
-        c = pixelProcess.colorAt(x: 0, y: 0, img: img!)
+        //let img = filteredImage!.ToCGImage()
+        if filteredImage?.IsValid() == true{
+            color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
+            return color
+            
+        }
+        
     }
     //let str = String(c.redComponent.description) + "|" + String(c.greenComponent.description) + "|" + String(c.blueComponent.description)
     //filteredImage?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/1111/" + str + ".bmp"))
-    
-    return c
+    return color
 }
 
 func NoiseReduction(_ image: CIImage) -> CIImage?{

@@ -51,7 +51,7 @@ class JSManager{
         return inString
     }
     
-    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [Int], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool])->Bool{
+    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [String], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool])->Bool{
         let names = NamesNormalize(names: contentList)
         let resourcePath = Bundle.main.resourcePath!
         let functionJSStr = ReadJSToString(jsPath: resourcePath +  "/Functions.js")

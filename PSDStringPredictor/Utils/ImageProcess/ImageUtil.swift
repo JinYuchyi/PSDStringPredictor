@@ -15,6 +15,7 @@ import Vision
 class ImageUtil{
     let ocr = OCR()
     let pixelProcess = PixelProcess()
+
     
     private func attributedTextImageGenerator(inputText: NSAttributedString, inputScaleFactor: NSNumber = 1) -> CIFilter? {
         guard let filter = CIFilter(name: "CIAttributedTextImageGenerator") else {
@@ -138,6 +139,13 @@ class ImageUtil{
         return result
         
     }
+    
+    static func sizeForImageAtURL(url: NSURL) -> CGSize? {
+        guard let imageReps = NSBitmapImageRep.imageReps(withContentsOf: url as URL) else { return nil }
+        return imageReps.reduce(CGSize.zero, { (size: CGSize, rep: NSImageRep) -> CGSize in
+                return CGSize(width: max(size.width, CGFloat(rep.pixelsWide)), height: max(size.height, CGFloat(rep.pixelsHigh)))
+            })
+        }
 
     
     

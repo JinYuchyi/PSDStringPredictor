@@ -25,7 +25,7 @@ struct psdThumbnailList: View {
                         PsdThumbnail(id: psd.id, name: psd.imageURL.lastPathComponent, thumb: psd.thumbnail)
                         .frame(width: geo.size.width, height: CGFloat(sizeOfThumbnail), alignment: .center)
                             .onTapGesture {
-                                print("tapped \(psd.id)")
+                                //print("tapped \(psd.id)")
                                 psdsVM.ThumbnailClicked(psdId: psd.id)
                                 //ControlVM.ThumbnailClicked(psdId: psd.id)
                                 //imageVM.FetchInfo()

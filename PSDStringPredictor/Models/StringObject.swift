@@ -24,6 +24,15 @@ import Foundation
 enum StringAlignment:String, CaseIterable{
     case left, center, right
 }
+extension StringAlignment{
+    func index () -> Int {
+        switch self {
+            case .left: return 1
+            case .center: return 2
+            case .right: return 3
+        }
+    }
+}
 
 //struct StringObject: Hashable, Codable, Identifiable {
 struct StringObject : Identifiable, Equatable, Hashable{
@@ -230,10 +239,12 @@ struct StringObject : Identifiable, Equatable, Hashable{
     
     func CalcColor() -> CGColor {
         //var colorList: [NSColor] = []
-        var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
-        var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-        var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-        var nsColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+        //let colorSpace: NSColorSpace = .genericRGB
+        //var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+        var result: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 0, alpha: 1)
+        var minc = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+        var maxc = NSColor.init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+        var nsColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
             if colorMode == .light{
                 //old
@@ -249,7 +260,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                         minc = Minimun(img)
                     }
                 }
-                result = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
+                result = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 
             }
             if colorMode == .dark{
@@ -263,7 +274,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                         maxc = Maximum(img)
                     }
                 }
-                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
+                result = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
             }
         }
         //SnapToNearestStandardColor(result)

@@ -34,6 +34,8 @@ struct ImageView: View {
                 //else{
                     ZStack{
                         Image(nsImage: psds.processedCIImage.ToNSImage())
+                            .resizable()
+                                .aspectRatio(contentMode: .fit)
                         SelectionOverlayView( psdsVM: psds)
 //                        VStack{
 //                            Text("Tracking1")

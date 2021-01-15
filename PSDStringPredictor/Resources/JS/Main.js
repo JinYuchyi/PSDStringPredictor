@@ -64,15 +64,18 @@ for (var i = 0; i < num; i++){
     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
     
     var alignmentOffset = 0
-    var alignName = "left"
-    if (alignmentList[i] == 1) {
-        alignmentOffset = rectList[i][2] / 2
-        alignName = "center"
-    }
-    if (alignmentList[i] == 2) {
-        alignmentOffset = rectList[i][2]
-        alignName = "right"
-    }
+    
+//    var alignName = "left"
+//    if (alignmentList[i] == 1) {
+//        alignmentOffset = rectList[i][2] / 2
+//        alignName = "center"
+//    }
+//    if (alignmentList[i] == 2) {
+//        alignmentOffset = rectList[i][2]
+//        alignName = "right"
+//    }
+    alignName = alignmentList[i]
+    
     if (isParagraphList[i] == true) {
         textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][3]  - offsetList[i][1] / 4)
     }else{
