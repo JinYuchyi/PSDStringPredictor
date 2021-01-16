@@ -50,7 +50,11 @@ struct ContentView: View {
 //            psdPagesView()
 //                .frame(width: 300, alignment: .center)
         //}
-        psdThumbnailList(psdsVM: psdsVM)
+        VStack{
+            PrograssView(psdsVM: psdsVM)
+            psdThumbnailList(psdsVM: psdsVM)
+        }
+        
         //.frame(width: 300, alignment: .center)
     }
     

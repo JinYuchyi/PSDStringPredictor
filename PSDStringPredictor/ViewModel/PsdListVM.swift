@@ -14,6 +14,7 @@ class PsdsVM: ObservableObject{
     let ocr = OCR()
     
     @Published var psdModel: PSD //refacting
+ 
     
     @Published var selectedPsdId: Int  //refacting
     @Published var gammaDict: [Int:CGFloat]//refacting
@@ -26,6 +27,8 @@ class PsdsVM: ObservableObject{
     @Published var selectedStrIDList: [UUID]//refacting
     //Others
     @Published var IndicatorText: String = ""
+    @Published var prograssScale: CGFloat = 0
+    //@Published var totalStrCountToProcess: Int = 0
     
     let imageUtil = ImageUtil()
     let pixProcess = PixelProcess()
@@ -77,16 +80,17 @@ class PsdsVM: ObservableObject{
     func UpdateProcessedImage(psdId: Int){
         let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, colorMode: GetSelectedPsd()!.colorMode)
         processedCIImage = imageUtil.ApplyFilters(target: _targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        print("gamma: \(gammaDict[psdId]), exp: \(expDict[psdId])")
+        //print("gamma: \(gammaDict[psdId]), exp: \(expDict[psdId])")
     }
     
     func FetchStringObjects(psdId: Int){
-        let group = DispatchGroup()
-        let queueCalc = DispatchQueue(label: "calc")
-        queueCalc.async(group: group) {
+        //let group = DispatchGroup()
+//        let queueCalc = DispatchQueue(label: "calc")
+//        queueCalc.async {
+            //print("Working on process \(psdId)")
             let tmpImageUrl = self.psdModel.GetPSDObject(psdId: psdId)?.imageURL
             let img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
-            let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img, psdsVM: self)
+            let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img, psdId: psdId, psdsVM: self)
             
             DispatchQueue.main.async{ [self] in
                 var tmpList = self.psdModel.psdObjects[psdId].stringObjects.filter({$0.status == .fixed}) //Filter all fixed objects
@@ -97,8 +101,8 @@ class PsdsVM: ObservableObject{
                 }
                 psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: tmpList)
                 IndicatorText = ""
-                print("obj count: \(psdModel.GetPSDObject(psdId: psdId)!.stringObjects.count)")
-            }
+                //print("obj count: \(psdModel.GetPSDObject(psdId: psdId)!.stringObjects.count)")
+            //}
         }
     }
     
@@ -152,15 +156,41 @@ class PsdsVM: ObservableObject{
         if psdModel.psdObjects.contains(where: {psdId == $0.id}) == true {
             selectedNSImage = LoadNSImage(imageUrlPath: GetSelectedPsd()!.imageURL.path)
             UpdateProcessedImage(psdId: psdId)
+            
+            if psdModel.GetPSDObject(psdId: psdId)!.status == PsdStatus.processed{
+                psdModel.SetStatusForPsd(psdId: psdId, value: PsdStatus.normal)
+            }
         }
     }
     
     func ProcessForOnePsd(){
-        FetchStringObjects(psdId: selectedPsdId)
-        print(selectedNSImage.size)
+        let queueCalc = DispatchQueue(label: "calc")
+        queueCalc.async {
+            self.FetchStringObjects(psdId: self.selectedPsdId)
+        }
+        psdModel.SetStatusForPsd(psdId: selectedPsdId, value: .processed)
     }
     
     func ProcessForAll(){
+        let _list = psdModel.psdObjects.filter({$0.status == .commited})
+        if _list.count > 0{
+        let queueCalc = DispatchQueue(label: "calc")
+        
+            var c: CGFloat = 0
+            for psd in _list {
+                queueCalc.async {
+                
+                self.FetchStringObjects(psdId: psd.id)
+                DispatchQueue.main.async{
+                    self.prograssScale = c / CGFloat(_list.count)
+                    self.psdModel.SetStatusForPsd(psdId: psd.id, value: .processed)
+
+                    //self.indicatorTitle = "Correcting strings' position \(index)/\(objs.count)"
+                }
+                c += 1
+            }
+        }
+        }
         
     }
     
@@ -253,19 +283,19 @@ class PsdsVM: ObservableObject{
     
     func FixedBtnTapped(_ _id: UUID){
         if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: _id)?.status == StringObjectStatus.fixed {
-            psdModel.SetStatus(psdId: selectedPsdId, objId: _id, value: .normal)
+            psdModel.SetStatusForString(psdId: selectedPsdId, objId: _id, value: .normal)
             //stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 0)
         }else {
-            psdModel.SetStatus(psdId: selectedPsdId, objId: _id, value: .fixed)
+            psdModel.SetStatusForString(psdId: selectedPsdId, objId: _id, value: .fixed)
             //stringObjectVM.SetStatusForStringObject(psdId: stringObjectVM.selectedPSDID, objId: id, value: 1
         }
     }
     
     func IgnoreBtnTapped(_ _id: UUID){
         if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: _id)?.status == StringObjectStatus.ignored {
-            psdModel.SetStatus(psdId: selectedPsdId, objId: _id, value: .normal)
+            psdModel.SetStatusForString(psdId: selectedPsdId, objId: _id, value: .normal)
         }else {
-            psdModel.SetStatus(psdId: selectedPsdId, objId: _id, value: .ignored)
+            psdModel.SetStatusForString(psdId: selectedPsdId, objId: _id, value: .ignored)
         }
     }
     
@@ -356,13 +386,13 @@ class PsdsVM: ObservableObject{
         }
         for sId in selectedStrIDList{
             if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: sId)?.status != StringObjectStatus.fixed {
-                psdModel.SetStatus(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.fixed)
+                psdModel.SetStatusForString(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.fixed)
                 allFix = false
             }
         }
         if allFix == true {
             for sId in selectedStrIDList{
-                psdModel.SetStatus(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.normal)
+                psdModel.SetStatusForString(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.normal)
             }
         }
     }
@@ -374,19 +404,30 @@ class PsdsVM: ObservableObject{
         }
         for sId in selectedStrIDList{
             if GetStringObjectForOnePsd(psdId: selectedPsdId, objId: sId)?.status != StringObjectStatus.ignored {
-                psdModel.SetStatus(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.ignored)
+                psdModel.SetStatusForString(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.ignored)
                 allFix = false
             }
         }
         if allFix == true {
             for sId in selectedStrIDList{
-                psdModel.SetStatus(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.normal)
+                psdModel.SetStatusForString(psdId: selectedPsdId, objId: sId, value: StringObjectStatus.normal)
             }
         }
     }
     
-    func psdCommitTapped(psdId: Int){
-        psdModel.ToggleCommit(psdId: psdId)
+    func psdStatusTapped(psdId: Int){
+        var st = PsdStatus.normal
+        guard let _psd = psdModel.GetPSDObject(psdId: psdId) else {return}
+        switch _psd.status{
+        case .normal:
+            st = .commited
+        case .commited:
+            st = .normal
+        case .processed:
+            st = .commited
+        }
+        
+        psdModel.SetStatusForPsd(psdId: psdId, value: st)
     }
     
 }

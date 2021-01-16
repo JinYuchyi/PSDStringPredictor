@@ -17,7 +17,7 @@ struct psdThumbnailList: View {
 
     var body: some View {
         VStack{
-            Text("\(psdsVM.psdModel.psdObjects.count)")
+            
             
             GeometryReader{geo in
                 List(psdsVM.psdModel.psdObjects, id:\.id) { psd in

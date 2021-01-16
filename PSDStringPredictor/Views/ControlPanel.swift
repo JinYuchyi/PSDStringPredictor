@@ -66,11 +66,11 @@ struct ControlPanel: View {
                 }
                 //.disabled(!self.stringObjectVM.OKForProcess)
                 
-                Button(action: {self.stringObjectVM.ProcessOnePSD(_id: stringObjectVM.selectedPSDID)}){
+                Button(action: {psdsVM.ProcessForAll()}){
                     Text("All")
                         .frame(minWidth: 40,  maxWidth: .infinity)
                 }
-                .disabled(true)
+                //.disabled(true)
                 
             }
             .frame( maxWidth: .infinity)

@@ -21,6 +21,10 @@ enum StringObjectStatus {
     case fixed, ignored, normal
 }
 
+enum PsdStatus {
+    case normal, processed, commited
+}
+
 
 struct PSDObject: Identifiable{
     var id: Int
@@ -29,7 +33,7 @@ struct PSDObject: Identifiable{
     var thumbnail: NSImage = NSImage.init()
     var colorMode: MacColorMode = .light
     var dpi: Int = 0
-    var commited: Bool = false
+    var status: PsdStatus = .normal
     
     
     fileprivate init(id: Int, imageURL: URL){
@@ -40,7 +44,7 @@ struct PSDObject: Identifiable{
         self.imageURL = imageURL
         self.thumbnail = FetchThumbnail(size: sizeOfThumbnail)
         colorMode = PsdsUtil.shared.FetchColorMode(img: thumbnail.ToCIImage()!)
-        commited = false
+        status = .normal
     }
     
     fileprivate func FetchThumbnail(size: Int) -> NSImage{
@@ -86,7 +90,7 @@ struct PSD {
         return psdObjects.first(where: {$0.id == psdId})
     }
     
-    mutating func SetStatus(psdId: Int, objId: UUID, value: StringObjectStatus){
+    mutating func SetStatusForString(psdId: Int, objId: UUID, value: StringObjectStatus){
         var psd = GetPSDObject(psdId: psdId)
         if psd != nil {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
@@ -103,9 +107,9 @@ struct PSD {
         }
     }
     
-    mutating func ToggleCommit(psdId: Int){
+    mutating func SetStatusForPsd(psdId: Int, value: PsdStatus){
         guard var psd = GetPSDObject(psdId: psdId) else {return}
-        psd.commited.toggle()
+        psd.status = value
         //Replace psd
         let _index = psdObjects.firstIndex(where: {$0.id == psdId})
         psdObjects.removeAll(where: {$0.id == psdId})

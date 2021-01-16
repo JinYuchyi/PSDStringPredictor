@@ -174,9 +174,9 @@ class PSDViewModel: ObservableObject{
         var result: [StringObject] = []
         var index = 0
         for obj in objs{
-            DispatchQueue.main.async{
-                self.indicatorTitle = "Correcting strings' position \(index)/\(objs.count)"
-            }
+//            DispatchQueue.main.async{
+//                self.indicatorTitle = "Correcting strings' position \(index)/\(objs.count)"
+//            }
 //            var highLetterEvenHeight: CGFloat = 0
 //            var lowerLetterEvenHeight: CGFloat = 0
             var fontName: String = ""

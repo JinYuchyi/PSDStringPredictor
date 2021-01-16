@@ -14,6 +14,7 @@ struct StringObjectPropertyView: View {
 //    @ObservedObject var imageProcess = imageProcessViewModel
     @State var stringField: String = ""
     @State var weight: String = "Regular"
+    
     let pixelMgr = PixelProcess()
     
     @ObservedObject var psdsVM: PsdsVM

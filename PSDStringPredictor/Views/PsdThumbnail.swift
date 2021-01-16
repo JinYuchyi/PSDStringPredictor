@@ -25,18 +25,35 @@ struct PsdThumbnail: View {
 //                    psdListVM.ThumbnailClicked(psdId: id)
 //                    //psdvm.PsdSelected(psdId: id)
 //                }
-            CheckView()
+            StatusView()
         }
     }
     
-    func CheckView()-> some View{
-        Text("􀁢")
-            .font(.system(size: 20, weight: .light, design: .serif))
-            .foregroundColor(psdVM.psdModel.GetPSDObject(psdId: id)?.commited == true ? Color.green : Color.gray)
+    func StatusView()-> some View{
+        LabelView()
             .frame(width: CGFloat(sizeOfThumbnail), height: CGFloat(sizeOfThumbnail), alignment: .topTrailing)
             .onTapGesture {
-                psdVM.psdCommitTapped(psdId: id)
+                psdVM.psdStatusTapped(psdId: id)
             }
+        
+        
+    }
+    
+    func LabelView() -> some View {
+        if psdVM.psdModel.GetPSDObject(psdId: id)?.status == PsdStatus.normal{
+            return Text("􀁢")
+                .font(.system(size: 20, weight: .light, design: .serif))
+                .foregroundColor(Color.gray)
+        }
+        else if psdVM.psdModel.GetPSDObject(psdId: id)?.status == PsdStatus.commited{
+            return Text("􀁢")
+                .font(.system(size: 20, weight: .light, design: .serif))
+                .foregroundColor(Color.green)
+        }else {
+            return Text("􀁞")
+                .font(.system(size: 20, weight: .light, design: .serif))
+                .foregroundColor(Color.orange)
+        }
     }
     
 }

@@ -139,7 +139,7 @@ class OCR: ObservableObject{
         return tmpObj
     }
     
-    func CreateAllStringObjects(FromCIImage ciImage: CIImage, psdsVM: PsdsVM) -> [StringObject]{
+    func CreateAllStringObjects(FromCIImage ciImage: CIImage, psdId: Int,  psdsVM: PsdsVM) -> [StringObject]{
         var strobjs : [StringObject] = []
         //Get Observations
         
@@ -163,12 +163,11 @@ class OCR: ObservableObject{
         let stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
         let strs = self.GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
-            DispatchQueue.main.async{
-                psdsVM.IndicatorText = "Processing \(i+1) of \(stringsRects.count) strings..."
-                
-                //DataRepository.shared.SetIndicator(title: "Processing \(i+1) of \(stringsRects.count) strings...")
-                //print ("\(self.warningVM.indicatorTitle)")
-            }
+//            DispatchQueue.main.async{
+//                psdsVM.IndicatorText = "Processing number \(psdId) image, \(i+1) of \(stringsRects.count) strings..."
+//                
+//                
+//            }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             //print("\(i) - charRects count: \(charRects.count), chars count: \(chars.count)")
             var newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))

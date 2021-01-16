@@ -256,7 +256,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "162"
             endingLineNumber = "162"
-            landmarkName = "CreateAllStringObjects(FromCIImage:psdsVM:)"
+            landmarkName = "CreateAllStringObjects(FromCIImage:psdId:psdsVM:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -272,7 +272,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
             endingLineNumber = "145"
-            landmarkName = "CreateAllStringObjects(FromCIImage:psdsVM:)"
+            landmarkName = "CreateAllStringObjects(FromCIImage:psdId:psdsVM:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -286,9 +286,25 @@
             filePath = "PSDStringPredictor/Utils/ML/OCR.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "CreateAllStringObjects(FromCIImage:psdsVM:)"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "CreateAllStringObjects(FromCIImage:psdId:psdsVM:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DB7448B3-65C1-495D-8E3D-2FBD70B64B66"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PSDStringPredictor/Views/PsdThumbnail.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "LabelView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
