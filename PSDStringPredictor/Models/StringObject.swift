@@ -237,7 +237,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
 //        return result
 //    }
     
-    func CalcColor() -> CGColor {
+    mutating func CalcColor() -> CGColor {
         //var colorList: [NSColor] = []
         //let colorSpace: NSColorSpace = .genericRGB
         //var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
@@ -258,6 +258,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 for img in charImageList{
                     if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
                         minc = Minimun(img)
+                        print("min Color: \(minc)")
                     }
                 }
                 result = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
@@ -272,6 +273,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 for img in charImageList{
                     if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
                         maxc = Maximum(img)
+                        print("max Color: \(maxc)")
                     }
                 }
                 result = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
@@ -279,6 +281,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
         //SnapToNearestStandardColor(result)
         //print("content: \(content), ns: \(nsColor), re: \(result)")
+        color = result
         return result
     }
     
