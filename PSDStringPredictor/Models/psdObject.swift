@@ -103,6 +103,17 @@ struct PSD {
         }
     }
     
+    mutating func ToggleCommit(psdId: Int){
+        guard var psd = GetPSDObject(psdId: psdId) else {return}
+        psd.commited.toggle()
+        //Replace psd
+        let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+        psdObjects.removeAll(where: {$0.id == psdId})
+        psdObjects.insert(psd, at: _index!)
+        
+        
+    }
+    
     mutating func SetAlignment(psdId: Int, objId: UUID, value: StringAlignment){
         var psd = GetPSDObject(psdId: psdId)
         if psd != nil {
@@ -138,7 +149,7 @@ struct PSD {
         }
     }
     
-
+    
     
     mutating func SetFontName(psdId: Int, objId: UUID, value: String){
         var psd = GetPSDObject(psdId: psdId)
@@ -159,7 +170,7 @@ struct PSD {
     }
     
     
-
+    
     
     
     mutating func removePSDObject( id: Int)  {
@@ -177,10 +188,10 @@ struct PSD {
             //Create temp obj
             var tmpObj = psdObjects.first(where: {$0.id == psdId})!
             tmpObj.stringObjects += objs
-//            //Remove Old one
-//            psdObjects.removeAll(where: {$0.id == tmpObj.id})
-//            //Append new one
-//            psdObjects.append(tmpObj)
+            //            //Remove Old one
+            //            psdObjects.removeAll(where: {$0.id == tmpObj.id})
+            //            //Append new one
+            //            psdObjects.append(tmpObj)
             
             let _index = psdObjects.firstIndex(where: {$0.id == tmpObj.id})
             psdObjects.removeAll(where: {$0.id == tmpObj.id})
@@ -195,8 +206,8 @@ struct PSD {
             var tmpObj = psdObjects.first(where: {$0.id == psdId})!
             tmpObj.stringObjects.removeAll()
             tmpObj.stringObjects += objs
-//            psdObjects.removeAll(where: {$0.id == tmpObj.id})
-//            psdObjects.append(tmpObj)
+            //            psdObjects.removeAll(where: {$0.id == tmpObj.id})
+            //            psdObjects.append(tmpObj)
             let _index = psdObjects.firstIndex(where: {$0.id == tmpObj.id})
             psdObjects.removeAll(where: {$0.id == tmpObj.id})
             psdObjects.insert(tmpObj, at: _index!)

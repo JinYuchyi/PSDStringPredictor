@@ -12,12 +12,15 @@ let sizeOfThumbnail: Int = 180
 
 struct PsdThumbnail: View {
     var id: Int
-    var name: String
-    var thumb: NSImage
+//    var name: String
+//    var thumb: NSImage
+    
+    @ObservedObject var psdVM: PsdsVM
     
     var body: some View {
         ZStack{
-            Image(nsImage: thumb)
+            
+            Image(nsImage: (psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: "defaultImage.png"))!)
 //                .onTapGesture {
 //                    psdListVM.ThumbnailClicked(psdId: id)
 //                    //psdvm.PsdSelected(psdId: id)
@@ -29,8 +32,11 @@ struct PsdThumbnail: View {
     func CheckView()-> some View{
         Text("􀁢")
             .font(.system(size: 20, weight: .light, design: .serif))
+            .foregroundColor(psdVM.psdModel.GetPSDObject(psdId: id)?.commited == true ? Color.green : Color.gray)
             .frame(width: CGFloat(sizeOfThumbnail), height: CGFloat(sizeOfThumbnail), alignment: .topTrailing)
-        
+            .onTapGesture {
+                psdVM.psdCommitTapped(psdId: id)
+            }
     }
     
 }

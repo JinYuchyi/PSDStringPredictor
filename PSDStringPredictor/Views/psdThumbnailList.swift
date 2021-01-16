@@ -22,7 +22,7 @@ struct psdThumbnailList: View {
             GeometryReader{geo in
                 List(psdsVM.psdModel.psdObjects, id:\.id) { psd in
                     VStack{
-                        PsdThumbnail(id: psd.id, name: psd.imageURL.lastPathComponent, thumb: psd.thumbnail)
+                        PsdThumbnail(id: psd.id, psdVM: psdsVM)
                         .frame(width: geo.size.width, height: CGFloat(sizeOfThumbnail), alignment: .center)
                             .onTapGesture {
                                 //print("tapped \(psd.id)")

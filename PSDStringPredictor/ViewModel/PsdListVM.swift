@@ -385,4 +385,8 @@ class PsdsVM: ObservableObject{
         }
     }
     
+    func psdCommitTapped(psdId: Int){
+        psdModel.ToggleCommit(psdId: psdId)
+    }
+    
 }
