@@ -148,7 +148,7 @@ class OCR: ObservableObject{
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         TextRecognitionRequest.usesLanguageCorrection = true
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
-        TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
+        //TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
         
         
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
@@ -163,11 +163,10 @@ class OCR: ObservableObject{
         let stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
         let strs = self.GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
-//            DispatchQueue.main.async{
-//                psdsVM.IndicatorText = "Processing number \(psdId) image, \(i+1) of \(stringsRects.count) strings..."
-//                
-//                
-//            }
+            DispatchQueue.main.async{
+                psdsVM.IndicatorText = "PSD \(psdId+1), \(i+1) / \(stringsRects.count) strings"
+                //psdsVM.prograssScale =
+            }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             //print("\(i) - charRects count: \(charRects.count), chars count: \(chars.count)")
             var newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))

@@ -11,8 +11,8 @@ import Foundation
 func PredictFontTracking (str: String, fontSize: Double, width: Double, fontWeight: String) -> Double {
     var output: Double = 0
     do{
-        let model = TrackingRegressor.init()
-        guard let predict = try? model.prediction(chars: str, fontSize: Double(12), width: width, fontWeight: fontWeight)
+        //let model = TrackingRegressor.init()
+        guard let predict = try? TrackingRegressor.shared.prediction(chars: str, fontSize: Double(12), width: width, fontWeight: fontWeight)
             else {
             fatalError("Unexpected runtime error.")
         }

@@ -258,7 +258,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 for img in charImageList{
                     if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
                         minc = Minimun(img)
-                        print("min Color: \(minc)")
+                        print("\(content) min Color: \(minc)")
                     }
                 }
                 result = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
@@ -273,7 +273,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                 for img in charImageList{
                     if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
                         maxc = Maximum(img)
-                        print("max Color: \(maxc)")
+                        print("\(content) max Color: \(maxc)")
                     }
                 }
                 result = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)

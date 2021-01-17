@@ -31,78 +31,92 @@ struct ControlPanel: View {
     let psdsVM: PsdsVM
     
     var body: some View {
+        GeometryReader{geo in
+            VStack{
+                
+                Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+                    Text("Combine To Paragraph")
+                        .frame(width: geo.size.width, alignment: .center)
+                }
+                HStack{
+                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+                        Text("Left")
+                    }
+                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+                        Text("Center")
+                    }
+                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+                        Text("Right")
+                    }
+                }
+                
+                //HStack{
 
-        VStack{
-            
-            Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-                Text("Combine To Paragraph")
-                    .frame(minWidth: 270,  maxWidth: .infinity)
-            }
-            //HStack{
+                Button(action: {psdsVM.SetSelectionToFixed()}){
+                        Text("Set Selection as Ready")
+                            .frame(minWidth: 270,  maxWidth: .infinity)
+                        
+                    }
+                    
+                Button(action: {psdsVM.SetSelectionToIgnored()}){
+                        Text("Set Selection as Ignore")
+                            .frame(minWidth: 270,  maxWidth: .infinity)
+                    }
+                //}
 
-            Button(action: {psdsVM.SetSelectionToFixed()}){
-                    Text("Mark Selection as Ready")
-                        .frame(minWidth: 270,  maxWidth: .infinity)
+                Divider()
+                
+                Text("Calculate String Layers")
+                    .foregroundColor(.gray)
+                    .padding(.top)
+                    .frame(width: 300, alignment: .leading)
+                
+                HStack{
+                    Button(action: {psdsVM.ProcessForOnePsd()}){
+                        Text("Current File")
+                            .frame(minWidth: 200,  maxWidth: .infinity)
+                    }
+                    .disabled(psdsVM.IndicatorText != "")
+                    
+                    Button(action: {psdsVM.ProcessForAll()}){
+                        Text("All")
+                            .frame(minWidth: 40,  maxWidth: .infinity)
+                    }
+                    .disabled(psdsVM.IndicatorText != "")
                     
                 }
+                .frame( maxWidth: .infinity)
                 
-            Button(action: {psdsVM.SetSelectionToIgnored()}){
-                    Text("Mark Selection as Ignore")
-                        .frame(minWidth: 270,  maxWidth: .infinity)
+                Text("Create PSD")
+                    .foregroundColor(.gray)
+                    .padding(.top)
+                    .frame(width: 300, alignment: .leading)
+                HStack{
+                    Button(action: {psdsVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
+                        Text("Current File")
+                            .frame(minWidth: 200,  maxWidth: .infinity)
+                    }
+                    .disabled(psdsVM.IndicatorText != "")
+                    
+                    Button(action: {psdsVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
+                        Text("All")
+                            .frame(minWidth: 40,  maxWidth: .infinity)
+                    }
+                    .disabled(psdsVM.IndicatorText != "")
                 }
-            //}
-
-            Divider()
-            
-            Text("Calculate String Layers")
-                .foregroundColor(.gray)
-                .padding(.top)
-                .frame(width: 300, alignment: .leading)
-            
-            HStack{
-                Button(action: {psdsVM.ProcessForOnePsd()}){
-                    Text("Current File")
-                        .frame(minWidth: 200,  maxWidth: .infinity)
-                }
-                //.disabled(!self.stringObjectVM.OKForProcess)
+                .frame( maxWidth: .infinity)
+                .padding(.bottom)
+                .padding(.bottom)
                 
-                Button(action: {psdsVM.ProcessForAll()}){
-                    Text("All")
-                        .frame(minWidth: 40,  maxWidth: .infinity)
-                }
-                //.disabled(true)
-                
+    //            Button(action: {self.Debug()}){
+    //                Text("Test")
+    //                    .frame(minWidth: 200,  maxWidth: .infinity)
+    //
+    //            }
             }
-            .frame( maxWidth: .infinity)
-            
-            Text("Create PSD")
-                .foregroundColor(.gray)
-                .padding(.top)
-                .frame(width: 300, alignment: .leading)
-            HStack{
-                Button(action: {psdsVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
-                    Text("Current File")
-                        .frame(minWidth: 200,  maxWidth: .infinity)
-                }
-                //.disabled(!self.stringObjectVM.OKForProcess)
-                
-                Button(action: {psdsVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID)}){
-                    Text("All")
-                        .frame(minWidth: 40,  maxWidth: .infinity)
-                }
-                .disabled(true)
-            }
-            .frame( maxWidth: .infinity)
-            .padding(.bottom)
-            .padding(.bottom)
-            
-//            Button(action: {self.Debug()}){
-//                Text("Test")
-//                    .frame(minWidth: 200,  maxWidth: .infinity)
-//
-//            }
+            //.padding()
         }
-        .padding()
+ 
         
     }
 

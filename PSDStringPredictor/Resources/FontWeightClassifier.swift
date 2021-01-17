@@ -101,7 +101,7 @@ class FontWeightClassifierOutput : MLFeatureProvider {
 @available(watchOS, unavailable)
 class FontWeightClassifier {
     let model: MLModel
-
+    static var shared = FontWeightClassifier.init()
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
         let bundle = Bundle(for: self)
@@ -125,7 +125,7 @@ class FontWeightClassifier {
         Construct FontWeightClassifier instance by automatically loading the model from the app's bundle.
     */
     @available(*, deprecated, message: "Use init(configuration:) instead and handle errors appropriately.")
-    convenience init() {
+    private convenience init() {
         try! self.init(contentsOf: type(of:self).urlOfModelInThisBundle)
     }
 

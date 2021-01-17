@@ -111,17 +111,8 @@ class PsdsVM: ObservableObject{
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
     
-//    func SwapLastSelectionWithObject(obj: StringObject){
-//        let id = selectedStrIDList.last
-//        //Remove from original list
-//        if id != nil {
-//            GetStringObjectForOnePsd(psdId: selectedPsdId, objId: id!).
-//            psds.GetPSDObject(psdId: selectedPsdId)!.stringObjects.removeAll(where: {$0.id == id})
-//            //PsdsUtil.shared.RemoveStringObject(psdId: PsdsUtil.shared.GetSelectedPsdId(), objId: id!)
-//        }
-//        PsdsUtil.shared.AppendStringObjectListDict(psdId: PsdsUtil.shared.GetSelectedPsdId(), stringObject: obj)
-//        //stringObjectListData[selectedPSDID]!.append(obj)
-//    }
+    
+
     
     
     //MARK: Intents
@@ -167,8 +158,11 @@ class PsdsVM: ObservableObject{
         let queueCalc = DispatchQueue(label: "calc")
         queueCalc.async {
             self.FetchStringObjects(psdId: self.selectedPsdId)
+            DispatchQueue.main.async{
+                self.psdModel.SetStatusForPsd(psdId: self.selectedPsdId, value: .processed)
+            }
         }
-        psdModel.SetStatusForPsd(psdId: selectedPsdId, value: .processed)
+        IndicatorText = ""
     }
     
     func ProcessForAll(){
@@ -190,6 +184,7 @@ class PsdsVM: ObservableObject{
                 c += 1
             }
         }
+        IndicatorText = ""
         }
         
     }

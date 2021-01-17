@@ -101,7 +101,7 @@ class CharColorModeOutput : MLFeatureProvider {
 @available(watchOS, unavailable)
 class CharColorMode {
     let model: MLModel
-
+    static var shared = CharColorMode.init()
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
         let bundle = Bundle(for: self)
@@ -125,7 +125,7 @@ class CharColorMode {
         Construct CharColorMode instance by automatically loading the model from the app's bundle.
     */
     @available(*, deprecated, message: "Use init(configuration:) instead and handle errors appropriately.")
-    convenience init() {
+    private convenience init() {
         try! self.init(contentsOf: type(of:self).urlOfModelInThisBundle)
     }
 

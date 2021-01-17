@@ -13,8 +13,8 @@ import Vision
 func PredictFontSize(character: String, width: Int16, height: Int16, fontWeight: String) -> (CGFloat) {
     var output: CGFloat = 0
     do{
-        let model = FontSizeTabularRegressor()
-        guard let predict = try? model.prediction(char_: character, width: Double(width), height: Double(height), fontWeight: fontWeight)
+        //let model = FontSizeTabularRegressor()
+        guard let predict = try? FontSizeTabularRegressor.shared.prediction(char_: character, width: Double(width), height: Double(height), fontWeight: fontWeight)
         else  {
             //return 0
             fatalError("Unexpected runtime error.")

@@ -15,18 +15,20 @@ struct PrograssView: View {
         //psdVM.prograssScale
         VStack{
             Text(psdsVM.IndicatorText)
-            RoundedRectangle(cornerRadius: 3)
-                .stroke(Color.green, lineWidth: 3)
-                .frame(width: width, height: 3)
+                .frame(alignment: .leading)
+            RoundedRectangle(cornerRadius: 2)
+                .stroke(Color.green, lineWidth: 2)
+                .frame(width: width, height: 2)
                 .offset(x: -width + psdsVM.prograssScale * width, y: 0)
                 //.animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: false))
                 .mask(
-                    RoundedRectangle(cornerRadius: 3)
-                        .stroke(Color(.systemGray), lineWidth: 3)
-                        .frame(width: width, height: 3)
+                    RoundedRectangle(cornerRadius: 2)
+                        .stroke(Color(.systemGray), lineWidth: 2)
+                        .frame(width: width, height: 2)
                 )
         }
-        
+        .IsHidden(condition: psdsVM.IndicatorText != "")
+
     }
 }
 

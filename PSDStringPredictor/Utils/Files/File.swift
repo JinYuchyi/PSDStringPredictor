@@ -13,7 +13,6 @@ func SaveStringToFile(str: String, path: String){
 
     // Set the contents
     //let contents = "Here are my file's contents"
-
     do {
         // Write contents to file
         try str.write(toFile: path, atomically: false, encoding: String.Encoding.utf8)
@@ -59,5 +58,30 @@ func DuplicateFileToTempPath(at srcURL: URL) ->String {
         return ""
     }
     return dstURL.path
+}
+
+func MakeImagesInTempFolder(imagePathList: [String]){
+    let js = JSManager()
+    let tempFolderPath = TempPath()
+    let variable = """
+        paths = \(imagePathList)
+        tmpPath = \(tempFolderPath)
+
+    """
+    let targetPyPath = Bundle.main.resourcePath! +  "/psdToPngInTempFolder.py"
+    let pythonContent = js.ReadJSToString(jsPath: targetPyPath)
+    let pyStr = variable.appending(pythonContent)
+    
+    do {
+        let path = Bundle.main.resourcePath! + "run.py"
+        let url = URL.init(fileURLWithPath: path)
+        try pyStr.write(to: url, atomically: false, encoding: .utf8)
+    }
+    catch {
+        return
+    }
+    
+    let cmd = "python3 " + Bundle.main.resourcePath! + "run.py"
+    PythonScriptManager.RunScript(str: cmd)
 }
 

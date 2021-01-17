@@ -82,17 +82,9 @@ struct ContentView: View {
 //                ScaleSliderView(scale: $viewScale)
 //                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
             }
-            //            VStack(alignment: .trailing){
-            //                Toggle(isOn: $showPredictString) {
-            //                    Text("String Layer").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
-            //                }
-            //                Toggle(isOn: $showDebugOverlay) {
-            //                    Text("Debug Overlay").shadow(color: Color.black.opacity(0.6), radius: 0.2, x: 0.1, y: -0.1)
-            //                }
-            //                .frame(width: 1000, height: 950, alignment: .topTrailing)
-            //            }
-            IndicatorView( psdsVM: psdsVM)
-                .frame(width: 1100, height: 1000, alignment: .center)
+            
+//            IndicatorView( psdsVM: psdsVM)
+//                .frame(width: 1100, height: 1000, alignment: .center)
             WarningView()
                 .frame(width: 1100, height: 1000, alignment: .center)
                 
@@ -108,17 +100,17 @@ struct ContentView: View {
             ImageProcessView(psdsVM: psdsVM)
                 .padding(.top, 20.0)
             
-            Divider()
+            //Divider()
             
             ImagePropertyView(psdvm: psdsVM)
-                .frame(width: 300, height: 150)
+                //.frame(width: 300, height: 150)
             
-            Divider()
+            //Divider()
             
             StringObjectPropertyView( psdsVM: psdsVM)
-                .frame(width: 300)
+                //.frame(width: 300)
             
-            Divider()
+            //Divider()
             
             ControlPanel(psdsVM: psdsVM)
 
@@ -137,6 +129,7 @@ struct ContentView: View {
                 MidViewGroup()
                 Divider()
                 RightViewGroup()
+                    .border(Color.red, width: 1)
             }
 
       
