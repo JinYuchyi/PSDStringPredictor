@@ -54,7 +54,7 @@ class ImageUtil{
     func AddRectangleMask(BGImage img:  CIImage, PositionX x: CGFloat, PositionY y: CGFloat, Width w: CGFloat, Height h: CGFloat, MaskColor color: CIColor) -> CIImage{
         //Create mask
         let pixelProcess = PixelProcess()
-        let nsC = pixelProcess.colorAt(x: Int(x), y: Int(y), img: PsdsUtil.shared.GetSelectedNSImage().ToCGImage()!)
+        let nsC = pixelProcess.colorAt(x: Int(x), y: Int(y), img: img.ToCGImage()!)
         let c: CIColor = CIColor.init(red: nsC.redComponent, green: nsC.greenComponent, blue: nsC.blueComponent)
         
         var mask = CIImage.init(color: c)
@@ -119,20 +119,23 @@ class ImageUtil{
         return target
     }
 
-    func ApplyBlockMasks(target: CIImage, psdId: Int, colorMode: MacColorMode ) -> CIImage{
-        var result: CIImage = CIImage.init()
+    func ApplyBlockMasks(target: CIImage, psdId: Int, rectDict: [Int:[CGRect]], colorMode: MacColorMode ) -> CIImage{
+        var result: CIImage = target
+        
         //self.imgProcess.FetchImage()
         //self.imgProcess.targetImageMasked = self.imgProcess.targetNSImage.ToCIImage()!
-        if PsdsUtil.shared.GetBlockMaskListDict()[psdId] == nil || PsdsUtil.shared.GetBlockMaskListDict()[psdId]!.count == 0{
+        if rectDict[psdId] == nil || rectDict[psdId]!.count == 0{
             return target
         }
         if colorMode == MacColorMode.light{
-            for rect in PsdsUtil.shared.GetBlockMaskListDict()[psdId]!{
-                result = AddRectangleMask(BGImage: (target), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
+            for rect in rectDict[psdId]!{
+                //print("\(rect)")
+                result = AddRectangleMask(BGImage: (result), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
             }
-        }else if colorMode == MacColorMode.dark {
-            for rect in PsdsUtil.shared.GetBlockMaskListDict()[psdId]!{
-                result = AddRectangleMask(BGImage: (target), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.gray)
+        }else {
+            for rect in rectDict[psdId]!{
+                //print("\(rect)")
+                result = AddRectangleMask(BGImage: (result), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.gray)
 //                self.imgProcess.SetTargetMaskedImage(tmpImg)
             }
         }

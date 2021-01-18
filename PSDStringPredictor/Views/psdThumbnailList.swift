@@ -21,9 +21,9 @@ struct psdThumbnailList: View {
             
             GeometryReader{geo in
                 List(psdsVM.psdModel.psdObjects, id:\.id) { psd in
-                    VStack{
+                    VStack(alignment: .center){
                         PsdThumbnail(id: psd.id, psdVM: psdsVM)
-                        .frame(width: geo.size.width, height: CGFloat(sizeOfThumbnail), alignment: .center)
+                            .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
                             .onTapGesture {
                                 //print("tapped \(psd.id)")
                                 psdsVM.ThumbnailClicked(psdId: psd.id)
@@ -31,8 +31,9 @@ struct psdThumbnailList: View {
                                 //imageVM.FetchInfo()
                                 //psdvm.PsdSelected(psdId: id)
                             }
-                        
-                    Divider()
+                            .border(psdsVM.selectedPsdId == psd.id ? Color.green : Color.gray.opacity(0.2), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+
+                    //Divider()
                     }
                 }
             }

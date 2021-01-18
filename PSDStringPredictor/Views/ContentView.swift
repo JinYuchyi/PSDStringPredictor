@@ -50,9 +50,12 @@ struct ContentView: View {
 //            psdPagesView()
 //                .frame(width: 300, alignment: .center)
         //}
-        VStack{
+        VStack(alignment: .center){
             PrograssView(psdsVM: psdsVM)
             psdThumbnailList(psdsVM: psdsVM)
+                .frame(height: 1000, alignment: .center)
+            PsdOperatorView(psdsVM: psdsVM)
+                .padding()
         }
         
         //.frame(width: 300, alignment: .center)
@@ -66,7 +69,7 @@ struct ContentView: View {
 
                     LabelsOnImage(psdsVM: psdsVM)
 
-                    CharacterFrameView()
+                    CharacterFrameView(psdVM: psdsVM)
                         .IsHidden(condition: showPatchLayer)
                     
                     HighlightView(psdsVM: psdsVM)
@@ -86,9 +89,10 @@ struct ContentView: View {
 //            IndicatorView( psdsVM: psdsVM)
 //                .frame(width: 1100, height: 1000, alignment: .center)
             WarningView()
-                .frame(width: 1100, height: 1000, alignment: .center)
+                //.frame(width: 1100, height: 1000, alignment: .center)
                 
         }
+        
         //.frame(width: 1100)
     }
     
@@ -98,19 +102,21 @@ struct ContentView: View {
             //Divider()
             
             ImageProcessView(psdsVM: psdsVM)
-                .padding(.top, 20.0)
+                //.padding(.top, 20.0)
             
-            //Divider()
+            Divider()
             
             ImagePropertyView(psdvm: psdsVM)
+                .frame(height: 100)
+
                 //.frame(width: 300, height: 150)
             
-            //Divider()
+            Divider()
             
             StringObjectPropertyView( psdsVM: psdsVM)
                 //.frame(width: 300)
             
-            //Divider()
+            Divider()
             
             ControlPanel(psdsVM: psdsVM)
 
@@ -124,12 +130,17 @@ struct ContentView: View {
        
             HStack(alignment: .center){
                 LeftViewGroup()
+                    .frame(width: 300)
+                    //.border(Color.red, width: 1)
                 Divider()
                 
                 MidViewGroup()
+                    .frame(width: 1200)
+                    //.border(Color.red, width: 1)
                 Divider()
                 RightViewGroup()
-                    .border(Color.red, width: 1)
+                    .frame(width: 300)
+                    //.border(Color.red, width: 1)
             }
 
       

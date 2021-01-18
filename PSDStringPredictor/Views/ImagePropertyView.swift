@@ -20,7 +20,7 @@ struct ImagePropertyView: View {
             Section(header: Text("Image Properties")){
                 
                 HStack{
-                    Text("Mode")
+                    Text("Color Mode")
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
 //                    psdvm.GetSelectedPsd()?.colorMode

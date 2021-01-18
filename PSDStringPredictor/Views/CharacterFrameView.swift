@@ -16,98 +16,118 @@ struct CharacterFrameView: View {
     //var charFrame: CGRect
     //var IDList: [UUID]
     let imgUtil = ImageUtil()
-    @ObservedObject var imgProcess = imageProcessViewModel
-    @ObservedObject var stringObjectVM = psdViewModel
+    //    @ObservedObject var imgProcess = imageProcessViewModel
+    //    @ObservedObject var stringObjectVM = psdViewModel
     @State var overText: Bool = false
-    //@State var isMasked: Bool = false
-
+    @State var rectList: [CGRect] = []
+    @ObservedObject var psdVM: PsdsVM
+    
+    
     fileprivate func CharFrameView() -> some View{
-//        if  ShowDefault() == false {
-            ZStack{
-                ForEach(stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID]!, id:\.id){item in
-                    
-                    RoundedRectangle(cornerRadius: 3)
-                        .fill(fillColor)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 3)
-                                .stroke(Color.white, lineWidth: 1)
-                                .shadow(radius: 0.5)
-                        )
-                        .frame(width: item.rect.width, height: item.rect.height)
-                        .position(x: item.rect.minX + item.rect.width/2, y: imgProcess.targetNSImage.size.height - item.rect.minY - item.rect.height/2)
-                        .onTapGesture {
-                            Tapped(rect: item.rect)
-                        }
-                }
+        //        if  ShowDefault() == false {
+        
+        ZStack{
+            ForEach(rectList, id:\.self){item in
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(fillColor)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 3)
+                            .stroke(Color.white, lineWidth: 1)
+                            .shadow(radius: 0.5)
+                    )
+                    .frame(width: item.width, height: item.height)
+                    .position(x: item.minX + item.width/2, y: psdVM.selectedNSImage.size.height - item.minY - item.height/2)
+                    .onTapGesture {
+                        Tapped(rect: item)
+                    }
             }
-            
-//        }else{
-//            Text("")
-//        }
-//        return EmptyView()
+        }
+        .onAppear(perform: {rectList = GetRectArray()})
+        
+        
+        //        }else{
+        //            Text("")
+        //        }
+        //        return EmptyView()
     }
     
     var body: some View {
         CharFrameView()
         
-
+        
     }
     
-    func ShowDefault() -> Bool{
-        if stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID]! == nil {
-            return true
-        }else {
-            return false
+    //    func ShowDefault() -> Bool{
+    //        if stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID]! == nil {
+    //            return true
+    //        }else {
+    //            return false
+    //        }
+    //    }
+    
+    func GetRectArray() -> [CGRect] {
+        guard let psdObj = psdVM.GetSelectedPsd() else {return []}
+        var result = [CGRect]()
+        for obj in psdObj.stringObjects {
+            result.append(contentsOf: obj.charRects)
         }
+        
+        return result
     }
     
     func Tapped(rect: CGRect){
-        let contain = imgProcess.maskList[stringObjectVM.selectedPSDID]!.contains(rect)
+        //print("Tapped")
+        if psdVM.maskDict[psdVM.selectedPsdId] == nil {
+            psdVM.maskDict[psdVM.selectedPsdId] = []
+        }
+        let contain = psdVM.maskDict[psdVM.selectedPsdId]!.contains(rect)
+        //print(contain)
         if contain == false {
-            imgProcess.maskList[stringObjectVM.selectedPSDID]!.append(rect)
+            psdVM.maskDict[psdVM.selectedPsdId]!.append(rect)
             //isMasked = true
-            //print("add")
-
+            print("add")
+            psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }else{
             //Delete rect in list
-            imgProcess.maskList[stringObjectVM.selectedPSDID]!.removeAll(where: {$0 == rect})
+            psdVM.maskDict[psdVM.selectedPsdId]!.removeAll(where: {$0 == rect})
             //isMasked = false
-            //print("remove")
-
+            print("remove")
+            psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }
         
-        if imgProcess.maskList.count == 0 {
-            AddCharRectMask()
+        if psdVM.maskDict.count == 0 {
+            //AddCharRectMask()
+            psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }
         
         if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1{
-            for _ in imgProcess.maskList{
-                AddCharRectMask()
+            for _ in psdVM.maskDict{
+//                AddCharRectMask()
+                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
             }
         }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
-            for _ in imgProcess.maskList{
-                AddCharRectMask()
+            for _ in psdVM.maskDict{
+                //AddCharRectMask()
+                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
             }
         }
         
     }
     
     func AddCharRectMask(){
-        //self.imgProcess.FetchImage()
-//        self.imgProcess.targetImageMasked = self.imgProcess.targetNSImage.ToCIImage()!
-//        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1{
-//            for rect in imgProcess.maskList[stringObjectVM.selectedPSDID]!{
-//                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
+        
+//        if psdVM.GetSelectedPsd()!.colorMode  == MacColorMode.light{
+//            for rect in psdVM.maskDict[psdVM.selectedPsdId]!{
+//                psdVM.maskedImage = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
 //            }
-//        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
+//        }else if psdVM.GetSelectedPsd()!.colorMode  == MacColorMode.dark {
 //            for rect in imgProcess.maskList[psdViewModel.selectedPSDID]! {
 //                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.black)
-////                self.imgProcess.SetTargetMaskedImage(tmpImg)
 //            }
 //        }
-//        
+//
 //        self.imgProcess.SetFilter()
-        
+//
     }
     
 }

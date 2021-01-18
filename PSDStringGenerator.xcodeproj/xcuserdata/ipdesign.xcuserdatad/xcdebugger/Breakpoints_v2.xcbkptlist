@@ -126,9 +126,9 @@
             filePath = "PSDStringPredictor/Utils/Script/JSManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "CreateJSFile(psdPath:contentList:colorList:fontSizeList:trackingList:fontNameList:positionList:offsetList:alignmentList:rectList:bgColorList:isParagraphList:)"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "CreateJSFile(psdPath:contentList:colorList:fontSizeList:trackingList:fontNameList:positionList:offsetList:alignmentList:rectList:bgColorList:isParagraphList:saveToPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -302,8 +302,8 @@
             filePath = "PSDStringPredictor/Views/PsdThumbnail.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "LabelView()"
             landmarkType = "7">
          </BreakpointContent>

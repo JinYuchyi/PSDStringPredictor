@@ -51,7 +51,7 @@ class JSManager{
         return inString
     }
     
-    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [String], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool])->Bool{
+    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Int]], offsetList: [[Int16]], alignmentList: [String], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool], saveToPath: String)->Bool{
         let names = NamesNormalize(names: contentList)
         let resourcePath = Bundle.main.resourcePath!
         let functionJSStr = ReadJSToString(jsPath: resourcePath +  "/Functions.js")
@@ -72,6 +72,7 @@ class JSManager{
         var bgColorList = \(bgColorList)
         var isParagraphList = \(isParagraphList)
         var widthExtend = 5
+        var saveToPath = "\(saveToPath)"
         """
         //let mainJSStr = ReadJSToString(jsPath: "/Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/AdobeScripts/Main.js")
         let mainJSStr = ReadJSToString(jsPath: resourcePath +  "/Main.js")

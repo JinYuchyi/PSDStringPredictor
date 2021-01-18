@@ -64,16 +64,7 @@ for (var i = 0; i < num; i++){
     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
     
     var alignmentOffset = 0
-    
-//    var alignName = "left"
-//    if (alignmentList[i] == 1) {
-//        alignmentOffset = rectList[i][2] / 2
-//        alignName = "center"
-//    }
-//    if (alignmentList[i] == 2) {
-//        alignmentOffset = rectList[i][2]
-//        alignName = "right"
-//    }
+
     alignName = alignmentList[i]
     
     if (isParagraphList[i] == true) {
@@ -90,5 +81,12 @@ for (var i = 0; i < num; i++){
     offset = 5
     fillColor = bgColorList[i]
     createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - offset,positionList[i][1] - rectList[i][3] - offset, rectList[i][2] + offset, rectList[i][3] + offset, fillColor)
+}
+                                     
+ if (saveToPath != "") {
+        const file = File(saveToPath)
+        docRef.saveAs(file, PhotoshopSaveOptions)
+        docRef.close(SaveOptions.DONOTSAVECHANGES)
+        //newDoc.close(SaveOptions.DONOTSAVECHANGES)
 }
 

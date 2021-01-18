@@ -23,11 +23,13 @@ class PsdsVM: ObservableObject{
 
     //Selected elements
     @Published var selectedNSImage: NSImage //refacting
+    @Published var maskedImage: CIImage
     @Published var processedCIImage: CIImage //refacting
     @Published var selectedStrIDList: [UUID]//refacting
     //Others
     @Published var IndicatorText: String = ""
     @Published var prograssScale: CGFloat = 0
+    @Published var maskDict: [Int:[CGRect]]  = [:]
     //@Published var totalStrCountToProcess: Int = 0
     
     let imageUtil = ImageUtil()
@@ -47,6 +49,7 @@ class PsdsVM: ObservableObject{
         expDict = [:]
         selectedStrIDList = []
         DragOffsetDict = [:]
+        maskedImage = CIImage.init()
     }
     
     //    func Refresh(){
@@ -78,28 +81,36 @@ class PsdsVM: ObservableObject{
     }
     
     func UpdateProcessedImage(psdId: Int){
-        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, colorMode: GetSelectedPsd()!.colorMode)
+        if selectedNSImage.size.width == 0 || selectedNSImage == nil {
+            return
+        }
+        
+        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict, colorMode: GetSelectedPsd()!.colorMode)
         processedCIImage = imageUtil.ApplyFilters(target: _targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
         //print("gamma: \(gammaDict[psdId]), exp: \(expDict[psdId])")
     }
     
     func FetchStringObjects(psdId: Int){
+        var result: [StringObject] = []
         //let group = DispatchGroup()
 //        let queueCalc = DispatchQueue(label: "calc")
 //        queueCalc.async {
             //print("Working on process \(psdId)")
             let tmpImageUrl = self.psdModel.GetPSDObject(psdId: psdId)?.imageURL
-            let img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
+            var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
+            img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict, colorMode: GetSelectedPsd()!.colorMode)
+            img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
             let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img, psdId: psdId, psdsVM: self)
-            
             DispatchQueue.main.async{ [self] in
                 var tmpList = self.psdModel.psdObjects[psdId].stringObjects.filter({$0.status == .fixed}) //Filter all fixed objects
                 for obj in allStrObjs {
-                    if self.psdModel.psdObjects[psdId].stringObjects.ContainsSame(obj) == false {
-                        tmpList.append(obj)
+                    if tmpList.ContainsSame(obj) == false {
+                        result.append(obj)
+                    }else{
+                        print("same")
                     }
                 }
-                psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: tmpList)
+                psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
                 IndicatorText = ""
                 //print("obj count: \(psdModel.GetPSDObject(psdId: psdId)!.stringObjects.count)")
             //}
@@ -132,7 +143,11 @@ class PsdsVM: ObservableObject{
                 if hasSame == false {
                     let outId = psdModel.addPSDObject(imageURL: result)
                     InitDictForOnePsd(psdId: outId )
-                    //psds.psdObjects.AppendPsdObjectList(url: result)
+                    
+                    if selectedNSImage.size.width == 0{
+                        ThumbnailClicked(psdId: psdModel.psdObjects[0].id)
+                    }
+
                 }
             }
             //print("psd count: \(psds.psdObjects.count)")
@@ -155,6 +170,11 @@ class PsdsVM: ObservableObject{
     }
     
     func ProcessForOnePsd(){
+        
+        if selectedNSImage == nil || selectedNSImage.size.width == 0 {
+            return
+        }
+        
         let queueCalc = DispatchQueue(label: "calc")
         queueCalc.async {
             self.FetchStringObjects(psdId: self.selectedPsdId)
@@ -166,6 +186,10 @@ class PsdsVM: ObservableObject{
     }
     
     func ProcessForAll(){
+        if  selectedNSImage == nil || selectedNSImage.size.width == 0 {
+            return
+        }
+        
         let _list = psdModel.psdObjects.filter({$0.status == .commited})
         if _list.count > 0{
         let queueCalc = DispatchQueue(label: "calc")
@@ -189,7 +213,44 @@ class PsdsVM: ObservableObject{
         
     }
     
-    func CreatePSDForOnePSD(_id: Int){
+    func CreatePSDForAll(){
+        
+        if  selectedNSImage == nil || selectedNSImage.size.width == 0 {
+            return
+        }
+        
+        if psdModel.psdObjects.count == 0{
+            return 
+        }
+        
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        //panel.allowsMultipleSelection = true
+        //panel.allowedFileTypes = ["png", "PNG", "psd", "PSD"]
+        
+        if (panel.runModal() ==  NSApplication.ModalResponse.OK) {
+            // Results contains an array with all the selected paths
+            let result = panel.url!
+            // Do whatever you need with every selected file
+            // in this case, print on the terminal every path
+            for psd in psdModel.psdObjects {
+                let fileTitle = psd.imageURL.lastPathComponent.components(separatedBy: ".")[0]
+                let fileName = fileTitle + ".psd"
+                let saveToPath = result.appendingPathComponent(fileName).path
+                //print(saveToPath)
+                CreatePSDForOnePSD(_id: psd.id, saveToPath: saveToPath)
+            }
+            //print("psd count: \(psds.psdObjects.count)")
+        } else {
+            // User clicked on "Cancel"
+            return
+        }
+        
+
+    }
+    
+    func CreatePSDForOnePSD(_id: Int, saveToPath: String){
         let psdPath = psdModel.GetPSDObject(psdId: _id)!.imageURL.path
         var contentList = [String]()
         var colorList = [[Int]]()
@@ -203,6 +264,7 @@ class PsdsVM: ObservableObject{
         var bgClolorList = [[Float]]()
         var isParagraphList = [Bool]()
         var updateList = psdModel.GetPSDObject(psdId: _id)!.stringObjects.filter{$0.status != .ignored}
+        var saveToPath = saveToPath
         
 //        for (key,value) in stringObjectStatusDict[_id]!{
 //            if  value == 2{
@@ -265,7 +327,7 @@ class PsdsVM: ObservableObject{
             bgClolorList.append(tmpBGColor)
         }
         
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList)
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: saveToPath)
         if success == true{
             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
             let cmd = "open " + jsPath + "  -a '\(settingViewModel.PSPath)'"
@@ -423,6 +485,35 @@ class PsdsVM: ObservableObject{
         }
         
         psdModel.SetStatusForPsd(psdId: psdId, value: st)
+    }
+    
+    func removePsd(psdId: Int){
+        //Check selected image
+        //Check selected id
+//        if selectedPsdId == 0 && psdModel.psdObjects.count == 1 {
+//            //psdModel.addPSDObject(imageURL: )
+//            selectedNSImage == NSImage.init()
+//            //UpdateProcessedImage(psdId: 0)
+//        }
+        psdModel.removePSDObject(id: psdId)
+        selectedNSImage = NSImage.init()
+        processedCIImage = CIImage.init()
+        
+    }
+    
+    //TODO:
+    func alignSelectionLeft(){
+        
+    }
+    
+    //TODO:
+    func alignSelectionCenter(){
+        
+    }
+    
+    //TODO:
+    func alignSelectionRight(){
+        
     }
     
 }

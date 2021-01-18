@@ -19,8 +19,7 @@ struct PsdThumbnail: View {
     
     var body: some View {
         ZStack{
-            
-            Image(nsImage: (psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: "defaultImage.png"))!)
+            Image(nsImage: ((psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
 //                .onTapGesture {
 //                    psdListVM.ThumbnailClicked(psdId: id)
 //                    //psdvm.PsdSelected(psdId: id)

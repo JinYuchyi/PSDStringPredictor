@@ -277,10 +277,7 @@ class PSDViewModel: ObservableObject{
                 }
             }
         }
-        
     }
-    
-    
     
     func FetchSelectedIDList(idList: [UUID] ){
         if selectedIDList.count == 0 {
@@ -336,11 +333,7 @@ class PSDViewModel: ObservableObject{
     func UpdataIndicatorTitle(_ str: String){
         indicatorTitle = str
     }
-    
-    
-    
 
-    
     func SetSelectionToIgnoredOnePSD(psdId: Int){
         var allIgnored = true
         var resDict = stringObjectStatusDict[psdId]!
@@ -407,7 +400,9 @@ class PSDViewModel: ObservableObject{
     }
     
     func CombineStringsOnePSD(psdId: Int){
-        //var newObj: StringObject
+        
+        if selectedIDList.count == 0{return }
+        
         var orderedYList: [UUID:CGFloat] = [:]
         var content: String = ""
         var rect: CGRect = CGRect.init()
