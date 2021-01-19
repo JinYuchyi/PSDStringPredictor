@@ -45,7 +45,7 @@ class CSVManager{
     private func ParsingCsvStringAsCharObjArray(FromString str: String) -> [CharDataObject]{
         var objArray : [CharDataObject] = []
         let objStrArray = str.components(separatedBy: "\n")
-        for index in 1..<objStrArray.count{
+        for index in 1..<objStrArray.count-1{
             //print("index: \(index)")
             let itemArray = objStrArray[index].components(separatedBy: ",")
             let a = itemArray[0]

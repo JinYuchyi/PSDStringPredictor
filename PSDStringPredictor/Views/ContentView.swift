@@ -165,6 +165,13 @@ struct ContentView: View  {
                 
                     //.border(Color.red, width: 1)
             }
+            .onAppear(perform: {
+                //Load tables
+                psdsVM.FetchTrackingData(path: Bundle.main.path(forResource: "FontSizeTrackingTable", ofType: "csv")!)
+                //psdsVM.FetchStandardTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
+                psdsVM.FetchCharacterTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
+                psdsVM.FetchBoundTable(path: Bundle.main.path(forResource: "charBounds", ofType: "csv")!)
+            })
             //.background(keyEventHandle)
 
       

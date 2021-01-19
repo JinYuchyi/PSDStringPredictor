@@ -51,6 +51,7 @@ class PsdsVM: ObservableObject{
         selectedStrIDList = []
         DragOffsetDict = [:]
         maskedImage = CIImage.init()
+        
     }
     
     //    func Refresh(){
@@ -79,6 +80,30 @@ class PsdsVM: ObservableObject{
             return nil
         }
         return _obj
+    }
+    
+    func FetchTrackingData(path: String){
+        TrackingDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+        let objArray = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray(FilePath: path)
+        TrackingDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, trackingObjectList: objArray)
+    }
+    
+    func FetchStandardTable(path: String){
+        OSStandardManager.DeleteAll(AppDelegate().persistentContainer.viewContext)
+        let objArray = CSVManager.shared.ParsingCsvFileAsFontStandardArray(FilePath: path)
+        OSStandardManager.BatchInsert(AppDelegate().persistentContainer.viewContext, FontStandardObjectList: objArray)
+    }
+    
+    func FetchCharacterTable(path: String){
+        CharDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+        let objArray = CSVManager.shared.ParsingCsvFileAsCharObjArray(FilePath: path)
+        CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
+    }
+    
+    func FetchBoundTable(path:String){
+        CharBoundsDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+        let objArray = CSVManager.shared.ParsingCsvFileAsBoundsObjArray(FilePath: path)
+        CharBoundsDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharBoundsList: objArray)
     }
     
     func UpdateProcessedImage(psdId: Int){
@@ -252,7 +277,8 @@ class PsdsVM: ObservableObject{
     }
     
     func CreatePSDForOnePSD(_id: Int, saveToPath: String){
-        let psdPath = psdModel.GetPSDObject(psdId: _id)!.imageURL.path
+        guard let obj = psdModel.GetPSDObject(psdId: _id) else {return}
+        let psdPath = obj.imageURL.path
         var contentList = [String]()
         var colorList = [[Int]]()
         var fontSizeList:[Float] = []
@@ -266,6 +292,7 @@ class PsdsVM: ObservableObject{
         var isParagraphList = [Bool]()
         var updateList = psdModel.GetPSDObject(psdId: _id)!.stringObjects.filter{$0.status != .ignored}
         var saveToPath = saveToPath
+        
         
 //        for (key,value) in stringObjectStatusDict[_id]!{
 //            if  value == 2{
@@ -515,6 +542,19 @@ class PsdsVM: ObservableObject{
     //TODO:
     func alignSelectionRight(){
         
+    }
+    
+    func DeleteAll(){
+        psdModel.psdObjects.removeAll()
+        selectedNSImage = NSImage.init()
+        processedCIImage = CIImage.init()
+    }
+    
+    //TODO:
+    func CommitAll(){
+        for obj in psdModel.psdObjects{
+            psdModel.SetStatusForPsd(psdId: obj.id, value: .commited)
+        }
     }
     
 }
