@@ -164,7 +164,9 @@ class OCR: ObservableObject{
         let strs = self.GetStringArrayFromObservations(results_fast)
         for i in 0..<stringsRects.count{
             DispatchQueue.main.async{
-                psdsVM.IndicatorText = "PSD \(psdId+1), \(i+1) / \(stringsRects.count) strings"
+                psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
+
+                psdsVM.IndicatorText = "Processing Image \(psdId+1), \(i+1)/\(stringsRects.count) strings"
                 //psdsVM.prograssScale =
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))

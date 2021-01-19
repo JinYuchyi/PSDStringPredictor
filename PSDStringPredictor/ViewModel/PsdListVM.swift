@@ -30,6 +30,7 @@ class PsdsVM: ObservableObject{
     @Published var IndicatorText: String = ""
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[CGRect]]  = [:]
+    @Published var stringIsOn: Bool = true
     //@Published var totalStrCountToProcess: Int = 0
     
     let imageUtil = ImageUtil()
@@ -200,7 +201,7 @@ class PsdsVM: ObservableObject{
                 
                 self.FetchStringObjects(psdId: psd.id)
                 DispatchQueue.main.async{
-                    self.prograssScale = c / CGFloat(_list.count)
+                    self.prograssScale = 0
                     self.psdModel.SetStatusForPsd(psdId: psd.id, value: .processed)
 
                     //self.indicatorTitle = "Correcting strings' position \(index)/\(objs.count)"

@@ -53,7 +53,7 @@ struct ContentView: View  {
 //                .frame(width: 300, alignment: .center)
         //}
         VStack(alignment: .center){
-            PrograssView(psdsVM: psdsVM)
+            //PrograssView(psdsVM: psdsVM)
             psdThumbnailList(psdsVM: psdsVM)
                 .frame(height: 1000, alignment: .center)
             PsdOperatorView(psdsVM: psdsVM)
@@ -63,36 +63,56 @@ struct ContentView: View  {
         //.frame(width: 300, alignment: .center)
     }
     
-    fileprivate func MidViewGroup() -> some View {
-        return ZStack{
+    var MidViewGroup: some View {
+         ZStack{
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView(psds: psdsVM)
 
-                    LabelsOnImage(psdsVM: psdsVM)
+                    Group{
+                        LabelsOnImage(psdsVM: psdsVM)
 
-                    CharacterFrameView(psdVM: psdsVM)
-                        .IsHidden(condition: showPatchLayer)
+                        CharacterFrameView(psdVM: psdsVM)
+                            .IsHidden(condition: showPatchLayer)
+                        
+                        HighlightView(psdsVM: psdsVM)
+                    }
+                    .IsHidden(condition: psdsVM.stringIsOn == true)
                     
-                    HighlightView(psdsVM: psdsVM)
+                   
                 }
                 //.scaleEffect(viewScale)
                 //.frame(width: 1100 * viewScale)
 
             }
-            
+
             GeometryReader{ geo in
                 UIOverlayView(showPatchLayer: $showPatchLayer)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
+                
 //                ScaleSliderView(scale: $viewScale)
 //                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
+                //Indicator
+                if #available(OSX 11.0, *) {
+                    ZStack{
+                        ProgressView(value: psdsVM.prograssScale)
+                        Text(psdsVM.IndicatorText)
+                    }
+                   .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
+                    .IsHidden(condition: psdsVM.IndicatorText != "")
+                } else {
+                    // Fallback on earlier versions
+                }
             }
             
 //            IndicatorView( psdsVM: psdsVM)
 //                .frame(width: 1100, height: 1000, alignment: .center)
             WarningView()
                 //.frame(width: 1100, height: 1000, alignment: .center)
-                
+            
+           
+                //.frame(width: 1000, height: 1000, alignment: .bottom)
+
         }
         
         //.frame(width: 1100)
@@ -136,15 +156,16 @@ struct ContentView: View  {
                     //.border(Color.red, width: 1)
                 Divider()
                 
-                MidViewGroup()
+                MidViewGroup
                     .frame(width: 1200)
                     //.border(Color.red, width: 1)
                 Divider()
                 RightViewGroup()
                     .frame(width: 300)
+                
                     //.border(Color.red, width: 1)
             }
-            .background(keyEventHandle)
+            //.background(keyEventHandle)
 
       
     }

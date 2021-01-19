@@ -8,32 +8,44 @@
 
 import SwiftUI
 
-struct PrograssView: View {
-    @ObservedObject var psdsVM : PsdsVM
-    let width: CGFloat = 200
+struct PrograssView1: View {
+    @ObservedObject var psdsVM : PsdsVM =  PsdsVM()
+    let width: CGFloat = 500
+    @State private var isLoading = false
+    
     var body: some View {
         //psdVM.prograssScale
-        VStack{
-            Text(psdsVM.IndicatorText)
-                .frame(alignment: .leading)
-            RoundedRectangle(cornerRadius: 2)
-                .stroke(Color.green, lineWidth: 2)
-                .frame(width: width, height: 2)
-                .offset(x: -width + psdsVM.prograssScale * width, y: 0)
-                //.animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: false))
-                .mask(
-                    RoundedRectangle(cornerRadius: 2)
-                        .stroke(Color(.systemGray), lineWidth: 2)
-                        .frame(width: width, height: 2)
-                )
-        }
-        .IsHidden(condition: psdsVM.IndicatorText != "")
-
+        ZStack {
+         
+                    Text("Loading")
+                        .font(.system(.body, design: .rounded))
+                        .bold()
+                        .offset(x: 0, y: -25)
+         
+                    RoundedRectangle(cornerRadius: 3)
+                        .stroke(Color(.systemGray), lineWidth: 3)
+                        .frame(width: 250, height: 3)
+         
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(Color.green)
+                        .frame(width: 30, height: 3)
+                        //.scaleEffect(isLoading ? 1.5 : 1)
+                        
+                        .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+                        .onAppear() {
+                            isLoading = true
+                        }
+                        
+                }
+        
+        
+        //.IsHidden(condition: psdsVM.IndicatorText != "")
+        
     }
 }
 
-//struct PrograssView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PrograssView()
-//    }
-//}
+struct PrograssView_Previews: PreviewProvider {
+    static var previews: some View {
+        PrograssView1()
+    }
+}

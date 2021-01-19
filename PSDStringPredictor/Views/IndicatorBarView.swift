@@ -29,7 +29,7 @@ struct IndicatorView: View {
                 
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(Color(.systemGray), lineWidth: 3)
-                    .frame(width: 500, height: 3)
+                    .frame(width: 100, height: 3)
                 
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(Color.green, lineWidth: 3)

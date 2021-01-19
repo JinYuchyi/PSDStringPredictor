@@ -234,5 +234,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         psdsVM.LoadImage()
     }
     
+    @IBAction func ToggleShowStringLayer(_ sender: Any) {
+        psdsVM.stringIsOn.toggle()
+        //print("Toggle")
+    }
 }
 
