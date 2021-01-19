@@ -91,6 +91,8 @@
 		3FBA3A7C2510AFC900F041DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBA3A7B2510AFC900F041DC /* String.swift */; };
 		3FBF5E1125AFEE6B009596A5 /* EnumExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBF5E1025AFEE6B009596A5 /* EnumExtension.swift */; };
 		3FC3DFC725B52FB60060521D /* PsdOperatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFC625B52FB60060521D /* PsdOperatorView.swift */; };
+		3FC3DFCC25B670EB0060521D /* KeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFCB25B670EB0060521D /* KeyBoard.swift */; };
+		3FC3DFD025B68BB80060521D /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFCF25B68BB80060521D /* CGFloatExtension.swift */; };
 		3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */; };
 		3FC9068125AB455E00120DE2 /* ImageAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */; };
 		3FC9068425ABF4DF00120DE2 /* StringAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */; };
@@ -216,6 +218,8 @@
 		3FBA3A7B2510AFC900F041DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		3FBF5E1025AFEE6B009596A5 /* EnumExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumExtension.swift; sourceTree = "<group>"; };
 		3FC3DFC625B52FB60060521D /* PsdOperatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdOperatorView.swift; sourceTree = "<group>"; };
+		3FC3DFCB25B670EB0060521D /* KeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoard.swift; sourceTree = "<group>"; };
+		3FC3DFCF25B68BB80060521D /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
 		3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdListVM.swift; sourceTree = "<group>"; };
 		3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAttributesVM.swift; sourceTree = "<group>"; };
 		3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringAttributesVM.swift; sourceTree = "<group>"; };
@@ -459,6 +463,7 @@
 				3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */,
 				3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */,
 				3FE881282532E6DD0088A1CD /* FontDataExtension.swift */,
+				3FC3DFCF25B68BB80060521D /* CGFloatExtension.swift */,
 				3F040A2725A69C4F0054E124 /* StringObjectExtension.swift */,
 				3F0782822541B9F0007163D6 /* FontExtension.swift */,
 				3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */,
@@ -472,6 +477,7 @@
 		3FBA3A7A2510AFAB00F041DC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3FC3DFCA25B670B50060521D /* Device */,
 				3FDBC4AE2583113400E9C2DC /* plist */,
 				3F662AF825677D29008F1879 /* Script */,
 				3F1A629625230CED006DC9F9 /* Font */,
@@ -484,6 +490,14 @@
 				3FAAB4922514706200CB89B1 /* Files */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		3FC3DFCA25B670B50060521D /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				3FC3DFCB25B670EB0060521D /* KeyBoard.swift */,
+			);
+			path = Device;
 			sourceTree = "<group>";
 		};
 		3FD401E62500F2FB00525E67 = {
@@ -702,6 +716,7 @@
 				3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */,
 				3F6C3CE62580CF5200AB7A19 /* WarningView.swift in Sources */,
 				3FB59B1425AAB5CD000FB170 /* PsdsUtil.swift in Sources */,
+				3FC3DFD025B68BB80060521D /* CGFloatExtension.swift in Sources */,
 				3FD1FBB42581C116004EF1FB /* SelectionOverlayView.swift in Sources */,
 				3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */,
 				3F8208502510F8CE00832192 /* File.swift in Sources */,
@@ -762,6 +777,7 @@
 				3FC9068825AC02C200120DE2 /* ControlVM.swift in Sources */,
 				3F040A2825A69C4F0054E124 /* StringObjectExtension.swift in Sources */,
 				3F0007BC252EF8AC0047574A /* Csv.swift in Sources */,
+				3FC3DFCC25B670EB0060521D /* KeyBoard.swift in Sources */,
 				3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */,
 				3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */,
 				3F79184C25A86B24003F158E /* psdThumbnailList.swift in Sources */,

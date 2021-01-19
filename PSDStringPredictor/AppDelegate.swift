@@ -18,8 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @ObservedObject var dbViewModel = DBViewModel()
     @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var imageVM = ImageVM()
-    
     @ObservedObject var psdsVM = PsdsVM()
+    
+
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
@@ -43,7 +44,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
         window.title = "PSD String Generator"
-        
         //        //Preference window
         //        settingWindow = NSWindow(
         //            contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),

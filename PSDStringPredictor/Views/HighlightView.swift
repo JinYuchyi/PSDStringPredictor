@@ -31,17 +31,17 @@ struct HighlightView: View {
                 Rectangle()
                     .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                     .position(
-                        x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX ?? zeroRect.minX,
-                        y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY ?? zeroRect.minY)
+                        x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX ?? zeroRect.minX.keepDecimalPlaces(num: 1),
+                        y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 1) ?? zeroRect.minY)
                     )
                     .foregroundColor(Color.green.opacity(0.3))
                     .shadow(color: .green, radius: 5, x: 0, y: 0)
                     .gesture(DragGesture()
                                 .onChanged { gesture in
                                     if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                        psdsVM.DragOffsetDict[theid] = CGSize(width: gesture.translation.width / 10, height: 0)
+                                        psdsVM.DragOffsetDict[theid] = CGSize(width: (gesture.translation.width / 10).keepDecimalPlaces(num: 1), height: 0)
                                     } else {
-                                        psdsVM.DragOffsetDict[theid] = CGSize(width: 0, height: gesture.translation.height / 10)
+                                        psdsVM.DragOffsetDict[theid] = CGSize(width: 0, height: (gesture.translation.height / 10).keepDecimalPlaces(num: 1))
                                     }
                                 }
                     )
@@ -50,8 +50,8 @@ struct HighlightView: View {
                     .stroke(Color.green, lineWidth: 1)
                     .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                     .position(
-                        x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX ?? zeroRect.minX,
-                        y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY  ?? zeroRect.minY)
+                        x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX.keepDecimalPlaces(num: 1) ?? zeroRect.minX,
+                        y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 1)  ?? zeroRect.minY)
                     )
                     .blendMode(.lighten)
 

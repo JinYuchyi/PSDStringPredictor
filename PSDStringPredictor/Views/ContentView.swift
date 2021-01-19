@@ -8,8 +8,9 @@
 
 import SwiftUI
 import CoreImage
+import AppKit
 
-struct ContentView: View {
+struct ContentView: View  {
     
     //    @ObservedObject var stringObjectList = StringObjectList()
     //    @ObservedObject var imageProcess: ImageProcess = ImageProcess()
@@ -26,6 +27,7 @@ struct ContentView: View {
     //@ObservedObject var controlVM: ControlVM = ControlVM()
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
+    let keyEventHandle = KeyEventHandling()
     @State var showImage = false
     @State var showPatchLayer = false
     //@State var showDebugOverlay = true
@@ -142,6 +144,7 @@ struct ContentView: View {
                     .frame(width: 300)
                     //.border(Color.red, width: 1)
             }
+            .background(keyEventHandle)
 
       
     }

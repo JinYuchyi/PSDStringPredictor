@@ -42,24 +42,22 @@ struct ControlPanel: View {
                     Text("Combine To Paragraph")
                         .frame(width: geo.size.width*0.8, alignment: .center)
                 }
-                //Section(header: Text("Align Selection").foregroundColor(.gray).frame(alignment:.center)){
-                Text("Align Selection").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
-                HStack{
-                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-                        Text("Left")
-                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-                        Text("Center")
-                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-                        Text("Right")
-                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            
-                    }
-                }
-                //}
+
+//                Text("Align Selection").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
+//                HStack{
+//                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+//                        Text("Left")
+//                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                    }
+//                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+//                        Text("Center")
+//                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                    }
+//                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+//                        Text("Right")
+//                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                    }
+//                }
 
                 //HStack{
                 Text("Set Selection Status").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
