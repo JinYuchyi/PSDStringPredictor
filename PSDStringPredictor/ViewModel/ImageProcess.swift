@@ -329,28 +329,28 @@ func LoadNSImage(imageUrlPath: String) -> NSImage {
     //    }
     let ci = CIImage.init(contentsOf: url)
     var newImg = NSImage(contentsOf: url)!
-//    let scale = ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height / newImg.size.height
-//    let size: NSSize = NSSize(width: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.width, height: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height)
-//    newImg.lockFocus()
-//    NSGraphicsContext.current!.imageInterpolation = NSImageInterpolation.high
-//    let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
-//                               pixelsWide: Int(size.width),
-//                               pixelsHigh: Int(size.height),
-//                               bitsPerSample: 8,
-//                               samplesPerPixel: 4,
-//                               hasAlpha: true,
-//                               isPlanar: false,
-//                               colorSpaceName: .deviceRGB,
-//                               bytesPerRow: Int(size.width * 4),
-//                               bitsPerPixel: 32)
-//
-//    let ctx = NSGraphicsContext(bitmapImageRep: rep!)
-//    NSGraphicsContext.saveGraphicsState()
-//    NSGraphicsContext.current = ( ctx )
-//    newImg.draw(in: NSMakeRect(0, 0, size.width, size.height))
-//        ctx?.flushGraphics()
-//        NSGraphicsContext.restoreGraphicsState()
-//    print("size: \(newImg.size)")
+    //    let scale = ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height / newImg.size.height
+    //    let size: NSSize = NSSize(width: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.width, height: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height)
+    //    newImg.lockFocus()
+    //    NSGraphicsContext.current!.imageInterpolation = NSImageInterpolation.high
+    //    let rep = NSBitmapImageRep(bitmapDataPlanes: nil,
+    //                               pixelsWide: Int(size.width),
+    //                               pixelsHigh: Int(size.height),
+    //                               bitsPerSample: 8,
+    //                               samplesPerPixel: 4,
+    //                               hasAlpha: true,
+    //                               isPlanar: false,
+    //                               colorSpaceName: .deviceRGB,
+    //                               bytesPerRow: Int(size.width * 4),
+    //                               bitsPerPixel: 32)
+    //
+    //    let ctx = NSGraphicsContext(bitmapImageRep: rep!)
+    //    NSGraphicsContext.saveGraphicsState()
+    //    NSGraphicsContext.current = ( ctx )
+    //    newImg.draw(in: NSMakeRect(0, 0, size.width, size.height))
+    //        ctx?.flushGraphics()
+    //        NSGraphicsContext.restoreGraphicsState()
+    //    print("size: \(newImg.size)")
     newImg = ci!.ToNSImage()
     return newImg
 }
@@ -426,47 +426,48 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
     return filteredImage
 }
 
-func Maximum(_ image: CIImage) -> NSColor{
+func Maximum(_ image: CIImage) -> (NSColor, CIImage){
     let pixelProcess = PixelProcess()
     //let colorSpace: NSColorSpace = .genericRGB
-    var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
-    
+    var color: NSColor = NSColor.init(srgbRed: 1, green: 0, blue: 1, alpha: 1)
+    var filteredImage = CIImage.init()
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
-    let filteredImage = filter?.outputImage
-    if filteredImage?.IsValid() == true
-    {color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
+    filteredImage = filter?.outputImage ?? CIImage.init()
+    if filteredImage.IsValid() == true{
+        color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
         
-        return color}
-    else {
-        return color
+    }else {
+        
     }
+    return (color, filteredImage)
 }
 
-func Minimun(_ image: CIImage) -> NSColor{
+func Minimun(_ image: CIImage) -> (NSColor, CIImage){
     let pixelProcess = PixelProcess()
     //let colorSpace: NSColorSpace = .genericRGB
     var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+    var filteredImage = CIImage.init()
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
-            return color
+            return (color, CIImage.init())
         }
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         
-        let filteredImage = filter.outputImage
+        filteredImage = filter.outputImage ?? CIImage.init()
         //let img = filteredImage!.ToCGImage()
-        if filteredImage?.IsValid() == true{
-            color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage!.ToCGImage()!)
-            return color
+        if filteredImage.IsValid() == true{
+            color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
+            return (color,filteredImage)
             
         }
         
     }
     //let str = String(c.redComponent.description) + "|" + String(c.greenComponent.description) + "|" + String(c.blueComponent.description)
     //filteredImage?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/1111/" + str + ".bmp"))
-    return color
+    return (color, filteredImage)
 }
 
 func NoiseReduction(_ image: CIImage) -> CIImage?{

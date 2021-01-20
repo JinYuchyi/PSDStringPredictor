@@ -78,8 +78,8 @@
             filePath = "PSDStringPredictor/Models/StringObject.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
             landmarkName = "StringObject"
             landmarkType = "14">
          </BreakpointContent>
@@ -254,24 +254,8 @@
             filePath = "PSDStringPredictor/Utils/ML/OCR.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "CreateAllStringObjects(FromCIImage:psdId:psdsVM:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D2C8D332-F5E6-49BD-9010-DD323D1AF760"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PSDStringPredictor/Utils/ML/OCR.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "CreateAllStringObjects(FromCIImage:psdId:psdsVM:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,8 +270,8 @@
             filePath = "PSDStringPredictor/Utils/ML/OCR.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "CreateAllStringObjects(FromCIImage:psdId:psdsVM:)"
             landmarkType = "7">
          </BreakpointContent>

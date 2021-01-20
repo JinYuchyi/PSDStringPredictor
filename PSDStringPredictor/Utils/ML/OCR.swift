@@ -141,19 +141,18 @@ class OCR: ObservableObject{
     
     func CreateAllStringObjects(FromCIImage ciImage: CIImage, psdId: Int,  psdsVM: PsdsVM) -> [StringObject]{
         var strobjs : [StringObject] = []
-        //Get Observations
-        
         let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         TextRecognitionRequest.usesLanguageCorrection = true
         TextRecognitionRequest.recognitionLanguages = ["en_US"]
         //TextRecognitionRequest.customWords = ["iCloud","FaceTime"]
-        
+        DispatchQueue.main.async{
+            psdsVM.prograssScale = 0
+        }
         
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
         do {
-            //print("In Thread.")
             try requestHandler.perform([TextRecognitionRequest])
         } catch {
             print(error)
@@ -165,19 +164,15 @@ class OCR: ObservableObject{
         for i in 0..<stringsRects.count{
             DispatchQueue.main.async{
                 psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
-
                 psdsVM.IndicatorText = "Processing Image \(psdId+1), \(i+1)/\(stringsRects.count) strings"
-                //psdsVM.prograssScale =
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             //print("\(i) - charRects count: \(charRects.count), chars count: \(chars.count)")
             var newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj = DeleteDecent(obj: newStrObj)
             strobjs.append(newStrObj) 
-            
         }
         return strobjs
-      
     }
     
   

@@ -128,7 +128,7 @@ class PsdsVM: ObservableObject{
             img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
             let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img, psdId: psdId, psdsVM: self)
             DispatchQueue.main.async{ [self] in
-                var tmpList = self.psdModel.psdObjects[psdId].stringObjects.filter({$0.status == .fixed}) //Filter all fixed objects
+                var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .fixed}) //Filter all fixed objects
                 for obj in allStrObjs {
                     if tmpList.ContainsSame(obj) == false {
                         result.append(obj)

@@ -207,9 +207,8 @@
 		3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleView.swift; sourceTree = "<group>"; };
 		3F9ED7AA25667E9400F950BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontSizeTabularRegressor.swift; sourceTree = "<group>"; };
-		3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackingRegressor.swift; path = PSDStringPredictor/Resources/TrackingRegressor.swift; sourceTree = SOURCE_ROOT; };
 		3FA49B382508B0D40093EBD2 /* LogObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObject.swift; sourceTree = "<group>"; };
-		3FA5047C2574CADA00F4A77A /* fontSize.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = fontSize.csv; path = PSDStringPredictor/Resources/fontSize.csv; sourceTree = SOURCE_ROOT; };
+		3FA5047C2574CADA00F4A77A /* fontSize.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = fontSize.csv; path = PSDStringPredictor/Resources/csv/fontSize.csv; sourceTree = SOURCE_ROOT; };
 		3FAAB4962514BD6600CB89B1 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
 		3FABE4E02580DA4C00287086 /* DBViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBViewModel.swift; sourceTree = "<group>"; };
 		3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -298,34 +297,23 @@
 		3F4D13E725021AFB008F846B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3F56E3E22505F06300E64337 /* DB */,
+				3FD558CE25B7C4D200056C85 /* ML */,
+				3FD558CD25B7C4B400056C85 /* csv */,
 				3F79184625A84464003F158E /* Images */,
 				3FF51BA025A2C65C00D11575 /* JS */,
-				3FF51B5A259ADF2800D11575 /* charBounds.csv */,
-				3F44C63C2570D60400E438CA /* CharColorMode.swift */,
-				3FA1C5B42557E7B100FC6DC3 /* TrackingRegressor.swift */,
-				3FD24809253EDED0007EBE36 /* FontWeightClassifier.swift */,
-				3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */,
-				3FD24806253EDDAE007EBE36 /* FontWeightClassifier.mlmodel */,
-				3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */,
-				3F44C6442570EB0C00E438CA /* CharColorMode.mlmodel */,
-				3F50A7B9253DC76500C10810 /* ColorMode.swift */,
-				3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */,
-				3F8208512511129200832192 /* TrackingRegressor.mlmodel */,
-				3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */,
-				3FA5047C2574CADA00F4A77A /* fontSize.csv */,
 				3FD401F82500F2FB00525E67 /* Preview Content */,
 				3F4D13E825021B74008F846B /* StringObjectsData.json */,
-				3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		3F56E3E22505F06300E64337 /* Data */ = {
+		3F56E3E22505F06300E64337 /* DB */ = {
 			isa = PBXGroup;
 			children = (
 				3F68B705252EA8A900CCFCE5 /* FontData.xcdatamodeld */,
 			);
-			path = Data;
+			path = DB;
 			sourceTree = "<group>";
 		};
 		3F56E3E5250603F600E64337 /* Models */ = {
@@ -527,7 +515,6 @@
 				3FBA3A7A2510AFAB00F041DC /* Utils */,
 				3F56E3EA25060CD300E64337 /* Views */,
 				3F56E3E5250603F600E64337 /* Models */,
-				3F56E3E22505F06300E64337 /* Data */,
 				3F4D13E725021AFB008F846B /* Resources */,
 				3FD401F22500F2FB00525E67 /* AppDelegate.swift */,
 				3FD401F62500F2FB00525E67 /* Assets.xcassets */,
@@ -543,6 +530,33 @@
 				3FD401F92500F2FB00525E67 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3FD558CD25B7C4B400056C85 /* csv */ = {
+			isa = PBXGroup;
+			children = (
+				3FF51B5A259ADF2800D11575 /* charBounds.csv */,
+				3FA5047C2574CADA00F4A77A /* fontSize.csv */,
+				3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */,
+			);
+			path = csv;
+			sourceTree = "<group>";
+		};
+		3FD558CE25B7C4D200056C85 /* ML */ = {
+			isa = PBXGroup;
+			children = (
+				3FD24809253EDED0007EBE36 /* FontWeightClassifier.swift */,
+				3FA1C5B125567D5500FC6DC3 /* FontSizeTabularRegressor.swift */,
+				3FD24806253EDDAE007EBE36 /* FontWeightClassifier.mlmodel */,
+				3F3E0008253DCA9D0047E4E5 /* ColorMode.mlmodel */,
+				3F44C6442570EB0C00E438CA /* CharColorMode.mlmodel */,
+				3F50A7B9253DC76500C10810 /* ColorMode.swift */,
+				3F44C63C2570D60400E438CA /* CharColorMode.swift */,
+				3FE8813425333B4B0088A1CD /* TrackingRegressor.swift */,
+				3F8208512511129200832192 /* TrackingRegressor.mlmodel */,
+				3F25BC66250DC97F00E105A6 /* FontSizeTabularRegressor.mlmodel */,
+			);
+			path = ML;
 			sourceTree = "<group>";
 		};
 		3FDBC4AE2583113400E9C2DC /* plist */ = {

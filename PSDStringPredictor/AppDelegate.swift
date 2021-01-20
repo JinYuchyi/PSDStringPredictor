@@ -43,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.setFrameAutosaveName("StringGeneratorMain")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
-        window.title = "PSD String Generator"
+        window.title = "PSD String layers Generator"
         //        //Preference window
         //        settingWindow = NSWindow(
         //            contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
@@ -198,18 +198,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func LoadPreference(_ sender: Any) {
-        //        var window: NSWindow!
-        //        if delegate.settingWindow != nil{
-        //            //Preference window
-        //            settingWindow = NSWindow(
-        //                contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
-        //                //styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-        //                styleMask: [.closable, .resizable, .titled],
-        //                backing: .buffered, defer: false)
-        //            settingWindow!.center()
-        //            settingWindow!.contentView = NSHostingView(rootView: SettingsView())
-        //            settingWindow!.makeKeyAndOrderFront(nil)
-        //        }
         let plistM = PlistManager()
         self.window = ClosableWindow (contentRect: NSMakeRect (0, 0, 480, 300), styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView], backing: NSWindow.BackingStoreType.buffered, defer: false)
         let item = plistM.Load(plistName: "AppSettings")

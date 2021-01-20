@@ -39,6 +39,8 @@ class CSVManager{
             objArray.append(TrackingDataObject(fontSize: a, fontTracking: b, fontTrackingPoints: c))
             
         }
+        print("Tracking Size: \(objArray.count)")
+
         return objArray
     }
     
@@ -56,6 +58,7 @@ class CSVManager{
             objArray.append(CharDataObject(char: a,fontSize: d,height: c,width: b, fontWeight: e))
             
         }
+        print("Char Size: \(objArray.count)")
         return objArray
     }
     
@@ -71,6 +74,8 @@ class CSVManager{
             let e = Int16(itemArray[4].replacingOccurrences(of: "\r", with: ""))!
             objArray.append(FontStandardObject(os: a, style: FontStyleType.init(rawValue: b)!, weight: FontWeightType.init(rawValue: c)!, fontSize: d, lineHeight: e))
         }
+        print("Standard Size: \(objArray.count)")
+
         return objArray
     }
     
@@ -88,6 +93,8 @@ class CSVManager{
             let g = (itemArray[5].replacingOccurrences(of: "\r", with: ""))
             objArray.append(CharBoundsObject(char: a, fontSize: b, x1: c, y1: d, x2: e, y2: f, weight: g))
         }
+        print("Bound Size: \(objArray.count)")
+
         return objArray
     }
     

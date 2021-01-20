@@ -85,6 +85,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var alignment: StringAlignment
     var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
+    var colorPixel: CIImage = CIImage.init()
     let ocr: OCR = OCR()
     let fontUtils = FontUtils()
 
@@ -115,7 +116,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
-        self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+        self.color = CalcColor()
     }
     
     init(_ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
@@ -145,7 +146,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
-        self.color = CalcColor() ?? CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+        self.color = CalcColor()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
         self.tracking = FetchTrackingFromDB(self.fontSize).0
@@ -244,36 +245,24 @@ struct StringObject : Identifiable, Equatable, Hashable{
         var result: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 0, alpha: 1)
         var minc = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
         var maxc = NSColor.init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
-        var nsColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+        //var nsColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
             if colorMode == .light{
-                //old
-//                let strImg = PsdsUtil.shared.GetSelectedNSImage().ToCIImage()!.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
-//                nsColor = Minimun(strImg)
-//                result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
-                
-                //New
-
-                 
-                for img in charImageList{
-                    if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
-                        minc = Minimun(img)
-                        //print("\(content) min Color: \(minc)")
+                for img in charImageList.filter({$0.extent.width > 0}){
+                    if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
+                        minc = Minimun(img).0
+                        colorPixel = Minimun(img).1
                     }
                 }
                 result = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 
             }
             if colorMode == .dark{
-                //old
-//                let strImg = PsdsUtil.shared.GetSelectedNSImage().ToCIImage()?.cropped(to: CGRect(x: stringRect.origin.x, y: stringRect.origin.y, width: stringRect.width.rounded(.towardZero) , height: stringRect.height.rounded(.towardZero)))
-//                result = CGColor.init(red: nsColor.redComponent, green: nsColor.greenComponent, blue: nsColor.blueComponent, alpha: 1)
-                
-                //new
-                for img in charImageList{
-                    if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
-                        maxc = Maximum(img)
-                        //print("\(content) max Color: \(maxc)")
+                for img in charImageList.filter({$0.extent.width > 0}){
+                    if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
+                        maxc = Maximum(img).0
+                        colorPixel = Maximum(img).1
+                        print("\(content) max Color: \(maxc), size: \(img.extent)")
                     }
                 }
                 result = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
@@ -401,21 +390,22 @@ struct StringObject : Identifiable, Equatable, Hashable{
     func CalcSizeForSingleChar(_ char: String, _ width: Int16, _ height: Int16, _ fontWeight: String) -> (Int16, Int){
         var isPredicted = 0
         //var result: Int16 = 0
-        
+        let _weight = fontWeight.lowercased()
         var keyvalues: [String: AnyObject] = [:]
         keyvalues["char"] = char as AnyObject
         keyvalues["width"] = width as AnyObject
         keyvalues["height"] = height as AnyObject
-        keyvalues["fontWeight"] = fontWeight as AnyObject
+        keyvalues["fontWeight"] = _weight as AnyObject
+        
         let objList = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
         
         if (objList.count == 0){
             isPredicted = 1
-            //print("\(char), with width \((width)) - height \((height)) - weight \(fontWeight). Pridict it as \(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight))")
-            return (Int16(PredictFontSize(character: char, width: (width), height: (height), fontWeight: fontWeight).rounded()), isPredicted)
+            //print("\(char), with width \((width)) - height \((height)) - weight \(_weight). Pridict it as \(PredictFontSize(character: char, width: (width), height: (height), fontWeight: _weight))")
+            return (Int16(PredictFontSize(character: char, width: (width), height: (height), fontWeight: _weight).rounded()), isPredicted)
         }else{
             isPredicted = -1
-            //print("\(char), with width \(width) - height \(height) - weight \(fontWeight). Found it in DB, size is \(objList[0].fontSize)")
+            print("\(char), with width \(width) - height \(height) - weight \(_weight). Found it in DB, size is \(objList[0].fontSize)")
             return (objList[0].fontSize, isPredicted)
         }
         
