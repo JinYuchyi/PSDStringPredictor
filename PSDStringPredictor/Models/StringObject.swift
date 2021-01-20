@@ -169,6 +169,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     
     mutating func CalcColorMode() -> MacColorMode{
         var result = -1
+        charColorModeList = []
         for img in charImageList{
             let bw = SetGrayScale(img)
             
@@ -262,7 +263,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
                     if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
                         maxc = Maximum(img).0
                         colorPixel = Maximum(img).1
-                        print("\(content) max Color: \(maxc), size: \(img.extent)")
+                        //print("\(content) max Color: \(maxc), size: \(img.extent)")
                     }
                 }
                 result = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)

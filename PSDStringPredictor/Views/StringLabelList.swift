@@ -22,21 +22,22 @@ struct LabelsOnImage: View {
                 StringLabel(id:obj.id, psdsVM: psdsVM )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
-                                    psdsVM.selectedStrIDList.removeAll()
                                     psdsVM.selectedStrIDList.append(obj.id)
+                                    psdsVM.selectedStrIDList.removeAll(where: {$0 != obj.id})
+                                    print("\(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: obj.id)?.content)")
                                 })
                 )
             }
             
-            ForEach((psdsVM.GetSelectedPsd()?.stringObjects.filter{$0.status == StringObjectStatus.ignored}) ?? [], id:\.id){ obj in
-                StringLabel(id:obj.id, psdsVM: psdsVM )
-                    .gesture(TapGesture()
-                                .onEnded({ (loc) in
-                                    psdsVM.selectedStrIDList.removeAll()
-                                    psdsVM.selectedStrIDList.append(obj.id)
-                                })
-                    )
-            }
+//            ForEach((psdsVM.GetSelectedPsd()?.stringObjects.filter{$0.status == StringObjectStatus.ignored}) ?? [], id:\.id){ obj in
+//                StringLabel(id:obj.id, psdsVM: psdsVM )
+//                    .gesture(TapGesture()
+//                                .onEnded({ (loc) in
+//                                    psdsVM.selectedStrIDList.removeAll()
+//                                    psdsVM.selectedStrIDList.append(obj.id)
+//                                })
+//                    )
+//            }
 
 //            ForEach(psdsVM.GetSelectedPsd()?.stringObjects.filter{$0.status != StringObjectStatus.ignored}, id:\.id){ myid in
 //                StringLabel(id: myid, charFrameList: charFrameList, psdsVM: psdsVM)

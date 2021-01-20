@@ -74,6 +74,7 @@ struct StringLabel: View {
             .foregroundColor(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.color.ToColor() ?? Color.white)
             .font(.custom(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.FontName ?? "", size: CalcSizeAfterOffset()))
             .shadow(color: psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+            
         //.blendMode(.difference)
         
     }

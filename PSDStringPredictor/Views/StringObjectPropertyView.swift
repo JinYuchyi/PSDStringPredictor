@@ -12,13 +12,13 @@ struct StringObjectPropertyView: View {
     
 //    @ObservedObject var stringObjectVM = psdViewModel
 //    @ObservedObject var imageProcess = imageProcessViewModel
-    @State var stringField: String = ""
+    //@State var stringList: [String]
     @State var weight: String = "Regular"
     
     let pixelMgr = PixelProcess()
     
     @ObservedObject var psdsVM: PsdsVM
-    
+    //@State var charList: [String]
     func GetLastSelectObject() -> StringObject{
         
         guard let id = psdsVM.selectedStrIDList.last else {return StringObject.init()}
@@ -41,7 +41,9 @@ struct StringObjectPropertyView: View {
         return targetObj.fontSize - offset
     }
     
-
+    func SetChar(index: Int, value: String){
+        print("Changed to \(value)")
+    }
     
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
@@ -52,34 +54,49 @@ struct StringObjectPropertyView: View {
                 HStack {
                     
                     ForEach(0..<GetLastSelectObject().charImageList.count, id: \.self){ index in
-                        
+//                        VStack{
+//                            if GetLastSelectObject().charColorModeList[index] == 1{
+//
+//                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(height: 40)
+//                                    .border(Color.yellow, width: 1)
+//                            }else if  GetLastSelectObject().charColorModeList[index] == 2{
+//                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(height: 40)
+//                                    .border(Color.blue, width: 1)
+//                            }
+//                            TextField(
+//                                        String(GetLastSelectObject().charArray[index]),
+//                                        text:$charList[index] ,
+//                                        onEditingChanged:{_ in print("") },
+//                                        onCommit: {SetChar(index: index, value: charList[index])}
+//                                    )
+//
+//                            //TextField(String(GetLastSelectObject().charArray[index]), text: $stringField})
+////                            TextField(String(GetLastSelectObject().charArray[index]),
+////                                            text: $stringField,
+////                                            onEditingChanged: {},
+////                                            onEditted: SetChar(index:index)
+////                                      )
+//
+//                            Text("\(Int(GetLastSelectObject().charRects[index].width.rounded()))/\(Int(GetLastSelectObject().charRects[index].height.rounded()))")
+//                            Text(String(GetLastSelectObject().charFontWeightList[index]))
+//
+//                            FontSizeView(index: index)
+//
+//                            Button(action: {CharSaveBtnPressed(index)}){
+//                                Text("􀈄")
+//                            }
+//
+//                        }
                         VStack{
-                            if GetLastSelectObject().charColorModeList[index] == 1{
-                                
-                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 40)
-                                    .border(Color.yellow, width: 1)
-                            }else if  GetLastSelectObject().charColorModeList[index] == 2{
-                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 40)
-                                    .border(Color.blue, width: 1)
-                            }
+                            Text("\(String(GetLastSelectObject().charArray[index]))")
+                            OneCharPropertyView(index: index, psdsVM: psdsVM)
 
-                            TextField(String(GetLastSelectObject().charArray[index]), text: $stringField)
-                            
-                            Text("\(Int(GetLastSelectObject().charRects[index].width.rounded()))/\(Int(GetLastSelectObject().charRects[index].height.rounded()))")
-                            Text(String(GetLastSelectObject().charFontWeightList[index]))
-                            
-                            FontSizeView(index: index)
-                            
-                            Button(action: {CharSaveBtnPressed(index)}){
-                                Text("􀈄")
-                            }
-                            
                         }
                         
                     }
@@ -88,6 +105,8 @@ struct StringObjectPropertyView: View {
             }
         }
     }
+    
+
     
     @ViewBuilder
     func FontSizeView(index: Int) -> some View {
@@ -175,7 +194,8 @@ struct StringObjectPropertyView: View {
                             Text("\(GetLastSelectObject().FontName)" )
                                 .frame(width:200, alignment: .topLeading)
                                 .onTapGesture {
-                                    psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
+                                    
+                                    psdsVM.ToggleFontName(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
                                 }
 //                        Picker(selection: $weight, label: Text("")) {
 //                            Text("Regular").tag("Regular")
@@ -196,15 +216,18 @@ struct StringObjectPropertyView: View {
 //                    Rectangle()
 //                        .fill(Color.init(red: Double(GetLastSelectObject().color.components![0]), green: Double(GetLastSelectObject().color.components![1]), blue: Double(GetLastSelectObject().color.components![2])))
 //                        .frame(width:10, height:10, alignment: .center)
-                    
-                    Text("\(String(format: "%.2f", GetLastSelectObject().color.components![0] * 255)), \(String(format: "%.2f", GetLastSelectObject().color.components![1] * 255)), \(String(format: "%.2f", GetLastSelectObject().color.components![2] * 255))")
+                    if psdsVM.selectedStrIDList.count > 0{
+                        Text("\(Int((GetLastSelectObject().color.components![0] * 255).rounded())), \(Int((GetLastSelectObject().color.components![1] * 255).rounded())), \(Int((GetLastSelectObject().color.components![2] * 255).rounded()))")
+                    }
                     //                    Text("\(stringObjectVM.selectedStringObject.color.ToColor())")
                     //                        .foregroundColor(Color.gray)
                     //                        .frame(width:80, alignment: .topLeading)
                     //                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
                     //                        .frame(width:200, alignment: .topLeading)
                 }.onTapGesture {
-                    psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
+                    if psdsVM.selectedStrIDList.count > 0 {
+                        psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
+                    }
                 }
                 
                 

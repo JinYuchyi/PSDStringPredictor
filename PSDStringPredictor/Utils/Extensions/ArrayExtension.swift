@@ -59,3 +59,15 @@ extension Array where Element == StringObject {
         return false
     }
 }
+
+extension Array where Element == Character {
+    func ToStringArray()-> [String] {
+        var result: [String] = []
+        for c in self{
+            result.append(String(c))
+        }
+        return result
+    }
+    
+   
+}
