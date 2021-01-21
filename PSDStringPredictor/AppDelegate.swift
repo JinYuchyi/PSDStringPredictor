@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow!
     var settingWindow: NSWindow!
     @ObservedObject var dbViewModel = DBViewModel()
-    @ObservedObject var stringObjectVM = psdViewModel
+   // @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var imageVM = ImageVM()
     @ObservedObject var psdsVM = PsdsVM()
     
@@ -60,8 +60,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func PreSettingConfig(){
-        stringObjectVM.frameOverlay = false
-        stringObjectVM.stringOverlay = true
+//        stringObjectVM.frameOverlay = false
+//        stringObjectVM.stringOverlay = true
         //Load color data
         imageProcessViewModel.FetchStandardHSVList()
     }
@@ -188,15 +188,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func LoadBoundsTable(_ sender: Any) {
         dbViewModel.ReloadBoundsTable()
     }
-    
-    @IBAction func ToggleStringLayer(_ sender: Any) {
-        stringObjectVM.stringOverlay = !stringObjectVM.stringOverlay
-    }
-    
-    @IBAction func ToggleFrameLayer(_ sender: Any) {
-        stringObjectVM.frameOverlay = !stringObjectVM.frameOverlay
-    }
-    
+
     @IBAction func LoadPreference(_ sender: Any) {
         let plistM = PlistManager()
         self.window = ClosableWindow (contentRect: NSMakeRect (0, 0, 480, 300), styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView], backing: NSWindow.BackingStoreType.buffered, defer: false)

@@ -31,16 +31,16 @@ class ImageProcess: ObservableObject{
     
     
     
-    func SetFilter(){
-        if (targetImageMasked.IsValid()){
-            var tmp = ChangeGamma(targetImageMasked, CGFloat(gammaValue[psdViewModel.selectedPSDID] ?? 1))!
-            tmp = ChangeExposure(tmp, CGFloat(exposureValue[psdViewModel.selectedPSDID] ?? 0))!
-            if isConvolution == true{
-                tmp = SetConv(tmp)!
-            }
-            targetImageProcessed = tmp
-        }
-    }
+//    func SetFilter(){
+//        if (targetImageMasked.IsValid()){
+//            var tmp = ChangeGamma(targetImageMasked, CGFloat(gammaValue[psdViewModel.selectedPSDID] ?? 1))!
+//            tmp = ChangeExposure(tmp, CGFloat(exposureValue[psdViewModel.selectedPSDID] ?? 0))!
+//            if isConvolution == true{
+//                tmp = SetConv(tmp)!
+//            }
+//            targetImageProcessed = tmp
+//        }
+//    }
     
     func GetImageProperty(keyName: String, path: String) -> Int{
         //        var imgData: Data = Data.init()
@@ -84,54 +84,54 @@ class ImageProcess: ObservableObject{
         //print(lightModeHSVList)
     }
     
-    func FindNearestStandardHSV(_ cl: NSColor) -> NSColor{
-        //Find the color in list where hue is most close
-        var min: CGFloat = 100
-        var targetList: [[CGFloat]] = []
-        var index = 0
-        var resultIndex = 0
-        
-        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 1 {
-            targetList = lightModeHSVList
-        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
-            targetList = darkModeHSVList
-        }
-        for c in targetList{
-            let gap = (cl.redComponent - c[0]) * (cl.redComponent - c[0])  + (cl.greenComponent - c[1])*(cl.greenComponent - c[1])  + (cl.blueComponent - c[2])*(cl.blueComponent - c[2])
-            if gap < min {
-                min = gap
-                resultIndex = index
-            }
-            index += 1
-        }
-        return NSColor(red: targetList[resultIndex][0], green: targetList[resultIndex][1], blue: targetList[resultIndex][2], alpha: 1)
-        //return resultIndex
-    }
+//    func FindNearestStandardHSV(_ cl: NSColor) -> NSColor{
+//        //Find the color in list where hue is most close
+//        var min: CGFloat = 100
+//        var targetList: [[CGFloat]] = []
+//        var index = 0
+//        var resultIndex = 0
+//
+//        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 1 {
+//            targetList = lightModeHSVList
+//        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
+//            targetList = darkModeHSVList
+//        }
+//        for c in targetList{
+//            let gap = (cl.redComponent - c[0]) * (cl.redComponent - c[0])  + (cl.greenComponent - c[1])*(cl.greenComponent - c[1])  + (cl.blueComponent - c[2])*(cl.blueComponent - c[2])
+//            if gap < min {
+//                min = gap
+//                resultIndex = index
+//            }
+//            index += 1
+//        }
+//        return NSColor(red: targetList[resultIndex][0], green: targetList[resultIndex][1], blue: targetList[resultIndex][2], alpha: 1)
+//        //return resultIndex
+//    }
     
-    func FindNearestStandardRGB(_ cl: CGColor) -> [CGFloat]{
-        //Find the color in list where hue is most close
-        var min: CGFloat = 100
-        var targetList: [[CGFloat]] = []
-        var index = 0
-        var resultIndex = 0
-        
-        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1 {
-            targetList = DataStore.colorLightModeList
-        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 2 {
-            targetList = DataStore.colorDarkModeList
-        }
-        for c in targetList{
-            let gap = (cl.components![0] - c[0]/255)*(cl.components![0] - c[0]/255) + (cl.components![1] - c[1]/255)*(cl.components![1] - c[1]/255) + (cl.components![2] - c[2]/255)*(cl.components![2] - c[2]/255)
-            if gap < min {
-                min = gap
-                resultIndex = index
-            }
-            index += 1
-        }
-        
-        //return CGColor(red: targetList[resultIndex][0], green: targetList[resultIndex][1], blue: targetList[resultIndex][2], alpha: 1)
-        return targetList[resultIndex]
-    }
+//    func FindNearestStandardRGB(_ cl: CGColor) -> [CGFloat]{
+//        //Find the color in list where hue is most close
+//        var min: CGFloat = 100
+//        var targetList: [[CGFloat]] = []
+//        var index = 0
+//        var resultIndex = 0
+//
+//        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1 {
+//            targetList = DataStore.colorLightModeList
+//        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID] == 2 {
+//            targetList = DataStore.colorDarkModeList
+//        }
+//        for c in targetList{
+//            let gap = (cl.components![0] - c[0]/255)*(cl.components![0] - c[0]/255) + (cl.components![1] - c[1]/255)*(cl.components![1] - c[1]/255) + (cl.components![2] - c[2]/255)*(cl.components![2] - c[2]/255)
+//            if gap < min {
+//                min = gap
+//                resultIndex = index
+//            }
+//            index += 1
+//        }
+//
+//        //return CGColor(red: targetList[resultIndex][0], green: targetList[resultIndex][1], blue: targetList[resultIndex][2], alpha: 1)
+//        return targetList[resultIndex]
+//    }
     
     
     
@@ -229,48 +229,48 @@ class ImageProcess: ObservableObject{
         img.ToPNG(url: url)
     }
     
-    func LoadImageBtnPressed()  {
-        let colorModeClassifier = ColorModeClassifier(image: targetNSImage.ToCIImage()!)
-        
-        let panel = NSOpenPanel()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let result = panel.runModal()
-            if result == .OK{
-                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
-                {
-                    //Reset stringobject list
-                    psdViewModel.CleanAllForOnePSD()
-                    
-                    let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
-                    self.SetTargetNSImage(tmp) //Reset images
-                    self.showImage = true
-                    
-                    //TODO: color mode classifier not work
-                    //colorModeClassifier.output
-                    imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
-                    DataStore.imagePath = panel.url!.path
-                    
-                    let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
-                    
-                    if settingViewModel.checkDPISelection == 1 {
-                        if (dpi != 72 ) {
-                            //stringObjectViewModel.OKForProcess = false
-                            psdViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
-                        }else{
-                            //stringObjectViewModel.OKForProcess = true
-                            psdViewModel.warningContent = ""
-                        }
-                    }else{
-                        //stringObjectViewModel.OKForProcess = true
-                        psdViewModel.warningContent = ""
-                    }
-                    
-                    
-                }
-            }
-        }
-        
-    }
+//    func LoadImageBtnPressed()  {
+//        let colorModeClassifier = ColorModeClassifier(image: targetNSImage.ToCIImage()!)
+//        
+//        let panel = NSOpenPanel()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//            let result = panel.runModal()
+//            if result == .OK{
+//                if ((panel.url?.pathExtension == "png" || panel.url?.pathExtension == "PNG" || panel.url?.pathExtension == "psd" || panel.url?.pathExtension == "PSD") )
+//                {
+//                    //Reset stringobject list
+//                    psdViewModel.CleanAllForOnePSD()
+//                    
+//                    let tmp = LoadNSImage(imageUrlPath: panel.url!.path)
+//                    self.SetTargetNSImage(tmp) //Reset images
+//                    self.showImage = true
+//                    
+//                    //TODO: color mode classifier not work
+//                    //colorModeClassifier.output
+//                    imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
+//                    DataStore.imagePath = panel.url!.path
+//                    
+//                    let dpi = self.GetImageProperty(keyName: "DPIWidth" , path: DataStore.imagePath)
+//                    
+//                    if settingViewModel.checkDPISelection == 1 {
+//                        if (dpi != 72 ) {
+//                            //stringObjectViewModel.OKForProcess = false
+//                            psdViewModel.warningContent = "Your image's DPI is \(dpi). This tool is only support 72 DPI currently."
+//                        }else{
+//                            //stringObjectViewModel.OKForProcess = true
+//                            psdViewModel.warningContent = ""
+//                        }
+//                    }else{
+//                        //stringObjectViewModel.OKForProcess = true
+//                        psdViewModel.warningContent = ""
+//                    }
+//                    
+//                    
+//                }
+//            }
+//        }
+//        
+//    }
     
     func LoadImageBtnPressed1()  {
         

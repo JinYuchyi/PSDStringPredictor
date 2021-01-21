@@ -212,7 +212,7 @@ class PSDViewModel: ObservableObject{
                 descent = descent * fontDecentOffsetScale
             }
             
-            let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
+            let newStringRect = CGRect(x: obj.stringRect.minX, y: obj.stringRect.minY + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
             
             var tmpObj = obj
             tmpObj.stringRect = newStringRect

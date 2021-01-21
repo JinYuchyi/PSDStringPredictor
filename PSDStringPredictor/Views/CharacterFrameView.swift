@@ -85,13 +85,11 @@ struct CharacterFrameView: View {
         if contain == false {
             psdVM.maskDict[psdVM.selectedPsdId]!.append(rect)
             //isMasked = true
-            print("add")
             psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }else{
             //Delete rect in list
             psdVM.maskDict[psdVM.selectedPsdId]!.removeAll(where: {$0 == rect})
             //isMasked = false
-            print("remove")
             psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }
         
@@ -100,17 +98,15 @@ struct CharacterFrameView: View {
             psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }
         
-        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1{
-            for _ in psdVM.maskDict{
-//                AddCharRectMask()
-                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
-            }
-        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
-            for _ in psdVM.maskDict{
-                //AddCharRectMask()
-                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
-            }
-        }
+//        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1{
+//            for _ in psdVM.maskDict{
+//                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
+//            }
+//        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
+//            for _ in psdVM.maskDict{
+//                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
+//            }
+//        }
         
     }
     

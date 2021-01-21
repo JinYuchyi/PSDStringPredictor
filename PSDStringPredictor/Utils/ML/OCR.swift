@@ -11,11 +11,12 @@ import CoreImage
 import Vision
 import SwiftUI
 
+let fontDecentOffsetScale: CGFloat = 0.6
+
 class OCR: ObservableObject{
     //private var workItem: DispatchWorkItem?
     //@EnvironmentObject var warningVM: WarningVM
     //Constant
-    let fontDecentOffsetScale: CGFloat = 0.6
     func GetRectsFromObservations(_ observations : [VNRecognizedTextObservation], _ width : Int, _ height : Int)->[CGRect]{
         var rects : [CGRect] = []
         //var total = observations.count
@@ -103,38 +104,10 @@ class OCR: ObservableObject{
     
     func DeleteDecent(obj: StringObject) -> StringObject{
         //Delete the decent height
-        var hasLongTail = false
-        for (_, c) in obj.charArray.enumerated() {
-            if (
-                c == "p" ||
-                    c == "q" ||
-                    c == "g" ||
-                    c == "y" ||
-                    c == "j" ||
-                    c == "," ||
-                    c == ";"
-            ) {
-                hasLongTail = true
-            }
-        }
+        let descent = FontUtils.FetchStringDescent(content: obj.content, fontSize: obj.fontSize)
         
-        var fontName: String = ""
-        if (obj.fontSize >= 20) {
-            fontName = "SFProDisplay-Regular"
-        }
-        else{
-            fontName = "SFProText-Regular"
-        }
-        
-        var descent: CGFloat = 0
-        if hasLongTail == true{
-            //let fontName = fontName
-            descent = FontUtils.GetFontInfo(Font: fontName, Content: obj.content, Size: obj.fontSize).descent
-            descent = descent * fontDecentOffsetScale
-        }
-        
-        //let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
-        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent , width: obj.stringRect.width, height: obj.stringRect.height - descent)
+        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
+        //let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y  , width: obj.stringRect.width, height: obj.stringRect.height )
 
         var tmpObj = StringObject.init(obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
         //tmpObj.stringRect = newStringRect
@@ -169,7 +142,6 @@ class OCR: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            //print("\(i) - charRects count: \(charRects.count), chars count: \(chars.count)")
             var newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
             newStrObj = DeleteDecent(obj: newStrObj)
             strobjs.append(newStrObj) 

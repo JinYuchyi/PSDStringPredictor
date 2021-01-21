@@ -9,8 +9,8 @@
 import Foundation
 import SwiftUI
 var imageProcessViewModel: ImageProcess = ImageProcess()
-var psdViewModel = PSDViewModel()
-var imagePropertyViewModel = ImagePropertyViewModel()
+//var psdViewModel = PSDViewModel()
+//var imagePropertyViewModel = ImagePropertyViewModel()
 var interactiveViewModel = InteractiveViewModel()
 var settingViewModel = SettingViewModel()
 var warningVM = WarningVM()

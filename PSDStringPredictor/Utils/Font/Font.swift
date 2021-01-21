@@ -37,7 +37,36 @@ class FontUtils {
         return info
     }
     
-    static func CalcStringSize(){
+    static func FetchStringDescent(content: String, fontSize: CGFloat) -> CGFloat{
+        var hasLongTail = false
+        for c in content {
+            if (
+                c == "p" ||
+                    c == "q" ||
+                    c == "g" ||
+                    c == "y" ||
+                    c == "j" ||
+                    c == "," ||
+                    c == ";"
+            ) {
+                hasLongTail = true
+            }
+        }
         
+        var fontName: String = ""
+        if (fontSize >= 20) {
+            fontName = "SFProDisplay-Regular"
+        }
+        else{
+            fontName = "SFProText-Regular"
+        }
+        
+        var descent: CGFloat = 0
+        if hasLongTail == true{
+            var descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
+            return  descent * fontDecentOffsetScale
+        }
+        
+        return descent
     }
 }

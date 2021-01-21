@@ -13,15 +13,15 @@ struct ControlPanel: View {
     
     //var dbvm = DBViewModel()
     let ternimalScriptMgr = TernimalScriptManager()
-    @ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
-    @ObservedObject var strObjVM = psdViewModel
+    //@ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
+    //@ObservedObject var strObjVM = psdViewModel
     @ObservedObject var imageProcessVM = imageProcessViewModel
     @ObservedObject var settingsVM = settingViewModel
     var imgUtil: ImageUtil = ImageUtil()
     var pixelProcess = PixelProcess()
 //    var db = DB()
     var training = MLTraining()
-    let imagePropertyVM = imagePropertyViewModel
+//    let imagePropertyVM = imagePropertyViewModel
     //@Binding var showImage: Bool
     //@Environment(\.managedObjectContext) private var viewContext
     let trackingData = TrackingDataManager.shared
@@ -38,7 +38,7 @@ struct ControlPanel: View {
 //            })
 //            .frame(width: geo.size.width, alignment: .center)
             VStack(alignment: .center){
-                Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
+                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
                     Text("Combine To Paragraph")
                         .frame(width: geo.size.width*0.8, alignment: .center)
                 }

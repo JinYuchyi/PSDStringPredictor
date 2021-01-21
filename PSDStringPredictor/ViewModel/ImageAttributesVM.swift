@@ -37,7 +37,7 @@ class ImageVM : PsdsVM {
 //        return p
         
         
-        path =  psdModel.GetPSDObject(psdId: selectedPsdId)!.imageURL.path ?? "-"
+        path = psdModel.GetPSDObject(psdId: selectedPsdId)!.imageURL.path ?? "-"
     }
     
 

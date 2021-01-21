@@ -21,7 +21,7 @@ struct ContentView: View  {
     let data = DataStore()
     let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
-    @ObservedObject var stringObjectVM = psdViewModel
+//    @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var imgVM: ImageVM
     //@ObservedObject var controlVM: ControlVM = ControlVM()
@@ -110,7 +110,7 @@ struct ContentView: View  {
             
 //            IndicatorView( psdsVM: psdsVM)
 //                .frame(width: 1100, height: 1000, alignment: .center)
-            WarningView()
+//            WarningView()
                 //.frame(width: 1100, height: 1000, alignment: .center)
             
            
