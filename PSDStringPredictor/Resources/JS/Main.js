@@ -78,9 +78,9 @@ for (var i = 0; i < num; i++){
     setTextAlignment(alignName)
 
     //Create Mask Layers
-    offset = 5
+    offset = 10
     fillColor = bgColorList[i]
-    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - offset,positionList[i][1] - rectList[i][3] - offset, rectList[i][2] + offset, rectList[i][3] + offset, fillColor)
+    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - offset, positionList[i][1] - rectList[i][3] - offset, rectList[i][2] + offset, rectList[i][3] + offset, fillColor)
 }
                                      
  if (saveToPath != "") {

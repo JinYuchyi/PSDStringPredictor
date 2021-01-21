@@ -94,9 +94,12 @@ struct ContentView: View  {
 //                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
                 //Indicator
                 if #available(OSX 11.0, *) {
-                    ZStack{
-                        ProgressView(value: psdsVM.prograssScale)
+                    VStack(spacing: 0){
                         Text(psdsVM.IndicatorText)
+                            .background(Color.black.opacity(0.3))
+                        
+                        ProgressView(value: psdsVM.prograssScale)
+                        
                     }
                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
                     .IsHidden(condition: psdsVM.IndicatorText != "")

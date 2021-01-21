@@ -48,7 +48,6 @@
 		3F50A7B2253DC61F00C10810 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7B1253DC61F00C10810 /* ViewExtension.swift */; };
 		3F50A7B4253DC64600C10810 /* ColorModeClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7B3253DC64600C10810 /* ColorModeClassifier.swift */; };
 		3F50A7BA253DC76500C10810 /* ColorMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7B9253DC76500C10810 /* ColorMode.swift */; };
-		3F5218182521E89200646F91 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5218172521E89200646F91 /* TestView.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
 		3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F662AF925677D40008F1879 /* TerminalScriptManager.swift */; };
@@ -175,7 +174,6 @@
 		3F50A7B1253DC61F00C10810 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		3F50A7B3253DC64600C10810 /* ColorModeClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorModeClassifier.swift; sourceTree = "<group>"; };
 		3F50A7B9253DC76500C10810 /* ColorMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorMode.swift; sourceTree = "<group>"; };
-		3F5218172521E89200646F91 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
 		3F662AF925677D40008F1879 /* TerminalScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalScriptManager.swift; sourceTree = "<group>"; };
@@ -343,7 +341,6 @@
 				3FD558D025B8111300056C85 /* OneCharPropertyView.swift */,
 				3FE8813F25333D820088A1CD /* StringObjectRow.swift */,
 				3F50A7AD253DC5BA00C10810 /* ImagePropertyView.swift */,
-				3F5218172521E89200646F91 /* TestView.swift */,
 				3FC3DFC625B52FB60060521D /* PsdOperatorView.swift */,
 				3F4D13E32501FB9E008F846B /* ImageView.swift */,
 				3F4D13E525020F22008F846B /* StringLabel.swift */,
@@ -771,7 +768,6 @@
 				3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */,
 				3FABE4E12580DA4C00287086 /* DBViewModel.swift in Sources */,
 				3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */,
-				3F5218182521E89200646F91 /* TestView.swift in Sources */,
 				3F9ED7A52566090100F950BC /* ImageResourceView.swift in Sources */,
 				3F74C9D2251B82DB00DEB5EB /* CGImageExtension.swift in Sources */,
 				3F38DB3E2591AA9300EB6CFB /* ScaleSliderView.swift in Sources */,

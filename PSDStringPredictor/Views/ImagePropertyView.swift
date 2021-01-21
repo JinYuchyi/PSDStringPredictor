@@ -24,7 +24,7 @@ struct ImagePropertyView: View {
                         .frame(width:80, alignment: .topLeading)
                         .foregroundColor(Color.gray)
 //                    psdvm.GetSelectedPsd()?.colorMode
-                    Text(psdvm.GetSelectedPsd()?.colorMode.toString() ?? "" )
+                    Text(psdvm.GetSelectedPsd()?.colorMode == .dark ? "􀆺" : "􀆮" )
                 }
 //                HStack{
 //                    Text("DPI")

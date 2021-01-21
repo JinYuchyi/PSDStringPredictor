@@ -29,7 +29,6 @@ struct PrograssView1: View {
                     RoundedRectangle(cornerRadius: 3)
                         .fill(Color.green)
                         .frame(width: 30, height: 3)
-                        //.scaleEffect(isLoading ? 1.5 : 1)
                         
                         .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
                         .onAppear() {

@@ -406,7 +406,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
             return (Int16(PredictFontSize(character: char, width: (width), height: (height), fontWeight: _weight).rounded()), isPredicted)
         }else{
             isPredicted = -1
-            print("\(char), with width \(width) - height \(height) - weight \(_weight). Found it in DB, size is \(objList[0].fontSize)")
+            //print("\(char), with width \(width) - height \(height) - weight \(_weight). Found it in DB, size is \(objList[0].fontSize)")
             return (objList[0].fontSize, isPredicted)
         }
         

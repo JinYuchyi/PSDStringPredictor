@@ -88,13 +88,13 @@ struct ControlPanel: View {
                 HStack{
                     Button(action: {psdsVM.ProcessForOnePsd()}){
                         Text("Current File")
-                            .frame(minWidth: 187,  maxWidth: .infinity)
+                            .frame(minWidth: 110,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
 
                     Button(action: {psdsVM.ProcessForAll()}){
-                        Text("All")
-                            .frame(minWidth: 27,  maxWidth: .infinity)
+                        Text("All Commited Files")
+                            .frame(minWidth: 110,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
 
@@ -106,15 +106,15 @@ struct ControlPanel: View {
                     //.padding(.top)
                     .frame(width: geo.size.width*0.8, alignment: .leading)
                 HStack{
-                    Button(action: {psdsVM.CreatePSDForOnePSD(_id: stringObjectVM.selectedPSDID, saveToPath: "")}){
+                    Button(action: {psdsVM.CreatePSDForOnePSD(_id: psdsVM.selectedPsdId, saveToPath: "")}){
                         Text("Current File")
-                            .frame(minWidth: 187,  maxWidth: .infinity)
+                            .frame(minWidth: 110,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
 
                     Button(action: {psdsVM.CreatePSDForAll()}){
-                        Text("All")
-                            .frame(minWidth: 27,  maxWidth: .infinity)
+                        Text("All Commited Files")
+                            .frame(minWidth: 110,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
                 }

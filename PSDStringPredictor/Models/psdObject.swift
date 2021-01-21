@@ -135,6 +135,23 @@ struct PSD {
         }
     }
     
+    mutating func SetRect(psdId: Int, objId: UUID, value: CGRect){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.stringRect = value
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.insert(psd!, at: _index!)
+            }
+        }
+    }
+    
     mutating func SetColorMode(psdId: Int, objId: UUID, value: MacColorMode){
         var psd = GetPSDObject(psdId: psdId)
         if psd != nil {

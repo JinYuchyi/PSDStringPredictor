@@ -143,8 +143,10 @@ class PsdsVM: ObservableObject{
         }
     }
     
-    func FetchBGColor(obj: StringObject) -> [Float]{
-        let color1 = pixProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(selectedNSImage.size.height - obj.stringRect.origin.y), img: selectedNSImage.ToCGImage()!)
+    func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
+        let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)
+
+        let color1 = pixProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(targetImg.size.height - obj.stringRect.origin.y), img: targetImg.ToCGImage()!)
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
     
@@ -228,8 +230,6 @@ class PsdsVM: ObservableObject{
                 DispatchQueue.main.async{
                     self.prograssScale = 0
                     self.psdModel.SetStatusForPsd(psdId: psd.id, value: .processed)
-
-                    //self.indicatorTitle = "Correcting strings' position \(index)/\(objs.count)"
                 }
                 c += 1
             }
@@ -277,6 +277,7 @@ class PsdsVM: ObservableObject{
     }
     
     func CreatePSDForOnePSD(_id: Int, saveToPath: String){
+        print("Creating psd for \(_id)")
         guard let obj = psdModel.GetPSDObject(psdId: _id) else {return}
         let psdPath = obj.imageURL.path
         var contentList = [String]()
@@ -338,9 +339,9 @@ class PsdsVM: ObservableObject{
             }else{
                 offsetList.append([0,0])
             }
-            
+            let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: _id)!.imageURL.path)
             fontNameList.append(obj.CalcFontPostScriptName())
-            positionList.append([Int(obj.stringRect.minX.rounded()), Int((selectedNSImage.size.height - obj.stringRect.minY).rounded())])
+            positionList.append([Int(obj.stringRect.minX.rounded()), Int((targetImg.size.height - obj.stringRect.minY).rounded())])
             rectList.append([Float(obj.stringRect.minX), Float(obj.stringRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
             
             //alignment
@@ -351,10 +352,12 @@ class PsdsVM: ObservableObject{
             }
             
             //BGColor
-            let tmpBGColor = FetchBGColor(obj: obj)
+            let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
             bgClolorList.append(tmpBGColor)
         }
-        
+        print("id:\(_id)")
+        print("\(psdPath)")
+        print("\(trackingList)")
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: saveToPath)
         if success == true{
             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!

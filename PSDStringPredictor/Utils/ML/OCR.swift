@@ -133,7 +133,9 @@ class OCR: ObservableObject{
             descent = descent * fontDecentOffsetScale
         }
         
-        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
+        //let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
+        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent , width: obj.stringRect.width, height: obj.stringRect.height - descent)
+
         var tmpObj = StringObject.init(obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
         //tmpObj.stringRect = newStringRect
         return tmpObj
@@ -164,7 +166,7 @@ class OCR: ObservableObject{
         for i in 0..<stringsRects.count{
             DispatchQueue.main.async{
                 psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
-                psdsVM.IndicatorText = "Processing Image \(psdId+1), \(i+1)/\(stringsRects.count) strings"
+                psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
             //print("\(i) - charRects count: \(charRects.count), chars count: \(chars.count)")

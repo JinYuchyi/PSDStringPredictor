@@ -226,5 +226,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         psdsVM.stringIsOn.toggle()
         //print("Toggle")
     }
+    @IBAction func MoveUp(_ sender: Any) {
+        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) else {return}
+        let tmpRect = CGRect(x: lastObj.stringRect.minX, y: lastObj.stringRect.minY + 1, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
+        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
+
+    }
+    @IBAction func MoveDown(_ sender: Any) {
+        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) else {return}
+        let tmpRect = CGRect(x: lastObj.stringRect.minX, y: lastObj.stringRect.minY - 1, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
+        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
+    }
+    @IBAction func MoveLeft(_ sender: Any) {
+        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) else {return}
+        let tmpRect = CGRect(x: lastObj.stringRect.minX - 1, y: lastObj.stringRect.minY, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
+        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
+    }
+    @IBAction func MoveRight(_ sender: Any) {
+        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) else {return}
+        let tmpRect = CGRect(x: lastObj.stringRect.minX + 1, y: lastObj.stringRect.minY, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
+        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
+    }
 }
 

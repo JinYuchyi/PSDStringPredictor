@@ -19,23 +19,34 @@ struct PsdThumbnail: View {
     
     var body: some View {
         ZStack{
+            IDView()
             Image(nsImage: ((psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
 //                .onTapGesture {
 //                    psdListVM.ThumbnailClicked(psdId: id)
 //                    //psdvm.PsdSelected(psdId: id)
 //                }
             StatusView()
+                
+                
+                
         }
+        .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
     
     func StatusView()-> some View{
         LabelView()
-            .frame(width: CGFloat(sizeOfThumbnail), height: CGFloat(sizeOfThumbnail), alignment: .topTrailing)
+            .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .topTrailing)
             .onTapGesture {
                 psdVM.psdStatusTapped(psdId: id)
-            }
+            }.padding(.trailing, 50)
         
         
+    }
+    
+    func IDView() -> some View{
+        Text("ID:\(id)")
+            .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .topLeading)
+            .padding(.leading, 50)
     }
     
     func LabelView() -> some View {
