@@ -67,8 +67,10 @@ for (var i = 0; i < num; i++){
 
     alignName = alignmentList[i]
     
+    padding = 5
+
     if (isParagraphList[i] == true) {
-        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][3]  - offsetList[i][1] / 4)
+        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset , positionList[i][1] - rectList[i][3]  - offsetList[i][1] / 4)
     }else{
         textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1]  - offsetList[i][1] / 4)
     }
@@ -78,9 +80,8 @@ for (var i = 0; i < num; i++){
     setTextAlignment(alignName)
 
     //Create Mask Layers
-    offset = 10
     fillColor = bgColorList[i]
-    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - offset, positionList[i][1] - rectList[i][3] - offset, rectList[i][2] + offset, rectList[i][3] + offset, fillColor)
+    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding , rectList[i][2] + padding * 2, rectList[i][3] + padding*2 + descentOffset[i], fillColor)
 }
                                      
  if (saveToPath != "") {

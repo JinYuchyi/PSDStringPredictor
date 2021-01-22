@@ -25,13 +25,7 @@ struct psdThumbnailList: View {
                         PsdThumbnail(id: psd.id, psdVM: psdsVM)
                             .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
                             .onTapGesture {
-                                //psdsVM.selectedPsdId = psd.id
                                 psdsVM.ThumbnailClicked(psdId: psd.id)
-                                print("tapped \(psd.id), selectedID is \(psdsVM.selectedPsdId)")
-
-                                //ControlVM.ThumbnailClicked(psdId: psd.id)
-                                //imageVM.FetchInfo()
-                                //psdvm.PsdSelected(psdId: id)
                             }
                             .border(psdsVM.selectedPsdId == psd.id ? Color.green : Color.gray.opacity(0.2), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
 

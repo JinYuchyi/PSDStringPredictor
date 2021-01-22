@@ -128,14 +128,16 @@ class PsdsVM: ObservableObject{
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
         let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img, psdId: psdId, psdsVM: self)
         DispatchQueue.main.async{ [self] in
-            var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .fixed}) //Filter all fixed objects
+            var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
             for obj in allStrObjs {
                 if tmpList.ContainsSame(obj) == false {
                     result.append(obj)
+                    
                 }else{
                     print("same")
                 }
             }
+            result += tmpList
             psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
             IndicatorText = ""
             //print("obj count: \(psdModel.GetPSDObject(psdId: psdId)!.stringObjects.count)")
@@ -205,7 +207,6 @@ class PsdsVM: ObservableObject{
         var tmpPsd = GetSelectedPsd()!
         
         for d in resultIDList{
-            //stringObjectListData[psdId]!.removeAll(where: {$0.id == d.key})
             tmpPsd.stringObjects.removeAll(where: {$0.id == d.key})
 
         }
@@ -214,10 +215,6 @@ class PsdsVM: ObservableObject{
         selectedStrIDList.append(resultObj.id)
         psdModel.psdObjects.removeAll(where: {$0.id == psdId})
         psdModel.psdObjects.append(tmpPsd)
-        //updateStringObjectList[psdId]!.append(resultObj.id)
-        
-        
-        
     }
     
     func LoadImage(){
@@ -243,7 +240,6 @@ class PsdsVM: ObservableObject{
                     
                 }
             }
-            //print("psd count: \(psds.psdObjects.count)")
         } else {
             // User clicked on "Cancel"
             return
@@ -342,7 +338,6 @@ class PsdsVM: ObservableObject{
     }
     
     func CreatePSDForOnePSD(_id: Int, saveToPath: String){
-        print("Creating psd for \(_id)")
         guard let obj = psdModel.GetPSDObject(psdId: _id) else {return}
         let psdPath = obj.imageURL.path
         var contentList = [String]()
@@ -356,9 +351,9 @@ class PsdsVM: ObservableObject{
         var rectList = [[Float]]()
         var bgClolorList = [[Float]]()
         var isParagraphList = [Bool]()
+        var descentOffset : [Float] =  []
         var updateList = psdModel.GetPSDObject(psdId: _id)!.stringObjects.filter{$0.status != .ignored}
         var saveToPath = saveToPath
-        
         
         //        for (key,value) in stringObjectStatusDict[_id]!{
         //            if  value == 2{
@@ -407,7 +402,9 @@ class PsdsVM: ObservableObject{
             let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: _id)!.imageURL.path)
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((targetImg.size.height - obj.stringRect.minY).rounded())])
-            //let descent = FontUtils.FetchStringDescent(content: obj.content, fontSize: obj.fontSize)
+            //Calc Descent
+            let tmpDesc = Float(FontUtils.FetchStringDescent(content: obj.content, fontSize: obj.fontSize))
+            descentOffset.append(tmpDesc)
             rectList.append([Float(obj.stringRect.minX), Float(obj.stringRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
             
             //alignment
@@ -421,10 +418,9 @@ class PsdsVM: ObservableObject{
             let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
             bgClolorList.append(tmpBGColor)
         }
-        print("id:\(_id)")
-        print("\(psdPath)")
-        print("\(trackingList)")
-        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: saveToPath)
+
+        let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: saveToPath , descentOffset: descentOffset)
+        
         if success == true{
             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
             let cmd = "open " + jsPath + "  -a '\(settingViewModel.PSPath)'"

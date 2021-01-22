@@ -18,13 +18,13 @@ struct LabelsOnImage: View {
     var body: some View {
         ZStack{
             
-            ForEach((psdsVM.GetSelectedPsd()?.stringObjects.filter{$0.status != StringObjectStatus.ignored}) ?? [], id:\.id){ obj in
+            ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
                 StringLabel(id:obj.id, psdsVM: psdsVM )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
                                     psdsVM.selectedStrIDList.append(obj.id)
                                     psdsVM.selectedStrIDList.removeAll(where: {$0 != obj.id})
-                                    print("\(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: obj.id)?.content)")
+                                    //print("\(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: obj.id)?.content)")
                                 })
                 )
             }

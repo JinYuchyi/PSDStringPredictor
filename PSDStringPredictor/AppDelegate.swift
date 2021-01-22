@@ -172,7 +172,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // 应用警示框
         let alert = NSAlert()
         alert.addButton(withTitle: "OK")
-        //alert.messageText = "Developer"
+        alert.messageText = "DTP Asia"
+
+        
         alert.informativeText = "yuqi_jin@apple.com"
         alert.beginSheetModal(for: NSApp.mainWindow!, completionHandler: nil)
     }

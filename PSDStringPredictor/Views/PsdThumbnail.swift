@@ -21,14 +21,7 @@ struct PsdThumbnail: View {
         ZStack{
             IDView()
             Image(nsImage: ((psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
-//                .onTapGesture {
-//                    psdListVM.ThumbnailClicked(psdId: id)
-//                    //psdvm.PsdSelected(psdId: id)
-//                }
             StatusView()
-                
-                
-                
         }
         .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }

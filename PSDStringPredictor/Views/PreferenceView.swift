@@ -32,28 +32,28 @@ struct SettingsView: View {
     
     var options: some View {
         VStack{
-            HStack{
-                
-                Text("Debug Mode")
-                    .frame(width: 100, alignment: .leading)
-                Picker(selection: $debugMode, label: Text("")){
-                    ForEach(0..<settingsVM.debugItems.count, id: \.self) {
-                        Text(settingsVM.debugItems[$0])
-                    }
-                }
-                .frame(width: 200, alignment: .leading)
-            }
-            
-            HStack{
-                Text("Check Load Image DPI")
-                    .frame(width: 100, alignment: .leading)
-                Picker(selection: $DPICheck, label: Text("")){
-                    ForEach(0..<settingsVM.checkDPIItems.count, id: \.self) {
-                        Text(settingsVM.checkDPIItems[$0])
-                    }
-                }
-                .frame(width: 200, alignment: .leading)
-            }
+//            HStack{
+//
+//                Text("Debug Mode")
+//                    .frame(width: 100, alignment: .leading)
+//                Picker(selection: $debugMode, label: Text("")){
+//                    ForEach(0..<settingsVM.debugItems.count, id: \.self) {
+//                        Text(settingsVM.debugItems[$0])
+//                    }
+//                }
+//                .frame(width: 200, alignment: .leading)
+//            }
+//
+//            HStack{
+//                Text("Check Load Image DPI")
+//                    .frame(width: 100, alignment: .leading)
+//                Picker(selection: $DPICheck, label: Text("")){
+//                    ForEach(0..<settingsVM.checkDPIItems.count, id: \.self) {
+//                        Text(settingsVM.checkDPIItems[$0])
+//                    }
+//                }
+//                .frame(width: 200, alignment: .leading)
+//            }
             
             HStack{
                 Text("Photoshop Path")
@@ -64,7 +64,7 @@ struct SettingsView: View {
             }
             
         }
-        .frame(width: 600, height: 800, alignment: .top)
+        .frame(alignment: .top)
     }
     
     var controls: some View{
