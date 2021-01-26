@@ -90,6 +90,64 @@ struct PSD {
         return psdObjects.first(where: {$0.id == psdId})
     }
     
+<<<<<<< Updated upstream
+=======
+    func ConstellateJsonString(relatedDataJsonObject: RelatedDataJsonObject) -> String{
+        var psdObjDictList: [PsdJsonObject] = []
+        for _psd in psdObjects{
+            var strObjDictList : [strObjJsonObject] = []
+            for _strObj in _psd.stringObjects {
+                
+                let strObj = strObjJsonObject.init(
+                    id: _strObj.id,
+                    content: _strObj.content,
+                    tracking: _strObj.tracking,
+                    fontSize: _strObj.fontSize,
+                    fontWeight: _strObj.fontWeight,
+                    stringRect: _strObj.stringRect,
+                    color: _strObj.color.toArray(),
+                    charArray: _strObj.charArray.map({String($0)}),
+                    charRects: _strObj.charRects,
+                    charSizeList: _strObj.charSizeList,
+                    charImageList: _strObj.charImageList.map({$0.toData()}),
+                    charFontWeightList: _strObj.charFontWeightList,
+                    isPredictedList: _strObj.isPredictedList,
+                    colorMode: _strObj.colorMode.rawValue,
+                    charColorModeList: _strObj.charColorModeList,
+                    FontName: _strObj.FontName,
+                    alignment: _strObj.alignment.rawValue,
+                    status: _strObj.status.rawValue,
+                    isParagraph: _strObj.isParagraph,
+                    colorPixel: _strObj.colorPixel.toData()
+                )
+              
+                strObjDictList.append(strObj)
+
+            }
+            //psd
+            let psdObj = PsdJsonObject.init(
+                id: _psd.id,
+                stringObjects: strObjDictList,
+                imageURL: _psd.imageURL,
+                thumbnail: _psd.thumbnail.pngData!,
+                colorMode: _psd.colorMode.rawValue,
+                dpi: _psd.dpi,
+                status: _psd.status.rawValue)
+   
+            
+            psdObjDictList.append(psdObj)
+        }
+        
+    
+        let jsonObj = JsonObject(PsdJsonObjectList: psdObjDictList, relatedDataJsonObject: relatedDataJsonObject)
+        let encoder = JSONEncoder()
+        let jsonData = try? encoder.encode(jsonObj)
+        let jsonString = NSString(data: jsonData!, encoding: String.Encoding.utf8.rawValue)! as String
+
+        return jsonString
+    }
+    
+>>>>>>> Stashed changes
     mutating func SetStatusForString(psdId: Int, objId: UUID, value: StringObjectStatus){
         var psd = GetPSDObject(psdId: psdId)
         if psd != nil {
@@ -253,6 +311,22 @@ struct PSD {
             psdObjects.removeAll(where: {$0.id == tmpObj.id})
             psdObjects.insert(tmpObj, at: _index!)
         }
+    }
+    
+    mutating func LoadPsdJsonObject(jsonObject: JsonObject){
+        var psdObjList: [PSDObject] = []
+        for psdJ in jsonObject.PsdJsonObjectList{
+            var tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL)
+            //var strObjList: [StringObject] = []
+            for strJ in psdJ.stringObjects{
+                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: strJ.charImageList, stringRect: strJ.stringRect, color: strJ.color, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.FontName, alignment: strJ.alignment, status: strJ.status)
+                tmpPsd.stringObjects.append(tmpStrObj)
+            }
+            psdObjList.append(tmpPsd)
+        }
+        //Clean original
+        psdObjects.removeAll()
+        psdObjects = psdObjList
     }
     
 }

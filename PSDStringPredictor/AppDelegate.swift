@@ -241,5 +241,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let tmpRect = CGRect(x: lastObj.stringRect.minX + 1, y: lastObj.stringRect.minY, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
         psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
     }
+<<<<<<< Updated upstream
+=======
+    @IBAction func SaveDocument(_ sender: Any) {
+        psdsVM.SaveDocument()
+    }
+    @IBAction func OpenDocument(_ sender: Any) {
+        psdsVM.OpenDocument()
+    }
+>>>>>>> Stashed changes
 }
 

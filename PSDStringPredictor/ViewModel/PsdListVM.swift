@@ -31,7 +31,13 @@ class PsdsVM: ObservableObject{
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[CGRect]]  = [:]
     @Published var stringIsOn: Bool = true
+<<<<<<< Updated upstream
     //@Published var totalStrCountToProcess: Int = 0
+=======
+    
+    //Json
+    //var psdJDict : [String: Any] = [:]
+>>>>>>> Stashed changes
     
     let imageUtil = ImageUtil()
     let pixProcess = PixelProcess()
@@ -594,6 +600,64 @@ class PsdsVM: ObservableObject{
         
     }
     
+<<<<<<< Updated upstream
+=======
+    func SaveDocument(){
+        let relatedData = RelatedDataJsonObject.init(selectedPsdId: selectedPsdId, gammaDict: gammaDict, expDict: expDict, DragOffsetDict: DragOffsetDict, selectedStrIDList: selectedStrIDList, maskDict: maskDict, stringIsOn: stringIsOn)
+        let str = psdModel.ConstellateJsonString(relatedDataJsonObject: relatedData)
+        let panel = NSSavePanel()
+        panel.nameFieldLabel = "Save File To:"
+        panel.nameFieldStringValue = "filename.stringlayers"
+        panel.canCreateDirectories = true
+        panel.begin { response in
+            if response == NSApplication.ModalResponse.OK, let fileUrl = panel.url {
+                do {
+                    try str.write(to: fileUrl, atomically: false, encoding: .utf8)
+                }
+                catch {/* error handling here */}
+            }
+        }
+    }
+    
+    
+    func OpenDocument(){
+        let panel = NSOpenPanel()
+        panel.allowsMultipleSelection = false
+        panel.allowedFileTypes = ["stringlayers"]
+        
+        if (panel.runModal() ==  NSApplication.ModalResponse.OK) {
+            let url = panel.url!
+            let decoder = JSONDecoder()
+            guard let data = try? Data(contentsOf: url),
+                  let json = try? decoder.decode(JsonObject.self, from: data)
+            
+            else {
+                return
+            }
+            
+            DragOffsetDict = json.relatedDataJsonObject.DragOffsetDict
+            expDict = json.relatedDataJsonObject.expDict
+            gammaDict = json.relatedDataJsonObject.gammaDict
+            maskDict = json.relatedDataJsonObject.maskDict
+            selectedPsdId = json.relatedDataJsonObject.selectedPsdId
+            selectedStrIDList = json.relatedDataJsonObject.selectedStrIDList
+            stringIsOn = json.relatedDataJsonObject.stringIsOn
+            
+//            //Load NSImage
+//            let targetUrl = GetSelectedPsd()?.imageURL
+//            if FileManager.default.fileExists(atPath: targetUrl!.path) == true {
+//                selectedNSImage = NSImage.init(contentsOf: targetUrl!)!
+//            }
+//            //Process Image
+//            UpdateProcessedImage(psdId: selectedPsdId)
+            
+            psdModel.LoadPsdJsonObject(jsonObject: json)
+            print(psdModel.psdObjects[0].imageURL.path)
+            
+        }
+    }
+    
+>>>>>>> Stashed changes
     //TODO:
     func alignSelectionLeft(){
         

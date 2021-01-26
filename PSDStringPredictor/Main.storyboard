@@ -68,9 +68,9 @@
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open…" hidden="YES" enabled="NO" keyEquivalent="o" id="IAo-SY-fd9">
+                                        <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
-                                                <action selector="LoadFile:" target="Voe-Tx-rLC" id="mpA-mP-I9N"/>
+                                                <action selector="OpenDocument:" target="Voe-Tx-rLC" id="JRV-P3-UUb"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Load Image…" keyEquivalent="l" id="Kkc-12-wzS">

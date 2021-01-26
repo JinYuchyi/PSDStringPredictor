@@ -150,9 +150,36 @@ struct StringObject : Identifiable, Equatable, Hashable{
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
         self.tracking = FetchTrackingFromDB(self.fontSize).0
+<<<<<<< Updated upstream
         self.trackingPS = FetchTrackingFromDB(self.fontSize).1
+=======
+>>>>>>> Stashed changes
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
+    }
+    
+    init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [Data], stringRect: CGRect, color: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
+        
+        self.id = id
+        self.content = content
+        self.tracking = tracking
+        self.fontSize = fontSize
+        self.colorMode = MacColorMode(rawValue: colorMode)!
+        self.fontWeight = fontWeight
+        self.charImageList = charImageList.toCIImageList()
+        self.stringRect = stringRect
+        self.color = color.toCGColor()
+        self.charArray = charArray.map({Array($0)[0]})
+        self.charRects = charRacts
+        self.charSizeList = charSizeList
+        self.charFontWeightList = charFontWeightList
+        self.charColorModeList = charColorModeList
+        self.isPredictedList = isPredictedList
+        self.FontName = fontName
+        self.alignment = StringAlignment.init(rawValue: alignment)!
+        self.status = StringObjectStatus.init(rawValue: status)!
+        
+
     }
     
 //    mutating func ToggleColorMode(){

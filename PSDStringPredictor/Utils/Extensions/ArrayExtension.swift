@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreImage
 
 //protocol P {}
 //extension Int: P {}
@@ -68,6 +69,24 @@ extension Array where Element == Character {
         }
         return result
     }
-    
-   
+}
+
+extension Array where Element == Data {
+    func toCIImageList()-> [CIImage] {
+        var result: [CIImage] = []
+        for c in self{
+            if c.isEmpty == false{
+                result.append(CIImage.init(data: c)!)
+            }else{
+                result.append(CIImage.init())
+            }
+        }
+        return result
+    }
+}
+
+extension Array where Element == CGFloat {
+    func toCGColor()-> CGColor {
+        return CGColor.init(srgbRed: self[0], green: self[1], blue: self[2], alpha: self[3])
+    }
 }
