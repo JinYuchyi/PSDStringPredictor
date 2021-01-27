@@ -79,6 +79,10 @@ extension CIImage{
         }
     }
     
+    func toData()-> Data{
+        return self.ToNSImage().pngData ?? Data.init()
+    }
+    
    
 
 }

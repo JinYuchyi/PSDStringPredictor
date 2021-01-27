@@ -109,7 +109,7 @@ class OCR: ObservableObject{
         let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
         //let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y  , width: obj.stringRect.width, height: obj.stringRect.height )
 
-        var tmpObj = StringObject.init(obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList, obj.confidence)
+        var tmpObj = StringObject.init(obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList)
         //tmpObj.stringRect = newStringRect
         return tmpObj
     }
@@ -142,7 +142,7 @@ class OCR: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            var newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects), CGFloat(results_fast[i].confidence))
+            var newStrObj = StringObject(strs[i], stringsRects[i],chars, charRects, charImageList: ciImage.GetCroppedImages(rects: charRects))
             newStrObj = DeleteDecent(obj: newStrObj)
             strobjs.append(newStrObj) 
         }

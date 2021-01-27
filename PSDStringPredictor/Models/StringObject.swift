@@ -46,7 +46,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
             lhs.id == rhs.id &&
             lhs.content == rhs.content &&
             lhs.tracking == rhs.tracking &&
-            lhs.trackingPS == rhs.trackingPS &&
+//            lhs.trackingPS == rhs.trackingPS &&
             lhs.fontSize == rhs.fontSize &&
             lhs.fontWeight == rhs.fontWeight &&
             lhs.stringRect == rhs.stringRect &&
@@ -65,7 +65,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var content: String
     //var position: [CGFloat]
     var tracking: CGFloat
-    var trackingPS: Int16
+    //var trackingPS: Int16
     var fontSize: CGFloat
     var fontWeight:  String
     var stringRect: CGRect
@@ -78,7 +78,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var charFontWeightList: [String]
     var isPredictedList: [Int]
     //var isForbidden: Bool
-    var confidence: CGFloat
+//    var confidence: CGFloat
     var colorMode: MacColorMode
     var charColorModeList: [Int]
     var FontName: String
@@ -86,8 +86,8 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
     var colorPixel: CIImage = CIImage.init()
-    let ocr: OCR = OCR()
-    let fontUtils = FontUtils()
+//    let ocr: OCR = OCR()
+//    let fontUtils = FontUtils()
 
     init(){
         self.id = UUID()
@@ -105,10 +105,10 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.charRects = [CGRect()]
         self.charSizeList = [0]
         self.charFontWeightList = ["Regular"]
-        self.confidence = 0
+  //      self.confidence = 0
         //self.isForbidden = false
         self.charColorModeList = [0]
-        self.trackingPS = 0
+//        self.trackingPS = 0
         self.isPredictedList = [0]
         self.FontName = ""
         self.alignment = .left
@@ -119,7 +119,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.color = CalcColor()
     }
     
-    init(_ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage], _ confidence: CGFloat){
+    init(_ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage]){
         
         id = UUID()
         self.content = content
@@ -135,10 +135,10 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.charRects = charRacts
         self.charSizeList = []
         self.charFontWeightList = []
-        self.confidence = confidence
+ //       self.confidence = confidence
         //self.isForbidden = false
         self.charColorModeList = []
-        self.trackingPS = 0
+        //self.trackingPS = 0
         self.isPredictedList = []
         self.FontName = ""
         self.alignment = .left
@@ -150,10 +150,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
         self.tracking = FetchTrackingFromDB(self.fontSize).0
-<<<<<<< Updated upstream
-        self.trackingPS = FetchTrackingFromDB(self.fontSize).1
-=======
->>>>>>> Stashed changes
+
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
     }

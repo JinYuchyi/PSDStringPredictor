@@ -73,9 +73,9 @@
                                                 <action selector="OpenDocument:" target="Voe-Tx-rLC" id="JRV-P3-UUb"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Load Image…" keyEquivalent="l" id="Kkc-12-wzS">
+                                        <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
                                             <connections>
-                                                <action selector="LoadImage:" target="Voe-Tx-rLC" id="xb3-Kz-V9M"/>
+                                                <action selector="SaveDocument:" target="Voe-Tx-rLC" id="IjK-CF-Xsg"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open Recent" hidden="YES" enabled="NO" id="tXI-mr-wws">
@@ -97,9 +97,9 @@
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save…" enabled="NO" keyEquivalent="s" id="pxx-59-PXV">
+                                        <menuItem title="Load Image…" keyEquivalent="l" id="Kkc-12-wzS">
                                             <connections>
-                                                <action selector="saveDocument:" target="Ady-hI-5gd" id="teZ-XB-qJY"/>
+                                                <action selector="LoadImage:" target="Voe-Tx-rLC" id="xb3-Kz-V9M"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Save As…" enabled="NO" keyEquivalent="S" id="Bw7-FT-i3A">

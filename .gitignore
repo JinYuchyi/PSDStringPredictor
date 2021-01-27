@@ -27,3 +27,4 @@ PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcschemes/xcschemem
 PSDStringPredictor.xcodeproj/xcuserdata/ipdesign.xcuserdatad/xcschemes/xcschememanagement.plist.orig
 .DS_Store
 TestImages/	
+*.pbxproj

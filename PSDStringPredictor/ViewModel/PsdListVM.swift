@@ -31,13 +31,7 @@ class PsdsVM: ObservableObject{
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[CGRect]]  = [:]
     @Published var stringIsOn: Bool = true
-<<<<<<< Updated upstream
-    //@Published var totalStrCountToProcess: Int = 0
-=======
-    
-    //Json
-    //var psdJDict : [String: Any] = [:]
->>>>>>> Stashed changes
+
     
     let imageUtil = ImageUtil()
     let pixProcess = PixelProcess()
@@ -600,8 +594,7 @@ class PsdsVM: ObservableObject{
         
     }
     
-<<<<<<< Updated upstream
-=======
+
     func SaveDocument(){
         let relatedData = RelatedDataJsonObject.init(selectedPsdId: selectedPsdId, gammaDict: gammaDict, expDict: expDict, DragOffsetDict: DragOffsetDict, selectedStrIDList: selectedStrIDList, maskDict: maskDict, stringIsOn: stringIsOn)
         let str = psdModel.ConstellateJsonString(relatedDataJsonObject: relatedData)
@@ -643,21 +636,19 @@ class PsdsVM: ObservableObject{
             selectedStrIDList = json.relatedDataJsonObject.selectedStrIDList
             stringIsOn = json.relatedDataJsonObject.stringIsOn
             
-//            //Load NSImage
-//            let targetUrl = GetSelectedPsd()?.imageURL
-//            if FileManager.default.fileExists(atPath: targetUrl!.path) == true {
-//                selectedNSImage = NSImage.init(contentsOf: targetUrl!)!
-//            }
-//            //Process Image
-//            UpdateProcessedImage(psdId: selectedPsdId)
-            
             psdModel.LoadPsdJsonObject(jsonObject: json)
-            print(psdModel.psdObjects[0].imageURL.path)
+            
+            //Load NSImage
+            let targetUrl = psdModel.GetPSDObject(psdId: selectedPsdId)?.imageURL
+            if FileManager.default.fileExists(atPath: targetUrl!.path) == true {
+                selectedNSImage = NSImage.init(contentsOf: targetUrl!)!
+            }
+            //Process Image
+            UpdateProcessedImage(psdId: selectedPsdId)
             
         }
     }
     
->>>>>>> Stashed changes
     //TODO:
     func alignSelectionLeft(){
         

@@ -13,16 +13,16 @@ import SwiftUI
 
 
 enum MacColorMode: String {
-    case light = "􀆮"
-    case dark = "􀆺"
+    case light = "light"
+    case dark = "dark"
 }
 
-enum StringObjectStatus {
+enum StringObjectStatus: String, Codable {
     case fixed, ignored, normal
 }
 
-enum PsdStatus {
-    case normal, processed, commited
+enum PsdStatus: String, Codable {
+    case normal = "normal", processed = "processed", commited = "commited"
 }
 
 
@@ -35,6 +35,14 @@ struct PSDObject: Identifiable{
     var dpi: Int = 0
     var status: PsdStatus = .normal
     
+    fileprivate init(id: Int, imageURL: URL, thumbnail: NSImage, colorMode: MacColorMode, dpi: Int, status: PsdStatus){
+        self.id = id
+        self.imageURL = imageURL
+        self.colorMode = colorMode
+        self.thumbnail = thumbnail
+        self.dpi = dpi
+        self.status = status
+    }
     
     fileprivate init(id: Int, imageURL: URL){
         self.id = id
@@ -90,8 +98,7 @@ struct PSD {
         return psdObjects.first(where: {$0.id == psdId})
     }
     
-<<<<<<< Updated upstream
-=======
+
     func ConstellateJsonString(relatedDataJsonObject: RelatedDataJsonObject) -> String{
         var psdObjDictList: [PsdJsonObject] = []
         for _psd in psdObjects{
@@ -114,7 +121,7 @@ struct PSD {
                     isPredictedList: _strObj.isPredictedList,
                     colorMode: _strObj.colorMode.rawValue,
                     charColorModeList: _strObj.charColorModeList,
-                    FontName: _strObj.FontName,
+                    fontName: _strObj.FontName,
                     alignment: _strObj.alignment.rawValue,
                     status: _strObj.status.rawValue,
                     isParagraph: _strObj.isParagraph,
@@ -147,7 +154,6 @@ struct PSD {
         return jsonString
     }
     
->>>>>>> Stashed changes
     mutating func SetStatusForString(psdId: Int, objId: UUID, value: StringObjectStatus){
         var psd = GetPSDObject(psdId: psdId)
         if psd != nil {
@@ -316,14 +322,16 @@ struct PSD {
     mutating func LoadPsdJsonObject(jsonObject: JsonObject){
         var psdObjList: [PSDObject] = []
         for psdJ in jsonObject.PsdJsonObjectList{
-            var tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL)
+            var tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL, thumbnail: NSImage.init(data: psdJ.thumbnail) ?? NSImage.init(), colorMode: MacColorMode.init(rawValue: psdJ.colorMode)!, dpi: psdJ.dpi, status: PsdStatus.init(rawValue: psdJ.status)!)
             //var strObjList: [StringObject] = []
             for strJ in psdJ.stringObjects{
-                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: strJ.charImageList, stringRect: strJ.stringRect, color: strJ.color, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.FontName, alignment: strJ.alignment, status: strJ.status)
+                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: strJ.charImageList, stringRect: strJ.stringRect, color: strJ.color, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)
                 tmpPsd.stringObjects.append(tmpStrObj)
             }
             psdObjList.append(tmpPsd)
         }
+
+        
         //Clean original
         psdObjects.removeAll()
         psdObjects = psdObjList

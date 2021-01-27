@@ -60,4 +60,8 @@ extension CGColor: Comparable{
 //        let str = String(self.components[0]!) + "," + String(self.components[1]!) + "," + String(self.components[2]!)
 //        return str
     }
+    
+    func toArray()->[CGFloat]{
+        return [self.components![0],  self.components![1],  self.components![2],  self.components![3]]
+    }
 }

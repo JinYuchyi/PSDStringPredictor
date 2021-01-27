@@ -53,7 +53,7 @@ struct strObjJsonObject: Codable{
     //var confidence: CGFloat
     var colorMode: String
     var charColorModeList: [Int]
-    var FontName: String
+    var fontName: String
     var alignment: String
     var status: String
     var isParagraph: Bool

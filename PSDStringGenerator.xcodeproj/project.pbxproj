@@ -127,6 +127,7 @@
 		3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FF51B5A259ADF2800D11575 /* charBounds.csv */; };
 		3FF51B9D25A2C65500D11575 /* Main.js in Resources */ = {isa = PBXBuildFile; fileRef = 3FF51B9B25A2C65500D11575 /* Main.js */; };
 		3FF51B9E25A2C65500D11575 /* Functions.js in Resources */ = {isa = PBXBuildFile; fileRef = 3FF51B9C25A2C65500D11575 /* Functions.js */; };
+		3FF933CF25C0F84100CDC3D2 /* psdDataJsonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF933CE25C0F84100CDC3D2 /* psdDataJsonModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -252,6 +253,7 @@
 		3FF51B5A259ADF2800D11575 /* charBounds.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = charBounds.csv; sourceTree = "<group>"; };
 		3FF51B9B25A2C65500D11575 /* Main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Main.js; path = PSDStringPredictor/Resources/JS/Main.js; sourceTree = SOURCE_ROOT; };
 		3FF51B9C25A2C65500D11575 /* Functions.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Functions.js; path = PSDStringPredictor/Resources/JS/Functions.js; sourceTree = SOURCE_ROOT; };
+		3FF933CE25C0F84100CDC3D2 /* psdDataJsonModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = psdDataJsonModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +319,7 @@
 				3F9B3A7D250F2855003B652C /* DataStore.swift */,
 				3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */,
 				3FB59B1325AAB5CD000FB170 /* PsdsUtil.swift */,
+				3FF933CE25C0F84100CDC3D2 /* psdDataJsonModel.swift */,
 				3FA49B382508B0D40093EBD2 /* LogObject.swift */,
 				3F9C395F256F8A9800F686A7 /* psdObject.swift */,
 				3F56E3E62506042D00E64337 /* StringObject.swift */,
@@ -770,6 +773,7 @@
 				3F3EFFA8253596140047E4E5 /* CharDataManager.swift in Sources */,
 				3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */,
 				3F9B3A82250F791B003B652C /* ImageProcessControlView.swift in Sources */,
+				3FF933CF25C0F84100CDC3D2 /* psdDataJsonModel.swift in Sources */,
 				3F38DB3B2591A65E00EB6CFB /* KeyboardManager.swift in Sources */,
 				3F44C6482570F42500E438CA /* CGColorExtension.swift in Sources */,
 				3F44C63D2570D60400E438CA /* CharColorMode.swift in Sources */,
