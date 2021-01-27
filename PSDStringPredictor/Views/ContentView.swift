@@ -39,19 +39,7 @@ struct ContentView: View  {
     
     
     fileprivate func LeftViewGroup() -> some View {
-       // VStack{
-//            Button(action: {imageProcessViewModel.LoadImageBtnPressed()}){
-//                Text("Load Image")
-//                //.frame(minWidth: 250,  maxWidth: .infinity)
-//            }e
-//            .frame(width: 300, alignment: .center)
-//            .padding()
-//
-//            Divider()
-            
-//            psdPagesView()
-//                .frame(width: 300, alignment: .center)
-        //}
+
         VStack(alignment: .center){
             //PrograssView(psdsVM: psdsVM)
             psdThumbnailList(psdsVM: psdsVM)
@@ -60,7 +48,6 @@ struct ContentView: View  {
                 .padding()
         }
         
-        //.frame(width: 300, alignment: .center)
     }
     
     var MidViewGroup: some View {

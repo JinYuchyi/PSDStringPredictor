@@ -15,7 +15,6 @@ class PsdsVM: ObservableObject{
     
     @Published var psdModel: PSD //refacting
     
-    
     @Published var selectedPsdId: Int  //refacting
     @Published var gammaDict: [Int:CGFloat]//refacting
     @Published var expDict: [Int:CGFloat]//refacting
@@ -30,6 +29,7 @@ class PsdsVM: ObservableObject{
     @Published var IndicatorText: String = ""
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[CGRect]]  = [:]
+    @Published var maskColorDict: [Int:[CGColor]]  = [:]
     @Published var stringIsOn: Bool = true
 
     

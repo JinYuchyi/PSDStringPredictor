@@ -11,11 +11,11 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="PSD StringGenerator" state="mixed" id="1Xt-HY-uBw">
+                            <menuItem title="PSD String Layers Generator" state="mixed" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="PSD StringGenerator" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="PSD String Layers Generator" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About PSD StringGenerator" id="5kV-Vb-QxS" userLabel="About StringLayersGenerator">
+                                        <menuItem title="About" id="5kV-Vb-QxS" userLabel="About StringLayersGenerator">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="AboutStringLayerGenerator:" target="Voe-Tx-rLC" id="y2K-Mh-Gx1"/>
@@ -27,7 +27,17 @@
                                                 <action selector="LoadPreference:" target="Voe-Tx-rLC" id="s66-7K-tI9"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Check For Update..." keyEquivalent="o" id="mUC-YJ-lQa">
+                                            <connections>
+                                                <action selector="checkForUpdates:" target="7g0-I2-pwP" id="hkL-jy-Im3"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" hidden="YES" id="wFC-TO-SCJ"/>
+                                        <menuItem title="File a Radar..." keyEquivalent="o" id="Auj-xK-QzX">
+                                            <connections>
+                                                <action selector="OpenRadarURL:" target="Voe-Tx-rLC" id="OtX-jG-Vx3"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Services" hidden="YES" enabled="NO" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
@@ -50,7 +60,7 @@
                                                 <action selector="unhideAllApplications:" target="Ady-hI-5gd" id="Dhg-Le-xox"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" hidden="YES" id="kCx-OE-vgT"/>
+                                        <menuItem isSeparatorItem="YES" enabled="YES" id="kCx-OE-vgT"/>
                                         <menuItem title="Quit StringGenerator" keyEquivalent="q" id="4sb-4s-VLi" userLabel="Quit StringLayersGenerator">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
@@ -63,17 +73,17 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="New" enabled="NO" keyEquivalent="n" id="Was-JA-tGl">
+                                        <menuItem title="New" hidden="YES" enabled="NO" keyEquivalent="n" id="Was-JA-tGl">
                                             <connections>
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
+                                        <menuItem title="Open File…" keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="OpenDocument:" target="Voe-Tx-rLC" id="JRV-P3-UUb"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
+                                        <menuItem title="Save File…" keyEquivalent="s" id="pxx-59-PXV">
                                             <connections>
                                                 <action selector="SaveDocument:" target="Voe-Tx-rLC" id="IjK-CF-Xsg"/>
                                             </connections>
@@ -92,17 +102,12 @@
                                             </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                                        <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
-                                            <connections>
-                                                <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Load Image…" keyEquivalent="l" id="Kkc-12-wzS">
+                                        <menuItem title="Load Images…" keyEquivalent="l" id="Kkc-12-wzS">
                                             <connections>
                                                 <action selector="LoadImage:" target="Voe-Tx-rLC" id="xb3-Kz-V9M"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save As…" enabled="NO" keyEquivalent="S" id="Bw7-FT-i3A">
+                                        <menuItem title="Save As…" hidden="YES" enabled="NO" keyEquivalent="S" id="Bw7-FT-i3A">
                                             <connections>
                                                 <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="mDf-zr-I0C"/>
                                             </connections>
@@ -113,6 +118,11 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
+                                        <menuItem title="Close" hidden="YES" enabled="NO" keyEquivalent="w" id="DVo-aG-piG">
+                                            <connections>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Page Setup…" hidden="YES" enabled="NO" keyEquivalent="P" id="qIS-W8-SiK">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
@@ -849,6 +859,7 @@
                     </connections>
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PSDStringGenerator" customModuleProvider="target"/>
+                <customObject id="7g0-I2-pwP" customClass="SUUpdater"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

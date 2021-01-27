@@ -1,0 +1,6 @@
+framework module Pods_PSDStringGenerator {
+  umbrella header "Pods-PSDStringGenerator-umbrella.h"
+
+  export *
+  module * { export * }
+}

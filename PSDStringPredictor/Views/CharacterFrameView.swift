@@ -24,7 +24,6 @@ struct CharacterFrameView: View {
     
     
     fileprivate func CharFrameView() -> some View{
-        //        if  ShowDefault() == false {
         
         ZStack{
             ForEach(rectList, id:\.self){item in
@@ -43,12 +42,7 @@ struct CharacterFrameView: View {
             }
         }
         .onAppear(perform: {rectList = GetRectArray()})
-        
-        
-        //        }else{
-        //            Text("")
-        //        }
-        //        return EmptyView()
+
     }
     
     var body: some View {
@@ -76,19 +70,29 @@ struct CharacterFrameView: View {
     }
     
     func Tapped(rect: CGRect){
-        //print("Tapped")
+        //GetTapArea bg color
+        var theColor: CGColor = CGColor.init(srgbRed: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        for str in psdVM.GetSelectedPsd()!.stringObjects{
+            if rect.intersects(str.stringRect) == true {
+                theColor = str.bgColor
+            }
+        }
+        
         if psdVM.maskDict[psdVM.selectedPsdId] == nil {
             psdVM.maskDict[psdVM.selectedPsdId] = []
+            psdVM.maskColorDict[psdVM.selectedPsdId] = []
         }
         let contain = psdVM.maskDict[psdVM.selectedPsdId]!.contains(rect)
         //print(contain)
         if contain == false {
             psdVM.maskDict[psdVM.selectedPsdId]!.append(rect)
-            //isMasked = true
+            psdVM.maskColorDict[psdVM.selectedPsdId]!.append(theColor)
             psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }else{
             //Delete rect in list
-            psdVM.maskDict[psdVM.selectedPsdId]!.removeAll(where: {$0 == rect})
+            let _index = psdVM.maskDict[psdVM.selectedPsdId]!.lastIndex(where: {$0 == rect})
+            psdVM.maskDict[psdVM.selectedPsdId]!.remove(at: _index!)
+            psdVM.maskColorDict[psdVM.selectedPsdId]!.remove(at: _index!)
             //isMasked = false
             psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }
@@ -97,16 +101,7 @@ struct CharacterFrameView: View {
             //AddCharRectMask()
             psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }
-        
-//        if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 1{
-//            for _ in psdVM.maskDict{
-//                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
-//            }
-//        }else if psdViewModel.psdColorMode[psdViewModel.selectedPSDID]  == 2 {
-//            for _ in psdVM.maskDict{
-//                psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
-//            }
-//        }
+
         
     }
     

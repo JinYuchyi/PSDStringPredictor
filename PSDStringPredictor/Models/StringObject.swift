@@ -71,6 +71,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var stringRect: CGRect
     //var observation : VNRecognizedTextObservation
     var color: CGColor
+    var bgColor: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
     var charArray: [Character]
     var charRects: [CGRect]
     var charSizeList: [Int16]
@@ -166,6 +167,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.charImageList = charImageList.toCIImageList()
         self.stringRect = stringRect
         self.color = color.toCGColor()
+        
         self.charArray = charArray.map({Array($0)[0]})
         self.charRects = charRacts
         self.charSizeList = charSizeList
@@ -190,6 +192,8 @@ struct StringObject : Identifiable, Equatable, Hashable{
 //    func FetchCharImageList(){
 //        targetImageProcessed.GetCroppedImages(rects: charRects)
 //    }
+    
+
     
     mutating func CalcColorMode() -> MacColorMode{
         var result = -1
@@ -268,42 +272,52 @@ struct StringObject : Identifiable, Equatable, Hashable{
         //let colorSpace: NSColorSpace = .genericRGB
         //var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
         var result: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 0, alpha: 1)
-        var minc = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
-        var maxc = NSColor.init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+       
         //var nsColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
         if charImageList.count > 0{
             if colorMode == .light{
+                
+                var minc = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+                var maxc = NSColor.init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+                
                 for img in charImageList.filter({$0.extent.width > 0}){
+                    //Calculate the darkest color as the font color
                     if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
                         minc = Minimun(img).0
                         colorPixel = Minimun(img).1
                     }
+                    //Calculate the brightest color as the background color
+                    if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
+                        maxc = Maximum(img).0
+                    }
                 }
+                bgColor = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
                 result = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 
             }
             if colorMode == .dark{
+                var minc = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+                var maxc = NSColor.init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
                 for img in charImageList.filter({$0.extent.width > 0}){
+                    //Calculate the brightest color as the font color
                     if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
                         maxc = Maximum(img).0
                         colorPixel = Maximum(img).1
-                        //print("\(content) max Color: \(maxc), size: \(img.extent)")
+                    }
+                    //Calculate the darkest color as the background color
+                    if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
+                        minc = Minimun(img).0
                     }
                 }
+                bgColor = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 result = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
             }
         }
-        //SnapToNearestStandardColor(result)
-        //print("content: \(content), ns: \(nsColor), re: \(result)")
+
         color = result
         return result
     }
-    
-//    func SnapToNearestStandardColor(_ cl: CGColor){
-//        let fixed  = imageProcessViewModel.FindNearestStandardRGB(cl)
-//        print(fixed)
-//    }
-    
+
     func CalcPosition() -> [CGFloat]{
         if stringRect.isEmpty {
             return [0,0]

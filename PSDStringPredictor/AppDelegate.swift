@@ -248,5 +248,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func OpenDocument(_ sender: Any) {
         psdsVM.OpenDocument()
     }
- }
+    @IBAction func OpenRadarURL(_ sender: Any) {
+        NSWorkspace.shared.open(URL(string: "rdar://new/problem/component=DTP%20Tools&version=PS%20Layering")!)
+    }
+}
 
