@@ -21,7 +21,7 @@ struct RelatedDataJsonObject: Codable{
    
     var selectedStrIDList: [UUID]//refacting
     //Others
-    var maskDict: [Int:[CGRect]]
+    var maskDict: [Int:[charRectObject]]
     var stringIsOn: Bool
 }
 

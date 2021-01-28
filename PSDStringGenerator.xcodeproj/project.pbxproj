@@ -1028,7 +1028,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
 				MARKETING_VERSION = 0.3;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
@@ -1057,7 +1057,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
 				MARKETING_VERSION = 0.3;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;

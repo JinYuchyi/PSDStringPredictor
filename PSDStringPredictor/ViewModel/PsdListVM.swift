@@ -9,6 +9,11 @@
 import Foundation
 import SwiftUI
 
+struct charRectObject: Codable{
+    var rect: CGRect
+    var color: [CGFloat]
+}
+
 class PsdsVM: ObservableObject{
     
     let ocr = OCR()
@@ -28,8 +33,8 @@ class PsdsVM: ObservableObject{
     //Others
     @Published var IndicatorText: String = ""
     @Published var prograssScale: CGFloat = 0
-    @Published var maskDict: [Int:[CGRect]]  = [:]
-    @Published var maskColorDict: [Int:[CGColor]]  = [:]
+    @Published var maskDict: [Int:[charRectObject]]  = [:]
+    //@Published var maskColorDict: [Int:[CGColor]]  = [:]
     @Published var stringIsOn: Bool = true
 
     
@@ -110,21 +115,16 @@ class PsdsVM: ObservableObject{
         if selectedNSImage.size.width == 0 || selectedNSImage == nil {
             return
         }
-        
-        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict, colorMode: GetSelectedPsd()!.colorMode)
+        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
         processedCIImage = imageUtil.ApplyFilters(target: _targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        //print("gamma: \(gammaDict[psdId]), exp: \(expDict[psdId])")
     }
     
     func FetchStringObjects(psdId: Int){
         var result: [StringObject] = []
-        //let group = DispatchGroup()
-        //        let queueCalc = DispatchQueue(label: "calc")
-        //        queueCalc.async {
-        //print("Working on process \(psdId)")
+
         let tmpImageUrl = self.psdModel.GetPSDObject(psdId: psdId)?.imageURL
         var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
-        img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict, colorMode: GetSelectedPsd()!.colorMode)
+        img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
         let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img, psdId: psdId, psdsVM: self)
         DispatchQueue.main.async{ [self] in
@@ -134,14 +134,13 @@ class PsdsVM: ObservableObject{
                     result.append(obj)
                     
                 }else{
-                    print("same")
+                    //print("same")
                 }
             }
             result += tmpList
             psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
             IndicatorText = ""
-            //print("obj count: \(psdModel.GetPSDObject(psdId: psdId)!.stringObjects.count)")
-            //}
+
         }
     }
     
@@ -151,10 +150,7 @@ class PsdsVM: ObservableObject{
         let color1 = pixProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(targetImg.size.height - obj.stringRect.origin.y), img: targetImg.ToCGImage()!)
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
-    
-    
-    
-    
+
     
     //MARK: Intents
     
