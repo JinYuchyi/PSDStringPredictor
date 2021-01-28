@@ -42,7 +42,7 @@ struct ContentView: View  {
 
         VStack(alignment: .center){
             //PrograssView(psdsVM: psdsVM)
-            psdThumbnailList(psdsVM: psdsVM)
+            psdThumbnailList(psdsVM: psdsVM, showPatchLayer: $showPatchLayer)
                 .frame(height: 1000, alignment: .center)
             PsdOperatorView(psdsVM: psdsVM)
                 .padding()

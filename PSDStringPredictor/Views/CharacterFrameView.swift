@@ -41,7 +41,7 @@ struct CharacterFrameView: View {
                     }
             }
         }
-        .onAppear(perform: {rectList = GetRectArray()})
+        .onAppear(perform: {rectList = GetOnePageRectArray()})
 
     }
     
@@ -50,16 +50,9 @@ struct CharacterFrameView: View {
         
         
     }
+
     
-    //    func ShowDefault() -> Bool{
-    //        if stringObjectVM.charFrameListData[stringObjectVM.selectedPSDID]! == nil {
-    //            return true
-    //        }else {
-    //            return false
-    //        }
-    //    }
-    
-    func GetRectArray() -> [CGRect] {
+    func GetOnePageRectArray() -> [CGRect] {
         guard let psdObj = psdVM.GetSelectedPsd() else {return []}
         var result = [CGRect]()
         for obj in psdObj.stringObjects {

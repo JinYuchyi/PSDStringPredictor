@@ -67,9 +67,7 @@ struct PSDObject: Identifiable{
     func GetStringObjectFromOnePsd(objId: UUID) -> StringObject?{
         return stringObjects.first(where: {$0.id == objId})
     }
-    
-    
-    
+
     func FetchColorMode() -> MacColorMode{
         let classifier = ColorModeClassifier(image: thumbnail.ToCIImage()!)
         let result = classifier.output

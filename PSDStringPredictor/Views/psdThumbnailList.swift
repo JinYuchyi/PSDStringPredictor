@@ -11,6 +11,7 @@ import SwiftUI
 struct psdThumbnailList: View {
     //@ObservedObject var psdvm = psdViewModel
     @ObservedObject var psdsVM: PsdsVM
+    @Binding var showPatchLayer: Bool
     //@ObservedObject var ControlVM: ControlVM
     //@ObservedObject var imageVM: ImageVM
     
@@ -26,6 +27,7 @@ struct psdThumbnailList: View {
                             .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
                             .onTapGesture {
                                 psdsVM.ThumbnailClicked(psdId: psd.id)
+                                showPatchLayer = false
                             }
                             .border(psdsVM.selectedPsdId == psd.id ? Color.green : Color.gray.opacity(0.2), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
 
