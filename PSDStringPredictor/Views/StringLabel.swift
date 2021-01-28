@@ -113,14 +113,7 @@ struct StringLabel: View {
             }.IsHidden(condition: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.status != StringObjectStatus.ignored)
             
             HStack{
-                //Button for show detail
-                //                Button(action: {self.InfoBtnTapped()}){
-                //                    CustomImage( name: "detail-round")
-                //                        .scaledToFit()
-                //                }
-                //                .buttonStyle(RoundButtonStyle())
-                //                .frame(width: 20, height: 20)
-                //                .padding(-4)
+
                 
                 //Button for alignment
                 

@@ -12,7 +12,6 @@ struct LabelsOnImage: View {
 //    @ObservedObject var imageProcess: ImageProcess = imageProcessViewModel
 //    @ObservedObject var stringObjectVM : PSDViewModel = psdViewModel
 //    let charFrameList: [CharFrame]
-    
     @ObservedObject var psdsVM: PsdsVM
     
     var body: some View {

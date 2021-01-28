@@ -177,9 +177,25 @@ struct PSD {
         let _index = psdObjects.firstIndex(where: {$0.id == psdId})
         psdObjects.removeAll(where: {$0.id == psdId})
         psdObjects.insert(psd, at: _index!)
-        
-        
     }
+    
+    mutating func SetFontSize(psdId: Int, objId: UUID, value: CGFloat, offset: Bool){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.fontSize = value
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.insert(psd!, at: _index!)
+            }
+        }
+    }
+    
     
     mutating func SetAlignment(psdId: Int, objId: UUID, value: StringAlignment){
         var psd = GetPSDObject(psdId: psdId)

@@ -9,7 +9,7 @@
 import Foundation
 
 extension StringObject{
-//    mutating func SetStatus(status: Int){
+//    mutating func SetFontSize(status: Int){
 //        self.status = status
 //    }
 }

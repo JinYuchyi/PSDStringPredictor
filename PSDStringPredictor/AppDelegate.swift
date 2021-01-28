@@ -29,6 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //let data = DataStore()
         //let context = (NSApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let contentView = ContentView( psdsVM: psdsVM, imgVM: imageVM)
+        
             //.environment(\.managedObjectContext, persistentContainer.viewContext)
             //.environmentObject(warningVM)
         //.environmentObject(data)

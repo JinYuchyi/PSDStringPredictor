@@ -14,6 +14,7 @@ struct StringObjectPropertyView: View {
 //    @ObservedObject var imageProcess = imageProcessViewModel
     //@State var stringList: [String]
     @State var weight: String = "Regular"
+    @State var fontSize: String = ""
     
     let pixelMgr = PixelProcess()
     
@@ -38,76 +39,35 @@ struct StringObjectPropertyView: View {
         if psdsVM.DragOffsetDict[targetObj.id] != nil{
             offset = psdsVM.DragOffsetDict[targetObj.id]!.height
         }
+        
         return targetObj.fontSize - offset
     }
     
-    func SetChar(index: Int, value: String){
-        print("Changed to \(value)")
+    func fontSizeCommit(){
+        let newVal = CGFloat((fontSize as NSString).floatValue) + (psdsVM.DragOffsetDict[psdsVM.selectedStrIDList.last!]?.height ?? 0)
+        psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: newVal, offset: false)
     }
+    
+//    func SetChar(index: Int, value: String){
+//        print("Changed to \(value)")
+//    }
     
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
-//            Text("Components")
-//                .foregroundColor(Color.gray)
             ScrollView ( .horizontal, showsIndicators: true) {
-                
                 HStack {
-                    
                     ForEach(0..<GetLastSelectObject().charImageList.count, id: \.self){ index in
-//                        VStack{
-//                            if GetLastSelectObject().charColorModeList[index] == 1{
-//
-//                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(height: 40)
-//                                    .border(Color.yellow, width: 1)
-//                            }else if  GetLastSelectObject().charColorModeList[index] == 2{
-//                                Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(height: 40)
-//                                    .border(Color.blue, width: 1)
-//                            }
-//                            TextField(
-//                                        String(GetLastSelectObject().charArray[index]),
-//                                        text:$charList[index] ,
-//                                        onEditingChanged:{_ in print("") },
-//                                        onCommit: {SetChar(index: index, value: charList[index])}
-//                                    )
-//
-//                            //TextField(String(GetLastSelectObject().charArray[index]), text: $stringField})
-////                            TextField(String(GetLastSelectObject().charArray[index]),
-////                                            text: $stringField,
-////                                            onEditingChanged: {},
-////                                            onEditted: SetChar(index:index)
-////                                      )
-//
-//                            Text("\(Int(GetLastSelectObject().charRects[index].width.rounded()))/\(Int(GetLastSelectObject().charRects[index].height.rounded()))")
-//                            Text(String(GetLastSelectObject().charFontWeightList[index]))
-//
-//                            FontSizeView(index: index)
-//
-//                            Button(action: {CharSaveBtnPressed(index)}){
-//                                Text("􀈄")
-//                            }
-//
-//                        }
                         VStack{
                             Text("\(String(GetLastSelectObject().charArray[index]))")
                             OneCharPropertyView(index: index, psdsVM: psdsVM)
-
                         }
-                        
                     }
                 }
                 .fixedSize()
             }
         }
     }
-    
 
-    
     @ViewBuilder
     func FontSizeView(index: Int) -> some View {
         if psdsVM.selectedStrIDList.count == 0 {
@@ -119,13 +79,27 @@ struct StringObjectPropertyView: View {
                  Text(String(GetLastSelectObject().charSizeList[index].description)).fixedSize()
             }
         }
+    }
+    
+    var floatingTextField: some View {
+        GeometryReader{ geo in
+            HStack{
+                TextField("", text: $fontSize)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .background(Color.black)
+
+
+                //
+            }.frame(width:geo.size.width * 0.9)
+        }
         
+
+           // .background(Color.black.opacity(0.1))
     }
     
     var body: some View {
         List{
             Section(header: Text("String Properties")){
-                //Text("id:\(stringObjectVM.selectedIDList.last ?? UUID.init())")
                 HStack{
                     Text("Content")
                         .foregroundColor(Color.gray)
@@ -133,20 +107,6 @@ struct StringObjectPropertyView: View {
                     Text("\(GetLastSelectObject().content)")
                         .frame(width:200, alignment: .topLeading)
                 }
-                
-//                if GetLastSelectObject().content != "No content." {
-//                    HStack{
-//                        let targetImg = imageProcess.targetNSImage.ToCIImage()!.cropped(to: GetLastSelectObject().stringRect).ToNSImage()
-//                        Image(nsImage: targetImg )
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 200)
-//                        Spacer()
-//                        Button(action: {StringSaveBtnPressed()}){
-//                            Text("􀈄")
-//                        }
-//                    }
-//                }
                 
                 HStack{
                     Text("Color Mode")
@@ -158,22 +118,26 @@ struct StringObjectPropertyView: View {
                     }else if GetLastSelectObject().colorMode == MacColorMode.dark {
                         Text("􀆺")
                             .frame(width:200, alignment: .topLeading)
-                        
                     }else{}
-                    
                 }
-
                 
                 HStack{
                     Text("Size")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
+                        
                     Text("\(CalcOffsetSize(targetObj: GetLastSelectObject()))")
                         .frame(width:200, alignment: .topLeading)
+                        
+
+                        .onTapGesture {
+                            //self.overlay(floatingTextField)
+                        }
+//                    TextField("\(CalcOffsetSize(targetObj: GetLastSelectObject()))", text: $fontSize, onCommit: {fontSizeCommit()})
+//                        .frame(width:200, alignment: .topLeading)
+                        
                 }
-                
-                //Spacer().frame(height: 10)
-                
+
                 HStack{
                     Text("Tracking")
                         .foregroundColor(Color.gray)
@@ -181,9 +145,7 @@ struct StringObjectPropertyView: View {
                     Text("\(CalcOffsetTracking(targetObj: GetLastSelectObject()))")
                         .frame(width:200, alignment: .topLeading)
                 }
-                
-                //Spacer().frame(height: 10)
-                
+
                 HStack{
                     Text("Font")
                         .foregroundColor(Color.gray)
@@ -194,36 +156,24 @@ struct StringObjectPropertyView: View {
                             Text("\(GetLastSelectObject().FontName)" )
                                 .frame(width:200, alignment: .topLeading)
                                 .onTapGesture {
-                                    
                                     psdsVM.ToggleFontName(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
                                 }
-//                        Picker(selection: $weight, label: Text("")) {
-//                            Text("Regular").tag("Regular")
-//                            Text("Semibold").tag("Semibold")
                         }
-
                     }
                     
                 }
                 
                 HStack{
-                    //stringObjectVM.selectedStringObject.color
                     Text("Color")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
                     Image(nsImage: GetLastSelectObject().colorPixel.ToNSImage())
                         .scaleEffect(10)
-//                    Rectangle()
-//                        .fill(Color.init(red: Double(GetLastSelectObject().color.components![0]), green: Double(GetLastSelectObject().color.components![1]), blue: Double(GetLastSelectObject().color.components![2])))
-//                        .frame(width:10, height:10, alignment: .center)
+
                     if psdsVM.selectedStrIDList.count > 0{
                         Text("\(Int((GetLastSelectObject().color.components![0] * 255).rounded())), \(Int((GetLastSelectObject().color.components![1] * 255).rounded())), \(Int((GetLastSelectObject().color.components![2] * 255).rounded()))")
                     }
-                    //                    Text("\(stringObjectVM.selectedStringObject.color.ToColor())")
-                    //                        .foregroundColor(Color.gray)
-                    //                        .frame(width:80, alignment: .topLeading)
-                    //                    Text("\(stringObjectVM.selectedStringObject.CalcFontFullName())")
-                    //                        .frame(width:200, alignment: .topLeading)
+
                 }.onTapGesture {
                     if psdsVM.selectedStrIDList.count > 0 {
                         psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
@@ -231,14 +181,13 @@ struct StringObjectPropertyView: View {
                 }
                 
                 
-                HStack{
-                    Text("Bounds")
-                        .foregroundColor(Color.gray)
-                        .frame(width:80, alignment: .topLeading)
-                    Text("X: \(Int(GetLastSelectObject().stringRect.minX.rounded() )), Y: \(Int(GetLastSelectObject().stringRect.minY.rounded())), W: \(Int(GetLastSelectObject().stringRect.width.rounded() )), H: \(Int(GetLastSelectObject().stringRect.height.rounded()))")
-                        //Text("w: \(Int(stringObjectVM.selectedStringObject.stringRect.width.rounded())), h: \(Int(stringObjectVM.selectedStringObject.stringRect.height.rounded()))")
-                        .frame(width:200, alignment: .topLeading)
-                }
+//                HStack{
+//                    Text("Bounds")
+//                        .foregroundColor(Color.gray)
+//                        .frame(width:80, alignment: .topLeading)
+//                    Text("X: \(Int(GetLastSelectObject().stringRect.minX.rounded() )), Y: \(Int(GetLastSelectObject().stringRect.minY.rounded())), W: \(Int(GetLastSelectObject().stringRect.width.rounded() )), H: \(Int(GetLastSelectObject().stringRect.height.rounded()))")
+//                        .frame(width:200, alignment: .topLeading)
+//                }
                 
                 StringComponents()
                 
@@ -247,40 +196,20 @@ struct StringObjectPropertyView: View {
     }
     
     func CharSaveBtnPressed(_ index: Int){
-        
         let panel = NSSavePanel()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let result = panel.runModal()
             if result == .OK{
-                //let img = stringObjectVM.selectedStringObject.charImageList[index]
                 GetLastSelectObject().charImageList[index].ToPNG(url: panel.url!)
-                //imageProcess.SaveCIIToPNG(CIImage: GetLastSelectObject().charImageList[index], filePath: panel.url!.path )
                 let bw = SetGrayScale(GetLastSelectObject().charImageList[index] )
                 let newUrl = URL.init(fileURLWithPath: panel.url!.path + "_bw.bmp")
                 bw!.ToPNG(url: newUrl)
-                //imageProcess.SaveCIIToPNG(CIImage: bw!, filePath: panel.url!.path + "_bw" )
-                //let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
-                //let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
-                //imageProcess.SaveCIIToPNG(CIImage: fixedImg, filePath: panel.url!.path+"_fixed" )
-                
             }
         }
     }
     
     func StringSaveBtnPressed(){
-//        let tergetImg = imageProcessViewModel.targetImageProcessed.cropped(to: GetLastSelectObject().stringRect)
-//        let denoise = NoiseReduction(tergetImg)
-//        let tergetImgBW = SetGrayScale(denoise!)
-//
-//        let panel = NSSavePanel()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            let result = panel.runModal()
-//            if result == .OK{
-//                imageProcess.SaveCIIToPNG(CIImage: tergetImg, filePath: panel.url!.path )
-//                imageProcess.SaveCIIToPNG(CIImage: tergetImgBW!, filePath: panel.url!.path + "_BW.bmp" )
-//
-//            }
-//        }
+
     }
 }
 

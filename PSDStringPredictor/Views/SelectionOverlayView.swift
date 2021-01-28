@@ -29,19 +29,15 @@ struct SelectionOverlayView: View {
                         .onChanged { gesture in
                             show = true
                             startPos = gesture.startLocation
-                            
                             width = gesture.translation.width
                             height = gesture.translation.height
                             interactive.selectionRect = CGRect.init(x: startPos.x , y: startPos.y , width: width, height: height)
                             interactive.selectionRect = interactive.selectionRect.standardized
-                            
                         }
                         .onEnded{ value in
                             show = false
                             endPos = value.location
                             CalcSelectedObject()
-                            
-                            
                         }
                 )
                 .gesture(

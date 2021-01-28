@@ -67,7 +67,7 @@
 		3F820854251112BA00832192 /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F820853251112BA00832192 /* FontTracking.swift */; };
 		3F8460A2251057FF00788176 /* CompareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8460A1251057FF00788176 /* CompareImage.swift */; };
 		3F853B6C257E6C0C002507C4 /* IndicatorBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */; };
-		3F853B712585BEAE002507C4 /* HighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B702585BEAE002507C4 /* HighlightView.swift */; };
+		3F853B712585BEAE002507C4 /* StringHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B702585BEAE002507C4 /* StringHighlightView.swift */; };
 		3F8E6CF725A4249F00B383C9 /* StringCreator.jsx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E6CF625A4249F00B383C9 /* StringCreator.jsx */; };
 		3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7D250F2855003B652C /* DataStore.swift */; };
 		3F9B3A80250F6430003B652C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7F250F6430003B652C /* LogPrint.swift */; };
@@ -192,7 +192,7 @@
 		3F820853251112BA00832192 /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		3F8460A1251057FF00788176 /* CompareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareImage.swift; sourceTree = "<group>"; };
 		3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorBarView.swift; sourceTree = "<group>"; };
-		3F853B702585BEAE002507C4 /* HighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightView.swift; sourceTree = "<group>"; };
+		3F853B702585BEAE002507C4 /* StringHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHighlightView.swift; sourceTree = "<group>"; };
 		3F8E6CF625A4249F00B383C9 /* StringCreator.jsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = StringCreator.jsx; sourceTree = "<group>"; };
 		3F9B3A7D250F2855003B652C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		3F9B3A7F250F6430003B652C /* LogPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
@@ -345,7 +345,7 @@
 			children = (
 				3F79184825A85CD2003F158E /* PsdThumbnail.swift */,
 				3F79184B25A86B24003F158E /* psdThumbnailList.swift */,
-				3F853B702585BEAE002507C4 /* HighlightView.swift */,
+				3F853B702585BEAE002507C4 /* StringHighlightView.swift */,
 				3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */,
 				3FD558D025B8111300056C85 /* OneCharPropertyView.swift */,
 				3FE8813F25333D820088A1CD /* StringObjectRow.swift */,
@@ -819,7 +819,7 @@
 				3FBF5E1125AFEE6B009596A5 /* EnumExtension.swift in Sources */,
 				3FD401F32500F2FB00525E67 /* AppDelegate.swift in Sources */,
 				3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */,
-				3F853B712585BEAE002507C4 /* HighlightView.swift in Sources */,
+				3F853B712585BEAE002507C4 /* StringHighlightView.swift in Sources */,
 				3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */,
 				3FEFE9132507200400AEF1C8 /* ControlPanel.swift in Sources */,
 				3FE8814325333EDB0088A1CD /* TrackingRegressor.mlmodel in Sources */,

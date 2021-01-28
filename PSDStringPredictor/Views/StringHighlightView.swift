@@ -11,18 +11,10 @@ import SwiftUI
 //Constant
 let zeroRect = CGRect(x: -1000, y: -1000, width: 0, height: 0)
 
-struct HighlightView: View {
-    //    @ObservedObject var imageVM = imageProcessViewModel
-    //    @ObservedObject var stringObjectVM = psdViewModel
-    //    @ObservedObject var pSDViewModel = PSDViewModel()
+struct StringHighlightView: View {
     
     @ObservedObject var psdsVM: PsdsVM
-    
 
-    
-    //var selectId: [UUID]
-    //imageProcessViewModel.targetNSImage.size.height - obj.stringRect.origin.y
-    //let ids: [UUID]
     var body: some View {
 
         ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
@@ -43,6 +35,7 @@ struct HighlightView: View {
                                     } else {
                                         psdsVM.DragOffsetDict[theid] = CGSize(width: 0, height: (gesture.translation.height / 10).keepDecimalPlaces(num: 1))
                                     }
+                                    
                                 }
                     )
 

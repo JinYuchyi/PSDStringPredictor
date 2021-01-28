@@ -11,23 +11,19 @@ import CoreImage
 import AppKit
 
 struct ContentView: View  {
+
+    @State var selectedStringObject: StringObject = StringObject.init()
     
-    //    @ObservedObject var stringObjectList = StringObjectList()
-    //    @ObservedObject var imageProcess: ImageProcess = ImageProcess()
-    //    @ObservedObject  var db = DBVideoModel()
-    //    @State private var ocr =  OCR()
-    //
-    //    @EnvironmentObject var data: DataStore
     let data = DataStore()
     let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
-//    @ObservedObject var stringObjectVM = psdViewModel
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var imgVM: ImageVM
-    //@ObservedObject var controlVM: ControlVM = ControlVM()
+
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     let keyEventHandle = KeyEventHandling()
+    
     @State var showImage = false
     @State var showPatchLayer = false
     //@State var showDebugOverlay = true
@@ -62,7 +58,7 @@ struct ContentView: View  {
                         CharacterFrameView(psdVM: psdsVM)
                             .IsHidden(condition: showPatchLayer)
                         
-                        HighlightView(psdsVM: psdsVM)
+                        StringHighlightView(psdsVM: psdsVM)
                     }
                     .IsHidden(condition: psdsVM.stringIsOn == true)
                     
@@ -162,10 +158,9 @@ struct ContentView: View  {
                 psdsVM.FetchCharacterTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
                 psdsVM.FetchBoundTable(path: Bundle.main.path(forResource: "charBounds", ofType: "csv")!)
             })
-            //.background(keyEventHandle)
-
-      
+            .preferredColorScheme(.dark)
     }
+    
     
     func Debug(){
         //        imageViewModel.FetchImage()

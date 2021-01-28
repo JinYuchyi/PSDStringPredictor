@@ -14,6 +14,8 @@ struct charRectObject: Codable{
     var color: [CGFloat]
 }
 
+
+
 class PsdsVM: ObservableObject{
     
     let ocr = OCR()
@@ -150,6 +152,7 @@ class PsdsVM: ObservableObject{
         let color1 = pixProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(targetImg.size.height - obj.stringRect.origin.y), img: targetImg.ToCGImage()!)
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
+    
 
     
     //MARK: Intents
