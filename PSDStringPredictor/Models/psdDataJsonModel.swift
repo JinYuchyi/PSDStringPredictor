@@ -44,6 +44,7 @@ struct strObjJsonObject: Codable{
     var fontWeight:  String
     var stringRect: CGRect
     var color: [CGFloat]
+    var bgColor: [CGFloat]
     var charArray: [String]
     var charRects: [CGRect]
     var charSizeList: [Int16]

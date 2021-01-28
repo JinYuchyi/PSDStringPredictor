@@ -11,15 +11,7 @@ import CoreImage
 import Vision
 import Foundation
 
-//struct StringObject: Hashable, Codable, Identifiable {
-//    var id: Int
-//    var content: String
-//    var position: [CGFloat]
-//    var width: CGFloat
-//    var height: CGFloat
-//    var tracking: CGFloat
-//    var fontSize: CGFloat
-//}
+
 
 enum StringAlignment:String, CaseIterable{
     case left, center, right
@@ -35,41 +27,38 @@ extension StringAlignment{
 }
 
 //struct StringObject: Hashable, Codable, Identifiable {
-struct StringObject : Identifiable, Equatable, Hashable{
+struct StringObject : Identifiable,  Hashable{
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
-    static func == (lhs: StringObject, rhs: StringObject) -> Bool {
-        return
-            lhs.id == rhs.id &&
-            lhs.content == rhs.content &&
-            lhs.tracking == rhs.tracking &&
-//            lhs.trackingPS == rhs.trackingPS &&
-            lhs.fontSize == rhs.fontSize &&
-            lhs.fontWeight == rhs.fontWeight &&
-            lhs.stringRect == rhs.stringRect &&
-            //lhs.observation == rhs.observation &&
-            lhs.color == rhs.color &&
-            lhs.charArray == rhs.charArray &&
-            lhs.charRects == rhs.charRects &&
-            lhs.charSizeList == rhs.charSizeList &&
-            lhs.charImageList == rhs.charImageList &&
-            lhs.isPredictedList == rhs.isPredictedList
-            //lhs.isForbidden == rhs.isForbidden
-    }
+//    static func == (lhs: StringObject, rhs: StringObject) -> Bool {
+//        return
+//            lhs.id == rhs.id &&
+//            lhs.content == rhs.content &&
+//            lhs.tracking == rhs.tracking &&
+////            lhs.trackingPS == rhs.trackingPS &&
+//            lhs.fontSize == rhs.fontSize &&
+//            lhs.fontWeight == rhs.fontWeight &&
+//            lhs.stringRect == rhs.stringRect &&
+//            //lhs.observation == rhs.observation &&
+//            lhs.color == rhs.color &&
+//            lhs.charArray == rhs.charArray &&
+//            lhs.charRects == rhs.charRects &&
+//            lhs.charSizeList == rhs.charSizeList &&
+//            lhs.charImageList == rhs.charImageList &&
+//            lhs.isPredictedList == rhs.isPredictedList
+//            //lhs.isForbidden == rhs.isForbidden
+//    }
     
     
     var id: UUID
     var content: String
-    //var position: [CGFloat]
     var tracking: CGFloat
-    //var trackingPS: Int16
     var fontSize: CGFloat
     var fontWeight:  String
     var stringRect: CGRect
-    //var observation : VNRecognizedTextObservation
     var color: CGColor
     var bgColor: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
     var charArray: [Character]
@@ -78,8 +67,6 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var charImageList: [CIImage]
     var charFontWeightList: [String]
     var isPredictedList: [Int]
-    //var isForbidden: Bool
-//    var confidence: CGFloat
     var colorMode: MacColorMode
     var charColorModeList: [Int]
     var FontName: String
@@ -87,8 +74,6 @@ struct StringObject : Identifiable, Equatable, Hashable{
     var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
     var colorPixel: CIImage = CIImage.init()
-//    let ocr: OCR = OCR()
-//    let fontUtils = FontUtils()
 
     init(){
         self.id = UUID()
@@ -100,16 +85,12 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontWeight =  ""
         self.charImageList = []
         self.stringRect = CGRect()
-        //self.observation = VNRecognizedTextObservation.init()
         self.color = CGColor.black
         self.charArray = [" "]
         self.charRects = [CGRect()]
         self.charSizeList = [0]
         self.charFontWeightList = ["Regular"]
-  //      self.confidence = 0
-        //self.isForbidden = false
         self.charColorModeList = [0]
-//        self.trackingPS = 0
         self.isPredictedList = [0]
         self.FontName = ""
         self.alignment = .left
@@ -130,16 +111,12 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.fontWeight = "Regular"
         self.charImageList = charImageList
         self.stringRect = stringRect
-        //self.observation = observation
         self.color = CGColor.black
         self.charArray = charArray
         self.charRects = charRacts
         self.charSizeList = []
         self.charFontWeightList = []
- //       self.confidence = confidence
-        //self.isForbidden = false
         self.charColorModeList = []
-        //self.trackingPS = 0
         self.isPredictedList = []
         self.FontName = ""
         self.alignment = .left
@@ -156,7 +133,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.isPredictedList = sizeFunc.2
     }
     
-    init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [Data], stringRect: CGRect, color: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
+    init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [Data], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
         
         self.id = id
         self.content = content
@@ -167,7 +144,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.charImageList = charImageList.toCIImageList()
         self.stringRect = stringRect
         self.color = color.toCGColor()
-        
+        self.bgColor = bgColor.toCGColor()
         self.charArray = charArray.map({Array($0)[0]})
         self.charRects = charRacts
         self.charSizeList = charSizeList
@@ -177,21 +154,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         self.FontName = fontName
         self.alignment = StringAlignment.init(rawValue: alignment)!
         self.status = StringObjectStatus.init(rawValue: status)!
-        
-
     }
-    
-//    mutating func ToggleColorMode(){
-//        if colorMode == 1 {
-//            colorMode = 2
-//        }else if colorMode == 2{
-//            colorMode = 1
-//        }
-//    }
-    
-//    func FetchCharImageList(){
-//        targetImageProcessed.GetCroppedImages(rects: charRects)
-//    }
     
 
     
@@ -251,21 +214,6 @@ struct StringObject : Identifiable, Equatable, Hashable{
         //return CGFloat(item.fontTrackingPoints)
         return (CGFloat(item.fontTrackingPoints), item.fontTracking)
     }
-    
-//    func PredictTracking()->Double{
-//        var trackings: [Double] = []
-//        for index in 0..<charArray.count{
-//            if (index + 1 < charArray.count && charArray[index].isLetter && charArray[index+1].isLetter){
-//                let strs: String = String(charArray[index]) + String(charArray[index+1])
-//                let _width = fabs(charRects[index].minX - charRects[index+1].maxX) / fontSize * 12
-//                let _fontWeight = "SFProText-Regular"
-//                let tmp = PredictFontTracking(str: strs, fontSize: Double(fontSize), width: Double(_width), fontWeight: _fontWeight)
-//                trackings.append(tmp)
-//            }
-//        }
-//        let result: Double = trackings.MajorityElement()
-//        return result
-//    }
     
     mutating func CalcColor() -> CGColor {
         //var colorList: [NSColor] = []
@@ -382,50 +330,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         }
         return "SFPro" + family + "-" + fontWeight
     }
-    
-//    mutating func DeleteDescentForRect()  {
-//        var highLetterEvenHeight: CGFloat = 0
-//        var lowerLetterEvenHeight: CGFloat = 0
-//        var fontName: String = ""
-//        if (fontSize >= 20) {
-//            fontName = "SFProDisplay-Regular"
-//        }
-//        else{
-//            fontName = "SFProText-Regular"
-//        }
-//        
-//        //Condition of if has p,q,g,y,j character in string,
-//        //We have to adjust string position and size
-//        var n: CGFloat = 0
-//        var n1: CGFloat = 0
-//        var hasLongTail = false
-//        for (index, c) in charArray.enumerated() {
-//            if (
-//                c == "p" ||
-//                    c == "q" ||
-//                    c == "g" ||
-//                    c == "y" ||
-//                    c == "j" ||
-//                    c == "," ||
-//                    c == ";"
-//            ) {
-//                hasLongTail = true
-//            }
-//        }
-//        
-//        var descent: CGFloat = 0
-//        if hasLongTail == true{
-//            let fontName = CalcFontFullName()
-//            descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
-//            descent = descent * 0.8
-//        }
-//        
-//        
-//        stringRect = CGRect(x: stringRect.origin.x, y: stringRect.origin.y + descent, width: stringRect.width, height: stringRect.height - descent)
-//        
-//        
-//    }
-    
+
     func CalcSizeForSingleChar(_ char: String, _ width: Int16, _ height: Int16, _ fontWeight: String) -> (Int16, Int){
         var isPredicted = 0
         //var result: Int16 = 0
@@ -457,14 +362,7 @@ struct StringObject : Identifiable, Equatable, Hashable{
         //Find weight for each character
         for (index, char) in self.charArray.enumerated(){
             if char.isNumber || char.isLetter{
-                //font.weight to fontWeight string, for searching
-                //var _fontWeight = ""
-//                if fontWeight == .regular {
-//                    _fontWeight = "regular"
-//                }
-//                else if fontWeight == .semibold{
-//                    _fontWeight = "semibold"
-//                }
+
                 let singleChar = CalcSizeForSingleChar(String(char), Int16(charRects[index].width.rounded()), Int16(charRects[index].height.rounded()), fontWeight)
                 let tempweight = singleChar.0
                 if (tempweight != 0){

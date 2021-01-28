@@ -126,7 +126,7 @@ class PsdsVM: ObservableObject{
         var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
         img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        let allStrObjs = self.ocr.CreateAllStringObjects(FromCIImage: img, psdId: psdId, psdsVM: self)
+        let allStrObjs = self.ocr.CreateAllStringObjects(rawNSImage: selectedNSImage, processedCIImage: img, psdId: psdId, psdsVM: self)
         DispatchQueue.main.async{ [self] in
             var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
             for obj in allStrObjs {

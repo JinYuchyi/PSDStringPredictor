@@ -113,6 +113,7 @@ struct PSD {
                     fontWeight: _strObj.fontWeight,
                     stringRect: _strObj.stringRect,
                     color: _strObj.color.toArray(),
+                    bgColor: _strObj.bgColor.toArray(),
                     charArray: _strObj.charArray.map({String($0)}),
                     charRects: _strObj.charRects,
                     charSizeList: _strObj.charSizeList,
@@ -325,7 +326,7 @@ struct PSD {
             var tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL, thumbnail: NSImage.init(data: psdJ.thumbnail) ?? NSImage.init(), colorMode: MacColorMode.init(rawValue: psdJ.colorMode)!, dpi: psdJ.dpi, status: PsdStatus.init(rawValue: psdJ.status)!)
             //var strObjList: [StringObject] = []
             for strJ in psdJ.stringObjects{
-                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: strJ.charImageList, stringRect: strJ.stringRect, color: strJ.color, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)
+                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: strJ.charImageList, stringRect: strJ.stringRect, color: strJ.color, bgColor: strJ.bgColor, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)
                 tmpPsd.stringObjects.append(tmpStrObj)
             }
             psdObjList.append(tmpPsd)
