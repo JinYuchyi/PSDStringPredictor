@@ -15,6 +15,7 @@ struct StringObjectPropertyView: View {
     //@State var stringList: [String]
     @State var weight: String = "Regular"
     @State var fontSize: String = ""
+    @State var fontSizeOpecity: Double = 0.6
     
     let pixelMgr = PixelProcess()
     
@@ -44,8 +45,12 @@ struct StringObjectPropertyView: View {
     }
     
     func fontSizeCommit(){
-        let newVal = CGFloat((fontSize as NSString).floatValue) + (psdsVM.DragOffsetDict[psdsVM.selectedStrIDList.last!]?.height ?? 0)
-        psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: newVal, offset: false)
+        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && fontSize != "" && fontSize.isNumeric == true  {
+            let newVal = CGFloat((fontSize as NSString).floatValue) + (psdsVM.DragOffsetDict[psdsVM.selectedStrIDList.last!]?.height ?? 0)
+            psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: newVal, offset: false)
+        }
+        fontSize = ""
+        fontSizeOpecity = 0.6
     }
     
 //    func SetChar(index: Int, value: String){
@@ -81,20 +86,18 @@ struct StringObjectPropertyView: View {
         }
     }
     
-    var floatingTextField: some View {
+    var fontSizeFloatingTextField: some View {
+        
         GeometryReader{ geo in
             HStack{
-                TextField("", text: $fontSize)
+                TextField("", text: $fontSize, onCommit: {fontSizeCommit()})
+                    
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .background(Color.black)
-
-
                 //
             }.frame(width:geo.size.width * 0.9)
         }
-        
 
-           // .background(Color.black.opacity(0.1))
     }
     
     var body: some View {
@@ -128,13 +131,15 @@ struct StringObjectPropertyView: View {
                         
                     Text("\(CalcOffsetSize(targetObj: GetLastSelectObject()))")
                         .frame(width:200, alignment: .topLeading)
-                        
+                        .overlay(
+                            fontSizeFloatingTextField
+                                .onTapGesture {
+                                    fontSize = ""
+                                    fontSizeOpecity = 1
+                                }
+                                .opacity(fontSizeOpecity)
 
-                        .onTapGesture {
-                            //self.overlay(floatingTextField)
-                        }
-//                    TextField("\(CalcOffsetSize(targetObj: GetLastSelectObject()))", text: $fontSize, onCommit: {fontSizeCommit()})
-//                        .frame(width:200, alignment: .topLeading)
+                        )
                         
                 }
 

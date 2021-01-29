@@ -16,6 +16,9 @@ extension String{
        return attrString
     }
     
+    var isNumeric : Bool {
+            return Double(self) != nil
+        }
 
 
 }
