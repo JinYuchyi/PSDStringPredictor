@@ -28,7 +28,8 @@ struct ControlPanel: View {
   //  let colorModeClassifier = ColorModeClassifier()
     
     //let controlVM = ControlVM()
-    let psdsVM: PsdsVM
+    @ObservedObject var psdsVM: PsdsVM
+    @ObservedObject var regionProcessVM: RegionProcessVM
     
     var body: some View {
         GeometryReader{geo in
@@ -87,14 +88,21 @@ struct ControlPanel: View {
 
                 HStack{
                     Button(action: {psdsVM.ProcessForOnePsd()}){
-                        Text("Current File")
-                            .frame(minWidth: 110,  maxWidth: .infinity)
+                        Text("One")
+                            .frame(minWidth: 70,  maxWidth: .infinity)
                     }
+                    .disabled(psdsVM.IndicatorText != "")
+                    
+                    Button(action: {regionProcessVM.regionBtnPressed()}){
+                        Text("Region")
+                            .frame(minWidth: 70,  maxWidth: .infinity)
+                    }
+                    .colorMultiply(regionProcessVM.regionActive == true ? Color.green : Color.white)
                     .disabled(psdsVM.IndicatorText != "")
 
                     Button(action: {psdsVM.ProcessForAll()}){
-                        Text("All Commited Files")
-                            .frame(minWidth: 110,  maxWidth: .infinity)
+                        Text("Committed")
+                            .frame(minWidth: 50,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
 
@@ -107,14 +115,14 @@ struct ControlPanel: View {
                     .frame(width: geo.size.width*0.8, alignment: .leading)
                 HStack{
                     Button(action: {psdsVM.CreatePSDForOnePSD(_id: psdsVM.selectedPsdId, saveToPath: "")}){
-                        Text("Current File")
-                            .frame(minWidth: 110,  maxWidth: .infinity)
+                        Text("One")
+                            .frame(minWidth: 165,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
 
                     Button(action: {psdsVM.CreatePSDForAll()}){
-                        Text("All Commited Files")
-                            .frame(minWidth: 110,  maxWidth: .infinity)
+                        Text("Committed")
+                            .frame(minWidth: 50,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
                 }

@@ -18,6 +18,7 @@ struct ContentView: View  {
     let font = FontUtils()
     @ObservedObject var imageViewModel = imageProcessViewModel
     @ObservedObject var psdsVM: PsdsVM
+    @ObservedObject var regionProcessVM: RegionProcessVM = RegionProcessVM()
     @ObservedObject var imgVM: ImageVM
 
     let pixelProcess = PixelProcess()
@@ -126,7 +127,7 @@ struct ContentView: View  {
             
             Divider()
             
-            ControlPanel(psdsVM: psdsVM)
+            ControlPanel(psdsVM: psdsVM, regionProcessVM: regionProcessVM)
 
             
         }

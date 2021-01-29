@@ -10,11 +10,7 @@ import SwiftUI
 
 struct SelectionOverlayView: View {
     @ObservedObject var interactive = interactiveViewModel
-//    @ObservedObject var objVM = psdViewModel
-//    @ObservedObject var imageVM = imageProcessViewModel
-    
-    @ObservedObject var psdsVM : PsdsVM
-    
+    @ObservedObject var psdsVM : PsdsVM    
     @State var startPos = CGPoint.zero
     @State var endPos = CGPoint.zero
     @State var width: CGFloat = 0
@@ -44,7 +40,7 @@ struct SelectionOverlayView: View {
                     TapGesture()
                         .onEnded { _ in
                             psdsVM.selectedStrIDList.removeAll()
-
+                            
                         }
                 )
             Rectangle()
@@ -65,34 +61,24 @@ struct SelectionOverlayView: View {
         if psdsVM.GetSelectedPsd() == nil {return }
         
         for obj in psdsVM.GetSelectedPsd()!.stringObjects {
-                if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
-                }
-            
-                let tmpRect = CGRect.init(x: (obj.stringRect.origin.x ), y: (psdsVM.selectedNSImage.size.height - obj.stringRect.origin.y - obj.stringRect.height/2), width: obj.stringRect.width, height: obj.stringRect.height)
-                if tmpRect.intersects(interactive.selectionRect)  {
-                    //print("intersects: \(tmpRect), \(interactive.selectionRect)")
-                    psdsVM.selectedStrIDList.append(obj.id)
-                }
+            if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
             }
+            
+            let tmpRect = CGRect.init(x: (obj.stringRect.origin.x ), y: (psdsVM.selectedNSImage.size.height - obj.stringRect.origin.y - obj.stringRect.height/2), width: obj.stringRect.width, height: obj.stringRect.height)
+            if tmpRect.intersects(interactive.selectionRect)  {
+                //print("intersects: \(tmpRect), \(interactive.selectionRect)")
+                psdsVM.selectedStrIDList.append(obj.id)
+            }
+        }
         
     }
     
     func CalcTap(tapPoint: CGPoint){
         psdsVM.selectedStrIDList.removeAll()
-        
         for obj in psdsVM.GetSelectedPsd()!.stringObjects {
-            
-            //let tmpRect = CGRect.init(x: (tapPoint.x ), y: (imageVM.GetTargetImageSize()[1] - tapPoint.y - 2), width: 4, height: 4)
             if obj.stringRect.contains(tapPoint) {
-                //print("intersects: \(tmpRect), \(interactive.selectionRect)")
                 psdsVM.selectedStrIDList.append(obj.id)
             }
         }
     }
 }
-
-//struct SelectionOverlayView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SelectionOverlayView()
-//    }
-//}

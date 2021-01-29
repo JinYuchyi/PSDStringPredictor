@@ -38,6 +38,8 @@ class PsdsVM: ObservableObject{
     @Published var maskDict: [Int:[charRectObject]]  = [:]
     //@Published var maskColorDict: [Int:[CGColor]]  = [:]
     @Published var stringIsOn: Bool = true
+    
+   
 
     
     let imageUtil = ImageUtil()
