@@ -15,14 +15,14 @@ struct StringObjectPropertyView: View {
     //@State var stringList: [String]
     @State var weight: String = "Regular"
     @State var fontSize: String = ""
-    @State var fontSizeOpecity: Double = 0.6
+    @State var posX: String = ""
+    @State var posY: String = ""
     
     let pixelMgr = PixelProcess()
     
     @ObservedObject var psdsVM: PsdsVM
-    //@State var charList: [String]
+
     func GetLastSelectObject() -> StringObject{
-        
         guard let id = psdsVM.selectedStrIDList.last else {return StringObject.init()}
         return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? StringObject.init()
     }
@@ -45,18 +45,38 @@ struct StringObjectPropertyView: View {
     }
     
     func fontSizeCommit(){
-        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && fontSize != "" && fontSize.isNumeric == true  {
+        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && fontSize.isNumeric == true  {
             let newVal = CGFloat((fontSize as NSString).floatValue) + (psdsVM.DragOffsetDict[psdsVM.selectedStrIDList.last!]?.height ?? 0)
-            psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: newVal, offset: false)
+            //Set fontSize for every selected string.
+            for id in psdsVM.selectedStrIDList {
+                psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: id, value: newVal, offset: false)
+            }
         }
         fontSize = ""
-        fontSizeOpecity = 0.6
     }
     
-//    func SetChar(index: Int, value: String){
-//        print("Changed to \(value)")
-//    }
+    func posXCommit(){
+        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && posX.isNumeric == true  {
+            let newVal = CGFloat((posX as NSString).floatValue)
+            //Set positionX for every selected string.
+            for id in psdsVM.selectedStrIDList {
+                psdsVM.psdModel.SetPosForString(psdId: psdsVM.selectedPsdId, objId: id, valueX: newVal, valueY: 0, isOnlyX: true, isOnlyY: false)
+            }
+        }
+        posX = ""
+    }
     
+    func posYCommit(){
+        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && posY.isNumeric == true  {
+            let newVal = CGFloat((posY as NSString).floatValue)
+            //Set positionX for every selected string.
+            for id in psdsVM.selectedStrIDList {
+                psdsVM.psdModel.SetPosForString(psdId: psdsVM.selectedPsdId, objId: id, valueX: 0, valueY: newVal, isOnlyX: false, isOnlyY: true)
+            }
+        }
+        posY = ""
+    }
+ 
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
             ScrollView ( .horizontal, showsIndicators: true) {
@@ -87,7 +107,6 @@ struct StringObjectPropertyView: View {
     }
     
     var fontSizeFloatingTextField: some View {
-        
         GeometryReader{ geo in
             HStack{
                 TextField("", text: $fontSize, onCommit: {fontSizeCommit()})
@@ -97,7 +116,28 @@ struct StringObjectPropertyView: View {
                 //
             }.frame(width:geo.size.width * 0.9)
         }
-
+    }
+    
+    var posXFloatingTextField: some View {
+        GeometryReader{ geo in
+            HStack{
+                TextField("", text: $posX, onCommit: {posXCommit()})
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .background(Color.black)
+                //
+            }.frame(width:geo.size.width * 0.9)
+        }
+    }
+    
+    var posYFloatingTextField: some View {
+        GeometryReader{ geo in
+            HStack{
+                TextField("", text: $posY, onCommit: {posYCommit()})
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .background(Color.black)
+                //
+            }.frame(width:geo.size.width * 0.9)
+        }
     }
     
     var body: some View {
@@ -135,10 +175,8 @@ struct StringObjectPropertyView: View {
                             fontSizeFloatingTextField
                                 .onTapGesture {
                                     fontSize = ""
-                                    fontSizeOpecity = 1
                                 }
-                                .opacity(fontSizeOpecity)
-
+                                .opacity(fontSize == "" ? 0.6:1)
                         )
                         
                 }
@@ -186,13 +224,31 @@ struct StringObjectPropertyView: View {
                 }
                 
                 
-//                HStack{
-//                    Text("Bounds")
-//                        .foregroundColor(Color.gray)
-//                        .frame(width:80, alignment: .topLeading)
+                HStack{
+                    Text("Position")
+                        .foregroundColor(Color.gray)
+                        .frame(width:80, alignment: .topLeading)
+                    Text( " \(Int(GetLastSelectObject().stringRect.minX.rounded())) " )
+                        .frame(width: 40).background(Color.black)
+                        .overlay(
+                            posXFloatingTextField
+                                .onTapGesture {
+                                    posX = ""
+                                }
+                                .opacity(posX == "" ? 0.6:1)
+                        )
+                    Text( " \(Int(GetLastSelectObject().stringRect.minY.rounded())) " )
+                        .frame(width: 40).background(Color.black)
+                        .overlay(
+                            posYFloatingTextField
+                                .onTapGesture {
+                                    posY = ""
+                                }
+                                .opacity(posY == "" ? 0.6:1)
+                        )
 //                    Text("X: \(Int(GetLastSelectObject().stringRect.minX.rounded() )), Y: \(Int(GetLastSelectObject().stringRect.minY.rounded())), W: \(Int(GetLastSelectObject().stringRect.width.rounded() )), H: \(Int(GetLastSelectObject().stringRect.height.rounded()))")
 //                        .frame(width:200, alignment: .topLeading)
-//                }
+                }
                 
                 StringComponents()
                 

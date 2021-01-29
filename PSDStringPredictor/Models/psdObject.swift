@@ -153,6 +153,20 @@ struct PSD {
         return jsonString
     }
     
+    mutating func SetPosForString(psdId: Int, objId: UUID, valueX: CGFloat, valueY: CGFloat, isOnlyX: Bool, isOnlyY: Bool){
+        var newRect = GetPSDObject(psdId: psdId)?.GetStringObjectFromOnePsd(objId: objId)?.stringRect
+        if isOnlyX == true {
+            newRect = CGRect.init(x: valueX, y: newRect!.minY, width: newRect!.width, height: newRect!.height)
+        }
+        else if isOnlyY == true {
+            newRect = CGRect.init(x: newRect!.minX, y: valueY, width: newRect!.width, height: newRect!.height)
+        }
+        else if isOnlyX == false && isOnlyY == false {
+            newRect = CGRect.init(x: valueX, y: valueY, width: newRect!.width, height: newRect!.height)
+        }
+        SetRect(psdId: psdId, objId: objId, value: newRect!)
+    }
+    
     mutating func SetStatusForString(psdId: Int, objId: UUID, value: StringObjectStatus){
         var psd = GetPSDObject(psdId: psdId)
         if psd != nil {

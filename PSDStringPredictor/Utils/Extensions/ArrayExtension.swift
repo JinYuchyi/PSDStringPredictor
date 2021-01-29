@@ -94,3 +94,32 @@ extension Array where Element == CGFloat {
         return CIColor.init(red: self[0], green: self[1], blue: self[2], alpha: self[3])
     }
 }
+
+extension Array where Element == CGRect{
+    func merge() -> CGRect {
+        var minx: CGFloat = 10000
+        var miny: CGFloat = 10000
+        var maxx: CGFloat = 0
+        var maxy: CGFloat = 0
+        
+        if self.count == 0 {
+            return CGRect.init()
+        }
+        
+        for rect in self {
+            if rect.minX < minx {
+                minx = rect.minX
+            }
+            if rect.minY < miny {
+                miny = rect.minY
+            }
+            if rect.maxX > maxx {
+                maxx = rect.maxX
+            }
+            if rect.maxY > maxy {
+                maxy = rect.maxY
+            }
+        }
+        return CGRect.init(x: minx, y: miny, width: maxx + minx, height: maxy + miny)
+    }
+}
