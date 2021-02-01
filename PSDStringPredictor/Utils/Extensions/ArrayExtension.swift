@@ -122,4 +122,13 @@ extension Array where Element == CGRect{
         }
         return CGRect.init(x: minx, y: miny, width: maxx + minx, height: maxy + miny)
     }
+    
+    func offset(offset: CGPoint) -> [CGRect] {
+        var result: [CGRect] = []
+        for elem in self{
+            let tmpRect = CGRect.init(x: elem.minX + offset.x, y: elem.minY + offset.y, width: elem.width, height: elem.height)
+            result.append(tmpRect)
+        }
+        return result
+    }
 }

@@ -144,8 +144,44 @@ class PsdsVM: ObservableObject{
             result += tmpList
             psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
             IndicatorText = ""
-
         }
+    }
+    
+    func fetchRegionString(regionImage: CIImage, offset: CGPoint, psdId: Int){
+        var result: [StringObject] = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .normal})
+        var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
+        img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
+//        img.ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath().appending("/test.png")))
+
+        let newList = self.ocr.CreateAllStringObjects(rawNSImage: selectedNSImage, processedCIImage: img, psdId: psdId, psdsVM: self, offset: offset)
+        if newList.count == 0{return }
+        //Apply offset
+//        var offsetedNewList: [StringObject] = []
+//        for obj in newList{
+//            var tmpObj = obj
+//            tmpObj.stringRect = CGRect.init(x: obj.stringRect.minX + offset.x, y: selectedNSImage.size.height - (obj.stringRect.minY + tmpObj.stringRect.height + offset.y), width: obj.stringRect.width, height: obj.stringRect.height)
+//            var _charRects : [CGRect] = []
+//            for cRect in obj.charRects {
+//                _charRects.append(CGRect.init(x: cRect.minX + offset.x, y: selectedNSImage.size.height - (cRect.minY + tmpObj.stringRect.height + offset.y), width:  cRect.width, height:  cRect.height))
+//            }
+//            tmpObj.charRects = _charRects
+//            offsetedNewList.append(tmpObj)
+//        }
+        print("\(newList.count), \(newList[0].content), \(newList[0].stringRect)")
+        DispatchQueue.main.async{ [self] in
+            //if region already have string object exist, just remove the old ones.
+            for newObj in newList{
+                for preObj in result{
+                    if preObj.stringRect.intersects(newObj.stringRect) == true{
+                        result.removeAll(where: {$0.id == preObj.id})
+                    }
+                }
+            }
+            result += newList
+            psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
+            IndicatorText = ""
+        }
+
     }
     
     func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
@@ -259,9 +295,11 @@ class PsdsVM: ObservableObject{
         }
     }
     
+    
+    
     func ProcessForOnePsd(){
         
-        if selectedNSImage == nil || selectedNSImage.size.width == 0 {
+        if  selectedNSImage.size.width == 0 {
             return
         }
         
@@ -276,7 +314,7 @@ class PsdsVM: ObservableObject{
     }
     
     func ProcessForAll(){
-        if  selectedNSImage == nil || selectedNSImage.size.width == 0 {
+        if   selectedNSImage.size.width == 0 {
             return
         }
         

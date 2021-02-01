@@ -51,7 +51,7 @@ struct ContentView: View  {
          ZStack{
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
-                    ImageView(psds: psdsVM)
+                    ImageView(psds: psdsVM, regionVM: regionProcessVM)
 
                     Group{
                         LabelsOnImage(psdsVM: psdsVM)

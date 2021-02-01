@@ -340,8 +340,6 @@ struct PSD {
             var tmpObj = psdObjects.first(where: {$0.id == psdId})!
             tmpObj.stringObjects.removeAll()
             tmpObj.stringObjects += objs
-            //            psdObjects.removeAll(where: {$0.id == tmpObj.id})
-            //            psdObjects.append(tmpObj)
             let _index = psdObjects.firstIndex(where: {$0.id == tmpObj.id})
             psdObjects.removeAll(where: {$0.id == tmpObj.id})
             psdObjects.insert(tmpObj, at: _index!)

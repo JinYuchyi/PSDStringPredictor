@@ -17,7 +17,6 @@ extension CGRect: Hashable{
     
     func IsSame(target rect: CGRect) -> Bool {
         if ( abs(self.midX - rect.midX) < 20 && abs(self.midY - rect.midY) < 20 ) {
-
             return true
         }
         

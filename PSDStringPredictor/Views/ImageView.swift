@@ -19,6 +19,7 @@ struct ImageView: View {
     //@ObservedObject var imageVM: ImageVM
     //    @Binding var showImage: Bool
     @ObservedObject var psds: PsdsVM
+    @ObservedObject var regionVM: RegionProcessVM
     
     var body: some View{
         
@@ -28,7 +29,8 @@ struct ImageView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             SelectionOverlayView( psdsVM: psds)
-            
+            RegionProcessOverlayView(psdsVM: psds, regionProcessVM: regionVM)
+                .IsHidden(condition: regionVM.regionActive)
         }
         
     }

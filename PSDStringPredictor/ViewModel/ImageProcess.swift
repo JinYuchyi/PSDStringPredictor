@@ -389,10 +389,24 @@ final class ImageStore {
     
 }
 
+func SourceInCompositing(bgImage: CIImage, maskImage: CIImage)-> CIImage? {
+    let filter = CIFilter(name: "CISourceInCompositing")
+    filter?.setValue(maskImage, forKey: "inputImage")
+    filter?.setValue(bgImage, forKey: "inputBackgroundImage")
+    let filteredImage = filter?.outputImage
+    return filteredImage
+}
+
+func Multiply(bgImage: CIImage, maskImage: CIImage)-> CIImage? {
+    let filter = CIFilter(name: "CIMultiplyBlendMode")
+    filter?.setValue(maskImage, forKey: "inputImage")
+    filter?.setValue(bgImage, forKey: "inputBackgroundImage")
+    let filteredImage = filter?.outputImage
+    return filteredImage
+}
+
 func ChangeGamma(_ image: CIImage, _ value: CGFloat) -> CIImage? {
-    //print("Change gamma value: \(value)")
     let filter = CIFilter(name: "CIGammaAdjust")
-    //let ciImage = CIImage(image: #imageLiteral(resourceName: "image"))
     filter?.setValue(image, forKey: kCIInputImageKey)
     filter?.setValue(value, forKey: "inputPower")
     let filteredImage = filter?.outputImage

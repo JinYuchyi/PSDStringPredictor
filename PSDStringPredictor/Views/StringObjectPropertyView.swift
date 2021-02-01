@@ -215,7 +215,9 @@ struct StringObjectPropertyView: View {
 
                     if psdsVM.selectedStrIDList.count > 0{
                         Text("\(Int((GetLastSelectObject().color.components![0] * 255).rounded())), \(Int((GetLastSelectObject().color.components![1] * 255).rounded())), \(Int((GetLastSelectObject().color.components![2] * 255).rounded()))")
+                        //Text("􀜊")
                     }
+                    
 
                 }.onTapGesture {
                     if psdsVM.selectedStrIDList.count > 0 {

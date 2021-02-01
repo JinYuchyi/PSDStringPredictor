@@ -10,7 +10,8 @@ import SwiftUI
 
 struct SelectionOverlayView: View {
     @ObservedObject var interactive = interactiveViewModel
-    @ObservedObject var psdsVM : PsdsVM    
+    @ObservedObject var psdsVM : PsdsVM
+//    @ObservedObject var regionVM: RegionProcessVM
     @State var startPos = CGPoint.zero
     @State var endPos = CGPoint.zero
     @State var width: CGFloat = 0
@@ -31,9 +32,12 @@ struct SelectionOverlayView: View {
                             interactive.selectionRect = interactive.selectionRect.standardized
                         }
                         .onEnded{ value in
-                            show = false
-                            endPos = value.location
-                            CalcSelectedObject()
+                                //Selection mode for select string
+                                show = false
+                                endPos = value.location
+                                CalcSelectedObject()
+                            
+          
                         }
                 )
                 .gesture(

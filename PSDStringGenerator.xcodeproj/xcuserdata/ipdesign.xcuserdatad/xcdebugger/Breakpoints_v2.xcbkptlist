@@ -256,7 +256,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
             endingLineNumber = "136"
-            landmarkName = "CreateAllStringObjects(rawNSImage:processedCIImage:psdId:psdsVM:)"
+            landmarkName = "CreateAllStringObjects(rawNSImage:processedCIImage:psdId:psdsVM:offset:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -286,8 +286,8 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "CreatePSDForOnePSD(_id:saveToPath:)"
             landmarkType = "7">
          </BreakpointContent>

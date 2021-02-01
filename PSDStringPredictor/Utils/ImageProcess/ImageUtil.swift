@@ -121,15 +121,15 @@ class ImageUtil{
 
     func ApplyBlockMasks(target: CIImage, psdId: Int, rectDict: [Int:[charRectObject]]) -> CIImage{
         var result: CIImage = target
-
         if rectDict[psdId] == nil || rectDict[psdId]!.count == 0{
             return target
         }
-   
+        let wholeRect = CGRect.init(x: 0, y: 0, width: target.extent.width, height: target.extent.height)
         for rectObj in rectDict[psdId]!{
-            result = AddRectangleMask(BGImage: (result), PositionX: rectObj.rect.minX, PositionY: rectObj.rect.minY, Width: rectObj.rect.width, Height: rectObj.rect.height, MaskColor: rectObj.color.toCIColor())
+            if wholeRect.contains(rectObj.rect){
+                result = AddRectangleMask(BGImage: (result), PositionX: rectObj.rect.minX, PositionY: rectObj.rect.minY, Width: rectObj.rect.width, Height: rectObj.rect.height, MaskColor: rectObj.color.toCIColor())
+            }
         }
-        
         return result
         
     }
