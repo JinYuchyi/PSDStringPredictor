@@ -35,29 +35,27 @@ struct RegionProcessOverlayView: View {
                         }
                         .onEnded{ value in
                             regionEndPos =  value.location
-                            //TODO: Render rengion
-                            let cropRect = CGRect.init(x: interactive.selectionRect.minX, y: psdsVM.selectedNSImage.size.height - interactive.selectionRect.minY, width: interactive.selectionRect.width, height: -interactive.selectionRect.height)
-                            let regionImg = psdsVM.processedCIImage.cropped(to: cropRect.standardized)
+                            let cropRect = CGRect.init(x: interactive.selectionRect.minX, y: psdsVM.selectedNSImage.size.height - interactive.selectionRect.minY, width: interactive.selectionRect.width, height: -interactive.selectionRect.height).standardized
+                            let regionImg = psdsVM.processedCIImage.cropped(to: cropRect)
                             let maskedImage = regionProcessVM.fetchOverlayedImage(regionRect: cropRect, targetImage: psdsVM.selectedNSImage.ToCIImage()!)
 
-                            psdsVM.fetchRegionString(regionImage: maskedImage, offset: CGPoint.init(x: 0, y: 0), psdId: psdsVM.selectedPsdId)
+                            var offset = CGPoint.init(x: cropRect.minX, y: cropRect.minY)
+                            psdsVM.fetchRegionString(regionImage: regionImg, offset: offset, psdId: psdsVM.selectedPsdId)
                             
-//                            let tmpPath = GetDocumentsPath().appending("/test.png")
+//                            let tmpPath = GetDocumentsPath().appending("/test.bmp")
 //                            maskedImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
     
                         }
                 )
-                .mask(Rectangle()
-                        .position(x: interactive.selectionRect.minX , y: interactive.selectionRect.minY )
-                        .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height, alignment: .topLeading)
+                .mask(
+                    Rectangle()
+                        //interactive.selectionRect
+                        .fill(Color.green.opacity(0.5))
+                        .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
+                        .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
                 )
 
             
-            Rectangle()
-                //interactive.selectionRect
-                .fill(Color.green.opacity(0.3))
-                .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
-                .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
                          
             
         }

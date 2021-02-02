@@ -20,9 +20,12 @@ extension NSColor{
      }
     
     func ToColor()->Color{
-        
         let c = Color.init(red: Double(self.redComponent * 255), green: Double(self.greenComponent * 255), blue: Double(self.blueComponent * 255))
         return c
+    }
+    
+    func toCIColor() -> CIColor{
+        return CIColor.init(color: self) ?? CIColor.init()
     }
     
     func getHSV() -> (CGFloat, CGFloat, CGFloat){

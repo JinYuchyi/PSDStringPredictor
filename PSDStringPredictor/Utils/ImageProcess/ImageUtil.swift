@@ -15,7 +15,7 @@ import Vision
 class ImageUtil{
     let ocr = OCR()
     let pixelProcess = PixelProcess()
-
+    
     
     private func attributedTextImageGenerator(inputText: NSAttributedString, inputScaleFactor: NSNumber = 1) -> CIFilter? {
         guard let filter = CIFilter(name: "CIAttributedTextImageGenerator") else {
@@ -27,19 +27,19 @@ class ImageUtil{
         //print("filter.inputKeys: \(filter.inputKeys)")
         return filter
     }
-
+    
     func RenderTextToImage(Content str: String, Color color: NSColor, Size size: CGFloat ) -> CIImage{
         //var mystr = str
         let myfont = CTFontCreateWithName("SFPro-Medium" as CFString, size, nil)
-
+        
         let attrString = NSAttributedString(string: str, attributes: [NSAttributedString.Key.foregroundColor: color, NSAttributedString.Key.font: myfont, NSAttributedString.Key.expansion: 0 ])
-
+        
         let filter = attributedTextImageGenerator(inputText: attrString, inputScaleFactor: NSNumber.init(value: 1))
         let newimg = filter!.outputImage!
         
         return newimg
     }
-
+    
     func ImageOntop(OverlayImage img1: CIImage, BGImage img2: CIImage, OffsetX x: CGFloat = 0, OffsetY y: CGFloat = 0) ->CIImage {
         //Filter Creation
         let filter = CIFilter(name: "CISourceOverCompositing")
@@ -53,72 +53,72 @@ class ImageUtil{
     
     func AddRectangleMask(BGImage img:  CIImage, PositionX x: CGFloat, PositionY y: CGFloat, Width w: CGFloat, Height h: CGFloat, MaskColor color: CIColor) -> CIImage{
         //Create mask
-//        let pixelProcess = PixelProcess()
-//        let nsC = pixelProcess.colorAt(x: Int(x), y: Int(y), img: img.ToCGImage()!)
-//        let c: CIColor = CIColor.init(red: nsC.redComponent, green: nsC.greenComponent, blue: nsC.blueComponent)
+        //        let pixelProcess = PixelProcess()
+        //        let nsC = pixelProcess.colorAt(x: Int(x), y: Int(y), img: img.ToCGImage()!)
+        //        let c: CIColor = CIColor.init(red: nsC.redComponent, green: nsC.greenComponent, blue: nsC.blueComponent)
         
         var mask = CIImage.init(color: color)
         let rect = CGRect(x: 0, y: 0, width: w, height: h)
         mask = mask.cropped(to: rect)
-
+        
         let res = ImageOntop(OverlayImage: mask, BGImage: img, OffsetX: x, OffsetY: y)
         
         return res
     }
     
-//    func AddRectangleMask(BGImage img: inout CIImage, Rects rects: [CGRect], MaskColor color: CIColor) -> CIImage{
-//        for i in 0..<rects.count{
-//            //Create mask
-//            var mask = CIImage.init(color: color)
-//            //let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
-//            mask = mask.cropped(to: rects[i])
-//            return  ImageOntop(OverlayImage: mask, BGImage: img )
-//        }
-//
-//    }
+    //    func AddRectangleMask(BGImage img: inout CIImage, Rects rects: [CGRect], MaskColor color: CIColor) -> CIImage{
+    //        for i in 0..<rects.count{
+    //            //Create mask
+    //            var mask = CIImage.init(color: color)
+    //            //let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+    //            mask = mask.cropped(to: rects[i])
+    //            return  ImageOntop(OverlayImage: mask, BGImage: img )
+    //        }
+    //
+    //    }
     
     func imageDataProperties(_ imageData: Data) -> NSDictionary? {
         if let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil)
         {
-          if let dictionary = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) {
-            return dictionary
-          }
+            if let dictionary = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) {
+                return dictionary
+            }
         }
         return nil
-      }
+    }
     
     static func GetImageProperty(keyName: String, path: String) -> String{
-
+        
         let url = URL.init(fileURLWithPath: path)
-
+        
         var imageData: NSData =  NSData.init()
-            do{
-                try imageData = NSData.init(contentsOf: url)
-            }catch{
-                print("Image data generate error in getting DPI function.")
-            }
-            
-
+        do{
+            try imageData = NSData.init(contentsOf: url)
+        }catch{
+            print("Image data generate error in getting DPI function.")
+        }
+        
+        
         let imageSource = CGImageSourceCreateWithData(imageData, nil)
         let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource!, 0, nil) as? [String: Any]
         let dpi = metaData![keyName] as! String
         print(dpi)
-            return dpi
-
+        return dpi
+        
     }
     
     func ApplyFilters(target: CIImage, gamma: CGFloat, exp: CGFloat)->CIImage{
         if (target.IsValid()){
             var tmp = ChangeGamma(target, gamma)!
             tmp = ChangeExposure(tmp, exp)!
-//            if isConvolution == true{
-//                tmp = SetConv(tmp)!
-//            }
+            //            if isConvolution == true{
+            //                tmp = SetConv(tmp)!
+            //            }
             return tmp
         }
         return target
     }
-
+    
     func ApplyBlockMasks(target: CIImage, psdId: Int, rectDict: [Int:[charRectObject]]) -> CIImage{
         var result: CIImage = target
         if rectDict[psdId] == nil || rectDict[psdId]!.count == 0{
@@ -137,11 +137,35 @@ class ImageUtil{
     static func sizeForImageAtURL(url: NSURL) -> CGSize? {
         guard let imageReps = NSBitmapImageRep.imageReps(withContentsOf: url as URL) else { return nil }
         return imageReps.reduce(CGSize.zero, { (size: CGSize, rep: NSImageRep) -> CGSize in
-                return CGSize(width: max(size.width, CGFloat(rep.pixelsWide)), height: max(size.height, CGFloat(rep.pixelsHigh)))
-            })
-        }
-
+            return CGSize(width: max(size.width, CGFloat(rep.pixelsWide)), height: max(size.height, CGFloat(rep.pixelsHigh)))
+        })
+    }
     
+    private func StringColorMode(img: CIImage) -> MacColorMode {
+        let bw = SetGrayScale(img)
+                let tmpPath = GetDocumentsPath().appending("/bw.bmp")
+        bw!.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
+        let colorMode = ColorModeClassifier(image: img)
+        let result = colorMode.Prediction(image: bw!)
+        print(result)
+        if result == 1 {
+            return .light
+        }else{
+            return .dark
+        }
+    }
+    
+    func backgroundColor(img: CIImage) -> NSColor {
+        //img correct
+        let mode = StringColorMode(img:img)
+        if mode == .light {
+            print("max: \(Maximum(img).color)")
+            return Maximum(img).color
+        }else {
+            print("min: \(Minimun(img).color)")
+            return Minimun(img).color
+        }
+    }
     
     
     

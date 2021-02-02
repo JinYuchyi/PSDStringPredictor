@@ -75,7 +75,7 @@ class ColorModeClassifier{
         //}
     }
     
-    private func Prediction( image: CIImage ){
+    func Prediction( image: CIImage ) -> Int{
         //DispatchQueue.global(qos: .userInitiated).async {
             let handler = VNImageRequestHandler(ciImage: image, orientation: .up)
             do {
@@ -89,6 +89,7 @@ class ColorModeClassifier{
                 print("Failed to perform classification.\n\(error.localizedDescription)")
             }
         //}
+        return output
     }
 }
 

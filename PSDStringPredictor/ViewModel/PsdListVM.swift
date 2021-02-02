@@ -39,8 +39,8 @@ class PsdsVM: ObservableObject{
     //@Published var maskColorDict: [Int:[CGColor]]  = [:]
     @Published var stringIsOn: Bool = true
     
-   
-
+    
+    
     
     let imageUtil = ImageUtil()
     let pixProcess = PixelProcess()
@@ -125,12 +125,12 @@ class PsdsVM: ObservableObject{
     
     func FetchStringObjects(psdId: Int){
         var result: [StringObject] = []
-
+        
         let tmpImageUrl = self.psdModel.GetPSDObject(psdId: psdId)?.imageURL
         var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
         img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        let allStrObjs = self.ocr.CreateAllStringObjects(rawNSImage: selectedNSImage, processedCIImage: img, psdId: psdId, psdsVM: self)
+        let allStrObjs = self.ocr.CreateAllStringObjects(rawNSImage: NSImage.init(contentsOfFile: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)!, processedCIImage: img, psdId: psdId, psdsVM: self)
         DispatchQueue.main.async{ [self] in
             var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
             for obj in allStrObjs {
@@ -151,23 +151,27 @@ class PsdsVM: ObservableObject{
         var result: [StringObject] = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .normal})
         var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-//        img.ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath().appending("/test.png")))
-
+        img.ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath().appending("/test.png")))
+        
         let newList = self.ocr.CreateAllStringObjects(rawNSImage: selectedNSImage, processedCIImage: img, psdId: psdId, psdsVM: self, offset: offset)
-        if newList.count == 0{return }
+        if newList.count == 0{
+            print("No strings detected in the area.")
+            return
+            
+        }
         //Apply offset
-//        var offsetedNewList: [StringObject] = []
-//        for obj in newList{
-//            var tmpObj = obj
-//            tmpObj.stringRect = CGRect.init(x: obj.stringRect.minX + offset.x, y: selectedNSImage.size.height - (obj.stringRect.minY + tmpObj.stringRect.height + offset.y), width: obj.stringRect.width, height: obj.stringRect.height)
-//            var _charRects : [CGRect] = []
-//            for cRect in obj.charRects {
-//                _charRects.append(CGRect.init(x: cRect.minX + offset.x, y: selectedNSImage.size.height - (cRect.minY + tmpObj.stringRect.height + offset.y), width:  cRect.width, height:  cRect.height))
-//            }
-//            tmpObj.charRects = _charRects
-//            offsetedNewList.append(tmpObj)
-//        }
-        print("\(newList.count), \(newList[0].content), \(newList[0].stringRect)")
+        //        var offsetedNewList: [StringObject] = []
+        //        for obj in newList{
+        //            var tmpObj = obj
+        //            tmpObj.stringRect = CGRect.init(x: obj.stringRect.minX + offset.x, y: selectedNSImage.size.height - (obj.stringRect.minY + tmpObj.stringRect.height + offset.y), width: obj.stringRect.width, height: obj.stringRect.height)
+        //            var _charRects : [CGRect] = []
+        //            for cRect in obj.charRects {
+        //                _charRects.append(CGRect.init(x: cRect.minX + offset.x, y: selectedNSImage.size.height - (cRect.minY + tmpObj.stringRect.height + offset.y), width:  cRect.width, height:  cRect.height))
+        //            }
+        //            tmpObj.charRects = _charRects
+        //            offsetedNewList.append(tmpObj)
+        //        }
+        //        print("\(newList.count), \(newList[0].content), \(newList[0].stringRect)")
         DispatchQueue.main.async{ [self] in
             //if region already have string object exist, just remove the old ones.
             for newObj in newList{
@@ -181,7 +185,7 @@ class PsdsVM: ObservableObject{
             psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
             IndicatorText = ""
         }
-
+        
     }
     
     func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
@@ -191,7 +195,7 @@ class PsdsVM: ObservableObject{
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
     
-
+    
     
     //MARK: Intents
     
@@ -245,9 +249,9 @@ class PsdsVM: ObservableObject{
         
         for d in resultIDList{
             tmpPsd.stringObjects.removeAll(where: {$0.id == d.key})
-
+            
         }
-
+        
         tmpPsd.stringObjects.append(resultObj)
         selectedStrIDList.append(resultObj.id)
         psdModel.psdObjects.removeAll(where: {$0.id == psdId})
@@ -457,7 +461,7 @@ class PsdsVM: ObservableObject{
             let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
             bgClolorList.append(tmpBGColor)
         }
-
+        
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: saveToPath , descentOffset: descentOffset)
         
         if success == true{
@@ -633,7 +637,7 @@ class PsdsVM: ObservableObject{
         
     }
     
-
+    
     func SaveDocument(){
         let relatedData = RelatedDataJsonObject.init(selectedPsdId: selectedPsdId, gammaDict: gammaDict, expDict: expDict, DragOffsetDict: DragOffsetDict, selectedStrIDList: selectedStrIDList, maskDict: maskDict, stringIsOn: stringIsOn)
         let str = psdModel.ConstellateJsonString(relatedDataJsonObject: relatedData)

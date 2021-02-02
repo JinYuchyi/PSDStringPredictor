@@ -255,29 +255,23 @@ class PixelProcess{
     }
     
     func colorAt(x: Int, y: Int, img: CGImage)->NSColor {
-        
+//        img.ToCIImage().ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath() + "/imgInColorAt.bmp"))
         let context = self.createBitmapContext(img: img)
         //let colorSpace: NSColorSpace = .genericRGB
         var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
 
-
-//        assert(0<=x && x < context.width)
-//        assert(0<=y && y < context.height)
         if (x < 0 || x >= context.width || y < 0 || y >= context.height){
             return color
         }
         
         guard let pixelBuffer = context.data else { return color }
         let data = pixelBuffer.bindMemory(to: UInt8.self, capacity: context.width * context.height)
-        
         let offset = 4 * (y * context.width + x)
         let alpha: UInt8 = data[offset]
         let red: UInt8 = data[offset+1]
         let green: UInt8 = data[offset+2]
         let blue: UInt8 = data[offset+3]
-        
         color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
-        
         return color
     }
     
@@ -291,7 +285,9 @@ class PixelProcess{
         let bitmapByteCount = bitmapBytesPerRow * Int(pixelsHigh)
         
         // Use the generic RGB color space.
+//        let colorSpace = CGColorSpaceCreateDeviceRGB()
         let colorSpace = CGColorSpaceCreateDeviceRGB()
+
         
         // Allocate memory for image data. This is the destination in memory
         // where any drawing to the bitmap context will be rendered.

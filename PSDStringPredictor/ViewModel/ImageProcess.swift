@@ -397,6 +397,14 @@ func SourceInCompositing(bgImage: CIImage, maskImage: CIImage)-> CIImage? {
     return filteredImage
 }
 
+func SourceOverCompositing(inputImage: CIImage, inputBackgroundImage: CIImage) -> CIImage?{
+    let filter = CIFilter(name: "CISourceOverCompositing")
+    filter?.setValue(inputImage, forKey: "inputImage")
+    filter?.setValue(inputBackgroundImage, forKey: "inputBackgroundImage")
+    let filteredImage = filter?.outputImage
+    return filteredImage
+}
+
 func Multiply(bgImage: CIImage, maskImage: CIImage)-> CIImage? {
     let filter = CIFilter(name: "CIMultiplyBlendMode")
     filter?.setValue(maskImage, forKey: "inputImage")
@@ -440,7 +448,7 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
     return filteredImage
 }
 
-func Maximum(_ image: CIImage) -> (NSColor, CIImage){
+func Maximum(_ image: CIImage) -> (color: NSColor, image: CIImage){
     let pixelProcess = PixelProcess()
     //let colorSpace: NSColorSpace = .genericRGB
     var color: NSColor = NSColor.init(srgbRed: 1, green: 0, blue: 1, alpha: 1)
@@ -458,9 +466,9 @@ func Maximum(_ image: CIImage) -> (NSColor, CIImage){
     return (color, filteredImage)
 }
 
-func Minimun(_ image: CIImage) -> (NSColor, CIImage){
+func Minimun(_ image: CIImage) -> (color: NSColor, image: CIImage){
     let pixelProcess = PixelProcess()
-    //let colorSpace: NSColorSpace = .genericRGB
+//    let colorSpace: NSColorSpace = .genericRGB
     var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
     var filteredImage = CIImage.init()
     if image.extent.width > 0 {
@@ -470,10 +478,13 @@ func Minimun(_ image: CIImage) -> (NSColor, CIImage){
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         
-        filteredImage = filter.outputImage ?? CIImage.init()
-        //let img = filteredImage!.ToCGImage()
+        filteredImage = filter.outputImage ?? CIImage.init() //Result Correct
+        //filteredImage is correct
         if filteredImage.IsValid() == true{
             color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
+            print("Color: \(color)")
+//            let tmpPath2 = GetDocumentsPath().appending("/mini.bmp")
+//            filteredImage.ToCGImage()!.ToCIImage().ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
             return (color,filteredImage)
             
         }

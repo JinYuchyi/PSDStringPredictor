@@ -51,7 +51,7 @@ class CharColorModeClassifier{
                 // Display top classifications ranked by confidence in the UI.
                 //let topClassifications = classifications.prefix(2)
                 let topClassification = classifications[0]
-                //print("Predict result: \(topClassification.identifier)" )
+                print("Predict result: \(topClassification.identifier)" )
                 if (topClassification.identifier == "light"){
                     result = 1
                 }
@@ -60,12 +60,7 @@ class CharColorModeClassifier{
                 }else{
                     result = -1
                 }
-                
-//                let descriptions = topClassifications.map { classification in
-//                    // Formats the classification for display; e.g. "(0.37) cliff, drop, drop-off".
-//
-//                   return String(format: "  (%.2f) %@", classification.confidence, classification.identifier)
-//                }
+
                 
             }
         //}
@@ -73,6 +68,7 @@ class CharColorModeClassifier{
     
     func Prediction(fromImage ciImage: CIImage) -> Int{
         //DispatchQueue.global(qos: .userInitiated).async {
+        
             let handler = VNImageRequestHandler(ciImage: ciImage, orientation: .up)
             do {
                 try handler.perform([self.classificationRequest])

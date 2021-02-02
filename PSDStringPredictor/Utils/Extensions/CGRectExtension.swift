@@ -48,4 +48,8 @@ extension CGRect: Hashable{
     func ToCIVector() -> CIVector{
         return CIVector.init(x: self.minX, y: self.minY, z: self.width, w: self.height)
     }
+    
+    func offset(offset: CGPoint) -> CGRect{
+        return CGRect.init(x: self.minX + offset.x, y: self.minY + offset.y, width: self.width, height: self.height)
+    }
 }

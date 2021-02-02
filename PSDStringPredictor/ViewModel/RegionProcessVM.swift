@@ -10,13 +10,13 @@ import Foundation
 import CoreImage
 
 class RegionProcessVM: ObservableObject {
-
+    
     //@Published var regionRect: CGRect = CGRect.init()
-//    @Published var regionOverlay: CIImage = CIImage.init()
+    //    @Published var regionOverlay: CIImage = CIImage.init()
     @Published var regionImageForProcess: CIImage = CIImage.init()
     @Published var regionActive: Bool = false
-//    @Published var targetImageWidth: CGFloat = 0
-//    @Published var targetImageHeight: CGFloat = 0
+    //    @Published var targetImageWidth: CGFloat = 0
+    //    @Published var targetImageHeight: CGFloat = 0
     
     var targetImage: CIImage = CIImage.init()
     
@@ -32,33 +32,53 @@ class RegionProcessVM: ObservableObject {
         let mask2 = imgUtil.ImageOntop(OverlayImage: regionImg2, BGImage: bgImg2, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
         
         return (mask1, mask2)
-//        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
-//        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
+        //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
+        //        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
     }
     
-    func fetchOverlayedImage(regionRect: CGRect, targetImage: CIImage, pixColor: CIColor)->CIImage{
+    func fetchOverlayedImage(regionRect: CGRect, targetImage: CIImage)->CIImage{
+        //TODO: Get area background image
+        let regionImg = targetImage.cropped(to: regionRect)
+        
+        let bgColor = imgUtil.backgroundColor(img: regionImg)
+        print(bgColor)
         var ( maskImg01,  maskImg02) = fetchRegionOverlay(regionRect: regionRect, bgWidth: targetImage.extent.width, bgHeight: targetImage.extent.height)
-        let img1 = Multiply(bgImage: targetImage, maskImage: maskImg01)
-        let bgImg = CIImage.init(color: pixColor ).cropped(to: CGRect.init(x: 0, y: 0, width: targetImage.extent.width, height: targetImage.extent.height))
-        let img2 = Multiply(bgImage: bgImg, maskImage: maskImg02)
-        return Multiply(bgImage: targetImage, maskImage: regionOverlay) ?? targetImage
+        
+        let tmpPath1 = GetDocumentsPath().appending("/regionImg.bmp")
+//        let tmpPath2 = GetDocumentsPath().appending("/test2.bmp")
+        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath1))
+//        maskImg02.ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
+        
+//        let regionImagInTotalSize = Multiply(bgImage: targetImage, maskImage: maskImg01)
+        
+        let bgColoredImg = CIImage.init(color: bgColor.toCIColor()).cropped(to: CGRect.init(x: 0, y: 0, width: targetImage.extent.width, height: targetImage.extent.height))
+        
+        let output = SourceOverCompositing(inputImage: regionImg, inputBackgroundImage: bgColoredImg)!
+        
+//                let tmpPath = GetDocumentsPath().appending("/test1.bmp")
+//                let tmpPath1 = GetDocumentsPath().appending("/test2.bmp")
+        let tmpPath2 = GetDocumentsPath().appending("/test3.bmp")
+        output.ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
+        let tmpPath4 = GetDocumentsPath().appending("/test4.bmp")
+        bgColoredImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath4))
+        return output
     }
     
     //Intent
     func regionBtnPressed() {
-//        FetchTargetImageInfo()
+        //        FetchTargetImageInfo()
         regionActive.toggle()
     }
     
-//    func FetchTargetImageInfo(){
-//        let psdVM = PsdsVM()
-//        print("In fetch: \(psdVM.selectedNSImage.size.width)")
-//
-//        if psdVM.selectedNSImage.size.width > 0{
-//            targetImageWidth = psdVM.selectedNSImage.size.width
-//            targetImageHeight = psdVM.selectedNSImage.size.height
-//            targetImage = psdVM.selectedNSImage.ToCIImage()!
-//        }
-//    }
+    //    func FetchTargetImageInfo(){
+    //        let psdVM = PsdsVM()
+    //        print("In fetch: \(psdVM.selectedNSImage.size.width)")
+    //
+    //        if psdVM.selectedNSImage.size.width > 0{
+    //            targetImageWidth = psdVM.selectedNSImage.size.width
+    //            targetImageHeight = psdVM.selectedNSImage.size.height
+    //            targetImage = psdVM.selectedNSImage.ToCIImage()!
+    //        }
+    //    }
     
 }

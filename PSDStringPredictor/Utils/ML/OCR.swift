@@ -142,7 +142,7 @@ class OCR: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            var newStrObj = StringObject(strs[i], stringsRects[i], chars, charRects, charImageList: rawNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset)))
+            var newStrObj = StringObject(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: rawNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset)))
             newStrObj = DeleteDecent(obj: newStrObj)
             strobjs.append(newStrObj) 
         }

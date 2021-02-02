@@ -20,6 +20,9 @@ extension CIImage{
 //        }else{
 //            return nil
 //        }
+        var colorSpace = CGColorSpaceCreateDeviceRGB()
+        context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: colorSpace)
+        
         return context.createCGImage(self, from: self.extent)
     }
     
@@ -35,7 +38,7 @@ extension CIImage{
             withIntermediateDirectories: true, attributes: nil)
         }
         nsimg.pngWrite(atUrl: URL(fileURLWithPath:path+fileName))
-    
+        
     }
     
     func GetCroppedImages(rects: [CGRect]) -> [CIImage]{
