@@ -133,7 +133,7 @@ struct StringObject : Identifiable,  Hashable{
         self.isPredictedList = sizeFunc.2
     }
     
-    init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [Data], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
+    init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [CIImage], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
         
         self.id = id
         self.content = content
@@ -141,7 +141,7 @@ struct StringObject : Identifiable,  Hashable{
         self.fontSize = fontSize
         self.colorMode = MacColorMode(rawValue: colorMode)!
         self.fontWeight = fontWeight
-        self.charImageList = charImageList.toCIImageList()
+        self.charImageList = charImageList 
         self.stringRect = stringRect
         self.color = color.toCGColor()
         self.bgColor = bgColor.toCGColor()

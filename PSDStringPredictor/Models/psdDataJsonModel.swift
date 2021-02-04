@@ -48,7 +48,7 @@ struct strObjJsonObject: Codable{
     var charArray: [String]
     var charRects: [CGRect]
     var charSizeList: [Int16]
-    var charImageList: [Data]
+//    var charImageList: [Data]
     var charFontWeightList: [String]
     var isPredictedList: [Int]
     //var confidence: CGFloat
@@ -59,6 +59,30 @@ struct strObjJsonObject: Codable{
     var status: String
     var isParagraph: Bool
     var colorPixel: Data
+    
+//    init(){
+//        id = UUID()
+//        content = ""
+//        tracking = 0
+//        fontSize = 0
+//        fontWeight = ""
+//        stringRect = CGRect.init()
+//        color = []
+//        bgColor = []
+//        charArray = []
+//        charRects = []
+//        charSizeList = []
+//        charImageList = []
+//        charFontWeightList = []
+//        isPredictedList = []
+//        colorMode = ""
+//        charColorModeList = []
+//        fontName = ""
+//        alignment = ""
+//        status = ""
+//        isParagraph = false
+//        colorPixel = Data.init()
+//    }
 }
 
 

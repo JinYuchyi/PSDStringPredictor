@@ -151,13 +151,12 @@ class PsdsVM: ObservableObject{
         var result: [StringObject] = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .normal})
         var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        img.ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath().appending("/test.png")))
+//        img.ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath().appending("/test.png")))
         
         let newList = self.ocr.CreateAllStringObjects(rawNSImage: selectedNSImage, processedCIImage: img, psdId: psdId, psdsVM: self, offset: offset)
         if newList.count == 0{
             print("No strings detected in the area.")
             return
-            
         }
         //Apply offset
         //        var offsetedNewList: [StringObject] = []
@@ -270,7 +269,7 @@ class PsdsVM: ObservableObject{
             // in this case, print on the terminal every path
             for result in results {
                 
-                let hasSame = psdModel.psdObjects.contains(where: {$0.imageURL == result})
+                let hasSame = psdModel.psdObjects.map({$0.imageURL}).contains(result)
                 if hasSame == false {
                     let outId = psdModel.addPSDObject(imageURL: result)
                     InitDictForOnePsd(psdId: outId )
@@ -397,12 +396,7 @@ class PsdsVM: ObservableObject{
         var descentOffset : [Float] =  []
         var updateList = psdModel.GetPSDObject(psdId: _id)!.stringObjects.filter{$0.status != .ignored}
         var saveToPath = saveToPath
-        
-        //        for (key,value) in stringObjectStatusDict[_id]!{
-        //            if  value == 2{
-        //                updateList!.removeAll(where: {$0.id == key})
-        //            }
-        //        }
+
         
         for obj in updateList{
             let newString = obj.content.replacingOccurrences(of: "\n", with: " ")
@@ -526,13 +520,6 @@ class PsdsVM: ObservableObject{
         }
         //obj!.color = obj!.CalcColor()
         psdModel.SetColorMode(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: cmode)
-        //        stringObjectVM.SwapLastSelectionWithObject(obj: obj)
-        
-        //            if GetLastSelectObject().colorMode == 1{
-        //                GetLastSelectObject().colorMode = 2
-        //            }else if GetLastSelectObject().colorMode == 2{
-        //                GetLastSelectObject().ToggleColorMode()
-        //            }
         
     }
     
@@ -639,8 +626,7 @@ class PsdsVM: ObservableObject{
     
     
     func SaveDocument(){
-        let relatedData = RelatedDataJsonObject.init(selectedPsdId: selectedPsdId, gammaDict: gammaDict, expDict: expDict, DragOffsetDict: DragOffsetDict, selectedStrIDList: selectedStrIDList, maskDict: maskDict, stringIsOn: stringIsOn)
-        let str = psdModel.ConstellateJsonString(relatedDataJsonObject: relatedData)
+
         let panel = NSSavePanel()
         panel.nameFieldLabel = "Save File To:"
         panel.nameFieldStringValue = "filename.stringlayers"
@@ -648,6 +634,8 @@ class PsdsVM: ObservableObject{
         panel.begin { response in
             if response == NSApplication.ModalResponse.OK, let fileUrl = panel.url {
                 do {
+                    let relatedData = RelatedDataJsonObject.init(selectedPsdId: self.selectedPsdId, gammaDict: self.gammaDict, expDict: self.expDict, DragOffsetDict: self.DragOffsetDict, selectedStrIDList: self.selectedStrIDList, maskDict: self.maskDict, stringIsOn: self.stringIsOn)
+                    let str = self.psdModel.ConstellateJsonString(relatedDataJsonObject: relatedData)
                     try str.write(to: fileUrl, atomically: false, encoding: .utf8)
                 }
                 catch {/* error handling here */}

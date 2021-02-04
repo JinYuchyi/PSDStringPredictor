@@ -102,7 +102,7 @@ struct PSD {
         for _psd in psdObjects{
             var strObjDictList : [strObjJsonObject] = []
             for _strObj in _psd.stringObjects {
-                
+                print("Constellating data for psdObject \(_psd.id), stringObject: \(_strObj.content)")
                 let strObj = strObjJsonObject.init(
                     id: _strObj.id,
                     content: _strObj.content,
@@ -115,7 +115,7 @@ struct PSD {
                     charArray: _strObj.charArray.map({String($0)}),
                     charRects: _strObj.charRects,
                     charSizeList: _strObj.charSizeList,
-                    charImageList: _strObj.charImageList.map({$0.toData()}),
+                    //charImageList: [],
                     charFontWeightList: _strObj.charFontWeightList,
                     isPredictedList: _strObj.isPredictedList,
                     colorMode: _strObj.colorMode.rawValue,
@@ -126,7 +126,7 @@ struct PSD {
                     isParagraph: _strObj.isParagraph,
                     colorPixel: _strObj.colorPixel.toData()
                 )
-              
+                
                 strObjDictList.append(strObj)
 
             }
@@ -349,10 +349,16 @@ struct PSD {
     mutating func LoadPsdJsonObject(jsonObject: JsonObject){
         var psdObjList: [PSDObject] = []
         for psdJ in jsonObject.PsdJsonObjectList{
+            let targetImage = CIImage.init(contentsOf: psdJ.imageURL)
             var tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL, thumbnail: NSImage.init(data: psdJ.thumbnail) ?? NSImage.init(), colorMode: MacColorMode.init(rawValue: psdJ.colorMode)!, dpi: psdJ.dpi, status: PsdStatus.init(rawValue: psdJ.status)!)
-            //var strObjList: [StringObject] = []
             for strJ in psdJ.stringObjects{
-                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: strJ.charImageList, stringRect: strJ.stringRect, color: strJ.color, bgColor: strJ.bgColor, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)
+                var charImgList = [CIImage]()
+                for rect in strJ.charRects{
+                    let tmpImg: CIImage = targetImage?.cropped(to: rect) ?? CIImage.init()
+//                    let tmpData = tmpImg.toData()
+                    charImgList.append(tmpImg)
+                }
+                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: charImgList, stringRect: strJ.stringRect, color: strJ.color, bgColor: strJ.bgColor, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)
                 tmpPsd.stringObjects.append(tmpStrObj)
             }
             psdObjList.append(tmpPsd)

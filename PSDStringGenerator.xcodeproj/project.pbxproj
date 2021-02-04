@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3ED0CD16A69BF2CC45C108 /* Pods_PSDStringGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A05D54B042419BE282DD1A4 /* Pods_PSDStringGenerator.framework */; };
 		3F0007BC252EF8AC0047574A /* Csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0007BB252EF8AC0047574A /* Csv.swift */; };
 		3F040A2825A69C4F0054E124 /* StringObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F040A2725A69C4F0054E124 /* StringObjectExtension.swift */; };
 		3F0550D025AEE0C7003AF60A /* MacColorModeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0550CF25AEE0C7003AF60A /* MacColorModeExtension.swift */; };
@@ -134,7 +133,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A05D54B042419BE282DD1A4 /* Pods_PSDStringGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PSDStringGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F0007BB252EF8AC0047574A /* Csv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Csv.swift; sourceTree = "<group>"; };
 		3F040A2725A69C4F0054E124 /* StringObjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectExtension.swift; sourceTree = "<group>"; };
 		3F0550CF25AEE0C7003AF60A /* MacColorModeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacColorModeExtension.swift; sourceTree = "<group>"; };
@@ -270,7 +268,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F66F86F2567BCE800BD48C3 /* PythonKit in Frameworks */,
-				1D3ED0CD16A69BF2CC45C108 /* Pods_PSDStringGenerator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +277,6 @@
 		00ECD81BBE763EB6F1CBC3E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1A05D54B042419BE282DD1A4 /* Pods_PSDStringGenerator.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

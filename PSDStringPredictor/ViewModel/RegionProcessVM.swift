@@ -30,7 +30,6 @@ class RegionProcessVM: ObservableObject {
         let bgImg2 = CIImage.init(color: CIColor.white ).cropped(to: CGRect.init(x: 0, y: 0, width: bgWidth, height: bgHeight))
         let regionImg2 = CIImage.init(color: CIColor.black).cropped(to: CGRect.init(x: 0, y: 0, width: regionRect.width, height: regionRect.height))
         let mask2 = imgUtil.ImageOntop(OverlayImage: regionImg2, BGImage: bgImg2, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
-        
         return (mask1, mask2)
         //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
         //        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
@@ -44,9 +43,9 @@ class RegionProcessVM: ObservableObject {
         print(bgColor)
         var ( maskImg01,  maskImg02) = fetchRegionOverlay(regionRect: regionRect, bgWidth: targetImage.extent.width, bgHeight: targetImage.extent.height)
         
-        let tmpPath1 = GetDocumentsPath().appending("/regionImg.bmp")
+//        let tmpPath1 = GetDocumentsPath().appending("/regionImg.bmp")
 //        let tmpPath2 = GetDocumentsPath().appending("/test2.bmp")
-        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath1))
+//        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath1))
 //        maskImg02.ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
         
 //        let regionImagInTotalSize = Multiply(bgImage: targetImage, maskImage: maskImg01)
@@ -57,10 +56,10 @@ class RegionProcessVM: ObservableObject {
         
 //                let tmpPath = GetDocumentsPath().appending("/test1.bmp")
 //                let tmpPath1 = GetDocumentsPath().appending("/test2.bmp")
-        let tmpPath2 = GetDocumentsPath().appending("/test3.bmp")
-        output.ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
-        let tmpPath4 = GetDocumentsPath().appending("/test4.bmp")
-        bgColoredImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath4))
+//        let tmpPath2 = GetDocumentsPath().appending("/test3.bmp")
+//        output.ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
+//        let tmpPath4 = GetDocumentsPath().appending("/test4.bmp")
+//        bgColoredImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath4))
         return output
     }
     

@@ -82,6 +82,7 @@ extension CIImage{
         }
     }
     
+    //This function will freeze the app when processing a lot of images
     func toData()-> Data{
         return self.ToNSImage().pngData ?? Data.init()
     }
