@@ -39,8 +39,21 @@ class PsdsVM: ObservableObject{
     //@Published var maskColorDict: [Int:[CGColor]]  = [:]
     @Published var stringIsOn: Bool = true
     
-    
-    
+    //For Template stringobject variable
+    //The reason for extract these as individial variables is for speed issue
+    //No bgColorDict, charArrayDict, contentDict, charSizeList, charImageList, charFontWeightList, isPredictedList, charColorModeList, FontName, colorPixel, because we do not need to adjust them frequently
+    @Published var tmpStringObjectList: [StringObject] = []
+//    @Published var tmpStrIDList: [UUID] = []
+//    @Published var trackingDict: [UUID: CGFloat] = [:]
+//    @Published var fontSizeDict: [UUID: CGFloat] = [:]
+//    @Published var fontWeightDict: [UUID: String] = [:]
+//    @Published var stringRectDict: [UUID: CGRect] = [:]
+//    @Published var colorDict: [UUID: CGColor] = [:]
+//    @Published var charRectsDict: [UUID: [CGRect]] = [:]
+//    @Published var colorModeDict: [UUID: MacColorMode] = [:]
+//    @Published var alignmentDict: [UUID: StringAlignment] = [:]
+//    @Published var statusDict: [UUID: StringObjectStatus] = [:]
+//    @Published var isParagraphDict: [UUID: Bool] = [:]
     
     let imageUtil = ImageUtil()
     let pixProcess = PixelProcess()
@@ -194,10 +207,52 @@ class PsdsVM: ObservableObject{
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
     
+    func UnpackPsdObject(psdId: Int) -> Bool {
+        guard let psd = GetSelectedPsd() else {return false}
+        tmpStringObjectList = psd.stringObjects
+        return true
+    }
+    
+    func packPsdObject(psdId: Int) -> Bool {
+        if selectedPsdId != nil && psdModel.GetPSDObject(psdId: psdId) != nil {
+            psdModel.SetStringObjects(psdId: psdId, value: tmpStringObjectList)
+            tmpStringObjectList = []
+            return true
+        }
+        return true
+    }
+    
+    func SetCommit(psdId: Int){
+        psdModel.SetStatusForPsd(psdId: psdId, value: .commited)
+        packPsdObject(psdId: psdId)
+    }
+    
+    func ScanAndBreakFarAwayStringObject(psdId: Int){
+        var newList: [StringObject] = []
+        var breakIndexList : [Int] = []
+        guard let psd = psdModel.GetPSDObject(psdId: psdId) else {return}
+        for strObj in psd.stringObjects {
+            for i in 0..<strObj.charRects.count {
+                if strObj.charArray[i] == " " && i != 0 && i != strObj.charRects.count - 1 {
+                    let dist = strObj.charRects[i+1].minX - strObj.charRects[i-1].maxX
+                    if dist > strObj.charRects[i+1].width * 1.1 {
+                        //Found a gap!
+                        breakIndexList.append(i)
+                    }
+                }
+            }
+        }
+        
+        for ind in breakIndexList {
+            //break
+            //TODO: Break the gap!
+            
+        }
+    }
     
     
     //MARK: Intents
-    
+
     func CombineStringsOnePSD(psdId: Int){
         if selectedStrIDList.count == 0 {return }
         
@@ -275,7 +330,7 @@ class PsdsVM: ObservableObject{
                     InitDictForOnePsd(psdId: outId )
                     
                     if selectedNSImage.size.width == 0{
-                        ThumbnailClicked(psdId: psdModel.psdObjects[0].id)
+                        thumbnailClicked(psdId: psdModel.psdObjects[0].id)
                     }
                     
                 }
@@ -286,8 +341,13 @@ class PsdsVM: ObservableObject{
         }
     }
     
-    func ThumbnailClicked(psdId: Int){
+    func thumbnailClicked(psdId: Int){
+        //When clicking other psd, before jump to that psd, pack string objects first
+        if selectedPsdId != nil {
+            packPsdObject(psdId: selectedPsdId)
+        }
         selectedPsdId = psdId
+        UnpackPsdObject(psdId: psdId)
         if psdModel.psdObjects.contains(where: {psdId == $0.id}) == true {
             selectedNSImage = LoadNSImage(imageUrlPath: GetSelectedPsd()!.imageURL.path)
             UpdateProcessedImage(psdId: psdId)
@@ -626,7 +686,7 @@ class PsdsVM: ObservableObject{
     
     
     func SaveDocument(){
-
+        packPsdObject(psdId: selectedPsdId)
         let panel = NSSavePanel()
         panel.nameFieldLabel = "Save File To:"
         panel.nameFieldStringValue = "filename.stringlayers"
@@ -677,6 +737,7 @@ class PsdsVM: ObservableObject{
             //Process Image
             UpdateProcessedImage(psdId: selectedPsdId)
             
+            UnpackPsdObject(psdId: selectedPsdId)
         }
     }
     
@@ -704,7 +765,7 @@ class PsdsVM: ObservableObject{
     //TODO:
     func CommitAll(){
         for obj in psdModel.psdObjects{
-            psdModel.SetStatusForPsd(psdId: obj.id, value: .commited)
+            SetCommit(psdId: obj.id)
         }
     }
     

@@ -26,7 +26,7 @@ struct psdThumbnailList: View {
                         PsdThumbnail(id: psd.id, psdVM: psdsVM)
                             .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
                             .onTapGesture {
-                                psdsVM.ThumbnailClicked(psdId: psd.id)
+                                psdsVM.thumbnailClicked(psdId: psd.id)
                                 showPatchLayer = false
                             }
                             .border(psdsVM.selectedPsdId == psd.id ? Color.green : Color.gray.opacity(0.2), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
