@@ -130,6 +130,11 @@ struct ControlPanel: View {
                 .padding(.bottom)
                 //.padding(.bottom)
 
+                
+                Button(action: {Debug()}){
+                    Text("Debug")
+                        .frame(minWidth: 50,  maxWidth: .infinity)
+                }
             }
 
         }
@@ -138,31 +143,9 @@ struct ControlPanel: View {
     }
 
     func Debug(){
-        //stringObjectVM.CombineStrings()
-//        let url = URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/PLK_LocoIthildin_TransporterRRU_MRH_O1_201201/Source/ITC_All_TransporterAppHelp_1_2-11/en/OTT/GlobalArt/options_button.psd")
-//        var imageData: NSData =  NSData.init()
-//        do{
-//        try imageData = NSData.init(contentsOf: url)
-//        }catch{}
-//        guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
-//                    let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
-//                    let dpi = metaData["DPIWidth"] as? Int else {
-//                        return
-//                }
-//
-//         print(dpi)
-       
-//        let properties: [String: Any] = imageProcessVM.targetCIImage.properties
-//        print(imageProcessVM.targetCIImage.extent)
-//        let exif = properties["{Exif}"] as! [String: Any]
-//        print(exif)
-        //stringObjectVM.indicatorTitle = "Heyhey"
-        //imageProcessVM.indicatorTitle = "ttest"
-        //imageProcessVM.indicatorTitle += "ttest"
-        //        pixelProcess.FindStrongestColor(img: imageProcessVM.targetCIImage)
-        //        imageProcessVM.FetchImage()
-        //        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageProcessVM.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 3, Height: 3, MaskColor: .red)
-        //        imageProcessVM.SetTargetProcessedImage(tmpImg)
+        var symbolPredict =  SymbolsPredict()
+        symbolPredict.Prediction(ciImage: psdsVM.selectedNSImage.ToCIImage()!)
+//        print (symbolPredict.)
     }
     
 }
