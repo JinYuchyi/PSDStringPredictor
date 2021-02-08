@@ -133,6 +133,33 @@ struct StringObject : Identifiable,  Hashable{
         self.isPredictedList = sizeFunc.2
     }
     
+    init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
+        
+        self.id = id
+//        self.content = content
+        self.tracking = tracking
+        self.fontSize = fontSize
+        self.colorMode = colorMode
+        self.fontWeight = fontWeight
+        self.charImageList = charImageList
+//        self.stringRect = stringRect
+        self.color = color
+        self.bgColor = bgColor
+        self.charArray = charArray
+        self.charRects = charRacts
+        self.charSizeList = charSizeList
+        self.charFontWeightList = charFontWeightList
+        self.charColorModeList = charColorModeList
+        self.isPredictedList = isPredictedList
+        self.FontName = fontName
+        self.alignment = alignment
+        self.status = status
+        self.stringRect = CGRect.init()
+        self.content = String(charArray)
+        self.stringRect = mergeRect(rects: charRacts)
+
+    }
+    
     init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [CIImage], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
         
         self.id = id
@@ -156,7 +183,10 @@ struct StringObject : Identifiable,  Hashable{
         self.status = StringObjectStatus.init(rawValue: status)!
     }
     
-
+    func mergeRect(rects: [CGRect]) -> CGRect{
+        let maxHeight = rects.map({$0.height}).max()!
+        return CGRect.init(x: rects[0].minX, y: rects[0].minY, width: rects.last!.maxX - rects[0].minX, height: maxHeight)
+    }
     
     mutating func CalcColorMode() -> MacColorMode{
         var result = -1

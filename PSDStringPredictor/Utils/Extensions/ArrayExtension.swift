@@ -97,30 +97,38 @@ extension Array where Element == CGFloat {
 
 extension Array where Element == CGRect{
     func merge() -> CGRect {
-        var minx: CGFloat = 10000
-        var miny: CGFloat = 10000
-        var maxx: CGFloat = 0
-        var maxy: CGFloat = 0
-        
-        if self.count == 0 {
-            return CGRect.init()
+//        var minx: CGFloat = 10000
+//        var miny: CGFloat = 10000
+//        var maxx: CGFloat = 0
+//        var maxy: CGFloat = 0
+//
+//        if self.count == 0 {
+//            return CGRect.init()
+//        }
+//
+//        for rect in self {
+//            if rect.minX < minx {
+//                minx = rect.minX
+//            }
+//            if rect.minY < miny {
+//                miny = rect.minY
+//            }
+//            if rect.maxX > maxx {
+//                maxx = rect.maxX
+//            }
+//            if rect.maxY > maxy {
+//                maxy = rect.maxY
+//            }
+//        }
+//        return CGRect.init(x: minx, y: miny, width: maxx + minx, height: maxy + miny)
+        var tmpRect = self[0].standardized
+        for index in 0..<self.count {
+            if index > 0 {
+                let targetRect = self[index].standardized
+                tmpRect = tmpRect.union(targetRect)
+            }
         }
-        
-        for rect in self {
-            if rect.minX < minx {
-                minx = rect.minX
-            }
-            if rect.minY < miny {
-                miny = rect.minY
-            }
-            if rect.maxX > maxx {
-                maxx = rect.maxX
-            }
-            if rect.maxY > maxy {
-                maxy = rect.maxY
-            }
-        }
-        return CGRect.init(x: minx, y: miny, width: maxx + minx, height: maxy + miny)
+        return tmpRect
     }
     
     func offset(offset: CGPoint) -> [CGRect] {
