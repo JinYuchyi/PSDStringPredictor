@@ -29,11 +29,18 @@ extension StringObject{
         if self.charRects.count <= 2 {
             return []
         }
-//        let cArray = self.charArray.map({$0 != " "})
-//        let maxWidth = self.charRects.map({$0.width}).max()!
+        var maxWidth: CGFloat = 0
+        for index in 0..<charArray.count {
+            if charArray[index].isNumber || charArray[index].isLetter {
+                if charRects[index].width > maxWidth {
+                    maxWidth = charRects[index].width
+                }
+            }
+        }
+
         for index in 0..<self.charRects.count {
             if index >= 1 && index < self.charRects.count - 1 && self.charArray[index] == " " {
-                if (self.charRects[index+1].minX - self.charRects[index-1].maxX) > self.charRects[index-1].width {
+                if (self.charRects[index+1].minX - self.charRects[index-1].maxX) > maxWidth {
                     //It is gap
                     print("Gap in \(self.content), index is \(index)")
                     gapIndexList.append(index)
@@ -60,11 +67,11 @@ extension StringObject{
                 
             }
             result.append(tmpObject)
-            print("__count: \(result.count)")
-            for obj in result {
-                print("objs: __ \(obj.content) ")
-
-            }
+//            print("__count: \(result.count)")
+//            for obj in result {
+//                print("objs: __ \(obj.content) ")
+//
+//            }
             
             return result
         }

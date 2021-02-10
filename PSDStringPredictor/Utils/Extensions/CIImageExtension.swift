@@ -4,7 +4,7 @@ import CoreImage
 import AppKit
 
 extension CIImage{
-
+    
     func ToNSImage()->NSImage{
         //ciImage to NSImage
         let rep = NSCIImageRep(ciImage: self)
@@ -15,11 +15,11 @@ extension CIImage{
     
     func ToCGImage() -> CGImage! {
         let context = CIContext()
-//        if context != nil {
-//            return context.createCGImage(self, from: self.extent)
-//        }else{
-//            return nil
-//        }
+        //        if context != nil {
+        //            return context.createCGImage(self, from: self.extent)
+        //        }else{
+        //            return nil
+        //        }
         var colorSpace = CGColorSpaceCreateDeviceRGB()
         context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: colorSpace)
         
@@ -35,7 +35,7 @@ extension CIImage{
         //nsimg.pngWrite(to: URL(fileURLWithPath: path))
         if createPath == true{
             try! FileManager.default.createDirectory(atPath: path,
-            withIntermediateDirectories: true, attributes: nil)
+                                                     withIntermediateDirectories: true, attributes: nil)
         }
         nsimg.pngWrite(atUrl: URL(fileURLWithPath:path+fileName))
         
@@ -59,20 +59,20 @@ extension CIImage{
     }
     
     func ToCGImage(context: CIContext? = nil) -> CGImage? {
-       let ctx = context ?? CIContext(options: nil)
-       return ctx.createCGImage(self, from: self.extent)
+        let ctx = context ?? CIContext(options: nil)
+        return ctx.createCGImage(self, from: self.extent)
     }
-
-//    /// Create an NSImage version of this image
-//    ///
-//    /// - Returns: Converted image, or nil
-//    func asNSImage() -> NSImage? {
-//       let rep = NSCIImageRep(ciImage: self)
-//       let updateImage = NSImage(size: rep.size)
-//       updateImage.addRepresentation(rep)
-//       return updateImage
-//    }
-
+    
+    //    /// Create an NSImage version of this image
+    //    ///
+    //    /// - Returns: Converted image, or nil
+    //    func asNSImage() -> NSImage? {
+    //       let rep = NSCIImageRep(ciImage: self)
+    //       let updateImage = NSImage(size: rep.size)
+    //       updateImage.addRepresentation(rep)
+    //       return updateImage
+    //    }
+    
     func IsValid() -> Bool {
         if self.extent.width > 0{
             return true
@@ -87,6 +87,31 @@ extension CIImage{
         return self.ToNSImage().pngData ?? Data.init()
     }
     
-   
-
+    func scale(size: CGFloat) -> CIImage  {
+        var newImg: CIImage = CIImage.init()
+        func iterScale(_ img: CIImage) {
+            let transform = CGAffineTransform.init(scaleX: 1.01, y: 1.01)
+            newImg = newImg.transformed(by: transform)
+            if newImg.extent.width < size || newImg.extent.height < size {
+                iterScale(newImg)
+            }
+        }
+        let scaleX = size / self.extent.width
+        let scaleY = size / self.extent.height
+        let transform = CGAffineTransform.init(scaleX: scaleX, y: scaleY)
+        newImg = self.transformed(by: transform)
+        if newImg.extent.width < size || newImg.extent.height < size {
+            iterScale(newImg)
+        }
+        
+        if newImg.extent.width > size && newImg.extent.height > size {
+            newImg.cropped(to: CGRect.init(x: 0, y: 0, width: size, height: size))
+            
+        }
+        
+        return newImg
+    }
+    
+    
+    
 }

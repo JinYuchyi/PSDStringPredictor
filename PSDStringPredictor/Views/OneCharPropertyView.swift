@@ -39,7 +39,7 @@ struct OneCharPropertyView: View {
                 )
                 
                 Text("\(Int(GetLastSelectObject().charRects[index].width.rounded()))/\(Int(GetLastSelectObject().charRects[index].height.rounded()))")
-                Text(String(GetLastSelectObject().charFontWeightList[index]))
+                Text(String(GetLastSelectObject().charFontWeightList[index] ?? ""))
                 
                 FontSizeView(index: index)
                 
@@ -95,8 +95,8 @@ struct OneCharPropertyView: View {
     
     func GetLastSelectObject() -> StringObject{
         
-        guard let id = psdsVM.selectedStrIDList.last else {return StringObject.init()}
-        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? StringObject.init()
+        guard let id = psdsVM.selectedStrIDList.last else {return zeroStringObject}
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? zeroStringObject
     }
     
 }

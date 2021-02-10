@@ -23,8 +23,8 @@ struct StringObjectPropertyView: View {
     @ObservedObject var psdsVM: PsdsVM
 
     func GetLastSelectObject() -> StringObject{
-        guard let id = psdsVM.selectedStrIDList.last else {return StringObject.init()}
-        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? StringObject.init()
+        guard let id = psdsVM.selectedStrIDList.last else {return zeroStringObject}
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? zeroStringObject
     }
 
     func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{

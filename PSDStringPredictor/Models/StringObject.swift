@@ -26,6 +26,8 @@ extension StringAlignment{
     }
 }
 
+let zeroStringObject = StringObject.init()
+
 //struct StringObject: Hashable, Codable, Identifiable {
 struct StringObject : Identifiable,  Hashable{
 
@@ -82,23 +84,23 @@ struct StringObject : Identifiable,  Hashable{
         self.tracking = 0
         self.fontSize = 0
         self.colorMode = .light
-        self.fontWeight =  ""
-        self.charImageList = []
+        self.fontWeight =  "Regular"
+        self.charImageList = [CIImage.init()]
         self.stringRect = CGRect()
-        self.color = CGColor.black
+        self.color = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
         self.charArray = [" "]
         self.charRects = [CGRect()]
         self.charSizeList = [0]
         self.charFontWeightList = ["Regular"]
         self.charColorModeList = [0]
         self.isPredictedList = [0]
-        self.FontName = ""
+        self.FontName = "SF Pro Text Regular"
         self.alignment = .left
         self.status = .normal
-        self.FontName = CalcFontFullName()
-        self.fontWeight = PredictFontWeight()
-        self.colorMode = CalcColorMode()
-        self.color = CalcColor()
+//        self.FontName = CalcFontFullName()
+//        self.fontWeight = PredictFontWeight()
+        self.colorMode = .light
+//        self.color = CalcColor()
     }
     
     init(_ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage]){
@@ -111,11 +113,11 @@ struct StringObject : Identifiable,  Hashable{
         self.fontWeight = "Regular"
         self.charImageList = charImageList
         self.stringRect = stringRect
-        self.color = CGColor.black
+        self.color = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
         self.charArray = charArray
         self.charRects = charRacts
         self.charSizeList = []
-        self.charFontWeightList = []
+        self.charFontWeightList = ["Regular"]
         self.charColorModeList = []
         self.isPredictedList = []
         self.FontName = ""
@@ -191,11 +193,11 @@ struct StringObject : Identifiable,  Hashable{
     mutating func CalcColorMode() -> MacColorMode{
         var result = -1
         charColorModeList = []
-        for img in charImageList{
-            let bw = SetGrayScale(img)
+        for index in 0..<charArray.count{
+            let bw = SetGrayScale(charImageList[index])
             
-            let charColorMode = CharColorModeClassifier()
-            let result = charColorMode.Prediction(fromImage: bw!)
+            let charColorMode = CharColorModeClassifierV2.init()
+            let result = charColorMode.Prediction(fromImage: bw!, char: String(charArray[index]))
             charColorModeList.append(result)
         }
         if charColorModeList.count > 0 {
@@ -245,10 +247,12 @@ struct StringObject : Identifiable,  Hashable{
         return (CGFloat(item.fontTrackingPoints), item.fontTracking)
     }
     
+
     mutating func CalcColor() -> CGColor {
         //var colorList: [NSColor] = []
         //let colorSpace: NSColorSpace = .genericRGB
         //var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+        print("Calc color for \(content)")
         var result: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 0, alpha: 1)
        
         //var nsColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
@@ -263,10 +267,12 @@ struct StringObject : Identifiable,  Hashable{
                     if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
                         minc = Minimun(img).0
                         colorPixel = Minimun(img).1
+                        print("Clac text color, char min: \(minc)")
                     }
                     //Calculate the brightest color as the background color
                     if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
                         maxc = Maximum(img).0
+                        print("Clac bg color, char max: \(maxc)")
                     }
                 }
                 bgColor = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
@@ -281,10 +287,13 @@ struct StringObject : Identifiable,  Hashable{
                     if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
                         maxc = Maximum(img).0
                         colorPixel = Maximum(img).1
+                        print("Clac text color, char max: \(maxc)")
                     }
                     //Calculate the darkest color as the background color
                     if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
                         minc = Minimun(img).0
+                        print("Clac bg color, char min: \(minc)")
+
                     }
                 }
                 bgColor = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)

@@ -482,7 +482,7 @@ func Minimun(_ image: CIImage) -> (color: NSColor, image: CIImage){
         //filteredImage is correct
         if filteredImage.IsValid() == true{
             color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
-            print("Color: \(color)")
+//            print("Color: \(color)")
 //            let tmpPath2 = GetDocumentsPath().appending("/mini.bmp")
 //            filteredImage.ToCGImage()!.ToCIImage().ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
             return (color,filteredImage)
