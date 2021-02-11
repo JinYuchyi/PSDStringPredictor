@@ -78,8 +78,8 @@
             filePath = "PSDStringPredictor/Models/StringObject.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "FindBestSizeFromArray(FromArray:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,8 +286,8 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "515"
-            endingLineNumber = "515"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "CreatePSDForOnePSD(_id:saveToPath:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -302,8 +302,8 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "697"
-            endingLineNumber = "697"
+            startingLineNumber = "682"
+            endingLineNumber = "682"
             landmarkName = "SaveDocument()"
             landmarkType = "7">
          </BreakpointContent>

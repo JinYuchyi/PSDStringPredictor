@@ -451,7 +451,7 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
 func Maximum(_ image: CIImage) -> (color: NSColor, image: CIImage){
     let pixelProcess = PixelProcess()
     //let colorSpace: NSColorSpace = .genericRGB
-    var color: NSColor = NSColor.init(srgbRed: 1, green: 0, blue: 1, alpha: 1)
+    var color: NSColor = NSColor.init(red: 1, green: 0, blue: 1, alpha: 1)
     var filteredImage = CIImage.init()
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
@@ -465,12 +465,14 @@ func Maximum(_ image: CIImage) -> (color: NSColor, image: CIImage){
     }
     return (color, filteredImage)
 }
-
+//var _index = 0
 func Minimun(_ image: CIImage) -> (color: NSColor, image: CIImage){
     let pixelProcess = PixelProcess()
 //    let colorSpace: NSColorSpace = .genericRGB
-    var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+    var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     var filteredImage = CIImage.init()
+    
+
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
             return (color, CIImage.init())
@@ -479,10 +481,13 @@ func Minimun(_ image: CIImage) -> (color: NSColor, image: CIImage){
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         
         filteredImage = filter.outputImage ?? CIImage.init() //Result Correct
+//        let str = "/Users/ipdesign/Downloads/" + String(_index) + ".bmp"
+//        filteredImage.ToPNG(url: URL.init(fileURLWithPath: str))
+//        _index += 1
         //filteredImage is correct
         if filteredImage.IsValid() == true{
             color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
-//            print("Color: \(color)")
+            print("Color: \(color)")
 //            let tmpPath2 = GetDocumentsPath().appending("/mini.bmp")
 //            filteredImage.ToCGImage()!.ToCIImage().ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
             return (color,filteredImage)

@@ -35,13 +35,12 @@ struct RegionProcessOverlayView: View {
                         }
                         .onEnded{ value in
                             regionEndPos =  value.location
-                            let cropRect = CGRect.init(x: interactive.selectionRect.minX, y: psdsVM.selectedNSImage.size.height - interactive.selectionRect.minY, width: interactive.selectionRect.width, height: -interactive.selectionRect.height).standardized
-                            let regionImg = psdsVM.processedCIImage.cropped(to: cropRect)
-                            let maskedImage = regionProcessVM.fetchOverlayedImage(regionRect: cropRect, targetImage: psdsVM.selectedNSImage.ToCIImage()!)
-
-                            var offset = CGPoint.init(x: cropRect.minX, y: cropRect.minY)
-                            psdsVM.fetchRegionString(regionImage: regionImg, offset: offset, psdId: psdsVM.selectedPsdId)
+                            let cropRect = CGRect.init(x: interactive.selectionRect.minX.rounded(), y: (psdsVM.selectedNSImage.size.height - interactive.selectionRect.minY).rounded(), width: interactive.selectionRect.width.rounded(), height: -interactive.selectionRect.height.rounded()).standardized
                             
+                            let regionImg = psdsVM.processedCIImage.cropped(to: cropRect).premultiplyingAlpha()
+                            let maskedImage = regionProcessVM.fetchOverlayedImage(regionRect: cropRect, targetImage: psdsVM.selectedNSImage.ToCIImage()!)
+                            var offset = CGPoint.init(x: cropRect.minX, y: cropRect.minY)
+                            psdsVM.fetchRegionStringObjects(regionImage: regionImg, offset: offset, psdId: psdsVM.selectedPsdId)
 //                            let tmpPath = GetDocumentsPath().appending("/test.bmp")
 //                            maskedImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
     

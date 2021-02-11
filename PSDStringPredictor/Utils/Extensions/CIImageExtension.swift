@@ -20,8 +20,9 @@ extension CIImage{
         //        }else{
         //            return nil
         //        }
-        var colorSpace = CGColorSpaceCreateDeviceRGB()
-        context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: colorSpace)
+//        var colorSpace = CGColorSpaceCreateDeviceRGB()
+//        var colorSpace = CGColorspace
+        context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: .none)
         
         return context.createCGImage(self, from: self.extent)
     }
@@ -44,7 +45,8 @@ extension CIImage{
     func GetCroppedImages(rects: [CGRect]) -> [CIImage]{
         var imgs :[CIImage] = []
         for rect in rects {
-            imgs.append(self.cropped(to: rect))
+            let tmpImg = self.cropped(to: rect).settingAlphaOne(in: self.extent)
+            imgs.append(tmpImg)
         }
         return imgs
     }

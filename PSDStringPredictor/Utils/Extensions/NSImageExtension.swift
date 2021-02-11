@@ -32,7 +32,7 @@ extension NSImage {
         let newRep = NSBitmapImageRep(cgImage: cgImage)
         //newRep.size = self.size // if you want the same size
         guard
-            let pngData = newRep.representation(using: .bmp, properties: [:])
+            let pngData = newRep.representation(using: .png, properties: [:])
             else { return } 
         do {
             try pngData.write(to: url)

@@ -258,7 +258,7 @@ class PixelProcess{
 //        img.ToCIImage().ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath() + "/imgInColorAt.bmp"))
         let context = self.createBitmapContext(img: img)
         //let colorSpace: NSColorSpace = .genericRGB
-        var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+        var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
 
         if (x < 0 || x >= context.width || y < 0 || y >= context.height){
             return color
@@ -271,6 +271,7 @@ class PixelProcess{
         let red: UInt8 = data[offset+1]
         let green: UInt8 = data[offset+2]
         let blue: UInt8 = data[offset+3]
+        print("color: \(data[0]), \(data[1]), \(data[2]), \(data[3])")
         color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
         return color
     }
@@ -292,7 +293,9 @@ class PixelProcess{
         // Allocate memory for image data. This is the destination in memory
         // where any drawing to the bitmap context will be rendered.
         let bitmapData = malloc(bitmapByteCount)
+//        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
+
         _ = CGSize(width: CGFloat(pixelsWide), height: CGFloat(pixelsHigh))
         //CGBitmapContextCreate
         //UIGraphicsBeginImageContextWithOptions(size, false, 0.0)

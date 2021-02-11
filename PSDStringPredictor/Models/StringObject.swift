@@ -62,7 +62,7 @@ struct StringObject : Identifiable,  Hashable{
     var fontWeight:  String
     var stringRect: CGRect
     var color: CGColor
-    var bgColor: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+    var bgColor: CGColor = CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     var charArray: [Character]
     var charRects: [CGRect]
     var charSizeList: [Int16]
@@ -87,7 +87,7 @@ struct StringObject : Identifiable,  Hashable{
         self.fontWeight =  "Regular"
         self.charImageList = [CIImage.init()]
         self.stringRect = CGRect()
-        self.color = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
+        self.color = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         self.charArray = [" "]
         self.charRects = [CGRect()]
         self.charSizeList = [0]
@@ -113,7 +113,7 @@ struct StringObject : Identifiable,  Hashable{
         self.fontWeight = "Regular"
         self.charImageList = charImageList
         self.stringRect = stringRect
-        self.color = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
+        self.color = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         self.charArray = charArray
         self.charRects = charRacts
         self.charSizeList = []
@@ -133,6 +133,7 @@ struct StringObject : Identifiable,  Hashable{
 
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
+        
     }
     
     init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
@@ -159,6 +160,7 @@ struct StringObject : Identifiable,  Hashable{
         self.stringRect = CGRect.init()
         self.content = String(charArray)
         self.stringRect = mergeRect(rects: charRacts)
+
 
     }
     
@@ -249,21 +251,18 @@ struct StringObject : Identifiable,  Hashable{
     
 
     mutating func CalcColor() -> CGColor {
-        //var colorList: [NSColor] = []
-        //let colorSpace: NSColorSpace = .genericRGB
-        //var color: NSColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
         print("Calc color for \(content)")
-        var result: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 0, alpha: 1)
-       
-        //var nsColor = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+        var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
+
         if charImageList.count > 0{
             if colorMode == .light{
                 
-                var minc = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
-                var maxc = NSColor.init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
                 
                 for img in charImageList.filter({$0.extent.width > 0}){
                     //Calculate the darkest color as the font color
+                    print("#min: \(Minimun(img).0)")
                     if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
                         minc = Minimun(img).0
                         colorPixel = Minimun(img).1
@@ -275,13 +274,13 @@ struct StringObject : Identifiable,  Hashable{
                         print("Clac bg color, char max: \(maxc)")
                     }
                 }
-                bgColor = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
-                result = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
+                bgColor = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
+                result = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 
             }
             if colorMode == .dark{
-                var minc = NSColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
-                var maxc = NSColor.init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
+                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
                 for img in charImageList.filter({$0.extent.width > 0}){
                     //Calculate the brightest color as the font color
                     if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
@@ -296,8 +295,8 @@ struct StringObject : Identifiable,  Hashable{
 
                     }
                 }
-                bgColor = CGColor.init(srgbRed: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
-                result = CGColor.init(srgbRed: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
+                bgColor = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
+                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
             }
         }
 

@@ -64,7 +64,7 @@ struct CharacterFrameView: View {
     
     func Tapped(rect: CGRect){
         //Get tap character background color
-        var theColor: CGColor = CGColor.init(srgbRed: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        var theColor: CGColor = CGColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
         for str in psdVM.GetSelectedPsd()!.stringObjects{
             if rect.intersects(str.stringRect) == true {
                 theColor = str.bgColor

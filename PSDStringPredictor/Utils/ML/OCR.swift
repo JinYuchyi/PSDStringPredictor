@@ -142,8 +142,14 @@ class OCR: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            
-            var newStrObj = StringObject(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: rawNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset)))
+            let charImageList = rawNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset))
+//            var index = 0
+//            for img in charImageList {
+//                let urlPath = "/Users/ipdesign/Downloads/test" + String(index) + ".bmp"
+//                img.ToPNG(url: URL.init(fileURLWithPath: urlPath))
+//                index += 1
+//            }
+            var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: charImageList)
             newStrObj = DeleteDecent(obj: newStrObj)
 //            strobjs.append(newStrObj)
             
