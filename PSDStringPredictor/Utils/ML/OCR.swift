@@ -150,6 +150,7 @@ class OCR: ObservableObject{
 //                index += 1
 //            }
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: charImageList)
+            print(charImageList.count)
             newStrObj = DeleteDecent(obj: newStrObj)
 //            strobjs.append(newStrObj)
             
