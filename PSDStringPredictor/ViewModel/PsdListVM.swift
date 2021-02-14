@@ -8,6 +8,8 @@
 
 import Foundation
 import SwiftUI
+import Vision
+
 
 struct charRectObject: Codable{
     var rect: CGRect
@@ -34,6 +36,7 @@ class PsdsVM: ObservableObject{
     @Published var selectedStrIDList: [UUID]//refacting
     //Others
     @Published var IndicatorText: String = ""
+    @Published var canProcess: Bool = false
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[charRectObject]]  = [:]
     //@Published var maskColorDict: [Int:[CGColor]]  = [:]
@@ -143,7 +146,7 @@ class PsdsVM: ObservableObject{
         var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
         img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        let allStrObjs = self.ocr.CreateAllStringObjects(rawNSImage: NSImage.init(contentsOfFile: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)!, processedCIImage: img, psdId: psdId, psdsVM: self)
+        let allStrObjs = CreateAllStringObjects(rawNSImage: NSImage.init(contentsOfFile: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)!, processedCIImage: img, psdId: psdId, psdsVM: self)
         DispatchQueue.main.async{ [self] in
             var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
             for obj in allStrObjs {
@@ -160,11 +163,14 @@ class PsdsVM: ObservableObject{
     }
     
     func fetchRegionStringObjects(regionImage: CIImage, offset: CGPoint, psdId: Int){
+        print("fetchRegionStringObjects")
+//        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
+//        regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
         var result: [StringObject] = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .normal})
         var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
 
-        let newList = self.ocr.CreateAllStringObjects(rawNSImage: NSImage.init(contentsOfFile: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)!, processedCIImage: img, psdId: psdId, psdsVM: self, offset: offset)
+        let newList = CreateAllStringObjects(rawNSImage: regionImage.ToNSImage(), processedCIImage: img, psdId: psdId, psdsVM: self, offset: offset)
         if newList.count == 0{
             print("No strings detected in the area.")
             return
@@ -180,6 +186,7 @@ class PsdsVM: ObservableObject{
             }
             result += newList
             psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
+
             IndicatorText = ""
         }
         
@@ -228,11 +235,65 @@ class PsdsVM: ObservableObject{
             }
         }
         
-        for ind in breakIndexList {
-            //break
-            //TODO: Break the gap!
-            
+//        for ind in breakIndexList {
+//            //break
+//            //TODO: Break the gap!
+//
+//        }
+    }
+    
+    func CreateAllStringObjects(rawNSImage: NSImage, processedCIImage ciImage: CIImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
+        var strobjs : [StringObject] = []
+        let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        let TextRecognitionRequest = VNRecognizeTextRequest()
+        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
+        TextRecognitionRequest.usesLanguageCorrection = true
+        TextRecognitionRequest.recognitionLanguages = ["en_US"]
+        
+        DispatchQueue.main.async{
+            psdsVM.prograssScale = 0
         }
+        
+        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
+        do {
+            try requestHandler.perform([TextRecognitionRequest])
+        } catch {
+            print(error)
+        }
+
+        guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
+        let stringsRects = ocr.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
+        let strs = ocr.GetStringArrayFromObservations(results_fast)
+
+        for i in 0..<stringsRects.count where canProcess == true{
+//            print("psdsVM.canProcess: \(canProcess)")
+
+            DispatchQueue.main.async{
+                psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
+                psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
+            }
+            let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
+            let charImageList = selectedNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset))
+
+            var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: charImageList)
+//            print(charImageList.count)
+            newStrObj = ocr.DeleteDecent(obj: newStrObj)
+            let sepObjList = newStrObj.seprateIfPossible()
+            if sepObjList != nil {
+                for obj in sepObjList!{
+                    strobjs.append(obj)
+                }
+            }else {
+                strobjs.append(newStrObj)
+            }
+        }
+        
+        //The reason for putting the clear indicator code here, is because I want the indicator invisible after the last process finished.
+        if canProcess == false {
+            psdsVM.IndicatorText = ""
+        }
+        
+        return strobjs
     }
     
     
@@ -346,7 +407,7 @@ class PsdsVM: ObservableObject{
     
     
     func ProcessForOnePsd(){
-        
+        canProcess = true
         if  selectedNSImage.size.width == 0 {
             return
         }
@@ -362,6 +423,7 @@ class PsdsVM: ObservableObject{
     }
     
     func ProcessForAll(){
+        canProcess = true
         if   selectedNSImage.size.width == 0 {
             return
         }

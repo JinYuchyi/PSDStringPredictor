@@ -93,7 +93,7 @@ struct ControlPanel: View {
                     }
                     .disabled(psdsVM.IndicatorText != "")
                     
-                    Button(action: {regionProcessVM.regionBtnPressed()}){
+                    Button(action: {regionProcessVM.regionBtnPressed(); psdsVM.canProcess = true}){
                         Text("Region")
                             .frame(minWidth: 70,  maxWidth: .infinity)
                     }

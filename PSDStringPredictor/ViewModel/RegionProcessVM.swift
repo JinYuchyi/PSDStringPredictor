@@ -31,18 +31,14 @@ class RegionProcessVM: ObservableObject {
         let regionImg2 = CIImage.init(color: CIColor.black).cropped(to: CGRect.init(x: 0, y: 0, width: regionRect.width, height: regionRect.height))
         let mask2 = imgUtil.ImageOntop(OverlayImage: regionImg2, BGImage: bgImg2, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
         return (mask1, mask2)
-        //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
-        //        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
+        
     }
     
     func fetchOverlayedImage(regionRect: CGRect, targetImage: CIImage)->CIImage{
         //TODO: Get area background image
         let regionImg = targetImage.cropped(to: regionRect)
-        
         let bgColor = imgUtil.backgroundColor(img: regionImg)
-        print(bgColor)
         var ( maskImg01,  maskImg02) = fetchRegionOverlay(regionRect: regionRect, bgWidth: targetImage.extent.width, bgHeight: targetImage.extent.height)
-        
 //        let tmpPath1 = GetDocumentsPath().appending("/regionImg.bmp")
 //        let tmpPath2 = GetDocumentsPath().appending("/test2.bmp")
 //        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath1))

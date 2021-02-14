@@ -11,7 +11,7 @@ import CoreImage
 import AppKit
 
 struct ContentView: View  {
-
+    
     @State var selectedStringObject: StringObject = StringObject.init()
     
     let data = DataStore()
@@ -20,7 +20,7 @@ struct ContentView: View  {
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var regionProcessVM: RegionProcessVM = RegionProcessVM()
     @ObservedObject var imgVM: ImageVM
-
+    
     let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     let keyEventHandle = KeyEventHandling()
@@ -36,7 +36,7 @@ struct ContentView: View  {
     
     
     fileprivate func LeftViewGroup() -> some View {
-
+        
         VStack(alignment: .center){
             //PrograssView(psdsVM: psdsVM)
             psdThumbnailList(psdsVM: psdsVM, showPatchLayer: $showPatchLayer)
@@ -48,14 +48,14 @@ struct ContentView: View  {
     }
     
     var MidViewGroup: some View {
-         ZStack{
+        ZStack{
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
                     ImageView(psds: psdsVM, regionVM: regionProcessVM)
-
+                    
                     Group{
                         LabelsOnImage(psdsVM: psdsVM)
-
+                        
                         CharacterFrameView(psdVM: psdsVM)
                             .IsHidden(condition: showPatchLayer)
                         
@@ -63,43 +63,39 @@ struct ContentView: View  {
                     }
                     .IsHidden(condition: psdsVM.stringIsOn == true)
                     
-                   
+                    
                 }
                 //.scaleEffect(viewScale)
                 //.frame(width: 1100 * viewScale)
-
+                
             }
-
             GeometryReader{ geo in
                 UIOverlayView(showPatchLayer: $showPatchLayer)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
                 
-//                ScaleSliderView(scale: $viewScale)
-//                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
-                //Indicator
+//                                ScaleSliderView(scale: $viewScale)
+//                                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
+              
+                
                 if #available(OSX 11.0, *) {
                     VStack(spacing: 0){
                         Text(psdsVM.IndicatorText)
                             .background(Color.black.opacity(0.3))
-                        
-                        ProgressView(value: psdsVM.prograssScale)
+                        HStack{
+                            
+                            ProgressView(value: psdsVM.prograssScale)
+                            Button(action: {abortProcess()}, label: {
+                                Text("Abort")
+                            })
+                            .background(Color.black.opacity(0.5))
+                        }
                         
                     }
-                   .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
-                    .IsHidden(condition: psdsVM.IndicatorText != "")
-                } else {
-                    // Fallback on earlier versions
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
                 }
+
             }
             
-//            IndicatorView( psdsVM: psdsVM)
-//                .frame(width: 1100, height: 1000, alignment: .center)
-//            WarningView()
-                //.frame(width: 1100, height: 1000, alignment: .center)
-            
-           
-                //.frame(width: 1000, height: 1000, alignment: .bottom)
-
         }
         
         //.frame(width: 1100)
@@ -107,28 +103,28 @@ struct ContentView: View  {
     
     fileprivate func RightViewGroup() -> some View {
         return VStack{
-
+            
             //Divider()
             
             ImageProcessView(psdsVM: psdsVM)
-                //.padding(.top, 20.0)
+            //.padding(.top, 20.0)
             
             Divider()
             
             ImagePropertyView(psdvm: psdsVM)
                 .frame(height: 100)
-
-                //.frame(width: 300, height: 150)
+            
+            //.frame(width: 300, height: 150)
             
             Divider()
             
             StringObjectPropertyView( psdsVM: psdsVM)
-                //.frame(width: 300)
+            //.frame(width: 300)
             
             Divider()
             
             ControlPanel(psdsVM: psdsVM, regionProcessVM: regionProcessVM)
-
+            
             
         }
         
@@ -136,30 +132,30 @@ struct ContentView: View  {
     
     
     var body: some View {
-       
-            HStack(alignment: .center){
-                LeftViewGroup()
-                    .frame(width: 300)
-                    //.border(Color.red, width: 1)
-                Divider()
-                
-                MidViewGroup
-                    .frame(width: 1200)
-                    //.border(Color.red, width: 1)
-                Divider()
-                RightViewGroup()
-                    .frame(width: 300)
-                
-                    //.border(Color.red, width: 1)
-            }
-            .onAppear(perform: {
-                //Load tables
-                psdsVM.FetchTrackingData(path: Bundle.main.path(forResource: "FontSizeTrackingTable", ofType: "csv")!)
-                //psdsVM.FetchStandardTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
-                psdsVM.FetchCharacterTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
-                psdsVM.FetchBoundTable(path: Bundle.main.path(forResource: "charBounds", ofType: "csv")!)
-            })
-            .preferredColorScheme(.dark)
+        
+        HStack(alignment: .center){
+            LeftViewGroup()
+                .frame(width: 300)
+            //.border(Color.red, width: 1)
+            Divider()
+            
+            MidViewGroup
+                .frame(width: 1200)
+            //.border(Color.red, width: 1)
+            Divider()
+            RightViewGroup()
+                .frame(width: 300)
+            
+            //.border(Color.red, width: 1)
+        }
+        .onAppear(perform: {
+            //Load tables
+            psdsVM.FetchTrackingData(path: Bundle.main.path(forResource: "FontSizeTrackingTable", ofType: "csv")!)
+            //psdsVM.FetchStandardTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
+            psdsVM.FetchCharacterTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
+            psdsVM.FetchBoundTable(path: Bundle.main.path(forResource: "charBounds", ofType: "csv")!)
+        })
+        .preferredColorScheme(.dark)
     }
     
     
@@ -171,6 +167,10 @@ struct ContentView: View  {
         let testImg = imageViewModel.targetImageProcessed.cropped(to: rect)
         print("\(rect)")
         print("\(testImg.extent)")
+    }
+    
+    func abortProcess(){
+        psdsVM.canProcess = false
     }
     
     

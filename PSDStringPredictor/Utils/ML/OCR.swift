@@ -114,58 +114,7 @@ class OCR: ObservableObject{
         return tmpObj
     }
     
-    func CreateAllStringObjects(rawNSImage: NSImage, processedCIImage ciImage: CIImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
-        var strobjs : [StringObject] = []
-        let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
-        let TextRecognitionRequest = VNRecognizeTextRequest()
-        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
-        TextRecognitionRequest.usesLanguageCorrection = true
-        TextRecognitionRequest.recognitionLanguages = ["en_US"]
-        
-        DispatchQueue.main.async{
-            psdsVM.prograssScale = 0
-        }
-        
-        TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.fast
-        do {
-            try requestHandler.perform([TextRecognitionRequest])
-        } catch {
-            print(error)
-        }
-
-        guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-        let stringsRects = self.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
-        let strs = self.GetStringArrayFromObservations(results_fast)
-        for i in 0..<stringsRects.count{
-            DispatchQueue.main.async{
-                psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
-                psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
-            }
-            let (charRects, chars) = self.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            let charImageList = rawNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset))
-//            var index = 0
-//            for img in charImageList {
-//                let urlPath = "/Users/ipdesign/Downloads/test" + String(index) + ".bmp"
-//                img.ToPNG(url: URL.init(fileURLWithPath: urlPath))
-//                index += 1
-//            }
-            var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: charImageList)
-            print(charImageList.count)
-            newStrObj = DeleteDecent(obj: newStrObj)
-//            strobjs.append(newStrObj)
-            
-            let sepObjList = newStrObj.seprateIfPossible()
-            if sepObjList != nil {
-                for obj in sepObjList!{
-                    strobjs.append(obj)
-                }
-            }else {
-                strobjs.append(newStrObj)
-            }
-        }
-        return strobjs
-    }
-    
+ 
   
     
     

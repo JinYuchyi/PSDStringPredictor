@@ -17,18 +17,23 @@ struct OneCharPropertyView: View {
             VStack{
                 
                 if GetLastSelectObject().charColorModeList[index] == 1{
-                    
                     Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
                         .resizable()
                         .scaledToFit()
                         .frame(height: 40)
                         .border(Color.yellow, width: 1)
-                }else if  GetLastSelectObject().charColorModeList[index] == 2{
+                }else if GetLastSelectObject().charColorModeList[index] == 2{
                     Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
                         .resizable()
                         .scaledToFit()
                         .frame(height: 40)
                         .border(Color.blue, width: 1)
+                }else{
+                    Image(nsImage: GetLastSelectObject().charImageList[index].ToNSImage())
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 40)
+                        .border(Color.white, width: 1)
                 }
                 TextField(
                     //String(GetLastSelectObject().charArray[index]),
@@ -65,7 +70,6 @@ struct OneCharPropertyView: View {
                 Text(String(GetLastSelectObject().charSizeList[index].description)).fixedSize()
             }
         }
-        
     }
     
     func CharSaveBtnPressed(_ index: Int){

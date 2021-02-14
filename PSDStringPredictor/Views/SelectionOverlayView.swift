@@ -32,12 +32,11 @@ struct SelectionOverlayView: View {
                             interactive.selectionRect = interactive.selectionRect.standardized
                         }
                         .onEnded{ value in
-                                //Selection mode for select string
-                                show = false
-                                endPos = value.location
-                                CalcSelectedObject()
-                            
-          
+                            //Selection mode for select string
+                            show = false
+                            endPos = value.location
+                            CalcSelectedObject()
+                           
                         }
                 )
                 .gesture(
