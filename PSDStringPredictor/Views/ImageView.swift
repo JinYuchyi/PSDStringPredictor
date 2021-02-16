@@ -30,8 +30,11 @@ struct ImageView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             SelectionOverlayView( interactive: interactive, psdsVM: psds)
-            RegionProcessOverlayView(interactive: interactive, psdsVM: psds, regionProcessVM: regionVM)
-                .IsHidden(condition: regionVM.regionActive)
+            if psds.canProcess == true {
+                RegionProcessOverlayView(interactive: interactive, psdsVM: psds, regionProcessVM: regionVM)
+                    .IsHidden(condition: regionVM.regionActive)
+            }
+
         }
         
     }

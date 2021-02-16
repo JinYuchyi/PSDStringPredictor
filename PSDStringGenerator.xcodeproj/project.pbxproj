@@ -51,7 +51,6 @@
 		3F4D13E625020F22008F846B /* StringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13E525020F22008F846B /* StringLabel.swift */; };
 		3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F4D13E825021B74008F846B /* StringObjectsData.json */; };
 		3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13EA2502220D008F846B /* StringLabelList.swift */; };
-		3F50A7AE253DC5BA00C10810 /* ImagePropertyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7AD253DC5BA00C10810 /* ImagePropertyView.swift */; };
 		3F50A7B2253DC61F00C10810 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7B1253DC61F00C10810 /* ViewExtension.swift */; };
 		3F50A7B4253DC64600C10810 /* ColorModeClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7B3253DC64600C10810 /* ColorModeClassifier.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
@@ -256,7 +255,6 @@
 		3F4D13E525020F22008F846B /* StringLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabel.swift; sourceTree = "<group>"; };
 		3F4D13E825021B74008F846B /* StringObjectsData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StringObjectsData.json; sourceTree = "<group>"; };
 		3F4D13EA2502220D008F846B /* StringLabelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabelList.swift; sourceTree = "<group>"; };
-		3F50A7AD253DC5BA00C10810 /* ImagePropertyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePropertyView.swift; sourceTree = "<group>"; };
 		3F50A7B1253DC61F00C10810 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		3F50A7B3253DC64600C10810 /* ColorModeClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorModeClassifier.swift; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -507,7 +505,6 @@
 				3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */,
 				3FD558D025B8111300056C85 /* OneCharPropertyView.swift */,
 				3FE8813F25333D820088A1CD /* StringObjectRow.swift */,
-				3F50A7AD253DC5BA00C10810 /* ImagePropertyView.swift */,
 				3FC3DFC625B52FB60060521D /* PsdOperatorView.swift */,
 				3F4D13E32501FB9E008F846B /* ImageView.swift */,
 				3F4D13E525020F22008F846B /* StringLabel.swift */,
@@ -1192,7 +1189,6 @@
 				3F59C0E125D3CF8600F9CF52 /* mColor.mlmodel in Sources */,
 				3FA4DCDE25D283E100E7041C /* CharColorModeClassifierV2.swift in Sources */,
 				3F3A22C425CCDC0200E7FC30 /* SymbolObjectDetector.swift in Sources */,
-				3F50A7AE253DC5BA00C10810 /* ImagePropertyView.swift in Sources */,
 				3F4D13E625020F22008F846B /* StringLabel.swift in Sources */,
 				3F3A22BC25CCDA9500E7FC30 /* FontWeightClassifier.swift in Sources */,
 				3F50A7B2253DC61F00C10810 /* ViewExtension.swift in Sources */,

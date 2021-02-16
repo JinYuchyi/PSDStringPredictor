@@ -16,7 +16,7 @@ class DataStore{
     
     static let sizeOfThumbnail = 180
 
-//    static var PSPath = ""
+    static var PSPath = ""
     
     static var colorLightModeList: [[CGFloat]] = [
         [0.0, 0.0, 0.0],

@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class SettingViewModel: ObservableObject {
     @Published var appSettingItem: AppSettingsItem =  AppSettingsItem()
     @Published var debugItems = ["false", "true"]
@@ -41,6 +42,7 @@ class SettingViewModel: ObservableObject {
     }
     
     func GetPSPath(_ item: AppSettingsItem) -> String{
+        DataStore.PSPath = item.PSPath
         return item.PSPath
     }
 

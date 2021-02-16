@@ -414,10 +414,11 @@ func Multiply(bgImage: CIImage, maskImage: CIImage)-> CIImage? {
 }
 
 func ChangeGamma(_ image: CIImage, _ value: CGFloat) -> CIImage? {
-    let filter = CIFilter(name: "CIGammaAdjust")
+    var filter = CIFilter(name: "CIGammaAdjust")
     filter?.setValue(image, forKey: kCIInputImageKey)
     filter?.setValue(value, forKey: "inputPower")
     let filteredImage = filter?.outputImage
+    filter = nil
     return filteredImage
 }
 
@@ -442,9 +443,11 @@ func SetConv(_ image: CIImage)-> CIImage?{
 }
 
 func SetGrayScale(_ image: CIImage) -> CIImage?{
-    let filter = CIFilter(name: "CIPhotoEffectNoir")
+    var filter = CIFilter(name: "CIPhotoEffectNoir")
     filter?.setValue(image, forKey: kCIInputImageKey)
     let filteredImage = filter?.outputImage
+    filter = nil
+    
     return filteredImage
 }
 

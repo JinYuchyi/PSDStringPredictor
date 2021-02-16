@@ -115,7 +115,7 @@ struct ControlPanel: View {
                     //.padding(.top)
                     .frame(width: geo.size.width*0.8, alignment: .leading)
                 HStack{
-                    Button(action: {psdsVM.CreatePSDForOnePSD(_id: psdsVM.selectedPsdId, saveToPath: "")}){
+                    Button(action: {psdsVM.CreatePSDForOnePSD(_id: psdsVM.selectedPsdId, saveToPath: "" )}){
                         Text("One")
                             .frame(minWidth: 165,  maxWidth: .infinity)
                     }

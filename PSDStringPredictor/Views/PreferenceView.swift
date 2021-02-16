@@ -14,17 +14,13 @@ struct SettingsView: View {
     @ObservedObject var settingsVM: SettingViewModel
     @State var DPICheck: Int = 1
     @State var debugMode: Int = 0
-    @State var PSPath: String 
-    //@State private var selectedFrameworkIndex = 0
-    
-    
+    var PSPath: String
 
     var body: some View {
         VStack{
             options
             Spacer()
             controls
-                
         }
         .padding()
 
@@ -32,33 +28,11 @@ struct SettingsView: View {
     
     var options: some View {
         VStack{
-//            HStack{
-//
-//                Text("Debug Mode")
-//                    .frame(width: 100, alignment: .leading)
-//                Picker(selection: $debugMode, label: Text("")){
-//                    ForEach(0..<settingsVM.debugItems.count, id: \.self) {
-//                        Text(settingsVM.debugItems[$0])
-//                    }
-//                }
-//                .frame(width: 200, alignment: .leading)
-//            }
-//
-//            HStack{
-//                Text("Check Load Image DPI")
-//                    .frame(width: 100, alignment: .leading)
-//                Picker(selection: $DPICheck, label: Text("")){
-//                    ForEach(0..<settingsVM.checkDPIItems.count, id: \.self) {
-//                        Text(settingsVM.checkDPIItems[$0])
-//                    }
-//                }
-//                .frame(width: 200, alignment: .leading)
-//            }
-            
+
             HStack{
                 Text("Photoshop Path")
                     .frame(width: 100, alignment: .leading)
-                TextField("Input Photoshop Path...", text: $PSPath, onCommit: { settingsVM.PSPath = PSPath; print(settingsVM.PSPath) })
+                TextField("Input Photoshop Path...", text: $settingsVM.PSPath, onCommit: { settingsVM.PSPath = PSPath; print(settingsVM.PSPath) })
                     .fixedSize()
                 .frame(width: 400, alignment: .leading)
             }

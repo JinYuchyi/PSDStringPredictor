@@ -97,10 +97,7 @@ struct StringObject : Identifiable,  Hashable{
         self.FontName = "SF Pro Text Regular"
         self.alignment = .left
         self.status = .normal
-//        self.FontName = CalcFontFullName()
-//        self.fontWeight = PredictFontWeight()
         self.colorMode = .light
-//        self.color = CalcColor()
     }
     
     init(_ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage]){
@@ -116,11 +113,11 @@ struct StringObject : Identifiable,  Hashable{
         self.color = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         self.charArray = charArray
         self.charRects = charRacts
-        self.charSizeList = []
+        self.charSizeList = [0]
         self.charFontWeightList = ["Regular"]
-        self.charColorModeList = []
-        self.isPredictedList = []
-        self.FontName = ""
+        self.charColorModeList = [0]
+        self.isPredictedList = [0]
+        self.FontName = "SF Pro Text Regular"
         self.alignment = .left
         self.status = .normal
         self.FontName = CalcFontFullName()
@@ -130,7 +127,7 @@ struct StringObject : Identifiable,  Hashable{
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
         self.tracking = FetchTrackingFromDB(self.fontSize).0
-
+//
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
         

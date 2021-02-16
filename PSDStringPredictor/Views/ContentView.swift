@@ -35,8 +35,7 @@ struct ContentView: View  {
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
     @State var viewScale: CGFloat = 1
-    
-    
+
     fileprivate func LeftViewGroup() -> some View {
         
         VStack(alignment: .center){
@@ -111,10 +110,10 @@ struct ContentView: View  {
             ImageProcessView(psdsVM: psdsVM)
             //.padding(.top, 20.0)
             
-            Divider()
-            
-            ImagePropertyView(psdvm: psdsVM)
-                .frame(height: 100)
+//            Divider()
+//            
+//            ImagePropertyView(psdvm: psdsVM)
+//                .frame(height: 100)
             
             //.frame(width: 300, height: 150)
             

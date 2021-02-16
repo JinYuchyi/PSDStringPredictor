@@ -17,7 +17,6 @@ struct charRectObject: Codable{
 }
 
 
-
 class PsdsVM: ObservableObject{
     
     let ocr = OCR()
@@ -40,7 +39,7 @@ class PsdsVM: ObservableObject{
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[charRectObject]]  = [:]
     @Published var stringIsOn: Bool = true
-    @Binding var PSPath: String
+   
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
     //No bgColorDict, charArrayDict, contentDict, charSizeList, charImageList, charFontWeightList, isPredictedList, charColorModeList, FontName, colorPixel, because we do not need to adjust them frequently
@@ -164,15 +163,21 @@ class PsdsVM: ObservableObject{
         }
     }
     
-    func fetchRegionStringObjects(regionImage: CIImage, offset: CGPoint, psdId: Int){
-        print("fetchRegionStringObjects")
+    func fetchRegionStringObjects(rect: CGRect, psdId: Int){
+//        print("fetchRegionStringObjects")
 //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
 //        regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
+        
+        let regionImage = processedCIImage.cropped(to: rect).premultiplyingAlpha()
+        var offset = CGPoint.init(x: rect.minX, y: rect.minY)
+//                let tmpPath = GetDocumentsPath().appending("/test1.bmp")
+//                regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
         var result: [StringObject] = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .normal})
         var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-
-        let newList = CreateAllStringObjects(rawNSImage: regionImage.ToNSImage(), psdId: psdId, psdsVM: self, offset: offset)
+//        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
+//        regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
+        let newList = CreateAllStringObjects(rawNSImage: img.ToNSImage(), psdId: psdId, psdsVM: self, offset: offset)
         if newList.count == 0{
             print("No strings detected in the area.")
             return
@@ -245,7 +250,7 @@ class PsdsVM: ObservableObject{
     }
     
     func CreateAllStringObjects(rawNSImage: NSImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
-        let ciImage = UpdateProcessedImage(psdId: psdId)!
+        let ciImage = rawNSImage.ToCIImage()!
         var strobjs : [StringObject] = []
         let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
@@ -276,9 +281,9 @@ class PsdsVM: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            let charImageList = rawNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset))
+            let charImageList = selectedNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset) )
 
-            var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: charImageList)
+            var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
 //            print(charImageList.count)
             newStrObj = ocr.DeleteDecent(obj: newStrObj)
             let sepObjList = newStrObj.seprateIfPossible()
@@ -425,6 +430,7 @@ class PsdsVM: ObservableObject{
                 self.psdModel.SetStatusForPsd(psdId: processOn, value: .processed)
             }
         }
+        canProcess = false
         IndicatorText = ""
     }
     
@@ -450,6 +456,7 @@ class PsdsVM: ObservableObject{
                     c += 1
                 }
             }
+            canProcess = false
             IndicatorText = ""
         }
         
@@ -481,7 +488,7 @@ class PsdsVM: ObservableObject{
                 let fileName = fileTitle + ".psd"
                 let saveToPath = result.appendingPathComponent(fileName).path
                 //print(saveToPath)
-                CreatePSDForOnePSD(_id: psd.id, saveToPath: saveToPath)
+                CreatePSDForOnePSD(_id: psd.id, saveToPath: saveToPath )
             }
             //print("psd count: \(psds.psdObjects.count)")
         } else {
@@ -492,7 +499,7 @@ class PsdsVM: ObservableObject{
         
     }
     
-    func CreatePSDForOnePSD(_id: Int, saveToPath: String){
+    func CreatePSDForOnePSD(_id: Int, saveToPath: String ){
         guard let obj = psdModel.GetPSDObject(psdId: _id) else {return}
         let psdPath = obj.imageURL.path
         var contentList = [String]()
@@ -573,7 +580,7 @@ class PsdsVM: ObservableObject{
         
         if success == true{
             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
-            let cmd = "open " + jsPath + "  -a '\(settingsVM.PSPath)'"
+            let cmd = "open " + jsPath + "  -a '\(DataStore.PSPath)'"
             PythonScriptManager.RunScript(str: cmd)
         }
     }

@@ -46,14 +46,17 @@ struct SelectionOverlayView: View {
                             
                         }
                 )
-            Rectangle()
-                //interactive.selectionRect
-                .fill(Color.green.opacity(0.3))
-                .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
-                .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
-                //.frame(width: width, height: height)
-                //.position(x: startPos.x + width/2, y: startPos.y + height/2)
-                .IsHidden(condition: show)
+            if show == true {
+                Rectangle()
+                    //interactive.selectionRect
+                    .fill(Color.green.opacity(0.3))
+                    .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
+                    .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
+                    //.frame(width: width, height: height)
+                    //.position(x: startPos.x + width/2, y: startPos.y + height/2)
+//                    .IsHidden(condition: show)
+            }
+            
             
             
         }
