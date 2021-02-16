@@ -18,7 +18,7 @@ struct StringObjectPropertyView: View {
     @State var posX: String = ""
     @State var posY: String = ""
     
-    let pixelMgr = PixelProcess()
+//    let pixelMgr = PixelProcess()
     
     @ObservedObject var psdsVM: PsdsVM
 
@@ -210,8 +210,8 @@ struct StringObjectPropertyView: View {
                     Text("Color")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Image(nsImage: GetLastSelectObject().colorPixel.ToNSImage())
-                        .scaleEffect(10)
+//                    Image(nsImage: GetLastSelectObject().colorPixel.ToNSImage())
+//                        .scaleEffect(10)
 
                     if psdsVM.selectedStrIDList.count > 0{
                         Text("\(Int((GetLastSelectObject().color.components![0] * 255).rounded())), \(Int((GetLastSelectObject().color.components![1] * 255).rounded())), \(Int((GetLastSelectObject().color.components![2] * 255).rounded()))")

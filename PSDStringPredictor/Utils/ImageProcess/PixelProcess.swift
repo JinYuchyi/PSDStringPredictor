@@ -12,7 +12,13 @@ import Vision
 import SwiftUI
 
 class PixelProcess{
+    
+    static let shared = PixelProcess.init()
+    
     let ocr = OCR()
+    
+    private init(){}
+    
     func FixBorder(image img: CIImage, rect: CGRect) -> CGRect {
         
         var x1: Int = Int(rect.minX.rounded())
@@ -38,38 +44,38 @@ class PixelProcess{
         var stepL: Int = 6
         var stepR: Int = 6
         
-        
-        func CheckEdgeT(){
-            previousHasDifT = hasDifT
-            print("stepT: \(stepT), previousHasDifT: \(previousHasDifT), hasDifT: \(hasDifT)")
-            var yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
-            let colorsTop = LoadRangeColors(FromImage: img.ToCGImage()!, Index: yTemp, RangeMin: x1, RangeMax: x2, IsForRow: true)
-            hasDifT = HasDifferentColor(ColorArray: colorsTop, Threshhold: 0.1)
-            
-            if (previousHasDifT == false && hasDifT == true) || stepT == 0 {
-                finishT = true
-            }
-            
-            stepT -= 1
-            if finishT == false{
-                //IsOKT()
-                if hasDifT == true  {
-                    y1 = y1 - 1
-                    yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
-                    let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
-                    _ = imageProcessViewModel.targetImageProcessed.cropped(to: resultRect)
-                    //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description  ))
-                }else{
-                    y1 = y1 + 1
-                    yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
-                    let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
-                    _ = imageProcessViewModel.targetImageProcessed.cropped(to: resultRect)
-                    //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description))
-                }
-                CheckEdgeT()
-                
-            }
-        }
+//
+//        func CheckEdgeT(){
+//            previousHasDifT = hasDifT
+//            print("stepT: \(stepT), previousHasDifT: \(previousHasDifT), hasDifT: \(hasDifT)")
+//            var yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
+//            let colorsTop = LoadRangeColors(FromImage: img.ToCGImage()!, Index: yTemp, RangeMin: x1, RangeMax: x2, IsForRow: true)
+//            hasDifT = HasDifferentColor(ColorArray: colorsTop, Threshhold: 0.1)
+//
+//            if (previousHasDifT == false && hasDifT == true) || stepT == 0 {
+//                finishT = true
+//            }
+//
+//            stepT -= 1
+//            if finishT == false{
+//                //IsOKT()
+//                if hasDifT == true  {
+//                    y1 = y1 - 1
+//                    yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
+//                    let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
+//                    _ = imageProcessViewModel.targetImageProcessed.cropped(to: resultRect)
+//                    //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description  ))
+//                }else{
+//                    y1 = y1 + 1
+//                    yTemp = Int(imageProcessViewModel.GetTargetImageSize()[1].rounded()) - y1
+//                    let resultRect = CGRect.init(x: x1, y: yTemp, width: abs(x2-x1), height: 1)
+//                    _ = imageProcessViewModel.targetImageProcessed.cropped(to: resultRect)
+//                    //tmp.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/untitled folder 3/" + stepT.description + "-" + hasDifT.description))
+//                }
+//                CheckEdgeT()
+//
+//            }
+//        }
         
         func CheckEdgeD(){
             print("CheckEdgeD: previousHasDifD - \(previousHasDifD); hasDifD - \(hasDifD); stepD - \(stepD)")
@@ -124,16 +130,17 @@ class PixelProcess{
         //            let hasDifL = HasDifferentColor(ColorArray: colorsLeft, Threshhold: 0.1)
         //            let hasDifR = HasDifferentColor(ColorArray: colorsRight, Threshhold: 0.1)
         //        }
-        func IsOKT(){
-            if hasDifT == true  {
-                x1 = x1 - 1
-                CheckEdgeT()
-            }else{
-                x1 = x1 + 1
-                CheckEdgeT()
-            }
-            
-        }
+        
+//        func IsOKT(){
+//            if hasDifT == true  {
+//                x1 = x1 - 1
+//                CheckEdgeT()
+//            }else{
+//                x1 = x1 + 1
+//                CheckEdgeT()
+//            }
+//
+//        }
         
         func IsOKD(){
             if hasDifD == true  {
@@ -167,7 +174,7 @@ class PixelProcess{
             
         }
         
-        CheckEdgeT()
+//        CheckEdgeT()
         //        CheckEdgeD()
         //        CheckEdgeL()
         //        CheckEdgeR()
@@ -271,7 +278,7 @@ class PixelProcess{
         let red: UInt8 = data[offset+1]
         let green: UInt8 = data[offset+2]
         let blue: UInt8 = data[offset+3]
-        print("color: \(data[0]), \(data[1]), \(data[2]), \(data[3])")
+//        print("color: \(data[0]), \(data[1]), \(data[2]), \(data[3])")
         color = NSColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
         return color
     }
@@ -292,15 +299,16 @@ class PixelProcess{
         
         // Allocate memory for image data. This is the destination in memory
         // where any drawing to the bitmap context will be rendered.
-        let bitmapData = malloc(bitmapByteCount)
+//        let bitmapData = malloc(bitmapByteCount)
+        
 //        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
 
-        _ = CGSize(width: CGFloat(pixelsWide), height: CGFloat(pixelsHigh))
+//        _ = CGSize(width: CGFloat(pixelsWide), height: CGFloat(pixelsHigh))
         //CGBitmapContextCreate
         //UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         // create bitmap
-        let context = CGContext(data: bitmapData,
+        let context = CGContext(data: nil,
                                 width: pixelsWide,
                                 height: pixelsHigh,
                                 bitsPerComponent: 8,
@@ -312,6 +320,7 @@ class PixelProcess{
         let rect = CGRect(x: 0, y: 0, width: pixelsWide, height: pixelsHigh)
         
         context?.draw(img, in: rect)
+//        bitmapData?.deallocate()
         
         return context!
     }

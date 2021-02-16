@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     let plistM = PlistManager()
     var item: AppSettingsItem
-    @ObservedObject var settingsVM = settingViewModel
+    @ObservedObject var settingsVM: SettingViewModel
     @State var DPICheck: Int = 1
     @State var debugMode: Int = 0
     @State var PSPath: String 

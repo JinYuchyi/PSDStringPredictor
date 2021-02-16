@@ -123,8 +123,8 @@ struct PSD {
                     fontName: _strObj.FontName,
                     alignment: _strObj.alignment.rawValue,
                     status: _strObj.status.rawValue,
-                    isParagraph: _strObj.isParagraph,
-                    colorPixel: _strObj.colorPixel.toData()
+                    isParagraph: _strObj.isParagraph
+//                    colorPixel: _strObj.colorPixel.toData()
                 )
                 
                 strObjDictList.append(strObj)

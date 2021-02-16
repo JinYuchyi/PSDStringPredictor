@@ -15,17 +15,17 @@ struct ControlPanel: View {
     let ternimalScriptMgr = TernimalScriptManager()
     //@ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     //@ObservedObject var strObjVM = psdViewModel
-    @ObservedObject var imageProcessVM = imageProcessViewModel
-    @ObservedObject var settingsVM = settingViewModel
+    @ObservedObject var imageProcessVM : ImageProcess
+    @ObservedObject var settingsVM: SettingViewModel
     var imgUtil: ImageUtil = ImageUtil()
-    var pixelProcess = PixelProcess()
-//    var db = DB()
+//    var pixelProcess = PixelProcess()
+    //    var db = DB()
     var training = MLTraining()
-//    let imagePropertyVM = imagePropertyViewModel
+    //    let imagePropertyVM = imagePropertyViewModel
     //@Binding var showImage: Bool
     //@Environment(\.managedObjectContext) private var viewContext
     let trackingData = TrackingDataManager.shared
-  //  let colorModeClassifier = ColorModeClassifier()
+    //  let colorModeClassifier = ColorModeClassifier()
     
     //let controlVM = ControlVM()
     @ObservedObject var psdsVM: PsdsVM
@@ -33,59 +33,60 @@ struct ControlPanel: View {
     
     var body: some View {
         GeometryReader{geo in
-//            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-//                /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-//                    .frame(width: geo.size.width * 0.8, alignment: .center)
-//            })
-//            .frame(width: geo.size.width, alignment: .center)
+            //            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+            //                /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+            //                    .frame(width: geo.size.width * 0.8, alignment: .center)
+            //            })
+            //            .frame(width: geo.size.width, alignment: .center)
             VStack(alignment: .center){
                 Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
                     Text("Combine To Paragraph")
                         .frame(width: geo.size.width*0.8, alignment: .center)
                 }
-
-//                Text("Align Selection").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
-//                HStack{
-//                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-//                        Text("Left")
-//                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                    }
-//                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-//                        Text("Center")
-//                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                    }
-//                    Button(action: {stringObjectVM.CombineStringsOnePSD(psdId: stringObjectVM.selectedPSDID)}){
-//                        Text("Right")
-//                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                    }
-//                }
-
+                
+                
+                
                 //HStack{
                 Text("Set Selection Status").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
                 HStack{
                     Button(action: {psdsVM.SetSelectionToFixed()}){
-                            Text("Ready")
-                                .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-
-                        }
-
+                        Text("Ready")
+                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
+                        
+                    }
+                    
                     Button(action: {psdsVM.SetSelectionToIgnored()}){
-                            Text("Ignore")
-                                .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-                        }
+                        Text("Ignore")
+                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
+                    }
+
                 }
-
+                //                Text("Align Selection").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
+                                HStack{
+                                    Button(action: {}){
+                                        Text("􀌀")
+                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                    }
+                                    Button(action: { }){
+                                        Text("􀌁")
+                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                    }
+                                    Button(action: { }){
+                                        Text("􀌂")
+                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                    }
+                                }
                 //}
-
+                
                 //Divider()
-
+                
                 Spacer()
                 
                 Text("Calculate String Layers")
                     .foregroundColor(.gray)
                     .padding(.top)
                     .frame(width: geo.size.width*0.8, alignment: .leading)
-
+                
                 HStack{
                     Button(action: {psdsVM.ProcessForOnePsd()}){
                         Text("One")
@@ -99,16 +100,16 @@ struct ControlPanel: View {
                     }
                     .colorMultiply(regionProcessVM.regionActive == true ? Color.green : Color.white)
                     .disabled(psdsVM.IndicatorText != "")
-
+                    
                     Button(action: {psdsVM.ProcessForAll()}){
                         Text("Committed")
                             .frame(minWidth: 50,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
-
+                    
                 }
                 .frame( maxWidth: .infinity)
-
+                
                 Text("Create PSD")
                     .foregroundColor(.gray)
                     //.padding(.top)
@@ -119,7 +120,7 @@ struct ControlPanel: View {
                             .frame(minWidth: 165,  maxWidth: .infinity)
                     }
                     .disabled(psdsVM.IndicatorText != "")
-
+                    
                     Button(action: {psdsVM.CreatePSDForAll()}){
                         Text("Committed")
                             .frame(minWidth: 50,  maxWidth: .infinity)
@@ -129,23 +130,23 @@ struct ControlPanel: View {
                 //.frame( maxWidth: .infinity)
                 .padding(.bottom)
                 //.padding(.bottom)
-
                 
-                Button(action: {Debug()}){
-                    Text("Debug")
-                        .frame(minWidth: 50,  maxWidth: .infinity)
-                }
+                
+                //                Button(action: {Debug()}){
+                //                    Text("Debug")
+                //                        .frame(minWidth: 50,  maxWidth: .infinity)
+                //                }
             }
-
+            
         }
         
         
     }
-
+    
     func Debug(){
         var symbolPredict =  SymbolsPredict()
         symbolPredict.Prediction(ciImage: psdsVM.selectedNSImage.ToCIImage()!)
-//        print (symbolPredict.)
+        //        print (symbolPredict.)
     }
     
 }

@@ -51,6 +51,7 @@ extension NSImage {
     
     func ToCGImage() -> CGImage? {
       var rect = NSRect(origin: CGPoint(x: 0, y: 0), size: self.size)
+        
       return cgImage(forProposedRect: &rect, context: NSGraphicsContext.current, hints: nil)
     }
     

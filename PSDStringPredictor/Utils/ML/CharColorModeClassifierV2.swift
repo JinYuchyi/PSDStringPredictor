@@ -52,6 +52,16 @@ class CharColorModeClassifierV2{
             case "x", "X": model = try VNCoreMLModel(for: xColor.shared.model)
             case "y", "Y": model = try VNCoreMLModel(for: yColor.shared.model)
             case "z", "Z": model = try VNCoreMLModel(for: zColor.shared.model)
+            case "0": model = try VNCoreMLModel(for: _0Color.shared.model)
+            case "1": model = try VNCoreMLModel(for: _1Color.shared.model)
+            case "2": model = try VNCoreMLModel(for: _2Color.shared.model)
+            case "3": model = try VNCoreMLModel(for: _3Color.shared.model)
+            case "4": model = try VNCoreMLModel(for: _4Color.shared.model)
+            case "5": model = try VNCoreMLModel(for: _5Color.shared.model)
+            case "6": model = try VNCoreMLModel(for: _6Color.shared.model)
+            case "7": model = try VNCoreMLModel(for: _7Color.shared.model)
+            case "8": model = try VNCoreMLModel(for: _8Color.shared.model)
+            case "9": model = try VNCoreMLModel(for: _9Color.shared.model)
             default:
                 model = try VNCoreMLModel(for: CharColorMode.shared.model)
             }

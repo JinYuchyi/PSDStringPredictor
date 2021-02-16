@@ -16,12 +16,14 @@ struct ContentView: View  {
     
     let data = DataStore()
     let font = FontUtils()
-    @ObservedObject var imageViewModel = imageProcessViewModel
+    @ObservedObject var imageViewModel: ImageProcess
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var regionProcessVM: RegionProcessVM = RegionProcessVM()
-    @ObservedObject var imgVM: ImageVM
+    @ObservedObject var interactive = InteractiveViewModel()
+    @ObservedObject var settingVM : SettingViewModel 
+//    @ObservedObject var imgVM: ImageVM
     
-    let pixelProcess = PixelProcess()
+//    let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     let keyEventHandle = KeyEventHandling()
     
@@ -51,7 +53,7 @@ struct ContentView: View  {
         ZStack{
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 ZStack{
-                    ImageView(psds: psdsVM, regionVM: regionProcessVM)
+                    ImageView(psds: psdsVM, regionVM: regionProcessVM, interactive: interactive)
                     
                     Group{
                         LabelsOnImage(psdsVM: psdsVM)
@@ -123,7 +125,7 @@ struct ContentView: View  {
             
             Divider()
             
-            ControlPanel(psdsVM: psdsVM, regionProcessVM: regionProcessVM)
+            ControlPanel(imageProcessVM: imageViewModel, settingsVM: settingVM, psdsVM: psdsVM, regionProcessVM: regionProcessVM)
             
             
         }

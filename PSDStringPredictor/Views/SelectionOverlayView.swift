@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SelectionOverlayView: View {
-    @ObservedObject var interactive = interactiveViewModel
+    @ObservedObject var interactive: InteractiveViewModel
     @ObservedObject var psdsVM : PsdsVM
 //    @ObservedObject var regionVM: RegionProcessVM
     @State var startPos = CGPoint.zero

@@ -10,6 +10,8 @@ import Cocoa
 import SwiftUI
 import CoreData
 
+let viewContext = AppDelegate().persistentContainer.viewContext
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
@@ -17,9 +19,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var settingWindow: NSWindow!
     @ObservedObject var dbViewModel = DBViewModel()
    // @ObservedObject var stringObjectVM = psdViewModel
-    @ObservedObject var imageVM = ImageVM()
+//    @ObservedObject var imageVM = ImageVM()
     @ObservedObject var psdsVM = PsdsVM()
-    
+    @ObservedObject var imageProcess = ImageProcess()
+    @ObservedObject var settingVM = SettingViewModel()
+//    let shared = AppDelegate()
 
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -28,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //let stringObjectVM = StringObjectViewModel()
         //let data = DataStore()
         //let context = (NSApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let contentView = ContentView( psdsVM: psdsVM, imgVM: imageVM)
+        let contentView = ContentView( imageViewModel: imageProcess, psdsVM: psdsVM, settingVM: settingVM)
         
             //.environment(\.managedObjectContext, persistentContainer.viewContext)
             //.environmentObject(warningVM)
@@ -64,7 +68,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        stringObjectVM.frameOverlay = false
 //        stringObjectVM.stringOverlay = true
         //Load color data
-        imageProcessViewModel.FetchStandardHSVList()
+        imageProcess.FetchStandardHSVList()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -200,7 +204,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //self.window! .title = "new window"
         self.window! .isOpaque = false
         self.window! .center ()
-        self.window! .contentView = NSHostingView (rootView: SettingsView(item: item, PSPath: settingViewModel.LoadPList(name: "AppSettings").PSPath))
+        self.window! .contentView = NSHostingView (rootView: SettingsView(item: item, settingsVM: settingVM, PSPath: settingVM.LoadPList(name: "AppSettings").PSPath))
         self.window! .isMovableByWindowBackground = true
         self.window! .makeKeyAndOrderFront (nil)
         

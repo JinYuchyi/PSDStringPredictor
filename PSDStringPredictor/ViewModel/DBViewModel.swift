@@ -16,8 +16,7 @@ class DBViewModel: ObservableObject{
     let csv = CSVManager()
     
     //@Published private var dbPathString = "db.sqlite3"
-    @Environment(\.managedObjectContext) private var viewContext
-
+//    @Environment(\.managedObjectContext) private var viewContext
     
     func ConnectDB()  {
         //imgUtil.RenderText("Text123!")
@@ -36,12 +35,12 @@ class DBViewModel: ObservableObject{
                 {
                     //DataStore.fontCsvPath = panel.url!.path
                     //DB.shared.RefillFontDBFromCSV()
-                    TrackingDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+                    TrackingDataManager.Delete(viewContext)
 
                    // let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
                     let objArray = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray(FilePath: panel.url!.path)
                     
-                    TrackingDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, trackingObjectList: objArray)
+                    TrackingDataManager.BatchInsert(viewContext, trackingObjectList: objArray)
 //                    var index = 0
 //                    for obj in objArray{
 //                        TrackingDataManager.Create(AppDelegate().persistentContainer.viewContext, Int16(obj[0]), Int16(obj[1]))
@@ -64,9 +63,9 @@ class DBViewModel: ObservableObject{
                 {
                     //DataStore.fontCsvPath = panel.url!.path
                     //DB.shared.RefillFontDBFromCSV()
-                    OSStandardManager.DeleteAll(AppDelegate().persistentContainer.viewContext)
+                    OSStandardManager.DeleteAll(viewContext)
                     let objArray = CSVManager.shared.ParsingCsvFileAsFontStandardArray(FilePath: panel.url!.path)
-                    OSStandardManager.BatchInsert(AppDelegate().persistentContainer.viewContext, FontStandardObjectList: objArray)
+                    OSStandardManager.BatchInsert(viewContext, FontStandardObjectList: objArray)
 
                 }
             }
@@ -82,12 +81,12 @@ class DBViewModel: ObservableObject{
                 {
                     //DataStore.fontCsvPath = panel.url!.path
                     //DB.shared.RefillFontDBFromCSV()
-                    CharDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+                    CharDataManager.Delete(viewContext)
 
                     //let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
                     //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
                     let objArray = CSVManager.shared.ParsingCsvFileAsCharObjArray(FilePath: panel.url!.path)
-                    CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
+                    CharDataManager.BatchInsert(viewContext, CharObjectList: objArray)
 
                 }
             }
@@ -103,12 +102,12 @@ class DBViewModel: ObservableObject{
                 {
                     //DataStore.fontCsvPath = panel.url!.path
                     //DB.shared.RefillFontDBFromCSV()
-                    CharDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+                    CharDataManager.Delete(viewContext)
 
                     //let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
                     //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
                     let objArray = CSVManager.shared.ParsingCsvFileAsCharObjArray(FilePath: panel.url!.path)
-                    CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
+                    CharDataManager.BatchInsert(viewContext, CharObjectList: objArray)
 
                 }
             }
@@ -124,12 +123,12 @@ class DBViewModel: ObservableObject{
                 {
                     //DataStore.fontCsvPath = panel.url!.path
                     //DB.shared.RefillFontDBFromCSV()
-                    CharBoundsDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+                    CharBoundsDataManager.Delete(viewContext)
 
                     //let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
                     //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
                     let objArray = CSVManager.shared.ParsingCsvFileAsBoundsObjArray(FilePath: panel.url!.path)
-                    CharBoundsDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharBoundsList: objArray)
+                    CharBoundsDataManager.BatchInsert(viewContext, CharBoundsList: objArray)
                 }
             }
         }

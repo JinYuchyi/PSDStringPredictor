@@ -20,6 +20,7 @@ struct ImageView: View {
     //    @Binding var showImage: Bool
     @ObservedObject var psds: PsdsVM
     @ObservedObject var regionVM: RegionProcessVM
+    @ObservedObject var interactive: InteractiveViewModel
     
     var body: some View{
         
@@ -28,8 +29,8 @@ struct ImageView: View {
             Image(nsImage: psds.processedCIImage.ToNSImage())
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-            SelectionOverlayView( psdsVM: psds)
-            RegionProcessOverlayView(psdsVM: psds, regionProcessVM: regionVM)
+            SelectionOverlayView( interactive: interactive, psdsVM: psds)
+            RegionProcessOverlayView(interactive: interactive, psdsVM: psds, regionProcessVM: regionVM)
                 .IsHidden(condition: regionVM.regionActive)
         }
         

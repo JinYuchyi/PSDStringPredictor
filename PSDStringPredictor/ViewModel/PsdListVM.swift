@@ -39,13 +39,12 @@ class PsdsVM: ObservableObject{
     @Published var canProcess: Bool = false
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[charRectObject]]  = [:]
-    //@Published var maskColorDict: [Int:[CGColor]]  = [:]
     @Published var stringIsOn: Bool = true
-    
+    @Binding var PSPath: String
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
     //No bgColorDict, charArrayDict, contentDict, charSizeList, charImageList, charFontWeightList, isPredictedList, charColorModeList, FontName, colorPixel, because we do not need to adjust them frequently
-    @Published var tmpStringObjectList: [StringObject] = []
+//    @Published var tmpStringObjectList: [StringObject] = []
 //    @Published var tmpStrIDList: [UUID] = []
 //    @Published var trackingDict: [UUID: CGFloat] = [:]
 //    @Published var fontSizeDict: [UUID: CGFloat] = [:]
@@ -59,7 +58,7 @@ class PsdsVM: ObservableObject{
 //    @Published var isParagraphDict: [UUID: Bool] = [:]
     
     let imageUtil = ImageUtil()
-    let pixProcess = PixelProcess()
+//    let pixProcess = PixelProcess()
     let jsMgr = JSManager()
     //    @Published var thumbnailDict: [Int:NSImage] = [:]
     //    @Published var commitedList: [Int:Bool] = [:]
@@ -108,35 +107,38 @@ class PsdsVM: ObservableObject{
     }
     
     func FetchTrackingData(path: String){
-        TrackingDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+        TrackingDataManager.Delete(viewContext)
         let objArray = CSVManager.shared.ParsingCsvFileAsTrackingObjectArray(FilePath: path)
-        TrackingDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, trackingObjectList: objArray)
+        TrackingDataManager.BatchInsert(viewContext, trackingObjectList: objArray)
     }
     
     func FetchStandardTable(path: String){
-        OSStandardManager.DeleteAll(AppDelegate().persistentContainer.viewContext)
+        OSStandardManager.DeleteAll(viewContext)
         let objArray = CSVManager.shared.ParsingCsvFileAsFontStandardArray(FilePath: path)
-        OSStandardManager.BatchInsert(AppDelegate().persistentContainer.viewContext, FontStandardObjectList: objArray)
+        OSStandardManager.BatchInsert(viewContext, FontStandardObjectList: objArray)
     }
     
     func FetchCharacterTable(path: String){
-        CharDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+        CharDataManager.Delete(viewContext)
         let objArray = CSVManager.shared.ParsingCsvFileAsCharObjArray(FilePath: path)
-        CharDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharObjectList: objArray)
+        CharDataManager.BatchInsert(viewContext, CharObjectList: objArray)
     }
     
     func FetchBoundTable(path:String){
-        CharBoundsDataManager.Delete(AppDelegate().persistentContainer.viewContext)
+        CharBoundsDataManager.Delete(viewContext)
         let objArray = CSVManager.shared.ParsingCsvFileAsBoundsObjArray(FilePath: path)
-        CharBoundsDataManager.BatchInsert(AppDelegate().persistentContainer.viewContext, CharBoundsList: objArray)
+        CharBoundsDataManager.BatchInsert(viewContext, CharBoundsList: objArray)
     }
     
-    func UpdateProcessedImage(psdId: Int){
+    func UpdateProcessedImage(psdId: Int)->CIImage?{
         if selectedNSImage.size.width == 0 || selectedNSImage == nil {
-            return
+            return nil
         }
         let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
-        processedCIImage = imageUtil.ApplyFilters(target: _targetImageMasked, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
+        DispatchQueue.main.async{
+            self.processedCIImage = self.imageUtil.ApplyFilters(target: _targetImageMasked, gamma: self.gammaDict[psdId] ?? 1, exp: self.expDict[psdId] ?? 0)
+        }
+        return processedCIImage
     }
     
     func FetchStringObjects(psdId: Int){
@@ -146,7 +148,7 @@ class PsdsVM: ObservableObject{
         var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
         img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        let allStrObjs = CreateAllStringObjects(rawNSImage: NSImage.init(contentsOfFile: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)!, processedCIImage: img, psdId: psdId, psdsVM: self)
+        let allStrObjs = CreateAllStringObjects(rawNSImage: NSImage.init(contentsOfFile: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)!, psdId: psdId, psdsVM: self)
         DispatchQueue.main.async{ [self] in
             var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
             for obj in allStrObjs {
@@ -170,7 +172,7 @@ class PsdsVM: ObservableObject{
         var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
 
-        let newList = CreateAllStringObjects(rawNSImage: regionImage.ToNSImage(), processedCIImage: img, psdId: psdId, psdsVM: self, offset: offset)
+        let newList = CreateAllStringObjects(rawNSImage: regionImage.ToNSImage(), psdId: psdId, psdsVM: self, offset: offset)
         if newList.count == 0{
             print("No strings detected in the area.")
             return
@@ -195,28 +197,28 @@ class PsdsVM: ObservableObject{
     func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
         let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)
         
-        let color1 = pixProcess.colorAt(x: Int(obj.stringRect.origin.x), y: Int(targetImg.size.height - obj.stringRect.origin.y), img: targetImg.ToCGImage()!)
+        let color1 = PixelProcess.shared.colorAt(x: Int(obj.stringRect.origin.x), y: Int(targetImg.size.height - obj.stringRect.origin.y), img: targetImg.ToCGImage()!)
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
     
-    func UnpackPsdObject(psdId: Int) -> Bool {
-        guard let psd = GetSelectedPsd() else {return false}
-        tmpStringObjectList = psd.stringObjects
-        return true
-    }
-    
-    func packPsdObject(psdId: Int) -> Bool {
-        if selectedPsdId != nil && psdModel.GetPSDObject(psdId: psdId) != nil {
-            psdModel.SetStringObjects(psdId: psdId, value: tmpStringObjectList)
-            tmpStringObjectList = []
-            return true
-        }
-        return true
-    }
+//    func UnpackPsdObject(psdId: Int) -> Bool {
+//        guard let psd = GetSelectedPsd() else {return false}
+//        tmpStringObjectList = psd.stringObjects
+//        return true
+//    }
+//
+//    func packPsdObject(psdId: Int) -> Bool {
+//        if selectedPsdId != nil && psdModel.GetPSDObject(psdId: psdId) != nil {
+//            psdModel.SetStringObjects(psdId: psdId, value: tmpStringObjectList)
+//            tmpStringObjectList = []
+//            return true
+//        }
+//        return true
+//    }
     
     func SetCommit(psdId: Int){
         psdModel.SetStatusForPsd(psdId: psdId, value: .commited)
-        packPsdObject(psdId: psdId)
+//        packPsdObject(psdId: psdId)
     }
     
     func ScanAndBreakFarAwayStringObject(psdId: Int){
@@ -242,7 +244,8 @@ class PsdsVM: ObservableObject{
 //        }
     }
     
-    func CreateAllStringObjects(rawNSImage: NSImage, processedCIImage ciImage: CIImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
+    func CreateAllStringObjects(rawNSImage: NSImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
+        let ciImage = UpdateProcessedImage(psdId: psdId)!
         var strobjs : [StringObject] = []
         let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
@@ -273,7 +276,7 @@ class PsdsVM: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            let charImageList = selectedNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset))
+            let charImageList = rawNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset))
 
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset), chars, charRects.offset(offset: offset), charImageList: charImageList)
 //            print(charImageList.count)
@@ -290,7 +293,9 @@ class PsdsVM: ObservableObject{
         
         //The reason for putting the clear indicator code here, is because I want the indicator invisible after the last process finished.
         if canProcess == false {
-            psdsVM.IndicatorText = ""
+            DispatchQueue.main.async{
+                psdsVM.IndicatorText = ""
+            }
         }
         
         return strobjs
@@ -389,11 +394,11 @@ class PsdsVM: ObservableObject{
     
     func thumbnailClicked(psdId: Int){
         //When clicking other psd, before jump to that psd, pack string objects first
-        if selectedPsdId != nil {
-            packPsdObject(psdId: selectedPsdId)
-        }
+//        if selectedPsdId != nil {
+//            packPsdObject(psdId: selectedPsdId)
+//        }
         selectedPsdId = psdId
-        UnpackPsdObject(psdId: psdId)
+//        UnpackPsdObject(psdId: psdId)
         if psdModel.psdObjects.contains(where: {psdId == $0.id}) == true {
             selectedNSImage = LoadNSImage(imageUrlPath: GetSelectedPsd()!.imageURL.path)
             UpdateProcessedImage(psdId: psdId)
@@ -407,6 +412,7 @@ class PsdsVM: ObservableObject{
     
     
     func ProcessForOnePsd(){
+        let processOn: Int = selectedPsdId
         canProcess = true
         if  selectedNSImage.size.width == 0 {
             return
@@ -416,7 +422,7 @@ class PsdsVM: ObservableObject{
         queueCalc.async {
             self.FetchStringObjects(psdId: self.selectedPsdId)
             DispatchQueue.main.async{
-                self.psdModel.SetStatusForPsd(psdId: self.selectedPsdId, value: .processed)
+                self.psdModel.SetStatusForPsd(psdId: processOn, value: .processed)
             }
         }
         IndicatorText = ""
@@ -536,7 +542,7 @@ class PsdsVM: ObservableObject{
             let char = (obj.content.first)
             keyvalues["char"] = String(char!) as AnyObject
             keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
-            let items = CharBoundsDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
+            let items = CharBoundsDataManager.FetchItems(viewContext, keyValues: keyvalues)
             if items.count > 0 {
                 let offset = [items[0].x1, Int16((Float(items[0].y2 - items[0].y1)/10).rounded())]
                 offsetList.append(offset)
@@ -567,7 +573,7 @@ class PsdsVM: ObservableObject{
         
         if success == true{
             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
-            let cmd = "open " + jsPath + "  -a '\(settingViewModel.PSPath)'"
+            let cmd = "open " + jsPath + "  -a '\(settingsVM.PSPath)'"
             PythonScriptManager.RunScript(str: cmd)
         }
     }
@@ -599,7 +605,6 @@ class PsdsVM: ObservableObject{
         }
         
         psdModel.SetAlignment(psdId: selectedPsdId, objId: _id, value: align.Next())
-        //stringObjectVM.alignmentDict[id]  = (stringObjectVM.alignmentDict[id]! + 1) % 3
         switch psdModel.GetPSDObject(psdId: selectedPsdId)!.GetStringObjectFromOnePsd(objId: _id)!.alignment {
         case .left:
             return "alignLeft-round"
@@ -733,7 +738,7 @@ class PsdsVM: ObservableObject{
     
     
     func SaveDocument(){
-        packPsdObject(psdId: selectedPsdId)
+//        packPsdObject(psdId: selectedPsdId)
         let panel = NSSavePanel()
         panel.nameFieldLabel = "Save File To:"
         panel.nameFieldStringValue = "filename.stringlayers"
@@ -784,7 +789,7 @@ class PsdsVM: ObservableObject{
             //Process Image
             UpdateProcessedImage(psdId: selectedPsdId)
             
-            UnpackPsdObject(psdId: selectedPsdId)
+//            UnpackPsdObject(psdId: selectedPsdId)
         }
     }
     

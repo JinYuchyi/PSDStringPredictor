@@ -58,7 +58,7 @@ struct strObjJsonObject: Codable{
     var alignment: String
     var status: String
     var isParagraph: Bool
-    var colorPixel: Data
+//    var colorPixel: Data
     
 //    init(){
 //        id = UUID()

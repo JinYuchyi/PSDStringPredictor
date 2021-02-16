@@ -24,7 +24,9 @@ struct psdThumbnailList: View {
                 List(psdsVM.psdModel.psdObjects, id:\.id) { psd in
                     VStack(alignment: .center){
                         PsdThumbnail(id: psd.id, psdVM: psdsVM)
+                            .tooltip("\(psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.imageURL)")
                             .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
+                            
                             .onTapGesture {
                                 psdsVM.thumbnailClicked(psdId: psd.id)
                                 showPatchLayer = false

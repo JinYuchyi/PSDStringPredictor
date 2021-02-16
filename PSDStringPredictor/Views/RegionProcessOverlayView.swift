@@ -10,7 +10,7 @@ import SwiftUI
 
 struct RegionProcessOverlayView: View {
     
-    @ObservedObject var interactive = interactiveViewModel
+    @ObservedObject var interactive: InteractiveViewModel
     @ObservedObject var psdsVM : PsdsVM
     @ObservedObject var regionProcessVM : RegionProcessVM 
     @State var regionStartPos = CGPoint.zero

@@ -10,15 +10,15 @@ import Foundation
 import SwiftUI
 
 class Controller{
-    var imgVM : ImageProcess = imageProcessViewModel
-    //@Binding var showImage: Bool
-    
-
-    
-    func TapToMask(){
-
-    }
-    
+//    var imgVM : ImageProcess = imageProcessViewModel
+//    //@Binding var showImage: Bool
+//    
+//
+//    
+//    func TapToMask(){
+//
+//    }
+//    
 
     
     

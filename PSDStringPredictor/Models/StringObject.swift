@@ -75,7 +75,7 @@ struct StringObject : Identifiable,  Hashable{
     var alignment: StringAlignment
     var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
-    var colorPixel: CIImage = CIImage.init()
+//    var colorPixel: CIImage = CIImage.init()
 
     init(){
         self.id = UUID()
@@ -242,7 +242,7 @@ struct StringObject : Identifiable,  Hashable{
     }
     
     func FetchTrackingFromDB(_ size: CGFloat) -> (CGFloat, Int16){
-        let item = TrackingDataManager.FetchNearestOne(AppDelegate().persistentContainer.viewContext, fontSize: Int16(size.rounded()))
+        let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(size.rounded()))
         //return CGFloat(item.fontTracking)/1000
         //print("item.fontTrackingPoints ",item.fontTrackingPoints)
         //return CGFloat(item.fontTrackingPoints)
@@ -262,16 +262,16 @@ struct StringObject : Identifiable,  Hashable{
                 
                 for img in charImageList.filter({$0.extent.width > 0}){
                     //Calculate the darkest color as the font color
-                    print("#min: \(Minimun(img).0)")
-                    if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
-                        minc = Minimun(img).0
-                        colorPixel = Minimun(img).1
-                        print("Clac text color, char min: \(minc)")
+//                    print("#min: \(Minimun(img).0)")
+                    if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
+                        minc = Minimun(img)
+//                        colorPixel = Minimun(img)
+//                        print("Clac text color, char min: \(minc)")
                     }
                     //Calculate the brightest color as the background color
-                    if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
-                        maxc = Maximum(img).0
-                        print("Clac bg color, char max: \(maxc)")
+                    if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
+                        maxc = Maximum(img)
+//                        print("Clac bg color, char max: \(maxc)")
                     }
                 }
                 bgColor = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
@@ -283,15 +283,15 @@ struct StringObject : Identifiable,  Hashable{
                 var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
                 for img in charImageList.filter({$0.extent.width > 0}){
                     //Calculate the brightest color as the font color
-                    if Maximum(img).0.brightnessComponent >  maxc.brightnessComponent  {
-                        maxc = Maximum(img).0
-                        colorPixel = Maximum(img).1
-                        print("Clac text color, char max: \(maxc)")
+                    if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
+                        maxc = Maximum(img)
+//                        colorPixel = Maximum(img).1
+//                        print("Clac text color, char max: \(maxc)")
                     }
                     //Calculate the darkest color as the background color
-                    if Minimun(img).0.brightnessComponent <  minc.brightnessComponent  {
-                        minc = Minimun(img).0
-                        print("Clac bg color, char min: \(minc)")
+                    if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
+                        minc = Minimun(img)
+//                        print("Clac bg color, char min: \(minc)")
 
                     }
                 }
@@ -379,7 +379,7 @@ struct StringObject : Identifiable,  Hashable{
         keyvalues["height"] = height as AnyObject
         keyvalues["fontWeight"] = _weight as AnyObject
         
-        let objList = CharDataManager.FetchItems(AppDelegate().persistentContainer.viewContext, keyValues: keyvalues)
+        let objList = CharDataManager.FetchItems(viewContext, keyValues: keyvalues)
         
         if (objList.count == 0){
             isPredicted = 1

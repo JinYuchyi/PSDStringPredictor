@@ -448,8 +448,8 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
     return filteredImage
 }
 
-func Maximum(_ image: CIImage) -> (color: NSColor, image: CIImage){
-    let pixelProcess = PixelProcess()
+func Maximum(_ image: CIImage) -> (NSColor){
+//    let pixelProcess = PixelProcess()
     //let colorSpace: NSColorSpace = .genericRGB
     var color: NSColor = NSColor.init(red: 1, green: 0, blue: 1, alpha: 1)
     var filteredImage = CIImage.init()
@@ -458,46 +458,33 @@ func Maximum(_ image: CIImage) -> (color: NSColor, image: CIImage){
     filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
     filteredImage = filter?.outputImage ?? CIImage.init()
     if filteredImage.IsValid() == true{
-        color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
+        color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
         
     }else {
         
     }
-    return (color, filteredImage)
+    return (color)
 }
-//var _index = 0
-func Minimun(_ image: CIImage) -> (color: NSColor, image: CIImage){
-    let pixelProcess = PixelProcess()
-//    let colorSpace: NSColorSpace = .genericRGB
-    var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-    var filteredImage = CIImage.init()
-    
 
+func Minimun(_ image: CIImage) -> (NSColor){
+//    let pixelProcess = PixelProcess()
+    var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
-            return (color, CIImage.init())
+            return (color)
         }
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         
-        filteredImage = filter.outputImage ?? CIImage.init() //Result Correct
-//        let str = "/Users/ipdesign/Downloads/" + String(_index) + ".bmp"
-//        filteredImage.ToPNG(url: URL.init(fileURLWithPath: str))
-//        _index += 1
-        //filteredImage is correct
+        let filteredImage = filter.outputImage ?? CIImage.init() //Result Correct
+
         if filteredImage.IsValid() == true{
-            color = pixelProcess.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
-            print("Color: \(color)")
-//            let tmpPath2 = GetDocumentsPath().appending("/mini.bmp")
-//            filteredImage.ToCGImage()!.ToCIImage().ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
-            return (color,filteredImage)
-            
+            color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
+            return (color)
         }
         
     }
-    //let str = String(c.redComponent.description) + "|" + String(c.greenComponent.description) + "|" + String(c.blueComponent.description)
-    //filteredImage?.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/1111/" + str + ".bmp"))
-    return (color, filteredImage)
+    return (color)
 }
 
 func NoiseReduction(_ image: CIImage) -> CIImage?{

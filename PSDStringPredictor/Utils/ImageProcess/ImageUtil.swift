@@ -14,7 +14,7 @@ import Vision
 
 class ImageUtil{
     let ocr = OCR()
-    let pixelProcess = PixelProcess()
+//    let pixelProcess = PixelProcess()
     
     
     private func attributedTextImageGenerator(inputText: NSAttributedString, inputScaleFactor: NSNumber = 1) -> CIFilter? {
@@ -159,11 +159,11 @@ class ImageUtil{
         //img correct
         let mode = StringColorMode(img:img)
         if mode == .light {
-            print("max: \(Maximum(img).color)")
-            return Maximum(img).color
+//            print("max: \(Maximum(img).color)")
+            return Maximum(img)
         }else {
-            print("min: \(Minimun(img).color)")
-            return Minimun(img).color
+//            print("min: \(Minimun(img).color)")
+            return Minimun(img)
         }
     }
     
