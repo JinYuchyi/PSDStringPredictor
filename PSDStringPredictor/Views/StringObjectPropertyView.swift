@@ -80,9 +80,7 @@ struct StringObjectPropertyView: View {
     
     func contentCommit(){
         if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && content.isEmpty == false  {
-            var tmpList = Array(psdsVM.GetSelectedPsd()?.stringObjects.dropLast())
-            tmpList = tmpList?.append(psdsVM.selectedLastStringObject)
-            psdsVM.psdModel.SetStringObjects(psdId: <#T##Int#>, value: <#T##[StringObject]#>)
+            psdsVM.psdModel.SetLastStringObject(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: psdsVM.selectedLastStringObject)
         }
 
     }

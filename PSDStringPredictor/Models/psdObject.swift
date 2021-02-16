@@ -219,6 +219,36 @@ struct PSD {
         }
     }
     
+    mutating func SetContent(psdId: Int, objId: UUID, value: String){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.content = value
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.insert(psd!, at: _index!)
+            }
+        }
+    }
+    
+    mutating func SetLastStringObject(psdId: Int, objId: UUID, value: StringObject){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            psd!.stringObjects.removeAll(where: {$0.id == objId})
+            psd!.stringObjects.append(value)
+            //Replace psd
+            let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+            psdObjects.removeAll(where: {$0.id == psdId})
+            psdObjects.insert(psd!, at: _index!)
+            
+        }
+    }
+    
     
     mutating func SetAlignment(psdId: Int, objId: UUID, value: StringAlignment){
         var psd = GetPSDObject(psdId: psdId)
@@ -312,26 +342,26 @@ struct PSD {
         }
     }
     
-    mutating func SetContent(psdId: Int, objId: UUID, value: String){
-        var psd = GetPSDObject(psdId: psdId)
-        if psd != nil {
-            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
-            if strObj != nil{
-//                print("Changing \(strObj!.charArray[charIndex]) to \(Array(value)[0])")
-//                strObj!.charArray[charIndex] = Array(value)[0]
-                strObj!.content = value
-                strObj!.charArray = Array(strObj!.content)
-                //print("\(strObj!.content)")
-                //Replace strObj
-                psd!.stringObjects.removeAll(where: {$0.id == objId})
-                psd!.stringObjects.append(strObj!)
-                //Replace psd
-                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
-                psdObjects.removeAll(where: {$0.id == psdId})
-                psdObjects.insert(psd!, at: _index!)
-            }
-        }
-    }
+//    mutating func SetContent(psdId: Int, objId: UUID, value: String){
+//        var psd = GetPSDObject(psdId: psdId)
+//        if psd != nil {
+//            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+//            if strObj != nil{
+////                print("Changing \(strObj!.charArray[charIndex]) to \(Array(value)[0])")
+////                strObj!.charArray[charIndex] = Array(value)[0]
+//                strObj!.content = value
+//                strObj!.charArray = Array(strObj!.content)
+//                //print("\(strObj!.content)")
+//                //Replace strObj
+//                psd!.stringObjects.removeAll(where: {$0.id == objId})
+//                psd!.stringObjects.append(strObj!)
+//                //Replace psd
+//                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+//                psdObjects.removeAll(where: {$0.id == psdId})
+//                psdObjects.insert(psd!, at: _index!)
+//            }
+//        }
+//    }
     
     
     
