@@ -76,6 +76,7 @@ struct SelectionOverlayView: View {
                 psdsVM.selectedStrIDList.append(obj.id)
             }
         }
+        psdsVM.selectedLastStringObject = psdsVM.GetSelectedPsd()!.stringObjects.last!
         
     }
     

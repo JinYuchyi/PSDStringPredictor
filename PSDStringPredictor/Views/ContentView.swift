@@ -119,7 +119,7 @@ struct ContentView: View  {
             
             Divider()
             
-            StringObjectPropertyView( psdsVM: psdsVM)
+            StringObjectPropertyView( psdsVM: psdsVM )
             //.frame(width: 300)
             
             Divider()

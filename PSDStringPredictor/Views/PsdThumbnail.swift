@@ -12,7 +12,7 @@ let sizeOfThumbnail: Int = 180
 
 struct PsdThumbnail: View {
     var id: Int
-//    var name: String
+    var title: String
 //    var thumb: NSImage
     
     @ObservedObject var psdVM: PsdsVM
@@ -22,6 +22,7 @@ struct PsdThumbnail: View {
             IDView()
             Image(nsImage: ((psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
             StatusView()
+            titleView()
         }
         .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
@@ -36,8 +37,17 @@ struct PsdThumbnail: View {
         
     }
     
+    func titleView() -> some View{
+        Text("\(title)")
+            .background(Color.black.opacity(0.2))
+            .foregroundColor(.white)
+            .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .bottom)
+//            .padding(.leading, 50)
+    }
+    
     func IDView() -> some View{
         Text("ID:\(id)")
+            .foregroundColor(.gray)
             .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .topLeading)
             .padding(.leading, 50)
     }

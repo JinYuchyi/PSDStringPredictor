@@ -11,8 +11,8 @@ import SwiftUI
 struct StringLabel: View {
     //Constant
     let smallBtnSize: CGFloat = 20
-    
-    var id: UUID
+    var stringObject: StringObject
+//    var id: UUID
     //var charFrameList: [CharFrame]
     //@State var status: Int
     // @State var ignored: Bool
@@ -29,10 +29,10 @@ struct StringLabel: View {
     func CalcTrackingAfterOffset() -> CGFloat {
         // var offset : CGSize = .zero
         var d : CGFloat = 0
-        if psdsVM.DragOffsetDict[id] != nil{
-            d = psdsVM.DragOffsetDict[id]!.width
+        if psdsVM.DragOffsetDict[stringObject.id] != nil{
+            d = psdsVM.DragOffsetDict[stringObject.id]!.width
             
-            return (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.tracking ?? 0) + d
+            return (stringObject.tracking ?? 0) + d
         }else{
             return 0
         }
@@ -40,26 +40,23 @@ struct StringLabel: View {
     
     func CalcSizeAfterOffset() -> CGFloat {
         var d : CGFloat = 0
-        if psdsVM.DragOffsetDict[id] != nil{
-            d = psdsVM.DragOffsetDict[id]!.height
+        if psdsVM.DragOffsetDict[stringObject.id] != nil{
+            d = psdsVM.DragOffsetDict[stringObject.id]!.height
         }
-        if psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)  == nil {
+        if stringObject  == nil {
             return 0
         }else{
-            return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)!.fontSize - d
+            return stringObject.fontSize - d
         }
     }
     
-    //Obsolete
-    func InfoBtnTapped(){
-        //stringObjectVM.FetchSelectedIDList(idList: [id])
-    }
+
     
     func GetPosition() -> CGPoint{
         
-        if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) != nil{
-            let x = (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.origin.x)! + (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.width)!/2
-            let y = psdsVM.selectedNSImage.size.height - (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.origin.y)!  - (psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)!.stringRect.height)!/2
+        if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: stringObject.id) != nil{
+            let x = (stringObject.stringRect.origin.x) + (stringObject.stringRect.width)/2
+            let y = psdsVM.selectedNSImage.size.height - (stringObject.stringRect.origin.y)  - (stringObject.stringRect.height)/2
             return CGPoint(x: x, y: y)
         }else{
             return CGPoint.zero
@@ -68,12 +65,12 @@ struct StringLabel: View {
     
     func TextLayerView() -> some View {
         
-        Text(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.content ?? " " )
+        Text(stringObject.content ?? " " )
             .tracking(CalcTrackingAfterOffset())
             .position(x: GetPosition().x, y: GetPosition().y)
-            .foregroundColor(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.color.ToColor() ?? Color.white)
-            .font(.custom(psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.FontName ?? "", size: CalcSizeAfterOffset()))
-            .shadow(color: psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id)?.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+            .foregroundColor(stringObject.color.ToColor() ?? Color.white)
+            .font(.custom(stringObject.FontName ?? "", size: CalcSizeAfterOffset()))
+            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
             
         //.blendMode(.difference)
         
@@ -82,8 +79,8 @@ struct StringLabel: View {
     fileprivate func StringFrameLayerView()-> some View {
         //String debug frame
         Rectangle()
-            .stroke(psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.status == StringObjectStatus.ignored ? Color.red : Color.green, lineWidth: 2)
-            .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.stringRect.width ?? 0, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.stringRect.height ?? 0)
+            .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green, lineWidth: 2)
+            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
     }
     
@@ -91,7 +88,7 @@ struct StringLabel: View {
         //Drag layer
         Rectangle()
             .fill( Color.yellow.opacity(0.1))
-            .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.stringRect.width ?? 0, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.stringRect.height ?? 0)
+            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y)
     }
     
@@ -110,43 +107,41 @@ struct StringLabel: View {
                 //Text content
                 TextLayerView()
                 
-            }.IsHidden(condition: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.status != StringObjectStatus.ignored)
+            }.IsHidden(condition: stringObject.status != StringObjectStatus.ignored)
             
             HStack{
-
-                
                 //Button for alignment
                 
-                Button(action: {alignmentIconName = psdsVM.alignmentTapped(id)}){
+                Button(action: {alignmentIconName = psdsVM.alignmentTapped(stringObject.id)}){
                     CustomImage( name: alignmentIconName)
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
-                .IsHidden(condition: psdsVM.selectedStrIDList.contains(id)==true)
+                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true)
                 
                 //Button for fix
-                Button(action: {psdsVM.FixedBtnTapped(id)}){
-                    CustomImage( name: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.status == StringObjectStatus.fixed ? "tick-active" : "tick-round")
+                Button(action: {psdsVM.FixedBtnTapped(stringObject.id)}){
+                    CustomImage( name: stringObject.status == StringObjectStatus.fixed ? "tick-active" : "tick-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
-                .IsHidden(condition: psdsVM.selectedStrIDList.contains(id)==true  || psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.status == StringObjectStatus.fixed)
+                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true  || stringObject.status == StringObjectStatus.fixed)
                 
                 //Button for delete
-                Button(action: {psdsVM.IgnoreBtnTapped(id)}){
-                    CustomImage( name: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.status == StringObjectStatus.ignored ? "forbidden-active" : "forbidden-round")
+                Button(action: {psdsVM.IgnoreBtnTapped(stringObject.id)}){
+                    CustomImage( name: stringObject.status == StringObjectStatus.ignored ? "forbidden-active" : "forbidden-round")
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
-                .IsHidden(condition: psdsVM.selectedStrIDList.contains(id)==true || psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.status == StringObjectStatus.ignored)
+                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true || stringObject.status == StringObjectStatus.ignored)
             }
-            .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.stringRect.width ?? 0, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.stringRect.height ?? 0, alignment: .bottomTrailing)
+            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0, alignment: .bottomTrailing)
             .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )
             
         }

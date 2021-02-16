@@ -18,7 +18,7 @@ struct LabelsOnImage: View {
         ZStack{
             
             ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
-                StringLabel(id:obj.id, psdsVM: psdsVM )
+                StringLabel( stringObject: obj, psdsVM: psdsVM )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
                                     psdsVM.selectedStrIDList.append(obj.id)

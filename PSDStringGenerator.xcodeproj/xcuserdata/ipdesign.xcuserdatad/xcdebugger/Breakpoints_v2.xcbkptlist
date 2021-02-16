@@ -254,8 +254,8 @@
             filePath = "PSDStringPredictor/Views/PsdThumbnail.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "LabelView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -270,8 +270,8 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
             landmarkName = "CreatePSDForOnePSD(_id:saveToPath:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,8 +286,8 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "756"
-            endingLineNumber = "756"
+            startingLineNumber = "758"
+            endingLineNumber = "758"
             landmarkName = "SaveDocument()"
             landmarkType = "7">
          </BreakpointContent>

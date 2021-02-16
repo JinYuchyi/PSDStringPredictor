@@ -15,6 +15,7 @@ struct StringObjectPropertyView: View {
     //@State var stringList: [String]
     @State var weight: String = "Regular"
     @State var fontSize: String = ""
+    @State var content: String = "No Content."
     @State var posX: String = ""
     @State var posY: String = ""
     
@@ -76,6 +77,15 @@ struct StringObjectPropertyView: View {
         }
         posY = ""
     }
+    
+    func contentCommit(){
+        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && content.isEmpty == false  {
+            var tmpList = Array(psdsVM.GetSelectedPsd()?.stringObjects.dropLast())
+            tmpList = tmpList?.append(psdsVM.selectedLastStringObject)
+            psdsVM.psdModel.SetStringObjects(psdId: <#T##Int#>, value: <#T##[StringObject]#>)
+        }
+
+    }
  
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
@@ -103,6 +113,23 @@ struct StringObjectPropertyView: View {
                 }else{
                  Text(String(GetLastSelectObject().charSizeList[index].description)).fixedSize()
             }
+        }
+    }
+    
+    var contentTextField: some View {
+        GeometryReader{ geo in
+            HStack{
+                TextField("\(GetLastSelectObject().content)", text: $psdsVM.selectedLastStringObject.content, onCommit: {contentCommit()})
+                    
+                    .textFieldStyle(PlainTextFieldStyle())
+//                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .background(Color.black)
+                    .onTapGesture(perform: {
+                        print("Focused")
+                    })
+                //
+            }.frame(width:geo.size.width )
+            
         }
     }
     
@@ -143,12 +170,22 @@ struct StringObjectPropertyView: View {
     var body: some View {
         List{
             Section(header: Text("String Properties")){
-                HStack{
+                VStack{
                     Text("Content")
                         .foregroundColor(Color.gray)
                         .frame(width:80, alignment: .topLeading)
-                    Text("\(GetLastSelectObject().content)")
-                        .frame(width:200, alignment: .topLeading)
+//                    Text("\(GetLastSelectObject().content)")
+//                        .frame(width:200, alignment: .topLeading)
+//                        .overlay(
+//                            contentTextField
+//
+//                                .onTapGesture {
+////                                    print("tapped")
+//                                    content = ""
+//                                }
+//                                .opacity(content == "" ? 0.6:1)
+//                        )
+                    contentTextField
                 }
                 
                 HStack{

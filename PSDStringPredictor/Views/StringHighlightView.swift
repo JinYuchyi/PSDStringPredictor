@@ -31,9 +31,9 @@ struct StringHighlightView: View {
                     .gesture(DragGesture()
                                 .onChanged { gesture in
                                     if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                        psdsVM.DragOffsetDict[theid] = CGSize(width: (gesture.translation.width / 20).keepDecimalPlaces(num: 2), height: 0)
+                                        psdsVM.DragOffsetDict[theid] = CGSize(width: (gesture.translation.width / 20), height: psdsVM.DragOffsetDict[theid]?.height ?? 0)
                                     } else {
-                                        psdsVM.DragOffsetDict[theid] = CGSize(width: 0, height: (gesture.translation.height / 20).keepDecimalPlaces(num: 2))
+                                        psdsVM.DragOffsetDict[theid] = CGSize(width: psdsVM.DragOffsetDict[theid]?.width ?? 0, height: (gesture.translation.height / 20))
                                     }
                                     
                                 }

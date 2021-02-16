@@ -39,6 +39,7 @@
 		3F3EFFA8253596140047E4E5 /* CharDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFA7253596140047E4E5 /* CharDataManager.swift */; };
 		3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */; };
 		3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */; };
+		3F437E4A25DBC05100BC0D7D /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E4925DBC05100BC0D7D /* TextArea.swift */; };
 		3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4445C925392FC300BB2745 /* OSStandardManager.swift */; };
 		3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4471BA25735459003AE7B6 /* ColorExtension.swift */; };
 		3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */; };
@@ -243,6 +244,7 @@
 		3F3EFFA7253596140047E4E5 /* CharDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharDataManager.swift; sourceTree = "<group>"; };
 		3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharDataObject.swift; sourceTree = "<group>"; };
 		3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverOnCharView.swift; sourceTree = "<group>"; };
+		3F437E4925DBC05100BC0D7D /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
 		3F4445C925392FC300BB2745 /* OSStandardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStandardManager.swift; sourceTree = "<group>"; };
 		3F4471BA25735459003AE7B6 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharColorModeClassifier.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
 				3FEFE9122507200400AEF1C8 /* ControlPanel.swift */,
 				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
+				3F437E4925DBC05100BC0D7D /* TextArea.swift */,
 				3FC906A125B2DFF300120DE2 /* PrograssView.swift */,
 				3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */,
 				3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */,
@@ -1087,6 +1090,7 @@
 				3F59C10825D3CF8600F9CF52 /* cColor.mlmodel in Sources */,
 				3FDBC4C8258346C400E9C2DC /* NSWindow.swift in Sources */,
 				3FAEC5CC25219AAD008ECA23 /* StringExtension.swift in Sources */,
+				3F437E4A25DBC05100BC0D7D /* TextArea.swift in Sources */,
 				3F59C0F625D3CF8600F9CF52 /* yColor.mlmodel in Sources */,
 				3F3A22C125CCDAAF00E7FC30 /* ColorMode.swift in Sources */,
 				3F1CC56D258DB5230084F4EC /* UIOverlayView.swift in Sources */,

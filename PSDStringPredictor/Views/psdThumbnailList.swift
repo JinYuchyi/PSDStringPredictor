@@ -23,7 +23,7 @@ struct psdThumbnailList: View {
             GeometryReader{geo in
                 List(psdsVM.psdModel.psdObjects, id:\.id) { psd in
                     VStack(alignment: .center){
-                        PsdThumbnail(id: psd.id, psdVM: psdsVM)
+                        PsdThumbnail(id: psd.id, title: psd.imageURL.lastPathComponent, psdVM: psdsVM)
                             .tooltip("\(psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.imageURL)")
                             .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
                             

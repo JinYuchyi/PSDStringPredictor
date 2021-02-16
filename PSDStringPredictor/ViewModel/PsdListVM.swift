@@ -39,6 +39,7 @@ class PsdsVM: ObservableObject{
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[charRectObject]]  = [:]
     @Published var stringIsOn: Bool = true
+    @Published var selectedLastStringObject: StringObject = zeroStringObject
    
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
@@ -196,7 +197,8 @@ class PsdsVM: ObservableObject{
 
             IndicatorText = ""
         }
-        
+//        canProcess = false
+
     }
     
     func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
@@ -281,7 +283,7 @@ class PsdsVM: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
-            let charImageList = selectedNSImage.ToCIImage()!.GetCroppedImages(rects: charRects.offset(offset: offset) )
+            let charImageList = CIImage.init(contentsOf: psdModel.GetPSDObject(psdId: psdId)!.imageURL)!.GetCroppedImages(rects: charRects.offset(offset: offset) )
 
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
 //            print(charImageList.count)
@@ -430,7 +432,7 @@ class PsdsVM: ObservableObject{
                 self.psdModel.SetStatusForPsd(psdId: processOn, value: .processed)
             }
         }
-        canProcess = false
+//        canProcess = false
         IndicatorText = ""
     }
     
@@ -456,10 +458,10 @@ class PsdsVM: ObservableObject{
                     c += 1
                 }
             }
-            canProcess = false
             IndicatorText = ""
         }
-        
+//        canProcess = false
+
     }
     
     func CreatePSDForAll(){
