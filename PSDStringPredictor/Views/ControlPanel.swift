@@ -121,7 +121,7 @@ struct ControlPanel: View {
                     }
                     .disabled(psdsVM.IndicatorText != "")
                     
-                    Button(action: {psdsVM.CreatePSDForAll()}){
+                    Button(action: {psdsVM.CreatePSDForCommited()}){
                         Text("Committed")
                             .frame(minWidth: 50,  maxWidth: .infinity)
                     }

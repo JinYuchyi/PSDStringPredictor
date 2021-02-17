@@ -199,7 +199,7 @@ struct StringObjectPropertyView: View {
                     Text("Tracking")
                         .foregroundColor(Color.gray)
                         .frame(width: titleWidth, alignment: .topLeading)
-                    Text("\(psdsVM.CalcTrackingAfterDrag(objId: GetLastSelectObject().id, originalTracking: GetLastSelectObject().tracking))")
+                    Text("\(GetLastSelectObject().tracking)")
                         .frame(width:200, alignment: .topLeading)
                 }
                 

@@ -501,7 +501,7 @@ class PsdsVM: ObservableObject{
 
     }
     
-    func CreatePSDForAll(){
+    func CreatePSDForCommited(){
         
         if  selectedNSImage == nil || selectedNSImage.size.width == 0 {
             return
@@ -522,7 +522,7 @@ class PsdsVM: ObservableObject{
             let result = panel.url!
             // Do whatever you need with every selected file
             // in this case, print on the terminal every path
-            for psd in psdModel.psdObjects {
+            for psd in psdModel.psdObjects.filter({$0.status == .commited}) {
                 let fileTitle = psd.imageURL.lastPathComponent.components(separatedBy: ".")[0]
                 let fileName = fileTitle + ".psd"
                 let saveToPath = result.appendingPathComponent(fileName).path
@@ -558,7 +558,10 @@ class PsdsVM: ObservableObject{
 
         
         for obj in updateList{
-            let newString = obj.content.replacingOccurrences(of: "\n", with: " ")
+            var newString = obj.content.replacingOccurrences(of: "\n", with: " ")
+            if newString.isEmpty || newString == nil {
+                newString = "_"
+            }
             contentList.append(newString)
             var tmpColor: [Int] = []
             
@@ -571,16 +574,16 @@ class PsdsVM: ObservableObject{
             isParagraphList.append(obj.isParagraph)
             
             //calc tracking and font size offset
-            var o1: CGFloat = 0
-            var o2: CGFloat = 0
-            if DragOffsetDict[obj.id] != nil {
-                o1 = DragOffsetDict[obj.id]!.width
-                o2 = DragOffsetDict[obj.id]!.height
-            }
-            let tmpSize: CGFloat = CGFloat(obj.fontSize - o2)
+//            var o1: CGFloat = 0
+//            var o2: CGFloat = 0
+//            if DragOffsetDict[obj.id] != nil {
+//                o1 = DragOffsetDict[obj.id]!.width
+//                o2 = DragOffsetDict[obj.id]!.height
+//            }
+            let tmpSize: CGFloat = CGFloat(obj.fontSize)
             fontSizeList.append(Float(tmpSize))
             //let tmpTracking = obj.fontSize * 1000 / obj.tracking
-            let tmpTracking = Float((obj.tracking + o1) * 1000 / tmpSize)
+            let tmpTracking = Float((obj.tracking) * 1000 / tmpSize)
             trackingList.append(tmpTracking)
             
             //Calc the offset of String

@@ -20,7 +20,12 @@ class JSManager{
                 res = res + String(c)
             }
         }
-        return res
+        if res.isEmpty {
+            return "_"
+        }else {
+            return res
+        }
+        
     }
     
     private func NamesNormalize(names : [String])->[String]{
