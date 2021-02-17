@@ -16,6 +16,14 @@ struct charRectObject: Codable{
     var color: [CGFloat]
 }
 
+struct StringObjectForStringProperty{
+    var content: String = ""
+    var posX: String = ""
+    var posY: String = ""
+    var fontSize: String = ""
+    var trakcing: String = ""
+}
+
 
 class PsdsVM: ObservableObject{
     
@@ -39,7 +47,7 @@ class PsdsVM: ObservableObject{
     @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[charRectObject]]  = [:]
     @Published var stringIsOn: Bool = true
-    @Published var selectedLastStringObject: StringObject = zeroStringObject
+    @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
    
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue

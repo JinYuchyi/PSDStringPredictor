@@ -19,6 +19,14 @@ extension String{
     var isNumeric : Bool {
             return Double(self) != nil
         }
+    
+    func toCGFloat() -> CGFloat {
+        var result: CGFloat = 0.0
+        if let n = NumberFormatter().number(from: self) {
+            result = CGFloat.init(n)
+        }
+        return result
+    }
 
 
 }

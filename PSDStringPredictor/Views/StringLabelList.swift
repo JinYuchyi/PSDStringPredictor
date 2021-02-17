@@ -23,7 +23,7 @@ struct LabelsOnImage: View {
                                 .onEnded({ (loc) in
                                     psdsVM.selectedStrIDList.append(obj.id)
                                     psdsVM.selectedStrIDList.removeAll(where: {$0 != obj.id})
-                                    psdsVM.selectedLastStringObject = obj
+                                    psdsVM.tmpObjectForStringProperty = obj.toObjectForStringProperty()
                                 })
                 )
             }

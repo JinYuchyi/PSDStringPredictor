@@ -21,4 +21,8 @@ extension CGFloat {
 
         }
     }
+    
+    func toString() -> String {
+        String.init(format:"%.2f",self)
+    }
 }

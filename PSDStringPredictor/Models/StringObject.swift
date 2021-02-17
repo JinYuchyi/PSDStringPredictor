@@ -62,7 +62,7 @@ struct StringObject : Identifiable,  Hashable{
     var fontWeight:  String
     var stringRect: CGRect
     var color: CGColor
-    var bgColor: CGColor = CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+    var bgColor: CGColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
     var charArray: [Character]
     var charRects: [CGRect]
     var charSizeList: [Int16]
@@ -87,7 +87,7 @@ struct StringObject : Identifiable,  Hashable{
         self.fontWeight =  "Regular"
         self.charImageList = [CIImage.init()]
         self.stringRect = CGRect()
-        self.color = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+        self.color = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
         self.charArray = [" "]
         self.charRects = [CGRect()]
         self.charSizeList = [0]
