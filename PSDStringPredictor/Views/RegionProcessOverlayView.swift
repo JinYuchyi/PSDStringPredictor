@@ -28,6 +28,7 @@ struct RegionProcessOverlayView: View {
                     DragGesture()
                         .onChanged { gesture in
                             regionStartPos = gesture.startLocation
+                            
                             regionWidth = gesture.translation.width
                             regionHeight = gesture.translation.height
                             interactive.selectionRect = CGRect.init(x: regionStartPos.x , y: regionStartPos.y , width: regionWidth, height: regionHeight)

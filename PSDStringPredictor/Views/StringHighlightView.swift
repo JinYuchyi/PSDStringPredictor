@@ -14,29 +14,58 @@ let zeroRect = CGRect(x: -1000, y: -1000, width: 0, height: 0)
 struct StringHighlightView: View {
     
     @ObservedObject var psdsVM: PsdsVM
-
+    @Binding var showFakeString: Bool  
+    @State var dragX: CGFloat = 0
+    @State var dragY: CGFloat = 0
+    
     var body: some View {
 
         ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
             //if (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid) != nil) {
             ZStack{
+                fakeString.IsHidden(condition: showFakeString)
                 Rectangle()
                     .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                     .position(
                         x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX ?? zeroRect.minX.keepDecimalPlaces(num: 1),
                         y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 1) ?? zeroRect.minY)
                     )
-                    .foregroundColor(Color.green.opacity(0.3))
+                    .foregroundColor(Color.green.opacity(0.2))
                     .shadow(color: .green, radius: 5, x: 0, y: 0)
                     .gesture(DragGesture()
                                 .onChanged { gesture in
+                                    showFakeString = true
+                                    print (gesture.translation)
                                     if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                        psdsVM.DragOffsetDict[theid] = CGSize(width: (gesture.translation.width / 20), height: psdsVM.DragOffsetDict[theid]?.height ?? 0)
+//                                        psdsVM.DragOffsetDict[theid] = CGSize(width: (gesture.translation.width / 20), height: psdsVM.DragOffsetDict[theid]?.height ?? 0)
+//                                        psdsVM.tmpObjectForStringProperty.tracking = psdsVM.CalcTrackingAfterDrag(objId: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.id, originalTracking: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.tracking).toString()
+                                        dragX = gesture.translation.width / 20
+                                        
+
+                                        //TODO: Try to find more fast way
+                                        
                                     } else {
-                                        psdsVM.DragOffsetDict[theid] = CGSize(width: psdsVM.DragOffsetDict[theid]?.width ?? 0, height: (gesture.translation.height / 20))
+//                                        psdsVM.DragOffsetDict[theid] = CGSize(width: psdsVM.DragOffsetDict[theid]?.width ?? 0, height: (gesture.translation.height / 10))
+//                                        psdsVM.tmpObjectForStringProperty.fontSize = psdsVM.CalcSizeAfterDrag(objId: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.id, originalFontSize:  psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.fontSize).toString()
+//                                        print (CGSize(width: psdsVM.DragOffsetDict[theid]?.width ?? 0, height: (gesture.translation.height / 10)))
+
+                                        //TODO: Try to find more fast way
+                                        dragY = gesture.translation.height / 40
                                     }
-                                    
+//                                    fakeString
                                 }
+                                .onEnded({ gesture in
+                                    showFakeString = false
+                                    psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
+                                    psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
+
+                                    psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
+                                    psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
+                                    dragX = 0
+                                    dragY = 0
+                                    
+                                })
+                                
                     )
 
                 Rectangle()
@@ -47,11 +76,45 @@ struct StringHighlightView: View {
                         y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
                     )
                     .blendMode(.lighten)
-
+                
             }
 
         }
 
     }
+    
+    var fakeString: some View {
+        Text(psdsVM.tmpObjectForStringProperty.content )
+            .tracking(calcTracking()  )
+            .position(
+                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
+                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
+            )
+            .foregroundColor(psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.color.ToColor() ?? Color.red  )
+            .font(.custom(fontName(), size: calcFontSize()))
+//            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+    }
+    
+    func fontName()-> String {
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.FontName ?? "SF Pro Text Regular"
+    }
+    
+    func fontSize() -> CGFloat {
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.fontSize ?? 0
+    }
+    
+    func fontTracking() -> CGFloat {
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.tracking ?? 0
+    }
+    
+    func calcFontSize() -> CGFloat {
+        return fontSize() - dragY
+    }
+    
+    func calcTracking() -> CGFloat {
+        return fontTracking() + dragX
+    }
+    
+ 
 
 }

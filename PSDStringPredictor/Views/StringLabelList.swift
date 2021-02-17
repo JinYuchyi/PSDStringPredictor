@@ -13,12 +13,13 @@ struct LabelsOnImage: View {
 //    @ObservedObject var stringObjectVM : PSDViewModel = psdViewModel
 //    let charFrameList: [CharFrame]
     @ObservedObject var psdsVM: PsdsVM
+    @Binding var showFakeString: Bool
     
     var body: some View {
         ZStack{
             
             ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
-                StringLabel( stringObject: obj, psdsVM: psdsVM )
+                StringLabel( stringObject: obj, showFakeString: $showFakeString, psdsVM: psdsVM )
                     .gesture(TapGesture()
                                 .onEnded({ (loc) in
                                     psdsVM.selectedStrIDList.append(obj.id)

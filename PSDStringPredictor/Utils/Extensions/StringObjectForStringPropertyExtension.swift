@@ -14,7 +14,7 @@ extension StringObjectForStringProperty {
         let tmpRect = CGRect.init(x: self.posX.toCGFloat(), y: self.posY.toCGFloat(), width: tempObj.stringRect.width, height: tempObj.stringRect.height)
         tempObj.stringRect = tmpRect
         tempObj.content = self.content
-        tempObj.tracking = self.trakcing.toCGFloat()
+        tempObj.tracking = self.tracking.toCGFloat()
         tempObj.fontSize = self.fontSize.toCGFloat()
         return tempObj
     }

@@ -21,7 +21,7 @@ struct StringObjectForStringProperty{
     var posX: String = ""
     var posY: String = ""
     var fontSize: String = ""
-    var trakcing: String = ""
+    var tracking: String = ""
 }
 
 
@@ -314,6 +314,35 @@ class PsdsVM: ObservableObject{
         }
         
         return strobjs
+    }
+    
+    func CalcTrackingAfterDrag(objId: UUID, originalTracking: CGFloat) -> CGFloat {
+        // var offset : CGSize = .zero
+        var d : CGFloat = 0
+        if DragOffsetDict[objId] != nil{
+            d = DragOffsetDict[objId]!.width
+            let newTracking = (originalTracking ?? 0) + d
+            return newTracking
+        }else{
+            return 0
+        }
+    }
+    
+    func CalcSizeAfterDrag(objId: UUID, originalFontSize: CGFloat) -> CGFloat {
+        var d : CGFloat = 0
+        if DragOffsetDict[objId] != nil{
+            d = DragOffsetDict[objId]!.height
+            let newSize = originalFontSize - d
+            return newSize
+        }else{
+            return 0
+        }
+    }
+    
+    func commitTempStringObject(){
+        guard let obj = (psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: selectedStrIDList.last!)) else {return }
+        psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
+        
     }
     
     

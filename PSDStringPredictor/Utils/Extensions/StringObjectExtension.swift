@@ -83,6 +83,6 @@ extension StringObject{
     }
     
     func toObjectForStringProperty() -> StringObjectForStringProperty {
-        StringObjectForStringProperty.init(content: self.content, posX: (self.stringRect.minX.toString()), posY: (self.stringRect.minY.toString()), fontSize: (self.fontSize.toString()), trakcing: String(self.tracking.toString()))
+        StringObjectForStringProperty.init(content: self.content, posX: (self.stringRect.minX.toString()), posY: (self.stringRect.minY.toString()), fontSize: (self.fontSize.toString()), tracking: String(self.tracking.toString()))
     }
 }

@@ -23,32 +23,10 @@ struct StringLabel: View {
     //@ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     //@State var width: CGFloat = 0
     @State var alignmentIconName = "alignLeft-round"
-    
+    @Binding var showFakeString: Bool
     @ObservedObject var psdsVM: PsdsVM
     
-    func CalcTrackingAfterOffset() -> CGFloat {
-        // var offset : CGSize = .zero
-        var d : CGFloat = 0
-        if psdsVM.DragOffsetDict[stringObject.id] != nil{
-            d = psdsVM.DragOffsetDict[stringObject.id]!.width
-            
-            return (stringObject.tracking ?? 0) + d
-        }else{
-            return 0
-        }
-    }
-    
-    func CalcSizeAfterOffset() -> CGFloat {
-        var d : CGFloat = 0
-        if psdsVM.DragOffsetDict[stringObject.id] != nil{
-            d = psdsVM.DragOffsetDict[stringObject.id]!.height
-        }
-        if stringObject  == nil {
-            return 0
-        }else{
-            return stringObject.fontSize - d
-        }
-    }
+
     
 
     
@@ -66,10 +44,10 @@ struct StringLabel: View {
     func TextLayerView() -> some View {
         
         Text(stringObject.content ?? " " )
-            .tracking(CalcTrackingAfterOffset())
+            .tracking(stringObject.tracking)
             .position(x: GetPosition().x, y: GetPosition().y)
             .foregroundColor(stringObject.color.ToColor() ?? Color.white)
-            .font(.custom(stringObject.FontName ?? "", size: CalcSizeAfterOffset()))
+            .font(.custom(stringObject.FontName, size: stringObject.fontSize))
             .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
             
         //.blendMode(.difference)
@@ -105,7 +83,7 @@ struct StringLabel: View {
                 //.IsHidden(condition: stringObjectVM.stringObjectStatusDict[id] == 0)
                 
                 //Text content
-                TextLayerView()
+                TextLayerView().IsHidden(condition: !showFakeString)
                 
             }.IsHidden(condition: stringObject.status != StringObjectStatus.ignored)
             

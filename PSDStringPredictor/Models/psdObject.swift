@@ -208,6 +208,7 @@ struct PSD {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
                 strObj!.fontSize = value
+                strObj!.tracking = strObj!.FetchTrackingFromDB(strObj!.fontSize).0
                 //Replace strObj
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
                 psd!.stringObjects.append(strObj!)
@@ -225,6 +226,40 @@ struct PSD {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
                 strObj!.content = value
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.insert(psd!, at: _index!)
+            }
+        }
+    }
+    
+    mutating func SetFontSize(psdId: Int, objId: UUID, value: CGFloat){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.fontSize = value
+                //Replace strObj
+                psd!.stringObjects.removeAll(where: {$0.id == objId})
+                psd!.stringObjects.append(strObj!)
+                //Replace psd
+                let _index = psdObjects.firstIndex(where: {$0.id == psdId})
+                psdObjects.removeAll(where: {$0.id == psdId})
+                psdObjects.insert(psd!, at: _index!)
+            }
+        }
+    }
+    
+    mutating func SetTracking(psdId: Int, objId: UUID, value: CGFloat){
+        var psd = GetPSDObject(psdId: psdId)
+        if psd != nil {
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            if strObj != nil{
+                strObj!.tracking = value
                 //Replace strObj
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
                 psd!.stringObjects.append(strObj!)

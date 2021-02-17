@@ -30,22 +30,22 @@ struct StringObjectPropertyView: View {
         return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? zeroStringObject
     }
     
-    func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{
-        var offset: CGFloat = 0
-        if psdsVM.DragOffsetDict[targetObj.id] != nil{
-            offset = psdsVM.DragOffsetDict[targetObj.id]!.width
-        }
-        return targetObj.tracking + offset
-    }
-    
-    func CalcOffsetSize(targetObj: StringObject) -> CGFloat{
-        var offset: CGFloat = 0
-        if psdsVM.DragOffsetDict[targetObj.id] != nil{
-            offset = psdsVM.DragOffsetDict[targetObj.id]!.height
-        }
-        
-        return targetObj.fontSize - offset
-    }
+//    func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{
+//        var offset: CGFloat = 0
+//        if psdsVM.DragOffsetDict[targetObj.id] != nil{
+//            offset = psdsVM.DragOffsetDict[targetObj.id]!.width
+//        }
+//        return targetObj.tracking + offset
+//    }
+//
+//    func CalcOffsetSize(targetObj: StringObject) -> CGFloat{
+//        var offset: CGFloat = 0
+//        if psdsVM.DragOffsetDict[targetObj.id] != nil{
+//            offset = psdsVM.DragOffsetDict[targetObj.id]!.height
+//        }
+//
+//        return targetObj.fontSize - offset
+//    }
     
     func fontSizeCommit(){
         if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && fontSize.isNumeric == true  {
@@ -85,11 +85,7 @@ struct StringObjectPropertyView: View {
 //        posY = ""
 //    }
     
-    func inputCommit(){
-        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && content.isEmpty == false  {
-            psdsVM.psdModel.SetLastStringObject(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: psdsVM.tmpObjectForStringProperty.toStringObject(strObj: GetLastSelectObject()))
-        }
-    }
+
     
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
@@ -123,7 +119,7 @@ struct StringObjectPropertyView: View {
     var contentTextField: some View {
         //        GeometryReader{ geo in
         //            HStack{
-        TextField("\(GetLastSelectObject().content)", text: $psdsVM.tmpObjectForStringProperty.content, onCommit: {inputCommit()})
+        TextField("\(GetLastSelectObject().content)", text: $psdsVM.tmpObjectForStringProperty.content, onCommit: {psdsVM.commitTempStringObject()})
             
             .textFieldStyle(RoundedBorderTextFieldStyle())
             //            .background(Color.black)
@@ -146,20 +142,20 @@ struct StringObjectPropertyView: View {
 //                //
 //            }.frame(width:geo.size.width * 0.9)
 //        }
-        TextField("\(psdsVM.tmpObjectForStringProperty.fontSize)", text: $psdsVM.tmpObjectForStringProperty.fontSize, onCommit: {inputCommit()})
+        TextField("\(psdsVM.tmpObjectForStringProperty.fontSize)", text: $psdsVM.tmpObjectForStringProperty.fontSize, onCommit: {psdsVM.commitTempStringObject()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
 
     }
     
     var posXFloatingTextField: some View {
-        TextField("\(psdsVM.tmpObjectForStringProperty.posX)", text: $psdsVM.tmpObjectForStringProperty.posX, onCommit: {inputCommit()})
+        TextField("\(psdsVM.tmpObjectForStringProperty.posX)", text: $psdsVM.tmpObjectForStringProperty.posX, onCommit: {psdsVM.commitTempStringObject()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
             //            .background(Color.black)
             .frame(width:80, alignment: .center)
     }
     
     var posYFloatingTextField: some View {
-        TextField("\(psdsVM.tmpObjectForStringProperty.posY)", text: $psdsVM.tmpObjectForStringProperty.posY, onCommit: {inputCommit()})
+        TextField("\(psdsVM.tmpObjectForStringProperty.posY)", text: $psdsVM.tmpObjectForStringProperty.posY, onCommit: {psdsVM.commitTempStringObject()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
             //            .background(Color.black)
             .frame(width:80, alignment: .center)
@@ -203,7 +199,7 @@ struct StringObjectPropertyView: View {
                     Text("Tracking")
                         .foregroundColor(Color.gray)
                         .frame(width: titleWidth, alignment: .topLeading)
-                    Text("\(CalcOffsetTracking(targetObj: GetLastSelectObject()))")
+                    Text("\(psdsVM.CalcTrackingAfterDrag(objId: GetLastSelectObject().id, originalTracking: GetLastSelectObject().tracking))")
                         .frame(width:200, alignment: .topLeading)
                 }
                 
