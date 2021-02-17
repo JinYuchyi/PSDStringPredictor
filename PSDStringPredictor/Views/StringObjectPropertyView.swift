@@ -14,12 +14,13 @@ struct StringObjectPropertyView: View {
 //    @ObservedObject var imageProcess = imageProcessViewModel
     //@State var stringList: [String]
     @State var weight: String = "Regular"
-    @State var fontSize: String = ""
+    @State var fontSize: String = "0"
     @State var content: String = "No Content."
-    @State var posX: String = ""
-    @State var posY: String = ""
+    @State var posX: String = "0"
+    @State var posY: String = "0"
     
-//    let pixelMgr = PixelProcess()
+
+    var columnWidth: CGFloat = 280
     
     @ObservedObject var psdsVM: PsdsVM
 
@@ -171,18 +172,9 @@ struct StringObjectPropertyView: View {
                 VStack{
                     Text("Content")
                         .foregroundColor(Color.gray)
-                        .frame(width:80, alignment: .topLeading)
-//                    Text("\(GetLastSelectObject().content)")
-//                        .frame(width:200, alignment: .topLeading)
-//                        .overlay(
-//                            contentTextField
-//
-//                                .onTapGesture {
-////                                    print("tapped")
-//                                    content = ""
-//                                }
-//                                .opacity(content == "" ? 0.6:1)
-//                        )
+                        .frame(width: columnWidth, alignment: .topLeading)
+//                        .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+
                     contentTextField
                 }
                 
@@ -238,7 +230,6 @@ struct StringObjectPropertyView: View {
                                 }
                         }
                     }
-                    
                 }
                 
                 HStack{
@@ -252,14 +243,11 @@ struct StringObjectPropertyView: View {
                         Text("\(Int((GetLastSelectObject().color.components![0] * 255).rounded())), \(Int((GetLastSelectObject().color.components![1] * 255).rounded())), \(Int((GetLastSelectObject().color.components![2] * 255).rounded()))")
                         //Text("􀜊")
                     }
-                    
-
                 }.onTapGesture {
                     if psdsVM.selectedStrIDList.count > 0 {
                         psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
                     }
                 }
-                
                 
                 HStack{
                     Text("Position")
@@ -283,8 +271,7 @@ struct StringObjectPropertyView: View {
                                 }
                                 .opacity(posY == "" ? 0.6:1)
                         )
-//                    Text("X: \(Int(GetLastSelectObject().stringRect.minX.rounded() )), Y: \(Int(GetLastSelectObject().stringRect.minY.rounded())), W: \(Int(GetLastSelectObject().stringRect.width.rounded() )), H: \(Int(GetLastSelectObject().stringRect.height.rounded()))")
-//                        .frame(width:200, alignment: .topLeading)
+
                 }
                 
                 StringComponents()
