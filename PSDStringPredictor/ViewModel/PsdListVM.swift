@@ -156,7 +156,7 @@ class PsdsVM: ObservableObject{
         var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
         img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
-        let allStrObjs = CreateAllStringObjects(rawNSImage: NSImage.init(contentsOfFile: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)!, psdId: psdId, psdsVM: self)
+        let allStrObjs = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self)
         DispatchQueue.main.async{ [self] in
             var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
             for obj in allStrObjs {
@@ -186,7 +186,7 @@ class PsdsVM: ObservableObject{
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
 //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
 //        regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
-        let newList = CreateAllStringObjects(rawNSImage: img.ToNSImage(), psdId: psdId, psdsVM: self, offset: offset)
+        let newList = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self, offset: offset)
         if newList.count == 0{
             print("No strings detected in the area.")
             return
@@ -259,10 +259,10 @@ class PsdsVM: ObservableObject{
 //        }
     }
     
-    func CreateAllStringObjects(rawNSImage: NSImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
-        let ciImage = rawNSImage.ToCIImage()!
+    func CreateAllStringObjects(rawImg: CIImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
+//        let ciImage = rawNSImage.ToCIImage()!
         var strobjs : [StringObject] = []
-        let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        let requestHandler = VNImageRequestHandler(ciImage: rawImg, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         TextRecognitionRequest.usesLanguageCorrection = true
@@ -280,7 +280,7 @@ class PsdsVM: ObservableObject{
         }
 
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-        let stringsRects = ocr.GetRectsFromObservations(results_fast, Int(ciImage.extent.width.rounded()), Int(ciImage.extent.height.rounded()))
+        let stringsRects = ocr.GetRectsFromObservations(results_fast, Int(rawImg.extent.width.rounded()), Int(rawImg.extent.height.rounded()))
         let strs = ocr.GetStringArrayFromObservations(results_fast)
 
         for i in 0..<stringsRects.count where canProcess == true{
@@ -290,7 +290,7 @@ class PsdsVM: ObservableObject{
                 psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
-            let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((ciImage.extent.width).rounded()), Int((ciImage.extent.height).rounded()))
+            let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((rawImg.extent.width).rounded()), Int((rawImg.extent.height).rounded()))
             let charImageList = CIImage.init(contentsOf: psdModel.GetPSDObject(psdId: psdId)!.imageURL)!.GetCroppedImages(rects: charRects.offset(offset: offset) )
 
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)

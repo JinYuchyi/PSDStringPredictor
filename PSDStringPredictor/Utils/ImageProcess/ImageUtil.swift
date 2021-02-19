@@ -1,5 +1,6 @@
 import SwiftUI
 import Vision
+import AVFoundation
 
 //extension View {
 //    func takeScreenshot(origin: CGPoint, size: CGSize) -> NSImage {
@@ -87,24 +88,45 @@ class ImageUtil{
         return nil
     }
     
-    static func GetImageProperty(keyName: String, path: String) -> String{
-        
-        let url = URL.init(fileURLWithPath: path)
-        
-        var imageData: NSData =  NSData.init()
-        do{
-            try imageData = NSData.init(contentsOf: url)
-        }catch{
-            print("Image data generate error in getting DPI function.")
+//    static func GetImageProperty(keyName: String, path: String) -> String{
+//
+//        let url = URL.init(fileURLWithPath: path)
+//
+//        var imageData: NSData =  NSData.init()
+//        do{
+//            try imageData = NSData.init(contentsOf: url)
+//        }catch{
+//            print("Image data generate error in getting DPI function.")
+//        }
+//
+//
+//        let imageSource = CGImageSourceCreateWithData(imageData, nil)
+//        let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource!, 0, nil) as? [String: Any]
+//        let dpi = metaData![keyName] as! String
+//        print(dpi)
+//        return dpi
+//
+//    }
+    
+    static func metadata(url: URL) {
+//        let url = Bundle.main.url(forResource: "audio", withExtension: "m4a")!
+        let asset = AVAsset(url: url)
+        let formatsKey = "availableMetadataFormats"
+        print("Load metadata")
+        asset.loadValuesAsynchronously(forKeys: [formatsKey]) {
+            var error: NSError? = nil
+            let status = asset.statusOfValue(forKey: formatsKey, error: &error)
+            if status == .loaded {
+                for format in asset.availableMetadataFormats {
+                    let metadata = asset.metadata(forFormat: format)
+                    // process format-specific metadata collection
+                    for data in metadata {
+                        print(data.key)
+                        print(data.stringValue)
+                    }
+                }
+            }
         }
-        
-        
-        let imageSource = CGImageSourceCreateWithData(imageData, nil)
-        let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource!, 0, nil) as? [String: Any]
-        let dpi = metaData![keyName] as! String
-        print(dpi)
-        return dpi
-        
     }
     
     func ApplyFilters(target: CIImage, gamma: CGFloat, exp: CGFloat)->CIImage{

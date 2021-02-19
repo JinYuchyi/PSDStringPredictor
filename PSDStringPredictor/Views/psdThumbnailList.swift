@@ -24,7 +24,7 @@ struct psdThumbnailList: View {
                 List(psdsVM.psdModel.psdObjects, id:\.id) { psd in
                     VStack(alignment: .center){
                         PsdThumbnail(id: psd.id, title: psd.imageURL.lastPathComponent, psdVM: psdsVM)
-                            .tooltip("\(psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.imageURL)")
+                            .tooltip("URL:\\n\(psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.imageURL)")
                             .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
                             
                             .onTapGesture {
@@ -41,6 +41,11 @@ struct psdThumbnailList: View {
         
         
     }
+    
+//    func GetToolTipString(psd: PSDObject) -> String {
+//        let imgPath = psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.imageURL
+////        let
+//    }
 }
 //
 //struct psdThumbnailList_Previews: PreviewProvider {

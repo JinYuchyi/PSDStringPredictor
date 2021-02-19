@@ -15,10 +15,16 @@ class JSManager{
     
     private func NameNormalize(name : String)->String{
         var res: String = ""
+        var index = 0
         for c in name{
             if c.isLetter || c.isNumber{
                 res = res + String(c)
             }
+            if(index > 20) {
+                res.append("...")
+                return res
+            }
+            index += 1
         }
         if res.isEmpty {
             return "_"
@@ -36,10 +42,10 @@ class JSManager{
             let tmp = NameNormalize(name: c)
             res.append("\(index).\(tmp)")
             index += 1
-            if(index > 20) {
-                res.append("...")
-                return res
-            }
+//            if(index > 20) {
+//                res.append("...")
+//                return res
+//            }
         }
         return res
     }

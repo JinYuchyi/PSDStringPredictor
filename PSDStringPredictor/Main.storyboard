@@ -10,9 +10,9 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="PSD String Layers Generator" state="mixed" id="1Xt-HY-uBw">
+                            <menuItem title="AutoLayer" state="mixed" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="PSD String Layers Generator" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="AutoLayer" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
                                         <menuItem title="About" id="5kV-Vb-QxS" userLabel="About StringLayersGenerator">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -60,7 +60,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" enabled="YES" id="kCx-OE-vgT"/>
-                                        <menuItem title="Quit StringGenerator" keyEquivalent="q" id="4sb-4s-VLi" userLabel="Quit StringLayersGenerator">
+                                        <menuItem title="Quit AutoLayer" keyEquivalent="q" id="4sb-4s-VLi" userLabel="Quit StringLayersGenerator">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
