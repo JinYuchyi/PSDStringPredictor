@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
     </dependencies>
     <scenes>
@@ -640,25 +639,25 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="StringObject" id="3x8-tJ-qdL">
                                     <items>
-                                        <menuItem title="Move Selection Up" enabled="NO" keyEquivalent="" id="64U-pN-a1F" userLabel="Move Selection Up">
+                                        <menuItem title="Move Selection Up" keyEquivalent="" id="64U-pN-a1F" userLabel="Move Selection Up">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveUp:" target="Voe-Tx-rLC" id="O6F-y7-RFo"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Move Selection Down" enabled="NO" keyEquivalent="" id="eWD-mB-t4b" userLabel="Move Selection Down">
+                                        <menuItem title="Move Selection Down" keyEquivalent="" id="eWD-mB-t4b" userLabel="Move Selection Down">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveDown:" target="Voe-Tx-rLC" id="6Sb-Bg-EJF"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Move Selection Left" enabled="NO" keyEquivalent="" id="D7D-jq-WeZ" userLabel="Move Selection Left">
+                                        <menuItem title="Move Selection Left" keyEquivalent="" id="D7D-jq-WeZ" userLabel="Move Selection Left">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveLeft:" target="Voe-Tx-rLC" id="l67-3n-Wwe"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Move Selection Right" enabled="NO" keyEquivalent="" id="MRg-FF-QCo" userLabel="Move Selection Right">
+                                        <menuItem title="Move Selection Right" keyEquivalent="" id="MRg-FF-QCo" userLabel="Move Selection Right">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveRight:" target="Voe-Tx-rLC" id="Mxy-k7-HAH"/>

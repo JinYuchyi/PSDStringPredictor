@@ -36,14 +36,12 @@ struct SelectionOverlayView: View {
                             show = false
                             endPos = value.location
                             CalcSelectedObject()
-                           
                         }
                 )
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
                             psdsVM.selectedStrIDList.removeAll()
-                            
                         }
                 )
             if show == true {
@@ -52,9 +50,6 @@ struct SelectionOverlayView: View {
                     .fill(Color.green.opacity(0.3))
                     .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
                     .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
-                    //.frame(width: width, height: height)
-                    //.position(x: startPos.x + width/2, y: startPos.y + height/2)
-//                    .IsHidden(condition: show)
             }
             
             
@@ -77,7 +72,9 @@ struct SelectionOverlayView: View {
             }
         }
 //        psdsVM.selectedLastStringObject = psdsVM.GetSelectedPsd()!.stringObjects.last!
-        psdsVM.tmpObjectForStringProperty = psdsVM.GetSelectedPsd()!.stringObjects.last!.toObjectForStringProperty()
+        if psdsVM.GetSelectedPsd() != nil && psdsVM.selectedStrIDList.last != nil && psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) != nil {
+            psdsVM.tmpObjectForStringProperty = psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
+        }
         
     }
     

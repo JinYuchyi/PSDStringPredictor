@@ -345,6 +345,12 @@ class PsdsVM: ObservableObject{
         
     }
     
+    func commitFontSize() {
+        for id in selectedStrIDList {
+            psdModel.SetFontSize(psdId: selectedPsdId, objId: id, value: tmpObjectForStringProperty.fontSize.toCGFloat())
+        }
+    }
+    
     
     //MARK: Intents
 

@@ -125,6 +125,7 @@ struct ContentView: View  {
             
             Divider()
             
+            Spacer()
             ControlPanel(imageProcessVM: imageViewModel, settingsVM: settingVM, psdsVM: psdsVM, regionProcessVM: regionProcessVM)
             
             

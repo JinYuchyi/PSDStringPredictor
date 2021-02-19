@@ -31,7 +31,13 @@ struct ControlPanel: View {
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var regionProcessVM: RegionProcessVM
     
+    //Constant
+    
     var body: some View {
+//        padding(.top)
+        Text("Operation on Selected").foregroundColor(.gray).frame(width:260, alignment:.leading).foregroundColor(.gray)
+        Divider()
+        
         GeometryReader{geo in
             //            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
             //                /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
@@ -47,7 +53,6 @@ struct ControlPanel: View {
                 
                 
                 //HStack{
-                Text("Set Selection Status").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
                 HStack{
                     Button(action: {psdsVM.SetSelectionToFixed()}){
                         Text("Ready")

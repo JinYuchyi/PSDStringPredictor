@@ -151,19 +151,20 @@ struct StringObjectPropertyView: View {
         TextField("\(psdsVM.tmpObjectForStringProperty.posX)", text: $psdsVM.tmpObjectForStringProperty.posX, onCommit: {psdsVM.commitTempStringObject()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
             //            .background(Color.black)
-            .frame(width:80, alignment: .center)
+            .frame(width:95, alignment: .center)
     }
     
     var posYFloatingTextField: some View {
         TextField("\(psdsVM.tmpObjectForStringProperty.posY)", text: $psdsVM.tmpObjectForStringProperty.posY, onCommit: {psdsVM.commitTempStringObject()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
             //            .background(Color.black)
-            .frame(width:80, alignment: .center)
+            .frame(width:95, alignment: .center)
     }
     
     var body: some View {
         List{
-            Section(header: Text("String Properties")){
+            Text("String Infomation").frame(width: 260, alignment: .leading).foregroundColor(.gray)
+            Divider()
                 VStack{
                     //                    Text("Content")
                     //                        .foregroundColor(Color.gray)
@@ -216,7 +217,7 @@ struct StringObjectPropertyView: View {
                                 .frame( alignment: .topLeading)
                             Spacer()
                             Button(action: {psdsVM.ToggleFontName(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)}, label: {
-                                Text("􀜊")
+                                Text("Toggle")
                             }).frame(width: 20, alignment: .trailing)
                             
                         }.frame(width:contentWidth )
@@ -253,12 +254,14 @@ struct StringObjectPropertyView: View {
                         }
                         //Color block
                         Color.init(GetLastSelectObject().color).frame(width: 10, height: 10, alignment: .center)
+                        
+                        //Toggle button
+                        Spacer()
+                        Button(action: {toggleColor()}, label: {
+                            Text("Toggle")
+                        }).frame(width: 20, alignment: .trailing)
                     }
                     
-                }.onTapGesture {
-                    if psdsVM.selectedStrIDList.count > 0 {
-                        psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
-                    }
                 }
                 
                 HStack{
@@ -294,7 +297,14 @@ struct StringObjectPropertyView: View {
                 StringComponents()
                 
             }
-        }
+        
+    }
+    
+    func toggleColor() {
+            if psdsVM.selectedStrIDList.count > 0 {
+                psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
+            }
+        
     }
     
     func CharSaveBtnPressed(_ index: Int){

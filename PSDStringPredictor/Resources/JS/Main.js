@@ -64,8 +64,15 @@ for (var i = 0; i < num; i++){
     textItemRef.size = new UnitValue(fontSizeList[i], "pt")
     
     var alignmentOffset = 0
-
     alignName = alignmentList[i]
+    if (alignName == "center") {
+        alignmentOffset = rectList[i][2] / 2
+    }
+    if (alignName == "right") {
+        alignmentOffset = rectList[i][2]
+    }
+
+//    alignName = alignmentList[i]
     
     padding = 5
 
