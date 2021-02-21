@@ -44,11 +44,13 @@ class PsdsVM: ObservableObject{
     //Others
     @Published var IndicatorText: String = ""
     @Published var canProcess: Bool = false
-    @Published var prograssScale: CGFloat = 0
+    @Published var prograssScale: CGFloat = 1
     @Published var maskDict: [Int:[charRectObject]]  = [:]
     @Published var stringIsOn: Bool = true
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
-   
+    @Published var viewScale: CGFloat = 1.0
+    @Published var selectRect: CGRect = CGRect.init()
+
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
     //No bgColorDict, charArrayDict, contentDict, charSizeList, charImageList, charFontWeightList, isPredictedList, charColorModeList, FontName, colorPixel, because we do not need to adjust them frequently
@@ -173,7 +175,6 @@ class PsdsVM: ObservableObject{
     }
     
     func fetchRegionStringObjects(rect: CGRect, psdId: Int){
-//        print("fetchRegionStringObjects")
 //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
 //        regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
         
@@ -205,7 +206,6 @@ class PsdsVM: ObservableObject{
 
             IndicatorText = ""
         }
-//        canProcess = false
 
     }
     
@@ -348,6 +348,18 @@ class PsdsVM: ObservableObject{
     func commitFontSize() {
         for id in selectedStrIDList {
             psdModel.SetFontSize(psdId: selectedPsdId, objId: id, value: tmpObjectForStringProperty.fontSize.toCGFloat())
+        }
+    }
+    
+    func commitPosX() {
+        for id in selectedStrIDList {
+            psdModel.SetPosForString(psdId: selectedPsdId, objId: id, valueX: tmpObjectForStringProperty.posX.toCGFloat(), valueY: tmpObjectForStringProperty.posY.toCGFloat(), isOnlyX: true, isOnlyY: false)
+        }
+    }
+    
+    func commitPosY() {
+        for id in selectedStrIDList {
+            psdModel.SetPosForString(psdId: selectedPsdId, objId: id, valueX: tmpObjectForStringProperty.posX.toCGFloat(), valueY: tmpObjectForStringProperty.posY.toCGFloat(), isOnlyX: false, isOnlyY: true)
         }
     }
     

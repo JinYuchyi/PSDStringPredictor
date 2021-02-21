@@ -45,11 +45,10 @@ struct StringLabel: View {
         
         Text(stringObject.content ?? " " )
             .tracking(stringObject.tracking)
-            .position(x: GetPosition().x, y: GetPosition().y)
+            .position(x: GetPosition().x , y: GetPosition().y)
             .foregroundColor(stringObject.color.ToColor() ?? Color.white)
             .font(.custom(stringObject.FontName, size: stringObject.fontSize))
             .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-            
         //.blendMode(.difference)
         
     }

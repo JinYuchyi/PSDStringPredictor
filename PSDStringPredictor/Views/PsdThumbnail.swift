@@ -20,6 +20,7 @@ struct PsdThumbnail: View {
     var body: some View {
         ZStack{
             IDView()
+            
             Image(nsImage: ((psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
             StatusView()
             titleView()

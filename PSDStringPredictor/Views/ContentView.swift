@@ -20,10 +20,12 @@ struct ContentView: View  {
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var regionProcessVM: RegionProcessVM = RegionProcessVM()
     @ObservedObject var interactive = InteractiveViewModel()
-    @ObservedObject var settingVM : SettingViewModel 
-//    @ObservedObject var imgVM: ImageVM
+    @ObservedObject var settingVM : SettingViewModel
     
-//    let pixelProcess = PixelProcess()
+    @State var width: CGFloat = 0
+    //    @ObservedObject var imgVM: ImageVM
+    
+    //    let pixelProcess = PixelProcess()
     let imgUtil = ImageUtil()
     let keyEventHandle = KeyEventHandling()
     
@@ -34,9 +36,8 @@ struct ContentView: View  {
     @State private var showDebugOverlay = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
-    @State var viewScale: CGFloat = 1
     @State var showFakeString: Bool = false
-
+    
     fileprivate func LeftViewGroup() -> some View {
         
         VStack(alignment: .center){
@@ -52,33 +53,40 @@ struct ContentView: View  {
     var MidViewGroup: some View {
         ZStack{
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
+                //                                    GeometryReader{geo in
+                
                 ZStack{
-                    ImageView(psds: psdsVM, regionVM: regionProcessVM, interactive: interactive)
+                    Color.white.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.01)
                     
+                    ImageView(psds: psdsVM, regionVM: regionProcessVM, interactive: interactive)
+                        .scaleEffect(psdsVM.viewScale)
+  
                     Group{
-                        LabelsOnImage(psdsVM: psdsVM, showFakeString: $showFakeString)
                         
+                        LabelsOnImage(psdsVM: psdsVM, showFakeString: $showFakeString)
+                            .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
+
                         CharacterFrameView(psdVM: psdsVM)
                             .IsHidden(condition: showPatchLayer)
                         
                         StringHighlightView(psdsVM: psdsVM, showFakeString: $showFakeString)
+                            .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
+                        
                     }
                     .IsHidden(condition: psdsVM.stringIsOn == true)
-                    
-                    
+                    .scaleEffect(psdsVM.viewScale)
+
                 }
-                //.scaleEffect(viewScale)
-                //.frame(width: 1100 * viewScale)
-                
+
             }
+
             GeometryReader{ geo in
                 UIOverlayView(showPatchLayer: $showPatchLayer)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
                 
-//                                ScaleSliderView(scale: $viewScale)
-//                                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
-              
-                
+                ScaleSliderView(psdsVM: psdsVM)
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
+
                 if #available(OSX 11.0, *) {
                     VStack(spacing: 0){
                         Text(psdsVM.IndicatorText)
@@ -95,33 +103,21 @@ struct ContentView: View  {
                     }
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
                 }
-
+                
             }
             
         }
-        
-        //.frame(width: 1100)
+
     }
     
     fileprivate func RightViewGroup() -> some View {
         return VStack{
-            
-            //Divider()
-            
+
             ImageProcessView(psdsVM: psdsVM)
-            //.padding(.top, 20.0)
-            
-//            Divider()
-//            
-//            ImagePropertyView(psdvm: psdsVM)
-//                .frame(height: 100)
-            
-            //.frame(width: 300, height: 150)
             
             Divider()
             
             StringObjectPropertyView( psdsVM: psdsVM )
-            //.frame(width: 300)
             
             Divider()
             
@@ -144,7 +140,7 @@ struct ContentView: View  {
             
             MidViewGroup
                 .frame(width: 1200)
-            //.border(Color.red, width: 1)
+
             Divider()
             RightViewGroup()
                 .frame(width: 300)

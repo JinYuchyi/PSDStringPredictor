@@ -35,7 +35,7 @@ struct CharacterFrameView: View {
                             .shadow(radius: 0.5)
                     )
                     .frame(width: item.width, height: item.height)
-                    .position(x: item.minX + item.width/2, y: psdVM.selectedNSImage.size.height - item.minY - item.height/2)
+                    .position(x: (item.minX + item.width/2), y: psdVM.selectedNSImage.size.height - item.minY - item.height/2)
                     .onTapGesture {
                         Tapped(rect: item)
                     }
@@ -47,8 +47,6 @@ struct CharacterFrameView: View {
     
     var body: some View {
         CharFrameView()
-        
-        
     }
 
     
@@ -94,25 +92,9 @@ struct CharacterFrameView: View {
     }
     
     func AddCharRectMask(){
-        
-//        if psdVM.GetSelectedPsd()!.colorMode  == MacColorMode.light{
-//            for rect in psdVM.maskDict[psdVM.selectedPsdId]!{
-//                psdVM.maskedImage = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.white)
-//            }
-//        }else if psdVM.GetSelectedPsd()!.colorMode  == MacColorMode.dark {
-//            for rect in imgProcess.maskList[psdViewModel.selectedPSDID]! {
-//                imgProcess.targetImageMasked = self.imgUtil.AddRectangleMask(BGImage: &(self.imgProcess.targetImageMasked), PositionX: rect.minX, PositionY: rect.minY, Width: rect.width, Height: rect.height, MaskColor: CIColor.black)
-//            }
-//        }
-//
-//        self.imgProcess.SetFilter()
+
 //
     }
     
 }
 
-//struct CharacterFrameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CharacterFrameView(id: 1, rect: CGRect(x: 0,y: 0,width: 20,height: 20), char: "A")
-//    }
-//}

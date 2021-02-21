@@ -27,8 +27,7 @@ struct ImageView: View {
         //else{
         ZStack{
             Image(nsImage: psds.processedCIImage.ToNSImage())
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+
             SelectionOverlayView( interactive: interactive, psdsVM: psds)
             if psds.canProcess == true {
                 RegionProcessOverlayView(interactive: interactive, psdsVM: psds, regionProcessVM: regionVM)

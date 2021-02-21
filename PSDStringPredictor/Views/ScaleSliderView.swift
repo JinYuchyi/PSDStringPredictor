@@ -10,14 +10,16 @@ import SwiftUI
 
 struct ScaleSliderView: View {
     
-    @Binding var scale: CGFloat 
-    
+//    @Binding var scale: CGFloat
+    @ObservedObject var psdsVM: PsdsVM
+
     var body: some View {
         VStack {
                 Slider(
-                    value: $scale,
+                    value: $psdsVM.viewScale,
                     in: 0.5...3.0,
-                    //step: 0.1,
+                    
+                    step: 0.5,
 //                    onEditingChanged: { v in
 //                        scale = v
 //                    },

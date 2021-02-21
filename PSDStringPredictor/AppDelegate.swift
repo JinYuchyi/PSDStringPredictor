@@ -37,18 +37,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             //.environment(\.managedObjectContext, persistentContainer.viewContext)
             //.environmentObject(warningVM)
         //.environmentObject(data)
-        
+        let screenSize = NSScreen.main?.frame
+//        let screenWidth = screenSize.width
+//        let screenHeight = screenSize.height
         // Create the window and set the content view. 
         window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 1700, height: 1000),
+            contentRect: screenSize ?? NSRect(x: 0, y: 0, width: 1700, height: 1000),
             //styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered, defer: false)
         window.center()
+        
         window.setFrameAutosaveName("StringGeneratorMain")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
-        window.title = "PSD String layers Generator"
+        window.title = "AutoLayer"
         //        //Preference window
         //        settingWindow = NSWindow(
         //            contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
@@ -58,7 +61,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //        settingWindow.center()
         //        settingWindow.contentView = NSHostingView(rootView: SettingsView())
         //        settingWindow.makeKeyAndOrderFront(nil)
-        
         //Prepare the config setting
         PreSettingConfig()
         

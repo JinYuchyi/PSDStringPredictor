@@ -18,7 +18,7 @@ struct ControlPanel: View {
     @ObservedObject var imageProcessVM : ImageProcess
     @ObservedObject var settingsVM: SettingViewModel
     var imgUtil: ImageUtil = ImageUtil()
-//    var pixelProcess = PixelProcess()
+    //    var pixelProcess = PixelProcess()
     //    var db = DB()
     var training = MLTraining()
     //    let imagePropertyVM = imagePropertyViewModel
@@ -34,7 +34,7 @@ struct ControlPanel: View {
     //Constant
     
     var body: some View {
-//        padding(.top)
+        //        padding(.top)
         Text("Operation on Selected").foregroundColor(.gray).frame(width:260, alignment:.leading).foregroundColor(.gray)
         Divider()
         
@@ -64,23 +64,53 @@ struct ControlPanel: View {
                         Text("Ignore")
                             .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
                     }
-
+                    
                 }
                 //                Text("Align Selection").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
-                                HStack{
-                                    Button(action: {}){
-                                        Text("􀌀")
-                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                    }
-                                    Button(action: { }){
-                                        Text("􀌁")
-                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                    }
-                                    Button(action: { }){
-                                        Text("􀌂")
-                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                    }
-                                }
+                HStack{
+                    Button(action: {}){
+                        Image("HAlignLeft")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        //                                        Text("􀌀")
+                        //                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    }
+                    Button(action: { }){
+                        Image("HAlignCenter")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    }
+                    Button(action: { }){
+                        Image("HAlignRight")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    }
+                
+              
+                    Button(action: {}){
+                        Image("VAlignTop")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
+                    }
+                    
+                    Button(action: { }){
+                        Image("VAlignCenter")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    }
+                    Button(action: { }){
+                        Image("VAlignBottom")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    }
+                }
                 //}
                 
                 //Divider()

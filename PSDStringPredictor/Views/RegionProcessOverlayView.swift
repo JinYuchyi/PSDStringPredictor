@@ -36,7 +36,12 @@ struct RegionProcessOverlayView: View {
                         }
                         .onEnded{ value in
                             regionEndPos =  value.location
-                            let cropRect = CGRect.init(x: interactive.selectionRect.minX.rounded(), y: (psdsVM.selectedNSImage.size.height - interactive.selectionRect.minY).rounded(), width: interactive.selectionRect.width.rounded(), height: -interactive.selectionRect.height.rounded()).standardized
+                            let cropRect = CGRect.init(
+                                x: interactive.selectionRect.minX.rounded(),
+                                y: (psdsVM.selectedNSImage.size.height.rounded() - interactive.selectionRect.minY).rounded() ,
+                                width: interactive.selectionRect.width.rounded(),
+                                height: -interactive.selectionRect.height.rounded()
+                            ).standardized
                             psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
     
                         }
@@ -45,14 +50,16 @@ struct RegionProcessOverlayView: View {
                     Rectangle()
                         //interactive.selectionRect
                         .fill(Color.green.opacity(0.5))
-                        .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
-                        .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
+                        .frame(width: interactive.selectionRect.width , height: interactive.selectionRect.height  )
+                        .position(x: (interactive.selectionRect.minX + interactive.selectionRect.width/2) , y: (interactive.selectionRect.minY + interactive.selectionRect.height/2) )
                 )
 
             
                          
             
         }
+        .frame(width: psdsVM.selectedNSImage.size.width  , height: psdsVM.selectedNSImage.size.height )
+
     }
     
     

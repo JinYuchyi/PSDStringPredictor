@@ -59,7 +59,8 @@ struct PSDObject: Identifiable{
         let imgData = (try? Data(contentsOf: imageURL))
         if imgData != nil {
             let rowImage = NSImage.init(data: imgData!)
-            return rowImage!.resize(sizeOfThumbnail)
+            let tn = rowImage!.resize(sizeOfThumbnail)
+            return tn
         }
         return NSImage.init()
     }

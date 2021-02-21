@@ -58,35 +58,6 @@ struct StringObjectPropertyView: View {
         fontSize = ""
     }
     
-//    func posCommit(){
-//        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && posX.isNumeric == true  {
-////            let newVal = CGFloat((posX as NSString).floatValue)
-//            //Set positionX for every selected string.
-////            for id in psdsVM.selectedStrIDList {
-////                psdsVM.psdModel.SetPosForString(psdId: psdsVM.selectedPsdId, objId: id, valueX: newVal, valueY: 0, isOnlyX: true, isOnlyY: false)
-////            }
-//            psdsVM.tmpObjectForStringProperty.posX =
-//            psdsVM.selectedLastStringObject.stringRect = newRect
-//            if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && content.isEmpty == false  {
-//                psdsVM.psdModel.SetLastStringObject(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: psdsVM.selectedLastStringObject)
-//            }
-//
-//        }
-//    }
-    
-//    func posYCommit(){
-//        if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && posY.isNumeric == true  {
-//            let newVal = CGFloat((posY as NSString).floatValue)
-//            //Set positionX for every selected string.
-//            for id in psdsVM.selectedStrIDList {
-//                psdsVM.psdModel.SetPosForString(psdId: psdsVM.selectedPsdId, objId: id, valueX: 0, valueY: newVal, isOnlyX: false, isOnlyY: true)
-//            }
-//        }
-//        posY = ""
-//    }
-    
-
-    
     fileprivate func StringComponents() -> some View {
         VStack(alignment: .leading){
             ScrollView ( .horizontal, showsIndicators: true) {
@@ -142,20 +113,20 @@ struct StringObjectPropertyView: View {
 //                //
 //            }.frame(width:geo.size.width * 0.9)
 //        }
-        TextField("\(psdsVM.tmpObjectForStringProperty.fontSize)", text: $psdsVM.tmpObjectForStringProperty.fontSize, onCommit: {psdsVM.commitTempStringObject()})
+        TextField("\(psdsVM.tmpObjectForStringProperty.fontSize)", text: $psdsVM.tmpObjectForStringProperty.fontSize, onCommit: {psdsVM.commitFontSize()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
 
     }
     
     var posXFloatingTextField: some View {
-        TextField("\(psdsVM.tmpObjectForStringProperty.posX)", text: $psdsVM.tmpObjectForStringProperty.posX, onCommit: {psdsVM.commitTempStringObject()})
+        TextField("\(psdsVM.tmpObjectForStringProperty.posX)", text: $psdsVM.tmpObjectForStringProperty.posX, onCommit: {psdsVM.commitPosX()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
             //            .background(Color.black)
             .frame(width:95, alignment: .center)
     }
     
     var posYFloatingTextField: some View {
-        TextField("\(psdsVM.tmpObjectForStringProperty.posY)", text: $psdsVM.tmpObjectForStringProperty.posY, onCommit: {psdsVM.commitTempStringObject()})
+        TextField("\(psdsVM.tmpObjectForStringProperty.posY)", text: $psdsVM.tmpObjectForStringProperty.posY, onCommit: {psdsVM.commitPosY()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
             //            .background(Color.black)
             .frame(width:95, alignment: .center)
