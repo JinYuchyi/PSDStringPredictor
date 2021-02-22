@@ -9,8 +9,8 @@
 import Foundation
 
 class FontUtils {
-    static func GetFontInfo(Font font: String, Content content: String, Size size: CGFloat) -> (ascent: CGFloat, descent: CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect ) {
-        var info: (ascent:CGFloat, descent:CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect )
+    static func GetFontInfo(Font font: String, Content content: String, Size size: CGFloat) -> (ascent: CGFloat, descent: CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect, xHeight: CGFloat ) {
+        var info: (ascent:CGFloat, descent:CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect, xHeight: CGFloat )
         
 //        let fontDescriptorAttributes = [
 //            kCTFontNameAttribute: font,
@@ -30,15 +30,17 @@ class FontUtils {
         info.descent = CTFontGetDescent(font)
         info.leading = CTFontGetLeading(font)
         info.size = CTFontGetBoundingBox(font)
-        
+        info.xHeight = CTFontGetXHeight(font)
         //CTFrameDraw(<#T##frame: CTFrame##CTFrame#>, <#T##context: CGContext##CGContext#>)
         info.lineHeight = info.ascent + info.descent + info.leading
         
         return info
     }
     
-    static func FetchStringDescent(content: String, fontSize: CGFloat) -> CGFloat{
+    static func FetchFontOffset(content: String, fontSize: CGFloat) -> CGFloat{
         var hasLongTail = false
+        var hasHat = false
+        
         for c in content {
             if (
                 c == "p" ||
@@ -51,6 +53,9 @@ class FontUtils {
             ) {
                 hasLongTail = true
             }
+            if (c.isUppercase || c.isNumber || c == "i" || c == "j" || c == "k" || c == "b" || c == "d" || c == "f" || c == "h" || c == "l" ) {
+                hasHat = true
+            }
         }
         
         var fontName: String = ""
@@ -62,9 +67,14 @@ class FontUtils {
         }
         
         var descent: CGFloat = 0
-        if hasLongTail == true{
-            var descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
-            return  descent * fontDecentOffsetScale
+        if hasLongTail == true && hasHat == true{
+            let descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
+            let ascent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).ascent
+            let xheight = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).xHeight
+            return  (descent - (ascent - xheight)) * fontDecentOffsetScale
+        }else if hasLongTail == true && hasHat == false {
+            let descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
+            return descent * fontDecentOffsetScale
         }
         
         return descent

@@ -11,7 +11,7 @@ import CoreImage
 import Vision
 import SwiftUI
 
-let fontDecentOffsetScale: CGFloat = 0.8
+let fontDecentOffsetScale: CGFloat = 1
 
 class OCR: ObservableObject{
     //private var workItem: DispatchWorkItem?
@@ -102,12 +102,12 @@ class OCR: ObservableObject{
     
 
     
-    func DeleteDecent(obj: StringObject) -> StringObject{
+    func DeleteFontOffset(obj: StringObject) -> StringObject{
         //Delete the decent height
-        let descent = FontUtils.FetchStringDescent(content: obj.content, fontSize: obj.fontSize)
-        
-        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + descent, width: obj.stringRect.width, height: obj.stringRect.height - descent)
-        //let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y  , width: obj.stringRect.width, height: obj.stringRect.height )
+        let fontOffset = FontUtils.FetchFontOffset(content: obj.content, fontSize: obj.fontSize)
+//        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + fontOffset, width: obj.stringRect.width, height: obj.stringRect.height - fontOffset)
+        let newStringRect = CGRect(x: obj.stringRect.minX, y: obj.stringRect.minY + fontOffset  , width: obj.stringRect.width, height: obj.stringRect.height - fontOffset )
+
 
         var tmpObj = StringObject.init(obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList)
         //tmpObj.stringRect = newStringRect

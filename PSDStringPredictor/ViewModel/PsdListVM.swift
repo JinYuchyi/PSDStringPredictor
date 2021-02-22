@@ -294,8 +294,7 @@ class PsdsVM: ObservableObject{
             let charImageList = CIImage.init(contentsOf: psdModel.GetPSDObject(psdId: psdId)!.imageURL)!.GetCroppedImages(rects: charRects.offset(offset: offset) )
 
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
-//            print(charImageList.count)
-            newStrObj = ocr.DeleteDecent(obj: newStrObj)
+            newStrObj = ocr.DeleteFontOffset(obj: newStrObj)
             let sepObjList = newStrObj.seprateIfPossible()
             if sepObjList != nil {
                 for obj in sepObjList!{
@@ -620,7 +619,7 @@ class PsdsVM: ObservableObject{
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((targetImg.size.height - obj.stringRect.minY).rounded())])
             //Calc Descent
-            let tmpDesc = Float(FontUtils.FetchStringDescent(content: obj.content, fontSize: obj.fontSize))
+            let tmpDesc = Float(FontUtils.FetchFontOffset(content: obj.content, fontSize: obj.fontSize))
             descentOffset.append(tmpDesc)
             rectList.append([Float(obj.stringRect.minX), Float(obj.stringRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
             
@@ -866,7 +865,7 @@ class PsdsVM: ObservableObject{
 //            guard let obj = GetStringObjectForOnePsd(psdId: selectedPsdId, objId: objId) else {return}
 //            objList.append(obj)
 //        }
-//        
+//
 //        if orientation == "horizontal-left" {
 //            let posXList = objList.map({$0.stringRect.minX})
 //            let minX = posXList.min()
@@ -885,7 +884,7 @@ class PsdsVM: ObservableObject{
 //                let rect: CGRect = CGRect.init(x: minX!, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
 //                psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
 //            }
-//            
+//
 //        }
         
     }
