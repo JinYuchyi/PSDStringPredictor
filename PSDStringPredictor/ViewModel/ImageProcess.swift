@@ -389,10 +389,13 @@ final class ImageStore {
     
 }
 
-func SourceInCompositing(bgImage: CIImage, maskImage: CIImage)-> CIImage? {
-    let filter = CIFilter(name: "CISourceInCompositing")
-    filter?.setValue(maskImage, forKey: "inputImage")
-    filter?.setValue(bgImage, forKey: "inputBackgroundImage")
+func FilterLanczosScaleTransform(image: CIImage, size: CGFloat)-> CIImage? {
+    var scale: CGFloat = 1
+    image.extent.width > image.extent.height ? (scale = image.extent.width / size) : (scale = image.extent.height / size)
+    let filter = CIFilter(name: "CILanczosScaleTransform")
+    filter?.setValue(image, forKey: "inputImage")
+    filter?.setValue(scale, forKey: "inputScale")
+    filter?.setValue(1, forKey: "inputAspectRatio")
     let filteredImage = filter?.outputImage
     return filteredImage
 }

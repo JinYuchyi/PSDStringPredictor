@@ -860,20 +860,37 @@ class PsdsVM: ObservableObject{
         }
     }
     
-    //TODO:
-    func alignSelectionLeft(){
+    func alignSelection(orientation: String){
+//        var objList: [StringObject] = []
+//        for objId in selectedStrIDList {
+//            guard let obj = GetStringObjectForOnePsd(psdId: selectedPsdId, objId: objId) else {return}
+//            objList.append(obj)
+//        }
+//        
+//        if orientation == "horizontal-left" {
+//            let posXList = objList.map({$0.stringRect.minX})
+//            let minX = posXList.min()
+//            if minX != nil {
+//                for obj in objList {
+//                    let rect: CGRect = CGRect.init(x: minX!, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+//                    psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
+//                }
+//            }
+//        }else if orientation == "horizontal-center" {
+//            let posXList = objList.map({$0.stringRect.minX})
+//            let minX = posXList.min()
+//            let maxX = posXList.max()
+//            guard let midX: CGFloat? = ((minX + maxX) / 2) else {return}
+//            for obj in objList {
+//                let rect: CGRect = CGRect.init(x: minX!, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+//                psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
+//            }
+//            
+//        }
         
     }
     
-    //TODO:
-    func alignSelectionCenter(){
-        
-    }
-    
-    //TODO:
-    func alignSelectionRight(){
-        
-    }
+
     
     func DeleteAll(){
         psdModel.psdObjects.removeAll()
@@ -881,7 +898,6 @@ class PsdsVM: ObservableObject{
         processedCIImage = CIImage.init()
     }
     
-    //TODO:
     func CommitAll(){
         for obj in psdModel.psdObjects{
             SetCommit(psdId: obj.id)

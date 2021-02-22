@@ -56,12 +56,14 @@ struct PSDObject: Identifiable{
     }
     
     fileprivate func FetchThumbnail(size: Int) -> NSImage{
-        let imgData = (try? Data(contentsOf: imageURL))
+        var imgData = (try? Data(contentsOf: imageURL))
         if imgData != nil {
             let rowImage = NSImage.init(data: imgData!)
             let tn = rowImage!.resize(sizeOfThumbnail)
+            imgData = nil
             return tn
         }
+        
         return NSImage.init()
     }
     
@@ -89,7 +91,7 @@ struct PSD {
     
     mutating func addPSDObject( imageURL: URL) -> Int{
         psdObjects.append(PSDObject(id: uniqID, imageURL: imageURL))
-        ImageUtil.metadata(url: imageURL)
+//        ImageUtil.metadata(url: imageURL)
         uniqID = (uniqID + 1) % 1000000
         return uniqID
     }
