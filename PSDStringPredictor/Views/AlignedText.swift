@@ -26,13 +26,14 @@ struct AlignedText: View {
     var alignment: StringAlignment
     var content: String
     var isHighLight: Bool
+    var pageWidth: CGFloat
     var pageHeight: CGFloat
+    
     
     var body: some View {
         if alignment == StringAlignment.left {
-            ZStack{
-                ZStack(alignment: .leading){
-                    Rectangle().frame(width: stringRect.width, height: 20).hidden()
+                ZStack(alignment: .topLeading){
+                    Rectangle().frame(width: stringRect.width, height: 20)
 
                     Text( content)
                         .foregroundColor( isHighLight == true ? Color.red: color.ToColor() )
@@ -40,16 +41,15 @@ struct AlignedText: View {
                         
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                .position(x: stringRect.origin.x + stringRect.width / 2  , y: pageHeight - stringRect.midY)
-                
+                .position(x: stringRect.width / 2  , y: stringRect.height/2)
+                .frame(width: stringRect.width, height: stringRect.height)
 
-            }
+            
 
         }else if  alignment == StringAlignment.right  {
-            ZStack{
 
-                ZStack(alignment: .trailing){
-                    Rectangle().frame(width: stringRect.width, height: 20).hidden()
+                ZStack(alignment: .topTrailing){
+                    Rectangle().frame(width: stringRect.width, height: 20)
 
                     Text( content)
                         .foregroundColor( color.ToColor())
@@ -61,12 +61,12 @@ struct AlignedText: View {
                         
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                .position(x: stringRect.origin.x - stringRect.width / 2  , y: pageHeight - stringRect.midY)
+                .position(x:  stringRect.width / 2  , y: stringRect.height / 2)
+                .frame(width: stringRect.width, height: stringRect.height)
+//                .frame(width: pageWidth, height: pageHeight)
 
-
-            }
+            
         }else {
-            ZStack{
 
                 ZStack(alignment: .center){
                     Rectangle().frame(width: stringRect.width, height: 20).hidden()
@@ -80,16 +80,16 @@ struct AlignedText: View {
                         
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                .position(x: stringRect.origin.x   , y: pageHeight - stringRect.midY)
-                
+                .position(x: stringRect.width / 2   , y:  stringRect.height / 2)
+                .frame(width: stringRect.width, height: stringRect.height)
+//                .frame(width: pageWidth, height: pageHeight)
 
-            }
         }
     }
 }
 
-//struct AlignedText_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AlignedText()
-//    }
-//}
+struct AlignedText_Previews: PreviewProvider {
+    static var previews: some View {
+        AlignedText(fontSize: 100, fontName: "SF Pro Text Regular", color: CGColor.white, stringRect: CGRect.init(x: 100, y: 300, width: 500, height: 150), alignment: .right, content: "aswww", isHighLight: true, pageWidth: 500, pageHeight: 600)
+    }
+}

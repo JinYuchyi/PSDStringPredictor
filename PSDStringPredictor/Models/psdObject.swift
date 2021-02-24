@@ -33,8 +33,8 @@ struct PSDObject: Identifiable{
     var thumbnail: NSImage = NSImage.init()
     var colorMode: MacColorMode = .light
     var dpi: Int = 0
-    var width: Int = 0
-    var height: Int = 0
+    var width: CGFloat = 0
+    var height: CGFloat = 0
     var status: PsdStatus = .normal
     
     fileprivate init(id: Int, imageURL: URL, thumbnail: NSImage, colorMode: MacColorMode, dpi: Int, status: PsdStatus){
@@ -44,6 +44,8 @@ struct PSDObject: Identifiable{
         self.thumbnail = thumbnail
         self.dpi = dpi
         self.status = status
+        self.width = NSImage.init(contentsOf: imageURL)?.size.width ?? 0
+        self.height = NSImage.init(contentsOf: imageURL)?.size.height ?? 0
     }
     
     fileprivate init(id: Int, imageURL: URL){
@@ -53,6 +55,8 @@ struct PSDObject: Identifiable{
         self.thumbnail = FetchThumbnail(size: sizeOfThumbnail)
         colorMode = PsdsUtil.shared.FetchColorMode(img: thumbnail.ToCIImage()!)
         status = .normal
+        self.width = NSImage.init(contentsOf: imageURL)?.size.width ?? 0
+        self.height = NSImage.init(contentsOf: imageURL)?.size.height ?? 0
     }
     
     fileprivate func FetchThumbnail(size: Int) -> NSImage{

@@ -18,6 +18,7 @@ struct LabelsOnImage: View {
     var body: some View {
         ZStack{
             
+            
             ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
                 StringLabel( stringObject: obj, showFakeString: $showFakeString, psdsVM: psdsVM )
                     .gesture(TapGesture()

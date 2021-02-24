@@ -51,8 +51,8 @@ struct StringLabel: View {
 //            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
         
         //New aligned text
-        AlignedText(psdsVM: psdsVM, fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false)
-        
+        AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
+            .position(x: GetPosition().x, y: GetPosition().y  )
     }
     
     fileprivate func StringFrameLayerView()-> some View {
@@ -87,6 +87,7 @@ struct StringLabel: View {
                 
                 //Text content
                 TextLayerView()
+                
 //                    .IsHidden(condition: !showFakeString)
                 
             }.IsHidden(condition: stringObject.status != StringObjectStatus.ignored)
