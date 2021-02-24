@@ -23,7 +23,8 @@ struct StringHighlightView: View {
         ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
             //if (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid) != nil) {
             ZStack{
-                fakeString.IsHidden(condition: showFakeString)
+                fakeString
+//                    .IsHidden(condition: showFakeString)
                 Rectangle()
                     .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                     .position(
@@ -36,9 +37,13 @@ struct StringHighlightView: View {
                         .onChanged { gesture in
                             showFakeString = true
                             if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                dragX = gesture.translation.width / 20
+                                dragX = gesture.translation.width / 20 // DragX is temp value
+                                psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
+//                                psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
                             } else {
                                 dragY = gesture.translation.height / 40
+                                psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
+//                                psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
                             }
                         }
                         .onEnded({ gesture in
@@ -69,15 +74,24 @@ struct StringHighlightView: View {
     }
     
     var fakeString: some View {
-        Text(psdsVM.tmpObjectForStringProperty.content )
-            .tracking(calcTracking()  )
-            .position(
-                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
-                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
-            )
-            .foregroundColor(psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.color.ToColor() ?? Color.red  )
+        //TODO: 
+        AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),  fontName: psdsVM.tmpObjectForStringProperty.fontName, color: psdsVM.tmpObjectForStringProperty.color, stringRect: psdsVM.tmpObjectForStringProperty.stringRect, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: psdsVM.tmpObjectForStringProperty.content, isHighLight: true, pageHieght: <#CGFloat#>)
             .font(.custom(fontName(), size: calcFontSize()))
-        //            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+            .position(
+                x: psdsVM.tmpObjectForStringProperty.stringRect.minX,
+                y: psdsVM.tmpObjectForStringProperty.stringRect.minY
+//                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
+//                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
+            )
+        
+//        Text(psdsVM.tmpObjectForStringProperty.content )
+//            .tracking(calcTracking()  )
+//            .position(
+//                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
+//                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
+//            )
+//            .foregroundColor(psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.color.ToColor() ?? Color.red  )
+//            .font(.custom(fontName(), size: calcFontSize()))
     }
     
     func fontName()-> String {

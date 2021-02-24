@@ -472,7 +472,6 @@ struct PSD {
 
 extension PSDObject {
     func CalcColorMode() -> MacColorMode{
-        //TODO:
         return .light
     }
     

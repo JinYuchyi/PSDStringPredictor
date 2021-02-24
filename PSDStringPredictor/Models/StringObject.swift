@@ -210,6 +210,10 @@ struct StringObject : Identifiable,  Hashable{
         //return result
     }
     
+    mutating func CalcRectWidthByString() {
+        
+    }
+    
     mutating func SetOffset(x: CGFloat, y: CGFloat){
         var result: [CGRect] = []
         for cr in charRects {

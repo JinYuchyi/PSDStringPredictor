@@ -21,7 +21,7 @@ struct ContentView: View  {
     @ObservedObject var regionProcessVM: RegionProcessVM = RegionProcessVM()
     @ObservedObject var interactive = InteractiveViewModel()
     @ObservedObject var settingVM : SettingViewModel
-    
+    @ObservedObject var fontTestVM = FontTestViewModel()
     @State var width: CGFloat = 0
     //    @ObservedObject var imgVM: ImageVM
     
@@ -60,12 +60,12 @@ struct ContentView: View  {
                     
                     ImageView(psds: psdsVM, regionVM: regionProcessVM, interactive: interactive)
                         .scaleEffect(psdsVM.viewScale)
-  
+                    
                     Group{
                         
                         LabelsOnImage(psdsVM: psdsVM, showFakeString: $showFakeString)
                             .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
-
+                        
                         CharacterFrameView(psdVM: psdsVM)
                             .IsHidden(condition: showPatchLayer)
                         
@@ -75,18 +75,17 @@ struct ContentView: View  {
                     }
                     .IsHidden(condition: psdsVM.stringIsOn == true)
                     .scaleEffect(psdsVM.viewScale)
-
                 }
-
+                
             }
-
+            
             GeometryReader{ geo in
                 UIOverlayView(showPatchLayer: $showPatchLayer)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
                 
                 ScaleSliderView(psdsVM: psdsVM)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
-
+                
                 if #available(OSX 11.0, *) {
                     VStack(spacing: 0){
                         Text(psdsVM.IndicatorText)
@@ -107,12 +106,12 @@ struct ContentView: View  {
             }
             
         }
-
+        
     }
     
     fileprivate func RightViewGroup() -> some View {
         return VStack{
-
+            
             ImageProcessView(psdsVM: psdsVM)
             
             Divider()
@@ -128,6 +127,11 @@ struct ContentView: View  {
         }
         
     }
+
+    
+    
+    
+    
     
     
     var body: some View {
@@ -140,7 +144,7 @@ struct ContentView: View  {
             
             MidViewGroup
                 .frame(width: 1200)
-
+            
             Divider()
             RightViewGroup()
                 .frame(width: 300)

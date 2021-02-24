@@ -35,7 +35,6 @@ class RegionProcessVM: ObservableObject {
     }
     
     func fetchOverlayedImage(regionRect: CGRect, targetImage: CIImage)->CIImage{
-        //TODO: Get area background image
         let regionImg = targetImage.cropped(to: regionRect)
         let bgColor = imgUtil.backgroundColor(img: regionImg)
         var ( maskImg01,  maskImg02) = fetchRegionOverlay(regionRect: regionRect, bgWidth: targetImage.extent.width, bgHeight: targetImage.extent.height)

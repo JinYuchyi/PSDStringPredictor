@@ -245,7 +245,6 @@ class ImageProcess: ObservableObject{
 //                    self.SetTargetNSImage(tmp) //Reset images
 //                    self.showImage = true
 //                    
-//                    //TODO: color mode classifier not work
 //                    //colorModeClassifier.output
 //                    imagePropertyViewModel.SetImageColorMode(modeIndex: DataStore.colorMode)
 //                    DataStore.imagePath = panel.url!.path

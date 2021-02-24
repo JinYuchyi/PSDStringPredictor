@@ -41,6 +41,12 @@
 		3F3EFFAE2537ECF80047E4E5 /* HoverOnCharView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */; };
 		3F437E4A25DBC05100BC0D7D /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E4925DBC05100BC0D7D /* TextArea.swift */; };
 		3F437E4D25DCC8A500BC0D7D /* StringObjectForStringPropertyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E4C25DCC8A500BC0D7D /* StringObjectForStringPropertyExtension.swift */; };
+		3F437E5025E4969300BC0D7D /* FontTestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E4F25E4969300BC0D7D /* FontTestViewModel.swift */; };
+		3F437E5625E4B7AC00BC0D7D /* CTRubyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E5525E4B7AC00BC0D7D /* CTRubyAnnotation.swift */; };
+		3F437E5925E4B81A00BC0D7D /* CFAttributedString+CoreText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E5825E4B81A00BC0D7D /* CFAttributedString+CoreText.swift */; };
+		3F437E5C25E4D62300BC0D7D /* pathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E5B25E4D62300BC0D7D /* pathView.swift */; };
+		3F437E7C25E5F4B800BC0D7D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E7B25E5F4B800BC0D7D /* Misc.swift */; };
+		3F437E8025E641FA00BC0D7D /* AlignedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F437E7F25E641FA00BC0D7D /* AlignedText.swift */; };
 		3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4445C925392FC300BB2745 /* OSStandardManager.swift */; };
 		3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4471BA25735459003AE7B6 /* ColorExtension.swift */; };
 		3F44C6402570D6F900E438CA /* CharColorModeClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */; };
@@ -247,6 +253,12 @@
 		3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverOnCharView.swift; sourceTree = "<group>"; };
 		3F437E4925DBC05100BC0D7D /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
 		3F437E4C25DCC8A500BC0D7D /* StringObjectForStringPropertyExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectForStringPropertyExtension.swift; sourceTree = "<group>"; };
+		3F437E4F25E4969300BC0D7D /* FontTestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTestViewModel.swift; sourceTree = "<group>"; };
+		3F437E5525E4B7AC00BC0D7D /* CTRubyAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTRubyAnnotation.swift; sourceTree = "<group>"; };
+		3F437E5825E4B81A00BC0D7D /* CFAttributedString+CoreText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CFAttributedString+CoreText.swift"; sourceTree = "<group>"; };
+		3F437E5B25E4D62300BC0D7D /* pathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pathView.swift; sourceTree = "<group>"; };
+		3F437E7B25E5F4B800BC0D7D /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		3F437E7F25E641FA00BC0D7D /* AlignedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedText.swift; sourceTree = "<group>"; };
 		3F4445C925392FC300BB2745 /* OSStandardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSStandardManager.swift; sourceTree = "<group>"; };
 		3F4471BA25735459003AE7B6 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		3F44C63F2570D6F900E438CA /* CharColorModeClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharColorModeClassifier.swift; sourceTree = "<group>"; };
@@ -442,6 +454,7 @@
 		3F1A629625230CED006DC9F9 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				3F437E7B25E5F4B800BC0D7D /* Misc.swift */,
 				3F1A629725230D0F006DC9F9 /* Font.swift */,
 			);
 			path = Font;
@@ -504,6 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				3F79184825A85CD2003F158E /* PsdThumbnail.swift */,
+				3F437E5B25E4D62300BC0D7D /* pathView.swift */,
 				3F79184B25A86B24003F158E /* psdThumbnailList.swift */,
 				3F853B702585BEAE002507C4 /* StringHighlightView.swift */,
 				3F3EFFAD2537ECF80047E4E5 /* HoverOnCharView.swift */,
@@ -518,6 +532,7 @@
 				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
 				3F437E4925DBC05100BC0D7D /* TextArea.swift */,
 				3FC906A125B2DFF300120DE2 /* PrograssView.swift */,
+				3F437E7F25E641FA00BC0D7D /* AlignedText.swift */,
 				3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */,
 				3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */,
 				3F9ED7A42566090100F950BC /* ImageResourceView.swift */,
@@ -655,6 +670,7 @@
 				3F0802AC25C409F2000530F6 /* RegionProcessVM.swift */,
 				3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */,
 				3FC9069125AD8E0F00120DE2 /* WarningVM.swift */,
+				3F437E4F25E4969300BC0D7D /* FontTestViewModel.swift */,
 				3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */,
 				3FC9068725AC02C200120DE2 /* ControlVM.swift */,
 				3FABE4E02580DA4C00287086 /* DBViewModel.swift */,
@@ -691,10 +707,12 @@
 				3F4CB5A6250A324300E41082 /* CIImageExtension.swift */,
 				3FBF5E1025AFEE6B009596A5 /* EnumExtension.swift */,
 				3F50A7B1253DC61F00C10810 /* ViewExtension.swift */,
+				3F437E5525E4B7AC00BC0D7D /* CTRubyAnnotation.swift */,
 				3F0550CF25AEE0C7003AF60A /* MacColorModeExtension.swift */,
 				3F4CB5A8250A327E00E41082 /* NSImageExtension.swift */,
 				3F0550D225AEE2FD003AF60A /* IntExtension.swift */,
 				3F308028251DFA3500550DEA /* NSColorExtension.swift */,
+				3F437E5825E4B81A00BC0D7D /* CFAttributedString+CoreText.swift */,
 				3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */,
 				3FAEC5CB25219AAD008ECA23 /* StringExtension.swift */,
 				3F68B703252DCAC700CCFCE5 /* ArrayExtension.swift */,
@@ -1163,6 +1181,7 @@
 				3F0550D025AEE0C7003AF60A /* MacColorModeExtension.swift in Sources */,
 				3F4445CA25392FC300BB2745 /* OSStandardManager.swift in Sources */,
 				3F59C0F825D3CF8600F9CF52 /* nColor.swift in Sources */,
+				3F437E8025E641FA00BC0D7D /* AlignedText.swift in Sources */,
 				3F59C11125D3CF8600F9CF52 /* qColor.mlmodel in Sources */,
 				3FA70D4E25D95E7C00D68598 /* 9Color.swift in Sources */,
 				3F59C10925D3CF8600F9CF52 /* mColor.swift in Sources */,
@@ -1171,6 +1190,8 @@
 				3FDBC4B02583114C00E9C2DC /* AppSettingsItem.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
+				3F437E5925E4B81A00BC0D7D /* CFAttributedString+CoreText.swift in Sources */,
+				3F437E5025E4969300BC0D7D /* FontTestViewModel.swift in Sources */,
 				3FC3DFC725B52FB60060521D /* PsdOperatorView.swift in Sources */,
 				3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */,
 				3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */,
@@ -1199,12 +1220,15 @@
 				3F3A22C425CCDC0200E7FC30 /* SymbolObjectDetector.swift in Sources */,
 				3F4D13E625020F22008F846B /* StringLabel.swift in Sources */,
 				3F3A22BC25CCDA9500E7FC30 /* FontWeightClassifier.swift in Sources */,
+				3F437E5C25E4D62300BC0D7D /* pathView.swift in Sources */,
 				3F50A7B2253DC61F00C10810 /* ViewExtension.swift in Sources */,
+				3F437E7C25E5F4B800BC0D7D /* Misc.swift in Sources */,
 				3F50A7B4253DC64600C10810 /* ColorModeClassifier.swift in Sources */,
 				3F44C6452570EB0C00E438CA /* CharColorMode.mlmodel in Sources */,
 				3F0802AD25C409F2000530F6 /* RegionProcessVM.swift in Sources */,
 				3FDBC4D12583613800E9C2DC /* SettingViewModel.swift in Sources */,
 				3F56E3E42505F0B400E64337 /* Data.swift in Sources */,
+				3F437E5625E4B7AC00BC0D7D /* CTRubyAnnotation.swift in Sources */,
 				3FC9068425ABF4DF00120DE2 /* StringAttributesVM.swift in Sources */,
 				3FC9068125AB455E00120DE2 /* ImageAttributesVM.swift in Sources */,
 				3F59C10C25D3CF8600F9CF52 /* bColor.swift in Sources */,

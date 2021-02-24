@@ -137,26 +137,10 @@ struct StringObjectPropertyView: View {
             Text("String Infomation").frame(width: 260, alignment: .leading).foregroundColor(.gray)
             Divider()
                 VStack{
-                    //                    Text("Content")
-                    //                        .foregroundColor(Color.gray)
-                    //                        .frame(width: columnWidth, alignment: .topLeading)
-                    //                        .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                    
                     contentTextField
                 }
                 
-                //                HStack{
-                //                    Text("Color Mode")
-                //                        .foregroundColor(Color.gray)
-                //                        .frame(width:80, alignment: .topLeading)
-                //                    if GetLastSelectObject().colorMode == MacColorMode.light {
-                //                        Text("􀆮")
-                //                            .frame(width:200, alignment: .topLeading)
-                //                    }else if GetLastSelectObject().colorMode == MacColorMode.dark {
-                //                        Text("􀆺")
-                //                            .frame(width:200, alignment: .topLeading)
-                //                    }else{}
-                //                }
+
                 
                 HStack{
                     Text("Size")
@@ -239,24 +223,7 @@ struct StringObjectPropertyView: View {
                     Text("Position")
                         .foregroundColor(Color.gray)
                         .frame(width: titleWidth, alignment: .topLeading)
-                    //                    Text( " \(Int(GetLastSelectObject().stringRect.minX.rounded())) " )
-                    //                        .frame(width: 40).background(Color.black)
-                    //                        .overlay(
-                    //                            posXFloatingTextField
-                    //                                .onTapGesture {
-                    //                                    posX = ""
-                    //                                }
-                    //                                .opacity(posX == "" ? 0.6:1)
-                    //                        )
-                    //                    Text( " \(Int(GetLastSelectObject().stringRect.minY.rounded())) " )
-                    //                        .frame(width: 40).background(Color.black)
-                    //                        .overlay(
-                    //                            posYFloatingTextField
-                    //                                .onTapGesture {
-                    //                                    posY = ""
-                    //                                }
-                    //                                .opacity(posY == "" ? 0.6:1)
-                    //                        )
+
                     HStack{
                         posXFloatingTextField
                         posYFloatingTextField

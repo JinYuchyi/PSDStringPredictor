@@ -27,6 +27,31 @@ extension String{
         }
         return result
     }
+    
+    func find(pattern: String) -> NSTextCheckingResult? {
+        do {
+            let re = try NSRegularExpression(pattern: pattern, options: [])
+            return re.firstMatch(
+                in: self,
+                options: [],
+                range: NSMakeRange(0, self.utf16.count))
+        } catch {
+            return nil
+        }
+    }
+
+    func replace(pattern: String, template: String) -> String {
+        do {
+            let re = try NSRegularExpression(pattern: pattern, options: [])
+            return re.stringByReplacingMatches(
+                in: self,
+                options: [],
+                range: NSMakeRange(0, self.utf16.count),
+                withTemplate: template)
+        } catch {
+            return self
+        }
+    }
 
 
 }

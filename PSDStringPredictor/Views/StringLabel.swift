@@ -43,20 +43,23 @@ struct StringLabel: View {
     
     func TextLayerView() -> some View {
         
-        Text(stringObject.content ?? " " )
-            .tracking(stringObject.tracking)
-            .position(x: GetPosition().x , y: GetPosition().y)
-            .foregroundColor(stringObject.color.ToColor() ?? Color.white)
-            .font(.custom(stringObject.FontName, size: stringObject.fontSize))
-            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-        //.blendMode(.difference)
+//        Text(stringObject.content ?? " " )
+//            .tracking(stringObject.tracking)
+//            .position(x: GetPosition().x , y: GetPosition().y)
+//            .foregroundColor(stringObject.color.ToColor() ?? Color.white)
+//            .font(.custom(stringObject.FontName, size: stringObject.fontSize))
+//            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+        
+        //New aligned text
+        AlignedText(psdsVM: psdsVM, fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false)
         
     }
     
     fileprivate func StringFrameLayerView()-> some View {
         //String debug frame
         Rectangle()
-            .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green, lineWidth: 2)
+            .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1)
+
             .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
     }
@@ -64,6 +67,7 @@ struct StringLabel: View {
     fileprivate func DragLayerView()-> some View {
         //Drag layer
         Rectangle()
+            
             .fill( Color.yellow.opacity(0.1))
             .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y)
@@ -82,7 +86,8 @@ struct StringLabel: View {
                 //.IsHidden(condition: stringObjectVM.stringObjectStatusDict[id] == 0)
                 
                 //Text content
-                TextLayerView().IsHidden(condition: !showFakeString)
+                TextLayerView()
+//                    .IsHidden(condition: !showFakeString)
                 
             }.IsHidden(condition: stringObject.status != StringObjectStatus.ignored)
             

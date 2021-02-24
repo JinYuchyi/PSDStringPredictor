@@ -22,6 +22,11 @@ struct StringObjectForStringProperty{
     var posY: String = ""
     var fontSize: String = ""
     var tracking: String = ""
+    var fontName: String = ""
+    var color: CGColor = CGColor.black
+    var stringRect: CGRect = CGRect.init()
+    var alignment: StringAlignment = .left
+    
 }
 
 
@@ -252,11 +257,7 @@ class PsdsVM: ObservableObject{
             }
         }
         
-//        for ind in breakIndexList {
-//            //break
-//            //TODO: Break the gap!
-//
-//        }
+ 
     }
     
     func CreateAllStringObjects(rawImg: CIImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
@@ -339,7 +340,9 @@ class PsdsVM: ObservableObject{
     }
     
     func commitTempStringObject(){
-        guard let obj = (psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: selectedStrIDList.last!)) else {return }
+        guard var obj = (psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: selectedStrIDList.last!)) else {return }
+//        let new  = FontUtils.GetStringBound(str: obj.content, fontName: obj.FontName, fontSize: obj.fontSize)
+//        obj.stringRect = CGRect.init(x: new.minX, y: obj.stringRect.minY, width: new.width, height: new.height)
         psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
         
     }
@@ -361,6 +364,8 @@ class PsdsVM: ObservableObject{
             psdModel.SetPosForString(psdId: selectedPsdId, objId: id, valueX: tmpObjectForStringProperty.posX.toCGFloat(), valueY: tmpObjectForStringProperty.posY.toCGFloat(), isOnlyX: false, isOnlyY: true)
         }
     }
+    
+    
     
     
     //MARK: Intents
