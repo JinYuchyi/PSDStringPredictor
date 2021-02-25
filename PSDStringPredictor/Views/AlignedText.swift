@@ -34,17 +34,15 @@ struct AlignedText: View {
         if alignment == StringAlignment.left {
                 ZStack(alignment: .topLeading){
                     Rectangle().frame(width: stringRect.width, height: 20)
+//                        .padding()
 
                     Text( content)
                         .foregroundColor( isHighLight == true ? Color.red: color.ToColor() )
                         .font(.custom(fontName, size: fontSize))
-                        
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .position(x: stringRect.width / 2  , y: stringRect.height/2)
                 .frame(width: stringRect.width, height: stringRect.height)
-
-            
 
         }else if  alignment == StringAlignment.right  {
 
@@ -53,12 +51,7 @@ struct AlignedText: View {
 
                     Text( content)
                         .foregroundColor( color.ToColor())
-                  
                         .font(.custom( fontName, size: fontSize))
-
-                    
-
-                        
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .position(x:  stringRect.width / 2  , y: stringRect.height / 2)
@@ -73,11 +66,7 @@ struct AlignedText: View {
 
                     Text( content)
                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                  
                         .font(.custom(fontName, size: fontSize))
-                    
-
-                        
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .position(x: stringRect.width / 2   , y:  stringRect.height / 2)

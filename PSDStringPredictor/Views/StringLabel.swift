@@ -22,8 +22,9 @@ struct StringLabel: View {
     //@ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
     //@ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     //@State var width: CGFloat = 0
+    @ObservedObject var interactive: InteractiveViewModel
     @State var alignmentIconName = "alignLeft-round"
-    @Binding var showFakeString: Bool
+    @Binding var showFakeString: UUID
     @ObservedObject var psdsVM: PsdsVM
     
 
@@ -51,8 +52,13 @@ struct StringLabel: View {
 //            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
         
         //New aligned text
-        AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
-            .position(x: GetPosition().x, y: GetPosition().y  )
+        ZStack{
+            AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
+                .position(x: GetPosition().x, y: GetPosition().y  )
+            
+            AlignedText(fontSize: stringObject.fontSize + interactive.dragY, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
+                .position(x: GetPosition().x, y: GetPosition().y  ).IsHidden(condition: showFakeString == stringObject.id)
+        }
     }
     
     fileprivate func StringFrameLayerView()-> some View {

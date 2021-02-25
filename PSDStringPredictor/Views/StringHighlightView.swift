@@ -12,15 +12,16 @@ import SwiftUI
 let zeroRect = CGRect(x: -1000, y: -1000, width: 0, height: 0)
 
 struct StringHighlightView: View {
-    
+    @ObservedObject var interactive: InteractiveViewModel
     @ObservedObject var psdsVM: PsdsVM
-    @Binding var showFakeString: Bool  
-    @State var dragX: CGFloat = 0
-    @State var dragY: CGFloat = 0
+    @Binding var showFakeString: UUID
+//    @State var dragX: CGFloat = 0
+//    @State var dragY: CGFloat = 0
     
     var body: some View {
         ZStack{
-            fakeString
+            
+            
             ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
                 //if (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid) != nil) {
                 ZStack{
@@ -36,26 +37,26 @@ struct StringHighlightView: View {
                         .shadow(color: .green, radius: 5, x: 0, y: 0)
                         .gesture(DragGesture()
                                     .onChanged { gesture in
-                                        showFakeString = true
+                                        showFakeString = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.id ?? UUID.init()
                                         if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                            dragX = gesture.translation.width / 20 // DragX is temp value
+                                            interactive.dragX = gesture.translation.width / 20 // DragX is temp value
                                             psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
                                             //                                psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
                                         } else {
-                                            dragY = gesture.translation.height / 40
+                                            interactive.dragY = gesture.translation.height / 40
                                             psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
                                             //                                psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
                                         }
                                     }
                                     .onEnded({ gesture in
-                                        showFakeString = false
+                                        showFakeString = UUID.init()
                                         psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
                                         psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
                                         
                                         psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
                                         psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
-                                        dragX = 0
-                                        dragY = 0
+                                        interactive.dragX = 0
+                                        interactive.dragY = 0
                                     })
                         )
                     
@@ -79,10 +80,7 @@ struct StringHighlightView: View {
         //TODO: 
         AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),  fontName: psdsVM.tmpObjectForStringProperty.fontName, color: psdsVM.tmpObjectForStringProperty.color, stringRect: psdsVM.tmpObjectForStringProperty.stringRect, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: psdsVM.tmpObjectForStringProperty.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()?.width ?? 0, pageHeight: psdsVM.GetSelectedPsd()?.height ?? 0)
             .font(.custom(fontName(), size: calcFontSize()))
-                    .position(
-                        x: -psdsVM.tmpObjectForStringProperty.stringRect.minX,
-                        y: -psdsVM.tmpObjectForStringProperty.stringRect.minY
-                    )
+                    
         ////                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
         ////                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
         //            )
@@ -113,11 +111,11 @@ struct StringHighlightView: View {
     }
     
     func calcFontSize() -> CGFloat {
-        return fontSize() - dragY
+        return fontSize() - interactive.dragY
     }
     
     func calcTracking() -> CGFloat {
-        return fontTracking() + dragX
+        return fontTracking() + interactive.dragX
     }
     
     

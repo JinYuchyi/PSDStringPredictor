@@ -12,7 +12,8 @@ class InteractiveViewModel: ObservableObject{
     @Published var selectStartLocation: CGPoint = CGPoint.init(x: -99999, y: -99999)
     @Published var selectEndLocation: CGPoint = CGPoint.init(x: -99999, y: -99999)
     @Published var selectionRect: CGRect = CGRect.init()
-    
+    @Published var dragX: CGFloat = 0
+    @Published var dragY: CGFloat = 0
     
     func CalcSelectionRect(_ p: CGPoint) -> CGRect{
         if selectStartLocation.x == -99999 {

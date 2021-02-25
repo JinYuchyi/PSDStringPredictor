@@ -36,7 +36,7 @@ struct ContentView: View  {
     @State private var showDebugOverlay = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
-    @State var showFakeString: Bool = false
+    @State var showFakeString: UUID = UUID.init()
     
     fileprivate func LeftViewGroup() -> some View {
         
@@ -63,13 +63,13 @@ struct ContentView: View  {
                     
                     Group{
                         
-                        LabelsOnImage(psdsVM: psdsVM, showFakeString: $showFakeString)
+                        LabelsOnImage(psdsVM: psdsVM, interactive: interactive, showFakeString: $showFakeString)
                             .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
                         
                         CharacterFrameView(psdVM: psdsVM)
                             .IsHidden(condition: showPatchLayer)
                         
-                        StringHighlightView(psdsVM: psdsVM, showFakeString: $showFakeString)
+                        StringHighlightView(interactive: interactive, psdsVM: psdsVM, showFakeString: $showFakeString)
                             .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
                         
                     }
