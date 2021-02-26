@@ -54,12 +54,31 @@ struct StringLabel: View {
         //New aligned text
         ZStack{
 //            AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
-            AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, posX: stringObject.stringRect.minX, posY: stringObject.stringRect.minY, width: stringObject.stringRect.width , height: stringObject.stringRect.height, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
-                .position(x: stringObject.stringRect.midX, y: psdsVM.GetSelectedPsd()!.height - stringObject.stringRect.midY  ).IsHidden(condition: showFakeString != stringObject.id)
+            if psdsVM.tmpObjectForStringProperty.alignment == .center{
+                AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, posX: stringObject.stringRect.minX, posY: stringObject.stringRect.minY, width: stringObject.stringRect.width , height: stringObject.stringRect.height, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                    .position(x: stringObject.stringRect.midX, y: psdsVM.GetSelectedPsd()!.height - stringObject.stringRect.midY  ).IsHidden(condition: showFakeString != stringObject.id)
+            }else if psdsVM.tmpObjectForStringProperty.alignment == .left{
+                AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, posX: stringObject.stringRect.minX, posY: stringObject.stringRect.minY, width: stringObject.stringRect.width , height: stringObject.stringRect.height, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                    .position(x: stringObject.stringRect.midX, y: psdsVM.GetSelectedPsd()!.height - stringObject.stringRect.midY  ).IsHidden(condition: showFakeString != stringObject.id)
+            }else {
+                AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, posX: stringObject.stringRect.minX, posY: stringObject.stringRect.minY, width: stringObject.stringRect.width , height: stringObject.stringRect.height, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                    .position(x: stringObject.stringRect.midX, y: psdsVM.GetSelectedPsd()!.height - stringObject.stringRect.midY  ).IsHidden(condition: showFakeString != stringObject.id)
+            }
+
+            
             //Fake String
-//            AlignedText(fontSize: stringObject.fontSize - interactive.dragY, fontName: stringObject.FontName, color: stringObject.color, alignment: stringObject.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
-            AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), fontName: stringObject.FontName, color: stringObject.color, posX: psdsVM.tmpObjectForStringProperty.posX.toCGFloat(), posY: psdsVM.tmpObjectForStringProperty.posY.toCGFloat(), width: psdsVM.tmpObjectForStringProperty.width, height: psdsVM.tmpObjectForStringProperty.height, alignment: stringObject.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
-                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2, y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2 ).IsHidden(condition: showFakeString == stringObject.id)
+            //For the position will be different depends on the alignment
+            if psdsVM.tmpObjectForStringProperty.alignment == .center{
+                AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), fontName: stringObject.FontName, color: stringObject.color, posX: psdsVM.tmpObjectForStringProperty.posX.toCGFloat(), posY: psdsVM.tmpObjectForStringProperty.posY.toCGFloat(), width: psdsVM.tmpObjectForStringProperty.width, height: psdsVM.tmpObjectForStringProperty.height, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                    .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + stringObject.stringRect.width / 2, y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2 ).IsHidden(condition: showFakeString == stringObject.id)
+            }else if psdsVM.tmpObjectForStringProperty.alignment == .left {
+                AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), fontName: stringObject.FontName, color: stringObject.color, posX: psdsVM.tmpObjectForStringProperty.posX.toCGFloat(), posY: psdsVM.tmpObjectForStringProperty.posY.toCGFloat(), width: psdsVM.tmpObjectForStringProperty.width, height: psdsVM.tmpObjectForStringProperty.height, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                    .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2, y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2 ).IsHidden(condition: showFakeString == stringObject.id)
+            }else if psdsVM.tmpObjectForStringProperty.alignment == .right {
+                AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), fontName: stringObject.FontName, color: stringObject.color, posX: psdsVM.tmpObjectForStringProperty.posX.toCGFloat(), posY: psdsVM.tmpObjectForStringProperty.posY.toCGFloat(), width: psdsVM.tmpObjectForStringProperty.width, height: psdsVM.tmpObjectForStringProperty.height, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                    .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() - psdsVM.tmpObjectForStringProperty.width / 2 + stringObject.stringRect.width, y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2 ).IsHidden(condition: showFakeString == stringObject.id)
+            }
+
         }
     }
     

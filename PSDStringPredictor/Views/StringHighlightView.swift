@@ -42,6 +42,7 @@ struct StringHighlightView: View {
                                             psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
                                             psdsVM.tmpObjectForStringProperty.width = tmp.width
                                             psdsVM.tmpObjectForStringProperty.height = tmp.height
+                                            
 //                                            interactive.stringWidth = tmp.width
 //                                            psdsVM.commitTempStringObject()
 
@@ -55,6 +56,8 @@ struct StringHighlightView: View {
 //                                            interactive.stringWidth = tmp.width
                                             psdsVM.tmpObjectForStringProperty.width = tmp.width
                                             psdsVM.tmpObjectForStringProperty.height = tmp.height
+                                            
+                                            
 //                                            psdsVM.commitTempStringObject()
 //                                            print("Rect: \(psdsVM.tmpObjectForStringProperty.minx)")
 
@@ -68,6 +71,13 @@ struct StringHighlightView: View {
 //
 //                                        psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
 //                                        psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
+                                        
+                                        if psdsVM.tmpObjectForStringProperty.alignment == .center {
+                                            psdsVM.tmpObjectForStringProperty.posX = ( psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.stringRect.width - psdsVM.tmpObjectForStringProperty.width ) / 2 ).toString()
+                                        }else if psdsVM.tmpObjectForStringProperty.alignment == .right {
+                                            psdsVM.tmpObjectForStringProperty.posX = ( psdsVM.tmpObjectForStringProperty.posX.toCGFloat() - ( psdsVM.tmpObjectForStringProperty.width - psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.stringRect.width ) ).toString()
+                                        }
+                                        
                                         psdsVM.commitTempStringObject()
                                         
                                         interactive.dragX = 0

@@ -716,10 +716,16 @@ class PsdsVM: ObservableObject{
         psdModel.SetAlignment(psdId: selectedPsdId, objId: _id, value: align.Next())
         switch psdModel.GetPSDObject(psdId: selectedPsdId)!.GetStringObjectFromOnePsd(objId: _id)!.alignment {
         case .left:
+            tmpObjectForStringProperty.alignment = .left
+            commitTempStringObject()
             return "alignLeft-round"
         case .center:
+            tmpObjectForStringProperty.alignment = .center
+            commitTempStringObject()
             return "alignCenter-round"
         case .right:
+            tmpObjectForStringProperty.alignment = .right
+            commitTempStringObject()
             return "alignRight-round"
         }
     }

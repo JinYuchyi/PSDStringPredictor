@@ -32,32 +32,37 @@ struct AlignedText: View {
     var pageWidth: CGFloat
     var pageHeight: CGFloat
     
+    //constant
+    let bgWidth = 200
     
     
     var body: some View {
         if alignment == StringAlignment.left {
-                ZStack(alignment: .topLeading){
-                    Rectangle().frame(width: width, height: 20)
+                ZStack(alignment: .leading){
+                    Rectangle().frame(width: width , height: height).hidden()
 //                        .padding()
 
                     Text( content)
-                        .foregroundColor( isHighLight == true ? Color.red: color.ToColor() )
+                        .foregroundColor( color.ToColor() )
                         .font(.custom(fontName, size: fontSize))
                         .fixedSize(horizontal: true, vertical: true)
+                        .blendMode(  .normal)
                     
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .position(x: width / 2  , y: height / 2)
-                .frame(width: width, height: height)
+                .frame(width: width , height: height)
 
         }else if  alignment == StringAlignment.right  {
 
-                ZStack(alignment: .topTrailing){
-                    Rectangle().frame(width: width, height: 20)
+                ZStack(alignment: .trailing){
+                    Rectangle().frame(width: width , height: height).hidden()
 
                     Text( content)
                         .foregroundColor( color.ToColor())
                         .font(.custom( fontName, size: fontSize))
+                        .fixedSize(horizontal: true, vertical: true)
+                        .blendMode(  .normal)
                 }
                 .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .position(x: width / 2, y: height / 2)
@@ -66,16 +71,17 @@ struct AlignedText: View {
 
             
         }else {
-
                 ZStack(alignment: .center){
-                    Rectangle().frame(width: width, height: 20).hidden()
+                    Rectangle().frame(width: width , height: height).hidden()
 
                     Text( content)
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                        .foregroundColor( color.ToColor())
                         .font(.custom(fontName, size: fontSize))
+                        .fixedSize(horizontal: true, vertical: true)
+                        .blendMode(  .normal)
                 }
-                .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                .position(x: width / 2   , y: height / 2)
+//                .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+                .position(x: width / 2, y: height / 2)
                 .frame(width: width, height: height)
 //                .frame(width: pageWidth, height: pageHeight)
 
@@ -86,6 +92,6 @@ struct AlignedText: View {
 struct AlignedText_Previews: PreviewProvider {
     static var previews: some View {
 //        AlignedText(fontSize: 100, fontName: "SF Pro Text Regular", color: CGColor.white, stringRect: CGRect.init(x: 100, y: 300, width: 500, height: 150), alignment: .right, content: "aswww", isHighLight: true, pageWidth: 500, pageHeight: 600)
-        AlignedText(fontSize: 100, fontName: "SF Pro Text Regular", color: CGColor.white, posX: 100, posY: 300, width: 400, height: 150, alignment: .right, content: "abc", isHighLight: true, pageWidth: 1000, pageHeight: 1000)
+        AlignedText(fontSize: 60, fontName: "SF Pro Text Regular", color: CGColor.white, posX: 100, posY: 300, width: 400, height: 150, alignment: .center, content: "abc", isHighLight: true, pageWidth: 1000, pageHeight: 1000)
     }
 }
