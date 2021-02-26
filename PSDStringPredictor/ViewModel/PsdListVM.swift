@@ -948,12 +948,11 @@ class PsdsVM: ObservableObject{
                 }
             }
         }else if orientation == "vertical-bottom" {
-            let posYList = objList.map({$0.stringRect.minY})
-            print(posYList)
-            let minY = posYList.min()
-            if minY != nil {
+            let posYList = objList.map({$0.stringRect.maxY})
+            let maxY = posYList.max()
+            if maxY != nil {
                 for obj in objList {
-                    let rect: CGRect = CGRect.init(x: obj.stringRect.origin.x, y: minY!, width: obj.stringRect.width, height: obj.stringRect.height)
+                    let rect: CGRect = CGRect.init(x: obj.stringRect.origin.x, y: maxY! - obj.stringRect.width, width: obj.stringRect.width, height: obj.stringRect.height)
                     psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
 //                    psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
                 }
@@ -965,7 +964,7 @@ class PsdsVM: ObservableObject{
             let maxY = posYList.max() ?? posYList[0]
             guard let midY: CGFloat? = ((minY + maxY) / 2) else {return}
             for obj in objList {
-                let rect: CGRect = CGRect.init(x: obj.stringRect.minX, y: minY, width: obj.stringRect.width, height: obj.stringRect.height)
+                let rect: CGRect = CGRect.init(x: obj.stringRect.minX, y: midY!, width: obj.stringRect.width, height: obj.stringRect.height)
                 psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
 //                psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
                 
