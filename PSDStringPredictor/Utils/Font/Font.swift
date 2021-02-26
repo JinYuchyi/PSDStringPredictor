@@ -84,6 +84,7 @@ class FontUtils {
     
     static func GetStringBound(str: String, fontName: String, fontSize: CGFloat) -> CGRect{
         //So far the size is correct, but the Y position is not
+        //TODO: Calc tracking related bound
         var hasHat: Bool = false
         var hasLongTail: Bool = false
         for c in str {

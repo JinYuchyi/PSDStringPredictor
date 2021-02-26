@@ -12,7 +12,7 @@ struct StringLabel: View {
     //Constant
     let smallBtnSize: CGFloat = 20
     var stringObject: StringObject
-//    var id: UUID
+    //    var id: UUID
     //var charFrameList: [CharFrame]
     //@State var status: Int
     // @State var ignored: Bool
@@ -27,9 +27,9 @@ struct StringLabel: View {
     @Binding var showFakeString: UUID
     @ObservedObject var psdsVM: PsdsVM
     
-
     
-
+    
+    
     
     func GetPosition() -> CGPoint{
         
@@ -44,20 +44,22 @@ struct StringLabel: View {
     
     func TextLayerView() -> some View {
         
-//        Text(stringObject.content ?? " " )
-//            .tracking(stringObject.tracking)
-//            .position(x: GetPosition().x , y: GetPosition().y)
-//            .foregroundColor(stringObject.color.ToColor() ?? Color.white)
-//            .font(.custom(stringObject.FontName, size: stringObject.fontSize))
-//            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+        //        Text(stringObject.content ?? " " )
+        //            .tracking(stringObject.tracking)
+        //            .position(x: GetPosition().x , y: GetPosition().y)
+        //            .foregroundColor(stringObject.color.ToColor() ?? Color.white)
+        //            .font(.custom(stringObject.FontName, size: stringObject.fontSize))
+        //            .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
         
         //New aligned text
         ZStack{
-            AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
-                .position(x: GetPosition().x, y: GetPosition().y  )
-            
-            AlignedText(fontSize: stringObject.fontSize + interactive.dragY, fontName: stringObject.FontName, color: stringObject.color, stringRect: stringObject.stringRect, alignment: stringObject.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
-                .position(x: GetPosition().x, y: GetPosition().y  ).IsHidden(condition: showFakeString == stringObject.id)
+//            AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
+            AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, posX: stringObject.stringRect.minX, posY: stringObject.stringRect.minY, width: stringObject.stringRect.width , height: stringObject.stringRect.height, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                .position(x: stringObject.stringRect.midX, y: psdsVM.GetSelectedPsd()!.height - stringObject.stringRect.midY  ).IsHidden(condition: showFakeString != stringObject.id)
+            //Fake String
+//            AlignedText(fontSize: stringObject.fontSize - interactive.dragY, fontName: stringObject.FontName, color: stringObject.color, alignment: stringObject.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
+            AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), fontName: stringObject.FontName, color: stringObject.color, posX: psdsVM.tmpObjectForStringProperty.posX.toCGFloat(), posY: psdsVM.tmpObjectForStringProperty.posY.toCGFloat(), width: psdsVM.tmpObjectForStringProperty.width, height: psdsVM.tmpObjectForStringProperty.height, alignment: stringObject.alignment, content: stringObject.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()!.width, pageHeight: psdsVM.GetSelectedPsd()!.height)
+                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2, y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2 ).IsHidden(condition: showFakeString == stringObject.id)
         }
     }
     
@@ -65,7 +67,7 @@ struct StringLabel: View {
         //String debug frame
         Rectangle()
             .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1)
-
+            
             .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
     }
@@ -94,7 +96,7 @@ struct StringLabel: View {
                 //Text content
                 TextLayerView()
                 
-//                    .IsHidden(condition: !showFakeString)
+                //                    .IsHidden(condition: !showFakeString)
                 
             }.IsHidden(condition: stringObject.status != StringObjectStatus.ignored)
             

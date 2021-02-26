@@ -83,6 +83,9 @@ extension StringObject{
     }
     
     func toObjectForStringProperty() -> StringObjectForStringProperty {
-        StringObjectForStringProperty.init(content: self.content, posX: (self.stringRect.minX.toString()), posY: (self.stringRect.minY.toString()), fontSize: (self.fontSize.toString()), tracking: String(self.tracking.toString()))
+//        StringObjectForStringProperty.init(content: self.content, posX: (self.stringRect.minX.toString()), posY: (self.stringRect.minY.toString()), fontSize: (self.fontSize.toString()), tracking: String(self.tracking.toString()))
+//        StringObjectForStringProperty.init(content: self.content, fontSize: self.fontSize.toString(), tracking: self.tracking.toString(), fontName: self.FontName, color: self.color, stringRect: self.stringRect, alignment: self.alignment)
+        StringObjectForStringProperty.init(content: self.content, fontSize: self.fontSize.toString(), tracking: self.tracking.toString(), fontName: self.FontName, color: self.color, stringRect: self.stringRect, alignment: self.alignment, posX: self.stringRect.minX, posY: self.stringRect.minY, width: self.stringRect.width, height: self.stringRect.height)
+
     }
 }

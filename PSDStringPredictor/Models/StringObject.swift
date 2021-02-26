@@ -157,8 +157,6 @@ struct StringObject : Identifiable,  Hashable{
         self.stringRect = CGRect.init()
         self.content = String(charArray)
         self.stringRect = mergeRect(rects: charRacts)
-
-
     }
     
     init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [CIImage], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
@@ -249,6 +247,8 @@ struct StringObject : Identifiable,  Hashable{
         //return CGFloat(item.fontTrackingPoints)
         return (CGFloat(item.fontTrackingPoints), item.fontTracking)
     }
+    
+
     
 
     mutating func CalcColor() -> CGColor {

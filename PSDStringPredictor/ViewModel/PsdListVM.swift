@@ -17,15 +17,45 @@ struct charRectObject: Codable{
 }
 
 struct StringObjectForStringProperty{
-    var content: String = ""
-    var posX: String = ""
-    var posY: String = ""
-    var fontSize: String = ""
-    var tracking: String = ""
-    var fontName: String = ""
-    var color: CGColor = CGColor.black
-    var stringRect: CGRect = CGRect.init()
-    var alignment: StringAlignment = .left
+    var content: String
+    var posX: String
+    var posY: String
+    var fontSize: String
+    var tracking: String
+    var fontName: String
+    var color: CGColor
+//    var stringRect: CGRect
+    var alignment: StringAlignment
+    var width: CGFloat
+    var height: CGFloat
+    
+    init() {
+        self.content = ""
+        self.fontSize = ""
+        self.tracking = ""
+        self.fontName = ""
+        self.color = CGColor.white
+//        self.stringRect = CGRect.init()
+        self.alignment = .left
+        self.posX = ""
+        self.posY = ""
+        self.width = 0
+        self.height = 0
+    }
+    
+    init(content: String, fontSize: String, tracking: String, fontName: String, color: CGColor, stringRect: CGRect, alignment: StringAlignment, posX: CGFloat, posY: CGFloat, width: CGFloat, height: CGFloat) {
+        self.content = content
+        self.fontSize = fontSize
+        self.tracking = tracking
+        self.fontName = fontName
+        self.color = color
+//        self.stringRect = stringRect
+        self.alignment = alignment
+        self.posX = posX.toString()
+        self.posY = posY.toString()
+        self.width = width
+        self.height = height
+    }
     
 }
 
@@ -362,6 +392,14 @@ class PsdsVM: ObservableObject{
     func commitPosY() {
         for id in selectedStrIDList {
             psdModel.SetPosForString(psdId: selectedPsdId, objId: id, valueX: tmpObjectForStringProperty.posX.toCGFloat(), valueY: tmpObjectForStringProperty.posY.toCGFloat(), isOnlyX: false, isOnlyY: true)
+        }
+    }
+    
+    func commitRect(){
+//        let newRect = CGRect.init(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: tmpObjectForStringProperty.stringRect, height: <#T##CGFloat#>)
+        for id in selectedStrIDList {
+            
+            psdModel.SetRect(psdId: selectedPsdId, objId: id, value: CGRect.init(x: tmpObjectForStringProperty.posX.toCGFloat(), y: tmpObjectForStringProperty.posY.toCGFloat(), width: tmpObjectForStringProperty.width, height: tmpObjectForStringProperty.height))
         }
     }
     

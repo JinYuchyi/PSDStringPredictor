@@ -14,6 +14,7 @@ class InteractiveViewModel: ObservableObject{
     @Published var selectionRect: CGRect = CGRect.init()
     @Published var dragX: CGFloat = 0
     @Published var dragY: CGFloat = 0
+//    @Published var stringWidth: CGFloat = 0
     
     func CalcSelectionRect(_ p: CGPoint) -> CGRect{
         if selectStartLocation.x == -99999 {
@@ -36,6 +37,8 @@ class InteractiveViewModel: ObservableObject{
         let result = CGRect.init(x: _x, y: _y, width: _w, height: _h)
         return result
     }
+    
+ 
     
     
 }

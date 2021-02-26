@@ -23,10 +23,7 @@ struct StringHighlightView: View {
             
             
             ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
-                //if (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid) != nil) {
                 ZStack{
-                    //                fakeString
-                    //                    .IsHidden(condition: showFakeString)
                     Rectangle()
                         .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                         .position(
@@ -40,21 +37,39 @@ struct StringHighlightView: View {
                                         showFakeString = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.id ?? UUID.init()
                                         if abs(gesture.translation.width / gesture.translation.height) > 1 {
                                             interactive.dragX = gesture.translation.width / 20 // DragX is temp value
+                                            
+                                            let tmp = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                             psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
+                                            psdsVM.tmpObjectForStringProperty.width = tmp.width
+                                            psdsVM.tmpObjectForStringProperty.height = tmp.height
+//                                            interactive.stringWidth = tmp.width
+//                                            psdsVM.commitTempStringObject()
+
                                             //                                psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
                                         } else {
                                             interactive.dragY = gesture.translation.height / 40
-                                            psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
-                                            //                                psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
+                                            //TODO: Incorrect
+                                            psdsVM.tmpObjectForStringProperty.fontSize = (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.fontSize - interactive.dragY).toString()
+                                            let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+//                                            let originRect = psdsVM.tmpObjectForStringProperty.stringRect
+//                                            interactive.stringWidth = tmp.width
+                                            psdsVM.tmpObjectForStringProperty.width = tmp.width
+                                            psdsVM.tmpObjectForStringProperty.height = tmp.height
+//                                            psdsVM.commitTempStringObject()
+//                                            print("Rect: \(psdsVM.tmpObjectForStringProperty.minx)")
+
                                         }
                                     }
                                     .onEnded({ gesture in
+
                                         showFakeString = UUID.init()
-                                        psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
-                                        psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
+//                                        psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
+//                                        psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
+//
+//                                        psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
+//                                        psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
+                                        psdsVM.commitTempStringObject()
                                         
-                                        psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
-                                        psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
                                         interactive.dragX = 0
                                         interactive.dragY = 0
                                     })
@@ -78,9 +93,21 @@ struct StringHighlightView: View {
     
     var fakeString: some View {
         //TODO: 
-        AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),  fontName: psdsVM.tmpObjectForStringProperty.fontName, color: psdsVM.tmpObjectForStringProperty.color, stringRect: psdsVM.tmpObjectForStringProperty.stringRect, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: psdsVM.tmpObjectForStringProperty.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()?.width ?? 0, pageHeight: psdsVM.GetSelectedPsd()?.height ?? 0)
-            .font(.custom(fontName(), size: calcFontSize()))
-                    
+//        AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),  fontName: psdsVM.tmpObjectForStringProperty.fontName, color: psdsVM.tmpObjectForStringProperty.color, stringRect: psdsVM.tmpObjectForStringProperty.stringRect, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: psdsVM.tmpObjectForStringProperty.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()?.width ?? 0, pageHeight: psdsVM.GetSelectedPsd()?.height ?? 0)
+//            .font(.custom(fontName(), size: calcFontSize()))
+        
+        AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
+                    fontName: psdsVM.tmpObjectForStringProperty.fontName,
+                    color: psdsVM.tmpObjectForStringProperty.color,
+                    posX: psdsVM.tmpObjectForStringProperty.posX.toCGFloat(),
+                    posY: psdsVM.tmpObjectForStringProperty.posY.toCGFloat(),
+                    width: psdsVM.tmpObjectForStringProperty.width,
+                    height: psdsVM.tmpObjectForStringProperty.height,
+                    alignment: psdsVM.tmpObjectForStringProperty.alignment,
+                    content: psdsVM.tmpObjectForStringProperty.content,
+                    isHighLight: true,
+                    pageWidth: psdsVM.GetSelectedPsd()?.width ?? 0,
+                    pageHeight: psdsVM.GetSelectedPsd()?.height ?? 0)
         ////                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
         ////                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
         //            )

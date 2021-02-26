@@ -11,11 +11,16 @@ import Foundation
 extension StringObjectForStringProperty {
     func toStringObject(strObj: StringObject) -> StringObject{
         var tempObj = strObj
-        let tmpRect = CGRect.init(x: self.posX.toCGFloat(), y: self.posY.toCGFloat(), width: tempObj.stringRect.width, height: tempObj.stringRect.height)
+//        let tmpRect = CGRect.init(x: self.posX.toCGFloat(), y: self.posY.toCGFloat(), width: tempObj.stringRect.width, height: tempObj.stringRect.height)
+        let tmpRect = CGRect.init(x: self.posX.toCGFloat(), y: self.posY.toCGFloat(), width: self.width, height: self.height)
         tempObj.stringRect = tmpRect
         tempObj.content = self.content
         tempObj.tracking = self.tracking.toCGFloat()
         tempObj.fontSize = self.fontSize.toCGFloat()
+//        tempObj.alignment = self.alignment
+//        tempObj.color = self.color
+//        tempObj.FontName = self.fontName
+        
         return tempObj
     }
 }
