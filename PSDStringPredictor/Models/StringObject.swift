@@ -95,7 +95,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charColorModeList = [0]
         self.isPredictedList = [0]
         self.FontName = "SF Pro Text Regular"
-        self.alignment = .left
+        self.alignment = .center
         self.status = .normal
         self.colorMode = .light
     }
@@ -118,7 +118,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charColorModeList = [0]
         self.isPredictedList = [0]
         self.FontName = "SF Pro Text Regular"
-        self.alignment = .left
+        self.alignment = .center
         self.status = .normal
         self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()

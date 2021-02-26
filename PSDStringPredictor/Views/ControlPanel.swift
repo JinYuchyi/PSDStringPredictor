@@ -68,7 +68,7 @@ struct ControlPanel: View {
                 }
                 //                Text("Align Selection").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
                 HStack{
-                    Button(action: {}){
+                    Button(action: {psdsVM.alignSelection(orientation: "horizontal-left")}){
                         Image("HAlignLeft")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -76,13 +76,13 @@ struct ControlPanel: View {
                         //                                        Text("􀌀")
                         //                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     }
-                    Button(action: { }){
+                    Button(action: { psdsVM.alignSelection(orientation: "horizontal-center") }){
                         Image("HAlignCenter")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     }
-                    Button(action: { }){
+                    Button(action: { psdsVM.alignSelection(orientation: "horizontal-right") }){
                         Image("HAlignRight")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -90,7 +90,7 @@ struct ControlPanel: View {
                     }
                 
               
-                    Button(action: {}){
+                    Button(action: {psdsVM.alignSelection(orientation: "vertical-top") }){
                         Image("VAlignTop")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -98,13 +98,13 @@ struct ControlPanel: View {
 
                     }
                     
-                    Button(action: { }){
+                    Button(action: {psdsVM.alignSelection(orientation: "vertical-center") }){
                         Image("VAlignCenter")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     }
-                    Button(action: { }){
+                    Button(action: { psdsVM.alignSelection(orientation: "vertical-bott0m")}){
                         Image("VAlignBottom")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
