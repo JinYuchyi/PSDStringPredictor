@@ -38,9 +38,8 @@ struct AlignedText: View {
     
     var body: some View {
         if alignment == StringAlignment.left {
-                ZStack(alignment: .leading){
+                ZStack(alignment: .topLeading){
                     Rectangle().frame(width: width , height: height).hidden()
-//                        .padding()
 
                     Text( content)
                         .foregroundColor( color.ToColor() )
@@ -49,13 +48,13 @@ struct AlignedText: View {
                         .blendMode(  .normal)
                     
                 }
-                .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+//                .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .position(x: width / 2  , y: height / 2)
                 .frame(width: width , height: height)
 
         }else if  alignment == StringAlignment.right  {
 
-                ZStack(alignment: .trailing){
+                ZStack(alignment: .topTrailing){
                     Rectangle().frame(width: width , height: height).hidden()
 
                     Text( content)
@@ -64,14 +63,14 @@ struct AlignedText: View {
                         .fixedSize(horizontal: true, vertical: true)
                         .blendMode(  .normal)
                 }
-                .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+//                .border(Color.red, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .position(x: width / 2, y: height / 2)
                 .frame(width: width, height: height)
 //                .frame(width: pageWidth, height: pageHeight)
 
             
         }else {
-                ZStack(alignment: .center){
+            ZStack(alignment: .top){
                     Rectangle().frame(width: width , height: height).hidden()
 
                     Text( content)

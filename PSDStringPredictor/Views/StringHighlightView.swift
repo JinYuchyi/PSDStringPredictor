@@ -15,8 +15,6 @@ struct StringHighlightView: View {
     @ObservedObject var interactive: InteractiveViewModel
     @ObservedObject var psdsVM: PsdsVM
     @Binding var showFakeString: UUID
-    //    @State var dragX: CGFloat = 0
-    //    @State var dragY: CGFloat = 0
     
     var body: some View {
         ZStack{
@@ -50,40 +48,29 @@ struct StringHighlightView: View {
                                 if abs(gesture.translation.width / gesture.translation.height) > 1 {
                                     interactive.dragX = gesture.translation.width / 20 // DragX is temp value
                                     
-                                    let tmp = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+                                    let tmp = FontUtils.GetStringBound(
+                                        str: psdsVM.tmpObjectForStringProperty.content,
+                                        fontName: psdsVM.tmpObjectForStringProperty.fontName,
+                                        fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()
+                                    )
                                     psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
                                     psdsVM.tmpObjectForStringProperty.width = tmp.width
-                                    psdsVM.tmpObjectForStringProperty.height = tmp.height
+                                    psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchFontOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                     
-                                    //                                            interactive.stringWidth = tmp.width
-                                    //                                            psdsVM.commitTempStringObject()
-                                    
-                                    //                                psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
                                 } else {
                                     interactive.dragY = gesture.translation.height / 40
-                                    //TODO: Incorrect
                                     psdsVM.tmpObjectForStringProperty.fontSize = (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.fontSize - interactive.dragY).toString()
                                     let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
-                                    //                                            let originRect = psdsVM.tmpObjectForStringProperty.stringRect
-                                    //                                            interactive.stringWidth = tmp.width
+                                   
                                     psdsVM.tmpObjectForStringProperty.width = tmp.width
-                                    psdsVM.tmpObjectForStringProperty.height = tmp.height
-                                    
-                                    
-                                    //                                            psdsVM.commitTempStringObject()
-                                    //                                            print("Rect: \(psdsVM.tmpObjectForStringProperty.minx)")
+                                    psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchFontOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                     
                                 }
                             }
                             .onEnded({ gesture in
                                 
                                 showFakeString = UUID.init()
-                                //                                        psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
-                                //                                        psdsVM.tmpObjectForStringProperty.fontSize = calcFontSize().toString()
-                                //
-                                //                                        psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: theid, value: calcFontSize())
-                                //                                        psdsVM.psdModel.SetTracking(psdId: psdsVM.selectedPsdId, objId: theid, value: calcTracking())
-                                
+                             
                                 if psdsVM.tmpObjectForStringProperty.alignment == .center {
                                     psdsVM.tmpObjectForStringProperty.posX = ( psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.stringRect.width - psdsVM.tmpObjectForStringProperty.width ) / 2 ).toString()
                                 }else if psdsVM.tmpObjectForStringProperty.alignment == .right {
