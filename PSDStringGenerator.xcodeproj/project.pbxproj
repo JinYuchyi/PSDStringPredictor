@@ -61,6 +61,7 @@
 		3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D13EA2502220D008F846B /* StringLabelList.swift */; };
 		3F50A7B2253DC61F00C10810 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7B1253DC61F00C10810 /* ViewExtension.swift */; };
 		3F50A7B4253DC64600C10810 /* ColorModeClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F50A7B3253DC64600C10810 /* ColorModeClassifier.swift */; };
+		3F56529525E9E192002A941E /* StringAlignment+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56529425E9E192002A941E /* StringAlignment+Extension.swift */; };
 		3F56E3E42505F0B400E64337 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E32505F0B400E64337 /* Data.swift */; };
 		3F56E3E72506042D00E64337 /* StringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F56E3E62506042D00E64337 /* StringObject.swift */; };
 		3F59C0E025D3CF8600F9CF52 /* gColor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F59C0AC25D3CF8500F9CF52 /* gColor.mlmodel */; };
@@ -273,6 +274,7 @@
 		3F4D13EA2502220D008F846B /* StringLabelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLabelList.swift; sourceTree = "<group>"; };
 		3F50A7B1253DC61F00C10810 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		3F50A7B3253DC64600C10810 /* ColorModeClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorModeClassifier.swift; sourceTree = "<group>"; };
+		3F56529425E9E192002A941E /* StringAlignment+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringAlignment+Extension.swift"; sourceTree = "<group>"; };
 		3F56E3E32505F0B400E64337 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3F56E3E62506042D00E64337 /* StringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObject.swift; sourceTree = "<group>"; };
 		3F59C0AC25D3CF8500F9CF52 /* gColor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = gColor.mlmodel; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 				3F0550CF25AEE0C7003AF60A /* MacColorModeExtension.swift */,
 				3F4CB5A8250A327E00E41082 /* NSImageExtension.swift */,
 				3F0550D225AEE2FD003AF60A /* IntExtension.swift */,
+				3F56529425E9E192002A941E /* StringAlignment+Extension.swift */,
 				3F308028251DFA3500550DEA /* NSColorExtension.swift */,
 				3F437E5825E4B81A00BC0D7D /* CFAttributedString+CoreText.swift */,
 				3F74C9D1251B82DB00DEB5EB /* CGImageExtension.swift */,
@@ -1202,6 +1205,7 @@
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,
 				3F0550D325AEE2FD003AF60A /* IntExtension.swift in Sources */,
 				3FA70D5025D95E7C00D68598 /* 9Color.mlmodel in Sources */,
+				3F56529525E9E192002A941E /* StringAlignment+Extension.swift in Sources */,
 				3FA70D4D25D95E7C00D68598 /* 8Color.swift in Sources */,
 				3FA4DCDB25D283A200E7041C /* charColorModeV2.swift in Sources */,
 				3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */,

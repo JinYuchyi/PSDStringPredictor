@@ -115,7 +115,7 @@ struct StringLabel: View {
                 //Button for alignment
                 
                 Button(action: {alignmentIconName = psdsVM.alignmentTapped(stringObject.id)}){
-                    CustomImage( name: alignmentIconName)
+                    CustomImage( name: stringObject.alignment.imageName())
                         .scaledToFit()
                 }
                 .buttonStyle(RoundButtonStyle())
@@ -131,7 +131,7 @@ struct StringLabel: View {
                 .buttonStyle(RoundButtonStyle())
                 .frame(width: smallBtnSize, height: smallBtnSize)
                 .padding(-4)
-                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true  || stringObject.status == StringObjectStatus.fixed)
+                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true || stringObject.status == StringObjectStatus.fixed)
                 
                 //Button for delete
                 Button(action: {psdsVM.IgnoreBtnTapped(stringObject.id)}){

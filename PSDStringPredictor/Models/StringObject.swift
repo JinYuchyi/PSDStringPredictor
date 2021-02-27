@@ -13,18 +13,7 @@ import Foundation
 
 
 
-enum StringAlignment:String, CaseIterable{
-    case left, center, right
-}
-extension StringAlignment{
-    func index () -> Int {
-        switch self {
-            case .left: return 1
-            case .center: return 2
-            case .right: return 3
-        }
-    }
-}
+
 
 let zeroStringObject = StringObject.init()
 
@@ -33,26 +22,8 @@ struct StringObject : Identifiable,  Hashable{
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+        
     }
-    
-//    static func == (lhs: StringObject, rhs: StringObject) -> Bool {
-//        return
-//            lhs.id == rhs.id &&
-//            lhs.content == rhs.content &&
-//            lhs.tracking == rhs.tracking &&
-////            lhs.trackingPS == rhs.trackingPS &&
-//            lhs.fontSize == rhs.fontSize &&
-//            lhs.fontWeight == rhs.fontWeight &&
-//            lhs.stringRect == rhs.stringRect &&
-//            //lhs.observation == rhs.observation &&
-//            lhs.color == rhs.color &&
-//            lhs.charArray == rhs.charArray &&
-//            lhs.charRects == rhs.charRects &&
-//            lhs.charSizeList == rhs.charSizeList &&
-//            lhs.charImageList == rhs.charImageList &&
-//            lhs.isPredictedList == rhs.isPredictedList
-//            //lhs.isForbidden == rhs.isForbidden
-//    }
     
     
     var id: UUID
@@ -80,7 +51,6 @@ struct StringObject : Identifiable,  Hashable{
     init(){
         self.id = UUID()
         self.content = "No content."
-        //position = []
         self.tracking = 0
         self.fontSize = 0
         self.colorMode = .light
@@ -127,7 +97,6 @@ struct StringObject : Identifiable,  Hashable{
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
         self.tracking = FetchTrackingFromDB(self.fontSize).0
-//
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
         
@@ -136,13 +105,11 @@ struct StringObject : Identifiable,  Hashable{
     init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
         
         self.id = id
-//        self.content = content
         self.tracking = tracking
         self.fontSize = fontSize
         self.colorMode = colorMode
         self.fontWeight = fontWeight
         self.charImageList = charImageList
-//        self.stringRect = stringRect
         self.color = color
         self.bgColor = bgColor
         self.charArray = charArray
@@ -252,7 +219,7 @@ struct StringObject : Identifiable,  Hashable{
     
 
     mutating func CalcColor() -> CGColor {
-        print("Calc color for \(content)")
+
         var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
 
         if charImageList.count > 0{
@@ -317,13 +284,6 @@ struct StringObject : Identifiable,  Hashable{
     
      func CalcFontFullName() -> String{
         var family = ""
-        //var style = ""
-//        if (fontWeight == .regular){
-//            style = "Regular"
-//        }
-//        else if fontWeight == .semibold{
-//            style = "Semibold"
-//        }
         
         if fontSize/3 < 20 {
             family = "Text"

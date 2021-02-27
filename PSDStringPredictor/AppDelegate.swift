@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //    let shared = AppDelegate()
 
     
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
         

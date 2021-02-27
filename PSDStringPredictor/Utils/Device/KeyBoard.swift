@@ -18,10 +18,25 @@ struct KeyEventHandling: NSViewRepresentable {
         @Published var pressedKeyCode = UInt16.init()
 
         override var acceptsFirstResponder: Bool { true }
-        override func keyDown(with event: NSEvent) {
-            super.keyDown(with: event)
-            print(">> key \(event.charactersIgnoringModifiers ?? "")")
-            pressedKeyCode = event.keyCode
+        override func keyDown(with theEvent: NSEvent) {
+            let s   =   theEvent.charactersIgnoringModifiers!
+               let s1  =   s.unicodeScalars
+               let s2  =   s1[s1.startIndex].value
+               let s3  =   Int(s2)
+            print(s3)
+               switch s3 {
+               case NSUpArrowFunctionKey:
+//                   wc1.navigateUp()
+                print("up")
+                   return
+               case NSDownArrowFunctionKey:
+//                   wc1.navigateDown()
+                print("down")
+                   return
+               default:
+                   break
+               }
+            super.keyDown(with: theEvent)
         }
         
         
@@ -49,5 +64,4 @@ struct KeyEventHandling: NSViewRepresentable {
 //
 //    }
 //}
-
 

@@ -13,7 +13,8 @@ import AppKit
 struct ContentView: View  {
     
     @State var selectedStringObject: StringObject = StringObject.init()
-    
+//    let keyEventHandle = KeyEventHandling()
+
     let data = DataStore()
     let font = FontUtils()
     @ObservedObject var imageViewModel: ImageProcess
@@ -23,11 +24,8 @@ struct ContentView: View  {
     @ObservedObject var settingVM : SettingViewModel
     @ObservedObject var fontTestVM = FontTestViewModel()
     @State var width: CGFloat = 0
-    //    @ObservedObject var imgVM: ImageVM
-    
-    //    let pixelProcess = PixelProcess()
+
     let imgUtil = ImageUtil()
-    let keyEventHandle = KeyEventHandling()
     
     @State var showImage = false
     @State var showPatchLayer = false
@@ -47,11 +45,11 @@ struct ContentView: View  {
             PsdOperatorView(psdsVM: psdsVM)
                 .padding()
         }
-        
     }
     
     var MidViewGroup: some View {
         ZStack{
+//            keyEventHandle
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 //                                    GeometryReader{geo in
                 

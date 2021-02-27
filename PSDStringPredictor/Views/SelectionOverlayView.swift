@@ -50,6 +50,7 @@ struct SelectionOverlayView: View {
                     .fill(Color.green.opacity(0.3))
                     .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
                     .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)
+                
             }
             
             

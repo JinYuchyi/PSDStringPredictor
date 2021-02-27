@@ -916,6 +916,7 @@ class PsdsVM: ObservableObject{
         }
         
         if orientation == "horizontal-left" {
+            
             let posXList = objList.map({$0.stringRect.minX})
             let minX = posXList.min()
             if minX != nil {
