@@ -20,7 +20,7 @@ struct StringObjectPropertyView: View {
     @State var posY: String = "0"
     
     //Constant
-    var contentWidth: CGFloat = 200
+    var contentWidth: CGFloat = NSScreen.main!.frame.width * 0.15 - 60
     var titleWidth: CGFloat = 60
     
     @ObservedObject var psdsVM: PsdsVM

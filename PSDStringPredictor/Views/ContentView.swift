@@ -36,6 +36,8 @@ struct ContentView: View  {
     @State private var clickPositionOnImage = CGSize.zero
     @State var showFakeString: UUID = UUID.init()
     
+    var screenSize: NSRect? = NSScreen.main?.frame
+    
     fileprivate func LeftViewGroup() -> some View {
         
         VStack(alignment: .center){
@@ -133,21 +135,23 @@ struct ContentView: View  {
     
     
     var body: some View {
-        
+//
+//        Rectangle()
+//            .frame(width: screenSize?.width, height: screenSize?.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
         HStack(alignment: .center){
             LeftViewGroup()
-                .frame(width: 300)
+                .frame(width: (screenSize!.width) * 0.14 )
             //.border(Color.red, width: 1)
             Divider()
-            
+
             MidViewGroup
-                .frame(width: 1200)
-            
+                .frame(width: (screenSize!.width) * 0.7)
+
             Divider()
             RightViewGroup()
-                .frame(width: 300)
-            
-            //.border(Color.red, width: 1)
+                .frame(width: (screenSize!.width) * 0.14)
+
         }
         .onAppear(perform: {
             //Load tables

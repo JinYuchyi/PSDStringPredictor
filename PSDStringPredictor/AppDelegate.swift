@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window = NSWindow(
             contentRect: screenSize ?? NSRect(x: 0, y: 0, width: 1700, height: 1000),
             //styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            styleMask: [.titled, .closable, .miniaturizable, .resizable],
+            styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView, .resizable],
             backing: .buffered, defer: false)
         window.center()
         

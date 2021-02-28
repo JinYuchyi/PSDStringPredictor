@@ -24,9 +24,9 @@ struct LabelsOnImage: View {
                 StringLabel( stringObject: obj, interactive: interactive, showFakeString: $showFakeString, psdsVM: psdsVM )
                     
                     .gesture(TapGesture().modifiers(.shift).onEnded ({ (loc) in
-                        print("shift_tap")
+//                        print("shift_tap")
                         if psdsVM.selectedStrIDList.contains(obj.id){
-                            print("Contain")
+//                            print("Contain")
                             psdsVM.selectedStrIDList.removeAll(where: {$0 == obj.id})
                             psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
                         }else {
@@ -36,7 +36,7 @@ struct LabelsOnImage: View {
                     })
                     )
                     .onTapGesture {
-                        print("tap")
+//                        print("tap")
                         psdsVM.selectedStrIDList.append(obj.id)
                         psdsVM.selectedStrIDList.removeAll(where: {$0 != obj.id})
                         psdsVM.tmpObjectForStringProperty = obj.toObjectForStringProperty()

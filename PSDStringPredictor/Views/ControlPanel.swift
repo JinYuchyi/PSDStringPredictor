@@ -31,11 +31,12 @@ struct ControlPanel: View {
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var regionProcessVM: RegionProcessVM
     
+    var width = NSScreen.main!.frame.width * 0.15
     //Constant
     
     var body: some View {
         //        padding(.top)
-        Text("Operation on Selected").foregroundColor(.gray).frame(width:260, alignment:.leading).foregroundColor(.gray)
+        Text("Operation on Selected").foregroundColor(.gray).frame(width: width, alignment:.leading).foregroundColor(.gray)
         Divider()
         
         GeometryReader{geo in
@@ -48,7 +49,9 @@ struct ControlPanel: View {
                 Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
                     Text("Combine To Paragraph")
                         .frame(width: geo.size.width*0.8, alignment: .center)
+                        
                 }
+                
                 
                 
                 
@@ -57,12 +60,15 @@ struct ControlPanel: View {
                     Button(action: {psdsVM.SetSelectionToFixed()}){
                         Text("Ready")
                             .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-                        
+                            .padding(0)
+
                     }
                     
                     Button(action: {psdsVM.SetSelectionToIgnored()}){
                         Text("Ignore")
                             .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
+                            .padding(0)
+
                     }
                     
                 }
