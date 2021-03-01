@@ -19,7 +19,7 @@ extension StringObjectForStringProperty {
         tempObj.fontSize = self.fontSize.toCGFloat()
 //        tempObj.alignment = self.alignment
 //        tempObj.color = self.color
-//        tempObj.FontName = self.fontName
+        tempObj.FontName = self.fontName
         
         return tempObj
     }

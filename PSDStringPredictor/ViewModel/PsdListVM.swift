@@ -770,18 +770,18 @@ class PsdsVM: ObservableObject{
             let startIndex = fName.startIndex
             let particialName = fName[startIndex..<endIndex!]
             let weightName = fName[endIndex!..<fName.endIndex]
-            
+            var str = ""
             if weightName == " Regular"  {
-                let str = particialName + " Semibold"
-                psdModel.SetFontName(psdId: psdId, objId: objId, value: String(str))
-                //GetLastSelectObject().FontName = particialName + " Semibold"
-                //print("\(stringObjectVM.StringObjectNameDict[id])")
+                 str = particialName + " Semibold"
+//                psdModel.SetFontName(psdId: psdId, objId: objId, value: String(str))
             }else {
-                let str = particialName + " Regular"
-                psdModel.SetFontName(psdId: psdId, objId: objId, value: String(str))
-                //                GetLastSelectObject().FontName = particialName + " Regular"
-                //print("\(stringObjectVM.StringObjectNameDict[id])")
+                 str = particialName + " Regular"
+//                psdModel.SetFontName(psdId: psdId, objId: objId, value: String(str))
             }
+            tmpObjectForStringProperty.fontName = str
+//            let tmpObj = GetStringObjectForOnePsd(psdId: selectedPsdId, objId: selectedStrIDList.last)!
+            tmpObjectForStringProperty.width = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: str, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat()).width
+            commitTempStringObject()
         }
         
     }

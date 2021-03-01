@@ -36,7 +36,7 @@ struct ContentView: View  {
     @State private var clickPositionOnImage = CGSize.zero
     @State var showFakeString: UUID = UUID.init()
     
-    var screenSize: NSRect? = NSScreen.main?.frame
+    var screenSize: NSRect? = NSScreen.main?.visibleFrame
     
     fileprivate func LeftViewGroup() -> some View {
         
@@ -139,18 +139,18 @@ struct ContentView: View  {
 //        Rectangle()
 //            .frame(width: screenSize?.width, height: screenSize?.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
 
-        HStack(alignment: .center){
+        HStack(alignment: .center, spacing: 0){
             LeftViewGroup()
-                .frame(width: (screenSize!.width) * 0.14 )
+                .frame(width: 300 )
             //.border(Color.red, width: 1)
             Divider()
 
             MidViewGroup
-                .frame(width: (screenSize!.width) * 0.7)
+                .frame(width: screenSize!.width - 600)
 
             Divider()
             RightViewGroup()
-                .frame(width: (screenSize!.width) * 0.14)
+                .frame(width: 300)
 
         }
         .onAppear(perform: {
