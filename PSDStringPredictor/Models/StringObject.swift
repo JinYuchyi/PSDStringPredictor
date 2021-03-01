@@ -272,15 +272,15 @@ struct StringObject : Identifiable,  Hashable{
         return result
     }
 
-    func CalcPosition() -> [CGFloat]{
-        if stringRect.isEmpty {
-            return [0,0]
-        }
-        else{
-            //return [stringRect.minX, stringRect.minY]
-            return [stringRect.minX, stringRect.minY]
-        }
-    }
+//    func CalcPosition() -> [CGFloat]{
+//        if stringRect.isEmpty {
+//            return [0,0]
+//        }
+//        else{
+//            //return [stringRect.minX, stringRect.minY]
+//            return [stringRect.minX, stringRect.minY]
+//        }
+//    }
     
      func CalcFontFullName() -> String{
         var family = ""

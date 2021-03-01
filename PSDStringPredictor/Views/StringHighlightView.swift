@@ -29,7 +29,7 @@ struct StringHighlightView: View {
                             y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 1) ?? zeroRect.minY)
                         )
                         .foregroundColor(Color.green.opacity(0.2))
-                        .shadow(color: .green, radius: 5, x: 0, y: 0)
+//                        .shadow(color: .green, radius: 5, x: 0, y: 0)
                         
                         .gesture(TapGesture().modifiers(.shift).onEnded ({ (loc) in
                             if psdsVM.selectedStrIDList.contains(psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.id){
@@ -45,14 +45,16 @@ struct StringHighlightView: View {
                         
                         .exclusively(before: DragGesture()
                                         .onChanged { gesture in
+                                            // Drag to change size and tracking
                                             showFakeString = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.id ?? UUID.init()
                                             if abs(gesture.translation.width / gesture.translation.height) > 1 {
                                                 interactive.dragX = gesture.translation.width / 20 // DragX is temp value
-                                                psdsVM.tmpObjectForStringProperty.tracking = (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.tracking - interactive.dragX).toString()
+                                                psdsVM.tmpObjectForStringProperty.tracking = (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.tracking + interactive.dragX).toString()
                                                 let tmp = FontUtils.GetStringBound(
                                                     str: psdsVM.tmpObjectForStringProperty.content,
                                                     fontName: psdsVM.tmpObjectForStringProperty.fontName,
-                                                    fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()
+                                                    fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
+                                                    tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
                                                 )
                                                 psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
                                                 psdsVM.tmpObjectForStringProperty.width = tmp.width
@@ -61,7 +63,7 @@ struct StringHighlightView: View {
                                             } else {
                                                 interactive.dragY = gesture.translation.height / 40
                                                 psdsVM.tmpObjectForStringProperty.fontSize = (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.fontSize - interactive.dragY).toString()
-                                                let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+                                                let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
                                                
                                                 psdsVM.tmpObjectForStringProperty.width = tmp.width
                                                 psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchFontOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())

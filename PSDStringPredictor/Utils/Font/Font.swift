@@ -82,7 +82,7 @@ class FontUtils {
         return descent
     }
     
-    static func GetStringBound(str: String, fontName: String, fontSize: CGFloat) -> CGRect{
+    static func GetStringBound(str: String, fontName: String, fontSize: CGFloat, tracking: CGFloat) -> CGRect{
         //So far the size is correct, but the Y position is not
         //TODO: Calc tracking related bound
         var hasHat: Bool = false
@@ -112,7 +112,8 @@ class FontUtils {
         let attrs:[NSAttributedString.Key: Any] = [
             
             kCTForegroundColorAttributeName as NSAttributedString.Key: CGColor.white,
-                kCTFontAttributeName as NSAttributedString.Key: font
+                kCTFontAttributeName as NSAttributedString.Key: font,
+            kCTTrackingAttributeName as NSAttributedString.Key: tracking
             ]
         let text = NSAttributedString(string: str, attributes: attrs)
 //        let framesetter = CTFramesetterCreateWithAttributedString(text as CFAttributedString)
