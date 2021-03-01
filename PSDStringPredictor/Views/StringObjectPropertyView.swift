@@ -20,7 +20,7 @@ struct StringObjectPropertyView: View {
     @State var posY: String = "0"
     
     //Constant
-    var contentWidth: CGFloat = NSScreen.main!.frame.width * 0.15 - 60
+    var contentWidth: CGFloat = 300 - 60
     var titleWidth: CGFloat = 60
     
     @ObservedObject var psdsVM: PsdsVM
@@ -134,7 +134,7 @@ struct StringObjectPropertyView: View {
     
     var body: some View {
         List{
-            Text("String Infomation").frame(width: 260, alignment: .leading).foregroundColor(.gray)
+            Text("String Infomation").frame(width: 300, alignment: .leading).foregroundColor(.gray)
             Divider()
                 VStack{
                     contentTextField
