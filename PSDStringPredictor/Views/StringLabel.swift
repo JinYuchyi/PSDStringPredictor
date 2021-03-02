@@ -27,11 +27,7 @@ struct StringLabel: View {
     @Binding var showFakeString: UUID
     @ObservedObject var psdsVM: PsdsVM
     
-    
-    
-    
-    
-    
+
     func GetPosition() -> CGPoint{
         
         if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: stringObject.id) != nil{
