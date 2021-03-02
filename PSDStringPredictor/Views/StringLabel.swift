@@ -43,15 +43,25 @@ struct StringLabel: View {
         }
     }
     
-    func TextLayerView() -> some View {
-        
-                Text(stringObject.content ?? " " )
-                    .tracking(stringObject.tracking)
-                    .position(x: GetPosition().x , y: GetPosition().y)
-                    .foregroundColor(stringObject.color.ToColor() ?? Color.white)
-                    .font(.custom(stringObject.FontName, size: stringObject.fontSize))
-                    .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-        
+    var TextLayerView: some View {
+        Group{
+            if showFakeString == stringObject.id{
+                    //Fake
+                    Text(stringObject.content ?? "" )
+                        .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
+                        .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2 , y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
+                        .foregroundColor(stringObject.color.ToColor() ?? Color.white)
+                        .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
+                        .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+            } else{
+                    Text(stringObject.content ?? "" )
+                        .tracking(stringObject.tracking)
+                        .position(x: GetPosition().x , y: GetPosition().y)
+                        .foregroundColor(stringObject.color.ToColor() ?? Color.white)
+                        .font(.custom(stringObject.FontName, size: stringObject.fontSize))
+                        .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+            }
+        }
         //New aligned text
 //        ZStack{
 //            AlignedText(fontSize: stringObject.fontSize, fontName: stringObject.FontName, color: stringObject.color, alignment: stringObject.alignment, content: stringObject.content, isHighLight: false, pageWidth: psdsVM.GetSelectedPsd()!.width,   pageHeight: psdsVM.GetSelectedPsd()!.height)
@@ -106,7 +116,7 @@ struct StringLabel: View {
                 //.IsHidden(condition: stringObjectVM.stringObjectStatusDict[id] == 0)
                 
                 //Text content
-                TextLayerView()
+                TextLayerView
                 
                 //                    .IsHidden(condition: !showFakeString)
                 

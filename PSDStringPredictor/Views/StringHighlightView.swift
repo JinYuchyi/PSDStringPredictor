@@ -71,15 +71,7 @@ struct StringHighlightView: View {
                                             }
                                         }
                                         .onEnded({ gesture in
-                                            
-//                                            showFakeString = UUID.init()
-//
-//                                            if psdsVM.tmpObjectForStringProperty.alignment == .center {
-//                                                psdsVM.tmpObjectForStringProperty.posX = ( psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.stringRect.width - psdsVM.tmpObjectForStringProperty.width ) / 2 ).toString()
-//                                            }else if psdsVM.tmpObjectForStringProperty.alignment == .right {
-//                                                psdsVM.tmpObjectForStringProperty.posX = ( psdsVM.tmpObjectForStringProperty.posX.toCGFloat() - ( psdsVM.tmpObjectForStringProperty.width - psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.stringRect.width ) ).toString()
-//                                            }
-                                            
+
                                             psdsVM.commitTempStringObject()
                                             
                                             interactive.dragX = 0

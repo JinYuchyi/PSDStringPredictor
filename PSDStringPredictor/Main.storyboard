@@ -663,6 +663,14 @@
                                                 <action selector="MoveRight:" target="Voe-Tx-rLC" id="Mxy-k7-HAH"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Delete" id="Ghu-k9-0JL" userLabel="Delete">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                            <connections>
+                                                <action selector="DeleteSelectedStringObjects:" target="Voe-Tx-rLC" id="bqw-v2-PkE"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Text" hidden="YES" enabled="NO" id="tBW-mi-unh">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Text" id="mzL-pf-kiO">
