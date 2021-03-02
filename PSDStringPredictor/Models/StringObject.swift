@@ -46,6 +46,8 @@ struct StringObject : Identifiable,  Hashable{
     var alignment: StringAlignment
     var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
+    
+    
 //    var colorPixel: CIImage = CIImage.init()
 
     init(){
