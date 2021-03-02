@@ -41,23 +41,30 @@ struct StringLabel: View {
     }
     
     var TextLayerView: some View {
-        Group{
-            if showFakeString == stringObject.id{
-                    //Fake
-                    Text(stringObject.content ?? "" )
-                        .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
-                        .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2 , y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
-                        .foregroundColor(stringObject.color.ToColor() ?? Color.white)
-                        .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
-                        .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-            } else{
-                    Text(stringObject.content ?? "" )
-                        .tracking(stringObject.tracking)
-                        .position(x: GetPosition().x , y: GetPosition().y)
-                        .foregroundColor(stringObject.color.ToColor() ?? Color.white)
-                        .font(.custom(stringObject.FontName, size: stringObject.fontSize))
-                        .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-            }
+        ZStack{
+            //Fake
+            Text(psdsVM.tmpObjectForStringProperty.content ?? "" )
+                .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
+                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2 , y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
+                .foregroundColor(psdsVM.tmpObjectForStringProperty.color.ToColor() ?? Color.white)
+                .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
+//                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+                .IsHidden(condition: stringObject.id == showFakeString)
+    
+            Text(stringObject.content ?? "" )
+                .tracking(stringObject.tracking)
+                .position(x: stringObject.stringRect.minX + stringObject.stringRect.width / 2 , y: psdsVM.GetSelectedPsd()!.height - stringObject.stringRect.minY - stringObject.stringRect.height / 2)
+                .foregroundColor(stringObject.color.ToColor() ?? Color.white)
+                .font(.custom(stringObject.FontName, size: stringObject.fontSize))
+                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+                .onTapGesture {
+                    //Tap to select stringobject
+                    psdsVM.selectedStrIDList.removeAll()
+                    psdsVM.selectedStrIDList.append(stringObject.id)
+                    psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
+                }
+                .IsHidden(condition: stringObject.id != showFakeString)
+    
         }
         //New aligned text
 //        ZStack{

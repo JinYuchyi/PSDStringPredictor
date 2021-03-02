@@ -38,8 +38,10 @@ struct SelectionOverlayView: View {
                             CalcSelectedObject()
                         }
                 )
+                
                 .gesture(
                     TapGesture()
+                        // Tap to clean up all selection
                         .onEnded { _ in
                             psdsVM.selectedStrIDList.removeAll()
                         }
