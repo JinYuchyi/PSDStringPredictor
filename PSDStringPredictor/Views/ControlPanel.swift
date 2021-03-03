@@ -31,12 +31,12 @@ struct ControlPanel: View {
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var regionProcessVM: RegionProcessVM
     
-    var width = NSScreen.main!.frame.width * 0.15
+    var panelWidth: CGFloat
     //Constant
     
     var body: some View {
         //        padding(.top)
-        Text("Operation on Selected").foregroundColor(.gray).frame(width: width, alignment:.leading).foregroundColor(.gray)
+        Text("Operation on Selected").foregroundColor(.gray).frame(width: panelWidth, alignment:.leading).foregroundColor(.gray)
         Divider()
         
         GeometryReader{geo in

@@ -36,14 +36,17 @@ struct ContentView: View  {
     @State private var clickPositionOnImage = CGSize.zero
     @State var showFakeString: UUID = UUID.init()
     
+    
     var screenSize: NSRect? = NSScreen.main?.visibleFrame
+    let leftPanelWidth: CGFloat = 300
+    let rightPanelWidth: CGFloat = 300
     
     fileprivate func LeftViewGroup() -> some View {
         
-        VStack(alignment: .center){
+        ZStack(alignment: .center){
             //PrograssView(psdsVM: psdsVM)
             psdThumbnailList(psdsVM: psdsVM, showPatchLayer: $showPatchLayer)
-                .frame(height: 1000, alignment: .center)
+                .frame(height: screenSize?.height, alignment: .center)
             PsdOperatorView(psdsVM: psdsVM)
                 .padding()
         }
@@ -116,12 +119,12 @@ struct ContentView: View  {
             
             Divider()
             
-            StringObjectPropertyView( psdsVM: psdsVM )
+            StringObjectPropertyView( panelWidth: rightPanelWidth, psdsVM: psdsVM  )
             
             Divider()
             
             Spacer()
-            ControlPanel(imageProcessVM: imageViewModel, settingsVM: settingVM, psdsVM: psdsVM, regionProcessVM: regionProcessVM)
+            ControlPanel(imageProcessVM: imageViewModel, settingsVM: settingVM, psdsVM: psdsVM, regionProcessVM: regionProcessVM, panelWidth: rightPanelWidth)
             
             
         }

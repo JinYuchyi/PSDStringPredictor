@@ -20,7 +20,8 @@ struct StringObjectPropertyView: View {
     @State var posY: String = "0"
     
     //Constant
-    var contentWidth: CGFloat = 300 - 60
+    var panelWidth: CGFloat
+//    var contentWidth: CGFloat = 300 - 60 - 15
     var titleWidth: CGFloat = 60
     
     @ObservedObject var psdsVM: PsdsVM
@@ -147,7 +148,7 @@ struct StringObjectPropertyView: View {
                         .foregroundColor(Color.gray)
                         .frame(width:titleWidth, alignment: .topLeading)
                     
-                    fontSizeFloatingTextField.frame(width:contentWidth )
+                    fontSizeFloatingTextField.frame(width: panelWidth - titleWidth )
                     
                 }
                 
@@ -172,14 +173,14 @@ struct StringObjectPropertyView: View {
                                 .frame( alignment: .topLeading)
                             Spacer()
                             Button(action: {psdsVM.ToggleFontName(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)}, label: {
-                                Text("Toggle")
-                            }).frame(width: 20, alignment: .trailing)
+                                Text("􀅈")
+                            }).frame(width: 15, alignment: .trailing)
                             
-                        }.frame(width:contentWidth )
+                        }.frame(width: panelWidth - titleWidth - 15 )
                         
                     }else {
                         Text("No font name." )
-                            .frame(width:contentWidth, alignment: .topLeading)
+                            .frame(width: panelWidth - titleWidth - 15, alignment: .topLeading)
                         //                                .foregroundColor(.gray)
                     }
                 }
@@ -213,8 +214,8 @@ struct StringObjectPropertyView: View {
                         //Toggle button
                         Spacer()
                         Button(action: {toggleColor()}, label: {
-                            Text("Toggle")
-                        }).frame(width: 20, alignment: .trailing)
+                            Text("􀅈")
+                        }).frame(width: 15, alignment: .trailing)
                     }
                     
                 }
@@ -227,7 +228,7 @@ struct StringObjectPropertyView: View {
                     HStack{
                         posXFloatingTextField
                         posYFloatingTextField
-                    }.frame(width: contentWidth , alignment: .topLeading)
+                    }.frame(width: panelWidth - titleWidth  , alignment: .topLeading)
                     
                     
                 }

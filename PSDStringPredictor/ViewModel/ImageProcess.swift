@@ -327,7 +327,7 @@ func LoadNSImage(imageUrlPath: String) -> NSImage {
     //
     //    }
     let ci = CIImage.init(contentsOf: url)
-    var newImg = NSImage(contentsOf: url)!
+//    var newImg = NSImage(contentsOf: url)!
     //    let scale = ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height / newImg.size.height
     //    let size: NSSize = NSSize(width: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.width, height: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height)
     //    newImg.lockFocus()
@@ -350,7 +350,9 @@ func LoadNSImage(imageUrlPath: String) -> NSImage {
     //        ctx?.flushGraphics()
     //        NSGraphicsContext.restoreGraphicsState()
     //    print("size: \(newImg.size)")
-    newImg = ci!.ToNSImage()
+    let newImg = ci!.ToNSImage()
+//    print("size: \(ci?.extent)")
+//    print("nssize: \(newImg.size)")
     return newImg
 }
 

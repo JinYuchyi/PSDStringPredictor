@@ -44,8 +44,8 @@ struct PSDObject: Identifiable{
         self.thumbnail = thumbnail
         self.dpi = dpi
         self.status = status
-        self.width = NSImage.init(contentsOf: imageURL)?.size.width ?? 0
-        self.height = NSImage.init(contentsOf: imageURL)?.size.height ?? 0
+        self.width = CIImage.init(contentsOf: imageURL)?.extent.width ?? 0
+        self.height = CIImage.init(contentsOf: imageURL)?.extent.height ?? 0
     }
     
     fileprivate init(id: Int, imageURL: URL){
@@ -55,8 +55,8 @@ struct PSDObject: Identifiable{
         self.thumbnail = FetchThumbnail(size: sizeOfThumbnail)
         colorMode = PsdsUtil.shared.FetchColorMode(img: thumbnail.ToCIImage()!)
         status = .normal
-        self.width = NSImage.init(contentsOf: imageURL)?.size.width ?? 0
-        self.height = NSImage.init(contentsOf: imageURL)?.size.height ?? 0
+        self.width = CIImage.init(contentsOf: imageURL)?.extent.width ?? 0
+        self.height = CIImage.init(contentsOf: imageURL)?.extent.height ?? 0
     }
     
     fileprivate func FetchThumbnail(size: Int) -> NSImage{
@@ -96,7 +96,7 @@ struct PSD {
     mutating func addPSDObject( imageURL: URL) -> Int{
         psdObjects.append(PSDObject(id: uniqID, imageURL: imageURL))
 //        ImageUtil.metadata(url: imageURL)
-        uniqID = (uniqID + 1) % 1000000
+        uniqID = (uniqID + 1) % Int.max
         return uniqID
     }
     
@@ -110,7 +110,7 @@ struct PSD {
         for _psd in psdObjects{
             var strObjDictList : [strObjJsonObject] = []
             for _strObj in _psd.stringObjects {
-                print("Constellating data for psdObject \(_psd.id), stringObject: \(_strObj.content)")
+//                print("Constellating data for psdObject \(_psd.id), stringObject: \(_strObj.content)")
                 let strObj = strObjJsonObject.init(
                     id: _strObj.id,
                     content: _strObj.content,

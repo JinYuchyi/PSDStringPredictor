@@ -79,7 +79,7 @@ class PsdsVM: ObservableObject{
     //Others
     @Published var IndicatorText: String = ""
     @Published var canProcess: Bool = false
-    @Published var prograssScale: CGFloat = 1
+    @Published var prograssScale: CGFloat = 0
     @Published var maskDict: [Int:[charRectObject]]  = [:]
     @Published var stringIsOn: Bool = true
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
@@ -912,7 +912,8 @@ class PsdsVM: ObservableObject{
             //Load NSImage
             let targetUrl = psdModel.GetPSDObject(psdId: selectedPsdId)?.imageURL
             if FileManager.default.fileExists(atPath: targetUrl!.path) == true {
-                selectedNSImage = NSImage.init(contentsOf: targetUrl!)!
+//                selectedNSImage = NSImage.init(contentsOf: targetUrl!)!
+                selectedNSImage = LoadNSImage(imageUrlPath: targetUrl!.path)
             }
             //Process Image
             UpdateProcessedImage(psdId: selectedPsdId)
