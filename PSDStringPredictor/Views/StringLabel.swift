@@ -43,20 +43,20 @@ struct StringLabel: View {
     var TextLayerView: some View {
         ZStack{
             //Fake
-            Text(psdsVM.tmpObjectForStringProperty.content ?? "" )
+            Text(psdsVM.tmpObjectForStringProperty.content)
                 .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
-                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2 , y: psdsVM.GetSelectedPsd()?.height ?? 0 - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
-                .foregroundColor( Color.white)
+                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
+                .foregroundColor( Color.gray)
                 .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
 //                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
                 .IsHidden(condition: stringObject.id == showFakeString)
                 .blendMode(.difference)
     
-            Text(stringObject.content ?? "" )
+            Text(stringObject.content)
                 .tracking(stringObject.tracking)
                 // Todo: the Y position incorrect.
-                .position(x: stringObject.stringRect.minX + stringObject.stringRect.width / 2 , y: psdsVM.GetSelectedPsd()?.height ?? 0 - (stringObject.stringRect.minY + stringObject.stringRect.height / 2))
-                .foregroundColor(stringObject.color.ToColor() ?? Color.white)
+                .position(x: stringObject.stringRect.minX + stringObject.stringRect.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY + stringObject.stringRect.height / 2))
+                .foregroundColor(stringObject.color.ToColor() )
                 .font(.custom(stringObject.FontName, size: stringObject.fontSize))
                 .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
                 .onTapGesture {

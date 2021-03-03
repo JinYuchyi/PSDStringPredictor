@@ -46,7 +46,7 @@ struct ContentView: View  {
         ZStack(alignment: .center){
             //PrograssView(psdsVM: psdsVM)
             psdThumbnailList(psdsVM: psdsVM, showPatchLayer: $showPatchLayer)
-                .frame(height: screenSize?.height, alignment: .center)
+                .frame(height: screenSize!.height * 0.9, alignment: .center)
             PsdOperatorView(psdsVM: psdsVM)
                 .padding()
         }
