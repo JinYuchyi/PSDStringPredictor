@@ -26,7 +26,7 @@ while (i < docRef.layerSets.length) {
     //console.log(docRef.layerSets.length+"-"+docRef.layerSets[i].name)
     if (docRef.layerSets[i].name == "StringLayersGroup" || docRef.layerSets[i].name == "MaskLayersGroup") {
         //listToRemove.push(i)
-        console.log(i)
+        // console.log(i)
         docRef.layerSets[i].remove()
     } else {
         i++
@@ -58,6 +58,7 @@ for (var i = 0; i < num; i++) {
     } else {
         textItemRef.kind = TextType.POINTTEXT
     }
+    textItemRef.antiAliasMethod = AntiAlias.STRONG
     textItemRef.contents = contentList[i]
     textColor = new SolidColor
     textColor.rgb.red = colorList[i][0]
@@ -68,28 +69,45 @@ for (var i = 0; i < num; i++) {
 
     textItemRef.size = new UnitValue(fontSizeList[i], "px")
 
-    var alignmentOffset = 0
-    alignName = alignmentList[i]
-    if (alignName == "center") {
-        alignmentOffset = rectList[i][2] / 2
-    }
-    if (alignName == "right") {
-        alignmentOffset = rectList[i][2]
-    }
+   var alignmentOffset = 0
+   alignName = alignmentList[i]
+   if (alignName == "center") {
+       alignmentOffset = rectList[i][2] / 2
+   }
+   if (alignName == "right") {
+       alignmentOffset = rectList[i][2]
+   }
 
     //    alignName = alignmentList[i]
 
     padding = 5
 
+    // Set string layer position
     if (isParagraphList[i] == true) {
-        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - rectList[i][3] - offsetList[i][1] / 4)
+        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + rectList[i][2] / 2, positionList[i][1] - rectList[i][3] - offsetList[i][1] / 4)
     } else {
-        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - offsetList[i][1] / 4)
+//        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - offsetList[i][1] / 4)
+            textItemRef.position = Array(positionList[i][0] + alignmentOffset , positionList[i][1] )
+        //     if (alignmentList[i] == "left"){
+        //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
+        //     }
+        //    else if (alignmentList[i] == "right") {
+        //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2  , positionList[i][1] )
+        //         }else{
+        //             textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
+        //         }
     }
     textItemRef.tracking = trackingList[i]
     artLayerRef.name = names[i]
     selectLayer(artLayerRef.name)
-    setTextAlignment(alignName)
+    setTextAlignment(alignmentList[i])
+
+    // Create debug rect
+    fillColor = bgColorList[i]
+    createRectangle(layerSetRef1, "Test" + names[i], positionList[i][0] , positionList[i][1] - rectList[i][3], rectList[i][2], rectList[i][3] + descentOffset[i], fillColor)
+    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 5, 5, [255,0,0])
+    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] + rectList[i][2] , positionList[i][1], 5, 5, [255,0,0])
+
 
     //Create Mask Layers
     fillColor = bgColorList[i]

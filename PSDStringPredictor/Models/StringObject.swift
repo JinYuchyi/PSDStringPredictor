@@ -92,12 +92,12 @@ struct StringObject : Identifiable,  Hashable{
         self.FontName = "SF Pro Text Regular"
         self.alignment = .center
         self.status = .normal
-        self.FontName = CalcFontFullName()
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
         self.color = CalcColor()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
+        self.FontName = CalcFontFullName()
         self.tracking = FetchTrackingFromDB(self.fontSize).0
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
@@ -288,8 +288,10 @@ struct StringObject : Identifiable,  Hashable{
         var family = ""
         
         if fontSize/3 < 20 {
+//            print("size is \(fontSize), family will be Text")
             family = "Text"
         }else{
+//            print("size is \(fontSize), family will be display")
             family = "Display"
         }
         

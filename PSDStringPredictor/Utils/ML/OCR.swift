@@ -11,7 +11,7 @@ import CoreImage
 import Vision
 import SwiftUI
 
-let fontDecentOffsetScale: CGFloat = 1
+let fontDecentOffsetScale: CGFloat = 0.8
 
 class OCR: ObservableObject{
     //private var workItem: DispatchWorkItem?

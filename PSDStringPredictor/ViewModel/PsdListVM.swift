@@ -383,6 +383,8 @@ class PsdsVM: ObservableObject{
         }
     }
     
+
+    
     func commitPosX() {
         for id in selectedStrIDList {
             psdModel.SetPosForString(psdId: selectedPsdId, objId: id, valueX: tmpObjectForStringProperty.posX.toCGFloat(), valueY: tmpObjectForStringProperty.posY.toCGFloat(), isOnlyX: true, isOnlyY: false)
@@ -632,14 +634,8 @@ class PsdsVM: ObservableObject{
             colorList.append(tmpColor)
             
             isParagraphList.append(obj.isParagraph)
+
             
-            //calc tracking and font size offset
-            //            var o1: CGFloat = 0
-            //            var o2: CGFloat = 0
-            //            if DragOffsetDict[obj.id] != nil {
-            //                o1 = DragOffsetDict[obj.id]!.width
-            //                o2 = DragOffsetDict[obj.id]!.height
-            //            }
             let tmpSize: CGFloat = CGFloat(obj.fontSize)
             fontSizeList.append(Float(tmpSize))
             //let tmpTracking = obj.fontSize * 1000 / obj.tracking
@@ -651,27 +647,46 @@ class PsdsVM: ObservableObject{
             let char = (obj.content.first)
             keyvalues["char"] = String(char!) as AnyObject
             keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
-            let items = CharBoundsDataManager.FetchItems(viewContext, keyValues: keyvalues)
-            if items.count > 0 {
-                let offset = [items[0].x1, Int16((Float(items[0].y2 - items[0].y1)/10).rounded())]
-                offsetList.append(offset)
-            }else{
-                offsetList.append([0,0])
-            }
+//            let items = CharBoundsDataManager.FetchItems(viewContext, keyValues: keyvalues)
+            let items = FontUtils.GetStringBound(str: obj.content, fontName: obj.FontName, fontSize: obj.fontSize, tracking: obj.tracking)
+            let offset = [Int16(items.minX), 0]
+            offsetList.append(offset)
+//            if items.count > 0 {
+//                let offset = [items[0].x1, Int16((Float(items[0].y2 - items[0].y1)/10).rounded())]
+//                offsetList.append(offset)
+//            }else{
+//                offsetList.append([0,0])
+//            }
             let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: _id)!.imageURL.path)
             fontNameList.append(obj.CalcFontPostScriptName())
             positionList.append([Int(obj.stringRect.minX.rounded()), Int((targetImg.size.height - obj.stringRect.minY).rounded())])
             //Calc Descent
             let tmpDesc = Float(FontUtils.FetchFontOffset(content: obj.content, fontSize: obj.fontSize))
+
             descentOffset.append(tmpDesc)
-            rectList.append([Float(obj.stringRect.minX), Float(obj.stringRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
+            let newRect = FontUtils.GetStringBound(str: obj.content, fontName: obj.FontName, fontSize: obj.fontSize, tracking: obj.tracking)
             
+
             //alignment
             if obj.alignment == nil {
                 alignmentList.append("center")
             }else {
                 alignmentList.append(obj.alignment.rawValue)
             }
+            
+            // Re-Calc the string box
+            if obj.alignment == .center {
+                rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
+
+            }else if obj.alignment == .left {
+                rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
+
+            }else if obj.alignment == .right {
+//                rectList.append([Float(obj.stringRect.maxX - newRect.width), Float(obj.stringRect.maxY - newRect.height), Float(newRect.width), Float(newRect.height)])
+                rectList.append([Float(newRect.minX), Float(newRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
+            }
+
+            
             
             //BGColor
             let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
@@ -773,14 +788,12 @@ class PsdsVM: ObservableObject{
             var str = ""
             if weightName == " Regular"  {
                  str = particialName + " Semibold"
-//                psdModel.SetFontName(psdId: psdId, objId: objId, value: String(str))
             }else {
                  str = particialName + " Regular"
-//                psdModel.SetFontName(psdId: psdId, objId: objId, value: String(str))
             }
             tmpObjectForStringProperty.fontName = str
 //            let tmpObj = GetStringObjectForOnePsd(psdId: selectedPsdId, objId: selectedStrIDList.last)!
-            tmpObjectForStringProperty.width = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: str, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat()).width
+//            tmpObjectForStringProperty.width = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: str, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat()).width
             commitTempStringObject()
         }
         

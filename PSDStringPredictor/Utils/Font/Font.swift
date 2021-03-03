@@ -116,22 +116,22 @@ class FontUtils {
             kCTTrackingAttributeName as NSAttributedString.Key: tracking
             ]
         let text = NSAttributedString(string: str, attributes: attrs)
-//        let framesetter = CTFramesetterCreateWithAttributedString(text as CFAttributedString)
-//        let frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, text.length), path, nil)
 
         let line = CTLineCreateWithAttributedString(text)
         let runs = CTLineGetGlyphRuns(line) as! [CTRun]
         let runPositionsPointer = CTRunGetPositionsPtr(runs[0])
         let runPosition = runPositionsPointer?.pointee
         let b = (CTRunGetImageBounds(runs[0], nil, CFRange(location: 0,length: 0)))
+
+        var fixb = CGRect.init(x: runPosition!.x , y: b.origin.y, width: b.width , height: b.height)
         
-        var fixb = CGRect.init(x: runPosition!.x, y: b.origin.y, width: b.width, height: b.height)
         if hasHat == true && hasLongTail == true {
-            let totalHeight = CTFontGetBoundingBox(font)
+//            let totalHeight = CTFontGetBoundingBox(font)
 //            let vWhiteH = totalHeight.height - CTFontGetAscent(font) - CTFontGetDescent(font)
             let offset = CTFontGetAscent(font) - CTFontGetXHeight(font) - CTFontGetDescent(font) - fontSize / 15
 //            print(vWhiteH)
-            fixb = CGRect.init(x: runPosition!.x, y: b.origin.y + offset/2 , width: b.width, height: b.height )
+
+            fixb = CGRect.init(x: runPosition!.x  , y: b.origin.y + offset/2 , width: b.width , height: b.height )
         }
         return fixb
     }

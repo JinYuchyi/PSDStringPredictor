@@ -46,10 +46,11 @@ struct StringLabel: View {
             Text(psdsVM.tmpObjectForStringProperty.content ?? "" )
                 .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
                 .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2 , y: psdsVM.GetSelectedPsd()!.height - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
-                .foregroundColor(psdsVM.tmpObjectForStringProperty.color.ToColor() ?? Color.white)
+                .foregroundColor( Color.white)
                 .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
 //                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
                 .IsHidden(condition: stringObject.id == showFakeString)
+                .blendMode(.difference)
     
             Text(stringObject.content ?? "" )
                 .tracking(stringObject.tracking)
@@ -62,6 +63,7 @@ struct StringLabel: View {
                     psdsVM.selectedStrIDList.removeAll()
                     psdsVM.selectedStrIDList.append(stringObject.id)
                     psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
+                    FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
                 }
                 .IsHidden(condition: stringObject.id != showFakeString)
     
