@@ -36,10 +36,15 @@ struct SelectionOverlayView: View {
                             show = false
                             endPos = value.location
                             if psdsVM.viewScale > 1{
-                                interactive.selectionRect = CGRect.init(x: interactive.selectionRect.minX - psdsVM.GetSelectedPsd()!.width * (psdsVM.viewScale - 1) / 2 , y: interactive.selectionRect.minY - psdsVM.GetSelectedPsd()!.height * (psdsVM.viewScale - 1) / 2 , width: interactive.selectionRect.width * psdsVM.viewScale , height: interactive.selectionRect.height * psdsVM.viewScale )
+                                interactive.selectionRect = CGRect.init(
+                                    x: interactive.selectionRect.minX - psdsVM.GetSelectedPsd()!.width * (psdsVM.viewScale - 1) / 2 ,
+                                    y: interactive.selectionRect.minY - psdsVM.GetSelectedPsd()!.height * (psdsVM.viewScale - 1) / 2  ,
+                                    width: interactive.selectionRect.width ,
+                                    height: interactive.selectionRect.height
+                                ).standardized
 
                             }else{
-                                interactive.selectionRect = CGRect.init(x: interactive.selectionRect.minX, y: interactive.selectionRect.minY  , width: interactive.selectionRect.width , height: interactive.selectionRect.height)
+//                                interactive.selectionRect = CGRect.init(x: interactive.selectionRect.minX, y: interactive.selectionRect.minY  , width: interactive.selectionRect.width , height: interactive.selectionRect.height)
                             }
 //                            let selRect = CGRect.init(
 //                                x: interactive.selectionRect.minX.rounded(),
@@ -85,8 +90,8 @@ struct SelectionOverlayView: View {
             }
             
             let tmpRect = CGRect.init(
-                x: (obj.stringRect.minX ),
-                y: (psdsVM.selectedNSImage.size.height - obj.stringRect.minY - obj.stringRect.height/2),
+                x: (obj.stringRect.origin.x),
+                y: (psdsVM.selectedNSImage.size.height - obj.stringRect.origin.y - obj.stringRect.height),
                 width: obj.stringRect.width,
                 height: obj.stringRect.height
             )

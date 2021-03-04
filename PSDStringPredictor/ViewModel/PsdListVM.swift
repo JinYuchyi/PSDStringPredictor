@@ -34,7 +34,7 @@ struct StringObjectForStringProperty{
         self.fontSize = ""
         self.tracking = ""
         self.fontName = ""
-        self.color = CGColor.white
+        self.color = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
         //        self.stringRect = CGRect.init()
         self.alignment = .center
         self.posX = ""

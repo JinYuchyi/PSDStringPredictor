@@ -54,7 +54,6 @@ struct StringLabel: View {
     
             Text(stringObject.content)
                 .tracking(stringObject.tracking)
-                // Todo: the Y position incorrect.
                 .position(x: stringObject.stringRect.minX + stringObject.stringRect.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY + stringObject.stringRect.height / 2))
                 .foregroundColor(stringObject.color.ToColor() )
                 .font(.custom(stringObject.FontName, size: stringObject.fontSize))

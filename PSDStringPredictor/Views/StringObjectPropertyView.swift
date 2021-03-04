@@ -18,6 +18,8 @@ struct StringObjectPropertyView: View {
     @State var content: String = "No Content."
     @State var posX: String = "0"
     @State var posY: String = "0"
+    @State private var textColor =
+            Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
     
     //Constant
     var panelWidth: CGFloat
@@ -179,7 +181,6 @@ struct StringObjectPropertyView: View {
                     
                 }
 //                .frame(width: panelWidth)
-                
                 HStack{
                     Text("Color")
                         .foregroundColor(Color.gray)
@@ -189,24 +190,37 @@ struct StringObjectPropertyView: View {
                         //Color mode icon
                         if GetLastSelectObject().colorMode == MacColorMode.light {
                             Text("􀆮")
-                                .frame(width:20, alignment: .leading)
+                                .frame(width:15, alignment: .leading)
                         }else if GetLastSelectObject().colorMode == MacColorMode.dark {
                             Text("􀆺")
-                                .frame(width:20, alignment: .leading)
+                                .frame(width:15, alignment: .leading)
                         }else{}
                         
                         
                         //Color numbers
                         if psdsVM.selectedStrIDList.count > 0{
-                            Text("\(Int((GetLastSelectObject().color.components![0] * 255).rounded())), \(Int((GetLastSelectObject().color.components![1] * 255).rounded())), \(Int((GetLastSelectObject().color.components![2] * 255).rounded()))")
+                            Text("\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[0] ?? 0) * 255).rounded()))|\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[1] ?? 0) * 255).rounded()))|\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[2] ?? 0) * 255).rounded()))")
                         }else {
-                            Text("0,0,0")
+                            Text("No Color Infomation")
                         }
                         //Color block
-                        Color.init(GetLastSelectObject().color).frame(width: 10, height: 10, alignment: .center)
+                        ColorPicker("", selection: $psdsVM.tmpObjectForStringProperty.color)
+                            .frame(width: 10, height: 10, alignment: .center)
+                            .mask(RoundedRectangle(cornerRadius: 2))
+//                            .padding(.horizontal)
+                            
+//                        Color.init(GetLastSelectObject().color).frame(width: 10, height: 10, alignment: .center)
+//                            .onTapGesture {
+//
+//                            }
                         
                         //Toggle button
                         Spacer()
+                        Button(action: {psdsVM.commitTempStringObject(); }, label: {
+                            Text("􀈄")
+                        })
+                        .frame(width: 15, alignment: .trailing)
+                        .padding(.horizontal)
                         Button(action: {toggleColor()}, label: {
                             Text("􀅈")
                         }).frame(width: 15, alignment: .trailing)
