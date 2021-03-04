@@ -23,16 +23,7 @@ struct LabelsOnImage: View {
             ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
                 StringLabel( stringObject: obj, interactive: interactive, showFakeString: $showFakeString, psdsVM: psdsVM )
                     
-                    .gesture(TapGesture().modifiers(.shift).onEnded ({ (loc) in
-                        if psdsVM.selectedStrIDList.contains(obj.id){
-                            psdsVM.selectedStrIDList.removeAll(where: {$0 == obj.id})
-                            psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
-                        }else {
-                            psdsVM.selectedStrIDList.append(obj.id)
-                            psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
-                        }
-                    })
-                    )
+                   
                     
                     
             }

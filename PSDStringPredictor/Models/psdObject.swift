@@ -94,6 +94,12 @@ struct PSD {
     fileprivate var uniqID = 0
     
     mutating func addPSDObject( imageURL: URL) -> Int{
+        if psdObjects.count > 0 {
+            let idList = psdObjects.map({$0.id})
+            let max = idList.max()!
+            uniqID = (max + 1) % Int.max
+        }
+        
         psdObjects.append(PSDObject(id: uniqID, imageURL: imageURL))
 //        ImageUtil.metadata(url: imageURL)
         uniqID = (uniqID + 1) % Int.max

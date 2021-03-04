@@ -165,26 +165,20 @@ struct StringObjectPropertyView: View {
                         .foregroundColor(Color.gray)
                         .frame(width:titleWidth, alignment: .topLeading)
                     
-                    Spacer()
-                    
                     if GetLastSelectObject().fontSize != 0 {
-                        HStack{
                             Text("\(GetLastSelectObject().FontName)" )
                                 .frame( alignment: .topLeading)
-                            Spacer()
-                            Button(action: {psdsVM.ToggleFontName(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)}, label: {
-                                Text("􀅈")
-                            }).frame(width: 15, alignment: .trailing)
-                            
-                        }.frame(width: panelWidth - titleWidth - 15 )
-                        
-                    }else {
-                        Text("No font name." )
-                            .frame(width: panelWidth - titleWidth - 15, alignment: .topLeading)
-                        //                                .foregroundColor(.gray)
                     }
+                    
+                    Spacer()
+                    
+                    Button(action: {psdsVM.ToggleFontName(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)}, label: {
+                        Text("􀅈")
+                    })
+                    .frame(width: 15, alignment: .trailing)
+                    
                 }
-                //                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+//                .frame(width: panelWidth)
                 
                 HStack{
                     Text("Color")

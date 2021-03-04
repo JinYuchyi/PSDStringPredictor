@@ -19,8 +19,7 @@ struct PsdOperatorView: View {
                     Text("Commit All")
                         .frame(width: 80)
                 })
-                
-
+ 
                 Button(action: {psdsVM.LoadImage()}, label: {
                     Text("Add")
                         .frame(width: 40)

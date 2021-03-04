@@ -14,6 +14,7 @@
 		3F0782832541B9F0007163D6 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0782822541B9F0007163D6 /* FontExtension.swift */; };
 		3F0802AD25C409F2000530F6 /* RegionProcessVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0802AC25C409F2000530F6 /* RegionProcessVM.swift */; };
 		3F0802B025C419A1000530F6 /* RegionProcessOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0802AF25C419A1000530F6 /* RegionProcessOverlayView.swift */; };
+		3F09920C25F08390004046B0 /* charDSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F09920B25F08390004046B0 /* charDSView.swift */; };
 		3F09E9D425B41E3800F627F2 /* psdToPngInTempFolder.py in Resources */ = {isa = PBXBuildFile; fileRef = 3F09E9D325B41E3800F627F2 /* psdToPngInTempFolder.py */; };
 		3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0DE2F425694E5A00BD3A3A /* JSManager.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
@@ -226,6 +227,7 @@
 		3F0782822541B9F0007163D6 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		3F0802AC25C409F2000530F6 /* RegionProcessVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionProcessVM.swift; sourceTree = "<group>"; };
 		3F0802AF25C419A1000530F6 /* RegionProcessOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionProcessOverlayView.swift; sourceTree = "<group>"; };
+		3F09920B25F08390004046B0 /* charDSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = charDSView.swift; sourceTree = "<group>"; };
 		3F09E9D325B41E3800F627F2 /* psdToPngInTempFolder.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = psdToPngInTempFolder.py; sourceTree = "<group>"; };
 		3F0DE2F425694E5A00BD3A3A /* JSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSManager.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				3FE8813F25333D820088A1CD /* StringObjectRow.swift */,
 				3FC3DFC625B52FB60060521D /* PsdOperatorView.swift */,
 				3F4D13E32501FB9E008F846B /* ImageView.swift */,
+				3F09920B25F08390004046B0 /* charDSView.swift */,
 				3F4D13E525020F22008F846B /* StringLabel.swift */,
 				3F4D13EA2502220D008F846B /* StringLabelList.swift */,
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
@@ -1049,6 +1052,7 @@
 			files = (
 				3F59C0FA25D3CF8600F9CF52 /* xColor.mlmodel in Sources */,
 				3F59C0EE25D3CF8600F9CF52 /* iColor.swift in Sources */,
+				3F09920C25F08390004046B0 /* charDSView.swift in Sources */,
 				3F59C10425D3CF8600F9CF52 /* dColor.mlmodel in Sources */,
 				3FDA0D3A2534111D007792C0 /* TrackingDataObject.swift in Sources */,
 				3FE881292532E6DD0088A1CD /* FontDataExtension.swift in Sources */,

@@ -59,14 +59,35 @@ struct StringLabel: View {
                 .foregroundColor(stringObject.color.ToColor() )
                 .font(.custom(stringObject.FontName, size: stringObject.fontSize))
                 .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-                .onTapGesture {
-                    //Tap to select stringobject
-                    psdsVM.selectedStrIDList.removeAll()
-                    psdsVM.selectedStrIDList.append(stringObject.id)
-                    psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
-                    FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
-                }
                 .IsHidden(condition: stringObject.id != showFakeString)
+
+//                .onTapGesture {
+//                    //Tap to select stringobject
+//                    psdsVM.selectedStrIDList.removeAll()
+//                    psdsVM.selectedStrIDList.append(stringObject.id)
+//                    psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
+//                    FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
+//                }
+                .gesture(
+                    TapGesture().modifiers(.shift).onEnded ({ (loc) in
+                    if psdsVM.selectedStrIDList.contains(stringObject.id){
+                        psdsVM.selectedStrIDList.removeAll(where: {$0 == stringObject.id})
+                        psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
+                    }else {
+                        psdsVM.selectedStrIDList.append(stringObject.id)
+                        psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
+                    }
+                    })
+                .exclusively(before: TapGesture().onEnded({ (loc) in
+                             psdsVM.selectedStrIDList.removeAll()
+                             psdsVM.selectedStrIDList.append(stringObject.id)
+                             psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
+                             FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
+                
+                    
+                            })
+                        )
+                )
     
         }
         //New aligned text

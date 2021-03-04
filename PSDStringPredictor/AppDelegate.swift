@@ -16,14 +16,16 @@ let viewContext = AppDelegate().persistentContainer.viewContext
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     var window: NSWindow!
-    var settingWindow: NSWindow!
+//    var charWindow: NSWindow!
+
+//    var settingWindow: NSWindow!
     @ObservedObject var dbViewModel = DBViewModel()
    // @ObservedObject var stringObjectVM = psdViewModel
 //    @ObservedObject var imageVM = ImageVM()
     @ObservedObject var psdsVM = PsdsVM()
     @ObservedObject var imageProcess = ImageProcess()
     @ObservedObject var settingVM = SettingViewModel()
-//    let shared = AppDelegate()
+//    static let shared = AppDelegate()
 
     
     
@@ -48,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView, .resizable],
             backing: .buffered, defer: false)
         window.center()
-        
+        window.isReleasedWhenClosed = true
         window.setFrameAutosaveName("StringGeneratorMain")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
@@ -66,6 +68,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         PreSettingConfig()
         
     }
+    
+//    func createCharDSWindow(img: CIImage) {
+//        charWindow = NSWindow(
+//            contentRect: NSRect(x: 0, y: 0, width: 500, height: 400),
+//            styleMask: [.closable],
+//            backing: .buffered, defer: false)
+//        charWindow.center()
+//        
+//    }
+//    
+//    func closeCharDSWindow() {
+//        charWindow.isReleasedWhenClosed = true
+//        charWindow.close()
+//    }
+    
+    
+    
     
     func PreSettingConfig(){
 //        stringObjectVM.frameOverlay = false

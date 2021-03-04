@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreImage
 
 func SaveStringToFile(str: String, path: String){
     //let path = "myfile.txt"
@@ -83,5 +84,36 @@ func MakeImagesInTempFolder(imagePathList: [String]){
     
     let cmd = "python3 " + Bundle.main.resourcePath! + "run.py"
     PythonScriptManager.RunScript(str: cmd)
+}
+
+func saveCharDataset(img: CIImage, str: String) {
+    let charDatasetFolder = "/Users/ipdesign/Box/MyShare/DataSet/charColorDataset/"
+    let mainUrl = URL.init(string: charDatasetFolder)!
+    
+    // Check if the main folder is reachable
+    do {
+        let b: Bool
+        try b = mainUrl.checkResourceIsReachable()
+        if b == false {
+            return
+        }
+    }catch{}
+    
+    if str.count == 2 && Array(str)[0].isLowercase == true && (Array(str)[1] == "l" || Array(str)[1] == "d") {
+        let _char = String(Array(str)[0])
+        let _cmode = String(Array(str)[1])
+        let subFolder = charDatasetFolder + _char + "/" + _char + _cmode + "/"
+        
+        var num : Int = 0
+        try? num = FileManager.default.contentsOfDirectory(atPath: subFolder).count
+        
+        
+        let _fileName = _char + "_" + _cmode + "_" + String(num + 1) + ".png"
+
+        img.ToPNG(url: URL.init(fileURLWithPath: subFolder + _fileName))
+        print("Image saved to \(subFolder + _fileName)")
+    }else {
+        print("The parameter does not fit for the criteria. The first letter represents which character, and the second letter should be 'l' or 'r' which represent the color mode.")
+    }
 }
 

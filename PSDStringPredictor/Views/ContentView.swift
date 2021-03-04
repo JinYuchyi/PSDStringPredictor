@@ -82,6 +82,7 @@ struct ContentView: View  {
                 
             }
             
+            //Prograss Bar
             GeometryReader{ geo in
                 UIOverlayView(showPatchLayer: $showPatchLayer)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
@@ -107,7 +108,9 @@ struct ContentView: View  {
                 }
                 
             }
-            
+           
+            //Popup Window
+            charDSView(psdsVM: psdsVM)
         }
         
     }
@@ -164,6 +167,8 @@ struct ContentView: View  {
             psdsVM.FetchBoundTable(path: Bundle.main.path(forResource: "charBounds", ofType: "csv")!)
         })
         .preferredColorScheme(.dark)
+        
+ 
     }
     
     

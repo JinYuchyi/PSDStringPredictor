@@ -85,6 +85,10 @@ class PsdsVM: ObservableObject{
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
     @Published var selectRect: CGRect = CGRect.init()
+    // Window control
+    @Published var charDSWindowShow: Bool = false
+    //Save Char DS
+    @Published var charImageDSWillBeSaved: CIImage = CIImage.init()
     
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
@@ -131,6 +135,8 @@ class PsdsVM: ObservableObject{
     //        psdObjectList = DataRepository.shared.GetPsdObjectList()
     //    }
     //
+    
+    
     func InitDictForOnePsd(psdId: Int){
         gammaDict[psdId] = 1
         expDict[psdId] = 0
@@ -409,6 +415,11 @@ class PsdsVM: ObservableObject{
     
     
     //MARK: Intents
+    
+    func saveCharDS(img: CIImage, str: String){
+        saveCharDataset(img: img, str: str)
+        charDSWindowShow = false
+    }
     
     func CombineStringsOnePSD(psdId: Int){
         if selectedStrIDList.count == 0 {return }
@@ -941,13 +952,16 @@ class PsdsVM: ObservableObject{
                 }
             }
         }else if orientation == "horizontal-center" {
-            let posXList = objList.map({$0.stringRect.minX})
-            let minX = posXList.min() ?? posXList[0]
-            let maxX = posXList.max() ?? posXList[0]
-            guard let midX: CGFloat? = ((minX + maxX) / 2) else {return}
+//            let posXList = objList.map({$0.stringRect.minX})
+//            let minX = posXList.min() ?? posXList[0]
+//            let maxX = posXList.max() ?? posXList[0]
+//            guard let midX: CGFloat? = ((minX + maxX) / 2) else {return}
+            guard let lastId = selectedStrIDList.last else {return }
+            let lasMidX = GetStringObjectForOnePsd(psdId: selectedPsdId, objId: lastId)!.stringRect.midX
             for obj in objList {
-                let rect: CGRect = CGRect.init(x: minX, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
-                psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
+                let offset = obj.stringRect.midX - lasMidX
+//                let rect: CGRect = CGRect.init(x: minX, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+                psdModel.SetPosForString(psdId: selectedPsdId, objId: obj.id, valueX: obj.stringRect.minX - offset, valueY: obj.stringRect.minY, isOnlyX: true, isOnlyY: false)
                 psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
                 
             }

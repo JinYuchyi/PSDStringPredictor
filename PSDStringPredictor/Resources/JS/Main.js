@@ -103,10 +103,10 @@ for (var i = 0; i < num; i++) {
     setTextAlignment(alignmentList[i])
 
     // Create debug rect
-    fillColor = bgColorList[i]
-    createRectangle(layerSetRef1, "Test" + names[i], positionList[i][0] , positionList[i][1] - rectList[i][3], rectList[i][2], rectList[i][3] + descentOffset[i], fillColor)
-    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 5, 5, [255,0,0])
-    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] + rectList[i][2] , positionList[i][1], 5, 5, [255,0,0])
+//    fillColor = bgColorList[i]
+//    createRectangle(layerSetRef1, "Test" + names[i], positionList[i][0] , positionList[i][1] - rectList[i][3], rectList[i][2], rectList[i][3] + descentOffset[i], fillColor)
+//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 5, 5, [255,0,0])
+//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] + rectList[i][2] , positionList[i][1], 5, 5, [255,0,0])
 
 
     //Create Mask Layers

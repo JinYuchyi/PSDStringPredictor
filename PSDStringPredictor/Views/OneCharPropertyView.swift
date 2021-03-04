@@ -73,24 +73,22 @@ struct OneCharPropertyView: View {
     }
     
     func CharSaveBtnPressed(_ index: Int){
-        
-        let panel = NSSavePanel()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let result = panel.runModal()
-            if result == .OK{
-                //let img = stringObjectVM.selectedStringObject.charImageList[index]
-                GetLastSelectObject().charImageList[index].ToPNG(url: panel.url!)
-                //imageProcess.SaveCIIToPNG(CIImage: GetLastSelectObject().charImageList[index], filePath: panel.url!.path )
-                let bw = SetGrayScale(GetLastSelectObject().charImageList[index] )
-                let newUrl = URL.init(fileURLWithPath: panel.url!.path + "_bw.bmp")
-                bw!.ToPNG(url: newUrl)
-                //imageProcess.SaveCIIToPNG(CIImage: bw!, filePath: panel.url!.path + "_bw" )
-                //let fixedRect = pixelMgr.FixBorder(image: DataStore.targetImageProcessed, rect: stringObjectVM.selectedStringObject.charRects[index])
-                //let fixedImg = DataStore.targetImageProcessed.cropped(to: fixedRect)
-                //imageProcess.SaveCIIToPNG(CIImage: fixedImg, filePath: panel.url!.path+"_fixed" )
-                
-            }
-        }
+        psdsVM.charImageDSWillBeSaved = GetLastSelectObject().charImageList[index]
+        psdsVM.charDSWindowShow = true
+//        let panel = NSSavePanel()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//            let result = panel.runModal()
+//            if result == .OK{
+//                //let img = stringObjectVM.selectedStringObject.charImageList[index]
+//                GetLastSelectObject().charImageList[index].ToPNG(url: panel.url!)
+//                //imageProcess.SaveCIIToPNG(CIImage: GetLastSelectObject().charImageList[index], filePath: panel.url!.path )
+//                let bw = SetGrayScale(GetLastSelectObject().charImageList[index] )
+//                let newUrl = URL.init(fileURLWithPath: panel.url!.path + "_bw.bmp")
+//                bw!.ToPNG(url: newUrl)
+//
+//
+//            }
+//        }
     }
     
     func SetChar(value: String){
