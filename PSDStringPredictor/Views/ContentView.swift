@@ -59,12 +59,13 @@ struct ContentView: View  {
                 //                                    GeometryReader{geo in
                 
                 ZStack{
-                    Color.white.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.01)
-                    
+                    Color.gray.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.1)
+//                    Color.white.frame(width: psdsVM.selectedNSImage.size.width , height: psdsVM.selectedNSImage.size.height ).opacity(0.01)
+
                     ImageView(psds: psdsVM, regionVM: regionProcessVM, interactive: interactive)
                         .scaleEffect(psdsVM.viewScale)
-                    
                     Group{
+                    
                         
                         LabelsOnImage(psdsVM: psdsVM, interactive: interactive, showFakeString: $showFakeString)
                             .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
@@ -78,6 +79,9 @@ struct ContentView: View  {
                     }
                     .IsHidden(condition: psdsVM.stringIsOn == true)
                     .scaleEffect(psdsVM.viewScale)
+                    
+//                    Color.red.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.3)
+
                 }
                 
             }

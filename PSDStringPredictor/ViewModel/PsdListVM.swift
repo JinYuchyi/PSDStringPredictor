@@ -376,7 +376,8 @@ class PsdsVM: ObservableObject{
     }
     
     func commitTempStringObject(){
-        guard var obj = (psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: selectedStrIDList.last!)) else {return }
+        guard let lastId = selectedStrIDList.last else {return }
+        guard let obj = psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: lastId) else {return }
         //        let new  = FontUtils.GetStringBound(str: obj.content, fontName: obj.FontName, fontSize: obj.fontSize)
         //        obj.stringRect = CGRect.init(x: new.minX, y: obj.stringRect.minY, width: new.width, height: new.height)
         psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
@@ -789,6 +790,7 @@ class PsdsVM: ObservableObject{
     func ToggleFontName(psdId: Int, objId: UUID){
         var psd = psdModel.GetPSDObject(psdId: psdId)
         if psd != nil {
+            for objId in selectedStrIDList{}
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj == nil {return }
             let fName = strObj!.FontName
@@ -803,9 +805,11 @@ class PsdsVM: ObservableObject{
                  str = particialName + " Regular"
             }
             tmpObjectForStringProperty.fontName = str
-//            let tmpObj = GetStringObjectForOnePsd(psdId: selectedPsdId, objId: selectedStrIDList.last)!
-//            tmpObjectForStringProperty.width = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: str, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat()).width
             commitTempStringObject()
+            //Set fontName for all selected
+            for objId in selectedStrIDList {
+                psdModel.SetFontName(psdId: psdId, objId: objId, value: str)
+            }
         }
         
     }

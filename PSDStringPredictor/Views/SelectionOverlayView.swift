@@ -27,15 +27,31 @@ struct SelectionOverlayView: View {
                             show = true
                             startPos = gesture.startLocation
                             width = gesture.translation.width
-                            height = gesture.translation.height
-                            interactive.selectionRect = CGRect.init(x: startPos.x , y: startPos.y , width: width, height: height)
+                            height = gesture.translation.height 
+                            interactive.selectionRect = CGRect.init(x: startPos.x, y: startPos.y , width: width, height: height)
                             interactive.selectionRect = interactive.selectionRect.standardized
                         }
                         .onEnded{ value in
                             //Selection mode for select string
                             show = false
                             endPos = value.location
+                            if psdsVM.viewScale > 1{
+                                interactive.selectionRect = CGRect.init(x: interactive.selectionRect.minX - psdsVM.GetSelectedPsd()!.width * (psdsVM.viewScale - 1) / 2 , y: interactive.selectionRect.minY - psdsVM.GetSelectedPsd()!.height * (psdsVM.viewScale - 1) / 2 , width: interactive.selectionRect.width * psdsVM.viewScale , height: interactive.selectionRect.height * psdsVM.viewScale )
+
+                            }else{
+                                interactive.selectionRect = CGRect.init(x: interactive.selectionRect.minX, y: interactive.selectionRect.minY  , width: interactive.selectionRect.width , height: interactive.selectionRect.height)
+                            }
+//                            let selRect = CGRect.init(
+//                                x: interactive.selectionRect.minX.rounded(),
+//                                y: (psdsVM.selectedNSImage.size.height.rounded() - interactive.selectionRect.minY).rounded() ,
+//                                width: interactive.selectionRect.width.rounded(),
+//                                height: -interactive.selectionRect.height.rounded()
+//                            ).standardized
+                            print(interactive.selectionRect)
+//                            let tmp = psdsVM.viewScale
+//                            psdsVM.viewScale = 1
                             CalcSelectedObject()
+//                            psdsVM.viewScale = tmp
                         }
                 )
                 
@@ -68,13 +84,17 @@ struct SelectionOverlayView: View {
             if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
             }
             
-            let tmpRect = CGRect.init(x: (obj.stringRect.origin.x ), y: (psdsVM.selectedNSImage.size.height - obj.stringRect.origin.y - obj.stringRect.height/2), width: obj.stringRect.width, height: obj.stringRect.height)
+            let tmpRect = CGRect.init(
+                x: (obj.stringRect.minX ),
+                y: (psdsVM.selectedNSImage.size.height - obj.stringRect.minY - obj.stringRect.height/2),
+                width: obj.stringRect.width,
+                height: obj.stringRect.height
+            )
+//            let tmpRect = rect
             if tmpRect.intersects(interactive.selectionRect)  {
-                //print("intersects: \(tmpRect), \(interactive.selectionRect)")
                 psdsVM.selectedStrIDList.append(obj.id)
             }
         }
-//        psdsVM.selectedLastStringObject = psdsVM.GetSelectedPsd()!.stringObjects.last!
         if psdsVM.GetSelectedPsd() != nil && psdsVM.selectedStrIDList.last != nil && psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) != nil {
             psdsVM.tmpObjectForStringProperty = psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
         }
