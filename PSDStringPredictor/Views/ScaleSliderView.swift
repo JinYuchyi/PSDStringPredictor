@@ -31,7 +31,13 @@ struct ScaleSliderView: View {
                 //Text("\(scale)")
                     //.foregroundColor(isEditing ? .red : .blue)
             }
-        .frame(width: 300, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//        .accentColor(.red)
+        .frame(width: 300, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        .padding(.horizontal)
+        .background(RoundedRectangle(cornerRadius: 5, style: .continuous).fill(Color.black.opacity(0.3)))
+        .padding()
+
+
     }
 }
 

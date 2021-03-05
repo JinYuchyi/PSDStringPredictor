@@ -45,30 +45,29 @@ struct ControlPanel: View {
 //                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
 //                    Text("Combine To Paragraph")
 //                        .frame(width: geo.size.width*0.8, alignment: .center)
-//                        
+//
 //                }
                 
                 
                 
                 
-                //HStack{
-                HStack{
-                    Button(action: {psdsVM.SetSelectionToFixed()}){
-                        Text("Ready")
-                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-                            .padding(0)
+//                HStack{
+//                    Button(action: {psdsVM.SetSelectionToFixed()}){
+//                        Text("Ready")
+//                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
+//                            .padding(0)
+//
+//                    }
+//
+//                    Button(action: {psdsVM.SetSelectionToIgnored()}){
+//                        Text("Ignore")
+//                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
+//                            .padding(0)
+//
+//                    }
+//
+//                }
 
-                    }
-                    
-                    Button(action: {psdsVM.SetSelectionToIgnored()}){
-                        Text("Ignore")
-                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-                            .padding(0)
-
-                    }
-                    
-                }
-                //                Text("Align Selection").foregroundColor(.gray).frame(width: geo.size.width * 0.8,alignment:.leading)
                 HStack{
                     Button(action: {psdsVM.alignSelection(orientation: "horizontal-left")}){
                         Image("HAlignLeft")
@@ -113,9 +112,7 @@ struct ControlPanel: View {
                             .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     }
                 }
-                //}
-                
-                //Divider()
+      
                 
                 Spacer()
                 

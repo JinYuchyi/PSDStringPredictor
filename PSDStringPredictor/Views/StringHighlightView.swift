@@ -15,6 +15,8 @@ struct StringHighlightView: View {
     @ObservedObject var interactive: InteractiveViewModel
     @ObservedObject var psdsVM: PsdsVM
     @Binding var showFakeString: UUID
+    @State var originTracking: CGFloat =  -100
+    @State var originSize: CGFloat = -100
     
     var body: some View {
         ZStack{
@@ -44,25 +46,32 @@ struct StringHighlightView: View {
                         
                         .exclusively(before: DragGesture()
                                         .onChanged { gesture in
+                                            if originTracking == -100 {
+                                                originTracking = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.tracking
+                                            }
+                                            if originSize == -100 {
+                                                originSize = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.fontSize
+                                            }
                                             // Drag to change size and tracking
                                             showFakeString = psdsVM.selectedStrIDList.last!
                                             if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                                interactive.dragX = gesture.translation.width / 20 // DragX is temp value
-                                                psdsVM.tmpObjectForStringProperty.tracking = (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.tracking + interactive.dragX).toString()
-                                                let tmp = FontUtils.GetStringBound(
-                                                    str: psdsVM.tmpObjectForStringProperty.content,
-                                                    fontName: psdsVM.tmpObjectForStringProperty.fontName,
-                                                    fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
-                                                    tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
-                                                )
-                                                psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
+                                                interactive.dragX = gesture.translation.width / 10 // DragX is temp value
+                                                psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString()
+//                                                let tmp = FontUtils.GetStringBound(
+//                                                    str: psdsVM.tmpObjectForStringProperty.content,
+//                                                    fontName: psdsVM.tmpObjectForStringProperty.fontName,
+//                                                    fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
+//                                                    tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
+//                                                )
+//                                                psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
                                                 //                                                psdsVM.tmpObjectForStringProperty.width = tmp.width
                                                 //                                                psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchFontOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                                 
                                             } else {
-                                                interactive.dragY = gesture.translation.height / 40
-                                                psdsVM.tmpObjectForStringProperty.fontSize = (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.fontSize - interactive.dragY).toString()
-                                                let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
+                                                interactive.dragY = gesture.translation.height / 20
+                                                psdsVM.tmpObjectForStringProperty.fontSize = (originSize - interactive.dragY).toString()
+                                                psdsVM.tmpObjectForStringProperty.tracking = String(TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16((originSize - interactive.dragY).rounded())).fontTrackingPoints)
+//                                                let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
                                                 //                                                psdsVM.tmpObjectForStringProperty.width = tmp.width
                                                 //                                                psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchFontOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                                 
@@ -74,6 +83,8 @@ struct StringHighlightView: View {
                                             
                                             interactive.dragX = 0
                                             interactive.dragY = 0
+                                            originTracking = -100
+                                            originSize = -100
                                         })
                         )
                         

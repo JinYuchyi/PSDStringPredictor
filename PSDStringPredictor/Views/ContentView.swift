@@ -86,14 +86,13 @@ struct ContentView: View  {
                 
             }
             
-            //Prograss Bar
             GeometryReader{ geo in
                 UIOverlayView(showPatchLayer: $showPatchLayer)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
                 
                 ScaleSliderView(psdsVM: psdsVM)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
-                
+                //Prograss Bar
                 if #available(OSX 11.0, *) {
                     VStack(spacing: 0){
                         Text(psdsVM.IndicatorText)
@@ -109,6 +108,7 @@ struct ContentView: View  {
                         
                     }
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
+                    .IsHidden(condition: psdsVM.IndicatorText != "")
                 }
                 
             }

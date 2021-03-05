@@ -420,7 +420,10 @@ class PsdsVM: ObservableObject{
         }
     }
     
-    
+//    func FetchTrackingFromDB(_ size: CGFloat) -> (CGFloat, Int16){
+//        let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(size.rounded()))
+//        return (CGFloat(item.fontTrackingPoints), item.fontTracking)
+//    }
     
     
     //MARK: Intents

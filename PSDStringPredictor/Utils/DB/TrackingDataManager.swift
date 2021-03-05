@@ -93,8 +93,8 @@ class TrackingDataManager  {
     }
     
     static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> TrackingDataObject{
-        //var object: TrackingDataObject
-        let fetchedResult = TrackingDataManager.FetchItems(context, fontSize: Int16((Float(fontSize)/3).rounded()))
+        // /3
+        let fetchedResult = TrackingDataManager.FetchItems(context, fontSize: Int16((Float(fontSize)).rounded()))
 
         if (fetchedResult.count > 0) {
             //print("FetchNearestOne: \(fetchedResult.first!.fontSize), \(fetchedResult.first!.fontTracking)")
