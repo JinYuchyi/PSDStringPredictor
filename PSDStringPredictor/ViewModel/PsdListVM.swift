@@ -251,9 +251,11 @@ class PsdsVM: ObservableObject{
     }
     
     func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
+        var pad: CGFloat = 3
         let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)
-        
-        let color1 = PixelProcess.shared.colorAt(x: Int(obj.stringRect.origin.x), y: Int(targetImg.size.height - obj.stringRect.origin.y), img: targetImg.ToCGImage()!)
+        let color1 = PixelProcess.shared.colorAt(x: Int(obj.stringRect.origin.x - pad), y: Int(targetImg.size.height - obj.stringRect.origin.y - pad), img: targetImg.ToCGImage()!)
+//        print("Fetch image color at: \(Int(obj.stringRect.origin.x)), \(Int(targetImg.size.height - obj.stringRect.origin.y)). The Color is \(color1)")
+
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
     
@@ -703,6 +705,7 @@ class PsdsVM: ObservableObject{
             //BGColor
             let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
             bgClolorList.append(tmpBGColor)
+//            bgClolorList.append(obj.bgColor.toFloatArray())
         }
         
         let success = jsMgr.CreateJSFile(psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: saveToPath , descentOffset: descentOffset)

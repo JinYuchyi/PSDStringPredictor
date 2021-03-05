@@ -101,6 +101,7 @@ struct StringObject : Identifiable,  Hashable{
         self.tracking = FetchTrackingFromDB(self.fontSize).0
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
+        self.content = FixContent(content)
         
     }
     
@@ -126,6 +127,7 @@ struct StringObject : Identifiable,  Hashable{
         self.stringRect = CGRect.init()
         self.content = String(charArray)
         self.stringRect = mergeRect(rects: charRacts)
+        self.content = FixContent(content)
     }
     
     init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [CIImage], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
@@ -149,6 +151,7 @@ struct StringObject : Identifiable,  Hashable{
         self.FontName = fontName
         self.alignment = StringAlignment.init(rawValue: alignment)!
         self.status = StringObjectStatus.init(rawValue: status)!
+        self.content = FixContent(content)
     }
     
     func mergeRect(rects: [CGRect]) -> CGRect{
@@ -197,14 +200,15 @@ struct StringObject : Identifiable,  Hashable{
     func FixContent(_ target: String) -> String{
         var res: String = target
         let lowerString: String = target.lowercased()
-        for _word in DataStore.wordList{
+        for (typo, correct) in DataStore.wordDict{
             //Condition which we need to fix lowercase/uppercase problem for proper nouns, such as "iCloud".
-            if (lowerString.contains(_word.lowercased()) == true && lowerString.contains(_word) == false ){
-                let range = lowerString.range(of: _word.lowercased())
-                let first = range?.lowerBound
-                let last = range?.upperBound
-                res = target.replacingOccurrences(of: target[first!...last!], with: _word)
-            }
+//            if (lowerString.contains(_word.lowercased()) == true && lowerString.contains(_word) == false ){
+//                let range = lowerString.range(of: _word.lowercased())
+//                let first = range?.lowerBound
+//                let last = range?.upperBound
+//                res = target.replacingOccurrences(of: target[first!...last!], with: _word)
+//            }
+            res = res.replacingOccurrences(of: typo, with: correct)
         }
         return res
     }

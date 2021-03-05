@@ -92,8 +92,11 @@ class DataStore{
 //        NSColor.init(red: 28, green: 28, blue: 30, alpha: 255)
 //    ]
     
-    static var wordList: [String] = [
-        "iCloud"
+    //Using
+    static var wordDict: [String:String] = [
+        "icloud": "iCloud",
+        "iphone": "IPhone",
+        "macbook": "MacBook"
     ]
     
     //UI

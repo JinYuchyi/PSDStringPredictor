@@ -102,21 +102,16 @@ for (var i = 0; i < num; i++) {
     selectLayer(artLayerRef.name)
     setTextAlignment(alignmentList[i])
 
-    // Create debug rect
-//    fillColor = bgColorList[i]
-//    createRectangle(layerSetRef1, "Test" + names[i], positionList[i][0] , positionList[i][1] - rectList[i][3], rectList[i][2], rectList[i][3] + descentOffset[i], fillColor)
-//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 5, 5, [255,0,0])
-//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] + rectList[i][2] , positionList[i][1], 5, 5, [255,0,0])
-
-
-    //Create Mask Layers
+//    //Create Mask Layers
     fillColor = bgColorList[i]
-    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding, rectList[i][2] + padding * 2, rectList[i][3] + padding * 2 + descentOffset[i], fillColor)
-                                     
-    app.activeDocument.selection.clear()
+    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding, rectList[i][2] + padding * 2, rectList[i][3] + padding * 2 + descentOffset[i], bgColorList[i])
+    //This layer is useless, however it must exist to make the above mask layer avaliable. There is a bug here.
+//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 5, 5, [255,0,0,0])
+    
 }
 // Resize to original ppi
 SetPPI(originalPPI)
+//app.activeDocument.selection.clear()
 
 if (saveToPath != "") {
     const file = File(saveToPath)

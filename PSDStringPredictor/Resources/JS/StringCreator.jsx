@@ -163,6 +163,7 @@ function createRectangle(layerSet, layerName, posX, posY, width, height, color1)
     fillColor.rgb.red = color1[0]
     fillColor.rgb.green = color1[1]
     fillColor.rgb.blue = color1[2]
+    
     app.activeDocument.selection.fill(fillColor)
 
 }
