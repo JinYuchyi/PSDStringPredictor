@@ -49,6 +49,15 @@ extension CGColor: Comparable{
         //return Color.init(red: Double(self.components![0]), green: Double(self.components![1]), blue: Double(self.components![2]))
     }
     
+    func ToReversedColor()->Color{
+        let newColor = CGColor.init(red: 1 - self.components![0], green: 1 - self.components![1], blue: 1 - self.components![2], alpha: 1)
+        let tmpNSC = NSColor.init(cgColor: newColor)
+        let tempC = Color.init(tmpNSC!)
+        return tempC
+        
+        //return Color.init(red: Double(self.components![0]), green: Double(self.components![1]), blue: Double(self.components![2]))
+    }
+    
     func ToGenericRGB()->CGColor{
         let sp2 = CGColorSpace(name:CGColorSpace.genericRGBLinear)!
         let c2 = self.converted(to: sp2, intent: .relativeColorimetric, options: nil)!

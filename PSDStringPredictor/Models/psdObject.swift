@@ -339,6 +339,7 @@ struct PSD {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
                 strObj!.colorMode = value
+                strObj!.charColorModeList = [Int](repeating: (value == .light) ? 1 : 2, count: strObj!.charColorModeList.count)
                 strObj!.CalcColor()
                 //Replace strObj
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
@@ -359,6 +360,7 @@ struct PSD {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
                 strObj!.FontName = value
+                strObj!.fontWeight = value.components(separatedBy: " ").last!
                 //strObj!.CalcColor()
                 //Replace strObj
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
@@ -376,7 +378,7 @@ struct PSD {
         if psd != nil {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
-                print("Changing \(strObj!.charArray[charIndex]) to \(Array(value)[0])")
+//                print("Changing \(strObj!.charArray[charIndex]) to \(Array(value)[0])")
                 strObj!.charArray[charIndex] = Array(value)[0]
                 strObj!.content = String(strObj!.charArray)
                 //print("\(strObj!.content)")

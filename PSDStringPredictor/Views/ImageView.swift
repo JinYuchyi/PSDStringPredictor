@@ -27,6 +27,7 @@ struct ImageView: View {
         //else{
         ZStack{
             Image(nsImage: psds.processedCIImage.ToNSImage())
+                .interpolation(.none)  
 
             SelectionOverlayView( interactive: interactive, psdsVM: psds)
             if psds.canProcess == true {

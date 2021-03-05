@@ -40,17 +40,13 @@ struct ControlPanel: View {
         Divider()
         
         GeometryReader{geo in
-            //            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-            //                /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-            //                    .frame(width: geo.size.width * 0.8, alignment: .center)
-            //            })
-            //            .frame(width: geo.size.width, alignment: .center)
             VStack(alignment: .center){
-                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
-                    Text("Combine To Paragraph")
-                        .frame(width: geo.size.width*0.8, alignment: .center)
-                        
-                }
+                
+//                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
+//                    Text("Combine To Paragraph")
+//                        .frame(width: geo.size.width*0.8, alignment: .center)
+//                        
+//                }
                 
                 
                 

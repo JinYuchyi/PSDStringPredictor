@@ -380,9 +380,15 @@ class PsdsVM: ObservableObject{
     func commitTempStringObject(){
         guard let lastId = selectedStrIDList.last else {return }
         guard let obj = psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: lastId) else {return }
-        //        let new  = FontUtils.GetStringBound(str: obj.content, fontName: obj.FontName, fontSize: obj.fontSize)
-        //        obj.stringRect = CGRect.init(x: new.minX, y: obj.stringRect.minY, width: new.width, height: new.height)
-        psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
+        if tmpObjectForStringProperty.content.count != obj.content.count {
+            let newWidth = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat()).width
+            tmpObjectForStringProperty.width = newWidth
+            psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
+        }
+        else{
+            psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
+        }
+        
         
     }
     
@@ -712,6 +718,7 @@ class PsdsVM: ObservableObject{
         
         if success == true{
             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
+            print("jsPath: \(jsPath)")
             let cmd = "open " + jsPath + "  -a '\(DataStore.PSPath)'"
             PythonScriptManager.RunScript(str: cmd)
         }
@@ -780,13 +787,14 @@ class PsdsVM: ObservableObject{
         
     }
     
-    func ToggleColorMode(psdId: Int, objId: UUID){
-        var psd = psdModel.GetPSDObject(psdId: psdId)
-        if psd != nil {
-            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
-            if strObj != nil{
-                strObj!.colorMode == .dark ? psdModel.SetColorMode(psdId: psdId, objId: objId, value: .light) : psdModel.SetColorMode(psdId: psdId, objId: objId, value: .dark)
-            }
+    func ToggleColorMode(psdId: Int){
+        guard let psd = psdModel.GetPSDObject(psdId: psdId) else {return }
+        if selectedStrIDList.count <= 0 {return}
+        guard let lastObj  = psd.stringObjects.last  else {return }
+        for objId in selectedStrIDList{
+//            guard let strObj = psd.GetStringObjectFromOnePsd(objId: objId) else {return}
+            lastObj.colorMode == .dark ? psdModel.SetColorMode(psdId: psdId, objId: objId, value: .light) : psdModel.SetColorMode(psdId: psdId, objId: objId, value: .dark)
+             tmpObjectForStringProperty.color = lastObj.color
         }
     }
     
@@ -810,8 +818,8 @@ class PsdsVM: ObservableObject{
             tmpObjectForStringProperty.fontName = str
             commitTempStringObject()
             //Set fontName for all selected
-            for objId in selectedStrIDList {
-                psdModel.SetFontName(psdId: psdId, objId: objId, value: str)
+            for id in selectedStrIDList {
+                psdModel.SetFontName(psdId: psdId, objId: id, value: str)
             }
         }
         

@@ -57,7 +57,7 @@ struct StringLabel: View {
                 .position(x: stringObject.stringRect.minX + stringObject.stringRect.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY + stringObject.stringRect.height / 2))
                 .foregroundColor(stringObject.color.ToColor() )
                 .font(.custom(stringObject.FontName, size: stringObject.fontSize))
-                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+                .shadow(color: stringObject.color.ToReversedColor(), radius: 2, x: 0, y: 0)
                 .IsHidden(condition: stringObject.id != showFakeString)
 
 //                .onTapGesture {
@@ -115,10 +115,10 @@ struct StringLabel: View {
     fileprivate func StringFrameLayerView()-> some View {
         //String debug frame
         Rectangle()
-            .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1)
-            
+            .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1 / psdsVM.viewScale)
             .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
+            
     }
     
     fileprivate func DragLayerView()-> some View {

@@ -84,7 +84,7 @@ for (var i = 0; i < num; i++) {
 
     // Set string layer position
     if (isParagraphList[i] == true) {
-        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + rectList[i][2] / 2, positionList[i][1] - rectList[i][3] - offsetList[i][1] / 4)
+        textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2, positionList[i][1] - rectList[i][3] - offsetList[i][1] / 4)
     } else {
 //        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - offsetList[i][1] / 4)
             textItemRef.position = Array(positionList[i][0] + alignmentOffset , positionList[i][1] )

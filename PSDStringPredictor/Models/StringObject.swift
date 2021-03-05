@@ -180,9 +180,9 @@ struct StringObject : Identifiable,  Hashable{
         //return result
     }
     
-    mutating func CalcRectWidthByString() {
-        
-    }
+//    mutating func CalcRectWidthByString() {
+//        
+//    }
     
     mutating func SetOffset(x: CGFloat, y: CGFloat){
         var result: [CGRect] = []
@@ -202,12 +202,6 @@ struct StringObject : Identifiable,  Hashable{
         let lowerString: String = target.lowercased()
         for (typo, correct) in DataStore.wordDict{
             //Condition which we need to fix lowercase/uppercase problem for proper nouns, such as "iCloud".
-//            if (lowerString.contains(_word.lowercased()) == true && lowerString.contains(_word) == false ){
-//                let range = lowerString.range(of: _word.lowercased())
-//                let first = range?.lowerBound
-//                let last = range?.upperBound
-//                res = target.replacingOccurrences(of: target[first!...last!], with: _word)
-//            }
             res = res.replacingOccurrences(of: typo, with: correct)
         }
         return res
@@ -273,8 +267,9 @@ struct StringObject : Identifiable,  Hashable{
                 result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
             }
         }
-
         color = result
+        print("Colormode is: \(colorMode.rawValue), color is \(color)")
+
         return result
     }
 
@@ -291,7 +286,7 @@ struct StringObject : Identifiable,  Hashable{
      func CalcFontFullName() -> String{
         var family = ""
         
-        if fontSize/3 < 20 {
+        if fontSize < 20 {
 //            print("size is \(fontSize), family will be Text")
             family = "Text"
         }else{
@@ -310,7 +305,7 @@ struct StringObject : Identifiable,  Hashable{
         
         style = weight
         
-        if fontSize/3 < 20 {
+        if fontSize < 20 {
             family = "Text"
         }else{
             family = "Display"
@@ -330,7 +325,7 @@ struct StringObject : Identifiable,  Hashable{
 //            style = "Semibold"
 //        }
         
-        if fontSize/3 < 20 {
+        if fontSize < 20 {
             family = "Text"
         }else{
             family = "Display"

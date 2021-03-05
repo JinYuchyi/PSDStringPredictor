@@ -249,7 +249,8 @@ struct StringObjectPropertyView: View {
     
     func toggleColor() {
             if psdsVM.selectedStrIDList.count > 0 {
-                psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)
+                psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId)
+                
             }
         
     }
