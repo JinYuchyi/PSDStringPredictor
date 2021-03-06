@@ -374,6 +374,7 @@ struct PSD {
     }
     
     mutating func SetChar(psdId: Int, objId: UUID, charIndex: Int, value: String){
+        if value == "" {return }
         var psd = GetPSDObject(psdId: psdId)
         if psd != nil {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)

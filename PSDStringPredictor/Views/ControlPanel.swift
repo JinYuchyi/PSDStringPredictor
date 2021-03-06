@@ -37,11 +37,16 @@ struct ControlPanel: View {
     var body: some View {
         //        padding(.top)
         Text("Operation on Selected").foregroundColor(.gray).frame(width: panelWidth, alignment:.leading).foregroundColor(.gray)
+            .padding(.horizontal)
+            .padding(.top)
+            .frame(width: panelWidth, alignment: .leading)
+            .foregroundColor(.gray)
+        
         Divider()
         
         GeometryReader{geo in
             VStack(alignment: .center){
-                
+            
 //                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
 //                    Text("Combine To Paragraph")
 //                        .frame(width: geo.size.width*0.8, alignment: .center)

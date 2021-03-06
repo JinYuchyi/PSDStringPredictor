@@ -87,8 +87,8 @@ struct ContentView: View  {
             }
             
             GeometryReader{ geo in
-                UIOverlayView(showPatchLayer: $showPatchLayer)
-                    .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
+//                UIOverlayView(showPatchLayer: $showPatchLayer)
+//                    .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
                 
                 ScaleSliderView(psdsVM: psdsVM)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
@@ -127,6 +127,7 @@ struct ContentView: View  {
             Divider()
             
             StringObjectPropertyView( panelWidth: rightPanelWidth, psdsVM: psdsVM  )
+                .padding()
             
             Divider()
             
@@ -135,6 +136,10 @@ struct ContentView: View  {
             
             
         }
+        .frame(width: rightPanelWidth)
+//        .padding()
+//        .ignoresSafeArea()
+//        .border(Color.red, width: 2)
         
     }
 
@@ -151,16 +156,16 @@ struct ContentView: View  {
 
         HStack(alignment: .center, spacing: 0){
             LeftViewGroup()
-                .frame(width: 300 )
+                .frame(width: leftPanelWidth )
             //.border(Color.red, width: 1)
             Divider()
 
             MidViewGroup
-                .frame(width: screenSize!.width - 600)
+                .frame(width: screenSize!.width - leftPanelWidth - rightPanelWidth)
 
             Divider()
             RightViewGroup()
-                .frame(width: 300)
+                .frame(width: rightPanelWidth)
 
         }
         .onAppear(perform: {

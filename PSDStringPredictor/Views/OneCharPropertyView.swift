@@ -92,7 +92,8 @@ struct OneCharPropertyView: View {
     }
     
     func SetChar(value: String){
-        psdsVM.psdModel.SetChar(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, charIndex: index, value: value)
+        guard let lastId = psdsVM.selectedStrIDList.last else {return}
+        psdsVM.psdModel.SetChar(psdId: psdsVM.selectedPsdId, objId: lastId, charIndex: index, value: value)
     }
     
     func GetLastSelectObject() -> StringObject{

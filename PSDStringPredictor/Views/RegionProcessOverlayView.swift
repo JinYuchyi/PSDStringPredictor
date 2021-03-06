@@ -42,21 +42,21 @@ struct RegionProcessOverlayView: View {
                                 width: interactive.selectionRect.width.rounded(),
                                 height: -interactive.selectionRect.height.rounded()
                             ).standardized
-                            psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
-    
+                            let newIdList = psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
+                            //Deactivate the region process, once finished the process
+                            regionProcessVM.regionActive.toggle()
+                            interactive.selectionRect = CGRect.init()
+                            // Select all new created strings
+                            psdsVM.selectedStrIDList = newIdList
+                            
                         }
                 )
                 .mask(
                     Rectangle()
-                        //interactive.selectionRect
                         .fill(Color.green.opacity(0.5))
                         .frame(width: interactive.selectionRect.width , height: interactive.selectionRect.height  )
                         .position(x: (interactive.selectionRect.minX + interactive.selectionRect.width/2) , y: (interactive.selectionRect.minY + interactive.selectionRect.height/2) )
                 )
-
-            
-                         
-            
         }
         .frame(width: psdsVM.selectedNSImage.size.width  , height: psdsVM.selectedNSImage.size.height )
 

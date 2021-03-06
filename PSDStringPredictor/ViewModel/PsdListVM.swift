@@ -215,10 +215,11 @@ class PsdsVM: ObservableObject{
         }
     }
     
-    func fetchRegionStringObjects(rect: CGRect, psdId: Int){
+    func fetchRegionStringObjects(rect: CGRect, psdId: Int) -> [UUID]{
         //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
         //        regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
         
+//        var idList: [UUID] = []
         let regionImage = processedCIImage.cropped(to: rect).premultiplyingAlpha()
         var offset = CGPoint.init(x: rect.minX, y: rect.minY)
         //                let tmpPath = GetDocumentsPath().appending("/test1.bmp")
@@ -231,7 +232,7 @@ class PsdsVM: ObservableObject{
         let newList = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self, offset: offset)
         if newList.count == 0{
             print("No strings detected in the area.")
-            return
+            return []
         }
         DispatchQueue.main.async{ [self] in
             //if region already have string object exist, just remove the old ones.
@@ -247,7 +248,7 @@ class PsdsVM: ObservableObject{
             
             IndicatorText = ""
         }
-        
+        return newList.map({$0.id})
     }
     
     func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
@@ -398,7 +399,11 @@ class PsdsVM: ObservableObject{
         }
     }
     
-
+    func commitFontTracking() {
+        for id in selectedStrIDList {
+            psdModel.SetTracking(psdId: selectedPsdId, objId: id, value: tmpObjectForStringProperty.tracking.toCGFloat())
+        }
+    }
     
     func commitPosX() {
         for id in selectedStrIDList {
@@ -801,11 +806,12 @@ class PsdsVM: ObservableObject{
         }
     }
     
-    func ToggleFontName(psdId: Int, objId: UUID){
+    func ToggleFontName(psdId: Int, objId: UUID?){
+        if objId == nil {return}
         var psd = psdModel.GetPSDObject(psdId: psdId)
         if psd != nil {
             for objId in selectedStrIDList{}
-            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
+            var strObj = psd!.GetStringObjectFromOnePsd(objId: objId!)
             if strObj == nil {return }
             let fName = strObj!.FontName
             let endIndex = fName.lastIndex(of: " ")
