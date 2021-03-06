@@ -34,8 +34,99 @@ struct ControlPanel: View {
     var panelWidth: CGFloat
     //Constant
     
+    var calculationBtns: some View {
+        HStack{
+            Button(action: {psdsVM.ProcessForOnePsd()}){
+                Text("One")
+                    .frame(minWidth: 70,  maxWidth: .infinity)
+            }
+            .disabled(psdsVM.IndicatorText != "")
+            
+            Button(action: {regionProcessVM.regionBtnPressed(); psdsVM.canProcess = true}){
+                Text("Region")
+                    .frame(minWidth: 70,  maxWidth: .infinity)
+            }
+            .colorMultiply(regionProcessVM.regionActive == true ? Color.green : Color.white)
+            .disabled(psdsVM.IndicatorText != "")
+            
+            Button(action: {psdsVM.ProcessForAll()}){
+                Text("Committed")
+                    .frame(minWidth: 50,  maxWidth: .infinity)
+            }
+            .disabled(psdsVM.IndicatorText != "")
+            
+        }
+        .frame( maxWidth: .infinity)
+    }
+    
+    var createPSDButtons: some View  {
+        HStack{
+            Button(action: {psdsVM.CreatePSDForOnePSD(_id: psdsVM.selectedPsdId, saveToPath: "" )}){
+                Text("One")
+                    .frame(minWidth: 165,  maxWidth: .infinity)
+            }
+            .disabled(psdsVM.IndicatorText != "")
+            
+            Button(action: {psdsVM.CreatePSDForCommited()}){
+                Text("Committed")
+                    .frame(minWidth: 50,  maxWidth: .infinity)
+            }
+            .disabled(psdsVM.IndicatorText != "")
+        }
+        //.frame( maxWidth: .infinity)
+        .padding(.bottom)
+    }
+    
+    var alignmentButtons: some View  {
+        HStack{
+            Button(action: {psdsVM.alignSelection(orientation: "horizontal-left")}){
+                Image("HAlignLeft")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                //                                        Text("􀌀")
+                //                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            }
+            Button(action: { psdsVM.alignSelection(orientation: "horizontal-center") }){
+                Image("HAlignCenter")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            }
+            Button(action: { psdsVM.alignSelection(orientation: "horizontal-right") }){
+                Image("HAlignRight")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            }
+            
+            
+            Button(action: {psdsVM.alignSelection(orientation: "vertical-top") }){
+                Image("VAlignTop")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                
+            }
+            
+            Button(action: {psdsVM.alignSelection(orientation: "vertical-center") }){
+                Image("VAlignCenter")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            }
+            Button(action: { psdsVM.alignSelection(orientation: "vertical-bott0m")}){
+                Image("VAlignBottom")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            }
+        }
+    }
+    
     var body: some View {
         //        padding(.top)
+
         Text("Operation on Selected").foregroundColor(.gray).frame(width: panelWidth, alignment:.leading).foregroundColor(.gray)
             .padding(.horizontal)
             .padding(.top)
@@ -44,141 +135,75 @@ struct ControlPanel: View {
         
         Divider()
         
-        GeometryReader{geo in
+//        GeometryReader{geo in
             VStack(alignment: .center){
-            
-//                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
-//                    Text("Combine To Paragraph")
-//                        .frame(width: geo.size.width*0.8, alignment: .center)
-//
-//                }
                 
-                
-                
-                
-//                HStack{
-//                    Button(action: {psdsVM.SetSelectionToFixed()}){
-//                        Text("Ready")
-//                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-//                            .padding(0)
-//
-//                    }
-//
-//                    Button(action: {psdsVM.SetSelectionToIgnored()}){
-//                        Text("Ignore")
-//                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-//                            .padding(0)
-//
-//                    }
-//
-//                }
+                //                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
+                //                    Text("Combine To Paragraph")
+                //                        .frame(width: geo.size.width*0.8, alignment: .center)
+                //
+                //                }
 
-                HStack{
-                    Button(action: {psdsVM.alignSelection(orientation: "horizontal-left")}){
-                        Image("HAlignLeft")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        //                                        Text("􀌀")
-                        //                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-                    Button(action: { psdsVM.alignSelection(orientation: "horizontal-center") }){
-                        Image("HAlignCenter")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-                    Button(action: { psdsVM.alignSelection(orientation: "horizontal-right") }){
-                        Image("HAlignRight")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
+                //                HStack{
+                //                    Button(action: {psdsVM.SetSelectionToFixed()}){
+                //                        Text("Ready")
+                //                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
+                //                            .padding(0)
+                //
+                //                    }
+                //
+                //                    Button(action: {psdsVM.SetSelectionToIgnored()}){
+                //                        Text("Ignore")
+                //                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
+                //                            .padding(0)
+                //
+                //                    }
+                //
+                //                }
                 
-              
-                    Button(action: {psdsVM.alignSelection(orientation: "vertical-top") }){
-                        Image("VAlignTop")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-
-                    }
-                    
-                    Button(action: {psdsVM.alignSelection(orientation: "vertical-center") }){
-                        Image("VAlignCenter")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-                    Button(action: { psdsVM.alignSelection(orientation: "vertical-bott0m")}){
-                        Image("VAlignBottom")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
+                Button(action: {psdsVM.deleteSelectedStringObjects()}){
+                    Text("Delete Selected Strings")
+                        .frame(width: 240)
                 }
-      
+                
+                
+                alignmentButtons
+                
+                Divider()
                 
                 Spacer()
                 
-                Text("Calculate String Layers")
-                    .foregroundColor(.gray)
-                    .padding(.top)
-                    .frame(width: geo.size.width*0.8, alignment: .leading)
-                
-                HStack{
-                    Button(action: {psdsVM.ProcessForOnePsd()}){
-                        Text("One")
-                            .frame(minWidth: 70,  maxWidth: .infinity)
-                    }
-                    .disabled(psdsVM.IndicatorText != "")
+                Group{
+                                    
+                    Text("Calculate String Layers")
+                        .foregroundColor(.gray)
+                        .padding(.horizontal)
+                        .padding(.top)
+                        .frame(width: panelWidth, alignment: .leading)
                     
-                    Button(action: {regionProcessVM.regionBtnPressed(); psdsVM.canProcess = true}){
-                        Text("Region")
-                            .frame(minWidth: 70,  maxWidth: .infinity)
-                    }
-                    .colorMultiply(regionProcessVM.regionActive == true ? Color.green : Color.white)
-                    .disabled(psdsVM.IndicatorText != "")
+                    Divider()
                     
-                    Button(action: {psdsVM.ProcessForAll()}){
-                        Text("Committed")
-                            .frame(minWidth: 50,  maxWidth: .infinity)
-                    }
-                    .disabled(psdsVM.IndicatorText != "")
+                    calculationBtns
                     
+                    Divider()
+                    
+                    Text("Create PSD")
+                        .foregroundColor(.gray)
+                        .padding(.horizontal)
+                        .padding(.top)
+                        .frame(width: panelWidth, alignment: .leading)
+                    
+                    Divider()
+                    
+                    createPSDButtons
+                    
+                    Divider()
                 }
-                .frame( maxWidth: .infinity)
-                
-                Text("Create PSD")
-                    .foregroundColor(.gray)
-                    //.padding(.top)
-                    .frame(width: geo.size.width*0.8, alignment: .leading)
-                HStack{
-                    Button(action: {psdsVM.CreatePSDForOnePSD(_id: psdsVM.selectedPsdId, saveToPath: "" )}){
-                        Text("One")
-                            .frame(minWidth: 165,  maxWidth: .infinity)
-                    }
-                    .disabled(psdsVM.IndicatorText != "")
-                    
-                    Button(action: {psdsVM.CreatePSDForCommited()}){
-                        Text("Committed")
-                            .frame(minWidth: 50,  maxWidth: .infinity)
-                    }
-                    .disabled(psdsVM.IndicatorText != "")
-                }
-                //.frame( maxWidth: .infinity)
-                .padding(.bottom)
-                //.padding(.bottom)
-                
-                
-                //                Button(action: {Debug()}){
-                //                    Text("Debug")
-                //                        .frame(minWidth: 50,  maxWidth: .infinity)
-                //                }
             }
             
-        }
-        
+//        }
+
+//        VStack { Divider().background(Color.gray) }.padding(.horizontal)
         
     }
     

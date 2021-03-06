@@ -156,9 +156,10 @@ struct StringObjectPropertyView: View {
             }
 
             HStack(spacing: 0){
-                Text("Size: ")
+                Text("Size")
                     .foregroundColor(Color.gray)
-                    .frame(width: titleWidth, alignment: .trailing)
+                    .padding(.leading)
+                    .frame(width: titleWidth, alignment: .leading)
                 
                 fontSizeFloatingTextField
                     .padding(.trailing)
@@ -166,9 +167,10 @@ struct StringObjectPropertyView: View {
             }
             
             HStack(spacing: 0){
-                Text("Tracking: ")
+                Text("Tracking")
+                    .padding(.leading)
                     .foregroundColor(Color.gray)
-                    .frame(width: titleWidth, alignment: .trailing)
+                    .frame(width: titleWidth, alignment: .leading)
                 HStack{
                     fontTrackingTextField
                         .padding(.trailing)
@@ -193,10 +195,11 @@ struct StringObjectPropertyView: View {
             .frame(width: panelWidth)
 //            .border(Color.red)
             
-            HStack{
-                Text("Font:")
+            HStack(spacing: 0){
+                Text("Font")
                     .foregroundColor(Color.gray)
-                    .frame(width:titleWidth, alignment: .trailing)
+                    .padding(.leading)
+                    .frame(width:titleWidth, alignment: .leading)
                 
                 HStack{
                     if GetLastSelectObject().fontSize != 0 {
@@ -222,11 +225,12 @@ struct StringObjectPropertyView: View {
                 
             }
             .frame(width: panelWidth)
-            //                .frame(width: panelWidth)
-            HStack{
-                Text("Color:")
+
+            HStack(spacing: 0){
+                Text("Color")
                     .foregroundColor(Color.gray)
-                    .frame(width: titleWidth, alignment: .trailing)
+                    .padding(.leading)
+                    .frame(width: titleWidth, alignment: .leading)
                 
                 HStack{
                     //Color mode icon
@@ -274,10 +278,11 @@ struct StringObjectPropertyView: View {
             }
             .frame(width: panelWidth)
             
-            HStack{
-                Text("Position:")
+            HStack(spacing: 0){
+                Text("Position")
                     .foregroundColor(Color.gray)
-                    .frame(width: titleWidth, alignment: .trailing)
+                    .padding(.leading)
+                    .frame(width: titleWidth, alignment: .leading)
                 
                 HStack{
                     posXFloatingTextField

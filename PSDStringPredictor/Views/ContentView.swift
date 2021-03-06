@@ -92,6 +92,7 @@ struct ContentView: View  {
                 
                 ScaleSliderView(psdsVM: psdsVM)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
+                
                 //Prograss Bar
                 if #available(OSX 11.0, *) {
                     VStack(spacing: 0){
@@ -122,7 +123,7 @@ struct ContentView: View  {
     fileprivate func RightViewGroup() -> some View {
         return VStack{
             
-            ImageProcessView(psdsVM: psdsVM)
+            ImageProcessView(psdsVM: psdsVM, panelWidth: rightPanelWidth)
             
             Divider()
             
@@ -133,7 +134,6 @@ struct ContentView: View  {
             
             Spacer()
             ControlPanel(imageProcessVM: imageViewModel, settingsVM: settingVM, psdsVM: psdsVM, regionProcessVM: regionProcessVM, panelWidth: rightPanelWidth)
-            
             
         }
         .frame(width: rightPanelWidth)

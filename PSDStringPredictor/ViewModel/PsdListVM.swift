@@ -425,6 +425,18 @@ class PsdsVM: ObservableObject{
         }
     }
     
+    func deleteSelectedStringObjects(){
+        if selectedStrIDList.count == 0 || GetSelectedPsd() == nil {return }
+        let idList = selectedStrIDList
+        selectedStrIDList = []
+        var tmpResult = GetSelectedPsd()!.stringObjects
+        for id in idList {
+            tmpResult.removeAll(where: {$0.id == id})
+        }
+        psdModel.SetStringObjects(psdId: selectedPsdId, value: tmpResult)
+        tmpObjectForStringProperty = StringObjectForStringProperty.init()
+    }
+    
 //    func FetchTrackingFromDB(_ size: CGFloat) -> (CGFloat, Int16){
 //        let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(size.rounded()))
 //        return (CGFloat(item.fontTrackingPoints), item.fontTracking)
@@ -902,6 +914,9 @@ class PsdsVM: ObservableObject{
     
     func SaveDocument(){
         //        packPsdObject(psdId: selectedPsdId)
+        if psdModel.psdObjects.count < 1 {
+            return
+        }
         let panel = NSSavePanel()
         panel.nameFieldLabel = "Save File To:"
         panel.nameFieldStringValue = "filename.stringlayers"

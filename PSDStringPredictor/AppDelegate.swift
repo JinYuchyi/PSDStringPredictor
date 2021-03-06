@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.setFrameAutosaveName("StringGeneratorMain")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
-        window.title = "AutoLayer"
+        window.title = "AutoLayer \(softwareInfo.getMainVersion())"
         //        //Preference window
         //        settingWindow = NSWindow(
         //            contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
@@ -287,15 +287,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.open(URL(string: "rdar://new/problem/component=DTP%20Tools&version=PS%20Layering")!)
     }
     @IBAction func DeleteSelectedStringObjects(_ sender: Any) {
-        if psdsVM.selectedStrIDList.count == 0 || psdsVM.GetSelectedPsd() == nil {return }
-        let idList = psdsVM.selectedStrIDList
-        psdsVM.selectedStrIDList = []
-        var tmpResult = psdsVM.GetSelectedPsd()!.stringObjects
-        for id in idList {
-            tmpResult.removeAll(where: {$0.id == id})
-        }
-        psdsVM.psdModel.SetStringObjects(psdId: psdsVM.selectedPsdId, value: tmpResult)
-        psdsVM.tmpObjectForStringProperty = StringObjectForStringProperty.init()
+        psdsVM.deleteSelectedStringObjects()
     }
 }
 

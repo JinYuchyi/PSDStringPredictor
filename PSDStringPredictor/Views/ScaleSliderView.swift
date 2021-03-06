@@ -14,22 +14,23 @@ struct ScaleSliderView: View {
     @ObservedObject var psdsVM: PsdsVM
 
     var body: some View {
-        VStack {
+        HStack {
                 Slider(
                     value: $psdsVM.viewScale,
                     in: 0.5...3.0,
                     
-                    step: 0.5,
+//                    step: 0.1,
 //                    onEditingChanged: { v in
 //                        scale = v
 //                    },
                     minimumValueLabel: Text("0.5"),
                     maximumValueLabel: Text("3.0")
                 ){
-                    Text("Scale")
+                    Text("Zoom")
                 }
-                //Text("\(scale)")
-                    //.foregroundColor(isEditing ? .red : .blue)
+            Button("Reset", action: {
+                psdsVM.viewScale = 1
+            })
             }
 //        .accentColor(.red)
         .frame(width: 300, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)

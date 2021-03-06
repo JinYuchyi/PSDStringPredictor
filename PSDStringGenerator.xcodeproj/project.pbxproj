@@ -179,6 +179,7 @@
 		3FC3DFC725B52FB60060521D /* PsdOperatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFC625B52FB60060521D /* PsdOperatorView.swift */; };
 		3FC3DFCC25B670EB0060521D /* KeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFCB25B670EB0060521D /* KeyBoard.swift */; };
 		3FC3DFD025B68BB80060521D /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFCF25B68BB80060521D /* CGFloatExtension.swift */; };
+		3FC8D72225F392BA00DF5A07 /* system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D72125F392BA00DF5A07 /* system.swift */; };
 		3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */; };
 		3FC9068125AB455E00120DE2 /* ImageAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */; };
 		3FC9068425ABF4DF00120DE2 /* StringAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */; };
@@ -393,6 +394,7 @@
 		3FC3DFC625B52FB60060521D /* PsdOperatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdOperatorView.swift; sourceTree = "<group>"; };
 		3FC3DFCB25B670EB0060521D /* KeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoard.swift; sourceTree = "<group>"; };
 		3FC3DFCF25B68BB80060521D /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
+		3FC8D72125F392BA00DF5A07 /* system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = system.swift; sourceTree = "<group>"; };
 		3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdListVM.swift; sourceTree = "<group>"; };
 		3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAttributesVM.swift; sourceTree = "<group>"; };
 		3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringAttributesVM.swift; sourceTree = "<group>"; };
@@ -757,6 +759,7 @@
 			isa = PBXGroup;
 			children = (
 				3FC3DFCB25B670EB0060521D /* KeyBoard.swift */,
+				3FC8D72125F392BA00DF5A07 /* system.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -1094,6 +1097,7 @@
 				3FA70D4825D95E7C00D68598 /* 1Color.swift in Sources */,
 				3FE8814025333D820088A1CD /* StringObjectRow.swift in Sources */,
 				3F8460A2251057FF00788176 /* CompareImage.swift in Sources */,
+				3FC8D72225F392BA00DF5A07 /* system.swift in Sources */,
 				3F9C3960256F8A9800F686A7 /* psdObject.swift in Sources */,
 				3F59C0F125D3CF8600F9CF52 /* hColor.mlmodel in Sources */,
 				3F3A22BB25CCDA9500E7FC30 /* CharColorMode.swift in Sources */,

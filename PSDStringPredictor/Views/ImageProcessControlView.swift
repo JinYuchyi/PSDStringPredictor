@@ -18,7 +18,7 @@ struct ImageProcessView: View {
 //    @ObservedObject var controlVM: ControlVM
 //    @ObservedObject var imageVM: ImageVM
     @ObservedObject var psdsVM: PsdsVM
-    
+    let panelWidth: CGFloat
     var body: some View {
         
 
@@ -27,9 +27,17 @@ struct ImageProcessView: View {
 //            HStack{
 //                ToggleConv()
 //            }
+            Text("Image Enhance")
+                .padding(.horizontal)
+                .padding(.top)
+                .frame(width: panelWidth, alignment: .leading)
+                .foregroundColor(Color.gray)
+            
+            Divider()
             
             HStack{
                 Text("Gamma")
+                    .foregroundColor(Color.gray)
                 Slider(
                     value: Binding(
                         get: {
@@ -48,10 +56,11 @@ struct ImageProcessView: View {
                 }
             }
             .padding(.horizontal)
-            .padding(.top)
+//            .padding(.top)
             
             HStack{
                 Text("Exposure")
+                    .foregroundColor(Color.gray)
                 Slider(
                     value: Binding(
                         get: {
