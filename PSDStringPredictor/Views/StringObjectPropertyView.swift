@@ -262,7 +262,7 @@ struct StringObjectPropertyView: View {
                     
                     Spacer()
                     
-                    Button(action: {psdsVM.commitTempStringObject(); }, label: {
+                    Button(action: {saveColor() }, label: {
                         Text("􀈄")
                     })
                     .frame(width: 15, alignment: .trailing)
@@ -299,6 +299,15 @@ struct StringObjectPropertyView: View {
         }
         
     }
+    
+    func saveColor(){
+//        print(psdsVM.tmpObjectForStringProperty.color)
+//        psdsVM.tmpObjectForStringProperty.color = psdsVM.tmpObjectForStringProperty.color
+        guard let lastID = psdsVM.selectedStrIDList.last else {return }
+        print("save color")
+        psdsVM.psdModel.SetColor(psdId: psdsVM.selectedPsdId, objId: lastID, value: psdsVM.tmpObjectForStringProperty.color)
+        psdsVM.commitTempStringObject()
+     }
     
     func toggleColor() {
         if psdsVM.selectedStrIDList.count > 0 {
