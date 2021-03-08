@@ -52,12 +52,13 @@ struct SelectionOverlayView: View {
 //                                width: interactive.selectionRect.width.rounded(),
 //                                height: -interactive.selectionRect.height.rounded()
 //                            ).standardized
-                            print(interactive.selectionRect)
+//                            print(interactive.selectionRect)
 //                            let tmp = psdsVM.viewScale
 //                            psdsVM.viewScale = 1
                             CalcSelectedObject()
 //                            psdsVM.viewScale = tmp
                         }
+                    
                 )
                 
                 .gesture(
@@ -67,6 +68,7 @@ struct SelectionOverlayView: View {
                             psdsVM.selectedStrIDList.removeAll()
                         }
                 )
+             
             if show == true {
                 Rectangle()
                     //interactive.selectionRect

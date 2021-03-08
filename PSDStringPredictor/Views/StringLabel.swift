@@ -42,6 +42,7 @@ struct StringLabel: View {
     
     var TextLayerView: some View {
         ZStack{
+            
             //Fake
             Text(psdsVM.tmpObjectForStringProperty.content)
                 .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
@@ -85,6 +86,21 @@ struct StringLabel: View {
                             })
                         )
                 )
+            
+                Color.red
+                    .frame(width: 2, height: 2, alignment: .center)
+                    .position(x: stringObject.stringRect.minX , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+                    .onTapGesture {
+                        print("Position: \(stringObject.stringRect.minX), \((psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
+                    }
+            
+            Color.yellow
+                .frame(width: 2, height: 2, alignment: .center)
+                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+                .onTapGesture {
+                    print("Position: \(psdsVM.tmpObjectForStringProperty.posX.toCGFloat()), \( psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
+                }
+
     
         }
         //New aligned text

@@ -656,7 +656,7 @@ class PsdsVM: ObservableObject{
         var colorList = [[Int]]()
         var fontSizeList:[Float] = []
         var fontNameList: [String] = []
-        var positionList = [[Int]]()
+        var positionList = [[Float]]()
         var trackingList = [Float]()
         var offsetList = [[Int16]]()
         var alignmentList = [String]()
@@ -738,24 +738,26 @@ class PsdsVM: ObservableObject{
             if obj.alignment == .center {
                 rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                 // Append Position
-                let newX = Int(obj.stringRect.minX + newRect.minX )
-                let newY = Int(targetImg.size.height - obj.stringRect.minY + newRect.minY)
+                let newX =  Float(obj.stringRect.minX + newRect.minX )
+                let newY =  Float(targetImg.size.height - obj.stringRect.minY + newRect.minY)
                 print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
                 positionList.append([newX, newY])
 
             }else if obj.alignment == .left {
                 rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                 // Append Position
-                let newX = Int(obj.stringRect.minX + newRect.minX - frontSpace)
-                let newY = Int((targetImg.size.height - obj.stringRect.minY + newRect.minY).rounded())
+//                let newX = Int(obj.stringRect.minX + newRect.minX - frontSpace)
+                let newX = Float(obj.stringRect.minX )
+
+                let newY =  Float((targetImg.size.height - obj.stringRect.minY + newRect.minY) )
                 positionList.append([newX, newY])
 
 
             }else if obj.alignment == .right {
-                rectList.append([Float(newRect.minX), Float(newRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
+                rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                 // Append Position
-                let newX = Int(obj.stringRect.minX + newRect.minX )
-                let newY = Int((targetImg.size.height - obj.stringRect.minY + newRect.minY).rounded())
+                let newX = Float(obj.stringRect.minX + newRect.minX )
+                let newY = Float((targetImg.size.height - obj.stringRect.minY + newRect.minY))
                 positionList.append([newX, newY])
 
             }

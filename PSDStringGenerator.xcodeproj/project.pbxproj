@@ -17,6 +17,7 @@
 		3F09920C25F08390004046B0 /* charDSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F09920B25F08390004046B0 /* charDSView.swift */; };
 		3F09E9D425B41E3800F627F2 /* psdToPngInTempFolder.py in Resources */ = {isa = PBXBuildFile; fileRef = 3F09E9D325B41E3800F627F2 /* psdToPngInTempFolder.py */; };
 		3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0DE2F425694E5A00BD3A3A /* JSManager.swift */; };
+		3F173D7525F5F87C00AADD65 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F173D7425F5F87C00AADD65 /* GridView.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */; };
 		3F1B2B21256CDB7C00D9BA0F /* CharBoundsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */; };
@@ -233,6 +234,7 @@
 		3F09920B25F08390004046B0 /* charDSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = charDSView.swift; sourceTree = "<group>"; };
 		3F09E9D325B41E3800F627F2 /* psdToPngInTempFolder.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = psdToPngInTempFolder.py; sourceTree = "<group>"; };
 		3F0DE2F425694E5A00BD3A3A /* JSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSManager.swift; sourceTree = "<group>"; };
+		3F173D7425F5F87C00AADD65 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsDataManager.swift; sourceTree = "<group>"; };
 		3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsObject.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				3F09920B25F08390004046B0 /* charDSView.swift */,
 				3F4D13E525020F22008F846B /* StringLabel.swift */,
 				3F4D13EA2502220D008F846B /* StringLabelList.swift */,
+				3F173D7425F5F87C00AADD65 /* GridView.swift */,
 				3FD401F42500F2FB00525E67 /* ContentView.swift */,
 				3FEFE9122507200400AEF1C8 /* ControlPanel.swift */,
 				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
@@ -1184,6 +1187,7 @@
 				3F3A22CB25CCF57400E7FC30 /* mlSymbolsUtil.swift in Sources */,
 				3F59C0F025D3CF8600F9CF52 /* xColor.swift in Sources */,
 				3F68B704252DCAC700CCFCE5 /* ArrayExtension.swift in Sources */,
+				3F173D7525F5F87C00AADD65 /* GridView.swift in Sources */,
 				3F59C0E725D3CF8600F9CF52 /* nColor.mlmodel in Sources */,
 				3FC9068825AC02C200120DE2 /* ControlVM.swift in Sources */,
 				3F59C0F425D3CF8600F9CF52 /* oColor.swift in Sources */,
