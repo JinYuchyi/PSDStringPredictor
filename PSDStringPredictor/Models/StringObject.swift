@@ -102,7 +102,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
         self.content = FixContent(content)
-        
+//        self.stringRect = reCalcRect(rect: stringRect)
     }
     
     init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
@@ -152,6 +152,17 @@ struct StringObject : Identifiable,  Hashable{
         self.alignment = StringAlignment.init(rawValue: alignment)!
         self.status = StringObjectStatus.init(rawValue: status)!
         self.content = FixContent(content)
+    }
+    
+    func reCalcRect(rect: CGRect) -> CGRect {
+        let bound = FontUtils.GetStringBound(str: content, fontName: FontName, fontSize: fontSize, tracking: tracking)
+        if Array(content).first!.isNumber == true || Array(content).first!.isLetter == true {
+            let firstChar = String(Array(content)[0])
+            let front = DataStore.frontSpaceDict[firstChar]
+            let r = CGRect.init(x: rect.minX + bound.minX - front!, y: rect.minY + bound.minY, width: bound.width, height: bound.height)
+            return r
+        }
+        return rect
     }
     
     func mergeRect(rects: [CGRect]) -> CGRect{

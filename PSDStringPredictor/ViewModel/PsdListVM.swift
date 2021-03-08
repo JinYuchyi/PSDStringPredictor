@@ -86,7 +86,6 @@ class PsdsVM: ObservableObject{
     @Published var viewScale: CGFloat = 1.0
     @Published var selectRect: CGRect = CGRect.init()
     @Published var linkSizeAndTracking: Bool = true
-    var frontSpaceDict: [String: CGFloat] = [:]
 
     // UI control
     @Published var charDSWindowShow: Bool = false
@@ -328,7 +327,6 @@ class PsdsVM: ObservableObject{
         let strs = ocr.GetStringArrayFromObservations(results_fast)
         
         for i in 0..<stringsRects.count where canProcess == true{
-            //            print("psdsVM.canProcess: \(canProcess)")
             
             DispatchQueue.main.async{
                 psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
@@ -727,7 +725,7 @@ class PsdsVM: ObservableObject{
             var frontSpace: CGFloat = 0
             guard let theChar: Character = obj.content.first else {return}
             if theChar.isLetter == true || theChar.isNumber == true {
-                frontSpace = frontSpaceDict[String(theChar)]!
+                frontSpace = DataStore.frontSpaceDict[String(theChar)]!
 //                let frontSpace: CGFloat = 0
 //                print("theChar: \(theChar), frontSpace: \(frontSpace)")
                 frontSpaceList.append(Float(frontSpace * obj.fontSize / 100))
@@ -738,8 +736,9 @@ class PsdsVM: ObservableObject{
             if obj.alignment == .center {
                 rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                 // Append Position
-                let newX =  Float(obj.stringRect.minX + newRect.minX )
-                let newY =  Float(targetImg.size.height - obj.stringRect.minY + newRect.minY)
+//                let newX =  Float(obj.stringRect.minX + newRect.minX )
+                let newX =  Float(obj.stringRect.minX )
+                let newY =  Float(targetImg.size.height - obj.stringRect.minY )
                 print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
                 positionList.append([newX, newY])
 
@@ -749,7 +748,7 @@ class PsdsVM: ObservableObject{
 //                let newX = Int(obj.stringRect.minX + newRect.minX - frontSpace)
                 let newX = Float(obj.stringRect.minX )
 
-                let newY =  Float((targetImg.size.height - obj.stringRect.minY + newRect.minY) )
+                let newY =  Float((targetImg.size.height - obj.stringRect.minY ) )
                 positionList.append([newX, newY])
 
 
@@ -757,7 +756,7 @@ class PsdsVM: ObservableObject{
                 rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                 // Append Position
                 let newX = Float(obj.stringRect.minX + newRect.minX )
-                let newY = Float((targetImg.size.height - obj.stringRect.minY + newRect.minY))
+                let newY = Float((targetImg.size.height - obj.stringRect.minY ))
                 positionList.append([newX, newY])
 
             }

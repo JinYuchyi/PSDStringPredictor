@@ -50,7 +50,8 @@ class FontUtils {
                     c == "y" ||
                     c == "j" ||
                     c == "," ||
-                    c == ";"
+                    c == ";" ||
+                c == "/"
             ) {
                 hasLongTail = true
             }

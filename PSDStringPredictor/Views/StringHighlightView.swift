@@ -70,7 +70,7 @@ struct StringHighlightView: View {
                                             // Drag to change size and tracking
                                             showFakeString = psdsVM.selectedStrIDList.last!
                                             if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                                interactive.dragX = gesture.translation.width / 10 // DragX is temp value
+                                                interactive.dragX = gesture.translation.width / 40 // DragX is temp value
                                                 psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString()
                                                 //                                                let tmp = FontUtils.GetStringBound(
                                                 //                                                    str: psdsVM.tmpObjectForStringProperty.content,
@@ -84,7 +84,7 @@ struct StringHighlightView: View {
                                                 
                                             } else {
                                                 interactive.dragY = gesture.translation.height / 20
-                                                psdsVM.tmpObjectForStringProperty.fontSize = (originSize - interactive.dragY).toString()
+                                                psdsVM.tmpObjectForStringProperty.fontSize = ((originSize - interactive.dragY).rounded()).toString()
                                                 if psdsVM.linkSizeAndTracking == true {
                                                     psdsVM.tmpObjectForStringProperty.tracking = String(TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16((originSize - interactive.dragY).rounded())).fontTrackingPoints)
                                                 }

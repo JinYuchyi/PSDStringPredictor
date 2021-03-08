@@ -94,12 +94,12 @@ struct StringLabel: View {
                         print("Position: \(stringObject.stringRect.minX), \((psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
                     }
             
-            Color.yellow
-                .frame(width: 2, height: 2, alignment: .center)
-                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
-                .onTapGesture {
-                    print("Position: \(psdsVM.tmpObjectForStringProperty.posX.toCGFloat()), \( psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
-                }
+//            Color.yellow
+//                .frame(width: 2, height: 2, alignment: .center)
+//                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+//                .onTapGesture {
+//                    print("Position: \(psdsVM.tmpObjectForStringProperty.posX.toCGFloat()), \( psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
+//                }
 
     
         }

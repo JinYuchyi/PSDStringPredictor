@@ -57,6 +57,8 @@ class DataStore{
         [ 255.0, 255.0,255.0]
     ]
     
+    static var frontSpaceDict : [String: CGFloat] = [:]
+    
 //    static var colorLightModeList: [NSColor] = [
 //        NSColor.init(red: 0, green: 122, blue: 255, alpha: 255),
 //        NSColor.init(red: 52, green: 199, blue: 89, alpha: 255),
@@ -96,7 +98,8 @@ class DataStore{
     static var wordDict: [String:String] = [
         "icloud": "iCloud",
         "iphone": "IPhone",
-        "macbook": "MacBook"
+        "macbook": "MacBook",
+        "Self ie": "Selfie"
     ]
     
     //UI
