@@ -47,8 +47,8 @@ struct RegionProcessOverlayView: View {
                             regionProcessVM.regionActive.toggle()
                             interactive.selectionRect = CGRect.init()
                             // Select all new created strings
-                            psdsVM.selectedStrIDList = newIdList
-                            
+//                            psdsVM.selectedStrIDList = newIdList
+//                            psdsVM.tmpObjectForStringProperty = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
                         }
                 )
                 .mask(

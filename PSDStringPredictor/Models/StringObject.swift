@@ -286,7 +286,7 @@ struct StringObject : Identifiable,  Hashable{
      func CalcFontFullName() -> String{
         var family = ""
         
-        if fontSize < 20 {
+        if fontSize/3 < 20 {
 //            print("size is \(fontSize), family will be Text")
             family = "Text"
         }else{
@@ -305,7 +305,7 @@ struct StringObject : Identifiable,  Hashable{
         
         style = weight
         
-        if fontSize < 20 {
+        if fontSize/3 < 20 {
             family = "Text"
         }else{
             family = "Display"
@@ -325,7 +325,7 @@ struct StringObject : Identifiable,  Hashable{
 //            style = "Semibold"
 //        }
         
-        if fontSize < 20 {
+        if fontSize/3 < 20 {
             family = "Text"
         }else{
             family = "Display"

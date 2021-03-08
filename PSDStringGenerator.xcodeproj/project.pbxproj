@@ -180,6 +180,8 @@
 		3FC3DFCC25B670EB0060521D /* KeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFCB25B670EB0060521D /* KeyBoard.swift */; };
 		3FC3DFD025B68BB80060521D /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC3DFCF25B68BB80060521D /* CGFloatExtension.swift */; };
 		3FC8D72225F392BA00DF5A07 /* system.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D72125F392BA00DF5A07 /* system.swift */; };
+		3FC8D72525F480C700DF5A07 /* frontspace.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3FC8D72425F480C700DF5A07 /* frontspace.csv */; };
+		3FC8D72825F4843300DF5A07 /* FrontSpaceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D72725F4843300DF5A07 /* FrontSpaceObject.swift */; };
 		3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */; };
 		3FC9068125AB455E00120DE2 /* ImageAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */; };
 		3FC9068425ABF4DF00120DE2 /* StringAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */; };
@@ -395,6 +397,8 @@
 		3FC3DFCB25B670EB0060521D /* KeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoard.swift; sourceTree = "<group>"; };
 		3FC3DFCF25B68BB80060521D /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
 		3FC8D72125F392BA00DF5A07 /* system.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = system.swift; sourceTree = "<group>"; };
+		3FC8D72425F480C700DF5A07 /* frontspace.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = frontspace.csv; sourceTree = "<group>"; };
+		3FC8D72725F4843300DF5A07 /* FrontSpaceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontSpaceObject.swift; sourceTree = "<group>"; };
 		3FC9067D25AB3AD700120DE2 /* PsdListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsdListVM.swift; sourceTree = "<group>"; };
 		3FC9068025AB455E00120DE2 /* ImageAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAttributesVM.swift; sourceTree = "<group>"; };
 		3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringAttributesVM.swift; sourceTree = "<group>"; };
@@ -814,6 +818,7 @@
 			isa = PBXGroup;
 			children = (
 				3FF51B5A259ADF2800D11575 /* charBounds.csv */,
+				3FC8D72425F480C700DF5A07 /* frontspace.csv */,
 				3FA5047C2574CADA00F4A77A /* fontSize.csv */,
 				3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */,
 			);
@@ -866,6 +871,7 @@
 				3FD247FC253E9BDD007EBE36 /* CharImageThumbnailObject.swift */,
 				3FEBA6C6251CA87C002D8EC1 /* StringLabelObject.swift */,
 				3FDA0D392534111D007792C0 /* TrackingDataObject.swift */,
+				3FC8D72725F4843300DF5A07 /* FrontSpaceObject.swift */,
 				3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */,
 				3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */,
 				3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */,
@@ -976,6 +982,7 @@
 				3FF51B9E25A2C65500D11575 /* Functions.js in Resources */,
 				3FF51B5B259ADF2800D11575 /* charBounds.csv in Resources */,
 				3F8E6CF725A4249F00B383C9 /* StringCreator.jsx in Resources */,
+				3FC8D72525F480C700DF5A07 /* frontspace.csv in Resources */,
 				3F9C3956256F496400F686A7 /* Main.storyboard in Resources */,
 				3FDBC4B32583121800E9C2DC /* AppSettings.plist in Resources */,
 				3F4D13E925021B74008F846B /* StringObjectsData.json in Resources */,
@@ -1215,6 +1222,7 @@
 				3FA70D5025D95E7C00D68598 /* 9Color.mlmodel in Sources */,
 				3F56529525E9E192002A941E /* StringAlignment+Extension.swift in Sources */,
 				3FA70D4D25D95E7C00D68598 /* 8Color.swift in Sources */,
+				3FC8D72825F4843300DF5A07 /* FrontSpaceObject.swift in Sources */,
 				3FA4DCDB25D283A200E7041C /* charColorModeV2.swift in Sources */,
 				3FC9067E25AB3AD700120DE2 /* PsdListVM.swift in Sources */,
 				3F59C10725D3CF8600F9CF52 /* cColor.swift in Sources */,

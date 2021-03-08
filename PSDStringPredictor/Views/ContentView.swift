@@ -13,8 +13,8 @@ import AppKit
 struct ContentView: View  {
     
     @State var selectedStringObject: StringObject = StringObject.init()
-//    let keyEventHandle = KeyEventHandling()
-
+    //    let keyEventHandle = KeyEventHandling()
+    
     let data = DataStore()
     let font = FontUtils()
     @ObservedObject var imageViewModel: ImageProcess
@@ -24,7 +24,7 @@ struct ContentView: View  {
     @ObservedObject var settingVM : SettingViewModel
     @ObservedObject var fontTestVM = FontTestViewModel()
     @State var width: CGFloat = 0
-
+    
     let imgUtil = ImageUtil()
     
     @State var showImage = false
@@ -54,19 +54,18 @@ struct ContentView: View  {
     
     var MidViewGroup: some View {
         ZStack{
-//            keyEventHandle
+            //            keyEventHandle
             ScrollView([.horizontal, .vertical] , showsIndicators: true ){
                 //                                    GeometryReader{geo in
                 
                 ZStack{
                     Color.gray.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.1)
-//                    Color.white.frame(width: psdsVM.selectedNSImage.size.width , height: psdsVM.selectedNSImage.size.height ).opacity(0.01)
-
+                    //                    Color.white.frame(width: psdsVM.selectedNSImage.size.width , height: psdsVM.selectedNSImage.size.height ).opacity(0.01)
+                    
                     ImageView(psds: psdsVM, regionVM: regionProcessVM, interactive: interactive)
                         .scaleEffect(psdsVM.viewScale)
                     Group{
-                    
-                        
+
                         LabelsOnImage(psdsVM: psdsVM, interactive: interactive, showFakeString: $showFakeString)
                             .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
                         
@@ -80,15 +79,15 @@ struct ContentView: View  {
                     .IsHidden(condition: psdsVM.stringIsOn == true)
                     .scaleEffect(psdsVM.viewScale)
                     
-//                    Color.red.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.3)
-
+                    //                    Color.red.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.3)
+                    
                 }
                 
             }
             
             GeometryReader{ geo in
-//                UIOverlayView(showPatchLayer: $showPatchLayer)
-//                    .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
+                UIOverlayView(psdsVM: psdsVM)
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .topTrailing)
                 
                 ScaleSliderView(psdsVM: psdsVM)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
@@ -113,7 +112,7 @@ struct ContentView: View  {
                 }
                 
             }
-           
+            
             //Popup Window
             charDSView(psdsVM: psdsVM)
         }
@@ -137,12 +136,12 @@ struct ContentView: View  {
             
         }
         .frame(width: rightPanelWidth)
-//        .padding()
-//        .ignoresSafeArea()
-//        .border(Color.red, width: 2)
+        //        .padding()
+        //        .ignoresSafeArea()
+        //        .border(Color.red, width: 2)
         
     }
-
+    
     
     
     
@@ -150,34 +149,34 @@ struct ContentView: View  {
     
     
     var body: some View {
-//
-//        Rectangle()
-//            .frame(width: screenSize?.width, height: screenSize?.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-
+        //
+        //        Rectangle()
+        //            .frame(width: screenSize?.width, height: screenSize?.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        
         HStack(alignment: .center, spacing: 0){
             LeftViewGroup()
                 .frame(width: leftPanelWidth )
             //.border(Color.red, width: 1)
             Divider()
-
+            
             MidViewGroup
                 .frame(width: screenSize!.width - leftPanelWidth - rightPanelWidth)
-
+            
             Divider()
             RightViewGroup()
                 .frame(width: rightPanelWidth)
-
+            
         }
         .onAppear(perform: {
             //Load tables
             psdsVM.FetchTrackingData(path: Bundle.main.path(forResource: "FontSizeTrackingTable", ofType: "csv")!)
-            //psdsVM.FetchStandardTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
             psdsVM.FetchCharacterTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
             psdsVM.FetchBoundTable(path: Bundle.main.path(forResource: "charBounds", ofType: "csv")!)
+            psdsVM.frontSpaceDict = CSVManager.shared.ParsingCsvFileAsFrontSpace(FilePath: Bundle.main.path(forResource: "frontspace", ofType: "csv")!)
         })
         .preferredColorScheme(.dark)
         
- 
+        
     }
     
     

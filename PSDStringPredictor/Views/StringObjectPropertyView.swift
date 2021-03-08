@@ -20,7 +20,7 @@ struct StringObjectPropertyView: View {
     @State var posY: String = "0"
     @State private var textColor =
         Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
-    @State var linkSizeAndTracking: Bool = true
+//    @State var linkSizeAndTracking: Bool = true
     
     //Constant
     var panelWidth: CGFloat
@@ -174,7 +174,7 @@ struct StringObjectPropertyView: View {
                 HStack{
                     fontTrackingTextField
                         .padding(.trailing)
-                    Toggle(isOn: $linkSizeAndTracking) {
+                    Toggle(isOn: $psdsVM.linkSizeAndTracking) {
                         Text("Link with size")
                             .fixedSize()
                     }

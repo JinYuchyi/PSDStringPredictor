@@ -18,12 +18,27 @@ struct StringHighlightView: View {
     @State var originTracking: CGFloat =  -100
     @State var originSize: CGFloat = -100
     
+    fileprivate func CalcRealBound() -> CGRect {
+        let rect = FontUtils.GetStringBound(str: GetObj().content, fontName: GetObj().FontName, fontSize: GetObj().fontSize, tracking: GetObj().tracking)
+        return rect
+    }
+    
     var body: some View {
         ZStack{
             
             
             ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
                 ZStack{
+                    //Realtime rect
+//                    Rectangle()
+//                        .frame(width: CalcRealBound().width , height: CalcRealBound().height)
+//                        .position(
+//                            x: GetObj().stringRect.midX,
+//                            y: psdsVM.selectedNSImage.size.height - GetObj().stringRect.midY
+//                        )
+//                        .foregroundColor(Color.yellow.opacity(0.6))
+//
+                    
                     Rectangle()
                         .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                         .position(
@@ -57,21 +72,23 @@ struct StringHighlightView: View {
                                             if abs(gesture.translation.width / gesture.translation.height) > 1 {
                                                 interactive.dragX = gesture.translation.width / 10 // DragX is temp value
                                                 psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString()
-//                                                let tmp = FontUtils.GetStringBound(
-//                                                    str: psdsVM.tmpObjectForStringProperty.content,
-//                                                    fontName: psdsVM.tmpObjectForStringProperty.fontName,
-//                                                    fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
-//                                                    tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
-//                                                )
-//                                                psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
+                                                //                                                let tmp = FontUtils.GetStringBound(
+                                                //                                                    str: psdsVM.tmpObjectForStringProperty.content,
+                                                //                                                    fontName: psdsVM.tmpObjectForStringProperty.fontName,
+                                                //                                                    fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
+                                                //                                                    tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
+                                                //                                                )
+                                                //                                                psdsVM.tmpObjectForStringProperty.tracking = calcTracking().toString()
                                                 //                                                psdsVM.tmpObjectForStringProperty.width = tmp.width
                                                 //                                                psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchFontOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                                 
                                             } else {
                                                 interactive.dragY = gesture.translation.height / 20
                                                 psdsVM.tmpObjectForStringProperty.fontSize = (originSize - interactive.dragY).toString()
-                                                psdsVM.tmpObjectForStringProperty.tracking = String(TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16((originSize - interactive.dragY).rounded())).fontTrackingPoints)
-//                                                let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
+                                                if psdsVM.linkSizeAndTracking == true {
+                                                    psdsVM.tmpObjectForStringProperty.tracking = String(TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16((originSize - interactive.dragY).rounded())).fontTrackingPoints)
+                                                }
+                                                //                                                let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
                                                 //                                                psdsVM.tmpObjectForStringProperty.width = tmp.width
                                                 //                                                psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchFontOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                                 
@@ -148,6 +165,11 @@ struct StringHighlightView: View {
             }
         }
         
+    }
+    
+    func GetObj() -> StringObject {
+        guard let lastId = psdsVM.selectedStrIDList.last else {return StringObject()}
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: lastId) ?? StringObject()
     }
     
     var fakeString: some View {

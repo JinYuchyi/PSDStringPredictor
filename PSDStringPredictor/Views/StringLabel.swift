@@ -55,11 +55,11 @@ struct StringLabel: View {
             Text(stringObject.content)
                 .tracking(stringObject.tracking)
                 .position(x: stringObject.stringRect.minX + stringObject.stringRect.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY + stringObject.stringRect.height / 2))
-                .foregroundColor(stringObject.color.ToColor() )
+                .foregroundColor(psdsVM.stringDifferenceShow == true ? Color.red.opacity(0.5) : stringObject.color.ToColor() )
                 .font(.custom(stringObject.FontName, size: stringObject.fontSize))
                 .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
                 .IsHidden(condition: stringObject.id != showFakeString)
-
+//                .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal)
 //                .onTapGesture {
 //                    //Tap to select stringobject
 //                    psdsVM.selectedStrIDList.removeAll()
@@ -82,8 +82,6 @@ struct StringLabel: View {
                              psdsVM.selectedStrIDList.append(stringObject.id)
                              psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
                              FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
-                
-                    
                             })
                         )
                 )

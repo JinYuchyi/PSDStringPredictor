@@ -98,6 +98,21 @@ class CSVManager{
         return objArray
     }
     
+    private func ParsingCsvStringAsFrontSpaceArray(FromString str: String) -> [FrontSpaceObject]{
+        var objArray : [FrontSpaceObject] = []
+        let objStrArray = str.components(separatedBy: "\n")
+        for index in 1..<objStrArray.count{
+            let itemArray = objStrArray[index].components(separatedBy: ",")
+            let a = String(itemArray[0])
+            let b = Int16(itemArray[1])!
+            let c = Int16(itemArray[2].replacingOccurrences(of: "\r", with: ""))!
+
+//            let g = (itemArray[5].replacingOccurrences(of: "\r", with: ""))
+            objArray.append(FrontSpaceObject(char: a, size: b, frontSpace: c))
+        }
+        return objArray
+    }
+    
     func ParsingCsvFileAsTrackingObjectArray(FilePath path: String) -> [TrackingDataObject] {
         let str = ReadAllContentAsString(FromFile: path)
         return ParsingCsvStringAsTrackingObjectArray(FromString: str)
@@ -116,5 +131,16 @@ class CSVManager{
     func ParsingCsvFileAsBoundsObjArray(FilePath path: String) -> [CharBoundsObject] {
         let str = ReadAllContentAsString(FromFile: path)
         return ParsingCsvStringAsCharBoundsArray(FromString: str)
+    }
+    
+    func ParsingCsvFileAsFrontSpace(FilePath path: String) -> [String: CGFloat] {
+        let str = ReadAllContentAsString(FromFile: path)
+        let objList = ParsingCsvStringAsFrontSpaceArray(FromString: str)
+        var dict: [String: CGFloat] = [:]
+        for obj in objList{
+//            print("Fill for char: \(obj.char), \(obj.frontSpace)")
+            dict[obj.char] = CGFloat(obj.frontSpace)
+        }
+        return dict
     }
 }

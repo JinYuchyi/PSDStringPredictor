@@ -9,10 +9,11 @@
 import SwiftUI
 
 struct UIOverlayView: View {
-    @Binding var showPatchLayer: Bool
+//    @Binding var showPatchLayer: Bool
+    @ObservedObject var psdsVM: PsdsVM
     var body: some View {
-        Toggle(isOn: $showPatchLayer) {
-            Text("Show Block layers")
+        Toggle(isOn: $psdsVM.stringDifferenceShow) {
+            Text("Show String Diff")
                 .fixedSize()
                 .shadow(radius: 1)
         }

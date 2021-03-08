@@ -128,7 +128,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
             endingLineNumber = "84"
-            landmarkName = "CreateJSFile(psdPath:contentList:colorList:fontSizeList:trackingList:fontNameList:positionList:offsetList:alignmentList:rectList:bgColorList:isParagraphList:saveToPath:descentOffset:)"
+            landmarkName = "CreateJSFile(psdPath:contentList:colorList:fontSizeList:trackingList:fontNameList:positionList:offsetList:alignmentList:rectList:bgColorList:isParagraphList:saveToPath:descentOffset:frontSpace:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

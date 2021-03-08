@@ -91,6 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        stringObjectVM.stringOverlay = true
         //Load color data
         imageProcess.FetchStandardHSVList()
+//        CSVManager.shared.ParsingCsvFileAsFrontSpace(FilePath: )
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
