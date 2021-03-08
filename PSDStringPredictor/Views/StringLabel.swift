@@ -40,6 +40,17 @@ struct StringLabel: View {
         }
     }
     
+    func getAlignLabelPos() -> CGFloat{
+        if stringObject.alignment == .left{
+            return stringObject.stringRect.minX
+        }else if stringObject.alignment == .center {
+            return stringObject.stringRect.midX
+        }else{
+            return stringObject.stringRect.maxX
+        }
+        
+    }
+    
     var TextLayerView: some View {
         ZStack{
             
@@ -87,12 +98,25 @@ struct StringLabel: View {
                         )
                 )
             
-                Color.red
-                    .frame(width: 2, height: 2, alignment: .center)
-                    .position(x: stringObject.stringRect.minX , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+               Text("􀆇")
+                .font(.system(size: 8))
+                .foregroundColor(Color.red)
+                    .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+                .offset(x: 0, y: 3)
+                .frame(alignment: .top)
                     .onTapGesture {
-                        print("Position: \(stringObject.stringRect.minX), \((psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
+//                        print("Position: \(stringObject.stringRect.minX), \((psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
                     }
+//            Color.pink
+//                .frame(width: 2, height: 2, alignment: .center)
+//                .position(x: stringObject.stringRect.midX , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+//                .onTapGesture {
+//                }
+//            Color.pink
+//                .frame(width: 2, height: 2, alignment: .center)
+//                .position(x: stringObject.stringRect.maxX , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+//                .onTapGesture {
+//                }
             
 //            Color.yellow
 //                .frame(width: 2, height: 2, alignment: .center)
@@ -163,40 +187,40 @@ struct StringLabel: View {
                 
             }.IsHidden(condition: stringObject.status != StringObjectStatus.ignored)
             
-            HStack{
-                //Button for alignment
-                
-                Button(action: {alignmentIconName = psdsVM.alignmentTapped(stringObject.id)}){
-                    CustomImage( name: stringObject.alignment.imageName())
-                        .scaledToFit()
-                }
-                .buttonStyle(RoundButtonStyle())
-                .frame(width: smallBtnSize, height: smallBtnSize)
-                .padding(-4)
-                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true)
-                
-                //Button for fix
-                Button(action: {psdsVM.FixedBtnTapped(stringObject.id)}){
-                    CustomImage( name: stringObject.status == StringObjectStatus.fixed ? "tick-active" : "tick-round")
-                        .scaledToFit()
-                }
-                .buttonStyle(RoundButtonStyle())
-                .frame(width: smallBtnSize, height: smallBtnSize)
-                .padding(-4)
-                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true || stringObject.status == StringObjectStatus.fixed)
-                
-                //Button for delete
-                Button(action: {psdsVM.IgnoreBtnTapped(stringObject.id)}){
-                    CustomImage( name: stringObject.status == StringObjectStatus.ignored ? "forbidden-active" : "forbidden-round")
-                        .scaledToFit()
-                }
-                .buttonStyle(RoundButtonStyle())
-                .frame(width: smallBtnSize, height: smallBtnSize)
-                .padding(-4)
-                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true || stringObject.status == StringObjectStatus.ignored)
-            }
-            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0, alignment: .bottomTrailing)
-            .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )
+//            HStack{
+//                //Button for alignment
+//
+//                Button(action: {alignmentIconName = psdsVM.alignmentTapped(stringObject.id)}){
+//                    CustomImage( name: stringObject.alignment.imageName())
+//                        .scaledToFit()
+//                }
+//                .buttonStyle(RoundButtonStyle())
+//                .frame(width: smallBtnSize, height: smallBtnSize)
+//                .padding(-4)
+//                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true)
+//
+//                //Button for fix
+//                Button(action: {psdsVM.FixedBtnTapped(stringObject.id)}){
+//                    CustomImage( name: stringObject.status == StringObjectStatus.fixed ? "tick-active" : "tick-round")
+//                        .scaledToFit()
+//                }
+//                .buttonStyle(RoundButtonStyle())
+//                .frame(width: smallBtnSize, height: smallBtnSize)
+//                .padding(-4)
+//                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true || stringObject.status == StringObjectStatus.fixed)
+//
+//                //Button for delete
+//                Button(action: {psdsVM.IgnoreBtnTapped(stringObject.id)}){
+//                    CustomImage( name: stringObject.status == StringObjectStatus.ignored ? "forbidden-active" : "forbidden-round")
+//                        .scaledToFit()
+//                }
+//                .buttonStyle(RoundButtonStyle())
+//                .frame(width: smallBtnSize, height: smallBtnSize)
+//                .padding(-4)
+//                .IsHidden(condition: psdsVM.selectedStrIDList.contains(stringObject.id)==true || stringObject.status == StringObjectStatus.ignored)
+//            }
+//            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0, alignment: .bottomTrailing)
+//            .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )
             
         }
     }

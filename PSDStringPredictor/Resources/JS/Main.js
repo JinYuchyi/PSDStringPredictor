@@ -31,7 +31,7 @@ while (i < docRef.layerSets.length) {
     } else {
         i++
     }
-
+    
 }
 
 
@@ -45,7 +45,7 @@ layerSetRef.name = "StringLayersGroup"
 const num = contentList.length
 for (var i = 0; i < num; i++) {
     var artLayerRef = layerSetRef.artLayers.add()
-
+    
     artLayerRef.kind = LayerKind.TEXT
     var textItemRef = artLayerRef.textItem
     if (isParagraphList[i] == true) {
@@ -54,7 +54,7 @@ for (var i = 0; i < num; i++) {
         textItemRef.leading = fontSizeList[i] * 10 / (600 / 72)
         textItemRef.width = rectList[i][2] + widthExtend
         textItemRef.height = rectList[i][3]
-
+        
     } else {
         textItemRef.kind = TextType.POINTTEXT
     }
@@ -66,64 +66,62 @@ for (var i = 0; i < num; i++) {
     textColor.rgb.blue = colorList[i][2]
     textItemRef.color = textColor
     textItemRef.font = fontNameList[i]
-
+    
     textItemRef.size = new UnitValue(fontSizeList[i], "px")
-
-   var alignmentOffset = 0
-//   alignName = alignmentList[i]
-//   if (alignName == "center") {
-//       alignmentOffset = rectList[i][2] / 2
-//   }
-//   if (alignName == "right") {
-//       alignmentOffset = rectList[i][2]
-//   }
-
+    
+    var alignmentOffset = 0
+    //   alignName = alignmentList[i]
+    //   if (alignName == "center") {
+    //       alignmentOffset = rectList[i][2] / 2
+    //   }
+    //   if (alignName == "right") {
+    //       alignmentOffset = rectList[i][2]
+    //   }
+    
     //    alignName = alignmentList[i]
-
+    
     padding = 5
     // Set string layer position
     if (isParagraphList[i] == true) {
-//        textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 - frontSpace[i], positionList[i][1] - rectList[i][3] - offsetList[i][1] / 4)
+        //        textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 - frontSpace[i], positionList[i][1] - rectList[i][3] - offsetList[i][1] / 4)
     } else {
-//        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - offsetList[i][1] / 4)
+        //        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - offsetList[i][1] / 4)
         if (alignmentList[i] == "right") {
-//            alert((textItemRef.bounds[2].value).toString())
             textItemRef.position = Array(positionList[i][0] + rectList[i][2] + frontSpace[i], positionList[i][1]   )
-            
         }else if  (alignmentList[i] == "left"){
             textItemRef.position = Array(positionList[i][0] - frontSpace[i] , positionList[i][1] )
-         }else {
+        }else {
             textItemRef.position = Array(positionList[i][0] + rectList[i][2]/2 - frontSpace[i], positionList[i][1] )
-        }
-        //     if (alignmentList[i] == "left"){
-        //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
-        //     }
-        //    else if (alignmentList[i] == "right") {
-        //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2  , positionList[i][1] )
-        //         }else{
-        //             textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
-        //         }
-    }
-    textItemRef.tracking = trackingList[i]
-    artLayerRef.name = names[i]
-    selectLayer(artLayerRef.name)
-    setTextAlignment(alignmentList[i])
-
-//    //Create Mask Layers
-    fillColor = bgColorList[i]
-    createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding, rectList[i][2] + padding * 2, rectList[i][3] + padding * 2 , bgColorList[i])
-    //This layer is useless, however it must exist to make the above mask layer avaliable. There is a bug here.
-//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 1, 1, [255,0,0])
-    
-}
-// Resize to original ppi
-SetPPI(originalPPI)
-//app.activeDocument.selection.clear()
-
-if (saveToPath != "") {
-    const file = File(saveToPath)
-    docRef.saveAs(file, PhotoshopSaveOptions)
-    docRef.close(SaveOptions.DONOTSAVECHANGES)
-    //newDoc.close(SaveOptions.DONOTSAVECHANGES)
-}
-
+         }
+                                         //     if (alignmentList[i] == "left"){
+                                         //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
+                                         //     }
+                                         //    else if (alignmentList[i] == "right") {
+                                         //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2  , positionList[i][1] )
+                                         //         }else{
+                                         //             textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
+                                         //         }
+                                         }
+                                         textItemRef.tracking = trackingList[i]
+                                         artLayerRef.name = names[i]
+                                         selectLayer(artLayerRef.name)
+                                         setTextAlignment(alignmentList[i])
+                                         
+                                         //    //Create Mask Layers
+                                         fillColor = bgColorList[i]
+                                         createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding, rectList[i][2] + padding * 2, rectList[i][3] + padding * 2 , bgColorList[i])
+                                         //This layer is useless, however it must exist to make the above mask layer avaliable. There is a bug here.
+                                         //    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 1, 1, [255,0,0])
+                                         
+                                         }
+                                         // Resize to original ppi
+                                         SetPPI(originalPPI)
+                                         //app.activeDocument.selection.clear()
+                                         
+                                         if (saveToPath != "") {
+                const file = File(saveToPath)
+                docRef.saveAs(file, PhotoshopSaveOptions)
+                docRef.close(SaveOptions.DONOTSAVECHANGES)
+                //newDoc.close(SaveOptions.DONOTSAVECHANGES)
+            }
+                                         
