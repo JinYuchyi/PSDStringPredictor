@@ -81,13 +81,18 @@ for (var i = 0; i < num; i++) {
     //    alignName = alignmentList[i]
 
     padding = 5
-
     // Set string layer position
     if (isParagraphList[i] == true) {
 //        textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 - frontSpace[i], positionList[i][1] - rectList[i][3] - offsetList[i][1] / 4)
     } else {
 //        textItemRef.position = Array(positionList[i][0] - offsetList[i][0] + alignmentOffset, positionList[i][1] - offsetList[i][1] / 4)
-            textItemRef.position = Array(positionList[i][0], positionList[i][1] )
+        if (alignmentList[i] == "right") {
+//            alert((textItemRef.bounds[2].value).toString())
+            textItemRef.position = Array(positionList[i][0] + artLayerRef.bounds[2].value - artLayerRef.bounds[0].value, positionList[i][1] )
+            
+        }else {
+            textItemRef.position = Array(positionList[i][0] + (textItemRef.bounds[2] - textItemRef.bounds[0]) / 2, positionList[i][1] )
+        }
         //     if (alignmentList[i] == "left"){
         //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
         //     }
@@ -100,14 +105,15 @@ for (var i = 0; i < num; i++) {
     textItemRef.tracking = trackingList[i]
     artLayerRef.name = names[i]
     selectLayer(artLayerRef.name)
+                                         alert(alignmentList[i].toString)
     setTextAlignment(alignmentList[i])
 
 //    //Create Mask Layers
     fillColor = bgColorList[i]
     createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding, rectList[i][2] + padding * 2, rectList[i][3] + padding * 2 + descentOffset[i], bgColorList[i])
     //This layer is useless, however it must exist to make the above mask layer avaliable. There is a bug here.
-    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 1, 1, [255,0,0])
-    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] + rectList[i][2] , positionList[i][1] - rectList[i][3], 1, 1, [255,0,0])
+//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 1, 1, [255,0,0])
+//    createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] + rectList[i][2] , positionList[i][1] - rectList[i][3], 1, 1, [255,0,0])
     
 }
 // Resize to original ppi

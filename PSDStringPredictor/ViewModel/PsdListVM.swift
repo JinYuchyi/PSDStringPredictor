@@ -738,7 +738,7 @@ class PsdsVM: ObservableObject{
             if obj.alignment == .center {
                 rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                 // Append Position
-                let newX = Int(obj.stringRect.minX + obj.stringRect.width / 2 + newRect.minX )
+                let newX = Int(obj.stringRect.minX + newRect.minX )
                 let newY = Int(targetImg.size.height - obj.stringRect.minY + newRect.minY)
                 print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
                 positionList.append([newX, newY])
@@ -754,7 +754,7 @@ class PsdsVM: ObservableObject{
             }else if obj.alignment == .right {
                 rectList.append([Float(newRect.minX), Float(newRect.minY), Float(obj.stringRect.width), Float(obj.stringRect.height)])
                 // Append Position
-                let newX = Int(obj.stringRect.minX + newRect.minX + (obj.stringRect.width)  )
+                let newX = Int(obj.stringRect.minX + newRect.minX )
                 let newY = Int((targetImg.size.height - obj.stringRect.minY + newRect.minY).rounded())
                 positionList.append([newX, newY])
 
