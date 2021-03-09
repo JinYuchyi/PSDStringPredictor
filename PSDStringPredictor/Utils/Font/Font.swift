@@ -10,6 +10,16 @@ import Foundation
 import Cocoa
 
 class FontUtils {
+    
+    static func  calcFontTailLength(content: String, size: CGFloat) -> CGFloat {
+        for c in Array(content) {
+            if String(c) == "p" || String(c) == "q" || String(c) == "g" || String(c) == "y" || String(c) == "j" || String(c) == "," || String(c) == ";" || String(c) == "/" || String(c) == "(" {
+                return size * 18 / 100
+            }
+        }
+        return 0
+    }
+    
     static func GetFontInfo(Font font: String, Content content: String, Size size: CGFloat) -> (ascent: CGFloat, descent: CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect, xHeight: CGFloat ) {
         var info: (ascent:CGFloat, descent:CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect, xHeight: CGFloat )
         
@@ -38,7 +48,7 @@ class FontUtils {
         return info
     }
     
-    static func FetchFontOffset(content: String, fontSize: CGFloat) -> CGFloat{
+    static func FetchTailOffset(content: String, fontSize: CGFloat) -> CGFloat{
         var hasLongTail = false
         var hasHat = false
         
@@ -61,7 +71,7 @@ class FontUtils {
         }
         
         var fontName: String = ""
-        if (fontSize >= 20) {
+        if (fontSize / 3 >= 20) {
             fontName = "SFProDisplay-Regular"
         }
         else{
@@ -73,7 +83,6 @@ class FontUtils {
             let descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
             let ascent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).ascent
             let xheight = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).xHeight
-//            return  (descent + (ascent - xheight)) * fontDecentOffsetScale
             return descent * fontDecentOffsetScale
         }else if hasLongTail == true && hasHat == false {
             let descent = FontUtils.GetFontInfo(Font: fontName, Content: content, Size: fontSize).descent
@@ -85,20 +94,20 @@ class FontUtils {
     
     static func GetStringBound(str: String, fontName: String, fontSize: CGFloat, tracking: CGFloat) -> CGRect{
         //So far the size is correct, but the Y position is not
-        //TODO: Calc tracking related bound
         var hasHat: Bool = false
         var hasLongTail: Bool = false
         for c in str {
             if (
                 c == "p" ||
-                    c == "q" ||
-                    c == "g" ||
-                    c == "y" ||
-                    c == "j" ||
-                    c == "," ||
-                    c == ";" ||
-                    c == ")" ||
-                    c == "("
+                c == "q" ||
+                c == "g" ||
+                c == "y" ||
+                c == "j" ||
+                c == "," ||
+                c == ";" ||
+                c == ")" ||
+                c == "(" ||
+                c == "/"
             ) {
                 hasLongTail = true
             }
@@ -127,11 +136,7 @@ class FontUtils {
         var fixb = CGRect.init(x: runPosition!.x , y: b.origin.y, width: b.width , height: b.height)
         
         if hasHat == true && hasLongTail == true {
-//            let totalHeight = CTFontGetBoundingBox(font)
-//            let vWhiteH = totalHeight.height - CTFontGetAscent(font) - CTFontGetDescent(font)
             let offset = CTFontGetAscent(font) - CTFontGetXHeight(font) - CTFontGetDescent(font) - fontSize / 15
-//            print(vWhiteH)
-
             fixb = CGRect.init(x: runPosition!.x  , y: b.origin.y + offset/2 , width: b.width , height: b.height )
         }
         return fixb

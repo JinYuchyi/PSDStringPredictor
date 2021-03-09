@@ -384,8 +384,9 @@ class PsdsVM: ObservableObject{
         guard let lastId = selectedStrIDList.last else {return }
         guard let obj = psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: lastId) else {return }
         if tmpObjectForStringProperty.content.count != obj.content.count {
-            let newWidth = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat()).width
-            tmpObjectForStringProperty.width = newWidth
+            let newBound = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat())
+            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + newBound.minX).toString()
+            tmpObjectForStringProperty.width = newBound.width
             psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
         }
         else{
@@ -706,7 +707,7 @@ class PsdsVM: ObservableObject{
             let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: _id)!.imageURL.path)
             fontNameList.append(obj.CalcFontPostScriptName())
             //Calc Descent
-            let tmpDesc = Float(FontUtils.FetchFontOffset(content: obj.content, fontSize: obj.fontSize))
+            let tmpDesc = Float(FontUtils.calcFontTailLength(content: obj.content, size: obj.fontSize))
 
             descentOffset.append(tmpDesc)
             let newRect = FontUtils.GetStringBound(str: obj.content, fontName: obj.FontName, fontSize: obj.fontSize, tracking: obj.tracking)
@@ -753,7 +754,7 @@ class PsdsVM: ObservableObject{
 
 
             }else if obj.alignment == .right {
-                rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
+                rectList.append([Float(newRect.minX), Float(newRect.minY), Float(obj.stringRect.width), Float(newRect.height)])
                 // Append Position
                 let newX = Float(obj.stringRect.minX + newRect.minX )
                 let newY = Float((targetImg.size.height - obj.stringRect.minY ))

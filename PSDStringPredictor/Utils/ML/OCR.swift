@@ -104,7 +104,7 @@ class OCR: ObservableObject{
     
     func DeleteFontOffset(obj: StringObject) -> StringObject{
         //Delete the decent height
-        let fontOffset = FontUtils.FetchFontOffset(content: obj.content, fontSize: obj.fontSize)
+        let fontOffset = FontUtils.calcFontTailLength(content: obj.content, size: obj.fontSize)
 //        let newStringRect = CGRect(x: obj.stringRect.origin.x, y: obj.stringRect.origin.y + fontOffset, width: obj.stringRect.width, height: obj.stringRect.height - fontOffset)
         let newStringRect = CGRect(x: obj.stringRect.minX, y: obj.stringRect.minY + fontOffset  , width: obj.stringRect.width, height: obj.stringRect.height - fontOffset )
 

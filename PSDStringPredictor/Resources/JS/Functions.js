@@ -18,6 +18,15 @@ function selectLayer(name){
     executeAction( idselect, desc25, DialogModes.NO );
 }
 
+function calcTailLength(content, size) {
+    for (var i = 0; i < content.length; i++) {
+        if (content.charAt(i) == "p" || content.charAt(i) == "q" || content.charAt(i) == "g" || content.charAt(i) == "y" || content.charAt(i) == "j" || content.charAt(i) == "," || content.charAt(i) == ";" || content.charAt(i) == "/" || content.charAt(i) == "("){
+            return size * 18 / 100
+        }
+    }
+    return 0
+}
+
 function setTextAlignment(alignment){
     var idset = stringIDToTypeID( "set" );
     var desc26 = new ActionDescriptor();

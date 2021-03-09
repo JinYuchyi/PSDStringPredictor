@@ -99,8 +99,9 @@ struct StringLabel: View {
                 )
             
                Text("􀆇")
-                .font(.system(size: 8))
-                .foregroundColor(Color.red)
+                .font(.custom("SF Pro Text Regular", size: 8))
+                .fontWeight(.black)
+                .foregroundColor(Color.green)
                     .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
                 .offset(x: 0, y: 3)
                 .frame(alignment: .top)
@@ -156,6 +157,7 @@ struct StringLabel: View {
             .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1 / psdsVM.viewScale)
             .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
+            .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal )
             
     }
     
