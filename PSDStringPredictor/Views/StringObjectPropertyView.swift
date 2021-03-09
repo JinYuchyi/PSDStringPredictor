@@ -122,7 +122,7 @@ struct StringObjectPropertyView: View {
     }
     
     var fontTrackingTextField: some View {
-        TextField("\(psdsVM.tmpObjectForStringProperty.tracking)", text: $psdsVM.tmpObjectForStringProperty.tracking, onCommit: {psdsVM.commitFontSize()})
+        TextField("\(psdsVM.tmpObjectForStringProperty.tracking)", text: $psdsVM.tmpObjectForStringProperty.tracking, onCommit: {psdsVM.commitFontTracking()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
     }
     

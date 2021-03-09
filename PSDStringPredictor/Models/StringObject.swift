@@ -279,7 +279,7 @@ struct StringObject : Identifiable,  Hashable{
             }
         }
         color = result
-        print("Colormode is: \(colorMode.rawValue), color is \(color)")
+//        print("Colormode is: \(colorMode.rawValue), color is \(color)")
 
         return result
     }

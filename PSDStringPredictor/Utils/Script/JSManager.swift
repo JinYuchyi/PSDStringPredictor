@@ -82,7 +82,7 @@ class JSManager{
         var names = \(names)
         var bgColorList = \(bgColorList)
         var isParagraphList = \(isParagraphList)
-        var widthExtend = 5
+        var widthExtend = 3
         var saveToPath = "\(saveToPath)"
         var descentOffset = \(descentOffset)
         var frontSpace = \(frontSpace)
