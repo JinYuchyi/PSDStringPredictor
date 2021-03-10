@@ -13,7 +13,7 @@ struct UIOverlayView: View {
     @ObservedObject var psdsVM: PsdsVM
     var body: some View {
         Toggle(isOn: $psdsVM.stringDifferenceShow) {
-            Text("Show String Diff")
+            Text("Show Difference")
                 .fixedSize()
                 .shadow(radius: 1)
         }

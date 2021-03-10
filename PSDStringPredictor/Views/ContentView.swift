@@ -104,6 +104,7 @@ struct ContentView: View  {
                                 Text("Abort")
                             })
                             .background(Color.black.opacity(0.5))
+                            .padding(.horizontal)
                         }
                         
                     }

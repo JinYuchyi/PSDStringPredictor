@@ -36,7 +36,8 @@ struct ScaleSliderView: View {
         .frame(width: 300, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         .padding(.horizontal)
         .background(RoundedRectangle(cornerRadius: 5, style: .continuous).fill(Color.black.opacity(0.3)))
-        .padding()
+        .padding(.vertical)
+
 
 
     }
