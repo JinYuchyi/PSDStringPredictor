@@ -11,8 +11,8 @@ import SwiftUI
 struct StringLabel: View {
     //Constant
     let smallBtnSize: CGFloat = 20
-    var stringObject: StringObject
-    //    var id: UUID
+//    var stringObject: StringObject
+    var id: UUID
     //var charFrameList: [CharFrame]
     //@State var status: Int
     // @State var ignored: Bool
@@ -28,12 +28,16 @@ struct StringLabel: View {
     @ObservedObject var psdsVM: PsdsVM
     
 
+    func getObject() -> StringObject{
+        return psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) ?? StringObject.init()
+    }
+    
     func GetPosition() -> CGPoint{
         
-        if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: stringObject.id) != nil{
-            let x = (stringObject.stringRect.origin.x) + (stringObject.stringRect.width)/2
+        if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) != nil{
+            let x = (getObject().stringRect.origin.x) + (getObject().stringRect.width)/2
 //            let x = (stringObject.stringRect.midX)  // midX will left aligned
-            let y = psdsVM.selectedNSImage.size.height - (stringObject.stringRect.origin.y)  - (stringObject.stringRect.height)/2
+            let y = psdsVM.selectedNSImage.size.height - (getObject().stringRect.origin.y)  - (getObject().stringRect.height)/2
             return CGPoint(x: x, y: y)
         }else{
             return CGPoint.zero
@@ -41,12 +45,12 @@ struct StringLabel: View {
     }
     
     func getAlignLabelPos() -> CGFloat{
-        if stringObject.alignment == .left{
-            return stringObject.stringRect.minX
-        }else if stringObject.alignment == .center {
-            return stringObject.stringRect.midX
+        if getObject().alignment == .left{
+            return getObject().stringRect.minX
+        }else if getObject().alignment == .center {
+            return getObject().stringRect.midX
         }else{
-            return stringObject.stringRect.maxX
+            return getObject().stringRect.maxX
         }
         
     }
@@ -61,19 +65,20 @@ struct StringLabel: View {
                 .foregroundColor( Color.gray)
                 .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
 //                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-                .IsHidden(condition: stringObject.id == showFakeString)
+                .IsHidden(condition: getObject().id == showFakeString)
                 .blendMode(.difference)
     
-            Text(stringObject.content)
-                .tracking(stringObject.tracking)
-                .position(x: stringObject.stringRect.minX + stringObject.stringRect.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY + stringObject.stringRect.height / 2))
-                .foregroundColor(psdsVM.stringDifferenceShow == true ? Color.red.opacity(0.7) : stringObject.color.ToColor() )
-                .font(.custom(stringObject.FontName, size: stringObject.fontSize))
-                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-                .IsHidden(condition: stringObject.id != showFakeString)
+            
+            Text(getObject().content)
+                .tracking(getObject().tracking)
+                .position(x: getObject().stringRect.minX + getObject().stringRect.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY + getObject().stringRect.height / 2))
+                .foregroundColor(getObject().color.ToColor())
+                .font(.custom(getObject().FontName, size: getObject().fontSize))
+                .shadow(color: getObject().colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+                .IsHidden(condition: getObject().id != showFakeString)
 //                .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal)
 //                .onTapGesture {
-//                    //Tap to select stringobject
+//                    //  select stringobject
 //                    psdsVM.selectedStrIDList.removeAll()
 //                    psdsVM.selectedStrIDList.append(stringObject.id)
 //                    psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
@@ -81,19 +86,20 @@ struct StringLabel: View {
 //                }
                 .gesture(
                     TapGesture().modifiers(.shift).onEnded ({ (loc) in
-                    if psdsVM.selectedStrIDList.contains(stringObject.id){
-                        psdsVM.selectedStrIDList.removeAll(where: {$0 == stringObject.id})
+                    if psdsVM.selectedStrIDList.contains(getObject().id){
+                        psdsVM.selectedStrIDList.removeAll(where: {$0 == getObject().id})
                         psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
                     }else {
-                        psdsVM.selectedStrIDList.append(stringObject.id)
+                        psdsVM.selectedStrIDList.append(getObject().id)
                         psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
                     }
                     })
                 .exclusively(before: TapGesture().onEnded({ (loc) in
                              psdsVM.selectedStrIDList.removeAll()
-                             psdsVM.selectedStrIDList.append(stringObject.id)
-                             psdsVM.tmpObjectForStringProperty = stringObject.toObjectForStringProperty()
-                             FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
+                             psdsVM.selectedStrIDList.append(getObject().id)
+                             psdsVM.tmpObjectForStringProperty = getObject().toObjectForStringProperty()
+//                    print("psdsVM.tmpObjectForStringProperty Color: \(psdsVM.tmpObjectForStringProperty.color), obj: \(psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.color)")
+//                             FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
                             })
                         )
                 )
@@ -102,7 +108,7 @@ struct StringLabel: View {
                 .font(.custom("SF Pro Text Regular", size: 8))
                 .fontWeight(.black)
                 .foregroundColor(Color.green)
-                    .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))
+                    .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY ))
                 .offset(x: 0, y: 3)
                 .frame(alignment: .top)
                     .onTapGesture {
@@ -151,11 +157,25 @@ struct StringLabel: View {
 //        }
     }
     
+    func getColor() -> Color {
+        guard let lastId = psdsVM.selectedStrIDList.last else {return Color.white}
+        if psdsVM.stringDifferenceShow == true {
+            return Color.red.opacity(0.7)
+        }else{
+            if lastId == getObject().id {
+//                return psdsVM.tmpObjectForStringProperty.color.ToColor()
+                return getObject().color.ToColor()
+            }else {
+                return getObject().color.ToColor()
+            }
+        }
+    }
+    
     fileprivate func StringFrameLayerView()-> some View {
         //String debug frame
         Rectangle()
-            .stroke(stringObject.status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1 / psdsVM.viewScale)
-            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
+            .stroke(getObject().status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1 / psdsVM.viewScale)
+            .frame(width: getObject().stringRect.width ?? 0, height: getObject().stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y  )
             .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal )
             
@@ -166,7 +186,7 @@ struct StringLabel: View {
         Rectangle()
             
             .fill( Color.yellow.opacity(0.1))
-            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0)
+            .frame(width: getObject().stringRect.width ?? 0, height: getObject().stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y)
     }
     
@@ -187,7 +207,7 @@ struct StringLabel: View {
                 
                 //                    .IsHidden(condition: !showFakeString)
                 
-            }.IsHidden(condition: stringObject.status != StringObjectStatus.ignored)
+            }.IsHidden(condition: getObject().status != StringObjectStatus.ignored)
             
 //            HStack{
 //                //Button for alignment

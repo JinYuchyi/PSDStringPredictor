@@ -18,7 +18,7 @@ extension StringObjectForStringProperty {
         tempObj.tracking = self.tracking.toCGFloat()
         tempObj.fontSize = self.fontSize.toCGFloat()
         tempObj.FontName = self.fontName
-//        tempObj.color = self.color
+        tempObj.color = self.color
         return tempObj
     }
 }

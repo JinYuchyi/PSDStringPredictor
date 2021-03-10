@@ -22,7 +22,7 @@ struct LabelsOnImage: View {
             
             ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
                 ZStack{
-                    StringLabel( stringObject: obj, interactive: interactive, showFakeString: $showFakeString, psdsVM: psdsVM )
+                    StringLabel( id: obj.id, interactive: interactive, showFakeString: $showFakeString, psdsVM: psdsVM )
 
                 }
                     

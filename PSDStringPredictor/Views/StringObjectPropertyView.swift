@@ -18,8 +18,8 @@ struct StringObjectPropertyView: View {
     @State var content: String = "No Content."
     @State var posX: String = "0"
     @State var posY: String = "0"
-    @State private var textColor =
-        Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
+    @State private var textColor: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+         
 //    @State var linkSizeAndTracking: Bool = true
     
     //Constant
@@ -118,7 +118,6 @@ struct StringObjectPropertyView: View {
         //        }
         TextField("\(psdsVM.tmpObjectForStringProperty.fontSize)", text: $psdsVM.tmpObjectForStringProperty.fontSize, onCommit: {psdsVM.commitFontSize()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
-        
     }
     
     var fontTrackingTextField: some View {
@@ -245,12 +244,18 @@ struct StringObjectPropertyView: View {
                     
                     //Color numbers
                     if psdsVM.selectedStrIDList.count > 0{
-                        Text("\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[0] ?? 0) * 255).rounded()))|\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[1] ?? 0) * 255).rounded()))|\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[2] ?? 0) * 255).rounded()))")
+                        if psdsVM.tmpObjectForStringProperty.color.components!.count >= 3{
+                            Text("\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[0] ?? 0) * 255).rounded()))|\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[1] ?? 0) * 255).rounded()))|\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[2] ?? 0) * 255).rounded()))")
+                        }else if psdsVM.tmpObjectForStringProperty.color.components?.count == 1{
+                            Text("\(Int(((psdsVM.tmpObjectForStringProperty.color.components?[0] ?? 0) * 255).rounded()))")
+                        }else {
+                            Text("\(psdsVM.tmpObjectForStringProperty.color.ToString())")
+                        }
                     }else {
                         Text("-")
                     }
                     //Color block
-                    ColorPicker("", selection: $psdsVM.tmpObjectForStringProperty.color)
+                    ColorPicker("", selection: $textColor)
                         .frame(width: 15, height: 15, alignment: .center)
                         .mask(RoundedRectangle(cornerRadius: 2))
                     //                            .padding(.horizontal)
@@ -274,7 +279,6 @@ struct StringObjectPropertyView: View {
                 }
                 .padding(.trailing)
                 .frame(width: panelWidth - titleWidth, alignment: .leading)
-                
             }
             .frame(width: panelWidth)
             
@@ -304,17 +308,29 @@ struct StringObjectPropertyView: View {
 //        print(psdsVM.tmpObjectForStringProperty.color)
 //        psdsVM.tmpObjectForStringProperty.color = psdsVM.tmpObjectForStringProperty.color
         guard let lastID = psdsVM.selectedStrIDList.last else {return }
-        print("save color")
-        psdsVM.psdModel.SetColor(psdId: psdsVM.selectedPsdId, objId: lastID, value: psdsVM.tmpObjectForStringProperty.color)
+//        print("save color")
+//        psdsVM.psdModel.SetColor(psdId: psdsVM.selectedPsdId, objId: lastID, value: textColor)
+        psdsVM.tmpObjectForStringProperty.color = textColor
+//        psdsVM.psdModel.SetColor(psdId: psdsVM.selectedPsdId, objId: lastID, value: textColor)
         psdsVM.commitTempStringObject()
-     }
+        
+        //
+//        if psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: lastID)?.alignment == StringAlignment.left {
+//            psdsVM.alignSelection(orientation: "horizontal-center")
+//            psdsVM.alignSelection(orientation: "horizontal-left")
+//        }else if psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: lastID)?.alignment == StringAlignment.center {
+//            psdsVM.alignSelection(orientation: "horizontal-left")
+//            psdsVM.alignSelection(orientation: "horizontal-center")
+//        }else {
+//            psdsVM.alignSelection(orientation: "horizontal-left")
+//            psdsVM.alignSelection(orientation: "horizontal-right")
+//        }
+      }
     
     func toggleColor() {
         if psdsVM.selectedStrIDList.count > 0 {
             psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId)
-            
         }
-        
     }
     
     func CharSaveBtnPressed(_ index: Int){

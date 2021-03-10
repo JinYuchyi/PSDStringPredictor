@@ -24,7 +24,6 @@ struct StringObjectForStringProperty{
     var tracking: String
     var fontName: String
     var color: CGColor
-    //    var stringRect: CGRect
     var alignment: StringAlignment
     var width: CGFloat
     var height: CGFloat
@@ -35,7 +34,6 @@ struct StringObjectForStringProperty{
         self.tracking = ""
         self.fontName = ""
         self.color = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
-        //        self.stringRect = CGRect.init()
         self.alignment = .center
         self.posX = ""
         self.posY = ""
@@ -49,7 +47,6 @@ struct StringObjectForStringProperty{
         self.tracking = tracking
         self.fontName = fontName
         self.color = color
-        //        self.stringRect = stringRect
         self.alignment = alignment
         self.posX = posX.toString()
         self.posY = posY.toString()
@@ -392,8 +389,6 @@ class PsdsVM: ObservableObject{
         else{
             psdModel.SetLastStringObject(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: tmpObjectForStringProperty.toStringObject(strObj: obj))
         }
-        
-        
     }
     
     func commitFontSize() {
@@ -730,7 +725,7 @@ class PsdsVM: ObservableObject{
 //                let frontSpace: CGFloat = 0
 //                print("theChar: \(theChar), frontSpace: \(frontSpace)")
                 frontSpaceList.append(Float(frontSpace * obj.fontSize / 100))
-                print("theChar: \(theChar), frontSpace: \(Float(frontSpace * obj.fontSize / 100))")
+//                print("theChar: \(theChar), frontSpace: \(Float(frontSpace * obj.fontSize / 100))")
             }
             
             // Re-Calc the string box
@@ -740,7 +735,7 @@ class PsdsVM: ObservableObject{
 //                let newX =  Float(obj.stringRect.minX + newRect.minX )
                 let newX =  Float(obj.stringRect.minX )
                 let newY =  Float(targetImg.size.height - obj.stringRect.minY )
-                print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
+//                print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
                 positionList.append([newX, newY])
 
             }else if obj.alignment == .left {
@@ -847,11 +842,13 @@ class PsdsVM: ObservableObject{
         guard let psd = psdModel.GetPSDObject(psdId: psdId) else {return }
         if selectedStrIDList.count <= 0 {return}
         guard let lastObj  = psd.stringObjects.last  else {return }
-        for objId in selectedStrIDList{
-//            guard let strObj = psd.GetStringObjectFromOnePsd(objId: objId) else {return}
-            lastObj.colorMode == .dark ? psdModel.SetColorMode(psdId: psdId, objId: objId, value: .light) : psdModel.SetColorMode(psdId: psdId, objId: objId, value: .dark)
-             tmpObjectForStringProperty.color = lastObj.color
-        }
+        guard let lastId = selectedStrIDList.last else {return}
+        let newCMode: MacColorMode
+        lastObj.colorMode == .dark ? (newCMode = .light) : (newCMode = .dark)
+        psdModel.SetColorMode(psdId: psdId, objId: lastId, value: newCMode)
+        tmpObjectForStringProperty = lastObj.toObjectForStringProperty()
+//        tmpObjectForStringProperty.color = lastObj.color
+//        commitTempStringObject()
     }
     
     func ToggleFontName(psdId: Int, objId: UUID?){

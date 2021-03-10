@@ -107,7 +107,7 @@ for (var i = 0; i < num; i++) {
          selectLayer(artLayerRef.name)
          setTextAlignment(alignmentList[i])
          
-         //    //Create Mask Layers
+         // Create Mask Layers
          fillColor = bgColorList[i]
          createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding + calcTailLength(contentList[i], fontSizeList[i]), rectList[i][2] + padding * 2, rectList[i][3] + padding * 2 , bgColorList[i])
          //This layer is useless, however it must exist to make the above mask layer avaliable. There is a bug here.

@@ -338,6 +338,7 @@ struct PSD {
         if psd != nil {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
+//                print("In SetColor function, color is \(value)")
                 strObj!.color = value
                 //Replace strObj
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
@@ -356,9 +357,10 @@ struct PSD {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
                 strObj!.colorMode = value
-                strObj!.charColorModeList = [Int](repeating: (value == .light) ? 1 : 2, count: strObj!.charColorModeList.count)
+//                strObj!.charColorModeList = [Int](repeating: (value == .light) ? 1 : 2, count: strObj!.charColorModeList.count)
+                
                 strObj!.CalcColor()
-                //Replace strObj
+                 //Replace strObj
                 psd!.stringObjects.removeAll(where: {$0.id == objId})
                 psd!.stringObjects.append(strObj!)
                 //Replace psd and save to the same place

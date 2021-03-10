@@ -477,6 +477,7 @@ func Maximum(_ image: CIImage) -> (NSColor){
 func Minimun(_ image: CIImage) -> (NSColor){
 //    let pixelProcess = PixelProcess()
     var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+ 
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
             return (color)
@@ -485,9 +486,10 @@ func Minimun(_ image: CIImage) -> (NSColor){
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         
         let filteredImage = filter.outputImage ?? CIImage.init() //Result Correct
-
+        
         if filteredImage.IsValid() == true{
             color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
+//            filteredImage.ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath() + "/\(color).png"))
             return (color)
         }
         

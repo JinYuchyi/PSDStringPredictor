@@ -227,7 +227,7 @@ struct StringObject : Identifiable,  Hashable{
     }
     
 
-    
+  
 
     mutating func CalcColor() -> CGColor {
 
@@ -235,20 +235,21 @@ struct StringObject : Identifiable,  Hashable{
 
         if charImageList.count > 0{
             if colorMode == .light{
-                
                 var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
                 var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-                
+                var i: Int = 0
+
                 for img in charImageList.filter({$0.extent.width > 0}){
+                    i += 1
                     //Calculate the darkest color as the font color
 //                    print("#min: \(Minimun(img).0)")
-                    if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
+                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
                         minc = Minimun(img)
 //                        colorPixel = Minimun(img)
-//                        print("Clac text color, char min: \(minc)")
+
                     }
                     //Calculate the brightest color as the background color
-                    if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
+                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
                         maxc = Maximum(img)
 //                        print("Clac bg color, char max: \(maxc)")
                     }
@@ -257,18 +258,20 @@ struct StringObject : Identifiable,  Hashable{
                 result = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
                 
             }
+            
             if colorMode == .dark{
                 var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
                 var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+                var i: Int = 0
                 for img in charImageList.filter({$0.extent.width > 0}){
+                    i += 1
                     //Calculate the brightest color as the font color
-                    if Maximum(img).brightnessComponent >  maxc.brightnessComponent  {
+                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
                         maxc = Maximum(img)
-//                        colorPixel = Maximum(img).1
-//                        print("Clac text color, char max: \(maxc)")
+
                     }
                     //Calculate the darkest color as the background color
-                    if Minimun(img).brightnessComponent <  minc.brightnessComponent  {
+                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
                         minc = Minimun(img)
 //                        print("Clac bg color, char min: \(minc)")
 
@@ -279,7 +282,6 @@ struct StringObject : Identifiable,  Hashable{
             }
         }
         color = result
-        print("Colormode is: \(colorMode.rawValue), color is \(color)")
 
         return result
     }

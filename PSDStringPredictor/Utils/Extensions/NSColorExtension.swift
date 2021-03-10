@@ -38,4 +38,6 @@ extension NSColor{
 //        let b: CGFloat = color.getHue(nil, saturation: nil, brightness: &brightness, alpha: nil)
         return (hue, sat, brightness)
     }
+    
+    
 }

@@ -92,7 +92,7 @@ class CharColorModeClassifierV2{
             // Display top classifications ranked by confidence in the UI.
             //let topClassifications = classifications.prefix(2)
             let topClassification = classifications[0]
-            print("Predict result for charMode: \(topClassification.identifier)" )
+//            print("Predict result for charMode: \(topClassification.identifier)" )
             if (topClassification.identifier.last! == "l"){
                 
                 result = 1
