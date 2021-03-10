@@ -16,6 +16,7 @@ import Foundation
 
 
 let zeroStringObject = StringObject.init()
+let defaultAlignment = StringAlignment.left
 
 //struct StringObject: Hashable, Codable, Identifiable {
 struct StringObject : Identifiable,  Hashable{
@@ -67,7 +68,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charColorModeList = [0]
         self.isPredictedList = [0]
         self.FontName = "SF Pro Text Regular"
-        self.alignment = .center
+        self.alignment = defaultAlignment
         self.status = .normal
         self.colorMode = .light
     }
@@ -90,7 +91,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charColorModeList = [0]
         self.isPredictedList = [0]
         self.FontName = "SF Pro Text Regular"
-        self.alignment = .center
+        self.alignment = defaultAlignment
         self.status = .normal
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()

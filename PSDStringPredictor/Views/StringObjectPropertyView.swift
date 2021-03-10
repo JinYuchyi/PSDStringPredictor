@@ -74,7 +74,7 @@ struct StringObjectPropertyView: View {
                     }
                 }
                 .fixedSize()
-            }
+            }   
         }
     }
     
