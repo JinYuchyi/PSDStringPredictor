@@ -10,11 +10,32 @@ import SwiftUI
 
 struct GridView: View {
     @ObservedObject var psdsVM: PsdsVM
+    let gap: CGFloat = 100
     var body: some View {
-        Rectangle()
-            .position(x: 0, y: 0)
-            .frame(width: 1, height: psdsVM.GetSelectedPsd()?.height, alignment: .center)
-            .foregroundColor(.red)
+        GeometryReader { geometry in
+                    Path { path in
+                        let numberOfHorizontalGridLines = Int(geometry.size.height / gap)
+                        let numberOfVerticalGridLines = Int(geometry.size.width / gap)
+                        for index in 0...numberOfVerticalGridLines {
+                            let vOffset: CGFloat = CGFloat(index) * gap
+                            path.move(to: CGPoint(x: vOffset, y: 0))
+                            path.addLine(to: CGPoint(x: vOffset, y: geometry.size.height))
+                        }
+                        for index in 0...numberOfHorizontalGridLines {
+                            let hOffset: CGFloat = CGFloat(index) * gap
+                            path.move(to: CGPoint(x: 0, y: hOffset))
+                            path.addLine(to: CGPoint(x: geometry.size.width, y: hOffset))
+                        }
+                    }
+                    .stroke()
+                    .foregroundColor(.red)
+                    .blendMode(.difference)
+                }
+        
+//        Rectangle()
+//            .position(x: 0, y: 0)
+//            .frame(width: 1, height: psdsVM.GetSelectedPsd()?.height, alignment: .center)
+//            .foregroundColor(.red)
     }
 }
 //

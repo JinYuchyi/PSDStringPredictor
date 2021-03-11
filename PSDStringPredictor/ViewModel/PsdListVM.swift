@@ -718,15 +718,8 @@ class PsdsVM: ObservableObject{
             }
             
             //Front space
-            var frontSpace: CGFloat = 0
-            guard let theChar: Character = obj.content.first else {return}
-            if theChar.isLetter == true || theChar.isNumber == true {
-                frontSpace = DataStore.frontSpaceDict[String(theChar)]!
-//                let frontSpace: CGFloat = 0
-//                print("theChar: \(theChar), frontSpace: \(frontSpace)")
-                frontSpaceList.append(Float(frontSpace * obj.fontSize / 100))
-//                print("theChar: \(theChar), frontSpace: \(Float(frontSpace * obj.fontSize / 100))")
-            }
+            let frontSpaceWidth = FontUtils.getFrontSpace(content: obj.content, fontSize: obj.fontSize)
+            frontSpaceList.append(Float(frontSpaceWidth))
             
             // Re-Calc the string box
             if obj.alignment == .center {
@@ -870,7 +863,15 @@ class PsdsVM: ObservableObject{
                  str = particialName + " Regular"
             }
             tmpObjectForStringProperty.fontName = str
+            
+            let tmp  = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat())
+            tmpObjectForStringProperty.width = tmp.width
+            tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
+            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
+//            tmpObjectForStringProperty.posY = (tmpObjectForStringProperty.posY.toCGFloat() + tmp.minY).toString()
+            
             commitTempStringObject()
+
             //Set fontName for all selected
             for id in selectedStrIDList {
                 psdModel.SetFontName(psdId: psdId, objId: id, value: str)

@@ -69,8 +69,8 @@ struct ContentView: View  {
                         LabelsOnImage(psdsVM: psdsVM, interactive: interactive, showFakeString: $showFakeString)
                             .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
                         
-                        CharacterFrameView(psdVM: psdsVM)
-                            .IsHidden(condition: showPatchLayer)
+//                        CharacterFrameView(psdVM: psdsVM)
+//                            .IsHidden(condition: showPatchLayer)
                         
                         StringHighlightView(interactive: interactive, psdsVM: psdsVM, showFakeString: $showFakeString)
                             .frame(width: psdsVM.selectedNSImage.size.width, height: psdsVM.selectedNSImage.size.height)
@@ -113,7 +113,7 @@ struct ContentView: View  {
                 }
                 
             }
-            
+//            testView()
             //Popup Window
             charDSView(psdsVM: psdsVM)
         }

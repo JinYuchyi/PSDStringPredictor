@@ -61,7 +61,7 @@ struct StringLabel: View {
             //Fake
             Text(psdsVM.tmpObjectForStringProperty.content)
                 .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
-                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
+                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2, y: (psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
                 .foregroundColor( Color.gray)
                 .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
 //                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
@@ -71,10 +71,10 @@ struct StringLabel: View {
             
             Text(getObject().content)
                 .tracking(getObject().tracking)
-                .position(x: getObject().stringRect.minX + getObject().stringRect.width / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY + getObject().stringRect.height / 2))
+                .position(x: getObject().stringRect.minX + getObject().stringRect.width / 2 + getObject().tracking / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY + getObject().stringRect.height / 2))
                 .foregroundColor(getObject().color.ToColor())
                 .font(.custom(getObject().FontName, size: getObject().fontSize))
-                .shadow(color: getObject().colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
+//                .shadow(color: getObject().colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
                 .IsHidden(condition: getObject().id != showFakeString)
 //                .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal)
 //                .onTapGesture {
@@ -104,6 +104,8 @@ struct StringLabel: View {
                         )
                 )
             
+               
+            
                Text("􀆇")
                 .font(.custom("SF Pro Text Regular", size: 8))
                 .fontWeight(.black)
@@ -111,9 +113,13 @@ struct StringLabel: View {
                     .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY ))
                 .offset(x: 0, y: 3)
                 .frame(alignment: .top)
-                    .onTapGesture {
-//                        print("Position: \(stringObject.stringRect.minX), \((psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat())")
-                    }
+            
+            
+            Rectangle()
+                .foregroundColor(.red)
+                .position(x: getObject().stringRect.minX, y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY ))
+                .frame(width: 2, height: 2, alignment: .center)
+
 //            Color.pink
 //                .frame(width: 2, height: 2, alignment: .center)
 //                .position(x: stringObject.stringRect.midX , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (stringObject.stringRect.minY ))

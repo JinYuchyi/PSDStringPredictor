@@ -48,6 +48,16 @@ class FontUtils {
         return info
     }
     
+    static func getFrontSpace(content: String, fontSize: CGFloat)-> CGFloat {
+        var frontSpace: CGFloat = 0
+        guard let theChar: Character = content.first else {return 0}
+        if theChar.isLetter == true || theChar.isNumber == true {
+            frontSpace = DataStore.frontSpaceDict[String(theChar)]!
+            frontSpace = frontSpace * fontSize / 100
+        }
+        return frontSpace
+    }
+    
     static func FetchTailOffset(content: String, fontSize: CGFloat) -> CGFloat{
         var hasLongTail = false
         var hasHat = false
@@ -132,12 +142,13 @@ class FontUtils {
         let runPositionsPointer = CTRunGetPositionsPtr(runs[0])
         let runPosition = runPositionsPointer?.pointee
         let b = (CTRunGetImageBounds(runs[0], nil, CFRange(location: 0,length: 0)))
-
-        var fixb = CGRect.init(x: runPosition!.x , y: b.origin.y, width: b.width , height: b.height)
+//        let b = CTRunGetTypographicBounds(runs[0], CFRange(location: 0,length: 0), nil, nil, nil)
+        
+        var fixb = CGRect.init(x: b.minX , y: b.minY, width: b.width , height: b.height)
         
         if hasHat == true && hasLongTail == true {
             let offset = CTFontGetAscent(font) - CTFontGetXHeight(font) - CTFontGetDescent(font) - fontSize / 15
-            fixb = CGRect.init(x: runPosition!.x  , y: b.origin.y + offset/2 , width: b.width , height: b.height )
+            fixb = CGRect.init(x: b.minX, y: b.minY + offset/2 , width: b.width , height: b.height )
         }
         return fixb
     }

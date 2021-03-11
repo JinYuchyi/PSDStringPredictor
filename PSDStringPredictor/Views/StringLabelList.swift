@@ -17,7 +17,7 @@ struct LabelsOnImage: View {
     @Binding var showFakeString: UUID
     
     var body: some View {
-        ZStack{
+         
             
             
             ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
@@ -32,7 +32,7 @@ struct LabelsOnImage: View {
 
             
             
-        }
+    
         
     }
     
