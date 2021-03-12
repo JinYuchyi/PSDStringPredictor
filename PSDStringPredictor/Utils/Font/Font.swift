@@ -11,6 +11,8 @@ import Cocoa
 
 class FontUtils {
     
+    
+    
     static func  calcFontTailLength(content: String, size: CGFloat) -> CGFloat {
         for c in Array(content) {
             if String(c) == "p" || String(c) == "q" || String(c) == "g" || String(c) == "y" || String(c) == "j" || String(c) == "," || String(c) == ";" || String(c) == "/" || String(c) == "(" {
@@ -18,6 +20,14 @@ class FontUtils {
             }
         }
         return 0
+    }
+    
+    static func GetCharFrontOffset(content: String, fontSize: CGFloat) -> CGFloat {
+        guard let first = content.first else {return 0}
+        guard let number = DataStore.charOffsetInFront[String(first)] else {return 0}
+            let result = number * fontSize / 100 / 2
+            return  result
+ 
     }
     
     static func GetFontInfo(Font font: String, Content content: String, Size size: CGFloat) -> (ascent: CGFloat, descent: CGFloat, leading:CGFloat, lineHeight:CGFloat, capHeight: CGFloat, size: CGRect, xHeight: CGFloat ) {

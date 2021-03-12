@@ -62,7 +62,7 @@ class JSManager{
         return inString
     }
     
-    func CreateJSFile(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Float]], offsetList: [[Int16]], alignmentList: [String], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool], saveToPath: String, descentOffset: [Float], frontSpace: [Float])->Bool{
+    func CreateJSString(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Float]], offsetList: [[Int16]], alignmentList: [String], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool], saveToPath: String, descentOffset: [Float], frontSpace: [Float])->String{
         let names = NamesNormalize(names: contentList)
         let resourcePath = Bundle.main.resourcePath!
         let functionJSStr = ReadJSToString(jsPath: resourcePath +  "/Functions.js")
@@ -95,16 +95,22 @@ class JSManager{
         outputStr.append(mainJSStr)
         outputStr.append(functionJSStr)
         
-        do {
-            let path = resourcePath + "/StringCreator.jsx"
-            let url = URL.init(fileURLWithPath: path)
-            try outputStr.write(to: url, atomically: false, encoding: .utf8)
-        }
-        catch {
-            return false
-        }
+        return outputStr
         
-        return true
+        
+        // Create JS file from JS string
+//        do {
+//            let path = jsPath //resourcePath + "/StringCreator.jsx"
+//            print("Creating js: \(path)")
+//            let url = URL.init(fileURLWithPath: path)
+//            try FileManager.default.createDirectory(atPath: resourcePath + "/OutputScript", withIntermediateDirectories: true, attributes: nil)
+//            try outputStr.write(to: url, atomically: false, encoding: .utf8)
+//        }
+//        catch {
+//            return false
+//        }
+//
+//        return true
         
     }
     

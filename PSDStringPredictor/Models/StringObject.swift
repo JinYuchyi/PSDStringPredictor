@@ -43,7 +43,7 @@ struct StringObject : Identifiable,  Hashable{
     var isPredictedList: [Int]
     var colorMode: MacColorMode
     var charColorModeList: [Int]
-    var FontName: String
+    var fontName: String
     var alignment: StringAlignment
     var status: StringObjectStatus //0: Normal 1: Fix 2: Ignore
     var isParagraph: Bool = false
@@ -67,7 +67,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charFontWeightList = ["Regular"]
         self.charColorModeList = [0]
         self.isPredictedList = [0]
-        self.FontName = "SF Pro Text Regular"
+        self.fontName = "SF Pro Text Regular"
         self.alignment = defaultAlignment
         self.status = .normal
         self.colorMode = .light
@@ -90,7 +90,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charFontWeightList = ["Regular"]
         self.charColorModeList = [0]
         self.isPredictedList = [0]
-        self.FontName = "SF Pro Text Regular"
+        self.fontName = "SF Pro Text Regular"
         self.alignment = defaultAlignment
         self.status = .normal
         self.fontWeight = PredictFontWeight()
@@ -98,11 +98,12 @@ struct StringObject : Identifiable,  Hashable{
         self.color = CalcColor()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
-        self.FontName = CalcFontFullName()
+        self.fontName = CalcFontFullName()
         self.tracking = FetchTrackingFromDB(self.fontSize).0
         self.charSizeList = sizeFunc.1
         self.isPredictedList = sizeFunc.2
         self.content = FixContent(content)
+        reCalcBound()
 //        self.stringRect = reCalcRect(rect: stringRect)
     }
     
@@ -122,7 +123,7 @@ struct StringObject : Identifiable,  Hashable{
         self.charFontWeightList = charFontWeightList
         self.charColorModeList = charColorModeList
         self.isPredictedList = isPredictedList
-        self.FontName = fontName
+        self.fontName = fontName
         self.alignment = alignment
         self.status = status
         self.stringRect = CGRect.init()
@@ -149,22 +150,31 @@ struct StringObject : Identifiable,  Hashable{
         self.charFontWeightList = charFontWeightList
         self.charColorModeList = charColorModeList
         self.isPredictedList = isPredictedList
-        self.FontName = fontName
+        self.fontName = fontName
         self.alignment = StringAlignment.init(rawValue: alignment)!
         self.status = StringObjectStatus.init(rawValue: status)!
         self.content = FixContent(content)
     }
     
-    func reCalcRect(rect: CGRect) -> CGRect {
-        let bound = FontUtils.GetStringBound(str: content, fontName: FontName, fontSize: fontSize, tracking: tracking)
-        if Array(content).first!.isNumber == true || Array(content).first!.isLetter == true {
-            let firstChar = String(Array(content)[0])
-            let front = DataStore.frontSpaceDict[firstChar]
-            let r = CGRect.init(x: rect.minX + bound.minX - front!, y: rect.minY + bound.minY, width: bound.width, height: bound.height)
-            return r
-        }
-        return rect
+    mutating func reCalcBound(){
+        let tmp  = FontUtils.GetStringBound(str: content, fontName: fontName, fontSize: fontSize, tracking: tracking)
+
+        let width = tmp.width
+        let height = tmp.height - FontUtils.FetchTailOffset(content: content, fontSize: fontSize)
+
+        stringRect = CGRect.init(x: stringRect.minX, y: stringRect.minY, width: width, height: height)
     }
+    
+//    func reCalcRect(rect: CGRect) -> CGRect {
+//        let bound = FontUtils.GetStringBound(str: content, fontName: FontName, fontSize: fontSize, tracking: tracking)
+//        if Array(content).first!.isNumber == true || Array(content).first!.isLetter == true {
+//            let firstChar = String(Array(content)[0])
+//            let front = DataStore.frontSpaceDict[firstChar]
+//            let r = CGRect.init(x: rect.minX + bound.minX - front!, y: rect.minY + bound.minY, width: bound.width, height: bound.height)
+//            return r
+//        }
+//        return rect
+//    }
     
     func mergeRect(rects: [CGRect]) -> CGRect{
         let maxHeight = rects.map({$0.height}).max()!

@@ -42,7 +42,7 @@ var layerSetRef = app.activeDocument.layerSets.add()
 layerSetRef.name = "StringLayersGroup"
 
 //Add Text layer
-const num = contentList.length
+var num = contentList.length
 for (var i = 0; i < num; i++) {
     var artLayerRef = layerSetRef.artLayers.add()
     
@@ -92,7 +92,7 @@ for (var i = 0; i < num; i++) {
             textItemRef.position = Array(positionList[i][0] - frontSpace[i] , positionList[i][1] )
         }else {
 //            textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 - frontSpace[i], positionList[i][1] )
-            textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 - frontSpace[i], positionList[i][1] )
+            textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
          }
          //     if (alignmentList[i] == "left"){
          //         textItemRef.position = Array(positionList[i][0] + rectList[i][2] / 2 , positionList[i][1] )
@@ -119,7 +119,7 @@ for (var i = 0; i < num; i++) {
          //app.activeDocument.selection.clear()
          
          if (saveToPath != "") {
-            const file = File(saveToPath)
+            var file = File(saveToPath)
             docRef.saveAs(file, PhotoshopSaveOptions)
             docRef.close(SaveOptions.DONOTSAVECHANGES)
             //newDoc.close(SaveOptions.DONOTSAVECHANGES)

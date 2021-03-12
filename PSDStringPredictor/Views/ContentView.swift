@@ -174,6 +174,7 @@ struct ContentView: View  {
             psdsVM.FetchCharacterTable(path: Bundle.main.path(forResource: "fontSize", ofType: "csv")!)
             psdsVM.FetchBoundTable(path: Bundle.main.path(forResource: "charBounds", ofType: "csv")!)
             DataStore.frontSpaceDict = CSVManager.shared.ParsingCsvFileAsFrontSpace(FilePath: Bundle.main.path(forResource: "frontspace", ofType: "csv")!)
+            DataStore.charOffsetInFront = CSVManager.shared.ParsingCsvFileAsCharFrontOffset(FilePath: Bundle.main.path(forResource: "charOffsetInFront", ofType: "csv")!)
         })
         .preferredColorScheme(.dark)
         

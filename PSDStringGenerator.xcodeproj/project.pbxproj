@@ -19,6 +19,8 @@
 		3F0DE2F525694E5A00BD3A3A /* JSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0DE2F425694E5A00BD3A3A /* JSManager.swift */; };
 		3F173D7525F5F87C00AADD65 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F173D7425F5F87C00AADD65 /* GridView.swift */; };
 		3F173D9C25F9F0F900AADD65 /* testView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F173D9B25F9F0F900AADD65 /* testView.swift */; };
+		3F173D9F25FB1C2700AADD65 /* charOffsetInFront.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3F173D9E25FB1C2700AADD65 /* charOffsetInFront.csv */; };
+		3F173DA225FB1DF700AADD65 /* CharFrontOffsetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F173DA125FB1DF700AADD65 /* CharFrontOffsetObject.swift */; };
 		3F1A629825230D0F006DC9F9 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A629725230D0F006DC9F9 /* Font.swift */; };
 		3F1B2B1D256CD87600D9BA0F /* CharBoundsDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */; };
 		3F1B2B21256CDB7C00D9BA0F /* CharBoundsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */; };
@@ -237,6 +239,8 @@
 		3F0DE2F425694E5A00BD3A3A /* JSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSManager.swift; sourceTree = "<group>"; };
 		3F173D7425F5F87C00AADD65 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		3F173D9B25F9F0F900AADD65 /* testView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testView.swift; sourceTree = "<group>"; };
+		3F173D9E25FB1C2700AADD65 /* charOffsetInFront.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = charOffsetInFront.csv; sourceTree = "<group>"; };
+		3F173DA125FB1DF700AADD65 /* CharFrontOffsetObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharFrontOffsetObject.swift; sourceTree = "<group>"; };
 		3F1A629725230D0F006DC9F9 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		3F1B2B1C256CD87600D9BA0F /* CharBoundsDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsDataManager.swift; sourceTree = "<group>"; };
 		3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharBoundsObject.swift; sourceTree = "<group>"; };
@@ -465,6 +469,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3F173DA625FB75DE00AADD65 /* OutputScript */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OutputScript;
+			sourceTree = "<group>";
+		};
 		3F1A629625230CED006DC9F9 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,6 +504,7 @@
 		3F4D13E725021AFB008F846B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3F173DA625FB75DE00AADD65 /* OutputScript */,
 				3F56E3E22505F06300E64337 /* DB */,
 				3FD558CE25B7C4D200056C85 /* ML */,
 				3FD558CD25B7C4B400056C85 /* csv */,
@@ -823,6 +835,7 @@
 		3FD558CD25B7C4B400056C85 /* csv */ = {
 			isa = PBXGroup;
 			children = (
+				3F173D9E25FB1C2700AADD65 /* charOffsetInFront.csv */,
 				3FF51B5A259ADF2800D11575 /* charBounds.csv */,
 				3FC8D72425F480C700DF5A07 /* frontspace.csv */,
 				3FA5047C2574CADA00F4A77A /* fontSize.csv */,
@@ -879,6 +892,7 @@
 				3FDA0D392534111D007792C0 /* TrackingDataObject.swift */,
 				3FC8D72725F4843300DF5A07 /* FrontSpaceObject.swift */,
 				3F3EFFAA2535ABB60047E4E5 /* CharDataObject.swift */,
+				3F173DA125FB1DF700AADD65 /* CharFrontOffsetObject.swift */,
 				3F1ED7D92538453100D59EC0 /* FontStandardObject.swift */,
 				3F1B2B20256CDB7C00D9BA0F /* CharBoundsObject.swift */,
 			);
@@ -996,6 +1010,7 @@
 				3FD401FA2500F2FB00525E67 /* Preview Assets.xcassets in Resources */,
 				3FF51B9D25A2C65500D11575 /* Main.js in Resources */,
 				3F7239F1257F2EAE003EC998 /* README.md in Resources */,
+				3F173D9F25FB1C2700AADD65 /* charOffsetInFront.csv in Resources */,
 				3FD401F72500F2FB00525E67 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1216,6 +1231,7 @@
 				3FDBC4B02583114C00E9C2DC /* AppSettingsItem.swift in Sources */,
 				3FEBA6C7251CA87C002D8EC1 /* StringLabelObject.swift in Sources */,
 				3FEFE91E25072F8300AEF1C8 /* OCR.swift in Sources */,
+				3F173DA225FB1DF700AADD65 /* CharFrontOffsetObject.swift in Sources */,
 				3F437E5925E4B81A00BC0D7D /* CFAttributedString+CoreText.swift in Sources */,
 				3F437E5025E4969300BC0D7D /* FontTestViewModel.swift in Sources */,
 				3FC3DFC725B52FB60060521D /* PsdOperatorView.swift in Sources */,

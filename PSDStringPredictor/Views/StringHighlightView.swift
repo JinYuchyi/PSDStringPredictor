@@ -19,7 +19,7 @@ struct StringHighlightView: View {
     @State var originSize: CGFloat = -100
     
     fileprivate func CalcRealBound() -> CGRect {
-        let rect = FontUtils.GetStringBound(str: GetObj().content, fontName: GetObj().FontName, fontSize: GetObj().fontSize, tracking: GetObj().tracking)
+        let rect = FontUtils.GetStringBound(str: GetObj().content, fontName: GetObj().fontName, fontSize: GetObj().fontSize, tracking: GetObj().tracking)
         return rect
     }
     
@@ -43,8 +43,8 @@ struct StringHighlightView: View {
                         .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                         .position(
 //                            x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX ?? zeroRect.minX.keepDecimalPlaces(num: 1),
-                            x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2  ?? zeroRect.minX.keepDecimalPlaces(num: 1),
-                            y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 1) ?? zeroRect.minY)
+                            x: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: theid)[0],
+                            y: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: theid)[1]
                         )
                         .foregroundColor(Color.green.opacity(0.2))
                         
@@ -63,10 +63,14 @@ struct StringHighlightView: View {
                         .exclusively(before: DragGesture()
                                         .onChanged { gesture in
                                             if originTracking == -100 {
-                                                originTracking = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.tracking
+                                                guard let lastId = psdsVM.selectedStrIDList.last else {return}
+                                                guard let obj = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: lastId) else {return}
+                                                originTracking = obj.tracking
                                             }
                                             if originSize == -100 {
-                                                originSize = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.fontSize
+                                                guard let lastId = psdsVM.selectedStrIDList.last else {return}
+                                                guard let obj = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: lastId) else {return}
+                                                originSize = obj.fontSize
                                             }
                                             // Drag to change size and tracking
                                             showFakeString = psdsVM.selectedStrIDList.last!
@@ -85,7 +89,6 @@ struct StringHighlightView: View {
                                                 )
                                                 psdsVM.tmpObjectForStringProperty.width = tmp.width
                                                 psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
-//                                                psdsVM.tmpObjectForStringProperty.posX = (psdsVM.tmpObjectForStringProperty.posX.toCGFloat() - psdsVM.tmpObjectForStringProperty.tracking.toCGFloat() ).toString()
                                                 
                                                 let dif = originTracking - psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
 
@@ -223,7 +226,7 @@ struct StringHighlightView: View {
     
     func fontName()-> String {
         guard let id = psdsVM.selectedStrIDList.last else {return ""}
-        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.FontName ?? "SF Pro Text Regular"
+        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id)?.fontName ?? "SF Pro Text Regular"
     }
     
     func fontSize() -> CGFloat {

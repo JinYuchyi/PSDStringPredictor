@@ -89,21 +89,22 @@ struct SelectionOverlayView: View {
         if psdsVM.GetSelectedPsd() == nil {return }
         
         for obj in psdsVM.GetSelectedPsd()!.stringObjects {
-            if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
-            }
+//            if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
+//            }
             
             let tmpRect = CGRect.init(
                 x: (obj.stringRect.origin.x),
-                y: (psdsVM.selectedNSImage.size.height - obj.stringRect.origin.y - obj.stringRect.height),
+                y: (psdsVM.GetSelectedPsd()!.height - obj.stringRect.origin.y - obj.stringRect.height),
                 width: obj.stringRect.width,
                 height: obj.stringRect.height
             )
 //            let tmpRect = rect
             if tmpRect.intersects(interactive.selectionRect)  {
+                print("Selection include : \(obj.content)")
                 psdsVM.selectedStrIDList.append(obj.id)
             }
         }
-        if psdsVM.GetSelectedPsd() != nil && psdsVM.selectedStrIDList.last != nil && psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) != nil {
+        if psdsVM.selectedStrIDList.last != nil && psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) != nil {
             psdsVM.tmpObjectForStringProperty = psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
         }
         

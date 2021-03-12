@@ -61,7 +61,7 @@ struct StringLabel: View {
             //Fake
             Text(psdsVM.tmpObjectForStringProperty.content)
                 .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
-                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2, y: (psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
+                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2  + psdsVM.tmpObjectForStringProperty.tracking.toCGFloat() / 2 - FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize), y: (psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
                 .foregroundColor( Color.gray)
                 .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
 //                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
@@ -71,9 +71,9 @@ struct StringLabel: View {
             
             Text(getObject().content)
                 .tracking(getObject().tracking)
-                .position(x: getObject().stringRect.minX + getObject().stringRect.width / 2 + getObject().tracking / 2 , y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY + getObject().stringRect.height / 2))
-                .foregroundColor(getObject().color.ToColor())
-                .font(.custom(getObject().FontName, size: getObject().fontSize))
+                .position(x: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: id)[0], y: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: id)[1])
+                .foregroundColor(getColor())
+                .font(.custom(getObject().fontName, size: getObject().fontSize))
 //                .shadow(color: getObject().colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
                 .IsHidden(condition: getObject().id != showFakeString)
 //                .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal)
@@ -95,6 +95,7 @@ struct StringLabel: View {
                     }
                     })
                 .exclusively(before: TapGesture().onEnded({ (loc) in
+                    print(FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize))
                              psdsVM.selectedStrIDList.removeAll()
                              psdsVM.selectedStrIDList.append(getObject().id)
                              psdsVM.tmpObjectForStringProperty = getObject().toObjectForStringProperty()
@@ -164,17 +165,14 @@ struct StringLabel: View {
     }
     
     func getColor() -> Color {
-        guard let lastId = psdsVM.selectedStrIDList.last else {return Color.white}
+        var _color: Color = getObject().color.ToColor()
+        guard let lastId = psdsVM.selectedStrIDList.last else {return _color}
         if psdsVM.stringDifferenceShow == true {
-            return Color.red.opacity(0.7)
+            _color = Color.red.opacity(0.7)
         }else{
-            if lastId == getObject().id {
-//                return psdsVM.tmpObjectForStringProperty.color.ToColor()
-                return getObject().color.ToColor()
-            }else {
-                return getObject().color.ToColor()
-            }
+            _color = getObject().color.ToColor()
         }
+        return _color
     }
     
     fileprivate func StringFrameLayerView()-> some View {

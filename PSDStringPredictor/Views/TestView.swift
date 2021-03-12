@@ -9,51 +9,57 @@
 import SwiftUI
 
 struct testView: View {
-    let fontSize: CGFloat = 100
+    let fontSize: CGFloat = 200
     let tracking: CGFloat = 0
     let fontName: String = "SF Pro Text Regular"
-    @State var content: String = "HeoA"
+    @State var content: String = "MtAsh"
     @State var x: CGFloat = 0
     
     let posX: CGFloat = 150
     let posY: CGFloat = 150
     
     var body: some View {
-        ZStack{
-            
+        ZStack(alignment: .center){
 
             Rectangle()
-//                .border(Color.red.opacity(0.2))
                 .frame(width: getBound().width, height: getBound().height)
-                .position(x: posX, y: posY)
+                .position(x: posX + getBound().width / 2 , y: posY)
+            
             Text(content)
                 .tracking(tracking)
-
-                .foregroundColor(Color.white)
+                .foregroundColor(Color.red)
                 .font(.custom(fontName, size: fontSize))
-                .position(x: posX + getBound().width / 2, y: posY)
+                .position(x: posX  + getBound().width / 2   , y: posY)
+                .ignoresSafeArea()
                 .onTapGesture {
                     x = FontUtils.getFrontSpace(content: content, fontSize: fontSize)
                     print(x)
                 }
-            
+
             Rectangle()
-//                .border(Color.red.opacity(0.2))
                 .foregroundColor(.red)
                 .frame(width:1, height: 1)
-                .position(x: posX, y: posY)
-
-
+                .position(x: posX , y: posY)
         }
     }
     
     func  getBound() -> CGRect {
         return FontUtils.GetStringBound(str: content, fontName: fontName, fontSize: fontSize, tracking: tracking)
     }
+    
+    
+//    func getOffset(str: String) -> CGFloat {
+//        let firstStr = String(str.first!)
+//        let number = DataStore.charOffsetInFront[firstStr]!
+//
+//        return  (number)
+////        return CGFloat(DataStore.charOffsetInFront[firstStr]!)
+//     }
 }
 
 struct testView_Previews: PreviewProvider {
     static var previews: some View {
         testView()
+            .previewLayout(.sizeThatFits)
     }
 }

@@ -202,7 +202,7 @@ struct StringObjectPropertyView: View {
                 
                 HStack{
                     if GetLastSelectObject().fontSize != 0 {
-                        Text("\(GetLastSelectObject().FontName)" )
+                        Text("\(GetLastSelectObject().fontName)" )
 //                            .frame(width: panelWidth - titleWidth)
                     }else{
                         Text("-" )

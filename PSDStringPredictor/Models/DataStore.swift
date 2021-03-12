@@ -57,6 +57,8 @@ class DataStore{
         [ 255.0, 255.0,255.0]
     ]
     
+    static var charOffsetInFront: [String: CGFloat] = [:]
+    
     static var frontSpaceDict : [String: CGFloat] = [:]
     
 //    static var colorLightModeList: [NSColor] = [
@@ -99,7 +101,8 @@ class DataStore{
         "icloud": "iCloud",
         "iphone": "IPhone",
         "macbook": "MacBook",
-        "Self ie": "Selfie"
+        "Self ie": "Selfie",
+        "Outf it": "Outfit"
     ]
     
     //UI

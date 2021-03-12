@@ -134,7 +134,7 @@ struct PSD {
                     isPredictedList: _strObj.isPredictedList,
                     colorMode: _strObj.colorMode.rawValue,
                     charColorModeList: _strObj.charColorModeList,
-                    fontName: _strObj.FontName,
+                    fontName: _strObj.fontName,
                     alignment: _strObj.alignment.rawValue,
                     status: _strObj.status.rawValue,
                     isParagraph: _strObj.isParagraph
@@ -378,7 +378,7 @@ struct PSD {
         if psd != nil {
             var strObj = psd!.GetStringObjectFromOnePsd(objId: objId)
             if strObj != nil{
-                strObj!.FontName = value
+                strObj!.fontName = value
                 strObj!.fontWeight = value.components(separatedBy: " ").last!
                 //strObj!.CalcColor()
                 //Replace strObj
