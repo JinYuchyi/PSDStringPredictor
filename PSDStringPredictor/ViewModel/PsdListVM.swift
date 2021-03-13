@@ -452,6 +452,141 @@ class PsdsVM: ObservableObject{
         tmpObjectForStringProperty = StringObjectForStringProperty.init()
     }
     
+    private func createJS(idList: [Int], savePSDToPathList: [String] ){
+        var finalStr : String = ""
+        var index: Int = 0
+        for _id in idList{
+            guard let obj = psdModel.GetPSDObject(psdId: _id) else {return}
+            let psdPath = obj.imageURL.path
+            var contentList = [String]()
+            var colorList = [[Int]]()
+            var fontSizeList:[Float] = []
+            var fontNameList: [String] = []
+            var positionList = [[Float]]()
+            var trackingList = [Float]()
+            var offsetList = [[Int16]]()
+            var alignmentList = [String]()
+            var rectList = [[Float]]()
+            var bgClolorList = [[Float]]()
+            var isParagraphList = [Bool]()
+            var descentOffset : [Float] =  []
+            var updateList = psdModel.GetPSDObject(psdId: _id)!.stringObjects.filter{$0.status != .ignored}
+            var saveToPath = savePSDToPathList
+            var frontSpaceList: [Float] = []
+            
+            for obj in updateList{
+                var newString = obj.content.replacingOccurrences(of: "\n", with: " ")
+                if newString.isEmpty || newString == nil {
+                    newString = "_"
+                }
+                contentList.append(newString)
+                var tmpColor: [Int] = []
+                
+                tmpColor = [ Int((Float(obj.color.components![0]) * 255).rounded()),
+                             Int((Float(obj.color.components![1]) * 255).rounded()),
+                             Int((Float(obj.color.components![2]) * 255).rounded())
+                ]
+                colorList.append(tmpColor)
+                
+                isParagraphList.append(obj.isParagraph)
+
+                
+                let tmpSize: CGFloat = CGFloat(obj.fontSize)
+                fontSizeList.append(Float(tmpSize))
+                //let tmpTracking = obj.fontSize * 1000 / obj.tracking
+                let tmpTracking = Float((obj.tracking) * 1000 / (tmpSize == 0 ? 1 : tmpSize))
+                trackingList.append(tmpTracking)
+                
+                //Calc the offset of String
+                var keyvalues: [String: AnyObject] = [:]
+                let char = (obj.content.first)
+                keyvalues["char"] = String(char!) as AnyObject
+                keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
+
+                let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: _id)!.imageURL.path)
+                fontNameList.append(obj.CalcFontPostScriptName())
+                //Calc Descent
+                let tmpDesc = Float(FontUtils.calcFontTailLength(content: obj.content, size: obj.fontSize))
+
+                descentOffset.append(tmpDesc)
+                let newRect = FontUtils.GetStringBound(str: obj.content, fontName: obj.fontName, fontSize: obj.fontSize, tracking: obj.tracking)
+                
+                let offset = [Int16(newRect.minX), 0]
+                offsetList.append(offset)
+
+                //alignment
+                if obj.alignment == nil {
+                    alignmentList.append("center")
+                }else {
+                    alignmentList.append(obj.alignment.rawValue)
+                }
+                
+                //Front space
+                let frontSpaceWidth = FontUtils.getFrontSpace(content: obj.content, fontSize: obj.fontSize)
+                frontSpaceList.append(Float(frontSpaceWidth))
+                
+                // Re-Calc the string box
+                if obj.alignment == .center {
+                    rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
+                    // Append Position
+    //                let newX =  Float(obj.stringRect.minX + newRect.minX )
+                    let newX =  Float(obj.stringRect.minX )
+                    let newY =  Float(targetImg.size.height - obj.stringRect.minY )
+    //                print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
+                    positionList.append([newX, newY])
+
+                }else if obj.alignment == .left {
+                    rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
+                    // Append Position
+    //                let newX = Int(obj.stringRect.minX + newRect.minX - frontSpace)
+                    let newX = Float(obj.stringRect.minX )
+
+                    let newY =  Float((targetImg.size.height - obj.stringRect.minY ) )
+                    positionList.append([newX, newY])
+
+
+                }else if obj.alignment == .right {
+                    rectList.append([Float(newRect.minX), Float(newRect.minY), Float(obj.stringRect.width), Float(newRect.height)])
+                    // Append Position
+                    let newX = Float(obj.stringRect.minX + newRect.minX )
+                    let newY = Float((targetImg.size.height - obj.stringRect.minY ))
+                    positionList.append([newX, newY])
+
+                }
+
+                //BGColor
+                let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
+                bgClolorList.append(tmpBGColor)
+            }
+            
+            // Create js file
+            let jsStr = jsMgr.CreateJSString( psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: savePSDToPathList[index] , descentOffset: descentOffset, frontSpace: frontSpaceList)
+            
+            finalStr.append(jsStr)
+            
+            index += 1
+        }
+        
+        // Create JS file from JS string
+        do {
+            let path = Bundle.main.resourcePath! + "/StringCreator.jsx"
+            print("Creating js: \(path)")
+            let url = URL.init(fileURLWithPath: path)
+            try finalStr.write(to: url, atomically: false, encoding: .utf8)
+        }
+        catch {
+            return
+        }
+        
+    }
+    
+    func runJS(){
+ 
+            let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
+            let cmd = "open " + jsPath + "  -a '\(DataStore.PSPath)'"
+            PythonScriptManager.RunScript(str: cmd)
+     }
+    
 //    func FetchTrackingFromDB(_ size: CGFloat) -> (CGFloat, Int16){
 //        let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(size.rounded()))
 //        return (CGFloat(item.fontTrackingPoints), item.fontTracking)
@@ -569,16 +704,13 @@ class PsdsVM: ObservableObject{
             }
         }
     }
-    
-    
-    
+
     func ProcessForOnePsd(){
         let processOn: Int = selectedPsdId
         canProcess = true
         if  selectedNSImage.size.width == 0 {
             return
         }
-        
         let queueCalc = DispatchQueue(label: "calc")
         queueCalc.async {
             self.FetchStringObjects(psdId: self.selectedPsdId)
@@ -618,6 +750,14 @@ class PsdsVM: ObservableObject{
         
     }
     
+    func createPSDForOne(){
+        if selectedPsdId != nil {
+            createJS(idList: [selectedPsdId], savePSDToPathList: [""])
+//            let path = Bundle.main.resourcePath! + "/StringCreator.jsx"
+            runJS()
+        }
+    }
+    
     func CreatePSDForCommited(){
         
         if  selectedNSImage == nil || selectedNSImage.size.width == 0 {
@@ -639,15 +779,20 @@ class PsdsVM: ObservableObject{
             let result = panel.url!
             // Do whatever you need with every selected file
             // in this case, print on the terminal every path
+            var savePSDToPathList: [String] = []
             for psd in psdModel.psdObjects.filter({$0.status == .commited}) {
-//                print("Processing on \(psd.imageURL)")
-
                 let fileTitle = psd.imageURL.lastPathComponent.components(separatedBy: ".")[0]
                 let fileName = fileTitle + ".psd"
                 let saveToPath = result.appendingPathComponent(fileName).path
-                let jsPath = Bundle.main.resourcePath! + "/OutputScript/" + String(psd.id) + ".jsx"
-//                CreatePSDForOnePSD(_id: psd.id, saveToPath: saveToPath )
-                createJSForOnePSD(_id: psd.id, jsPath: jsPath, savePSDToPath: saveToPath)
+                savePSDToPathList.append(saveToPath)
+//                let jsPath = Bundle.main.resourcePath! + "/StringCreator.jsx"
+
+            }
+            //Collect all psd id
+            let idList: [Int] = psdModel.psdObjects.filter({$0.status == .commited}).map({$0.id})
+            if idList.count > 0 {
+                createJS(idList: idList, savePSDToPathList: savePSDToPathList)
+                runJS()
             }
         } else {
             // User clicked on "Cancel"
@@ -657,137 +802,7 @@ class PsdsVM: ObservableObject{
         
     }
     
-    private func createJS(idList: [Int], jsPath: String, savePSDToPath: String ){
-        var finalStr : String = ""
-        for _id in idList{
-            guard let obj = psdModel.GetPSDObject(psdId: _id) else {return}
-            let psdPath = obj.imageURL.path
-            var contentList = [String]()
-            var colorList = [[Int]]()
-            var fontSizeList:[Float] = []
-            var fontNameList: [String] = []
-            var positionList = [[Float]]()
-            var trackingList = [Float]()
-            var offsetList = [[Int16]]()
-            var alignmentList = [String]()
-            var rectList = [[Float]]()
-            var bgClolorList = [[Float]]()
-            var isParagraphList = [Bool]()
-            var descentOffset : [Float] =  []
-            var updateList = psdModel.GetPSDObject(psdId: _id)!.stringObjects.filter{$0.status != .ignored}
-            var saveToPath = savePSDToPath
-            var frontSpaceList: [Float] = []
-            
-            for obj in updateList{
-                var newString = obj.content.replacingOccurrences(of: "\n", with: " ")
-                if newString.isEmpty || newString == nil {
-                    newString = "_"
-                }
-                contentList.append(newString)
-                var tmpColor: [Int] = []
-                
-                tmpColor = [ Int((Float(obj.color.components![0]) * 255).rounded()),
-                             Int((Float(obj.color.components![1]) * 255).rounded()),
-                             Int((Float(obj.color.components![2]) * 255).rounded())
-                ]
-                colorList.append(tmpColor)
-                
-                isParagraphList.append(obj.isParagraph)
-
-                
-                let tmpSize: CGFloat = CGFloat(obj.fontSize)
-                fontSizeList.append(Float(tmpSize))
-                //let tmpTracking = obj.fontSize * 1000 / obj.tracking
-                let tmpTracking = Float((obj.tracking) * 1000 / tmpSize)
-                trackingList.append(tmpTracking)
-                
-                //Calc the offset of String
-                var keyvalues: [String: AnyObject] = [:]
-                let char = (obj.content.first)
-                keyvalues["char"] = String(char!) as AnyObject
-                keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
-
-                let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: _id)!.imageURL.path)
-                fontNameList.append(obj.CalcFontPostScriptName())
-                //Calc Descent
-                let tmpDesc = Float(FontUtils.calcFontTailLength(content: obj.content, size: obj.fontSize))
-
-                descentOffset.append(tmpDesc)
-                let newRect = FontUtils.GetStringBound(str: obj.content, fontName: obj.fontName, fontSize: obj.fontSize, tracking: obj.tracking)
-                
-                let offset = [Int16(newRect.minX), 0]
-                offsetList.append(offset)
-
-                //alignment
-                if obj.alignment == nil {
-                    alignmentList.append("center")
-                }else {
-                    alignmentList.append(obj.alignment.rawValue)
-                }
-                
-                //Front space
-                let frontSpaceWidth = FontUtils.getFrontSpace(content: obj.content, fontSize: obj.fontSize)
-                frontSpaceList.append(Float(frontSpaceWidth))
-                
-                // Re-Calc the string box
-                if obj.alignment == .center {
-                    rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
-                    // Append Position
-    //                let newX =  Float(obj.stringRect.minX + newRect.minX )
-                    let newX =  Float(obj.stringRect.minX )
-                    let newY =  Float(targetImg.size.height - obj.stringRect.minY )
-    //                print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
-                    positionList.append([newX, newY])
-
-                }else if obj.alignment == .left {
-                    rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
-                    // Append Position
-    //                let newX = Int(obj.stringRect.minX + newRect.minX - frontSpace)
-                    let newX = Float(obj.stringRect.minX )
-
-                    let newY =  Float((targetImg.size.height - obj.stringRect.minY ) )
-                    positionList.append([newX, newY])
-
-
-                }else if obj.alignment == .right {
-                    rectList.append([Float(newRect.minX), Float(newRect.minY), Float(obj.stringRect.width), Float(newRect.height)])
-                    // Append Position
-                    let newX = Float(obj.stringRect.minX + newRect.minX )
-                    let newY = Float((targetImg.size.height - obj.stringRect.minY ))
-                    positionList.append([newX, newY])
-
-                }
-
-                //BGColor
-                let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
-                bgClolorList.append(tmpBGColor)
-            }
-            
-            let jsStr = jsMgr.CreateJSString( psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: saveToPath , descentOffset: descentOffset, frontSpace: frontSpaceList)
-            
-            finalStr.append(jsStr)
-        }
-        
-        // Create JS file from JS string
-        do {
-            let path = Bundle.main.resourcePath! + "/StringCreator.jsx"
-            print("Creating js: \(path)")
-            let url = URL.init(fileURLWithPath: path)
-//            try FileManager.default.createDirectory(atPath: resourcePath + "/OutputScript", withIntermediateDirectories: true, attributes: nil)
-            try finalStr.write(to: url, atomically: false, encoding: .utf8)
-        }
-        catch {
-            return
-        }
-        
-    }
     
-    func runJS(jsPath: String){
- 
-//             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
-            let cmd = "open " + jsPath + "  -a '\(DataStore.PSPath)'"
-            PythonScriptManager.RunScript(str: cmd)
-     }
     
     
     //func GetRealResolution(){}

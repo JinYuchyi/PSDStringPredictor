@@ -429,7 +429,7 @@ struct StringObject : Identifiable,  Hashable{
         }
         let sortedValues = sizeDict.values.sorted(by: >)
         
-        var res: Int16 = 0
+        var res: Int16 = 1
         for item in sizeDict.keys{
             if sizeDict[item] == sortedValues[0]{
                 res = item

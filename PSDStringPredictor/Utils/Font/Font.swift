@@ -59,12 +59,13 @@ class FontUtils {
     }
     
     static func getFrontSpace(content: String, fontSize: CGFloat)-> CGFloat {
-        var frontSpace: CGFloat = 0
+//        var frontSpace: CGFloat = 0
         guard let theChar: Character = content.first else {return 0}
-        if theChar.isLetter == true || theChar.isNumber == true {
-            frontSpace = DataStore.frontSpaceDict[String(theChar)]!
-            frontSpace = frontSpace * fontSize / 100
-        }
+        guard var frontSpace = DataStore.frontSpaceDict[String(theChar)] else {return 0}
+//        if theChar.isLetter == true || theChar.isNumber == true {
+//            frontSpace = DataStore.frontSpaceDict[String(theChar)]!
+        frontSpace = frontSpace * fontSize / 100
+//        }
         return frontSpace
     }
     

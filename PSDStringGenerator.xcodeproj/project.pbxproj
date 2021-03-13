@@ -469,13 +469,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3F173DA625FB75DE00AADD65 /* OutputScript */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = OutputScript;
-			sourceTree = "<group>";
-		};
 		3F1A629625230CED006DC9F9 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,7 +497,6 @@
 		3F4D13E725021AFB008F846B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3F173DA625FB75DE00AADD65 /* OutputScript */,
 				3F56E3E22505F06300E64337 /* DB */,
 				3FD558CE25B7C4D200056C85 /* ML */,
 				3FD558CD25B7C4B400056C85 /* csv */,

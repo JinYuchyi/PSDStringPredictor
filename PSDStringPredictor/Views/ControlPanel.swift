@@ -61,7 +61,7 @@ struct ControlPanel: View {
     
     var createPSDButtons: some View  {
         HStack{
-            Button(action: {psdsVM.CreatePSDForOnePSD(_id: psdsVM.selectedPsdId, saveToPath: "" )}){
+            Button(action: {psdsVM.createPSDForOne()}){
                 Text("One")
                     .frame(minWidth: 165,  maxWidth: .infinity)
             }
