@@ -18,6 +18,12 @@ struct StringHighlightView: View {
     @State var originTracking: CGFloat =  -100
     @State var originSize: CGFloat = -100
     
+    //Replace for tmpStruct
+    @State var tmpTracking: CGFloat = 0
+    @State var tmpSize: CGFloat = 0
+    @State var tmpWidth: CGFloat = 0
+    @State var tmpHeight: CGFloat = 0
+    
     fileprivate func CalcRealBound() -> CGRect {
         let rect = FontUtils.GetStringBound(str: GetObj().content, fontName: GetObj().fontName, fontSize: GetObj().fontSize, tracking: GetObj().tracking)
         return rect
@@ -47,7 +53,7 @@ struct StringHighlightView: View {
                             y: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: theid)[1]
                         )
                         .foregroundColor(Color.green.opacity(0.2))
-                        
+
                         .gesture(TapGesture().modifiers(.shift).onEnded ({ (loc) in
                             if psdsVM.selectedStrIDList.contains(psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.id){
                                 psdsVM.selectedStrIDList.removeAll(where: {$0 == psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)!.id})
@@ -77,10 +83,12 @@ struct StringHighlightView: View {
                                             
                                             // Change tracking
                                             if abs(gesture.translation.width / gesture.translation.height) > 1 {
+                                                
+//                                                psdsVM.tmpTracking = gesture.translation.width / 40
                                                 interactive.dragX = gesture.translation.width / 40 // DragX is temp value
-
+                                                print(originTracking + interactive.dragX)
                                                 // Re-Calc the bound
-                                                psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString()
+                                                psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString()//
                                                 let tmp = FontUtils.GetStringBound(
                                                     str: psdsVM.tmpObjectForStringProperty.content,
                                                     fontName: psdsVM.tmpObjectForStringProperty.fontName,
@@ -89,10 +97,10 @@ struct StringHighlightView: View {
                                                 )
                                                 psdsVM.tmpObjectForStringProperty.width = tmp.width
                                                 psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+//
+//                                                let dif = originTracking - psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
                                                 
-                                                let dif = originTracking - psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
-
-                                                psdsVM.tmpObjectForStringProperty.posX = (psdsVM.tmpObjectForStringProperty.posX.toCGFloat()   ).toString()
+//                                                psdsVM.tmpObjectForStringProperty.posX = (psdsVM.tmpObjectForStringProperty.posX.toCGFloat()   ).toString()
 
                                                 
                                             } else {

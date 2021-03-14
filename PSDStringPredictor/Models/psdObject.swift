@@ -15,6 +15,7 @@ import SwiftUI
 enum MacColorMode: String {
     case light = "light"
     case dark = "dark"
+    case none = "none"
 }
 
 enum StringObjectStatus: String, Codable {
@@ -503,9 +504,9 @@ struct PSD {
 }
 
 extension PSDObject {
-    func CalcColorMode() -> MacColorMode{
-        return .light
-    }
+//    func CalcColorMode() -> MacColorMode{
+//        return .light
+//    }
     
     
 }

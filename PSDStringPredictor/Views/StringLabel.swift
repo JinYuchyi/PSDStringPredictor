@@ -59,15 +59,18 @@ struct StringLabel: View {
         ZStack{
             
             //Fake
+            if getObject().id == showFakeString {
             Text(psdsVM.tmpObjectForStringProperty.content)
                 .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
+//                .tracking(psdsVM.tmpTracking)
+
                 .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2  + psdsVM.tmpObjectForStringProperty.tracking.toCGFloat() / 2 - FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize), y: (psdsVM.GetSelectedPsd()?.height ?? 0) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
                 .foregroundColor( Color.gray)
                 .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
 //                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-                .IsHidden(condition: getObject().id == showFakeString)
+//                .IsHidden(condition: getObject().id == showFakeString)
                 .blendMode(.difference)
-    
+            }
             
             Text(getObject().content)
                 .tracking(getObject().tracking)
@@ -116,10 +119,10 @@ struct StringLabel: View {
                 .frame(alignment: .top)
             
             
-            Rectangle()
-                .foregroundColor(.red)
-                .position(x: getObject().stringRect.minX, y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY ))
-                .frame(width: 2, height: 2, alignment: .center)
+//            Rectangle()
+//                .foregroundColor(.red)
+//                .position(x: getObject().stringRect.minX, y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY ))
+//                .frame(width: 2, height: 2, alignment: .center)
 
 //            Color.pink
 //                .frame(width: 2, height: 2, alignment: .center)
@@ -195,15 +198,15 @@ struct StringLabel: View {
     }
     
     var body: some View {
-        ZStack {
+//        ZStack {
             ZStack { //Debug
                 //Text(stringObjectVM.FindStringObjectByID(id: id)!.content)
-                Group{
+//                Group{
                     //Frames
                     StringFrameLayerView()
                     
                     //DragLayerView()
-                }
+//                }
                 //.IsHidden(condition: stringObjectVM.stringObjectStatusDict[id] == 0)
                 
                 //Text content
@@ -211,7 +214,8 @@ struct StringLabel: View {
                 
                 //                    .IsHidden(condition: !showFakeString)
                 
-            }.IsHidden(condition: getObject().status != StringObjectStatus.ignored)
+            }
+//            .IsHidden(condition: getObject().status != StringObjectStatus.ignored)
             
 //            HStack{
 //                //Button for alignment
@@ -248,7 +252,7 @@ struct StringLabel: View {
 //            .frame(width: stringObject.stringRect.width ?? 0, height: stringObject.stringRect.height ?? 0, alignment: .bottomTrailing)
 //            .position(x: GetPosition().x , y: GetPosition().y + smallBtnSize )
             
-        }
+//        }
     }
 }
 

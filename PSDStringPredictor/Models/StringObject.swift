@@ -196,8 +196,10 @@ struct StringObject : Identifiable,  Hashable{
         }
         if result == 1{
             return .light
-        }else{
+        }else if result == 2{
             return .dark
+        }else {
+            return .none
         }
         //return result
     }
@@ -270,7 +272,7 @@ struct StringObject : Identifiable,  Hashable{
                 
             }
             
-            if colorMode == .dark{
+            else if colorMode == .dark{
                 var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
                 var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
                 var i: Int = 0

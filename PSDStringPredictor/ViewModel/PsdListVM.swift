@@ -90,6 +90,8 @@ class PsdsVM: ObservableObject{
     //Save Char DS
     @Published var charImageDSWillBeSaved: CIImage = CIImage.init()
     
+    @Published var tmpTracking: CGFloat = 0
+    
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
     //No bgColorDict, charArrayDict, contentDict, charSizeList, charImageList, charFontWeightList, isPredictedList, charColorModeList, FontName, colorPixel, because we do not need to adjust them frequently
@@ -863,7 +865,7 @@ class PsdsVM: ObservableObject{
             cmode = .light
         }
         psdModel.SetColorMode(psdId: selectedPsdId, objId: selectedStrIDList.last!, value: cmode)
-        
+        tmpObjectForStringProperty = obj!.toObjectForStringProperty()
     }
     
     func ToggleColorMode(psdId: Int){
@@ -902,8 +904,7 @@ class PsdsVM: ObservableObject{
             let tmp  = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat())
             tmpObjectForStringProperty.width = tmp.width
             tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
-            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
-//            tmpObjectForStringProperty.posY = (tmpObjectForStringProperty.posY.toCGFloat() + tmp.minY).toString()
+//            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
             
             commitTempStringObject()
 
