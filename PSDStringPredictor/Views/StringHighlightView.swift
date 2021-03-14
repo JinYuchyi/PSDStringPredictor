@@ -88,7 +88,7 @@ struct StringHighlightView: View {
                                                 interactive.dragX = gesture.translation.width / 40 // DragX is temp value
                                                 print(originTracking + interactive.dragX)
                                                 // Re-Calc the bound
-                                                psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString()//
+                                                tmpTracking = (originTracking + interactive.dragX) //
                                                 let tmp = FontUtils.GetStringBound(
                                                     str: psdsVM.tmpObjectForStringProperty.content,
                                                     fontName: psdsVM.tmpObjectForStringProperty.fontName,

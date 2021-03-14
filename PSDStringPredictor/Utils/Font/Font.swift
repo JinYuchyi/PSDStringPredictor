@@ -157,6 +157,8 @@ class FontUtils {
         
         var fixb = CGRect.init(x: b.minX , y: b.minY, width: b.width , height: b.height)
         
+        
+        // TODO: Check if it can be deleted
         if hasHat == true && hasLongTail == true {
             let offset = CTFontGetAscent(font) - CTFontGetXHeight(font) - CTFontGetDescent(font) - fontSize / 15
             fixb = CGRect.init(x: b.minX, y: b.minY + offset/2 , width: b.width , height: b.height )
