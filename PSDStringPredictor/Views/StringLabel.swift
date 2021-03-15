@@ -72,6 +72,7 @@ struct StringLabel: View {
                 .blendMode(.difference)
             }
             
+            if showFakeString == zeroUUID{
             Text(getObject().content)
                 .tracking(getObject().tracking)
                 .position(x: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: id)[0], y: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: id)[1])
@@ -98,16 +99,16 @@ struct StringLabel: View {
                     }
                     })
                 .exclusively(before: TapGesture().onEnded({ (loc) in
-                    print(FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize))
-                             psdsVM.selectedStrIDList.removeAll()
-                             psdsVM.selectedStrIDList.append(getObject().id)
-                             psdsVM.tmpObjectForStringProperty = getObject().toObjectForStringProperty()
+//                    print(FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize))
+                     psdsVM.selectedStrIDList.removeAll()
+                     psdsVM.selectedStrIDList.append(getObject().id)
+                     psdsVM.tmpObjectForStringProperty = getObject().toObjectForStringProperty()
 //                    print("psdsVM.tmpObjectForStringProperty Color: \(psdsVM.tmpObjectForStringProperty.color), obj: \(psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.color)")
 //                             FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
                             })
                         )
                 )
-            
+            }
                
             
                Text("􀆇")

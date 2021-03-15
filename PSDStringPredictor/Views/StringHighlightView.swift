@@ -85,7 +85,7 @@ struct StringHighlightView: View {
                                                 
 //                                                psdsVM.tmpTracking = gesture.translation.width / 40
                                                 interactive.dragX = gesture.translation.width / 40 // DragX is temp value
-                                                print(originTracking + interactive.dragX)
+//                                                print(originTracking + interactive.dragX)
                                                 // Re-Calc the bound
                                                 psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString() //
                                                 let tmp = FontUtils.GetStringBound(
@@ -122,7 +122,7 @@ struct StringHighlightView: View {
                                             }
                                         }
                                         .onEnded({ gesture in
-                                            showFakeString = UUID.init()
+                                            showFakeString = zeroUUID
                                             psdsVM.commitTempStringObject()
                                             
                                             interactive.dragX = 0

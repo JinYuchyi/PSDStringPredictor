@@ -10,11 +10,16 @@ import SwiftUI
 import CoreImage
 import AppKit
 
+let zeroUUID: UUID = UUID.init()
+
 struct ContentView: View  {
+    
+
     
     @State var selectedStringObject: StringObject = StringObject.init()
     //    let keyEventHandle = KeyEventHandling()
     
+
     let data = DataStore()
     let font = FontUtils()
     @ObservedObject var imageViewModel: ImageProcess
@@ -34,7 +39,7 @@ struct ContentView: View  {
     @State private var showDebugOverlay = true
     @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
-    @State var showFakeString: UUID = UUID.init()
+    @State var showFakeString: UUID = zeroUUID
     
     
     var screenSize: NSRect? = NSScreen.main?.visibleFrame
