@@ -43,11 +43,13 @@ struct ContentView: View  {
     
     fileprivate func LeftViewGroup() -> some View {
         
-        ZStack(alignment: .center){
+        VStack(alignment: .center){
             //PrograssView(psdsVM: psdsVM)
-            psdThumbnailList(psdsVM: psdsVM, showPatchLayer: $showPatchLayer)
-                .frame(height: screenSize!.height * 0.9, alignment: .center)
+            psdThumbnailList(psdsVM: psdsVM, interactive: interactive, showPatchLayer: $showPatchLayer)
+                .padding(.top)
+//                .frame(height: screenSize!.height * 0.9, alignment: .top)
             PsdOperatorView(psdsVM: psdsVM)
+                .frame(height: 30, alignment: .bottom)
                 .padding()
         }
     }
@@ -133,7 +135,7 @@ struct ContentView: View  {
             Divider()
             
             Spacer()
-            ControlPanel(imageProcessVM: imageViewModel, settingsVM: settingVM, psdsVM: psdsVM, regionProcessVM: regionProcessVM, panelWidth: rightPanelWidth)
+            ControlPanel(imageProcessVM: imageViewModel, interactive: interactive, settingsVM: settingVM, psdsVM: psdsVM, regionProcessVM: regionProcessVM, panelWidth: rightPanelWidth)
             
         }
         .frame(width: rightPanelWidth)

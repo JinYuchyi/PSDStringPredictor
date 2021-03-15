@@ -19,7 +19,7 @@ struct SelectionOverlayView: View {
     @State var show: Bool = false
     var body: some View {
         ZStack{
-            Rectangle()
+            Rectangle() //Rect for detect drag
                 .fill(Color.white.opacity(0.01))
                 .gesture(
                     DragGesture()
@@ -71,8 +71,7 @@ struct SelectionOverlayView: View {
                 )
              
             if show == true {
-                Rectangle()
-                    //interactive.selectionRect
+                Rectangle() //Rect for show
                     .fill(Color.green.opacity(0.3))
                     .frame(width: interactive.selectionRect.width, height: interactive.selectionRect.height)
                     .position(x: interactive.selectionRect.minX + interactive.selectionRect.width/2, y: interactive.selectionRect.minY + interactive.selectionRect.height/2)

@@ -31,8 +31,7 @@ struct StringHighlightView: View {
     
     var body: some View {
         ZStack{
-            
-            
+
             ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
                 ZStack{
                     //Realtime rect
@@ -88,7 +87,7 @@ struct StringHighlightView: View {
                                                 interactive.dragX = gesture.translation.width / 40 // DragX is temp value
                                                 print(originTracking + interactive.dragX)
                                                 // Re-Calc the bound
-                                                tmpTracking = (originTracking + interactive.dragX) //
+                                                psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString() //
                                                 let tmp = FontUtils.GetStringBound(
                                                     str: psdsVM.tmpObjectForStringProperty.content,
                                                     fontName: psdsVM.tmpObjectForStringProperty.fontName,

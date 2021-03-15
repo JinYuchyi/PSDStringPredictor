@@ -23,7 +23,7 @@ struct RegionProcessOverlayView: View {
     var body: some View {
         ZStack{
             Rectangle()
-                .fill(Color.green.opacity(0.5))
+                .fill(regionProcessVM.regionActive == true ? (Color.blue.opacity(0.5)) : (Color.white.opacity(0.01)))
                 .gesture(
                     DragGesture()
                         .onChanged { gesture in
@@ -44,8 +44,9 @@ struct RegionProcessOverlayView: View {
                             ).standardized
                             let newIdList = psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
                             //Deactivate the region process, once finished the process
-                            regionProcessVM.regionActive.toggle()
-                            interactive.selectionRect = CGRect.init()
+//                            regionProcessVM.regionActive.toggle()
+                            regionProcessVM.regionActive = false
+//                            interactive.selectionRect = CGRect.init()
                             // Select all new created strings
 //                            psdsVM.selectedStrIDList = newIdList
 //                            psdsVM.tmpObjectForStringProperty = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
@@ -53,12 +54,13 @@ struct RegionProcessOverlayView: View {
                 )
                 .mask(
                     Rectangle()
-                        .fill(Color.green.opacity(0.5))
+                        .fill(Color.white)
                         .frame(width: interactive.selectionRect.width , height: interactive.selectionRect.height  )
                         .position(x: (interactive.selectionRect.minX + interactive.selectionRect.width/2) , y: (interactive.selectionRect.minY + interactive.selectionRect.height/2) )
                 )
         }
-        .frame(width: psdsVM.selectedNSImage.size.width  , height: psdsVM.selectedNSImage.size.height )
+        .frame(width: psdsVM.GetSelectedPsd()?.width ?? 0  , height: psdsVM.GetSelectedPsd()?.height ?? 0 )
+        .IsHidden(condition: regionProcessVM.regionActive == true)
 
     }
     

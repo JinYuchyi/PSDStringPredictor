@@ -73,6 +73,7 @@ class PsdsVM: ObservableObject{
     @Published var maskedImage: CIImage
     @Published var processedCIImage: CIImage //refacting
     @Published var selectedStrIDList: [UUID]//refacting
+    
     //Others
     @Published var IndicatorText: String = ""
     @Published var canProcess: Bool = false
@@ -87,10 +88,11 @@ class PsdsVM: ObservableObject{
     // UI control
     @Published var charDSWindowShow: Bool = false
     @Published var stringDifferenceShow: Bool = false
+
     //Save Char DS
     @Published var charImageDSWillBeSaved: CIImage = CIImage.init()
     
-    @Published var tmpTracking: CGFloat = 0
+//    @Published var tmpTracking: CGFloat = 0
     
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
@@ -695,6 +697,8 @@ class PsdsVM: ObservableObject{
         //        if selectedPsdId != nil {
         //            packPsdObject(psdId: selectedPsdId)
         //        }
+        selectedStrIDList.removeAll()
+
         selectedPsdId = psdId
         //        UnpackPsdObject(psdId: psdId)
         if psdModel.psdObjects.contains(where: {psdId == $0.id}) == true {
@@ -1037,6 +1041,9 @@ class PsdsVM: ObservableObject{
             }
             //Process Image
             UpdateProcessedImage(psdId: selectedPsdId)
+            
+            selectedStrIDList.removeAll()
+
             
             //            UnpackPsdObject(psdId: selectedPsdId)
         }

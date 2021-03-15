@@ -16,6 +16,7 @@ struct ControlPanel: View {
     //@ObservedObject var stringObjectVM: PSDViewModel = psdViewModel
     //@ObservedObject var strObjVM = psdViewModel
     @ObservedObject var imageProcessVM : ImageProcess
+    @ObservedObject var interactive : InteractiveViewModel
     @ObservedObject var settingsVM: SettingViewModel
     var imgUtil: ImageUtil = ImageUtil()
     //    var pixelProcess = PixelProcess()
@@ -42,7 +43,7 @@ struct ControlPanel: View {
             }
             .disabled(psdsVM.IndicatorText != "")
             
-            Button(action: {regionProcessVM.regionBtnPressed(); psdsVM.canProcess = true}){
+            Button(action: {regionProcessVM.regionBtnPressed(); psdsVM.canProcess = true; interactive.selectionRect = CGRect.init()}){
                 Text("Region")
                     .frame(minWidth: 70,  maxWidth: .infinity)
             }

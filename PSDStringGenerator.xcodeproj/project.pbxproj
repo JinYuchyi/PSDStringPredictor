@@ -1417,7 +1417,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				MARKETING_VERSION = 0.4.1;
+				MARKETING_VERSION = 0.4.2;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1446,7 +1446,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				MARKETING_VERSION = 0.4.1;
+				MARKETING_VERSION = 0.4.2;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
