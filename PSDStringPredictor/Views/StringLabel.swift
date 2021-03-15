@@ -37,7 +37,7 @@ struct StringLabel: View {
         if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) != nil{
             let x = (getObject().stringRect.origin.x) + (getObject().stringRect.width)/2
 //            let x = (stringObject.stringRect.midX)  // midX will left aligned
-            let y = psdsVM.selectedNSImage.size.height - (getObject().stringRect.origin.y)  - (getObject().stringRect.height)/2
+            let y = psdsVM.GetSelectedPsd()?.height ?? 0 - (getObject().stringRect.origin.y)  - (getObject().stringRect.height)/2
             return CGPoint(x: x, y: y)
         }else{
             return CGPoint.zero

@@ -203,7 +203,6 @@ class PsdsVM: ObservableObject{
         let x: CGFloat = tmpObj.stringRect.minX + tmpObj.stringRect.width / 2 + tmpObj.tracking / 2 - FontUtils.GetCharFrontOffset(content: tmpObj.content, fontSize: tmpObj.fontSize)
         let y: CGFloat =  tmpPsd.height  - (tmpObj.stringRect.minY + tmpObj.stringRect.height / 2)
         return [x,y]
-//        x: getObject().stringRect.minX + getObject().stringRect.width / 2 + getObject().tracking / 2 - FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize), y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (getObject().stringRect.minY + getObject().stringRect.height / 2)
     }
     
     func FetchStringObjects(psdId: Int){
