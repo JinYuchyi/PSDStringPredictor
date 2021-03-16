@@ -62,7 +62,7 @@ func DuplicateFileToTempPath(at srcURL: URL) ->String {
 }
 
 func MakeImagesInTempFolder(imagePathList: [String]){
-    let js = JSManager()
+    let js = JSManager.shared
     let tempFolderPath = TempPath()
     let variable = """
         paths = \(imagePathList)

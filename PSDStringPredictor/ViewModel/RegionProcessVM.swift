@@ -13,14 +13,14 @@ class RegionProcessVM: ObservableObject {
     
     //@Published var regionRect: CGRect = CGRect.init()
     //    @Published var regionOverlay: CIImage = CIImage.init()
-    @Published var regionImageForProcess: CIImage = CIImage.init()
+    @Published var regionImageForProcess: CIImage = DataStore.zeroCIImage
     @Published var regionActive: Bool = false
     //    @Published var targetImageWidth: CGFloat = 0
     //    @Published var targetImageHeight: CGFloat = 0
     
-    var targetImage: CIImage = CIImage.init()
+    var targetImage: CIImage = DataStore.zeroCIImage
     
-    let imgUtil = ImageUtil()
+    let imgUtil = ImageUtil.shared
     
     private func fetchRegionOverlay( regionRect: CGRect, bgWidth: CGFloat, bgHeight: CGFloat) -> (mask1: CIImage, mask2: CIImage){
         let bgImg = CIImage.init(color: CIColor.black ).cropped(to: CGRect.init(x: 0, y: 0, width: bgWidth, height: bgHeight))

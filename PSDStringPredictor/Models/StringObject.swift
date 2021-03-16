@@ -58,7 +58,7 @@ struct StringObject : Identifiable,  Hashable{
         self.fontSize = 0
         self.colorMode = .light
         self.fontWeight =  "Regular"
-        self.charImageList = [CIImage.init()]
+        self.charImageList = [DataStore.zeroCIImage]
         self.stringRect = CGRect()
         self.color = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
         self.charArray = [" "]
@@ -126,7 +126,7 @@ struct StringObject : Identifiable,  Hashable{
         self.fontName = fontName
         self.alignment = alignment
         self.status = status
-        self.stringRect = CGRect.init()
+        self.stringRect = zeroRect
         self.content = String(charArray)
         self.stringRect = mergeRect(rects: charRacts)
         self.content = FixContent(content)

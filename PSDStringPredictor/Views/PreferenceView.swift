@@ -14,13 +14,13 @@ struct SettingsView: View {
     @ObservedObject var settingsVM: SettingViewModel
     @State var DPICheck: Int = 1
     @State var debugMode: Int = 0
-    var PSPath: String
+    @State var  PSPath: String = ""
 
     var body: some View {
         VStack{
             options
-            Spacer()
-            controls
+//            Spacer()
+//            controls
         }
         .padding()
 
@@ -32,7 +32,7 @@ struct SettingsView: View {
             HStack{
                 Text("Photoshop Path")
                     .frame(width: 100, alignment: .leading)
-                TextField("Input Photoshop Path...", text: $settingsVM.PSPath, onCommit: { settingsVM.PSPath = PSPath; print(settingsVM.PSPath) })
+                TextField("Input Photoshop Path...", text: $PSPath, onCommit: { commitPSPath()})
                     .fixedSize()
                 .frame(width: 400, alignment: .leading)
             }
@@ -45,9 +45,7 @@ struct SettingsView: View {
         HStack{
             Button("Confirm", action: {
                 
-                plistM.Write(settingItem: CreateItem(), plistName: "AppSettings")
-                settingsVM.debugItemsSelection = debugMode
-                settingsVM.checkDPISelection = DPICheck
+                
                 //settingsVM.PSPath = PSPath
             })
         }
@@ -57,9 +55,17 @@ struct SettingsView: View {
         //print("PSPath: \(PSPath)")
         let item = AppSettingsItem(Debug: debugMode == 1 ? true : false,
                                    DPICheck: DPICheck == 1 ? true : false,
-                                   PSPath: PSPath
+                                   PSPath: DataStore.PSPath
                                    )
         return item
+    }
+    
+    func commitPSPath(){
+        DataStore.PSPath = PSPath;
+        plistM.Write(settingItem: CreateItem(), plistName: "AppSettings")
+        settingsVM.debugItemsSelection = debugMode
+        settingsVM.checkDPISelection = DPICheck
+        print(DataStore.PSPath)
     }
 //
 //    func LoadPList(name: String) -> AppSettingsItem{

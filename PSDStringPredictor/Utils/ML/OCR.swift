@@ -13,10 +13,12 @@ import SwiftUI
 
 let fontDecentOffsetScale: CGFloat = 0.8
 
-class OCR: ObservableObject{
-    //private var workItem: DispatchWorkItem?
-    //@EnvironmentObject var warningVM: WarningVM
-    //Constant
+class OCR{
+    
+    static let shared = OCR()
+    
+    private init(){}
+    
     func GetRectsFromObservations(_ observations : [VNRecognizedTextObservation], _ width : Int, _ height : Int)->[CGRect]{
         var rects : [CGRect] = []
         //var total = observations.count

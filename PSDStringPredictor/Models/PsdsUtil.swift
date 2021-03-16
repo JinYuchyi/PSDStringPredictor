@@ -10,9 +10,9 @@ import Foundation
 import SwiftUI
 
 class PsdsUtil  {
-    let ocr = OCR()
+    let ocr = OCR.shared
     //var psds: PSD
-    let imageUtil = ImageUtil()
+    let imageUtil = ImageUtil.shared
 
     private var stringObjectListDict: [Int:[StringObject]] = [:]
     private var charFrameListDict: [Int:[CharFrame]] = [:]
@@ -28,8 +28,8 @@ class PsdsUtil  {
     //private var psdCommitedList: [Int: Bool] = [:]
     //private var psdObjectList: [PSDObject] = []
     
-    private var targetImageProcessed = CIImage.init() //selected
-    private var targetImageMasked = CIImage.init()//selected
+    private var targetImageProcessed = DataStore.zeroCIImage//selected
+    private var targetImageMasked = DataStore.zeroCIImage//selected
     private var selectedNSImage = NSImage()//selected
     private var colorModeDict: [Int: Int] = [:]
     private var gammaDict: [Int: CGFloat] = [:]
@@ -147,8 +147,8 @@ class PsdsUtil  {
     
     func SetSelectedNSImage(image: NSImage) {
         selectedNSImage = image
-        targetImageMasked = selectedNSImage.ToCIImage() ?? CIImage.init()
-        targetImageProcessed = selectedNSImage.ToCIImage() ?? CIImage.init()
+        targetImageMasked = selectedNSImage.ToCIImage() ?? DataStore.zeroCIImage
+        targetImageProcessed = selectedNSImage.ToCIImage() ?? DataStore.zeroCIImage
         //targetImageMasked = selectedNSImage.ToCIImage()
     }
 

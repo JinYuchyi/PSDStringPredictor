@@ -13,6 +13,10 @@ import AppKit
 
 class JSManager{
     
+    static let shared = JSManager()
+    
+    private init(){}
+    
     private func NameNormalize(name : String)->String{
         var res: String = ""
         var index = 0

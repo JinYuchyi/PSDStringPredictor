@@ -14,8 +14,8 @@ import SwiftUI
 class ImageProcess: ObservableObject{
     
     
-    @Published var targetImageProcessed = CIImage.init() //selected
-    @Published var targetImageMasked = CIImage.init()//selected
+    @Published var targetImageProcessed = DataStore.zeroCIImage //selected
+    @Published var targetImageMasked = DataStore.zeroCIImage//selected
     @Published var targetNSImage = NSImage()//selected
     
     @Published var maskList: [Int:[CGRect]] = [:]
@@ -178,8 +178,8 @@ class ImageProcess: ObservableObject{
     
     func SetTargetNSImage(_ img: NSImage){
         targetNSImage = img
-        targetImageProcessed = CIImage.init()
-        targetImageMasked = CIImage.init()
+        targetImageProcessed = DataStore.zeroCIImage
+        targetImageMasked = DataStore.zeroCIImage
         //targetImageProcessed = targetNSImage.ToCIImage()!
         //        if(targetImageProcessed.extent.width > 0){}
         //        else{
@@ -460,11 +460,11 @@ func Maximum(_ image: CIImage) -> (NSColor){
 //    let pixelProcess = PixelProcess()
     //let colorSpace: NSColorSpace = .genericRGB
     var color: NSColor = NSColor.init(red: 1, green: 0, blue: 1, alpha: 1)
-    var filteredImage = CIImage.init()
+    var filteredImage = DataStore.zeroCIImage
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
-    filteredImage = filter?.outputImage ?? CIImage.init()
+    filteredImage = filter?.outputImage ?? DataStore.zeroCIImage
     if filteredImage.IsValid() == true{
         color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
         
@@ -485,7 +485,7 @@ func Minimun(_ image: CIImage) -> (NSColor){
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         
-        let filteredImage = filter.outputImage ?? CIImage.init() //Result Correct
+        let filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
         
         if filteredImage.IsValid() == true{
             color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)

@@ -15,7 +15,7 @@ class PixelProcess{
     
     static let shared = PixelProcess.init()
     
-    let ocr = OCR()
+    let ocr = OCR.shared
     
     private init(){}
     

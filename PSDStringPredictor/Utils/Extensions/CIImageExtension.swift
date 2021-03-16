@@ -90,7 +90,7 @@ extension CIImage{
     }
     
     func scale(size: CGFloat) -> CIImage  {
-        var newImg: CIImage = CIImage.init()
+        var newImg: CIImage = DataStore.zeroCIImage
         func iterScale(_ img: CIImage) {
             let transform = CGAffineTransform.init(scaleX: 1.01, y: 1.01)
             newImg = newImg.transformed(by: transform)

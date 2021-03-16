@@ -12,7 +12,7 @@ import SwiftUI
 class MLTraining {
     
     let imageProcess = ImageProcess()
-    let ocr = OCR()
+    let ocr = OCR.shared
     
     func CreateTrackingData(){
         //var contentStr: String = ""

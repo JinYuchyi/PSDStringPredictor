@@ -20,7 +20,7 @@ struct ContentView: View  {
     //    let keyEventHandle = KeyEventHandling()
     
 
-    let data = DataStore()
+//    let data = DataStore()
     let font = FontUtils()
     @ObservedObject var imageViewModel: ImageProcess
     @ObservedObject var psdsVM: PsdsVM
@@ -30,7 +30,7 @@ struct ContentView: View  {
     @ObservedObject var fontTestVM = FontTestViewModel()
     @State var width: CGFloat = 0
     
-    let imgUtil = ImageUtil()
+    let imgUtil = ImageUtil.shared
     
     @State var showImage = false
     @State var showPatchLayer = false

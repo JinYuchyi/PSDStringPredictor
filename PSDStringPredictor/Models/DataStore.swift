@@ -14,6 +14,8 @@ import AppKit
 
 class DataStore{
     
+    static let zeroCIImage = CIImage.init()
+    
     static let sizeOfThumbnail = 180
 
     static var PSPath = ""

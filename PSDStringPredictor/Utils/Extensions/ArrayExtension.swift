@@ -78,7 +78,7 @@ extension Array where Element == Data {
             if c.isEmpty == false{
                 result.append(CIImage.init(data: c)!)
             }else{
-                result.append(CIImage.init())
+                result.append(DataStore.zeroCIImage)
             }
         }
         return result

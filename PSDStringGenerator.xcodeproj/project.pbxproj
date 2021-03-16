@@ -137,7 +137,6 @@
 		3F8208502510F8CE00832192 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82084F2510F8CE00832192 /* File.swift */; };
 		3F820854251112BA00832192 /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F820853251112BA00832192 /* FontTracking.swift */; };
 		3F8460A2251057FF00788176 /* CompareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8460A1251057FF00788176 /* CompareImage.swift */; };
-		3F853B6C257E6C0C002507C4 /* IndicatorBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */; };
 		3F853B712585BEAE002507C4 /* StringHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853B702585BEAE002507C4 /* StringHighlightView.swift */; };
 		3F8E6CF725A4249F00B383C9 /* StringCreator.jsx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E6CF625A4249F00B383C9 /* StringCreator.jsx */; };
 		3F9B3A7E250F2855003B652C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B3A7D250F2855003B652C /* DataStore.swift */; };
@@ -191,7 +190,6 @@
 		3FC9068425ABF4DF00120DE2 /* StringAttributesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */; };
 		3FC9068825AC02C200120DE2 /* ControlVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9068725AC02C200120DE2 /* ControlVM.swift */; };
 		3FC9069225AD8E0F00120DE2 /* WarningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9069125AD8E0F00120DE2 /* WarningVM.swift */; };
-		3FC906A225B2DFF300120DE2 /* PrograssView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC906A125B2DFF300120DE2 /* PrograssView.swift */; };
 		3FD1D332254D0E1600F4BCE7 /* CharFrameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */; };
 		3FD1FBB42581C116004EF1FB /* SelectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */; };
 		3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */; };
@@ -358,7 +356,6 @@
 		3F8208512511129200832192 /* TrackingRegressor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TrackingRegressor.mlmodel; sourceTree = "<group>"; };
 		3F820853251112BA00832192 /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		3F8460A1251057FF00788176 /* CompareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareImage.swift; sourceTree = "<group>"; };
-		3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorBarView.swift; sourceTree = "<group>"; };
 		3F853B702585BEAE002507C4 /* StringHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHighlightView.swift; sourceTree = "<group>"; };
 		3F8E6CF625A4249F00B383C9 /* StringCreator.jsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = StringCreator.jsx; sourceTree = "<group>"; };
 		3F9B3A7D250F2855003B652C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
@@ -412,7 +409,6 @@
 		3FC9068325ABF4DF00120DE2 /* StringAttributesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringAttributesVM.swift; sourceTree = "<group>"; };
 		3FC9068725AC02C200120DE2 /* ControlVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlVM.swift; sourceTree = "<group>"; };
 		3FC9069125AD8E0F00120DE2 /* WarningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningVM.swift; sourceTree = "<group>"; };
-		3FC906A125B2DFF300120DE2 /* PrograssView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrograssView.swift; sourceTree = "<group>"; };
 		3FD1D331254D0E1600F4BCE7 /* CharFrameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharFrameData.swift; sourceTree = "<group>"; };
 		3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionOverlayView.swift; sourceTree = "<group>"; };
 		3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringObjectPropertyView.swift; sourceTree = "<group>"; };
@@ -551,14 +547,12 @@
 				3FEFE9122507200400AEF1C8 /* ControlPanel.swift */,
 				3F9B3A81250F791B003B652C /* ImageProcessControlView.swift */,
 				3F437E4925DBC05100BC0D7D /* TextArea.swift */,
-				3FC906A125B2DFF300120DE2 /* PrograssView.swift */,
 				3F173D9B25F9F0F900AADD65 /* testView.swift */,
 				3F437E7F25E641FA00BC0D7D /* AlignedText.swift */,
 				3F6B455325133BD100BE6F76 /* CharacterFrameView.swift */,
 				3FD247F5253E7E13007EBE36 /* StringObjectPropertyView.swift */,
 				3F9ED7A42566090100F950BC /* ImageResourceView.swift */,
 				3F9ED7A725662CD600F950BC /* ButtonStyleView.swift */,
-				3F853B6B257E6C0C002507C4 /* IndicatorBarView.swift */,
 				3FD1FBB32581C116004EF1FB /* SelectionOverlayView.swift */,
 				3F0802AF25C419A1000530F6 /* RegionProcessOverlayView.swift */,
 				3FDBC4C3258324F900E9C2DC /* PreferenceView.swift */,
@@ -1123,7 +1117,6 @@
 				3F3A22BB25CCDA9500E7FC30 /* CharColorMode.swift in Sources */,
 				3FD558D125B8111300056C85 /* OneCharPropertyView.swift in Sources */,
 				3FA70D4A25D95E7C00D68598 /* 2Color.swift in Sources */,
-				3FC906A225B2DFF300120DE2 /* PrograssView.swift in Sources */,
 				3F59C10E25D3CF8600F9CF52 /* dColor.swift in Sources */,
 				3FD24803253ED7B0007EBE36 /* FontWeight.swift in Sources */,
 				3F59C0F525D3CF8600F9CF52 /* tColor.swift in Sources */,
@@ -1230,7 +1223,6 @@
 				3FD247F6253E7E13007EBE36 /* StringObjectPropertyView.swift in Sources */,
 				3F4471BB25735459003AE7B6 /* ColorExtension.swift in Sources */,
 				3F59C0FE25D3CF8600F9CF52 /* vColor.mlmodel in Sources */,
-				3F853B6C257E6C0C002507C4 /* IndicatorBarView.swift in Sources */,
 				3F59C10B25D3CF8600F9CF52 /* uColor.swift in Sources */,
 				3F4D13EB2502220D008F846B /* StringLabelList.swift in Sources */,
 				3F4CB5A7250A324300E41082 /* CIImageExtension.swift in Sources */,
@@ -1417,7 +1409,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.3;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1446,7 +1438,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.3;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";

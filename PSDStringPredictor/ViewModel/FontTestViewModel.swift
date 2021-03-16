@@ -15,7 +15,7 @@ struct FontProperty {
     var leading: CGFloat = 0
     var lineHeight: CGFloat = 0
     var capHeight: CGFloat = 0
-    var size: CGRect = CGRect.init()
+    var size: CGRect = zeroRect
     var xHeight: CGFloat = 0
 }
 

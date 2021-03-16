@@ -14,9 +14,12 @@ import AVFoundation
 //}
 
 class ImageUtil{
-    let ocr = OCR()
+    let ocr = OCR.shared
 //    let pixelProcess = PixelProcess()
     
+    static let shared = ImageUtil.init()
+    
+    private init(){}
     
     private func attributedTextImageGenerator(inputText: NSAttributedString, inputScaleFactor: NSNumber = 1) -> CIFilter? {
         guard let filter = CIFilter(name: "CIAttributedTextImageGenerator") else {

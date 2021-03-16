@@ -34,15 +34,7 @@ struct StringHighlightView: View {
 
             ForEach(psdsVM.selectedStrIDList, id:\.self){ theid in
                 ZStack{
-                    //Realtime rect
-                    //                    Rectangle()
-                    //                        .frame(width: CalcRealBound().width , height: CalcRealBound().height)
-                    //                        .position(
-                    //                            x: GetObj().stringRect.midX,
-                    //                            y: psdsVM.selectedNSImage.size.height - GetObj().stringRect.midY
-                    //                        )
-                    //                        .foregroundColor(Color.yellow.opacity(0.6))
-                    //
+                   
                     
                     Rectangle()
                         .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
@@ -182,7 +174,7 @@ struct StringHighlightView: View {
                         .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                         .position(
                             x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX ?? zeroRect.minX,
-                            y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
+                            y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
                         )
                         
                         .blendMode(.lighten)
@@ -217,18 +209,7 @@ struct StringHighlightView: View {
                     isHighLight: true,
                     pageWidth: psdsVM.GetSelectedPsd()?.width ?? 0,
                     pageHeight: psdsVM.GetSelectedPsd()?.height ?? 0)
-        ////                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
-        ////                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
-        //            )
-        
-        //        Text(psdsVM.tmpObjectForStringProperty.content )
-        //            .tracking(calcTracking()  )
-        //            .position(
-        //                x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midX.keepDecimalPlaces(num: 2) ?? zeroRect.minX,
-        //                y: psdsVM.selectedNSImage.size.height - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
-        //            )
-        //            .foregroundColor(psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)?.color.ToColor() ?? Color.red  )
-        //            .font(.custom(fontName(), size: calcFontSize()))
+
     }
     
     func fontName()-> String {

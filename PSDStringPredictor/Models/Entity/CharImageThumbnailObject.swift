@@ -11,7 +11,7 @@ import CoreImage
 import SwiftUI
 
 struct CharImageThumbnailObject {
-    var image: CIImage = CIImage.init()
+    var image: CIImage = DataStore.zeroCIImage
     var char: String
     var weight: String
     var size: Int

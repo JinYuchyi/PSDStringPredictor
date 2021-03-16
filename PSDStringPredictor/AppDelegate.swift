@@ -20,33 +20,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 //    var settingWindow: NSWindow!
     @ObservedObject var dbViewModel = DBViewModel()
-   // @ObservedObject var stringObjectVM = psdViewModel
-//    @ObservedObject var imageVM = ImageVM()
     @ObservedObject var psdsVM = PsdsVM()
     @ObservedObject var imageProcess = ImageProcess()
     @ObservedObject var settingVM = SettingViewModel()
-//    static let shared = AppDelegate()
 
-    
-    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
-        
-        //let stringObjectVM = StringObjectViewModel()
-        //let data = DataStore()
-        //let context = (NSApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  
         let contentView = ContentView( imageViewModel: imageProcess, psdsVM: psdsVM, settingVM: settingVM)
-        
-            //.environment(\.managedObjectContext, persistentContainer.viewContext)
-            //.environmentObject(warningVM)
-        //.environmentObject(data)
+
         let screenSize = NSScreen.main?.frame
-//        let screenWidth = screenSize.width
-//        let screenHeight = screenSize.height
+
         // Create the window and set the content view. 
         window = NSWindow(
             contentRect: screenSize ?? NSRect(x: 0, y: 0, width: 1700, height: 1000),
-            //styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView, .resizable],
             backing: .buffered, defer: false)
         window.center()
@@ -55,15 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
         window.title = "AutoLayer \(softwareInfo.getMainVersion())"
-        //        //Preference window
-        //        settingWindow = NSWindow(
-        //            contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
-        //            //styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-        //            styleMask: [.closable, .resizable, .titled],
-        //            backing: .buffered, defer: false)
-        //        settingWindow.center()
-        //        settingWindow.contentView = NSHostingView(rootView: SettingsView())
-        //        settingWindow.makeKeyAndOrderFront(nil)
+
         //Prepare the config setting
         PreSettingConfig()
         

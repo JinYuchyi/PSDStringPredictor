@@ -12,7 +12,7 @@ import SwiftUI
 
 class DBViewModel: ObservableObject{
     //var dbModel = DB()
-    let imgUtil = ImageUtil()
+    let imgUtil = ImageUtil.shared
     let csv = CSVManager()
     
     //@Published private var dbPathString = "db.sqlite3"

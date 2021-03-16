@@ -11,7 +11,7 @@ import Foundation
 class InteractiveViewModel: ObservableObject{
     @Published var selectStartLocation: CGPoint = CGPoint.init(x: -99999, y: -99999)
     @Published var selectEndLocation: CGPoint = CGPoint.init(x: -99999, y: -99999)
-    @Published var selectionRect: CGRect = CGRect.init()
+    @Published var selectionRect: CGRect = zeroRect
     @Published var dragX: CGFloat = 0
     @Published var dragY: CGFloat = 0
 //    @Published var stringWidth: CGFloat = 0

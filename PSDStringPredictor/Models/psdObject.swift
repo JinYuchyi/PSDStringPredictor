@@ -47,6 +47,7 @@ struct PSDObject: Identifiable{
         self.status = status
         self.width = CIImage.init(contentsOf: imageURL)?.extent.width ?? 0
         self.height = CIImage.init(contentsOf: imageURL)?.extent.height ?? 0
+//        print("height: \(self.height)")
     }
     
     fileprivate init(id: Int, imageURL: URL){
@@ -58,6 +59,7 @@ struct PSDObject: Identifiable{
         status = .normal
         self.width = CIImage.init(contentsOf: imageURL)?.extent.width ?? 0
         self.height = CIImage.init(contentsOf: imageURL)?.extent.height ?? 0
+//        print("height: \(self.height)")
     }
     
     fileprivate func FetchThumbnail(size: Int) -> NSImage{
@@ -486,7 +488,7 @@ struct PSD {
             for strJ in psdJ.stringObjects{
                 var charImgList = [CIImage]()
                 for rect in strJ.charRects{
-                    let tmpImg: CIImage = targetImage?.cropped(to: rect) ?? CIImage.init()
+                    let tmpImg: CIImage = targetImage?.cropped(to: rect) ?? DataStore.zeroCIImage
                     charImgList.append(tmpImg)
                 }
                 let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: charImgList, stringRect: strJ.stringRect, color: strJ.color, bgColor: strJ.bgColor, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)

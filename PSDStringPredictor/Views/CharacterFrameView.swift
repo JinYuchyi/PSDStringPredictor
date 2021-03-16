@@ -15,7 +15,7 @@ struct CharacterFrameView: View {
     
     //var charFrame: CGRect
     //var IDList: [UUID]
-    let imgUtil = ImageUtil()
+    let imgUtil = ImageUtil.shared
     //    @ObservedObject var imgProcess = imageProcessViewModel
     //    @ObservedObject var stringObjectVM = psdViewModel
     @State var overText: Bool = false

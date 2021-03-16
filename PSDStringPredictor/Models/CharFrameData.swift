@@ -16,7 +16,7 @@ struct CharFrame: Identifiable, Hashable{
     
     init(){
         id = UUID()
-        rect = CGRect.init()
+        rect = zeroRect
         char = ""
         predictedSize = 0
     }

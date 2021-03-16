@@ -59,7 +59,7 @@ struct StringObjectForStringProperty{
 
 class PsdsVM: ObservableObject{
     
-    let ocr = OCR()
+    let ocr = OCR.shared
     
     @Published var psdModel: PSD //refacting
     
@@ -82,15 +82,16 @@ class PsdsVM: ObservableObject{
     @Published var stringIsOn: Bool = true
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
-    @Published var selectRect: CGRect = CGRect.init()
-    @Published var linkSizeAndTracking: Bool = true
+//    @Published var PSPath: String = ""
+//    @Published var selectRect: CGRect = zeroRect
 
     // UI control
+    @Published var linkSizeAndTracking: Bool = true
     @Published var charDSWindowShow: Bool = false
     @Published var stringDifferenceShow: Bool = false
 
     //Save Char DS
-    @Published var charImageDSWillBeSaved: CIImage = CIImage.init()
+    @Published var charImageDSWillBeSaved: CIImage
     
 //    @Published var tmpTracking: CGFloat = 0
     
@@ -110,9 +111,9 @@ class PsdsVM: ObservableObject{
     //    @Published var statusDict: [UUID: StringObjectStatus] = [:]
     //    @Published var isParagraphDict: [UUID: Bool] = [:]
     
-    let imageUtil = ImageUtil()
+    let imageUtil = ImageUtil.shared
     //    let pixProcess = PixelProcess()
-    let jsMgr = JSManager()
+    let jsMgr = JSManager.shared
     //    @Published var thumbnailDict: [Int:NSImage] = [:]
     //    @Published var commitedList: [Int:Bool] = [:]
     //    @Published var pathList: [Int:String] = [:]
@@ -122,12 +123,14 @@ class PsdsVM: ObservableObject{
         psdModel = PSD()
         selectedPsdId = 0
         selectedNSImage = NSImage.init()
-        processedCIImage = CIImage.init()
+        processedCIImage = DataStore.zeroCIImage
         gammaDict = [:]
         expDict = [:]
         selectedStrIDList = []
         DragOffsetDict = [:]
-        maskedImage = CIImage.init()
+        maskedImage = DataStore.zeroCIImage
+        charImageDSWillBeSaved = DataStore.zeroCIImage
+
         
     }
     
@@ -144,7 +147,7 @@ class PsdsVM: ObservableObject{
     func InitDictForOnePsd(psdId: Int){
         gammaDict[psdId] = 1
         expDict[psdId] = 0
-        processedCIImage = selectedNSImage.ToCIImage() ?? CIImage.init()
+        processedCIImage = selectedNSImage.ToCIImage() ?? DataStore.zeroCIImage
     }
     
     func GetSelectedPsd() -> PSDObject?{
@@ -586,7 +589,9 @@ class PsdsVM: ObservableObject{
     func runJS(){
  
             let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
-            let cmd = "open " + jsPath + "  -a '\(DataStore.PSPath)'"
+        
+        let cmd = "open " + jsPath + "  -a '\(DataStore.PSPath)'"
+        print("cmd: \(cmd)")
             PythonScriptManager.RunScript(str: cmd)
      }
     
@@ -608,7 +613,7 @@ class PsdsVM: ObservableObject{
         
         var orderedYList: [UUID:CGFloat] = [:]
         var content: String = ""
-        var rect: CGRect = CGRect.init()
+        var rect: CGRect = zeroRect
         var color: CGColor = CGColor.white
         var fontSize: CGFloat = 0
         var fontTracking: CGFloat = 0
@@ -980,7 +985,7 @@ class PsdsVM: ObservableObject{
         //        }
         psdModel.removePSDObject(id: psdId)
         selectedNSImage = NSImage.init()
-        processedCIImage = CIImage.init()
+        processedCIImage = DataStore.zeroCIImage
         
     }
     
@@ -1133,7 +1138,7 @@ class PsdsVM: ObservableObject{
     func DeleteAll(){
         psdModel.psdObjects.removeAll()
         selectedNSImage = NSImage.init()
-        processedCIImage = CIImage.init()
+        processedCIImage = DataStore.zeroCIImage
     }
     
     func CommitAll(){
