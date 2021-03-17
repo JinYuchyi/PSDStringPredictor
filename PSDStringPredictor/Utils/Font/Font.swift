@@ -11,7 +11,9 @@ import Cocoa
 
 class FontUtils {
     
+    static let shared = FontUtils()
     
+    private init(){}
     
     static func  calcFontTailLength(content: String, size: CGFloat) -> CGFloat {
         for c in Array(content) {

@@ -12,6 +12,8 @@ class CSVManager{
     
     static let shared = CSVManager()
     
+    private init() {}
+    
     private func ReadAllContentAsString(FromFile filePath: String) -> String{
         
         if FileManager.default.fileExists(atPath: filePath) {

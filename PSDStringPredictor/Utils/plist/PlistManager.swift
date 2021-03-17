@@ -9,6 +9,11 @@
 import Foundation
 
 class PlistManager{
+    
+    static let shared = PlistManager()
+    
+    private init(){}
+    
     func Load(plistName: String) -> AppSettingsItem {
 //        var plistURL: URL
 //        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

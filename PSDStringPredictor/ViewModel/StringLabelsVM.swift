@@ -28,21 +28,6 @@ class StringLabelsVM: ObservableObject {
         positionList = result
     }
     
-    //MARK: Intensions
-    func StringClicked(objId: UUID){
-        print("StringClicked")
-    }
-    
-    func alignmentClicked(objId: UUID){
-        print("alignmentClicked")
-    }
-    
-    func FixClicked(objId: UUID){
-        print("FixClicked")
-    }
-    
-    func IgnoreClicked(objId: UUID){
-        print("IgnoreClicked")
-    }
+
     
 }

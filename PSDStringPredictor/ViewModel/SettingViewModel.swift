@@ -15,7 +15,7 @@ class SettingViewModel: ObservableObject {
     @Published var checkDPIItems = ["false", "true"]
     @Published var debugItemsSelection = 0
     @Published var checkDPISelection = 1
-    let plistM = PlistManager()
+    let plistM = PlistManager.shared
     
     init(){
         appSettingItem = LoadPList(name: "AppSettings")

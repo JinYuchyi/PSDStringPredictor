@@ -16,22 +16,22 @@ struct ContentView: View  {
     
 
     
-    @State var selectedStringObject: StringObject = StringObject.init()
+//    @State var selectedStringObject: StringObject = StringObject.init()
     //    let keyEventHandle = KeyEventHandling()
     
 
 //    let data = DataStore()
-    let font = FontUtils()
+    let font = FontUtils.shared
+    let imgUtil = ImageUtil.shared
+
     @ObservedObject var imageViewModel: ImageProcess
     @ObservedObject var psdsVM: PsdsVM
     @ObservedObject var regionProcessVM: RegionProcessVM = RegionProcessVM()
     @ObservedObject var interactive = InteractiveViewModel()
     @ObservedObject var settingVM : SettingViewModel
-    @ObservedObject var fontTestVM = FontTestViewModel()
-    @State var width: CGFloat = 0
-    
-    let imgUtil = ImageUtil.shared
-    
+//    @ObservedObject var fontTestVM = FontTestViewModel()
+//    @State var width: CGFloat = 0
+
     @State var showImage = false
     @State var showPatchLayer = false
     //@State var showDebugOverlay = true
@@ -86,7 +86,6 @@ struct ContentView: View  {
                     .IsHidden(condition: psdsVM.stringIsOn == true)
                     .scaleEffect(psdsVM.viewScale)
                     
-                    //                    Color.red.frame(width: psdsVM.selectedNSImage.size.width * psdsVM.viewScale, height: psdsVM.selectedNSImage.size.height * psdsVM.viewScale).opacity(0.3)
                     
                 }
                 
@@ -162,17 +161,17 @@ struct ContentView: View  {
         //            .frame(width: screenSize?.width, height: screenSize?.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         
         HStack(alignment: .center, spacing: 0){
-            LeftViewGroup()
-                .frame(width: leftPanelWidth )
-            //.border(Color.red, width: 1)
-            Divider()
-            
-            MidViewGroup
-                .frame(width: screenSize!.width - leftPanelWidth - rightPanelWidth)
-            
-            Divider()
-            RightViewGroup()
-                .frame(width: rightPanelWidth)
+//            LeftViewGroup()
+//                .frame(width: leftPanelWidth )
+//            //.border(Color.red, width: 1)
+//            Divider()
+//
+//            MidViewGroup
+//                .frame(width: screenSize!.width - leftPanelWidth - rightPanelWidth)
+//
+//            Divider()
+//            RightViewGroup()
+//                .frame(width: rightPanelWidth)
             
         }
         .onAppear(perform: {
@@ -189,15 +188,6 @@ struct ContentView: View  {
     }
     
     
-    func Debug(){
-        //        imageViewModel.FetchImage()
-        //        let tmpImg = self.imgUtil.AddRectangleMask(BGImage: &(imageViewModel.targetImageProcessed), PositionX: 175, PositionY: 184, Width: 10, Height: 10, MaskColor: CIColor.red)
-        //        imageViewModel.SetTargetProcessedImage(tmpImg)
-        let rect = CGRect.init(x: 10, y: 10, width: 100, height: 100)
-        let testImg = imageViewModel.targetImageProcessed.cropped(to: rect)
-        print("\(rect)")
-        print("\(testImg.extent)")
-    }
     
     func abortProcess(){
         psdsVM.canProcess = false

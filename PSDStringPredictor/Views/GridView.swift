@@ -31,11 +31,7 @@ struct GridView: View {
                     .foregroundColor(.red)
                     .blendMode(.difference)
                 }
-        
-//        Rectangle()
-//            .position(x: 0, y: 0)
-//            .frame(width: 1, height: psdsVM.GetSelectedPsd()?.height, alignment: .center)
-//            .foregroundColor(.red)
+
     }
 }
 //

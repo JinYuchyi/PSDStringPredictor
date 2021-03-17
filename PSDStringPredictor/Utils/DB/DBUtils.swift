@@ -10,11 +10,14 @@ import Foundation
 import SwiftUI
 //import GRDB
 
-class DBViewModel: ObservableObject{
+class DBUtils{
     //var dbModel = DB()
     let imgUtil = ImageUtil.shared
-    let csv = CSVManager()
+    let csv = CSVManager.shared
     
+    static let shared = DBUtils()
+    
+    private init(){}
     //@Published private var dbPathString = "db.sqlite3"
 //    @Environment(\.managedObjectContext) private var viewContext
     

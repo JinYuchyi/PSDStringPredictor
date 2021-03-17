@@ -19,7 +19,6 @@ class RegionProcessVM: ObservableObject {
     //    @Published var targetImageHeight: CGFloat = 0
     
     var targetImage: CIImage = DataStore.zeroCIImage
-    
     let imgUtil = ImageUtil.shared
     
     private func fetchRegionOverlay( regionRect: CGRect, bgWidth: CGFloat, bgHeight: CGFloat) -> (mask1: CIImage, mask2: CIImage){
@@ -30,10 +29,8 @@ class RegionProcessVM: ObservableObject {
         let bgImg2 = CIImage.init(color: CIColor.white ).cropped(to: CGRect.init(x: 0, y: 0, width: bgWidth, height: bgHeight))
         let regionImg2 = CIImage.init(color: CIColor.black).cropped(to: CGRect.init(x: 0, y: 0, width: regionRect.width, height: regionRect.height))
         let mask2 = imgUtil.ImageOntop(OverlayImage: regionImg2, BGImage: bgImg2, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
-        
-        
+
         return (mask1, mask2)
-        
     }
     
     func fetchOverlayedImage(regionRect: CGRect, targetImage: CIImage)->CIImage{

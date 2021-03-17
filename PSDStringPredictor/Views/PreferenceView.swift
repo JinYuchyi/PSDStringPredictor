@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    let plistM = PlistManager()
+    let plistM = PlistManager.shared
     var item: AppSettingsItem
     @ObservedObject var settingsVM: SettingViewModel
     @State var DPICheck: Int = 1

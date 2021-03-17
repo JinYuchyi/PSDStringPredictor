@@ -74,10 +74,8 @@ struct StringHighlightView: View {
                                             
                                             // Change tracking
                                             if abs(gesture.translation.width / gesture.translation.height) > 1 {
-                                                
-//                                                psdsVM.tmpTracking = gesture.translation.width / 40
                                                 interactive.dragX = gesture.translation.width / 40 // DragX is temp value
-//                                                print(originTracking + interactive.dragX)
+
                                                 // Re-Calc the bound
                                                 psdsVM.tmpObjectForStringProperty.tracking = (originTracking + interactive.dragX).toString() //
                                                 let tmp = FontUtils.GetStringBound(
@@ -174,7 +172,7 @@ struct StringHighlightView: View {
                         .frame(width: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.width, height: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.height)
                         .position(
                             x: psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midX ?? zeroRect.minX,
-                            y: (psdsVM.GetSelectedPsd()?.height ?? 0) - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
+                            y: (psdsVM.GetSelectedPsd()!.height) - (psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: theid)?.stringRect.midY.keepDecimalPlaces(num: 2)  ?? zeroRect.minY)
                         )
                         
                         .blendMode(.lighten)
@@ -192,9 +190,7 @@ struct StringHighlightView: View {
     }
     
     var fakeString: some View {
-        //TODO: 
-        //        AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),  fontName: psdsVM.tmpObjectForStringProperty.fontName, color: psdsVM.tmpObjectForStringProperty.color, stringRect: psdsVM.tmpObjectForStringProperty.stringRect, alignment: psdsVM.tmpObjectForStringProperty.alignment, content: psdsVM.tmpObjectForStringProperty.content, isHighLight: true, pageWidth: psdsVM.GetSelectedPsd()?.width ?? 0, pageHeight: psdsVM.GetSelectedPsd()?.height ?? 0)
-        //            .font(.custom(fontName(), size: calcFontSize()))
+
         
         AlignedText(fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
                     tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat(),
@@ -207,8 +203,8 @@ struct StringHighlightView: View {
                     alignment: psdsVM.tmpObjectForStringProperty.alignment,
                     content: psdsVM.tmpObjectForStringProperty.content,
                     isHighLight: true,
-                    pageWidth: psdsVM.GetSelectedPsd()?.width ?? 0,
-                    pageHeight: psdsVM.GetSelectedPsd()?.height ?? 0)
+                    pageWidth: psdsVM.GetSelectedPsd()!.width,
+                    pageHeight: psdsVM.GetSelectedPsd()!.height)
 
     }
     

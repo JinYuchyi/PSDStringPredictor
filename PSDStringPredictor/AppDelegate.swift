@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //    var charWindow: NSWindow!
 
 //    var settingWindow: NSWindow!
-    @ObservedObject var dbViewModel = DBViewModel()
+    let dbUtils = DBUtils.shared
     @ObservedObject var psdsVM = PsdsVM()
     @ObservedObject var imageProcess = ImageProcess()
     @ObservedObject var settingVM = SettingViewModel()
@@ -187,19 +187,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func LoadFontSizeTable(_ sender: Any) {
-        dbViewModel.ReloadCharacterTable()
+        dbUtils.ReloadCharacterTable()
     }
     
     @IBAction func LoadFontTrackingTable(_ sender: Any) {
-        dbViewModel.ReloadFontTable()
+        dbUtils.ReloadFontTable()
     }
     
     @IBAction func LoadBoundsTable(_ sender: Any) {
-        dbViewModel.ReloadBoundsTable()
+        dbUtils.ReloadBoundsTable()
     }
 
     @IBAction func LoadPreference(_ sender: Any) {
-        let plistM = PlistManager()
+        let plistM = PlistManager.shared
         self.window = ClosableWindow (contentRect: NSMakeRect (0, 0, 480, 300), styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView], backing: NSWindow.BackingStoreType.buffered, defer: false)
         let item = plistM.Load(plistName: "AppSettings")
         //print(item.Debug)

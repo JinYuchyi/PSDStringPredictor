@@ -17,7 +17,6 @@ struct RegionProcessOverlayView: View {
     @State var regionEndPos = CGPoint.zero
     @State var regionWidth: CGFloat = 0
     @State var regionHeight: CGFloat = 0
-    //@State var show: Bool = false
     
     
     var body: some View {
@@ -42,14 +41,10 @@ struct RegionProcessOverlayView: View {
                                 width: interactive.selectionRect.width.rounded(),
                                 height: -interactive.selectionRect.height.rounded()
                             ).standardized
-                            let newIdList = psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
-                            //Deactivate the region process, once finished the process
-//                            regionProcessVM.regionActive.toggle()
+                            _ = psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
+
                             regionProcessVM.regionActive = false
-//                            interactive.selectionRect = CGRect.init()
-                            // Select all new created strings
-//                            psdsVM.selectedStrIDList = newIdList
-//                            psdsVM.tmpObjectForStringProperty = psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
+
                         }
                 )
                 .mask(
@@ -59,7 +54,7 @@ struct RegionProcessOverlayView: View {
                         .position(x: (interactive.selectionRect.minX + interactive.selectionRect.width/2) , y: (interactive.selectionRect.minY + interactive.selectionRect.height/2) )
                 )
         }
-        .frame(width: psdsVM.GetSelectedPsd()?.width ?? 0  , height: psdsVM.GetSelectedPsd()?.height ?? 0 )
+        .frame(width: psdsVM.GetSelectedPsd()!.width  , height: psdsVM.GetSelectedPsd()!.height )
         .IsHidden(condition: regionProcessVM.regionActive == true)
 
     }
