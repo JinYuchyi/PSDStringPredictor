@@ -29,7 +29,7 @@ enum PsdStatus: String, Codable {
 
 struct PSDObject: Identifiable{
     var id: Int
-    var stringObjects: [StringObject] = []
+//    var stringObjects: [StringObject] = []
     var imageURL: URL
     var thumbnail: NSImage = NSImage.init()
     var colorMode: MacColorMode = .light
@@ -52,7 +52,7 @@ struct PSDObject: Identifiable{
     
     fileprivate init(id: Int, imageURL: URL){
         self.id = id
-        stringObjects = []
+//        stringObjects = []
         self.imageURL = imageURL
         self.thumbnail = FetchThumbnail(size: sizeOfThumbnail)
         colorMode = PsdsUtil.shared.FetchColorMode(img: thumbnail.ToCIImage()!)
@@ -74,9 +74,9 @@ struct PSDObject: Identifiable{
         return NSImage.init()
     }
     
-    func GetStringObjectFromOnePsd(objId: UUID) -> StringObject?{
-        return stringObjects.first(where: {$0.id == objId})
-    }
+//    func GetStringObjectFromOnePsd(objId: UUID) -> StringObject?{
+//        return stringObjects.first(where: {$0.id == objId})
+//    }
 
     func FetchColorMode() -> MacColorMode{
         let classifier = ColorModeClassifier(image: thumbnail.ToCIImage()!)
@@ -104,7 +104,6 @@ struct PSD {
         }
         
         psdObjects.append(PSDObject(id: uniqID, imageURL: imageURL))
-//        ImageUtil.metadata(url: imageURL)
         uniqID = (uniqID + 1) % Int.max
         return uniqID
     }

@@ -62,7 +62,8 @@ class PsdsVM: ObservableObject{
     let ocr = OCR.shared
     
     @Published var psdModel: PSD //refacting
-    
+//    @Published var stringObjectList: [StringObject] = []
+    @Published var psdStrObjDict: [Int: [StringObject]] = [:]
     @Published var selectedPsdId: Int  //refacting
     @Published var gammaDict: [Int:CGFloat]//refacting
     @Published var expDict: [Int:CGFloat]//refacting

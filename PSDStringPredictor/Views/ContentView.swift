@@ -13,14 +13,7 @@ import AppKit
 let zeroUUID: UUID = UUID.init()
 
 struct ContentView: View  {
-    
 
-    
-//    @State var selectedStringObject: StringObject = StringObject.init()
-    //    let keyEventHandle = KeyEventHandling()
-    
-
-//    let data = DataStore()
     let font = FontUtils.shared
     let imgUtil = ImageUtil.shared
 
@@ -29,8 +22,6 @@ struct ContentView: View  {
     @ObservedObject var regionProcessVM: RegionProcessVM = RegionProcessVM()
     @ObservedObject var interactive = InteractiveViewModel()
     @ObservedObject var settingVM : SettingViewModel
-//    @ObservedObject var fontTestVM = FontTestViewModel()
-//    @State var width: CGFloat = 0
 
     @State var showImage = false
     @State var showPatchLayer = false
