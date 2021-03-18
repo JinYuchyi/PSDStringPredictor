@@ -161,17 +161,17 @@ struct ContentView: View  {
         //            .frame(width: screenSize?.width, height: screenSize?.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         
         HStack(alignment: .center, spacing: 0){
-//            LeftViewGroup()
-//                .frame(width: leftPanelWidth )
-//            //.border(Color.red, width: 1)
-//            Divider()
-//
-//            MidViewGroup
-//                .frame(width: screenSize!.width - leftPanelWidth - rightPanelWidth)
-//
-//            Divider()
-//            RightViewGroup()
-//                .frame(width: rightPanelWidth)
+            LeftViewGroup()
+                .frame(width: leftPanelWidth )
+            //.border(Color.red, width: 1)
+            Divider()
+
+            MidViewGroup
+                .frame(width: screenSize!.width - leftPanelWidth - rightPanelWidth)
+
+            Divider()
+            RightViewGroup()
+                .frame(width: rightPanelWidth)
             
         }
         .onAppear(perform: {
