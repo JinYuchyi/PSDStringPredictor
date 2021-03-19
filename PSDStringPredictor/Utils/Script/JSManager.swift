@@ -118,4 +118,80 @@ class JSManager{
         
     }
     
+    func ConstellateJsonString(relatedDataJsonObject: RelatedDataJsonObject, psdStrDict: [Int:[UUID]], psdDict: [Int:[PSDObject]], strDict: [UUID: [StringObject]]) -> String{
+        var psdObjDictList: [PsdJsonObject] = []
+        for _psd in psdObjects{
+            var strObjDictList : [strObjJsonObject] = []
+            for _strObj in _psd.stringObjects {
+//                print("Constellating data for psdObject \(_psd.id), stringObject: \(_strObj.content)")
+                let strObj = strObjJsonObject.init(
+                    id: _strObj.id,
+                    content: _strObj.content,
+                    tracking: _strObj.tracking,
+                    fontSize: _strObj.fontSize,
+                    fontWeight: _strObj.fontWeight,
+                    stringRect: _strObj.stringRect,
+                    color: _strObj.color.toArray(),
+                    bgColor: _strObj.bgColor.toArray(),
+                    charArray: _strObj.charArray.map({String($0)}),
+                    charRects: _strObj.charRects,
+                    charSizeList: _strObj.charSizeList,
+                    //charImageList: [],
+                    charFontWeightList: _strObj.charFontWeightList,
+                    isPredictedList: _strObj.isPredictedList,
+                    colorMode: _strObj.colorMode.rawValue,
+                    charColorModeList: _strObj.charColorModeList,
+                    fontName: _strObj.fontName,
+                    alignment: _strObj.alignment.rawValue,
+                    status: _strObj.status.rawValue,
+                    isParagraph: _strObj.isParagraph
+//                    colorPixel: _strObj.colorPixel.toData()
+                )
+                
+                strObjDictList.append(strObj)
+
+            }
+            //psd
+            let psdObj = PsdJsonObject.init(
+                id: _psd.id,
+                stringObjects: strObjDictList,
+                imageURL: _psd.imageURL,
+                thumbnail: _psd.thumbnail.pngData!,
+                colorMode: _psd.colorMode.rawValue,
+                dpi: _psd.dpi,
+                status: _psd.status.rawValue)
+   
+            
+            psdObjDictList.append(psdObj)
+        }
+        
+    
+        let jsonObj = JsonObject(PsdJsonObjectList: psdObjDictList, relatedDataJsonObject: relatedDataJsonObject)
+        let encoder = JSONEncoder()
+        let jsonData = try? encoder.encode(jsonObj)
+        let jsonString = NSString(data: jsonData!, encoding: String.Encoding.utf8.rawValue)! as String
+
+        return jsonString
+    }
+    
+    func loadPsdJsonObject(jsonObject: JsonObject) ->[PSDObject] {
+        var psdObjList: [PSDObject] = []
+        for psdJ in jsonObject.PsdJsonObjectList{
+            let targetImage = CIImage.init(contentsOf: psdJ.imageURL)
+            var tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL, thumbnail: NSImage.init(data: psdJ.thumbnail) ?? NSImage.init(), colorMode: MacColorMode.init(rawValue: psdJ.colorMode)!, dpi: psdJ.dpi, status: PsdStatus.init(rawValue: psdJ.status)!)
+            for strJ in psdJ.stringObjects{
+                var charImgList = [CIImage]()
+                for rect in strJ.charRects{
+                    let tmpImg: CIImage = targetImage?.cropped(to: rect) ?? DataStore.zeroCIImage
+                    charImgList.append(tmpImg)
+                }
+                let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: charImgList, stringRect: strJ.stringRect, color: strJ.color, bgColor: strJ.bgColor, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)
+                tmpPsd.stringObjects.append(tmpStrObj)
+            }
+            psdObjList.append(tmpPsd)
+        }
+        //Clean original
+        return psdObjList
+    }
+    
 }

@@ -28,29 +28,31 @@ struct StringLabel: View {
     @ObservedObject var psdsVM: PsdsVM
     
 
-    func getObject() -> StringObject{
-        return psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) ?? StringObject.init()
-    }
+//    func getObject() -> StringObject{
+//        return psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) ?? StringObject.init()
+//    }
+    
+   
     
     func GetPosition() -> CGPoint{
-        
-        if psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: id) != nil{
-            let x = (getObject().stringRect.origin.x) + (getObject().stringRect.width)/2
+        guard let obj = psdsVM.stringObjectDict[id] else {return CGPoint.zero}
+//        if psdsVM.stringObjectDict[id] != nil{
+        let x = (obj.stringRect.origin.x) + (obj.stringRect.width)/2
 //            let x = (stringObject.stringRect.midX)  // midX will left aligned
-            let y = psdsVM.GetSelectedPsd()!.height - (getObject().stringRect.origin.y)  - (getObject().stringRect.height)/2
-            return CGPoint(x: x, y: y)
-        }else{
-            return CGPoint.zero
-        }
+        let y = psdsVM.GetSelectedPsd()!.height - (obj.stringRect.origin.y)  - (obj.stringRect.height)/2
+        return CGPoint(x: x, y: y)
+//        }else{
+//            return CGPoint.zero
+//        }
     }
     
     func getAlignLabelPos() -> CGFloat{
-        if getObject().alignment == .left{
-            return getObject().stringRect.minX
-        }else if getObject().alignment == .center {
-            return getObject().stringRect.midX
+        if psdsVM.fetchStringObject(strId: id).alignment == .left{
+            return psdsVM.fetchStringObject(strId: id).stringRect.minX
+        }else if psdsVM.fetchStringObject(strId: id).alignment == .center {
+            return psdsVM.fetchStringObject(strId: id).stringRect.midX
         }else{
-            return getObject().stringRect.maxX
+            return psdsVM.fetchStringObject(strId: id).stringRect.maxX
         }
         
     }
@@ -59,27 +61,29 @@ struct StringLabel: View {
         ZStack{
             
             //Fake
-            if getObject().id == showFakeString {
+            if id == showFakeString {
             Text(psdsVM.tmpObjectForStringProperty.content)
                 .tracking(psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
 //                .tracking(psdsVM.tmpTracking)
 
-                .position(x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2  + psdsVM.tmpObjectForStringProperty.tracking.toCGFloat() / 2 - FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize), y: (psdsVM.GetSelectedPsd()!.height) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2)
+                .position(
+                    x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2  + psdsVM.tmpObjectForStringProperty.tracking.toCGFloat() / 2 - FontUtils.GetCharFrontOffset(content: psdsVM.fetchStringObject(strId: id).content, fontSize: psdsVM.fetchStringObject(strId: id).fontSize),
+                    y: (psdsVM.GetSelectedPsd()!.height) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2
+                )
+                
                 .foregroundColor( Color.gray)
                 .font(.custom(psdsVM.tmpObjectForStringProperty.fontName, size: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat()))
-//                .shadow(color: stringObject.colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-//                .IsHidden(condition: getObject().id == showFakeString)
                 .blendMode(.difference)
             }
             
             if showFakeString == zeroUUID{
-            Text(getObject().content)
-                .tracking(getObject().tracking)
+            Text(psdsVM.fetchStringObject(strId: id).content)
+                .tracking(psdsVM.fetchStringObject(strId: id).tracking)
                 .position(x: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: id)[0], y: psdsVM.calcStringPositionOnImage(psdId: psdsVM.selectedPsdId, objId: id)[1])
                 .foregroundColor(getColor())
-                .font(.custom(getObject().fontName, size: getObject().fontSize))
+                .font(.custom(psdsVM.fetchStringObject(strId: id).fontName, size: psdsVM.fetchStringObject(strId: id).fontSize))
 //                .shadow(color: getObject().colorMode == MacColorMode.dark ?  .black : .white, radius: 2, x: 0, y: 0)
-                .IsHidden(condition: getObject().id != showFakeString)
+                .IsHidden(condition: psdsVM.fetchStringObject(strId: id).id != showFakeString)
 //                .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal)
 //                .onTapGesture {
 //                    //  select stringobject
@@ -90,19 +94,19 @@ struct StringLabel: View {
 //                }
                 .gesture(
                     TapGesture().modifiers(.shift).onEnded ({ (loc) in
-                    if psdsVM.selectedStrIDList.contains(getObject().id){
-                        psdsVM.selectedStrIDList.removeAll(where: {$0 == getObject().id})
-                        psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
+                    if psdsVM.selectedStrIDList.contains( id){
+                        psdsVM.selectedStrIDList.removeAll(where: {$0 == id})
+                        psdsVM.fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
                     }else {
-                        psdsVM.selectedStrIDList.append(getObject().id)
-                        psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
+                        psdsVM.selectedStrIDList.append(id)
+                        psdsVM.fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
                     }
                     })
                 .exclusively(before: TapGesture().onEnded({ (loc) in
 //                    print(FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize))
                      psdsVM.selectedStrIDList.removeAll()
-                     psdsVM.selectedStrIDList.append(getObject().id)
-                     psdsVM.tmpObjectForStringProperty = getObject().toObjectForStringProperty()
+                     psdsVM.selectedStrIDList.append(id)
+                     psdsVM.tmpObjectForStringProperty = psdsVM.fetchStringObject(strId: id).toObjectForStringProperty()
 //                    print("psdsVM.tmpObjectForStringProperty Color: \(psdsVM.tmpObjectForStringProperty.color), obj: \(psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.color)")
 //                             FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
                             })
@@ -115,7 +119,7 @@ struct StringLabel: View {
                 .font(.custom("SF Pro Text Regular", size: 8))
                 .fontWeight(.black)
                 .foregroundColor(Color.green)
-                    .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()!.height) - (getObject().stringRect.minY ))
+                    .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()!.height) - (psdsVM.fetchStringObject(strId: id).stringRect.minY ))
                 .offset(x: 0, y: 3)
                 .frame(alignment: .top)
             
@@ -126,12 +130,12 @@ struct StringLabel: View {
     }
     
     func getColor() -> Color {
-        var _color: Color = getObject().color.ToColor()
+        var _color: Color = psdsVM.fetchStringObject(strId: id).color.ToColor()
         guard let lastId = psdsVM.selectedStrIDList.last else {return _color}
         if psdsVM.stringDifferenceShow == true {
             _color = Color.red.opacity(0.7)
         }else{
-            _color = getObject().color.ToColor()
+//            _color = psdsVM.fetchStringObject(strId: id).color.ToColor()
         }
         return _color
     }
@@ -139,8 +143,8 @@ struct StringLabel: View {
     fileprivate func StringFrameLayerView()-> some View {
         //String debug frame
         Rectangle()
-            .stroke(getObject().status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1 / psdsVM.viewScale)
-            .frame(width: getObject().stringRect.width ?? 0, height: getObject().stringRect.height ?? 0)
+            .stroke(psdsVM.fetchStringObject(strId: id).status == StringObjectStatus.ignored ? Color.red : Color.green.opacity(0.7), lineWidth: 1 / psdsVM.viewScale)
+            .frame(width: psdsVM.fetchStringObject(strId: id).stringRect.width ?? 0, height: psdsVM.fetchStringObject(strId: id).stringRect.height ?? 0)
             .position(x: GetPosition().x, y:  GetPosition().y  )
             .blendMode(psdsVM.stringDifferenceShow == true ? .difference : .normal )
             
@@ -151,7 +155,7 @@ struct StringLabel: View {
         Rectangle()
             
             .fill( Color.yellow.opacity(0.1))
-            .frame(width: getObject().stringRect.width ?? 0, height: getObject().stringRect.height ?? 0)
+            .frame(width: psdsVM.fetchStringObject(strId: id).stringRect.width ?? 0, height: psdsVM.fetchStringObject(strId: id).stringRect.height ?? 0)
             .position(x: GetPosition().x, y: GetPosition().y)
     }
     

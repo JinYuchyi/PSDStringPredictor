@@ -51,23 +51,30 @@ struct CharacterFrameView: View {
 
     
     func GetOnePageRectArray() -> [CGRect] {
-        guard let psdObj = psdVM.GetSelectedPsd() else {return []}
+//        guard let psdObj = psdVM.GetSelectedPsd() else {return []}
         var result = [CGRect]()
-        for obj in psdObj.stringObjects {
-            result.append(contentsOf: obj.charRects)
+        guard let idList = psdVM.psdStrDict[psdVM.selectedPsdId] else {return []}
+        for id in idList {
+            result.append(contentsOf: psdVM.stringObjectDict[id]?.charRects ?? [])
         }
-        
+//        for obj in psdObj.stringObjects {
+//            result.append(contentsOf: obj.charRects)
+//        }
         return result
     }
     
     func Tapped(rect: CGRect){
         //Get tap character background color
         var theColor: CGColor = CGColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
-        for str in psdVM.GetSelectedPsd()!.stringObjects{
-            if rect.intersects(str.stringRect) == true {
-                theColor = str.bgColor
+        guard let idList = psdVM.psdStrDict[psdVM.selectedPsdId] else {return }
+        for id in idList {
+//            for str in psdVM.fetchStringObject(strId: id){
+            if rect.intersects(psdVM.fetchStringObject(strId: id).stringRect) == true {
+                theColor = psdVM.fetchStringObject(strId: id).bgColor
             }
+//            }
         }
+        
         
         if psdVM.maskDict[psdVM.selectedPsdId] == nil {
             psdVM.maskDict[psdVM.selectedPsdId] = []

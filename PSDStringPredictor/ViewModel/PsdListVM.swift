@@ -61,9 +61,14 @@ class PsdsVM: ObservableObject{
     
     let ocr = OCR.shared
     
-    @Published var psdModel: PSD //refacting
-//    @Published var stringObjectList: [StringObject] = []
-    @Published var psdStrObjDict: [Int: [StringObject]] = [:]
+    
+    //refacting
+    @Published var stringObjectDict: [UUID: StringObject] = [:]
+    @Published var psdStrDict: [Int: [UUID]] = [:]
+    @Published var psdObjectDict: [Int: PSDObject] = [:]
+    
+    
+    @Published var psdModel: PSD
     @Published var selectedPsdId: Int  //refacting
     @Published var gammaDict: [Int:CGFloat]//refacting
     @Published var expDict: [Int:CGFloat]//refacting
@@ -83,18 +88,18 @@ class PsdsVM: ObservableObject{
     @Published var stringIsOn: Bool = true
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
-//    @Published var PSPath: String = ""
-//    @Published var selectRect: CGRect = zeroRect
-
+    //    @Published var PSPath: String = ""
+    //    @Published var selectRect: CGRect = zeroRect
+    
     // UI control
     @Published var linkSizeAndTracking: Bool = true
     @Published var charDSWindowShow: Bool = false
     @Published var stringDifferenceShow: Bool = false
-
+    
     //Save Char DS
     @Published var charImageDSWillBeSaved: CIImage
     
-//    @Published var tmpTracking: CGFloat = 0
+    //    @Published var tmpTracking: CGFloat = 0
     
     //For Template stringobject variable
     //The reason for extract these as individial variables is for speed issue
@@ -131,7 +136,7 @@ class PsdsVM: ObservableObject{
         DragOffsetDict = [:]
         maskedImage = DataStore.zeroCIImage
         charImageDSWillBeSaved = DataStore.zeroCIImage
-
+        
         
     }
     
@@ -144,6 +149,37 @@ class PsdsVM: ObservableObject{
     //    }
     //
     
+    func addPsdObject(imageURL: URL) {
+        var id = (psdObjectDict.keys.max() ?? -1)
+        id = (id + 1) % Int.max
+        let newPsd = PSDObject(id: id, imageURL: imageURL)
+        psdObjectDict[id] = newPsd
+        //        uniqID = (uniqID + 1) % Int.max
+    }
+    
+    func fetchStringObject(strId: UUID) -> StringObject {
+        guard let obj = stringObjectDict[strId] else {return zeroStringObject}
+        return obj
+    }
+    
+    func fetchPsd(psdId: Int) -> PSDObject {
+        guard let obj = psdObjectDict[psdId] else {return zeroPsdObject}
+        return obj
+    }
+    
+    func fetchLastStringObjectFromSelectedPsd() -> StringObject {
+        guard let id = psdStrDict[selectedPsdId]?.last else {return zeroStringObject}
+        guard let obj = stringObjectDict[id] else {return zeroStringObject}
+        return obj
+    }
+    
+//    func fetchStringObjectsFromSelectedPSD() -> [StringObject] {
+//        guard let ids = psdStrDict[selectedPsdId] else {return [zeroStringObject]}
+//        for id in ids {
+//
+//        }
+//    }
+    
     
     func InitDictForOnePsd(psdId: Int){
         gammaDict[psdId] = 1
@@ -151,19 +187,21 @@ class PsdsVM: ObservableObject{
         processedCIImage = selectedNSImage.ToCIImage() ?? DataStore.zeroCIImage
     }
     
-    func GetSelectedPsd() -> PSDObject?{
-        return psdModel.psdObjects.first(where: {$0.id == selectedPsdId})
+    func fetchSelectedPsd() -> PSDObject{
+        //        return psdModel.psdObjects.first(where: {$0.id == selectedPsdId})
+        guard let psd = psdObjectDict[selectedPsdId] else {return zeroPsdObject}
+        return psd
     }
     
-    func GetStringObjectForOnePsd(psdId: Int, objId: UUID) -> StringObject?{
-        guard let _psd = psdModel.psdObjects.first(where: {$0.id == psdId}) else {
-            return nil
-        }
-        guard let _obj = _psd.stringObjects.first(where: {$0.id == objId}) else {
-            return nil
-        }
-        return _obj
-    }
+    //    func GetStringObjectForOnePsd(psdId: Int, objId: UUID) -> StringObject?{
+    //        guard let _psd = psdModel.psdObjects.first(where: {$0.id == psdId}) else {
+    //            return nil
+    //        }
+    //        guard let _obj = _psd.stringObjects.first(where: {$0.id == objId}) else {
+    //            return nil
+    //        }
+    //        return _obj
+    //    }
     
     func FetchTrackingData(path: String){
         TrackingDataManager.Delete(viewContext)
@@ -201,47 +239,63 @@ class PsdsVM: ObservableObject{
     }
     
     func calcStringPositionOnImage(psdId: Int, objId: UUID) -> [CGFloat] {
-//        var pos: [CGFloat] = []
-        guard let tmpPsd = psdModel.GetPSDObject(psdId: psdId) else {return [0,0]}
-        guard let tmpObj = GetStringObjectForOnePsd(psdId: psdId, objId: objId) else {return [0,0]}
-        let x: CGFloat = tmpObj.stringRect.minX + tmpObj.stringRect.width / 2 + tmpObj.tracking / 2 - FontUtils.GetCharFrontOffset(content: tmpObj.content, fontSize: tmpObj.fontSize)
-        let y: CGFloat =  tmpPsd.height  - (tmpObj.stringRect.minY + tmpObj.stringRect.height / 2)
+        //        var pos: [CGFloat] = []
+        //        guard let tmpPsd = psdModel.GetPSDObject(psdId: psdId) else {return [0,0]}
+        //        guard let tmpObj = GetStringObjectForOnePsd(psdId: psdId, objId: objId) else {return [0,0]}
+        
+        let x: CGFloat = fetchStringObject(strId: objId).stringRect.minX + fetchStringObject(strId: objId).stringRect.width / 2 + fetchStringObject(strId: objId).tracking / 2 - FontUtils.GetCharFrontOffset(content: fetchStringObject(strId: objId).content, fontSize: fetchStringObject(strId: objId).fontSize)
+        let y: CGFloat =  fetchStringObject(strId: objId).stringRect.height  - (fetchStringObject(strId: objId).stringRect.minY + fetchStringObject(strId: objId).stringRect.height / 2)
         return [x,y]
     }
     
     func FetchStringObjects(psdId: Int){
         var result: [StringObject] = []
         
-        let tmpImageUrl = self.psdModel.GetPSDObject(psdId: psdId)?.imageURL
-        var img = LoadNSImage(imageUrlPath: tmpImageUrl!.path).ToCIImage()!
+        guard let tmpImageUrl = psdObjectDict[selectedPsdId]?.imageURL else {return}
+        
+        var img = LoadNSImage(imageUrlPath: tmpImageUrl.path).ToCIImage()!
         img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
         let allStrObjs = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self)
-        DispatchQueue.main.async{ [self] in
-            var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
-            for obj in allStrObjs {
-                if tmpList.ContainsSame(obj) == false {
-                    result.append(obj)
-                    
-                }else{
-                }
+//        DispatchQueue.main.async{ [self] in
+//            let tmpList = Array(stringObjectDict.values.filter({$0.status != .normal}))
+//            //            var tmpList = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status != .normal}) //Filter all fixed objects
+//            for obj in allStrObjs {
+//                if tmpList.ContainsSame(obj) == false {
+//                    result.append(obj)
+//
+//                }else{
+//                }
+//            }
+//            result += tmpList
+//            psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
+//
+//            IndicatorText = ""
+//        }
+        let idList = allStrObjs.map({$0.id})
+        let formerList = psdStrDict[psdId]
+        if formerList != nil && formerList!.count > 0 {
+            //Remove all
+            for id in formerList! {
+                stringObjectDict[id] = nil
             }
-            result += tmpList
-            psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
-            IndicatorText = ""
         }
+        // Fill in new obj list
+        for obj in allStrObjs{
+            stringObjectDict[obj.id] = obj
+        }
+        // Update psdStrDict
+        psdStrDict[psdId] = idList
+        
+        
     }
     
     func fetchRegionStringObjects(rect: CGRect, psdId: Int) -> [UUID]{
-        //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
-        //        regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
-        
-//        var idList: [UUID] = []
         let regionImage = processedCIImage.cropped(to: rect).premultiplyingAlpha()
         var offset = CGPoint.init(x: rect.minX, y: rect.minY)
-        //                let tmpPath = GetDocumentsPath().appending("/test1.bmp")
-        //                regionImage.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
-        var result: [StringObject] = self.psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .normal})
+        // Get strobj id list for selected psd
+        var idList = psdStrDict[selectedPsdId] ?? []
+//        var result = psdModel.GetPSDObject(psdId: psdId)!.stringObjects.filter({$0.status == .normal})
         var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
         //        let tmpPath = GetDocumentsPath().appending("/test1.bmp")
@@ -253,10 +307,12 @@ class PsdsVM: ObservableObject{
         }
         DispatchQueue.main.async{ [self] in
             //if region already have string object exist, just remove the old ones.
-            for newObj in newList{
-                for preObj in result{
-                    if preObj.stringRect.intersects(newObj.stringRect) == true{
-                        result.removeAll(where: {$0.id == preObj.id})
+            if idList.count > 0 {
+                for newObj in newList{
+                    for preOneId in idList{
+                        if preObj.stringRect.intersects(newObj.stringRect) == true{
+                            result.removeAll(where: {$0.id == preObj.id})
+                        }
                     }
                 }
             }
@@ -272,8 +328,8 @@ class PsdsVM: ObservableObject{
         var pad: CGFloat = 3
         let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: psdId)!.imageURL.path)
         let color1 = PixelProcess.shared.colorAt(x: Int(obj.stringRect.origin.x - pad), y: Int(targetImg.size.height - obj.stringRect.origin.y - pad), img: targetImg.ToCGImage()!)
-//        print("Fetch image color at: \(Int(obj.stringRect.origin.x)), \(Int(targetImg.size.height - obj.stringRect.origin.y)). The Color is \(color1)")
-
+        //        print("Fetch image color at: \(Int(obj.stringRect.origin.x)), \(Int(targetImg.size.height - obj.stringRect.origin.y)). The Color is \(color1)")
+        
         return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
     }
     
@@ -350,7 +406,7 @@ class PsdsVM: ObservableObject{
             
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
             
-
+            
             
             newStrObj = ocr.DeleteFontOffset(obj: newStrObj)
             let sepObjList = newStrObj.seprateIfPossible()
@@ -448,7 +504,7 @@ class PsdsVM: ObservableObject{
     }
     
     func deleteSelectedStringObjects(){
-        if selectedStrIDList.count == 0 || GetSelectedPsd() == nil {return }
+        if selectedStrIDList.count == 0 || fetchSelectedPsd() == nil {return }
         let idList = selectedStrIDList
         selectedStrIDList = []
         var tmpResult = GetSelectedPsd()!.stringObjects
@@ -496,7 +552,7 @@ class PsdsVM: ObservableObject{
                 colorList.append(tmpColor)
                 
                 isParagraphList.append(obj.isParagraph)
-
+                
                 
                 let tmpSize: CGFloat = CGFloat(obj.fontSize)
                 fontSizeList.append(Float(tmpSize))
@@ -509,18 +565,18 @@ class PsdsVM: ObservableObject{
                 let char = (obj.content.first)
                 keyvalues["char"] = String(char!) as AnyObject
                 keyvalues["fontSize"] = Int(obj.fontSize.rounded()) as AnyObject
-
+                
                 let targetImg = LoadNSImage(imageUrlPath: psdModel.GetPSDObject(psdId: _id)!.imageURL.path)
                 fontNameList.append(obj.CalcFontPostScriptName())
                 //Calc Descent
                 let tmpDesc = Float(FontUtils.calcFontTailLength(content: obj.content, size: obj.fontSize))
-
+                
                 descentOffset.append(tmpDesc)
                 let newRect = FontUtils.GetStringBound(str: obj.content, fontName: obj.fontName, fontSize: obj.fontSize, tracking: obj.tracking)
                 
                 let offset = [Int16(newRect.minX), 0]
                 offsetList.append(offset)
-
+                
                 //alignment
                 if obj.alignment == nil {
                     alignmentList.append("center")
@@ -536,31 +592,31 @@ class PsdsVM: ObservableObject{
                 if obj.alignment == .center {
                     rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                     // Append Position
-    //                let newX =  Float(obj.stringRect.minX + newRect.minX )
+                    //                let newX =  Float(obj.stringRect.minX + newRect.minX )
                     let newX =  Float(obj.stringRect.minX )
                     let newY =  Float(targetImg.size.height - obj.stringRect.minY )
-    //                print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
+                    //                print("\(obj.stringRect.midX), \(newRect.minX), \(frontSpace)")
                     positionList.append([newX, newY])
-
+                    
                 }else if obj.alignment == .left {
                     rectList.append([Float(newRect.minX), Float(newRect.minY), Float(newRect.width), Float(newRect.height)])
                     // Append Position
-    //                let newX = Int(obj.stringRect.minX + newRect.minX - frontSpace)
+                    //                let newX = Int(obj.stringRect.minX + newRect.minX - frontSpace)
                     let newX = Float(obj.stringRect.minX )
-
+                    
                     let newY =  Float((targetImg.size.height - obj.stringRect.minY ) )
                     positionList.append([newX, newY])
-
-
+                    
+                    
                 }else if obj.alignment == .right {
                     rectList.append([Float(newRect.minX), Float(newRect.minY), Float(obj.stringRect.width), Float(newRect.height)])
                     // Append Position
                     let newX = Float(obj.stringRect.minX + newRect.minX )
                     let newY = Float((targetImg.size.height - obj.stringRect.minY ))
                     positionList.append([newX, newY])
-
+                    
                 }
-
+                
                 //BGColor
                 let tmpBGColor = FetchBGColor(psdId: _id, obj: obj)
                 bgClolorList.append(tmpBGColor)
@@ -588,18 +644,18 @@ class PsdsVM: ObservableObject{
     }
     
     func runJS(){
- 
-            let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
+        
+        let jsPath = Bundle.main.path(forResource: "StringCreator", ofType: "jsx")!
         
         let cmd = "open " + jsPath + "  -a '\(DataStore.PSPath)'"
         print("cmd: \(cmd)")
-            PythonScriptManager.RunScript(str: cmd)
-     }
+        PythonScriptManager.RunScript(str: cmd)
+    }
     
-//    func FetchTrackingFromDB(_ size: CGFloat) -> (CGFloat, Int16){
-//        let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(size.rounded()))
-//        return (CGFloat(item.fontTrackingPoints), item.fontTracking)
-//    }
+    //    func FetchTrackingFromDB(_ size: CGFloat) -> (CGFloat, Int16){
+    //        let item = TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(size.rounded()))
+    //        return (CGFloat(item.fontTrackingPoints), item.fontTracking)
+    //    }
     
     
     //MARK: Intents
@@ -703,7 +759,7 @@ class PsdsVM: ObservableObject{
         //            packPsdObject(psdId: selectedPsdId)
         //        }
         selectedStrIDList.removeAll()
-
+        
         selectedPsdId = psdId
         //        UnpackPsdObject(psdId: psdId)
         if psdModel.psdObjects.contains(where: {psdId == $0.id}) == true {
@@ -715,7 +771,7 @@ class PsdsVM: ObservableObject{
             }
         }
     }
-
+    
     func ProcessForOnePsd(){
         let processOn: Int = selectedPsdId
         canProcess = true
@@ -764,7 +820,7 @@ class PsdsVM: ObservableObject{
     func createPSDForOne(){
         if selectedPsdId != nil {
             createJS(idList: [selectedPsdId], savePSDToPathList: [""])
-//            let path = Bundle.main.resourcePath! + "/StringCreator.jsx"
+            //            let path = Bundle.main.resourcePath! + "/StringCreator.jsx"
             runJS()
         }
     }
@@ -796,8 +852,8 @@ class PsdsVM: ObservableObject{
                 let fileName = fileTitle + ".psd"
                 let saveToPath = result.appendingPathComponent(fileName).path
                 savePSDToPathList.append(saveToPath)
-//                let jsPath = Bundle.main.resourcePath! + "/StringCreator.jsx"
-
+                //                let jsPath = Bundle.main.resourcePath! + "/StringCreator.jsx"
+                
             }
             //Collect all psd id
             let idList: [Int] = psdModel.psdObjects.filter({$0.status == .commited}).map({$0.id})
@@ -886,8 +942,8 @@ class PsdsVM: ObservableObject{
         lastObj.colorMode == .dark ? (newCMode = .light) : (newCMode = .dark)
         psdModel.SetColorMode(psdId: psdId, objId: lastId, value: newCMode)
         tmpObjectForStringProperty = lastObj.toObjectForStringProperty()
-//        tmpObjectForStringProperty.color = lastObj.color
-//        commitTempStringObject()
+        //        tmpObjectForStringProperty.color = lastObj.color
+        //        commitTempStringObject()
     }
     
     func ToggleFontName(psdId: Int, objId: UUID?){
@@ -904,19 +960,19 @@ class PsdsVM: ObservableObject{
             let weightName = fName[endIndex!..<fName.endIndex]
             var str = ""
             if weightName == " Regular"  {
-                 str = particialName + " Semibold"
+                str = particialName + " Semibold"
             }else {
-                 str = particialName + " Regular"
+                str = particialName + " Regular"
             }
             tmpObjectForStringProperty.fontName = str
             
             let tmp  = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat())
             tmpObjectForStringProperty.width = tmp.width
             tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
-//            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
+            //            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
             
             commitTempStringObject()
-
+            
             //Set fontName for all selected
             for id in selectedStrIDList {
                 psdModel.SetFontName(psdId: psdId, objId: id, value: str)
@@ -1041,14 +1097,14 @@ class PsdsVM: ObservableObject{
             //Load NSImage
             let targetUrl = psdModel.GetPSDObject(psdId: selectedPsdId)?.imageURL
             if FileManager.default.fileExists(atPath: targetUrl!.path) == true {
-//                selectedNSImage = NSImage.init(contentsOf: targetUrl!)!
+                //                selectedNSImage = NSImage.init(contentsOf: targetUrl!)!
                 selectedNSImage = LoadNSImage(imageUrlPath: targetUrl!.path)
             }
             //Process Image
             UpdateProcessedImage(psdId: selectedPsdId)
             
             selectedStrIDList.removeAll()
-
+            
             
             //            UnpackPsdObject(psdId: selectedPsdId)
         }
@@ -1073,15 +1129,15 @@ class PsdsVM: ObservableObject{
                 }
             }
         }else if orientation == "horizontal-center" {
-//            let posXList = objList.map({$0.stringRect.minX})
-//            let minX = posXList.min() ?? posXList[0]
-//            let maxX = posXList.max() ?? posXList[0]
-//            guard let midX: CGFloat? = ((minX + maxX) / 2) else {return}
+            //            let posXList = objList.map({$0.stringRect.minX})
+            //            let minX = posXList.min() ?? posXList[0]
+            //            let maxX = posXList.max() ?? posXList[0]
+            //            guard let midX: CGFloat? = ((minX + maxX) / 2) else {return}
             guard let lastId = selectedStrIDList.last else {return }
             let lasMidX = GetStringObjectForOnePsd(psdId: selectedPsdId, objId: lastId)!.stringRect.midX
             for obj in objList {
                 let offset = obj.stringRect.midX - lasMidX
-//                let rect: CGRect = CGRect.init(x: minX, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+                //                let rect: CGRect = CGRect.init(x: minX, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
                 psdModel.SetPosForString(psdId: selectedPsdId, objId: obj.id, valueX: obj.stringRect.minX - offset, valueY: obj.stringRect.minY, isOnlyX: true, isOnlyY: false)
                 psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
                 
@@ -1104,19 +1160,19 @@ class PsdsVM: ObservableObject{
                 for obj in objList {
                     let rect: CGRect = CGRect.init(x: obj.stringRect.origin.x, y: maxY! - obj.stringRect.width, width: obj.stringRect.width, height: obj.stringRect.height)
                     psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
-//                    psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
+                    //                    psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
                 }
             }
         }else if orientation == "vertical-center" {
             let posYList = objList.map({$0.stringRect.minY})
-//            let posYMaxList = objList.map({$0.stringRect.maxY})
+            //            let posYMaxList = objList.map({$0.stringRect.maxY})
             let minY = posYList.min() ?? posYList[0]
             let maxY = posYList.max() ?? posYList[0]
             guard let midY: CGFloat? = ((minY + maxY) / 2) else {return}
             for obj in objList {
                 let rect: CGRect = CGRect.init(x: obj.stringRect.minX, y: midY!, width: obj.stringRect.width, height: obj.stringRect.height)
                 psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
-//                psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
+                //                psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
                 
             }
         }else if orientation == "vertical-top" {
@@ -1126,7 +1182,7 @@ class PsdsVM: ObservableObject{
                 for obj in objList {
                     let rect: CGRect = CGRect.init(x: obj.stringRect.minX , y: maxY! - obj.stringRect.height, width: obj.stringRect.width, height: obj.stringRect.height)
                     psdModel.SetRect(psdId: selectedPsdId, objId: obj.id, value: rect)
-//                    psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
+                    //                    psdModel.SetAlignment(psdId: selectedPsdId, objId: obj.id, value: .center)
                 }
             }
         }

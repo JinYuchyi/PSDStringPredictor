@@ -85,22 +85,22 @@ struct SelectionOverlayView: View {
     
     func CalcSelectedObject(){
         psdsVM.selectedStrIDList.removeAll()
-        if psdsVM.GetSelectedPsd() == nil {return }
-        
-        for obj in psdsVM.GetSelectedPsd()!.stringObjects {
+//        if psdsVM.GetSelectedPsd() == nil {return }
+        guard let ids = psdsVM.psdStrDict[psdsVM.selectedPsdId] else {return  }
+
+        for id in ids {
 //            if obj.stringRect.contains(startPos) && obj.stringRect.contains(endPos){
 //            }
             
             let tmpRect = CGRect.init(
-                x: (obj.stringRect.origin.x),
-                y: (psdsVM.GetSelectedPsd()!.height - obj.stringRect.origin.y - obj.stringRect.height),
-                width: obj.stringRect.width,
-                height: obj.stringRect.height
+                x: (psdsVM.fetchStringObject(strId: id).stringRect.origin.x),
+                y: (psdsVM.GetSelectedPsd()!.height - (psdsVM.fetchStringObject(strId: id).stringRect.origin.y - (psdsVM.fetchStringObject(strId: id).stringRect.height),
+                width: (psdsVM.fetchStringObject(strId: id).stringRect.width,
+                height: (psdsVM.fetchStringObject(strId: id).stringRect.height
             )
 //            let tmpRect = rect
             if tmpRect.intersects(interactive.selectionRect)  {
-                print("Selection include : \(obj.content)")
-                psdsVM.selectedStrIDList.append(obj.id)
+                psdsVM.selectedStrIDList.append((psdsVM.fetchStringObject(strId: id).id)
             }
         }
         if psdsVM.selectedStrIDList.last != nil && psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) != nil {

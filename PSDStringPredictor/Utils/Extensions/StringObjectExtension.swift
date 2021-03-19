@@ -77,7 +77,7 @@ extension StringObject{
 //                print("objs: __ \(obj.content) ")
 //
 //            }
-            print("seprate number: \(result.count)")
+//            print("seprate number: \(result.count)")
             return result
         }
     }
@@ -88,4 +88,12 @@ extension StringObject{
         StringObjectForStringProperty.init(content: self.content, fontSize: self.fontSize.toString(), tracking: self.tracking.toString(), fontName: self.fontName, color: self.color, stringRect: self.stringRect, alignment: self.alignment, posX: self.stringRect.minX, posY: self.stringRect.minY, width: self.stringRect.width, height: self.stringRect.height)
 
     }
+    
+    mutating func setContent(value: String){
+        self.content = value
+    }
+    
+
+    
+
 }
