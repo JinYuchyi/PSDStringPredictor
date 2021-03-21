@@ -20,7 +20,6 @@ struct StringObjectPropertyView: View {
     @State var posY: String = "0"
     @State private var textColor: CGColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
          
-//    @State var linkSizeAndTracking: Bool = true
     
     //Constant
     var panelWidth: CGFloat
@@ -28,35 +27,19 @@ struct StringObjectPropertyView: View {
     var titleWidth: CGFloat = 70
     
     @ObservedObject var psdsVM: PsdsVM
+    @ObservedObject var settingVM: SettingViewModel
     
     func GetLastSelectObject() -> StringObject{
-        guard let id = psdsVM.selectedStrIDList.last else {return zeroStringObject}
-        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? zeroStringObject
+        psdsVM.fetchLastStringObjectFromSelectedPsd()
     }
-    
-    //    func CalcOffsetTracking(targetObj: StringObject) -> CGFloat{
-    //        var offset: CGFloat = 0
-    //        if psdsVM.DragOffsetDict[targetObj.id] != nil{
-    //            offset = psdsVM.DragOffsetDict[targetObj.id]!.width
-    //        }
-    //        return targetObj.tracking + offset
-    //    }
-    //
-    //    func CalcOffsetSize(targetObj: StringObject) -> CGFloat{
-    //        var offset: CGFloat = 0
-    //        if psdsVM.DragOffsetDict[targetObj.id] != nil{
-    //            offset = psdsVM.DragOffsetDict[targetObj.id]!.height
-    //        }
-    //
-    //        return targetObj.fontSize - offset
-    //    }
+
     
     func fontSizeCommit(){
         if psdsVM.selectedPsdId != nil && psdsVM.selectedStrIDList.last != nil && fontSize.isNumeric == true  {
             let newVal = CGFloat((fontSize as NSString).floatValue) + (psdsVM.DragOffsetDict[psdsVM.selectedStrIDList.last!]?.height ?? 0)
             //Set fontSize for every selected string.
             for id in psdsVM.selectedStrIDList {
-                psdsVM.psdModel.SetFontSize(psdId: psdsVM.selectedPsdId, objId: id, value: newVal, offset: false)
+                psdsVM.stringObjectDict[id]!.fontSize = newVal
             }
         }
         fontSize = ""
@@ -66,9 +49,9 @@ struct StringObjectPropertyView: View {
         VStack(alignment: .leading){
             ScrollView ( .horizontal, showsIndicators: true) {
                 HStack {
-                    ForEach(0..<GetLastSelectObject().charImageList.count, id: \.self){ index in
+                    ForEach(0..<psdsVM.fetchLastStringObjectFromSelectedPsd().charImageList.count, id: \.self){ index in
                         VStack{
-                            Text("\(String(GetLastSelectObject().charArray[index]))")
+                            Text("\(String(psdsVM.fetchLastStringObjectFromSelectedPsd().charArray[index]))")
                             OneCharPropertyView(index: index, psdsVM: psdsVM)
                         }
                     }
@@ -92,30 +75,11 @@ struct StringObjectPropertyView: View {
     }
     
     var contentTextField: some View {
-        //        GeometryReader{ geo in
-        //            HStack{
         TextField("\(GetLastSelectObject().content)", text: $psdsVM.tmpObjectForStringProperty.content, onCommit: {psdsVM.commitTempStringObject()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
-        //            .background(Color.black)
-        //            .onTapGesture(perform: {
-        //                print("Focused")
-        //            })
-        //
-        //            }.frame(width:geo.size.width )
-        
-        //        }
     }
     
     var fontSizeFloatingTextField: some View {
-        //        GeometryReader{ geo in
-        //            HStack{
-        //                TextField("", text: $fontSize, onCommit: {fontSizeCommit()})
-        //
-        //                    .textFieldStyle(RoundedBorderTextFieldStyle())
-        //                //                    .background(Color.black)
-        //                //
-        //            }.frame(width:geo.size.width * 0.9)
-        //        }
         TextField("\(psdsVM.tmpObjectForStringProperty.fontSize)", text: $psdsVM.tmpObjectForStringProperty.fontSize, onCommit: {psdsVM.commitFontSize()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
     }
@@ -128,14 +92,12 @@ struct StringObjectPropertyView: View {
     var posXFloatingTextField: some View {
         TextField("\(psdsVM.tmpObjectForStringProperty.posX)", text: $psdsVM.tmpObjectForStringProperty.posX, onCommit: {psdsVM.commitPosX()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
-            //            .background(Color.black)
             .frame(width:102, alignment: .center)
     }
     
     var posYFloatingTextField: some View {
         TextField("\(psdsVM.tmpObjectForStringProperty.posY)", text: $psdsVM.tmpObjectForStringProperty.posY, onCommit: {psdsVM.commitPosY()})
             .textFieldStyle(RoundedBorderTextFieldStyle())
-            //            .background(Color.black)
             .frame(width:102, alignment: .center)
     }
     
@@ -180,19 +142,8 @@ struct StringObjectPropertyView: View {
                 }
                 .padding(.trailing)
                 .frame(width: panelWidth - titleWidth)
-
-//                HStack{
-//                    Text("\(GetLastSelectObject().tracking, specifier: "%.2f")")
-//                        .frame(alignment: .topLeading)
-//                    Toggle(isOn: $linkSizeAndTracking) {
-//                        Text("Link with size")
-//                            .fixedSize()
-//                    }
-//
-//                }.frame(width: panelWidth - titleWidth)
             }
             .frame(width: panelWidth)
-//            .border(Color.red)
             
             HStack(spacing: 0){
                 Text("Font")
@@ -203,18 +154,15 @@ struct StringObjectPropertyView: View {
                 HStack{
                     if GetLastSelectObject().fontSize != 0 {
                         Text("\(GetLastSelectObject().fontName)" )
-//                            .frame(width: panelWidth - titleWidth)
                     }else{
                         Text("-" )
-//                            .frame(width: panelWidth - titleWidth)
                     }
                     
                     Spacer()
                     
-                    Button(action: {psdsVM.ToggleFontName(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last)}, label: {
+                    Button(action: {psdsVM.ToggleFontName(objId: psdsVM.selectedStrIDList.last)}, label: {
                         Text("􀅈")
                     })
-                    
                     .frame(width: 15, alignment: .trailing)
                     
                 }
@@ -258,12 +206,6 @@ struct StringObjectPropertyView: View {
                     ColorPicker("", selection: $textColor)
                         .frame(width: 15, height: 15, alignment: .center)
                         .mask(RoundedRectangle(cornerRadius: 2))
-                    //                            .padding(.horizontal)
-                    
-                    //                        Color.init(GetLastSelectObject().color).frame(width: 10, height: 10, alignment: .center)
-                    //                            .onTapGesture {
-                    //
-                    //                            }
                     
                     Spacer()
                     
@@ -296,35 +238,20 @@ struct StringObjectPropertyView: View {
                 
             }
             .frame(width: panelWidth)
+
+            if settingVM.debugMode == true {
+                StringComponents()
+            }
             
-            StringComponents()
-                .padding(.horizontal)
-            
+                
         }
         
     }
     
     func saveColor(){
-//        print(psdsVM.tmpObjectForStringProperty.color)
-//        psdsVM.tmpObjectForStringProperty.color = psdsVM.tmpObjectForStringProperty.color
         guard let lastID = psdsVM.selectedStrIDList.last else {return }
-//        print("save color")
-//        psdsVM.psdModel.SetColor(psdId: psdsVM.selectedPsdId, objId: lastID, value: textColor)
         psdsVM.tmpObjectForStringProperty.color = textColor
-//        psdsVM.psdModel.SetColor(psdId: psdsVM.selectedPsdId, objId: lastID, value: textColor)
         psdsVM.commitTempStringObject()
-        
-        //
-//        if psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: lastID)?.alignment == StringAlignment.left {
-//            psdsVM.alignSelection(orientation: "horizontal-center")
-//            psdsVM.alignSelection(orientation: "horizontal-left")
-//        }else if psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: lastID)?.alignment == StringAlignment.center {
-//            psdsVM.alignSelection(orientation: "horizontal-left")
-//            psdsVM.alignSelection(orientation: "horizontal-center")
-//        }else {
-//            psdsVM.alignSelection(orientation: "horizontal-left")
-//            psdsVM.alignSelection(orientation: "horizontal-right")
-//        }
       }
     
     func toggleColor() {

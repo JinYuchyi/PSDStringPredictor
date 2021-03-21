@@ -50,7 +50,7 @@ struct ImageProcessView: View {
                     ),
                     in: 0...10
                     
-                ).disabled(psdsVM.selectedNSImage.ToCIImage()?.IsValid() == false)
+                ).disabled( psdsVM.selectedPsdId == -1)
                 Button(action: { ResetGamma() }){
                     Text("Reset")
                 }
@@ -73,7 +73,7 @@ struct ImageProcessView: View {
                     ),
                     in: 0...10
                     
-                ).disabled(psdsVM.selectedNSImage.ToCIImage()?.IsValid() == false)
+                ).disabled(psdsVM.selectedPsdId == -1)
                 Button(action: { ResetExp() }){
                     Text("Reset")
                 }

@@ -15,14 +15,10 @@ extension CIImage{
     
     func ToCGImage() -> CGImage! {
         let context = CIContext()
-        //        if context != nil {
-        //            return context.createCGImage(self, from: self.extent)
-        //        }else{
-        //            return nil
-        //        }
-        var colorSpace = CGColorSpaceCreateDeviceRGB()
-//        var colorSpace = CGColorspace
-        context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: .none)
+
+        
+//        var colorSpace = CGColorSpaceCreateDeviceRGB()
+//        context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: .none)
         
         return context.createCGImage(self, from: self.extent)
     }

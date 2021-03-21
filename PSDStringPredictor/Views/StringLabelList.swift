@@ -17,28 +17,12 @@ struct LabelsOnImage: View {
     @Binding var showFakeString: UUID
     
     var body: some View {
-         
-            
-            
-            ForEach((psdsVM.GetSelectedPsd()?.stringObjects) ?? [], id:\.id){ obj in
-//                ZStack{
-                
-                    StringLabel( id: obj.id, interactive: interactive, showFakeString: $showFakeString, psdsVM: psdsVM )
-                
 
-//                }
-                    
-                    
-            }
-            
+        ForEach((psdsVM.psdStrDict[psdsVM.selectedPsdId]) ?? [], id:\.self){ id in
+            StringLabel( id: id, interactive: interactive, showFakeString: $showFakeString, psdsVM: psdsVM )
+        }
 
-            
-            
-    
-        
     }
-    
-    
-    
+
 }
 

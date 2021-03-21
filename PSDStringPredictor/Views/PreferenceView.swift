@@ -13,7 +13,7 @@ struct SettingsView: View {
     var item: AppSettingsItem
     @ObservedObject var settingsVM: SettingViewModel
     @State var DPICheck: Int = 1
-    @State var debugMode: Int = 0
+//    @State var debugMode: Bool = true
     @State var  PSPath: String = ""
 
     var body: some View {
@@ -32,8 +32,27 @@ struct SettingsView: View {
             HStack{
                 Text("Photoshop Path")
                     .frame(width: 100, alignment: .leading)
-                TextField("Input Photoshop Path...", text: $PSPath, onCommit: { commitPSPath()})
+                TextField("Input Photoshop Path...", text: $PSPath, onCommit: { commitSetting()})
                     .fixedSize()
+                .frame(width: 400, alignment: .leading)
+            }
+            
+            HStack{
+                Text("Debug Mode")
+                    .frame(width: 100, alignment: .leading)
+                Toggle(
+                        isOn: Binding(
+                            get: { settingsVM.debugMode },
+                          set: { value in
+                            settingsVM.debugMode = value
+                            commitSetting()
+                            // call function to send network request
+                          }
+                        ),
+                        label: {
+                          Text("")
+                        }
+                      )
                 .frame(width: 400, alignment: .leading)
             }
             
@@ -52,20 +71,20 @@ struct SettingsView: View {
     }
     
     func CreateItem() -> AppSettingsItem{
-        //print("PSPath: \(PSPath)")
-        let item = AppSettingsItem(Debug: debugMode == 1 ? true : false,
+        print("debug: \(settingsVM.debugMode)")
+        let item = AppSettingsItem(Debug: settingsVM.debugMode ,
                                    DPICheck: DPICheck == 1 ? true : false,
                                    PSPath: DataStore.PSPath
                                    )
         return item
     }
     
-    func commitPSPath(){
-        DataStore.PSPath = PSPath;
+    func commitSetting(){
+        DataStore.PSPath = PSPath
         plistM.Write(settingItem: CreateItem(), plistName: "AppSettings")
-        settingsVM.debugItemsSelection = debugMode
+        settingsVM.debugMode =  settingsVM.debugMode
         settingsVM.checkDPISelection = DPICheck
-        print(DataStore.PSPath)
+        
     }
 //
 //    func LoadPList(name: String) -> AppSettingsItem{

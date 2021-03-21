@@ -121,10 +121,10 @@ struct ContentView: View  {
         return VStack{
             
             ImageProcessView(psdsVM: psdsVM, panelWidth: rightPanelWidth)
-            
+//
             Divider()
-            
-            StringObjectPropertyView( panelWidth: rightPanelWidth, psdsVM: psdsVM  )
+//
+            StringObjectPropertyView( panelWidth: rightPanelWidth, psdsVM: psdsVM, settingVM: settingVM  )
                 .padding()
             
             Divider()

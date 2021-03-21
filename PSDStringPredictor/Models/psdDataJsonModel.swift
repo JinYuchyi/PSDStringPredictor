@@ -10,6 +10,7 @@ import Foundation
 
 struct JsonObject: Codable{
     var PsdJsonObjectList: [PsdJsonObject]
+    var psdStrDict: [Int:[UUID]]
     var relatedDataJsonObject: RelatedDataJsonObject
 }
 
@@ -23,6 +24,7 @@ struct RelatedDataJsonObject: Codable{
     //Others
     var maskDict: [Int:[charRectObject]]
     var stringIsOn: Bool
+//    var psdStrDict:[Int: [UUID]]
 }
 
 struct PsdJsonObject: Codable {

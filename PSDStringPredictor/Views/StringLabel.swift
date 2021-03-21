@@ -39,7 +39,7 @@ struct StringLabel: View {
 //        if psdsVM.stringObjectDict[id] != nil{
         let x = (obj.stringRect.origin.x) + (obj.stringRect.width)/2
 //            let x = (stringObject.stringRect.midX)  // midX will left aligned
-        let y = psdsVM.GetSelectedPsd()!.height - (obj.stringRect.origin.y)  - (obj.stringRect.height)/2
+        let y = psdsVM.fetchSelectedPsd().height - (obj.stringRect.origin.y)  - (obj.stringRect.height)/2
         return CGPoint(x: x, y: y)
 //        }else{
 //            return CGPoint.zero
@@ -68,7 +68,7 @@ struct StringLabel: View {
 
                 .position(
                     x: psdsVM.tmpObjectForStringProperty.posX.toCGFloat() + psdsVM.tmpObjectForStringProperty.width / 2  + psdsVM.tmpObjectForStringProperty.tracking.toCGFloat() / 2 - FontUtils.GetCharFrontOffset(content: psdsVM.fetchStringObject(strId: id).content, fontSize: psdsVM.fetchStringObject(strId: id).fontSize),
-                    y: (psdsVM.GetSelectedPsd()!.height) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2
+                    y: (psdsVM.fetchSelectedPsd().height) - psdsVM.tmpObjectForStringProperty.posY.toCGFloat() - psdsVM.tmpObjectForStringProperty.height / 2
                 )
                 
                 .foregroundColor( Color.gray)
@@ -103,12 +103,11 @@ struct StringLabel: View {
                     }
                     })
                 .exclusively(before: TapGesture().onEnded({ (loc) in
-//                    print(FontUtils.GetCharFrontOffset(content: getObject().content, fontSize: getObject().fontSize))
                      psdsVM.selectedStrIDList.removeAll()
                      psdsVM.selectedStrIDList.append(id)
+//                    print(psdsVM.fetchLastStrIdFromSelectedPsd())
+//                    print(psdsVM.fetchLastStringObjectFromSelectedPsd().charImageList.count)
                      psdsVM.tmpObjectForStringProperty = psdsVM.fetchStringObject(strId: id).toObjectForStringProperty()
-//                    print("psdsVM.tmpObjectForStringProperty Color: \(psdsVM.tmpObjectForStringProperty.color), obj: \(psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.color)")
-//                             FontUtils.GetStringBound(str: stringObject.content, fontName: stringObject.FontName, fontSize: stringObject.fontSize, tracking: stringObject.tracking)
                             })
                         )
                 )
@@ -119,7 +118,7 @@ struct StringLabel: View {
                 .font(.custom("SF Pro Text Regular", size: 8))
                 .fontWeight(.black)
                 .foregroundColor(Color.green)
-                    .position(x: getAlignLabelPos() , y: (psdsVM.GetSelectedPsd()!.height) - (psdsVM.fetchStringObject(strId: id).stringRect.minY ))
+                    .position(x: getAlignLabelPos() , y: (psdsVM.fetchSelectedPsd().height) - (psdsVM.fetchStringObject(strId: id).stringRect.minY ))
                 .offset(x: 0, y: 3)
                 .frame(alignment: .top)
             

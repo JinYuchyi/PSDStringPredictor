@@ -37,8 +37,8 @@ struct SelectionOverlayView: View {
                             endPos = value.location
                             if psdsVM.viewScale > 1{
                                 interactive.selectionRect = CGRect.init(
-                                    x: interactive.selectionRect.minX - psdsVM.GetSelectedPsd()!.width * (psdsVM.viewScale - 1) / 2 ,
-                                    y: interactive.selectionRect.minY - psdsVM.GetSelectedPsd()!.height * (psdsVM.viewScale - 1) / 2  ,
+                                    x: interactive.selectionRect.minX - psdsVM.fetchSelectedPsd().width * (psdsVM.viewScale - 1) / 2 ,
+                                    y: interactive.selectionRect.minY - psdsVM.fetchSelectedPsd().height * (psdsVM.viewScale - 1) / 2  ,
                                     width: interactive.selectionRect.width ,
                                     height: interactive.selectionRect.height
                                 ).standardized
@@ -94,26 +94,26 @@ struct SelectionOverlayView: View {
             
             let tmpRect = CGRect.init(
                 x: (psdsVM.fetchStringObject(strId: id).stringRect.origin.x),
-                y: (psdsVM.GetSelectedPsd()!.height - (psdsVM.fetchStringObject(strId: id).stringRect.origin.y - (psdsVM.fetchStringObject(strId: id).stringRect.height),
-                width: (psdsVM.fetchStringObject(strId: id).stringRect.width,
-                height: (psdsVM.fetchStringObject(strId: id).stringRect.height
+                y: psdsVM.fetchSelectedPsd().height - psdsVM.fetchStringObject(strId: id).stringRect.origin.y - (psdsVM.fetchStringObject(strId: id).stringRect.height),
+                width: psdsVM.fetchStringObject(strId: id).stringRect.width,
+                height: psdsVM.fetchStringObject(strId: id).stringRect.height
             )
 //            let tmpRect = rect
             if tmpRect.intersects(interactive.selectionRect)  {
-                psdsVM.selectedStrIDList.append((psdsVM.fetchStringObject(strId: id).id)
+                psdsVM.selectedStrIDList.append(psdsVM.fetchStringObject(strId: id).id)
             }
         }
-        if psdsVM.selectedStrIDList.last != nil && psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!) != nil {
-            psdsVM.tmpObjectForStringProperty = psdsVM.GetSelectedPsd()!.GetStringObjectFromOnePsd(objId: psdsVM.selectedStrIDList.last!)!.toObjectForStringProperty()
+        if psdsVM.selectedStrIDList.last != nil && psdsVM.fetchLastStringObjectFromSelectedPsd() != nil {
+            psdsVM.tmpObjectForStringProperty = psdsVM.fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
         }
         
     }
     
     func CalcTap(tapPoint: CGPoint){
         psdsVM.selectedStrIDList.removeAll()
-        for obj in psdsVM.GetSelectedPsd()!.stringObjects {
-            if obj.stringRect.contains(tapPoint) {
-                psdsVM.selectedStrIDList.append(obj.id)
+        for objId in psdsVM.psdStrDict[psdsVM.selectedPsdId]! {
+            if psdsVM.stringObjectDict[objId]!.stringRect.contains(tapPoint) {
+                psdsVM.selectedStrIDList.append(objId)
             }
         }
     }

@@ -29,7 +29,7 @@ enum PsdStatus: String, Codable {
 let zeroPsdObject = PSDObject()
 
 struct PSDObject: Identifiable{
-    var id: Int
+    var id: Int = -1
 //    var stringObjects: [StringObject] = []
     var imageURL: URL
     var thumbnail: NSImage = NSImage.init()
@@ -39,9 +39,11 @@ struct PSDObject: Identifiable{
     var height: CGFloat = 0
     var status: PsdStatus = .normal
     
-    init(){}
+    init(){
+        imageURL = URL.init(string: Bundle.main.resourcePath! + "/defaultImage.png")!  //URL.init(string: Bundle.main.path(forResource: "default", ofType: "png")!)!
+    }
     
-    fileprivate init(id: Int, imageURL: URL, thumbnail: NSImage, colorMode: MacColorMode, dpi: Int, status: PsdStatus){
+    init(id: Int, imageURL: URL, thumbnail: NSImage, colorMode: MacColorMode, dpi: Int, status: PsdStatus){
         self.id = id
         self.imageURL = imageURL
         self.colorMode = colorMode

@@ -35,13 +35,13 @@ struct OneCharPropertyView: View {
                         .frame(height: 40)
                         .border(Color.white, width: 1)
                 }
-                TextField(
-                    //String(GetLastSelectObject().charArray[index]),
-                    "..",
-                    text:$myChar,
-                    //onEditingChanged:{_ in print("") },
-                    onCommit: {SetChar(value: myChar)}
-                )
+//                TextField(
+//                    //String(GetLastSelectObject().charArray[index]),
+//                    "..",
+//                    text:$myChar,
+//                    //onEditingChanged:{_ in print("") },
+//                    onCommit: {SetChar(value: myChar)}
+//                )
                 
                 Text("\(Int(GetLastSelectObject().charRects[index].width.rounded()))/\(Int(GetLastSelectObject().charRects[index].height.rounded()))")
                 Text(String(GetLastSelectObject().charFontWeightList[index] ?? ""))
@@ -91,15 +91,13 @@ struct OneCharPropertyView: View {
 //        }
     }
     
-    func SetChar(value: String){
-        guard let lastId = psdsVM.selectedStrIDList.last else {return}
-        psdsVM.psdModel.SetChar(psdId: psdsVM.selectedPsdId, objId: lastId, charIndex: index, value: value)
-    }
-    
+//    func SetChar(value: String){
+//        guard let lastId = psdsVM.selectedStrIDList.last else {return}
+//        psdsVM.psdModel.SetChar(psdId: psdsVM.selectedPsdId, objId: lastId, charIndex: index, value: value)
+//    }
+//
     func GetLastSelectObject() -> StringObject{
-        
-        guard let id = psdsVM.selectedStrIDList.last else {return zeroStringObject}
-        return psdsVM.GetStringObjectForOnePsd(psdId: psdsVM.selectedPsdId, objId: id) ?? zeroStringObject
+        psdsVM.fetchLastStringObjectFromSelectedPsd()
     }
     
 }

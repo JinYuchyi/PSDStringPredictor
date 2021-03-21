@@ -118,43 +118,44 @@ class JSManager{
         
     }
     
-    func ConstellateJsonString(relatedDataJsonObject: RelatedDataJsonObject, psdStrDict: [Int:[UUID]], psdDict: [Int:[PSDObject]], strDict: [UUID: [StringObject]]) -> String{
+    func ConstellateJsonString(relatedDataJsonObject: RelatedDataJsonObject, psdStrDict: [Int:[UUID]], psdDict: [Int: PSDObject], strDict: [UUID: StringObject]) -> String{
         var psdObjDictList: [PsdJsonObject] = []
-        for _psd in psdObjects{
-            var strObjDictList : [strObjJsonObject] = []
-            for _strObj in _psd.stringObjects {
-//                print("Constellating data for psdObject \(_psd.id), stringObject: \(_strObj.content)")
-                let strObj = strObjJsonObject.init(
-                    id: _strObj.id,
-                    content: _strObj.content,
-                    tracking: _strObj.tracking,
-                    fontSize: _strObj.fontSize,
-                    fontWeight: _strObj.fontWeight,
-                    stringRect: _strObj.stringRect,
-                    color: _strObj.color.toArray(),
-                    bgColor: _strObj.bgColor.toArray(),
-                    charArray: _strObj.charArray.map({String($0)}),
-                    charRects: _strObj.charRects,
-                    charSizeList: _strObj.charSizeList,
-                    //charImageList: [],
-                    charFontWeightList: _strObj.charFontWeightList,
-                    isPredictedList: _strObj.isPredictedList,
-                    colorMode: _strObj.colorMode.rawValue,
-                    charColorModeList: _strObj.charColorModeList,
-                    fontName: _strObj.fontName,
-                    alignment: _strObj.alignment.rawValue,
-                    status: _strObj.status.rawValue,
-                    isParagraph: _strObj.isParagraph
-//                    colorPixel: _strObj.colorPixel.toData()
-                )
-                
-                strObjDictList.append(strObj)
+        for _psd in psdDict.values{
+            let objIdList = psdStrDict[_psd.id]
+            var outputList : [strObjJsonObject] = []
 
+            if objIdList != nil {
+                for objId in objIdList! {
+                    let strObj = strObjJsonObject.init(
+                        id: objId,
+                        content: strDict[objId]!.content,
+                        tracking: strDict[objId]!.tracking,
+                        fontSize: strDict[objId]!.fontSize,
+                        fontWeight: strDict[objId]!.fontWeight,
+                        stringRect: strDict[objId]!.stringRect,
+                        color: strDict[objId]!.color.toArray(),
+                        bgColor: strDict[objId]!.bgColor.toArray(),
+                        charArray: strDict[objId]!.charArray.map({String($0)}),
+                        charRects: strDict[objId]!.charRects,
+                        charSizeList: strDict[objId]!.charSizeList,
+                        charFontWeightList: strDict[objId]!.charFontWeightList,
+                        isPredictedList: strDict[objId]!.isPredictedList,
+                        colorMode: strDict[objId]!.colorMode.rawValue,
+                        charColorModeList: strDict[objId]!.charColorModeList,
+                        fontName: strDict[objId]!.fontName,
+                        alignment: strDict[objId]!.alignment.rawValue,
+                        status: strDict[objId]!.status.rawValue,
+                        isParagraph: strDict[objId]!.isParagraph
+                    )
+                    
+                    outputList.append(strObj)
+
+                }
             }
             //psd
             let psdObj = PsdJsonObject.init(
                 id: _psd.id,
-                stringObjects: strObjDictList,
+                stringObjects: outputList,
                 imageURL: _psd.imageURL,
                 thumbnail: _psd.thumbnail.pngData!,
                 colorMode: _psd.colorMode.rawValue,
@@ -166,7 +167,7 @@ class JSManager{
         }
         
     
-        let jsonObj = JsonObject(PsdJsonObjectList: psdObjDictList, relatedDataJsonObject: relatedDataJsonObject)
+        let jsonObj = JsonObject(PsdJsonObjectList: psdObjDictList, psdStrDict: psdStrDict, relatedDataJsonObject: relatedDataJsonObject)
         let encoder = JSONEncoder()
         let jsonData = try? encoder.encode(jsonObj)
         let jsonString = NSString(data: jsonData!, encoding: String.Encoding.utf8.rawValue)! as String
@@ -174,11 +175,15 @@ class JSManager{
         return jsonString
     }
     
-    func loadPsdJsonObject(jsonObject: JsonObject) ->[PSDObject] {
-        var psdObjList: [PSDObject] = []
+    func loadPsdJsonObject(jsonObject: JsonObject) -> (psdStrDict: [Int:[UUID]], psdDict: [Int: PSDObject], strDict: [UUID: StringObject]) {
+//        var psdObjList: [PSDObject] = []
+        var psdDict: [Int: PSDObject] = [:]
+        var psdStrDict: [Int:[UUID]] = [:]
+        var strDict: [UUID: StringObject] = [:]
         for psdJ in jsonObject.PsdJsonObjectList{
             let targetImage = CIImage.init(contentsOf: psdJ.imageURL)
-            var tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL, thumbnail: NSImage.init(data: psdJ.thumbnail) ?? NSImage.init(), colorMode: MacColorMode.init(rawValue: psdJ.colorMode)!, dpi: psdJ.dpi, status: PsdStatus.init(rawValue: psdJ.status)!)
+            let tmpPsd = PSDObject(id: psdJ.id, imageURL: psdJ.imageURL, thumbnail: NSImage.init(data: psdJ.thumbnail) ?? NSImage.init(), colorMode: MacColorMode.init(rawValue: psdJ.colorMode)!, dpi: psdJ.dpi, status: PsdStatus.init(rawValue: psdJ.status)!)
+            psdDict[psdJ.id] = tmpPsd // Recover one psd in psdDict
             for strJ in psdJ.stringObjects{
                 var charImgList = [CIImage]()
                 for rect in strJ.charRects{
@@ -186,12 +191,11 @@ class JSManager{
                     charImgList.append(tmpImg)
                 }
                 let tmpStrObj = StringObject.init(id: strJ.id, content: strJ.content, tracking: strJ.tracking, fontSize: strJ.fontSize, colorMode: strJ.colorMode, fontWeight: strJ.fontWeight, charImageList: charImgList, stringRect: strJ.stringRect, color: strJ.color, bgColor: strJ.bgColor, charArray: strJ.charArray, charRacts: strJ.charRects, charSizeList: strJ.charSizeList, charFontWeightList: strJ.charFontWeightList, charColorModeList: strJ.charColorModeList, isPredictedList: strJ.isPredictedList, fontName: strJ.fontName, alignment: strJ.alignment, status: strJ.status)
-                tmpPsd.stringObjects.append(tmpStrObj)
+                psdStrDict[psdJ.id] == nil ? psdStrDict[psdJ.id] = [tmpStrObj.id] : psdStrDict[psdJ.id]?.append(tmpStrObj.id) // Recover one psd-str in psdStrDict
+                strDict[tmpStrObj.id] = tmpStrObj // Recover one str in strDict
             }
-            psdObjList.append(tmpPsd)
         }
-        //Clean original
-        return psdObjList
+        return (psdStrDict, psdDict, strDict)
     }
     
 }

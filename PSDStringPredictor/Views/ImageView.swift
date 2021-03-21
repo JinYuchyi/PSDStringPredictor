@@ -10,14 +10,6 @@ import SwiftUI
 
 
 struct ImageView: View {
-    //var imageProcess: ImageProcess
-    //@EnvironmentObject var data: DataStore
-    //    let imgUtil = ImageUtil()
-    //    let control = Controller()
-    //let imgProcess = ImageProcess()
-    //@ObservedObject var imageViewModel: ImageProcess = imageProcessViewModel
-    //@ObservedObject var imageVM: ImageVM
-    //    @Binding var showImage: Bool
     @ObservedObject var psds: PsdsVM
     @ObservedObject var regionVM: RegionProcessVM
     @ObservedObject var interactive: InteractiveViewModel

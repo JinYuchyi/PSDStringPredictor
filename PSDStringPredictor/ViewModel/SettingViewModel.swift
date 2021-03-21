@@ -11,7 +11,7 @@ import Foundation
 
 class SettingViewModel: ObservableObject {
     @Published var appSettingItem: AppSettingsItem =  AppSettingsItem()
-    @Published var debugItems = ["false", "true"]
+    @Published var debugMode: Bool = true
     @Published var checkDPIItems = ["false", "true"]
     @Published var debugItemsSelection = 0
     @Published var checkDPISelection = 1
@@ -22,6 +22,7 @@ class SettingViewModel: ObservableObject {
         debugItemsSelection = GetDebugSelectionList(appSettingItem)
         checkDPISelection = GetDPISelectionList(appSettingItem)
         DataStore.PSPath = GetPSPath(appSettingItem)
+        debugMode = getDebugMode(appSettingItem)
     }
     
     func GetDebugSelectionList(_ item: AppSettingsItem) -> Int{
@@ -48,5 +49,9 @@ class SettingViewModel: ObservableObject {
     func LoadPList(name: String) -> AppSettingsItem{
         let item = plistM.Load(plistName: name)
         return item
+    }
+    
+    func getDebugMode(_ item: AppSettingsItem) -> Bool{
+        return item.Debug
     }
 }

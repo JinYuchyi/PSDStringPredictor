@@ -22,10 +22,10 @@ struct psdThumbnailList: View {
             
             
             GeometryReader{geo in
-                List(psdsVM.psdModel.psdObjects, id:\.id) { psd in
+                List(Array(psdsVM.psdObjectDict.values), id:\.id) { psd in
 //                    VStack(alignment: .center){
                         PsdThumbnail(id: psd.id, title: psd.imageURL.lastPathComponent, psdVM: psdsVM)
-                            .tooltip("Path:" + "\r\n" + "\(psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.imageURL)" + "\r\n" + "Size: \(psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.width), \(psdsVM.psdModel.GetPSDObject(psdId: psd.id)!.height)")
+                            .tooltip("Path:" + "\r\n" + "\(psdsVM.fetchPsd(psdId: psd.id).imageURL)" + "\r\n" + "Size: \(psdsVM.fetchPsd(psdId: psd.id).width), \(psdsVM.fetchPsd(psdId: psd.id).height)")
                             .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
                             
                             .onTapGesture {

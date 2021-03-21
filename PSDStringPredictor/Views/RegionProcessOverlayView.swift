@@ -54,7 +54,7 @@ struct RegionProcessOverlayView: View {
                         .position(x: (interactive.selectionRect.minX + interactive.selectionRect.width/2) , y: (interactive.selectionRect.minY + interactive.selectionRect.height/2) )
                 )
         }
-        .frame(width: psdsVM.GetSelectedPsd()!.width  , height: psdsVM.GetSelectedPsd()!.height )
+        .frame(width: psdsVM.fetchSelectedPsd().width  , height: psdsVM.fetchSelectedPsd().height )
         .IsHidden(condition: regionProcessVM.regionActive == true)
 
     }

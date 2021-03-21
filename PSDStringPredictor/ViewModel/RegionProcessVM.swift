@@ -37,23 +37,11 @@ class RegionProcessVM: ObservableObject {
         let regionImg = targetImage.cropped(to: regionRect)
         let bgColor = imgUtil.backgroundColor(img: regionImg)
         var ( maskImg01,  maskImg02) = fetchRegionOverlay(regionRect: regionRect, bgWidth: targetImage.extent.width, bgHeight: targetImage.extent.height)
-//        let tmpPath1 = GetDocumentsPath().appending("/regionImg.bmp")
-//        let tmpPath2 = GetDocumentsPath().appending("/test2.bmp")
-//        regionImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath1))
-//        maskImg02.ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
-        
-//        let regionImagInTotalSize = Multiply(bgImage: targetImage, maskImage: maskImg01)
         
         let bgColoredImg = CIImage.init(color: bgColor.toCIColor()).cropped(to: CGRect.init(x: 0, y: 0, width: targetImage.extent.width, height: targetImage.extent.height))
         
         let output = SourceOverCompositing(inputImage: regionImg, inputBackgroundImage: bgColoredImg)!
-        
-//                let tmpPath = GetDocumentsPath().appending("/test1.bmp")
-//                let tmpPath1 = GetDocumentsPath().appending("/test2.bmp")
-//        let tmpPath2 = GetDocumentsPath().appending("/test3.bmp")
-//        output.ToPNG(url: URL.init(fileURLWithPath: tmpPath2))
-//        let tmpPath4 = GetDocumentsPath().appending("/test4.bmp")
-//        bgColoredImg.ToPNG(url: URL.init(fileURLWithPath: tmpPath4))
+
         return output
     }
     

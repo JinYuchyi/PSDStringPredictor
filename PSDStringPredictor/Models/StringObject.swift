@@ -294,6 +294,7 @@ struct StringObject : Identifiable,  Hashable{
                 result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
             }
         }
+        print(result)
         color = result
 
         return result

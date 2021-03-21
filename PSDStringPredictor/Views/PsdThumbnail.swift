@@ -21,7 +21,7 @@ struct PsdThumbnail: View {
         ZStack{
             IDView()
             
-            Image(nsImage: ((psdVM.psdModel.GetPSDObject(psdId: id)?.thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
+            Image(nsImage: ((psdVM.fetchPsd(psdId: id).thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
             StatusView()
             titleView()
         }
@@ -54,12 +54,12 @@ struct PsdThumbnail: View {
     }
     
     func LabelView() -> some View {
-        if psdVM.psdModel.GetPSDObject(psdId: id)?.status == PsdStatus.normal{
+        if psdVM.fetchPsd(psdId: id).status == PsdStatus.normal{
             return Text("􀁢")
                 .font(.system(size: 20, weight: .light, design: .serif))
                 .foregroundColor(Color.gray)
         }
-        else if psdVM.psdModel.GetPSDObject(psdId: id)?.status == PsdStatus.commited{
+        else if psdVM.fetchPsd(psdId: id).status == PsdStatus.commited{
             return Text("􀁢")
                 .font(.system(size: 20, weight: .light, design: .serif))
                 .foregroundColor(Color.green)
