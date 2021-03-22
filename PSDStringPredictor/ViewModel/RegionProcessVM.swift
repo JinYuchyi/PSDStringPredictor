@@ -14,7 +14,7 @@ class RegionProcessVM: ObservableObject {
     //@Published var regionRect: CGRect = CGRect.init()
     //    @Published var regionOverlay: CIImage = CIImage.init()
     @Published var regionImageForProcess: CIImage = DataStore.zeroCIImage
-    @Published var regionActive: Bool = false
+    @Published var regionButtonActive: Bool = false
     //    @Published var targetImageWidth: CGFloat = 0
     //    @Published var targetImageHeight: CGFloat = 0
     
@@ -48,7 +48,7 @@ class RegionProcessVM: ObservableObject {
     //Intent
     func regionBtnPressed() {
         //        FetchTargetImageInfo()
-        regionActive.toggle()
+        regionButtonActive.toggle()
     }
     
     //    func FetchTargetImageInfo(){

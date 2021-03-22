@@ -69,7 +69,8 @@ struct StringHighlightView: View {
                                             showFakeString = psdsVM.selectedStrIDList.last!
                                             
                                             // Change tracking
-                                            if abs(gesture.translation.width / gesture.translation.height) > 1 {
+                                            // We use two boundary lines (1.2 and 0.8), to make the users' interaction more clear
+                                            if abs(gesture.translation.width / gesture.translation.height) > 1.2 {
                                                 // Disable the link between size and tracking first
                                                 psdsVM.linkSizeAndTracking = false
                                                 
@@ -87,7 +88,7 @@ struct StringHighlightView: View {
                                                 psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                                 
                                                 
-                                            } else {
+                                            } else if abs(gesture.translation.width / gesture.translation.height) < 0.8 {
                                                 // Change size
                                                 interactive.dragY = gesture.translation.height / 20
                                                 psdsVM.tmpObjectForStringProperty.fontSize = ((originSize - interactive.dragY).rounded()).toString()

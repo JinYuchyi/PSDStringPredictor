@@ -24,7 +24,7 @@ struct ImageView: View {
             SelectionOverlayView( interactive: interactive, psdsVM: psds)
             if psds.canProcess == true {
                 RegionProcessOverlayView(interactive: interactive, psdsVM: psds, regionProcessVM: regionVM)
-                    .IsHidden(condition: regionVM.regionActive)
+                    .IsHidden(condition: regionVM.regionButtonActive)
             }
             
 //            GridView(psdsVM: psds)

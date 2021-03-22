@@ -112,7 +112,7 @@ for (var i = 0; i < num; i++) {
          fillColor = bgColorList[i]
          createRectangle(layerSetRef1, "L_" + names[i], positionList[i][0] - padding, positionList[i][1] - rectList[i][3] - padding + calcTailLength(contentList[i], fontSizeList[i]), rectList[i][2] + padding * 2, rectList[i][3] + padding * 2 , bgColorList[i])
          //This layer is useless, however it must exist to make the above mask layer avaliable. There is a bug here.
-             createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 1, 1, [255,0,0])
+//             createRectangle(layerSetRef1, "origin" + names[i], positionList[i][0] , positionList[i][1], 1, 1, [255,0,0])
          }
          // Resize to original ppi
          SetPPI(originalPPI)

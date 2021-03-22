@@ -136,7 +136,7 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Edit" hidden="YES" enabled="NO" id="5QF-Oa-p0T">
+                            <menuItem title="Edit" id="5QF-Oa-p0T">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="W48-6f-4Dl">
                                     <items>
@@ -639,28 +639,52 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="StringObject" id="3x8-tJ-qdL">
                                     <items>
-                                        <menuItem title="Move Selection Up" keyEquivalent="" id="64U-pN-a1F" userLabel="Move Selection Up">
+                                        <menuItem title="Move Up" keyEquivalent="" id="64U-pN-a1F" userLabel="Move Selection Up">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveUp:" target="Voe-Tx-rLC" id="O6F-y7-RFo"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Move Selection Down" keyEquivalent="" id="eWD-mB-t4b" userLabel="Move Selection Down">
+                                        <menuItem title="Move Up In Large Step" keyEquivalent="" id="0JH-0C-ceh" userLabel="Move Selection Up">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                            <connections>
+                                                <action selector="MoveUpLarge:" target="Voe-Tx-rLC" id="ba2-ZX-GCX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Move Down" keyEquivalent="" id="eWD-mB-t4b" userLabel="Move Selection Down">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveDown:" target="Voe-Tx-rLC" id="6Sb-Bg-EJF"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Move Selection Left" keyEquivalent="" id="D7D-jq-WeZ" userLabel="Move Selection Left">
+                                        <menuItem title="Move Down In Large Step" keyEquivalent="" id="aKt-eA-JNZ" userLabel="Move Selection Down">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                            <connections>
+                                                <action selector="MoveDownLarge:" target="Voe-Tx-rLC" id="nvJ-sY-bp6"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Move Left" keyEquivalent="" id="D7D-jq-WeZ" userLabel="Move Selection Left">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveLeft:" target="Voe-Tx-rLC" id="l67-3n-Wwe"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Move Selection Right" keyEquivalent="" id="MRg-FF-QCo" userLabel="Move Selection Right">
+                                        <menuItem title="Move Left In Large Step" keyEquivalent="" id="0IS-Nj-FjU" userLabel="Move Selection Left">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                            <connections>
+                                                <action selector="MoveLeftLarge:" target="Voe-Tx-rLC" id="Ame-1z-FkG"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Move Right" keyEquivalent="" id="MRg-FF-QCo" userLabel="Move Selection Right">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="MoveRight:" target="Voe-Tx-rLC" id="Mxy-k7-HAH"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Move Right In Large Step" keyEquivalent="" id="lwW-3I-I9J" userLabel="Move Selection Right">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                            <connections>
+                                                <action selector="MoveRightLarge:" target="Voe-Tx-rLC" id="vI9-qJ-QC7"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Delete" id="Ghu-k9-0JL" userLabel="Delete">
@@ -669,6 +693,11 @@ CA
 </string>
                                             <connections>
                                                 <action selector="DeleteSelectedStringObjects:" target="Voe-Tx-rLC" id="bqw-v2-PkE"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Duplicate" keyEquivalent="d" id="GlS-hh-17H" userLabel="Delete">
+                                            <connections>
+                                                <action selector="DeleteSelectedStringObjects:" target="Voe-Tx-rLC" id="9F6-hU-pit"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Text" hidden="YES" enabled="NO" id="tBW-mi-unh">

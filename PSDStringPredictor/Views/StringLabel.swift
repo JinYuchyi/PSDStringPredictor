@@ -129,12 +129,12 @@ struct StringLabel: View {
     }
     
     func getColor() -> Color {
-        var _color: Color = psdsVM.fetchStringObject(strId: id).color.ToColor()
-        guard let lastId = psdsVM.selectedStrIDList.last else {return _color}
+        var _color: Color
         if psdsVM.stringDifferenceShow == true {
             _color = Color.red.opacity(0.7)
         }else{
-//            _color = psdsVM.fetchStringObject(strId: id).color.ToColor()
+            _color = psdsVM.fetchStringObject(strId: id).color.ToColor()
+            guard let lastId = psdsVM.selectedStrIDList.last else {return _color}
         }
         return _color
     }

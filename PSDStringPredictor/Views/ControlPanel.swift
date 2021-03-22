@@ -47,7 +47,7 @@ struct ControlPanel: View {
                 Text("Region")
                     .frame(minWidth: 70,  maxWidth: .infinity)
             }
-            .colorMultiply(regionProcessVM.regionActive == true ? Color.green : Color.white)
+            .colorMultiply(regionProcessVM.regionButtonActive == true ? Color.green : Color.white)
             .disabled(psdsVM.IndicatorText != "")
             
             Button(action: {psdsVM.ProcessForAll()}){

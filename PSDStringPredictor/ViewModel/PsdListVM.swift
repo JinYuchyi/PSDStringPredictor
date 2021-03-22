@@ -306,7 +306,7 @@ class PsdsVM: ObservableObject{
         let regionImage = processedCIImage.cropped(to: rect).premultiplyingAlpha()
         var offset = CGPoint.init(x: rect.minX, y: rect.minY)
         // Get strobj id list for selected psd
-        var idList = psdStrDict[selectedPsdId] ?? []
+        var preIdList = psdStrDict[selectedPsdId] ?? []
 //        var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
         var img = imageUtil.ApplyFilters(target: regionImage, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
         let newList = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self, offset: offset)
@@ -317,26 +317,23 @@ class PsdsVM: ObservableObject{
         }
         DispatchQueue.main.async{ [self] in
             //if region already have string object exist, just remove the old ones.
-            if idList.count > 0 {
+            if preIdList.count > 0 {
                 for newObj in newList{
-                    for preOneId in idList{
+                    for preOneId in preIdList{
                         if fetchStringObject(strId: preOneId).stringRect.intersects(newObj.stringRect) == true{
-//                            newList.removeAll(where: {$0.id == preOneId})
-                            result.removeAll(where: {$0.id == preOneId})
+//                            result.removeAll(where: {$0.id == newObj.id})
+                            stringObjectDict[preOneId] = nil
+                            psdStrDict[selectedPsdId]?.removeAll(where: {$0 == preOneId})
                         }
                     }
                 }
             }
-            
-//            result += newList
-//            psdModel.UpdateStringObjectsForOnePsd(psdId: psdId, objs: result)
             for obj in result {
                 stringObjectDict[obj.id] = obj
                 (psdStrDict[selectedPsdId] == nil) ? (psdStrDict[selectedPsdId] = [obj.id]) : (psdStrDict[selectedPsdId]!.append(obj.id))
             }
             IndicatorText = ""
         }
-//        print(newList.count)
         return newList.map({$0.id})
     }
     
@@ -403,9 +400,7 @@ class PsdsVM: ObservableObject{
             let charImageList = CIImage.init(contentsOf: psdObjectDict[psdId]!.imageURL)!.GetCroppedImages(rects: charRects.offset(offset: offset) )
             
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
-            
-            
-            
+
             newStrObj = ocr.DeleteFontOffset(obj: newStrObj)
             let sepObjList = newStrObj.seprateIfPossible()
             if sepObjList != nil {
@@ -585,7 +580,11 @@ class PsdsVM: ObservableObject{
                 keyvalues["fontSize"] = Int(stringObjectDict[objId]!.fontSize.rounded()) as AnyObject
                 
                 let targetImg = LoadNSImage(imageUrlPath: psdObjectDict[psdId]!.imageURL.path)
+                if (stringObjectDict[objId]!.content == "Do Not Disturb") {
+                    print(stringObjectDict[objId]!.fontName + ", " + stringObjectDict[objId]!.fontWeight)
+                }
                 fontNameList.append(stringObjectDict[objId]!.CalcFontPostScriptName())
+                print(stringObjectDict[objId]!.CalcFontPostScriptName())
                 //Calc Descent
                 let tmpDesc = Float(FontUtils.calcFontTailLength(content: stringObjectDict[objId]!.content, size: stringObjectDict[objId]!.fontSize))
                 
@@ -793,10 +792,9 @@ class PsdsVM: ObservableObject{
             self.FetchStringObjects(psdId: self.selectedPsdId)
             DispatchQueue.main.async{
                 self.psdObjectDict[processOn]!.status = .processed
+                self.IndicatorText = ""
             }
         }
-        //        canProcess = false
-        IndicatorText = ""
     }
     
     func ProcessForAll(){
@@ -943,6 +941,7 @@ class PsdsVM: ObservableObject{
         let newCMode: MacColorMode
         fetchLastStringObjectFromSelectedPsd().colorMode == .dark ? (newCMode = .light) : (newCMode = .dark)
         stringObjectDict[selectedStrIDList.last!]!.colorMode = newCMode
+        stringObjectDict[selectedStrIDList.last!]!.CalcColor()
         tmpObjectForStringProperty = fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
     }
     
@@ -956,11 +955,13 @@ class PsdsVM: ObservableObject{
             let endIndex = fName.lastIndex(of: " ")
             let startIndex = fName.startIndex
             let particialName = fName[startIndex..<endIndex!]
-            let weightName = fName[endIndex!..<fName.endIndex]
+            var weightName = fName[endIndex!..<fName.endIndex]
             var str = ""
             if weightName == " Regular"  {
+                weightName = "Semibold"
                 str = particialName + " Semibold"
             }else {
+                weightName = "Regular"
                 str = particialName + " Regular"
             }
             tmpObjectForStringProperty.fontName = str
@@ -971,6 +972,7 @@ class PsdsVM: ObservableObject{
             //            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
             
             commitTempStringObject()
+            stringObjectDict[objId!]?.fontWeight = String(weightName)
             
             //Set fontName for all selected
             for id in selectedStrIDList {

@@ -22,9 +22,9 @@ struct RegionProcessOverlayView: View {
     var body: some View {
         ZStack{
             Rectangle()
-                .fill(regionProcessVM.regionActive == true ? (Color.blue.opacity(0.5)) : (Color.white.opacity(0.01)))
+                .fill(regionProcessVM.regionButtonActive == true ? (Color.blue.opacity(0.5)) : (Color.white.opacity(0.01)))
                 .gesture(
-                    DragGesture()
+                    DragGesture() //Drag to region process
                         .onChanged { gesture in
                             regionStartPos = gesture.startLocation
                             
@@ -43,7 +43,9 @@ struct RegionProcessOverlayView: View {
                             ).standardized
                             _ = psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
 
-                            regionProcessVM.regionActive = false
+                            regionProcessVM.regionButtonActive = false
+                            psdsVM.IndicatorText = ""
+
 
                         }
                 )
@@ -55,7 +57,7 @@ struct RegionProcessOverlayView: View {
                 )
         }
         .frame(width: psdsVM.fetchSelectedPsd().width  , height: psdsVM.fetchSelectedPsd().height )
-        .IsHidden(condition: regionProcessVM.regionActive == true)
+        .IsHidden(condition: regionProcessVM.regionButtonActive == true)
 
     }
     
