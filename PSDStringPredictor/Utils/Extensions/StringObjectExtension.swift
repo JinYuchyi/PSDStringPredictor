@@ -65,7 +65,7 @@ extension StringObject{
             for i in IndexList {
                 let _index = i - (preIndex + 1)
                 guard let tmpList = tmpObject.sliceObject(index: _index) else {print("Slide object unsuccess!");  return nil}
-                print("Seprating '\(self.content)', index is \(i)")
+//                print("Seprating '\(self.content)', index is \(i)")
                 result.append(tmpList[0])
                 tmpObject = tmpList[1]
                 preIndex = i

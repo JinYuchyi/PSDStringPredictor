@@ -402,7 +402,9 @@ class PsdsVM: ObservableObject{
             
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
 
-            newStrObj = ocr.DeleteFontOffset(obj: newStrObj)
+//            newStrObj = ocr.DeleteFontOffset(objId: id)
+            deleteFontTailLength(id: newStrObj.id)
+            
             let sepObjList = newStrObj.seprateIfPossible()
             if sepObjList != nil {
                 for obj in sepObjList!{
@@ -421,6 +423,12 @@ class PsdsVM: ObservableObject{
         }
         
         return strobjs
+    }
+    
+    func deleteFontTailLength(id: UUID) {
+        let fontOffset = FontUtils.calcFontTailLength(content: stringObjectDict[id]!.content, size: stringObjectDict[id]!.fontSize)
+        let newStringRect = CGRect(x: stringObjectDict[id]!.stringRect.minX, y: stringObjectDict[id]!.stringRect.minY + fontOffset, width: stringObjectDict[id]!.stringRect.width, height: stringObjectDict[id]!.stringRect.height - fontOffset )
+        stringObjectDict[id]!.stringRect = newStringRect
     }
     
     func CalcTrackingAfterDrag(objId: UUID, originalTracking: CGFloat) -> CGFloat {

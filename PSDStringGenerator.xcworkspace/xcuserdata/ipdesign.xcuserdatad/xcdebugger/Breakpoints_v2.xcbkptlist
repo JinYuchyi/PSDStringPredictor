@@ -126,8 +126,8 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "644"
-            endingLineNumber = "644"
+            startingLineNumber = "652"
+            endingLineNumber = "652"
             landmarkName = "createJS(idList:savePSDToPathList:)"
             landmarkType = "7">
          </BreakpointContent>
