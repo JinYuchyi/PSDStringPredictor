@@ -254,17 +254,13 @@ struct StringObject : Identifiable,  Hashable{
 
                 for img in charImageList.filter({$0.extent.width > 0}){
                     i += 1
-                    //Calculate the darkest color as the font color
-//                    print("#min: \(Minimun(img).0)")
+
                     if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
                         minc = Minimun(img)
-//                        colorPixel = Minimun(img)
 
                     }
-                    //Calculate the brightest color as the background color
                     if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
                         maxc = Maximum(img)
-//                        print("Clac bg color, char max: \(maxc)")
                     }
                 }
                 bgColor = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
@@ -286,8 +282,6 @@ struct StringObject : Identifiable,  Hashable{
                     //Calculate the darkest color as the background color
                     if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
                         minc = Minimun(img)
-//                        print("Clac bg color, char min: \(minc)")
-
                     }
                 }
                 bgColor = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
