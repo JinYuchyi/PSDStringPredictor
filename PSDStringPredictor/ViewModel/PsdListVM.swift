@@ -88,6 +88,7 @@ class PsdsVM: ObservableObject{
     @Published var stringIsOn: Bool = true
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
+    @Published var pickerColor: CGColor = CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //    @Published var PSPath: String = ""
     //    @Published var selectRect: CGRect = zeroRect
     

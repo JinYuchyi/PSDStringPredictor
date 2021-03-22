@@ -126,6 +126,7 @@ struct ContentView: View  {
 //
             StringObjectPropertyView( panelWidth: rightPanelWidth, psdsVM: psdsVM, settingVM: settingVM  )
                 .padding()
+                .IsHidden(condition: psdsVM.selectedStrIDList.count > 0)
             
             Divider()
             

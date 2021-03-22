@@ -139,28 +139,6 @@ struct ControlPanel: View {
 //        GeometryReader{geo in
             VStack(alignment: .center){
                 
-                //                Button(action: {psdsVM.CombineStringsOnePSD(psdId: psdsVM.selectedPsdId)}){
-                //                    Text("Combine To Paragraph")
-                //                        .frame(width: geo.size.width*0.8, alignment: .center)
-                //
-                //                }
-
-                //                HStack{
-                //                    Button(action: {psdsVM.SetSelectionToFixed()}){
-                //                        Text("Ready")
-                //                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-                //                            .padding(0)
-                //
-                //                    }
-                //
-                //                    Button(action: {psdsVM.SetSelectionToIgnored()}){
-                //                        Text("Ignore")
-                //                            .frame(minWidth: geo.size.width*0.36,  maxWidth: .infinity)
-                //                            .padding(0)
-                //
-                //                    }
-                //
-                //                }
                 
                 Button(action: {psdsVM.deleteSelectedStringObjects()}){
                     Text("Delete Selected Strings")
@@ -172,7 +150,7 @@ struct ControlPanel: View {
                 
                 Divider()
                 
-                Spacer()
+//                Spacer()
                 
                 Group{
                                     

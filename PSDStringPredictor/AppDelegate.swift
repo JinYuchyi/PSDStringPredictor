@@ -300,5 +300,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func DeleteSelectedStringObjects(_ sender: Any) {
         psdsVM.deleteSelectedStringObjects()
     }
+    @IBAction func duplicateStringObject(_ sender: Any) {
+        var str = psdsVM.fetchLastStringObjectFromSelectedPsd()
+        str.id = UUID()
+        psdsVM.psdStrDict[psdsVM.selectedPsdId]?.append(str.id)
+        psdsVM.stringObjectDict[str.id] = str
+    }
 }
 

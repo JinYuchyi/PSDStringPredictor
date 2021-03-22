@@ -697,7 +697,7 @@ CA
                                         </menuItem>
                                         <menuItem title="Duplicate" keyEquivalent="d" id="GlS-hh-17H" userLabel="Delete">
                                             <connections>
-                                                <action selector="DeleteSelectedStringObjects:" target="Voe-Tx-rLC" id="9F6-hU-pit"/>
+                                                <action selector="duplicateStringObject:" target="Voe-Tx-rLC" id="Tdp-bH-l4v"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Text" hidden="YES" enabled="NO" id="tBW-mi-unh">

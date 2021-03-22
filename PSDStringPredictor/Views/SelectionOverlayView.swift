@@ -65,7 +65,7 @@ struct SelectionOverlayView: View {
                     TapGesture()
                         // Tap to clean up all selection
                         .onEnded { _ in
-//                            psdsVM.commitTempStringObject()
+                            
                             psdsVM.selectedStrIDList.removeAll()
                         }
                 )

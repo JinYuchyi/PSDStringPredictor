@@ -203,17 +203,24 @@ struct StringObjectPropertyView: View {
                         Text("-")
                     }
                     //Color block
-                    ColorPicker("", selection: $textColor)
+                    ColorPicker("", selection: Binding(
+                        get: { psdsVM.pickerColor },
+                      set: { value in
+                        psdsVM.pickerColor = value
+                        psdsVM.stringObjectDict[psdsVM.selectedStrIDList.last!]?.color = value
+                        // call function to send network request
+                      }
+                    ))
                         .frame(width: 15, height: 15, alignment: .center)
                         .mask(RoundedRectangle(cornerRadius: 2))
                     
                     Spacer()
-                    
-                    Button(action: {saveColor() }, label: {
-                        Text("􀈄")
-                    })
-                    .frame(width: 15, alignment: .trailing)
-                    .padding(.horizontal)
+//
+//                    Button(action: {saveColor() }, label: {
+//                        Text("􀈄")
+//                    })
+//                    .frame(width: 15, alignment: .trailing)
+//                    .padding(.horizontal)
                     
                     Button(action: {toggleColor()}, label: {
                         Text("􀅈")
