@@ -22,7 +22,7 @@ struct psdThumbnailList: View {
             
             
             GeometryReader{geo in
-                List(Array(psdsVM.psdObjectDict.values), id:\.id) { psd in
+                List(Array(psdsVM.psdObjectDict.values).sorted(by: {$0.id < $1.id}), id:\.id) { psd in
 //                    VStack(alignment: .center){
                         PsdThumbnail(id: psd.id, title: psd.imageURL.lastPathComponent, psdVM: psdsVM)
                             .tooltip("Path:" + "\r\n" + "\(psdsVM.fetchPsd(psdId: psd.id).imageURL)" + "\r\n" + "Size: \(psdsVM.fetchPsd(psdId: psd.id).width), \(psdsVM.fetchPsd(psdId: psd.id).height)")

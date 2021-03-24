@@ -104,7 +104,6 @@ struct StringObject : Identifiable,  Hashable{
         self.isPredictedList = sizeFunc.2
         self.content = FixContent(content)
         reCalcBound()
-//        self.stringRect = reCalcRect(rect: stringRect)
     }
     
     init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
@@ -201,12 +200,8 @@ struct StringObject : Identifiable,  Hashable{
         }else {
             return .none
         }
-        //return result
     }
-    
-//    mutating func CalcRectWidthByString() {
-//        
-//    }
+
     
     mutating func SetOffset(x: CGFloat, y: CGFloat){
         var result: [CGRect] = []
@@ -224,10 +219,16 @@ struct StringObject : Identifiable,  Hashable{
     func FixContent(_ target: String) -> String{
         var res: String = target
         let lowerString: String = target.lowercased()
+        //Condition which we need to fix lowercase/uppercase problem for proper nouns, such as "iCloud".
         for (typo, correct) in DataStore.wordDict{
-            //Condition which we need to fix lowercase/uppercase problem for proper nouns, such as "iCloud".
             res = res.replacingOccurrences(of: typo, with: correct)
         }
+        // 720 -> 72°
+        let targetMarkList = target.findZeroBehindNumberIndex()
+        if targetMarkList.count > 0 {
+            
+        }
+        
         return res
     }
     

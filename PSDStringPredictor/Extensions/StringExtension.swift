@@ -52,6 +52,17 @@ extension String{
             return self
         }
     }
+    
+    func findZeroBehindNumberIndex() -> [Int] {
+        var result: [Int] = []
+        let cList = Array(self)
+        for i in 0..<cList.count {
+            if cList[i] == "0" && i > 0 && cList[i-1].isNumber  {
+                result.append(i)
+            }
+        }
+        return result
+    }
 
 
 }

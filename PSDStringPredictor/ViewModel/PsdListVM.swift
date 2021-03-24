@@ -68,7 +68,7 @@ class PsdsVM: ObservableObject{
     @Published var psdObjectDict: [Int: PSDObject] = [:]
     
     
-    @Published var psdModel: PSD
+//    @Published var psdModel: PSD
     @Published var selectedPsdId: Int  //refacting
     @Published var gammaDict: [Int:CGFloat]//refacting
     @Published var expDict: [Int:CGFloat]//refacting
@@ -128,7 +128,7 @@ class PsdsVM: ObservableObject{
     //@Published var psdObjectList: [PSDObject] = []
     
     init(){
-        psdModel = PSD()
+//        psdModel = PSD()
         selectedPsdId = 0
         selectedNSImage = NSImage.init()
         processedCIImage = DataStore.zeroCIImage
@@ -398,12 +398,12 @@ class PsdsVM: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((rawImg.extent.width).rounded()), Int((rawImg.extent.height).rounded()))
+            print(chars)
             let charImageList = CIImage.init(contentsOf: psdObjectDict[psdId]!.imageURL)!.GetCroppedImages(rects: charRects.offset(offset: offset) )
             
             var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
 
-//            newStrObj = ocr.DeleteFontOffset(objId: id)
-            deleteFontTailLength(id: newStrObj.id)
+            newStrObj.deleteFontTailLength()
             
             let sepObjList = newStrObj.seprateIfPossible()
             if sepObjList != nil {
@@ -425,11 +425,7 @@ class PsdsVM: ObservableObject{
         return strobjs
     }
     
-    func deleteFontTailLength(id: UUID) {
-        let fontOffset = FontUtils.calcFontTailLength(content: stringObjectDict[id]!.content, size: stringObjectDict[id]!.fontSize)
-        let newStringRect = CGRect(x: stringObjectDict[id]!.stringRect.minX, y: stringObjectDict[id]!.stringRect.minY + fontOffset, width: stringObjectDict[id]!.stringRect.width, height: stringObjectDict[id]!.stringRect.height - fontOffset )
-        stringObjectDict[id]!.stringRect = newStringRect
-    }
+  
     
     func CalcTrackingAfterDrag(objId: UUID, originalTracking: CGFloat) -> CGFloat {
         // var offset : CGSize = .zero
@@ -459,7 +455,14 @@ class PsdsVM: ObservableObject{
 //        guard let obj = psdModel.GetPSDObject(psdId: selectedPsdId)?.GetStringObjectFromOnePsd(objId: lastId) else {return }
         if tmpObjectForStringProperty.content.count != fetchLastStringObjectFromSelectedPsd().content.count {
             let newBound = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat())
-            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + newBound.minX).toString()
+            // Re-Calc the bound
+            let tmp  = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat())
+            
+            tmpObjectForStringProperty.width = tmp.width
+            tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
+            
+//            let dif = originTracking - psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
+            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() ).toString()
             tmpObjectForStringProperty.width = newBound.width
         }
         else{
@@ -683,6 +686,13 @@ class PsdsVM: ObservableObject{
     //        return (CGFloat(item.fontTrackingPoints), item.fontTracking)
     //    }
     
+    func setSelectionColorMode(newCMode: MacColorMode){
+        for id in selectedStrIDList {
+            stringObjectDict[id]!.colorMode = newCMode
+            stringObjectDict[id]!.CalcColor()
+            tmpObjectForStringProperty = fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
+        }
+    }
     
     //MARK: Intents
     
@@ -945,7 +955,7 @@ class PsdsVM: ObservableObject{
 //        tmpObjectForStringProperty = stringObjectDict[id]!.toObjectForStringProperty()
 //    }
     
-    func ToggleColorMode(psdId: Int){
+    func ToggleColorMode(){
         if selectedStrIDList.count <= 0 {return}
         let newCMode: MacColorMode
         fetchLastStringObjectFromSelectedPsd().colorMode == .dark ? (newCMode = .light) : (newCMode = .dark)

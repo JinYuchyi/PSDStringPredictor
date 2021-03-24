@@ -207,7 +207,9 @@ struct StringObjectPropertyView: View {
                         get: { psdsVM.pickerColor },
                       set: { value in
                         psdsVM.pickerColor = value
-                        psdsVM.stringObjectDict[psdsVM.selectedStrIDList.last!]?.color = value
+                        for _id in psdsVM.selectedStrIDList {
+                            psdsVM.stringObjectDict[_id]?.color = value
+                        }
                         // call function to send network request
                       }
                     ))
@@ -222,7 +224,7 @@ struct StringObjectPropertyView: View {
 //                    .frame(width: 15, alignment: .trailing)
 //                    .padding(.horizontal)
                     
-                    Button(action: {toggleColor()}, label: {
+                    Button(action: {toggleColorPressed()}, label: {
                         Text("􀅈")
                     }).frame(width: 15, alignment: .trailing)
                 }
@@ -261,10 +263,12 @@ struct StringObjectPropertyView: View {
         psdsVM.commitTempStringObject()
       }
     
-    func toggleColor() {
+    func toggleColorPressed() {
         if psdsVM.selectedStrIDList.count > 0 {
-            psdsVM.ToggleColorMode(psdId: psdsVM.selectedPsdId)
+            psdsVM.ToggleColorMode()
         }
+        psdsVM.setSelectionColorMode(newCMode: psdsVM.fetchLastStringObjectFromSelectedPsd().colorMode)
+
     }
     
     func CharSaveBtnPressed(_ index: Int){

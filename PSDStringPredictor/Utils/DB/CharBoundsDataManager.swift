@@ -93,27 +93,7 @@ class CharBoundsDataManager{
             }
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates:predicateList)
         }
-        //    static func FetchItems(_ context: NSManagedObjectContext, char: String = "", fontSize: Int16 = -1000, width: Int16 = -1000, height: Int16 = -1000) -> [CharDataObject]{
-        //        var charDatas:[CharDataObject] = []
-        //        let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
-        //        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
-        //        //let predicate: NSPredicate
-        //        if (char != "" && fontSize == -1000 && width == -1000 && height == -1000){
-        //            request.predicate = NSPredicate(format: "char = %@ ", char)
-        //        }
-        //        else if (char != "" && fontSize != -1000 && width == -1000 && height == -1000){
-        //            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@", char, NSNumber(value: Int(fontSize)))
-        //        }
-        //        else if (char != "" && fontSize != -1000 && width != -1000 && height == -1000){
-        //            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)))
-        //        }
-        //        else if (char != "" && fontSize != -1000 && width != -1000 && height != -1000){
-        //            request.predicate = NSPredicate(format: "char = %@ and fontSize = %@ and width = %@ and height = %@", char, NSNumber(value: Int(fontSize)), NSNumber(value: Int(width)), NSNumber(value: Int(height)))
-        //        }
-        //        else if (char != "" && fontSize == -1000 && width != -1000 && height != -1000){
-        //            request.predicate = NSPredicate(format: "char = %@ and width = %@ and height = %@", char, NSNumber(value: Int(width)), NSNumber(value: Int(height)))
-        //        }
-        
+
         let objs = (try? context.fetch(request)) ?? []
         //print("Fetched \(objs.count) items, from char = \(char), width = \(width), height = \(height) ")
         for item in objs {
