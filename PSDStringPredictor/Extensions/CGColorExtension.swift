@@ -70,7 +70,7 @@ extension CGColor: Comparable{
 //        return str
     }
     
-    func toArray()->[CGFloat]{
+    func toCGFloatArray()->[CGFloat]{
         return [self.components![0],  self.components![1],  self.components![2],  self.components![3]]
     }
     func toFloatArray()->[Float]{

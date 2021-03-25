@@ -35,13 +35,13 @@ struct CharacterFrameView: View {
                             .shadow(radius: 0.5)
                     )
                     .frame(width: item.width, height: item.height)
-                    .position(x: (item.minX + item.width/2), y: psdVM.selectedNSImage.size.height - item.minY - item.height/2)
+                    .position(x: (item.minX + item.width/2), y: psdVM.fetchSelectedPsd().height - item.minY - item.height/2)
                     .onTapGesture {
                         Tapped(rect: item)
                     }
             }
         }
-        .onAppear(perform: {rectList = GetOnePageRectArray()})
+        .onAppear(perform: {fetchRectList()})
 
     }
     
@@ -49,17 +49,16 @@ struct CharacterFrameView: View {
         CharFrameView()
     }
 
+    private func fetchRectList(){
+        rectList = GetOnePageRectArray()
+    }
     
     func GetOnePageRectArray() -> [CGRect] {
-//        guard let psdObj = psdVM.GetSelectedPsd() else {return []}
         var result = [CGRect]()
         guard let idList = psdVM.psdStrDict[psdVM.selectedPsdId] else {return []}
         for id in idList {
             result.append(contentsOf: psdVM.stringObjectDict[id]?.charRects ?? [])
         }
-//        for obj in psdObj.stringObjects {
-//            result.append(contentsOf: obj.charRects)
-//        }
         return result
     }
     
@@ -82,7 +81,7 @@ struct CharacterFrameView: View {
         let contain = psdVM.maskDict[psdVM.selectedPsdId]!.map({$0.rect}).contains(rect)
         //The tapped area is not in been tapped status
         if contain == false {
-            let tempCharObj = charRectObject.init(rect: rect, color: theColor.toArray())
+            let tempCharObj = charRectObject.init(rect: rect, color: theColor.toCGFloatArray())
             psdVM.maskDict[psdVM.selectedPsdId]!.append(tempCharObj)
             psdVM.UpdateProcessedImage(psdId: psdVM.selectedPsdId)
         }else{

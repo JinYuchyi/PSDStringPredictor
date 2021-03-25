@@ -186,11 +186,11 @@ struct ControlPanel: View {
         
     }
     
-    func Debug(){
-        var symbolPredict =  SymbolsPredict()
-        symbolPredict.Prediction(ciImage: psdsVM.selectedNSImage.ToCIImage()!)
-        //        print (symbolPredict.)
-    }
+//    func Debug(){
+//        var symbolPredict =  SymbolsPredict()
+//        symbolPredict.Prediction(ciImage: DataStore.selectedNSImage.ToCIImage()!)
+//        //        print (symbolPredict.)
+//    }
     
 }
 

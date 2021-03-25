@@ -11,6 +11,7 @@ import CoreData
 
 class CharDataManager{
     static let shared = CharDataManager()
+    static let fetchRequest: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
     
     private init(){}
     
@@ -74,8 +75,8 @@ class CharDataManager{
     
     static func FetchItems(_ context: NSManagedObjectContext, keyValues: [String: AnyObject]) -> [CharDataObject]{
         var charDataList:[CharDataObject] = []
-        let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
-        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
+//        let request: NSFetchRequest<CharacterData> = NSFetchRequest(entityName: "CharacterData")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
         
         var predicateList: [NSPredicate] = []
         
@@ -85,10 +86,10 @@ class CharDataManager{
                 let predicate:NSPredicate = NSPredicate(format: "%K == %@", key, value as! NSObject)
                 predicateList.append(predicate)
             }
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates:predicateList)
+            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates:predicateList)
         }
 
-        let objs = (try? context.fetch(request)) ?? []
+        let objs = (try? context.fetch(fetchRequest)) ?? []
 //        print("Fetched \(objs.count) items, from char = \(char), width = \(width), height = \(height) ")
         for item in objs {
             charDataList.append(CharDataObject(char: item.char!, fontSize: item.fontSize, height: item.height, width: item.width, fontWeight: item.fontWeight!))

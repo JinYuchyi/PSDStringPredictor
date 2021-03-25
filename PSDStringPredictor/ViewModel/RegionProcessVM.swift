@@ -33,17 +33,17 @@ class RegionProcessVM: ObservableObject {
         return (mask1, mask2)
     }
     
-    func fetchOverlayedImage(regionRect: CGRect, targetImage: CIImage)->CIImage{
-        let regionImg = targetImage.cropped(to: regionRect)
-        let bgColor = imgUtil.backgroundColor(img: regionImg)
-        var ( maskImg01,  maskImg02) = fetchRegionOverlay(regionRect: regionRect, bgWidth: targetImage.extent.width, bgHeight: targetImage.extent.height)
-        
-        let bgColoredImg = CIImage.init(color: bgColor.toCIColor()).cropped(to: CGRect.init(x: 0, y: 0, width: targetImage.extent.width, height: targetImage.extent.height))
-        
-        let output = SourceOverCompositing(inputImage: regionImg, inputBackgroundImage: bgColoredImg)!
-
-        return output
-    }
+//    func fetchOverlayedImage(regionRect: CGRect, targetImage: CIImage)->CIImage{
+//        let regionImg = targetImage.cropped(to: regionRect)
+//        let bgColor = imgUtil.backgroundColor(img: regionImg)
+//        var ( maskImg01,  maskImg02) = fetchRegionOverlay(regionRect: regionRect, bgWidth: targetImage.extent.width, bgHeight: targetImage.extent.height)
+//        
+//        let bgColoredImg = CIImage.init(color: bgColor.toCIColor()).cropped(to: CGRect.init(x: 0, y: 0, width: targetImage.extent.width, height: targetImage.extent.height))
+//        
+//        let output = SourceOverCompositing(inputImage: regionImg, inputBackgroundImage: bgColoredImg)!
+//
+//        return output
+//    }
     
     //Intent
     func regionBtnPressed() {

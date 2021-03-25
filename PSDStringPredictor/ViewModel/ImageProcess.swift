@@ -456,46 +456,83 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
     return filteredImage
 }
 
-func Maximum(_ image: CIImage) -> (NSColor){
-//    let pixelProcess = PixelProcess()
-    //let colorSpace: NSColorSpace = .genericRGB
-    var color: NSColor = NSColor.init(red: 1, green: 0, blue: 1, alpha: 1)
-    var filteredImage = DataStore.zeroCIImage
+//func Maximum(_ image: CIImage) -> (NSColor){
+////    let pixelProcess = PixelProcess()
+//    //let colorSpace: NSColorSpace = .genericRGB
+//    var color: NSColor = NSColor.init(red: 1, green: 0, blue: 1, alpha: 1)
+//    var filteredImage = DataStore.zeroCIImage
+//    let filter = CIFilter(name: "CIAreaMaximum")
+//    filter?.setValue(image, forKey: "inputImage")
+//    filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
+//    filteredImage = filter?.outputImage ?? DataStore.zeroCIImage
+//    if filteredImage.IsValid() == true{
+//        color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
+//        
+//    }else {
+//        
+//    }
+//    return (color)
+//}
+
+func Maximum(_ image: CIImage) -> ([CGFloat]){
+    var colorValueList: [CGFloat] =  [0,0,0]
+//    var path = "/Users/ipdesign/Downloads/test_max.png"
+//    image.ToPNG(url: URL.init(fileURLWithPath: path))
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
-    filteredImage = filter?.outputImage ?? DataStore.zeroCIImage
+    let filteredImage = filter?.outputImage ?? DataStore.zeroCIImage
+//    path = "/Users/ipdesign/Downloads/test.png"
+//    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
     if filteredImage.IsValid() == true{
-        color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
+        colorValueList = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
         
     }else {
         
     }
-    return (color)
+    return (colorValueList)
 }
 
-func Minimun(_ image: CIImage) -> (NSColor){
-//    let pixelProcess = PixelProcess()
-    var color: NSColor = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
- 
+func Minimun(_ image: CIImage) -> ([CGFloat]){
+    var colorValueList: [CGFloat] =  [0,0,0]
+//    var path = "/Users/ipdesign/Downloads/test_min.png"
+//    image.ToPNG(url: URL.init(fileURLWithPath: path))
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
-            return (color)
+            return colorValueList
         }
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
-        
         let filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
         
-        if filteredImage.IsValid() == true{
-            color = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage.ToCGImage()!)
-//            filteredImage.ToPNG(url: URL.init(fileURLWithPath: GetDocumentsPath() + "/\(color).png"))
-            return (color)
-        }
+//        path = "/Users/ipdesign/Downloads/test.png"
+//        filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
         
+        if filteredImage.IsValid() == true{
+            colorValueList = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
+            return colorValueList
+        }
     }
-    return (color)
+    return colorValueList
 }
+
+//func Minimun(_ image: CIImage) -> ([CGFloat]){
+//    var colorValueList: [CGFloat] = [0,0,0]
+//
+//    if image.extent.width > 0 {
+//        guard let filter = CIFilter(name: "CIAreaMinimum") else {
+//            return colorValueList
+//        }
+//        filter.setValue(image, forKey: kCIInputImageKey)
+//        filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
+//        let filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
+//        if filteredImage.IsValid() == true{
+//            colorValueList = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
+//            return colorValueList
+//        }
+//    }
+//    return colorValueList
+//}
 
 func NoiseReduction(_ image: CIImage) -> CIImage?{
     

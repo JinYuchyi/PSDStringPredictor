@@ -180,17 +180,19 @@ class ImageUtil{
         }
     }
     
-    func backgroundColor(img: CIImage) -> NSColor {
-        //img correct
-        let mode = StringColorMode(img:img)
-        if mode == .light {
-//            print("max: \(Maximum(img).color)")
-            return Maximum(img)
-        }else {
-//            print("min: \(Minimun(img).color)")
-            return Minimun(img)
-        }
-    }
+//    func backgroundColor(img: CIImage) -> NSColor {
+//        //img correct
+//        let mode = StringColorMode(img:img)
+//        if mode == .light {
+////            print("max: \(Maximum(img).color)")
+//            return Maximum(img)
+//        }else {
+////            print("min: \(Minimun(img).color)")
+//            return Minimun(img)
+//        }
+//    }
+    
+    
     
     
     

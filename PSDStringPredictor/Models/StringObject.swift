@@ -91,7 +91,7 @@ struct StringObject : Identifiable,  Hashable{
         self.status = .normal
         self.fontWeight = PredictFontWeight()
         self.colorMode = CalcColorMode()
-        self.color = CalcColor()
+//        self.color = CalcColor()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
         self.fontName = CalcFontFullName()
@@ -100,6 +100,7 @@ struct StringObject : Identifiable,  Hashable{
         self.isPredictedList = sizeFunc.2
         self.content = FixContent(content)
         reCalcBound()
+        CalcColor()
     }
     
     init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
@@ -237,59 +238,62 @@ struct StringObject : Identifiable,  Hashable{
     }
     
 
-  
-
-    mutating func CalcColor() -> CGColor {
-
-        var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
-
-        if charImageList.count > 0{
-            if colorMode == .light{
-                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-                var i: Int = 0
-
-                for img in charImageList.filter({$0.extent.width > 0}){
-                    i += 1
-
-                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
-                        minc = Minimun(img)
-
-                    }
-                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
-                        maxc = Maximum(img)
-                    }
-                }
-                bgColor = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
-                result = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
-                
-            }
-            
-            else if colorMode == .dark{
-                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-                var i: Int = 0
-                for img in charImageList.filter({$0.extent.width > 0}){
-                    i += 1
-                    //Calculate the brightest color as the font color
-                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
-                        maxc = Maximum(img)
-
-                    }
-                    //Calculate the darkest color as the background color
-                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
-                        minc = Minimun(img)
-                    }
-                }
-                bgColor = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
-                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
-            }
-        }
-//        print(result)
-        color = result
-
-        return result
+    mutating func CalcColor() {
+        guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
+        (color, bgColor) = img.cropped(to: stringRect).getForegroundBackgroundColor(colorMode: self.colorMode)
     }
+
+//    mutating func CalcColor() -> CGColor {
+//
+//        var result: CGColor = CGColor.init(red: 1, green: 1, blue: 0, alpha: 1)
+//
+//        if charImageList.count > 0{
+//            if colorMode == .light{
+//                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+//                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+//                var i: Int = 0
+//
+//                for img in charImageList.filter({$0.extent.width > 0}){
+//                    i += 1
+//
+//                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
+//                        minc = Minimun(img)
+//
+//                    }
+//                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
+//                        maxc = Maximum(img)
+//                    }
+//                }
+//                bgColor = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
+//                result = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
+//                
+//            }
+//            
+//            else if colorMode == .dark{
+//                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+//                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+//                var i: Int = 0
+//                for img in charImageList.filter({$0.extent.width > 0}){
+//                    i += 1
+//                    //Calculate the brightest color as the font color
+//                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
+//                        maxc = Maximum(img)
+//
+//                    }
+//                    //Calculate the darkest color as the background color
+//                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
+//                        minc = Minimun(img)
+//                    }
+//                }
+//                bgColor = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
+//                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
+//            }
+//        }
+////        print(result)
+//        color = result
+//
+//        return result
+//    }
 
     
      func CalcFontFullName() -> String{

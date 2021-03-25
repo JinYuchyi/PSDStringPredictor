@@ -19,6 +19,7 @@ class DataStore{
     static let sizeOfThumbnail = 180
 
     static var PSPath = ""
+    static var selectedNSImage = NSImage.init()
     
     static var colorLightModeList: [[CGFloat]] = [
         [0.0, 0.0, 0.0],
@@ -109,13 +110,13 @@ class DataStore{
     
     //UI
     //static var charFrameIndex = 0
-    static var charFrameList: [CharFrame] = []
-    static var fontStandardObjectList: [FontStandardObject] = []
+//    static var charFrameList: [CharFrame] = []
+//    static var fontStandardObjectList: [FontStandardObject] = []
     
     
     //Image Property
-    static var colorMode = -1 // 1 = Light mode, 2 = Dark Mode
-    static var imagePath = ""
+//    static var colorMode = -1 // 1 = Light mode, 2 = Dark Mode
+//    static var imagePath = ""
 
 //    static var logListData = [
 //        LogObject(content: "Log 1", time: "xxx-xxx", category: LogObject.Category.normal),

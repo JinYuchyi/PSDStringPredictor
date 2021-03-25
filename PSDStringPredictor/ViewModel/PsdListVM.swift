@@ -75,7 +75,7 @@ class PsdsVM: ObservableObject{
     @Published var DragOffsetDict: [UUID: CGSize] 
     
     //Selected elements
-    @Published var selectedNSImage: NSImage //refacting
+//    @Published var selectedNSImage: NSImage //refacting
     @Published var maskedImage: CIImage
     @Published var processedCIImage: CIImage //refacting
     @Published var selectedStrIDList: [UUID]//refacting
@@ -130,7 +130,7 @@ class PsdsVM: ObservableObject{
     init(){
 //        psdModel = PSD()
         selectedPsdId = 0
-        selectedNSImage = NSImage.init()
+//        selectedNSImage = NSImage.init()
         processedCIImage = DataStore.zeroCIImage
         gammaDict = [:]
         expDict = [:]
@@ -192,7 +192,7 @@ class PsdsVM: ObservableObject{
     func InitDictForOnePsd(psdId: Int){
         gammaDict[psdId] = 1
         expDict[psdId] = 0
-        processedCIImage = selectedNSImage.ToCIImage() ?? DataStore.zeroCIImage
+        processedCIImage = DataStore.selectedNSImage.ToCIImage() ?? DataStore.zeroCIImage
     }
     
     func fetchSelectedPsd() -> PSDObject{
@@ -236,10 +236,10 @@ class PsdsVM: ObservableObject{
     }
     
     func UpdateProcessedImage(psdId: Int)->CIImage?{
-        if selectedNSImage.size.width == 0 || selectedNSImage == nil {
+        if DataStore.selectedNSImage.size.width == 0 || DataStore.selectedNSImage == nil {
             return nil
         }
-        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
+        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: DataStore.selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
         DispatchQueue.main.async{
             self.processedCIImage = self.imageUtil.ApplyFilters(target: _targetImageMasked, gamma: self.gammaDict[psdId] ?? 1, exp: self.expDict[psdId] ?? 0)
         }
@@ -338,13 +338,13 @@ class PsdsVM: ObservableObject{
         return newList.map({$0.id})
     }
     
-    func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
-        let pad: CGFloat = 3
-        let targetImg = LoadNSImage(imageUrlPath: fetchPsd(psdId: psdId).imageURL.path)
-        let color1 = PixelProcess.shared.colorAt(x: Int(obj.stringRect.origin.x - pad), y: Int(targetImg.size.height - obj.stringRect.origin.y - pad), img: targetImg.ToCGImage()!)
-        
-        return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
-    }
+//    func FetchBGColor(psdId: Int, obj: StringObject) -> [Float]{
+//        let pad: CGFloat = 3
+//        let targetImg = LoadNSImage(imageUrlPath: fetchPsd(psdId: psdId).imageURL.path)
+//        let color1 = PixelProcess.shared.colorAt(x: Int(obj.stringRect.origin.x - pad), y: Int(targetImg.size.height - obj.stringRect.origin.y - pad), img: targetImg.ToCGImage()!)
+//
+//        return [Float(color1.redComponent * 255), Float(color1.greenComponent * 255), Float(color1.blueComponent * 255)]
+//    }
     
     
     func setPsdToCommit(psdId: Int){
@@ -647,8 +647,9 @@ class PsdsVM: ObservableObject{
                 }
                 
                 //BGColor
-                let tmpBGColor = FetchBGColor(psdId: psdId, obj: stringObjectDict[objId]!)
-                bgClolorList.append(tmpBGColor)
+//                let tmpBGColor = FetchBGColor(psdId: psdId, obj: stringObjectDict[objId]!)
+                let tmpBGColor = stringObjectDict[objId]!.bgColor
+                bgClolorList.append(tmpBGColor.toFloatArray())
             }
             
             // Create js file
@@ -773,7 +774,7 @@ class PsdsVM: ObservableObject{
                     let outId = addPsdObject(imageURL: result)
                     InitDictForOnePsd(psdId: outId )
                     
-                    if selectedNSImage.size.width == 0{
+                    if DataStore.selectedNSImage.size.width == 0{
                         thumbnailClicked(psdId: psdObjectDict.first!.key)
                     }
                     
@@ -791,7 +792,7 @@ class PsdsVM: ObservableObject{
         
         selectedPsdId = psdId
         if psdObjectDict.keys.contains(psdId) == true {
-            selectedNSImage = LoadNSImage(imageUrlPath: fetchPsd(psdId: psdId).imageURL.path)
+            DataStore.selectedNSImage = LoadNSImage(imageUrlPath: fetchPsd(psdId: psdId).imageURL.path)
             UpdateProcessedImage(psdId: psdId)
             
             if fetchPsd(psdId: psdId).status == PsdStatus.processed{
@@ -803,7 +804,7 @@ class PsdsVM: ObservableObject{
     func ProcessForOnePsd(){
         let processOn: Int = selectedPsdId
         canProcess = true
-        if  selectedNSImage.size.width == 0 {
+        if  DataStore.selectedNSImage.size.width == 0 {
             return
         }
         let queueCalc = DispatchQueue(label: "calc")
@@ -818,7 +819,7 @@ class PsdsVM: ObservableObject{
     
     func ProcessForAll(){
         canProcess = true
-        if   selectedNSImage.size.width == 0 {
+        if   DataStore.selectedNSImage.size.width == 0 {
             return
         }
         
@@ -854,7 +855,7 @@ class PsdsVM: ObservableObject{
     
     func CreatePSDForCommited(){
         
-        if  selectedNSImage == nil || selectedNSImage.size.width == 0 {
+        if  DataStore.selectedNSImage == nil || DataStore.selectedNSImage.size.width == 0 {
             return
         }
         
@@ -1055,7 +1056,7 @@ class PsdsVM: ObservableObject{
     func removePsd(psdId: Int){
         psdStrDict[psdId] = nil
         psdObjectDict[psdId] = nil
-        selectedNSImage = NSImage.init()
+        DataStore.selectedNSImage = NSImage.init()
         processedCIImage = DataStore.zeroCIImage
     }
     
@@ -1113,7 +1114,7 @@ class PsdsVM: ObservableObject{
             //Load NSImage
             let targetUrl = fetchSelectedPsd().imageURL
             if FileManager.default.fileExists(atPath: targetUrl.path) == true {
-                selectedNSImage = LoadNSImage(imageUrlPath: targetUrl.path)
+                DataStore.selectedNSImage = LoadNSImage(imageUrlPath: targetUrl.path)
             }
             //Process Image
             UpdateProcessedImage(psdId: selectedPsdId)
@@ -1205,7 +1206,7 @@ class PsdsVM: ObservableObject{
         psdStrDict.removeAll()
         stringObjectDict.removeAll()
         psdObjectDict.removeAll()
-        selectedNSImage = NSImage.init()
+        DataStore.selectedNSImage = NSImage.init()
         processedCIImage = DataStore.zeroCIImage
     }
     

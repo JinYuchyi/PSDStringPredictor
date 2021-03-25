@@ -37,7 +37,7 @@ struct RegionProcessOverlayView: View {
                             regionEndPos =  value.location
                             let cropRect = CGRect.init(
                                 x: interactive.selectionRect.minX.rounded(),
-                                y: (psdsVM.selectedNSImage.size.height.rounded() - interactive.selectionRect.minY).rounded() ,
+                                y: (DataStore.selectedNSImage.size.height.rounded() - interactive.selectionRect.minY).rounded() ,
                                 width: interactive.selectionRect.width.rounded(),
                                 height: -interactive.selectionRect.height.rounded()
                             ).standardized
