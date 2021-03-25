@@ -19,6 +19,7 @@ struct StringHighlightView: View {
     @State var originSize: CGFloat = -100
     
     //Replace for tmpStruct
+//    @State var onDragMethod: Int = 0 // 0 open, 1 fix to size, 2 fix to tracking
     @State var tmpTracking: CGFloat = 0
     @State var tmpSize: CGFloat = 0
     @State var tmpWidth: CGFloat = 0
@@ -69,10 +70,11 @@ struct StringHighlightView: View {
                                             showFakeString = psdsVM.selectedStrIDList.last!
                                             
                                             // Change tracking
-                                            // We use two boundary lines (1.2 and 0.8), to make the users' interaction more clear
-                                            if abs(gesture.translation.width / gesture.translation.height) > 1.2 {
+                                            // We use two boundary lines (1.5 and 0.5), to make the users' interaction more clear
+                                            if abs(gesture.translation.width / gesture.translation.height) > 1.5  {
+//                                                onDragMethod = 2
                                                 // Disable the link between size and tracking first
-                                                psdsVM.linkSizeAndTracking = false
+//                                                psdsVM.linkSizeAndTracking = false
                                                 
                                                 interactive.dragX = gesture.translation.width / 40 // DragX is temp value
                                                 
@@ -88,7 +90,7 @@ struct StringHighlightView: View {
                                                 psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                                 
                                                 
-                                            } else if abs(gesture.translation.width / gesture.translation.height) < 0.8 {
+                                            } else if abs(gesture.translation.width / gesture.translation.height) < 0.5  {
                                                 // Change size
                                                 interactive.dragY = gesture.translation.height / 20
                                                 psdsVM.tmpObjectForStringProperty.fontSize = ((originSize - interactive.dragY).rounded()).toString()
@@ -108,6 +110,7 @@ struct StringHighlightView: View {
                                             }
                                         }
                                         .onEnded({ gesture in
+//                                            onDragMethod = 0
                                             showFakeString = zeroUUID
                                             psdsVM.commitTempStringObject()
                                             

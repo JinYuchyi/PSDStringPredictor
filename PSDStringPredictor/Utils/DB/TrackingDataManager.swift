@@ -57,18 +57,7 @@ class TrackingDataManager  {
             print("Batch insert \(success)")
         }
     }
-    
-//    static func FetchAll(_ context: NSManagedObjectContext)->[TrackingDataObject]{
-//        var trackingDatas:[TrackingDataObject] = []
-//        let request: NSFetchRequest<TrackingData> = NSFetchRequest(entityName:"TrackingData")
-//        request.sortDescriptors = [NSSortDescriptor(key: "size", ascending: true)]
-//        let objs = (try? context.fetch(request)) ?? []
-//        for item in objs {
-//            trackingDatas.append(TrackingDataObject(size: item.size, tracking: item.tracking))
-//        }
-//        return trackingDatas
-//
-//    }
+
     
     static func FetchItems(_ context: NSManagedObjectContext, fontSize: Int16 = -1000, fontTracking: Int16 = -1000) -> [TrackingDataObject]{
         var trackingDatas:[TrackingDataObject] = []

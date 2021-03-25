@@ -74,16 +74,10 @@ class OCR{
             let index_end = candidate.string.index(candidate.string.startIndex, offsetBy: offset+1)
             let myrange = index_start..<index_end
             let boxObservation = try? candidate.boundingBox(for: myrange)
-            //let boxObservation = try? candidate.boundingBox(for: stringRange)
             
             // Get the normalized CGRect value.
             let boundingBox = boxObservation?.boundingBox ?? .zero
-            //let Rect = VNImageRectForNormalizedRect(boundingBox, width, height)
-            
-            //print(boundingBox)
-            // Convert the rectangle from normalized coordinates to image coordinates.
-            //return VNImageRectForNormalizedRect(boundingBox, 100, 100)
-            
+
             let _x = (VNImageRectForNormalizedRect(boundingBox, width, height).minX).rounded()
             let _y = (VNImageRectForNormalizedRect(boundingBox, width, height).minY).rounded()
             let _w = (VNImageRectForNormalizedRect(boundingBox, width, height).width).rounded()
@@ -91,7 +85,6 @@ class OCR{
             let fixRect = CGRect.init(x: _x, y: _y, width: _w, height: _h)
             
             rects.append(fixRect)
-            //print("\(offset) \(candidate.string[index_start]) \(boundingBox)")
             let char = candidate.string[index_start]
             //            if (char == "B"){
             //                print("B: \(VNImageRectForNormalizedRect(boundingBox, width, height))")

@@ -125,6 +125,8 @@ class CharColorModeClassifierV2{
         //}
         return result
     }
+    
+    
 }
 
 
