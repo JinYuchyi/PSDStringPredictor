@@ -101,6 +101,8 @@ class PsdsVM: ObservableObject{
     //Save Char DS
     @Published var charImageDSWillBeSaved: CIImage
     
+//    @Published var pixel: CIImage = CIImage.init()
+    
     //    @Published var tmpTracking: CGFloat = 0
     
     //For Template stringobject variable

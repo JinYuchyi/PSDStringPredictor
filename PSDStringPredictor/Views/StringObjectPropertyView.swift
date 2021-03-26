@@ -189,6 +189,8 @@ struct StringObjectPropertyView: View {
                             .frame(width:15, alignment: .leading)
                     }else{}
                     
+//                    Image(nsImage: NSImage.init(data: psdsVM.pixel.toData()) ?? NSImage.init())
+//                        .scaleEffect(10)
                     
                     //Color numbers
                     if psdsVM.selectedStrIDList.count > 0{

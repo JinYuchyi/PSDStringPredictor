@@ -29,10 +29,13 @@ extension NSImage {
         guard
             let cgImage = self.cgImage(forProposedRect: nil, context: nil, hints: nil)
             else { return } 
-        let newRep = NSBitmapImageRep(cgImage: cgImage)
+        var newRep = NSBitmapImageRep(cgImage: cgImage)
+        newRep.hasAlpha = false
+//        let bitmapData = newRep.bitmapData as! UnsafeMutablePointer<Int>
+//        let pixInfo = newRep.getPixel(bitmapData, atX: 0, y: 0)
         //newRep.size = self.size // if you want the same size
         guard
-            let pngData = newRep.representation(using: .png, properties: [:])
+            let pngData = newRep.representation(using: .bmp, properties: [:])
             else { return } 
         do {
             try pngData.write(to: url)

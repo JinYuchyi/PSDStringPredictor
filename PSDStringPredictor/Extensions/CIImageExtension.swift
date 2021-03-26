@@ -50,6 +50,7 @@ extension CIImage{
     func ToPNG(url: URL){
         //let newimg = self.cropped(to: rect)
         let nsimg = self.ToNSImage()
+        
         //Save text images to file
         //let path = "/Users/user2/Public/Projects/MacAppTest/MacTest/TestOutput/a\(i).png"
         //nsimg.pngWrite(to: URL(fileURLWithPath: path))

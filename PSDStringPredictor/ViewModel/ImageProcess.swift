@@ -476,14 +476,12 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
 
 func Maximum(_ image: CIImage) -> ([CGFloat]){
     var colorValueList: [CGFloat] =  [0,0,0]
-//    var path = "/Users/ipdesign/Downloads/test_max.png"
-//    image.ToPNG(url: URL.init(fileURLWithPath: path))
     let filter = CIFilter(name: "CIAreaMaximum")
     filter?.setValue(image, forKey: "inputImage")
     filter?.setValue(image.extent.ToCIVector(), forKey: "inputExtent")
     let filteredImage = filter?.outputImage ?? DataStore.zeroCIImage
-//    path = "/Users/ipdesign/Downloads/test.png"
-//    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
+    var path = "/Users/ipdesign/Downloads/Maximum.png"
+    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
     if filteredImage.IsValid() == true{
         colorValueList = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
         
@@ -494,26 +492,26 @@ func Maximum(_ image: CIImage) -> ([CGFloat]){
 }
 
 func Minimun(_ image: CIImage) -> ([CGFloat]){
+    var filteredImage: CIImage = CIImage.init()
     var colorValueList: [CGFloat] =  [0,0,0]
-//    var path = "/Users/ipdesign/Downloads/test_min.png"
-//    image.ToPNG(url: URL.init(fileURLWithPath: path))
+    image.settingAlphaOne(in: image.extent)
+    image.premultiplyingAlpha()
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
-            return colorValueList
+            return (colorValueList)
         }
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
-        let filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
-        
-//        path = "/Users/ipdesign/Downloads/test.png"
-//        filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
-        
+        print(image.extent)
+        filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
+
         if filteredImage.IsValid() == true{
             colorValueList = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
-            return colorValueList
+//            print(colorValueList)
+            return (colorValueList)
         }
     }
-    return colorValueList
+    return (colorValueList)
 }
 
 //func Minimun(_ image: CIImage) -> ([CGFloat]){
