@@ -100,7 +100,7 @@ struct StringObject : Identifiable,  Hashable{
         self.isPredictedList = sizeFunc.2
         self.content = FixContent(content)
         reCalcBound()
-        CalcColor()
+        calcColor()
     }
     
     init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
@@ -238,8 +238,9 @@ struct StringObject : Identifiable,  Hashable{
     }
     
 
-    mutating func CalcColor() {
+    mutating func calcColor() {
         guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
+        img.unpremultiplyingAlpha()
         (color, bgColor) = img.cropped(to: stringRect).getForegroundBackgroundColor(colorMode: self.colorMode)
     }
 

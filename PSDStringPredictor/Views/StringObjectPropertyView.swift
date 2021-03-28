@@ -219,12 +219,7 @@ struct StringObjectPropertyView: View {
                         .mask(RoundedRectangle(cornerRadius: 2))
                     
                     Spacer()
-//
-//                    Button(action: {saveColor() }, label: {
-//                        Text("􀈄")
-//                    })
-//                    .frame(width: 15, alignment: .trailing)
-//                    .padding(.horizontal)
+
                     
                     Button(action: {toggleColorPressed()}, label: {
                         Text("􀅈")
@@ -269,8 +264,7 @@ struct StringObjectPropertyView: View {
         if psdsVM.selectedStrIDList.count > 0 {
             psdsVM.ToggleColorMode()
         }
-        psdsVM.setSelectionColorMode(newCMode: psdsVM.fetchLastStringObjectFromSelectedPsd().colorMode)
-
+//        psdsVM.setSelectionColorMode(newCMode: psdsVM.fetchLastStringObjectFromSelectedPsd().colorMode)
     }
     
     func CharSaveBtnPressed(_ index: Int){
@@ -286,9 +280,7 @@ struct StringObjectPropertyView: View {
         }
     }
     
-    func StringSaveBtnPressed(){
-        
-    }
+
 }
 
 //struct StringObjectPropertyView_Previews: PreviewProvider {

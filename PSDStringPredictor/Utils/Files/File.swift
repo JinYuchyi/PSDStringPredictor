@@ -99,21 +99,28 @@ func saveCharDataset(img: CIImage, str: String) {
         }
     }catch{}
     
+
+    var subFolder = ""
+    var _fileName = ""
+    var num : Int = 0
+    try? num = FileManager.default.contentsOfDirectory(atPath: subFolder).count
+    
     if str.count == 2 && Array(str)[0].isLowercase == true && (Array(str)[1] == "l" || Array(str)[1] == "d") {
         let _char = String(Array(str)[0])
         let _cmode = String(Array(str)[1])
-        let subFolder = charDatasetFolder + _char + "/" + _char + _cmode + "/"
-        
-        var num : Int = 0
-        try? num = FileManager.default.contentsOfDirectory(atPath: subFolder).count
-        
-        
-        let _fileName = _char + "_" + _cmode + "_" + String(num + 1) + ".png"
-
-        img.ToPNG(url: URL.init(fileURLWithPath: subFolder + _fileName))
-        print("Image saved to \(subFolder + _fileName)")
-    }else {
+        subFolder = charDatasetFolder + _char + "/" + _char + _cmode + "/"
+        _fileName = _char + "_" + _cmode + "_" + String(num + 1) + ".png"
+//        print("Image saved to \(subFolder + _fileName)")
+    }else if str.count == 2 && Array(str)[0] == "."  && (Array(str)[1] == "l" || Array(str)[1] == "d") {
+        let _cmode = String(Array(str)[1])
+        subFolder = charDatasetFolder + "dot" + "/" + "dot" + _cmode + "/"
+        _fileName = "dot" + "_" + _cmode + "_" + String(num + 1) + ".png"
+    }
+    else {
         print("The parameter does not fit for the criteria. The first letter represents which character, and the second letter should be 'l' or 'r' which represent the color mode.")
     }
+    
+    img.ToPNG(url: URL.init(fileURLWithPath: subFolder + _fileName))
+
 }
 
