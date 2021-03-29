@@ -24,6 +24,7 @@ struct StringObjectForStringProperty{
     var tracking: String
     var fontName: String
     var color: CGColor
+    
     var alignment: StringAlignment
     var width: CGFloat
     var height: CGFloat
@@ -408,8 +409,8 @@ class PsdsVM: ObservableObject{
             var newStrObj = StringObject.init(imagePath: psdObjectDict[psdId]!.imageURL.path, strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
 
             newStrObj.deleteFontTailLength()
-            
             let sepObjList = newStrObj.seprateIfPossible()
+//            print(sepObjList?.count)
             if sepObjList != nil {
                 for obj in sepObjList!{
                     strobjs.append(obj)
@@ -694,7 +695,7 @@ class PsdsVM: ObservableObject{
     func setSelectionColorMode(newCMode: MacColorMode){
         for id in selectedStrIDList {
             stringObjectDict[id]!.colorMode = newCMode
-            stringObjectDict[id]!.CalcColor()
+            stringObjectDict[id]!.calcColor()
             tmpObjectForStringProperty = fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
         }
     }
@@ -965,8 +966,8 @@ class PsdsVM: ObservableObject{
         let newCMode: MacColorMode
         fetchLastStringObjectFromSelectedPsd().colorMode == .dark ? (newCMode = .light) : (newCMode = .dark)
         stringObjectDict[selectedStrIDList.last!]!.colorMode = newCMode
-        stringObjectDict[selectedStrIDList.last!]!.CalcColor()
-        tmpObjectForStringProperty = fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
+        stringObjectDict[selectedStrIDList.last!]!.calcColor()
+        tmpObjectForStringProperty = stringObjectDict[selectedStrIDList.last!]!.toObjectForStringProperty()
     }
     
     func ToggleFontName(objId: UUID?){

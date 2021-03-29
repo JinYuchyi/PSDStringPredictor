@@ -35,7 +35,7 @@ extension NSImage {
 //        let pixInfo = newRep.getPixel(bitmapData, atX: 0, y: 0)
         //newRep.size = self.size // if you want the same size
         guard
-            let pngData = newRep.representation(using: .bmp, properties: [:])
+            let pngData = newRep.representation(using: .png, properties: [:])
             else { return } 
         do {
             try pngData.write(to: url)
@@ -47,7 +47,9 @@ extension NSImage {
     
     func ToCIImage() -> CIImage? {
        if let cgImage = self.ToCGImage() {
-          return CIImage(cgImage: cgImage)
+            let img = CIImage(cgImage: cgImage)
+            img.unpremultiplyingAlpha()
+            return img
        }
        return nil
     }

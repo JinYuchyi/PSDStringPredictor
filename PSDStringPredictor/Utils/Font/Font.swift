@@ -233,6 +233,19 @@ class FontUtils {
 //        }//for i
 //    }
 
-    
+    ///Lists all fonts available to the app, including embedded fonts
+     static func listAvailableFontFamilies() {
+        let fontFamilies = NSFontManager.shared.availableFontFamilies
+        for (index, family) in fontFamilies.enumerated() {
+            print("\(index). \(family)")
+        }
+    }
+
+     static func listAvailableFonts() {
+        let fonts = NSFontManager.shared.availableFonts
+        for (index, font) in fonts.enumerated() {
+            print("\(index). \(font)")
+        }
+    }
     
 }

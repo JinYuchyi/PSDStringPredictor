@@ -1,7 +1,10 @@
 
 import Foundation
 import CoreImage
+import Cocoa
 import AppKit
+
+
 
 extension CIImage{
     
@@ -39,6 +42,7 @@ extension CIImage{
     }
     
     func GetCroppedImages(rects: [CGRect]) -> [CIImage]{
+        self.unpremultiplyingAlpha()
         var imgs :[CIImage] = []
         for rect in rects {
             let tmpImg = self.cropped(to: rect).settingAlphaOne(in: self.extent)
@@ -113,6 +117,10 @@ extension CIImage{
     
     func getForegroundBackgroundColor(colorMode: MacColorMode)->(foregroundColor: CGColor, backgroundColor: CGColor){
 //        if charImageList.count > 0{
+        self.unpremultiplyingAlpha()
+//        print("max: \(Maximum(self))")
+//        print("min: \(Minimun(self))")
+        let maxmin = MaxMin(rect: self.extent)
         var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         var backgroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
             if colorMode == .light{
@@ -131,10 +139,10 @@ extension CIImage{
 //                        maxc = Maximum(img)
 //                    }
 //                }
-                let tmpBGValueList = Maximum(self)
-                let tmpFGValueList = Minimun(self)
-                backgroundColor = CGColor.init(red: tmpBGValueList[0], green: tmpBGValueList[1], blue: tmpBGValueList[2], alpha: 1)
-                foregroundColor = CGColor.init(red: tmpFGValueList[0], green: tmpFGValueList[1], blue: tmpFGValueList[2], alpha: 1)
+//                let tmpBGValueList = Maximum(self)
+//                let tmpFGValueList = Minimun(self)
+                backgroundColor = CGColor.init(red: maxmin.max[0], green: maxmin.max[1], blue: maxmin.max[2], alpha: 1)
+                foregroundColor = CGColor.init(red: maxmin.min[0], green: maxmin.min[1], blue: maxmin.min[2], alpha: 1)
                 
             }
             
@@ -156,13 +164,13 @@ extension CIImage{
 //                }
 //                bgColor = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
 //                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
-                let tmpBGValueList = Minimun(self)
-                let tmpFGValueList = Maximum(self)
-                backgroundColor = CGColor.init(red: tmpBGValueList[0], green: tmpBGValueList[1], blue: tmpBGValueList[2], alpha: 1)
-                foregroundColor = CGColor.init(red: tmpFGValueList[0], green: tmpFGValueList[1], blue: tmpFGValueList[2], alpha: 1)
+//                let tmpBGValueList = Minimun(self)
+//                let tmpFGValueList = Maximum(self)
+                backgroundColor = CGColor.init(red: maxmin.min[0], green: maxmin.min[1], blue: maxmin.min[2], alpha: 1)
+                foregroundColor = CGColor.init(red: maxmin.max[0], green: maxmin.max[1], blue: maxmin.max[2], alpha: 1)
             }
 //        }
-
+ 
         return (foregroundColor, backgroundColor)
     }
     
