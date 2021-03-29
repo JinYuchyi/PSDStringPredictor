@@ -68,13 +68,15 @@ struct PSDObject: Identifiable{
     }
     
     fileprivate func FetchThumbnail(size: Int) -> NSImage{
-        var imgData = (try? Data(contentsOf: imageURL))
-        if imgData != nil {
-            let rowImage = NSImage.init(data: imgData!)
-            let tn = rowImage!.resize(sizeOfThumbnail)
-            imgData = nil
+//        var imgData = (try? Data(contentsOf: imageURL))
+        
+//        if imgData != nil {
+        guard let rowImage = NSImage.init(contentsOf: self.imageURL) else {return NSImage.init()}
+            let tn = rowImage.resize(sizeOfThumbnail)
+//            rowImage.
+//            imgData = nil
             return tn
-        }
+//        }
         
         return NSImage.init()
     }
