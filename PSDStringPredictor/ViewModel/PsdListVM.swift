@@ -282,8 +282,10 @@ class PsdsVM: ObservableObject{
 //
 //            IndicatorText = ""
 //        }
-        updateStringObjectsForPsd(psdId: psdId, strObjs: allStrObjs)
-        
+        DispatchQueue.main.async{ [self] in
+            updateStringObjectsForPsd(psdId: psdId, strObjs: allStrObjs)
+            IndicatorText = ""
+        }
         
     }
     
@@ -400,10 +402,10 @@ class PsdsVM: ObservableObject{
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
             let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((rawImg.extent.width).rounded()), Int((rawImg.extent.height).rounded()))
-            print(chars)
+//            print(chars)
             let charImageList = CIImage.init(contentsOf: psdObjectDict[psdId]!.imageURL)!.GetCroppedImages(rects: charRects.offset(offset: offset) )
             
-            var newStrObj = StringObject.init(strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
+            var newStrObj = StringObject.init(imagePath: psdObjectDict[psdId]!.imageURL.path, strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
 
             newStrObj.deleteFontTailLength()
             
@@ -825,7 +827,7 @@ class PsdsVM: ObservableObject{
             return
         }
         
-        let _list = psdObjectDict.values.filter({$0.status == .commited})
+        let _list = psdObjectDict.values.filter({$0.status == .commited}).sorted(by: {$0.id < $1.id})
         if _list.count > 0{
             let queueCalc = DispatchQueue(label: "calc")
             

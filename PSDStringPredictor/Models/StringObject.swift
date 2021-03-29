@@ -24,6 +24,7 @@ struct StringObject : Identifiable,  Hashable{
     
     
     var id: UUID
+    var imagePath: String
     var content: String
     var tracking: CGFloat
     var fontSize: CGFloat
@@ -49,6 +50,7 @@ struct StringObject : Identifiable,  Hashable{
 
     init(){
         self.id = UUID()
+        imagePath =  ""
         self.content = "No content."
         self.tracking = 0
         self.fontSize = 0
@@ -69,9 +71,10 @@ struct StringObject : Identifiable,  Hashable{
         self.colorMode = .light
     }
     
-    init(_ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage]){
+    init(imagePath: String,  _ content: String, _ stringRect: CGRect, _ charArray: [Character], _ charRacts: [CGRect], charImageList: [CIImage]){
         
         id = UUID()
+        self.imagePath = imagePath
         self.content = content
         self.tracking = 10
         self.fontSize = 0.0
@@ -103,9 +106,10 @@ struct StringObject : Identifiable,  Hashable{
         CalcColor()
     }
     
-    init(id: UUID, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
+    init(id: UUID, imagePath: String, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
         
         self.id = id
+        self.imagePath = imagePath
         self.tracking = tracking
         self.fontSize = fontSize
         self.colorMode = colorMode
@@ -128,9 +132,10 @@ struct StringObject : Identifiable,  Hashable{
         self.content = FixContent(content)
     }
     
-    init(id: UUID, content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [CIImage], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
+    init(id: UUID, imagePath: String,  content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [CIImage], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
         
         self.id = id
+        self.imagePath = imagePath
         self.content = content
         self.tracking = tracking
         self.fontSize = fontSize
@@ -239,7 +244,8 @@ struct StringObject : Identifiable,  Hashable{
     
 
     mutating func CalcColor() {
-        guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
+        guard let img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath)) else {return}
+//        guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
         (color, bgColor) = img.cropped(to: stringRect).getForegroundBackgroundColor(colorMode: self.colorMode)
     }
 

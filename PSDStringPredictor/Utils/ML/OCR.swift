@@ -104,7 +104,7 @@ class OCR{
         let newStringRect = CGRect(x: obj.stringRect.minX, y: obj.stringRect.minY + fontOffset  , width: obj.stringRect.width, height: obj.stringRect.height - fontOffset )
 
 
-        var tmpObj = StringObject.init(obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList)
+        var tmpObj = StringObject.init(imagePath: obj.imagePath, obj.content, newStringRect, obj.charArray, obj.charRects, charImageList: obj.charImageList)
         //tmpObj.stringRect = newStringRect
         return tmpObj
     }
