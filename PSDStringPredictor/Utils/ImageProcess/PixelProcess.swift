@@ -279,11 +279,18 @@ class PixelProcess{
 //    }
     
     func colorAt(x: Int, y: Int, img: CIImage) -> [CGFloat] {
+        img.unpremultiplyingAlpha()
+        img.settingAlphaOne(in: img.extent)
         let bitmap = NSBitmapImageRep(ciImage: img)
-            // get the color from the bitmap
+
+        bitmap.colorSpace
+
         let color = bitmap.colorAt(x: x, y: y)!
-//        print("Color at: \(color)")
+        print("Color at: \(color)")
         return [color.redComponent, color.greenComponent, color.blueComponent]
+        
+
+
     }
     
     func createBitmapContext(img: CGImage) -> CGContext {

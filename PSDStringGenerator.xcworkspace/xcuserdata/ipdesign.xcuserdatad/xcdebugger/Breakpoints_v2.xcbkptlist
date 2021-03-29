@@ -14,58 +14,73 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "839"
-            endingLineNumber = "839"
+            startingLineNumber = "854"
+            endingLineNumber = "854"
             landmarkName = "ProcessForAll()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "365A30FE-1F93-4463-B1F5-DC0FB3FCF713 - ec6b4b4e2b0aff28"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 () -&gt; () in PSDStringGenerator.PsdsVM.ProcessForAll() -&gt; ()"
-                  moduleName = "PSDStringGenerator"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/ViewModel/PsdListVM.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "837"
-                  endingLineNumber = "837"
-                  offsetFromSymbolStart = "339">
-               </Location>
-               <Location
-                  uuid = "365A30FE-1F93-4463-B1F5-DC0FB3FCF713 - dc3f21de0e33da1d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #3 () -&gt; () in PSDStringGenerator.PsdsVM.ProcessForAll() -&gt; ()"
-                  moduleName = "PSDStringGenerator"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/ViewModel/PsdListVM.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "838"
-                  endingLineNumber = "838"
-                  offsetFromSymbolStart = "87">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "47C4C79D-9B7C-47A2-8AA4-2E2FB3A3C0CB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "831"
-            endingLineNumber = "831"
+            startingLineNumber = "847"
+            endingLineNumber = "847"
             landmarkName = "ProcessForAll()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "47C4C79D-9B7C-47A2-8AA4-2E2FB3A3C0CB - 9698fd740e0e9aac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PSDStringGenerator.PsdsVM.ProcessForAll() -&gt; ()"
+                  moduleName = "PSDStringGenerator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/ViewModel/PsdListVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "847"
+                  endingLineNumber = "847"
+                  offsetFromSymbolStart = "713">
+               </Location>
+               <Location
+                  uuid = "47C4C79D-9B7C-47A2-8AA4-2E2FB3A3C0CB - ead9b59b96ca5106"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (PSDStringGenerator.PSDObject) -&gt; Swift.Bool in PSDStringGenerator.PsdsVM.ProcessForAll() -&gt; ()"
+                  moduleName = "PSDStringGenerator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/ViewModel/PsdListVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "847"
+                  endingLineNumber = "847"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "47C4C79D-9B7C-47A2-8AA4-2E2FB3A3C0CB - da70547b3f6ac18f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (PSDStringGenerator.PSDObject, PSDStringGenerator.PSDObject) -&gt; Swift.Bool in PSDStringGenerator.PsdsVM.ProcessForAll() -&gt; ()"
+                  moduleName = "PSDStringGenerator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ipdesign/Documents/Development/PSDStringPredictor/PSDStringPredictor/ViewModel/PsdListVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "847"
+                  endingLineNumber = "847"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

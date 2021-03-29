@@ -11,6 +11,7 @@ extension CIImage{
     func ToNSImage()->NSImage{
         //ciImage to NSImage
         let rep = NSCIImageRep(ciImage: self)
+        rep.hasAlpha = false
         let nsImage = NSImage(size: rep.size)
         nsImage.addRepresentation(rep)
         return nsImage
@@ -43,6 +44,7 @@ extension CIImage{
     
     func GetCroppedImages(rects: [CGRect]) -> [CIImage]{
         self.unpremultiplyingAlpha()
+        self.settingAlphaOne(in: self.extent)
         var imgs :[CIImage] = []
         for rect in rects {
             let tmpImg = self.cropped(to: rect).settingAlphaOne(in: self.extent)
@@ -52,6 +54,8 @@ extension CIImage{
     }
     
     func ToPNG(url: URL){
+//        self.settingAlphaOne(in: self.extent)
+//        self.unpremultiplyingAlpha()
         //let newimg = self.cropped(to: rect)
         let nsimg = self.ToNSImage()
         
@@ -117,11 +121,12 @@ extension CIImage{
     
     func getForegroundBackgroundColor(colorMode: MacColorMode)->(foregroundColor: CGColor, backgroundColor: CGColor){
 //        if charImageList.count > 0{
+        self.settingAlphaOne(in: self.extent)
         self.unpremultiplyingAlpha()
 //        print("max: \(Maximum(self))")
 //        print("min: \(Minimun(self))")
-        let maxmin = MaxMin(rect: self.extent)
-        var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+        let maxmin = MaxMin(img: self)
+         var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         var backgroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
             if colorMode == .light{
 //                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)

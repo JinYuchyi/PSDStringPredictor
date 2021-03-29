@@ -160,7 +160,7 @@ struct StringObjectPropertyView: View {
                     
                     Spacer()
                     
-                    Button(action: {psdsVM.ToggleFontName(objId: psdsVM.selectedStrIDList.last)}, label: {
+                    Button(action: {psdsVM.ToggleFontName()}, label: {
                         Text("􀅈")
                     })
                     .frame(width: 15, alignment: .trailing)

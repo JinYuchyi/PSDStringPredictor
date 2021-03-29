@@ -74,7 +74,7 @@ extension CGColor: Comparable{
         return [self.components![0],  self.components![1],  self.components![2],  self.components![3]]
     }
     func toFloatArray()->[Float]{
-        return [Float(self.components![0]),  Float(self.components![1]),  Float(self.components![2]),  Float(self.components![3])]
+        return [Float(self.components![0]) * 255,  Float(self.components![1]) * 255,  Float(self.components![2]) * 255,  Float(self.components![3]) * 255]
     }
     
     func toCIColor()->CIColor{

@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 import Vision
 
+let queueCalc = DispatchQueue(label: "calc")
+
 
 struct charRectObject: Codable{
     var rect: CGRect
@@ -265,7 +267,7 @@ class PsdsVM: ObservableObject{
         guard let tmpImageUrl = psdObjectDict[psdId]?.imageURL else {return}
         
         var img = LoadNSImage(imageUrlPath: tmpImageUrl.path).ToCIImage()!
-        img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
+//        img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
         let allStrObjs = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self)
 //        DispatchQueue.main.async{ [self] in
@@ -309,7 +311,7 @@ class PsdsVM: ObservableObject{
 
     
     func fetchRegionStringObjects(rect: CGRect, psdId: Int) -> [UUID]{
-        let regionImage = processedCIImage.cropped(to: rect).premultiplyingAlpha()
+        let regionImage = processedCIImage.cropped(to: rect).unpremultiplyingAlpha()
         var offset = CGPoint.init(x: rect.minX, y: rect.minY)
         // Get strobj id list for selected psd
         var preIdList = psdStrDict[selectedPsdId] ?? []
@@ -404,7 +406,9 @@ class PsdsVM: ObservableObject{
             }
             let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((rawImg.extent.width).rounded()), Int((rawImg.extent.height).rounded()))
 //            print(chars)
-            let charImageList = CIImage.init(contentsOf: psdObjectDict[psdId]!.imageURL)!.GetCroppedImages(rects: charRects.offset(offset: offset) )
+//            var targetImage = CIImage.init(contentsOf: psdObjectDict[psdId]!.imageURL)!
+//            targetImage.unpremultiplyingAlpha()
+            let charImageList = rawImg.GetCroppedImages(rects: charRects.offset(offset: offset) )
             
             var newStrObj = StringObject.init(imagePath: psdObjectDict[psdId]!.imageURL.path, strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
 
@@ -486,14 +490,28 @@ class PsdsVM: ObservableObject{
 //                psdModel.SetTracking(psdId: selectedPsdId, objId: id, value: newT)
 //            }
 //        }
+//        let originTracking = fetchLastStringObjectFromSelectedPsd().tracking
         for id in selectedStrIDList {
             stringObjectDict[id]!.fontSize = tmpObjectForStringProperty.fontSize.toCGFloat()
             if linkSizeAndTracking == true {
-                let newT: CGFloat = CGFloat(TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(tmpObjectForStringProperty.fontSize.toCGFloat().rounded())).fontTrackingPoints)
+                let newT: CGFloat = CGFloat(TrackingDataManager.FetchNearestOne(viewContext, fontSize: Int16(stringObjectDict[id]!.fontSize.rounded())).fontTrackingPoints)
                 tmpObjectForStringProperty.tracking =  newT.toString()
                 stringObjectDict[id]!.tracking = newT
             }
+            // Re-Calc the bound
+            let tmp = FontUtils.GetStringBound(
+                str: stringObjectDict[id]!.content,
+                fontName: stringObjectDict[id]!.fontName,
+                fontSize: stringObjectDict[id]!.fontSize,
+                tracking: stringObjectDict[id]!.tracking
+            )
+            stringObjectDict[id]!.stringRect  = CGRect.init(x: stringObjectDict[id]!.stringRect.minX, y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: tmp.height - FontUtils.FetchTailOffset(content: stringObjectDict[id]!.content, fontSize: stringObjectDict[id]!.fontSize))
+//            stringObjectDict[id]!.deleteFontTailLength()
+//            tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
+//            let dif = originTracking - tmpObjectForStringProperty.tracking.toCGFloat()
+//            stringObjectDict[id]!.stringRect.minX = (psdsVM.tmpObjectForStringProperty.posX.toCGFloat() )
         }
+        tmpObjectForStringProperty = fetchLastStringObjectFromSelectedPsd().toObjectForStringProperty()
 
     }
     
@@ -809,12 +827,12 @@ class PsdsVM: ObservableObject{
     func ProcessForOnePsd(){
         let processOn: Int = selectedPsdId
         canProcess = true
-        if  DataStore.selectedNSImage.size.width == 0 {
+        if  psdObjectDict[processOn]!.width == 0 {
             return
         }
-        let queueCalc = DispatchQueue(label: "calc")
+//        let queueCalc = DispatchQueue(label: "calc")
         queueCalc.async {
-            self.FetchStringObjects(psdId: self.selectedPsdId)
+            self.FetchStringObjects(psdId: processOn)
             DispatchQueue.main.async{
                 self.psdObjectDict[processOn]!.status = .processed
                 self.IndicatorText = ""
@@ -822,15 +840,12 @@ class PsdsVM: ObservableObject{
         }
     }
     
+
     func ProcessForAll(){
         canProcess = true
-        if   DataStore.selectedNSImage.size.width == 0 {
-            return
-        }
         
         let _list = psdObjectDict.values.filter({$0.status == .commited}).sorted(by: {$0.id < $1.id})
         if _list.count > 0{
-            let queueCalc = DispatchQueue(label: "calc")
             
             var c: CGFloat = 0
             for psd in _list {
@@ -970,12 +985,13 @@ class PsdsVM: ObservableObject{
         tmpObjectForStringProperty = stringObjectDict[selectedStrIDList.last!]!.toObjectForStringProperty()
     }
     
-    func ToggleFontName(objId: UUID?){
+    func ToggleFontName(){
+        for objId in selectedStrIDList{
         if objId == nil {return}
 //        var psd = stringObjectDict[psdId]
 //        if psdObjectDict[psdId] != nil {
 //            for objId in selectedStrIDList{}
-            guard let strObj = stringObjectDict[objId!] else {return}
+            guard let strObj = stringObjectDict[objId] else {return}
             let fName = strObj.fontName
             let endIndex = fName.lastIndex(of: " ")
             let startIndex = fName.startIndex
@@ -997,13 +1013,13 @@ class PsdsVM: ObservableObject{
             //            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
             
             commitTempStringObject()
-            stringObjectDict[objId!]?.fontWeight = String(weightName)
+            stringObjectDict[objId]?.fontWeight = String(weightName)
             
             //Set fontName for all selected
             for id in selectedStrIDList {
                 stringObjectDict[id]!.fontName = str
             }
-//        }
+        }
         
     }
     

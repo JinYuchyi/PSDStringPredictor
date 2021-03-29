@@ -63,6 +63,19 @@ extension String{
         }
         return result
     }
+    
+    func findDots() -> [Int]{
+        var result: [Int] = []
+        let cList = Array(self)
+        for i in 0..<cList.count {
+            
+            if cList[i] == "." {
+                result.append(i)
+            }
+
+        }
+        return result
+    }
 
 
 }

@@ -530,27 +530,55 @@ func Minimun(_ image: CIImage) -> ([CGFloat]){
     return (colorValueList)
 }
 
-func MaxMin(rect: CGRect) -> (min: [CGFloat], max: [CGFloat]) {
+func MaxMin(img: CIImage ) -> (min: [CGFloat], max: [CGFloat]) {
+
+//    img.unpremultiplyingAlpha()
+//    img.settingAlphaOne(in: img.extent)
+    
+//    var path = "/Users/ipdesign/Downloads/raw.png"
+//    img.ToPNG(url: URL.init(fileURLWithPath: path))
     var filteredImage: CIImage = CIImage.init()
     var min: [CGFloat] = [1,0,0]
     var max: [CGFloat] = [1,0,0]
-    guard let img = DataStore.selectedNSImage.ToCIImage() else {return (min,max)}
+//    guard let img = DataStore.selectedNSImage.ToCIImage() else {return (min,max)}
 //    if DataStore.selectedNSImage.isValid == true {
     guard let filter = CIFilter(name: "CIAreaMinMax") else {
         return (min,max)
     }
     
+    // Shrink a pixel of the bounds, for one pixel of the edge is incorrect
+    var mx = img.extent.minX + 1
+//    mx.round(.awayFromZero)
+    var my = img.extent.minY + 1
+//    my.round(.awayFromZero)
+    var w = img.extent.width - 2
+//    w.round(.towardZero)
+    var h = img.extent.height - 2
+//    h.round(.towardZero)
+    let rec = CGRect(x: mx, y: my, width: w, height: h)
+    
     filter.setValue(img, forKey: kCIInputImageKey)
-    filter.setValue(rect.ToCIVector(), forKey: kCIInputExtentKey)
-    filteredImage.unpremultiplyingAlpha()
+    filter.setValue(rec.ToCIVector(), forKey: kCIInputExtentKey)
     filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
-//    var path = "/Users/ipdesign/Downloads/maxmin.bmp"
+//    filteredImage.unpremultiplyingAlpha()
+//    filteredImage.settingAlphaOne(in: filteredImage.extent)
+
+//    path = "/Users/ipdesign/Downloads/maxmin.png"
 //    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
     if filteredImage.IsValid() == true{
-        min = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
-        max = PixelProcess.shared.colorAt(x: 1, y: 0, img: filteredImage)
+//        min = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
+//        max = PixelProcess.shared.colorAt(x: 1, y: 0, img: filteredImage)
+        
+        var bitmap = [UInt8](repeating: 0, count: 8)
+//        let context = CIContext(options: [.workingColorSpace: kCFNull])
+        let context = CIContext(options: [.workingColorSpace: kCFNull])
+        context.render(filteredImage, toBitmap: &bitmap, rowBytes: 8, bounds: CGRect(x: 0, y: 0, width: 2, height: 1), format: .RGBA8, colorSpace: nil)
+        min = [CGFloat(bitmap[0])/255, CGFloat(bitmap[1])/255, CGFloat(bitmap[2])/255]
+        max = [CGFloat(bitmap[4])/255, CGFloat(bitmap[5])/255, CGFloat(bitmap[6])/255]
+        print("min:\(min), max:\(max)")
         return (min, max)
     }
+    
 //    }
     return (min, max)
 }

@@ -93,7 +93,7 @@ struct StringObject : Identifiable,  Hashable{
         self.alignment = defaultAlignment
         self.status = .normal
         self.fontWeight = PredictFontWeight()
-        self.colorMode = CalcColorMode()
+        self.colorMode = calcColorMode()
 //        self.color = CalcColor()
         let sizeFunc = CalcBestSizeForString()
         self.fontSize = CGFloat(sizeFunc.0)
@@ -103,7 +103,7 @@ struct StringObject : Identifiable,  Hashable{
         self.isPredictedList = sizeFunc.2
         self.content = FixContent(content)
         reCalcBound()
-        CalcColor()
+        calcColor()
     }
     
     init(id: UUID, imagePath: String, tracking: CGFloat, fontSize: CGFloat, colorMode: MacColorMode, fontWeight: String, charImageList: [CIImage], color: CGColor, bgColor: CGColor, charArray: [Character], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: StringAlignment, status: StringObjectStatus){
@@ -129,7 +129,8 @@ struct StringObject : Identifiable,  Hashable{
         self.stringRect = zeroRect
         self.content = String(charArray)
         self.stringRect = mergeRect(rects: charRacts)
-        self.content = FixContent(content)
+//        self.content = FixContent(content)
+//        calcColor()
     }
     
     init(id: UUID, imagePath: String,  content: String, tracking: CGFloat, fontSize: CGFloat, colorMode: String, fontWeight: String, charImageList: [CIImage], stringRect: CGRect, color: [CGFloat], bgColor: [CGFloat], charArray: [String], charRacts: [CGRect], charSizeList: [Int16], charFontWeightList: [String], charColorModeList: [Int], isPredictedList: [Int], fontName: String, alignment: String, status: String){
@@ -154,7 +155,8 @@ struct StringObject : Identifiable,  Hashable{
         self.fontName = fontName
         self.alignment = StringAlignment.init(rawValue: alignment)!
         self.status = StringObjectStatus.init(rawValue: status)!
-        self.content = FixContent(content)
+//        self.content = FixContent(content)
+//        calcColor()
     }
     
     mutating func reCalcBound(){
@@ -182,7 +184,7 @@ struct StringObject : Identifiable,  Hashable{
         return CGRect.init(x: rects[0].minX, y: rects[0].minY, width: rects.last!.maxX - rects[0].minX, height: maxHeight)
     }
     
-    mutating func CalcColorMode() -> MacColorMode{
+    mutating func calcColorMode() -> MacColorMode{
         var result = -1
         charColorModeList = []
         for index in 0..<charArray.count{
@@ -196,10 +198,13 @@ struct StringObject : Identifiable,  Hashable{
             result = charColorModeList.MajorityElement()
         }
         if result == 1{
+//            self.colorMode = .light
             return .light
         }else if result == 2{
+//            self.colorMode = .dark
             return .dark
         }else {
+//            self.colorMode = .none
             return .none
         }
     }
@@ -218,17 +223,35 @@ struct StringObject : Identifiable,  Hashable{
     
 
     
-    func FixContent(_ target: String) -> String{
+    mutating func FixContent(_ target: String) -> String{
         var res: String = target
         let lowerString: String = target.lowercased()
         //Condition which we need to fix lowercase/uppercase problem for proper nouns, such as "iCloud".
         for (typo, correct) in DataStore.wordDict{
             res = res.replacingOccurrences(of: typo, with: correct)
+            self.content = res
+            self.charArray = Array(res)
         }
         // 720 -> 72°
-        let targetMarkList = target.findZeroBehindNumberIndex()
-        if targetMarkList.count > 0 {
-            
+//        let targetMarkList = target.findZeroBehindNumberIndex()
+//        if targetMarkList.count > 0 {
+//
+//        }
+        // . -> ·
+        let dotsList = target.findDots()
+        print("Dot found: \(dotsList)")
+        var charList = Array(content)
+        for _index in dotsList {
+            if _index != 0 {
+                print("1/3: \((self.stringRect.minY + self.stringRect.height / 3.0)), mid: \(self.charRects[_index].midY), 2/3: \((self.stringRect.minY + CGFloat(self.stringRect.height)) * 2.0 / 3.0 )")
+                if ( self.charRects[_index].midY > (self.stringRect.minY + self.stringRect.height / 3.0) ) && ( CGFloat(self.charRects[_index].midY) < self.stringRect.minY + CGFloat(self.stringRect.height) * 2.0 / 3.0 ) {
+                    print("Dot replace: \(_index)")
+                    charList[_index] = "·"
+                    self.charArray = charList
+                    self.content = String(charArray)
+                    res = self.content
+                }
+            }
         }
         
         return res
@@ -243,8 +266,10 @@ struct StringObject : Identifiable,  Hashable{
     }
     
 
-    mutating func CalcColor() {
+    mutating func calcColor() {
         guard let img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath)) else {return}
+        img.settingAlphaOne(in: img.extent)
+        img.unpremultiplyingAlpha()
 //        guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
         (color, bgColor) = img.cropped(to: stringRect).getForegroundBackgroundColor(colorMode: self.colorMode)
     }

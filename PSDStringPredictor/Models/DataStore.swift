@@ -105,7 +105,8 @@ class DataStore{
         "iphone": "IPhone",
         "macbook": "MacBook",
         "Self ie": "Selfie",
-        "Outf it": "Outfit"
+        "Outf it": "Outfit",
+        "macos": "macOS"
     ]
     
     //UI

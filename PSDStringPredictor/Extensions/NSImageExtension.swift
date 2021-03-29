@@ -49,6 +49,8 @@ extension NSImage {
        if let cgImage = self.ToCGImage() {
             let img = CIImage(cgImage: cgImage)
             img.unpremultiplyingAlpha()
+            img.settingAlphaOne(in: img.extent)
+
             return img
        }
        return nil
