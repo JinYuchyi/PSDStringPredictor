@@ -980,46 +980,58 @@ class PsdsVM: ObservableObject{
         if selectedStrIDList.count <= 0 {return}
         let newCMode: MacColorMode
         fetchLastStringObjectFromSelectedPsd().colorMode == .dark ? (newCMode = .light) : (newCMode = .dark)
-        stringObjectDict[selectedStrIDList.last!]!.colorMode = newCMode
-        stringObjectDict[selectedStrIDList.last!]!.calcColor()
+        for id in selectedStrIDList{
+            stringObjectDict[id]!.colorMode = newCMode
+            stringObjectDict[id]!.calcColor()
+        }
+
         tmpObjectForStringProperty = stringObjectDict[selectedStrIDList.last!]!.toObjectForStringProperty()
     }
     
     func ToggleFontName(){
+        //Get last obj weight
+        let lastObj = fetchLastStringObjectFromSelectedPsd()
+        let fName = lastObj.fontName
+        let endIndex = fName.lastIndex(of: " ")
+        let startIndex = fName.startIndex
+        let particialName = fName[startIndex..<endIndex!]
+        var weightName = fName[endIndex!..<fName.endIndex]
+        var str = ""
+//            print("weightName: \(weightName)")
+        if weightName == " Regular"  {
+            weightName = "Semibold"
+            str = particialName + " Semibold"
+        }else {
+            weightName = "Regular"
+            str = particialName + " Regular"
+        }
+        
         for objId in selectedStrIDList{
         if objId == nil {return}
 //        var psd = stringObjectDict[psdId]
 //        if psdObjectDict[psdId] != nil {
 //            for objId in selectedStrIDList{}
-            guard let strObj = stringObjectDict[objId] else {return}
-            let fName = strObj.fontName
-            let endIndex = fName.lastIndex(of: " ")
-            let startIndex = fName.startIndex
-            let particialName = fName[startIndex..<endIndex!]
-            var weightName = fName[endIndex!..<fName.endIndex]
-            var str = ""
-            if weightName == " Regular"  {
-                weightName = "Semibold"
-                str = particialName + " Semibold"
-            }else {
-                weightName = "Regular"
-                str = particialName + " Regular"
-            }
-            tmpObjectForStringProperty.fontName = str
             
-            let tmp  = FontUtils.GetStringBound(str: tmpObjectForStringProperty.content, fontName: tmpObjectForStringProperty.fontName, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: tmpObjectForStringProperty.tracking.toCGFloat())
-            tmpObjectForStringProperty.width = tmp.width
-            tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
+            stringObjectDict[objId]!.fontName = str
+            
+            let tmp  = FontUtils.GetStringBound(str: stringObjectDict[objId]!.content, fontName: stringObjectDict[objId]!.fontName, fontSize: stringObjectDict[objId]!.fontSize, tracking: stringObjectDict[objId]!.tracking)
+            stringObjectDict[objId]!.stringRect = CGRect.init(x: stringObjectDict[objId]!.stringRect.minX, y: stringObjectDict[objId]!.stringRect.minY, width: tmp.width, height: tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat()) )
+            stringObjectDict[objId]!.fontWeight = String(weightName)
+            stringObjectDict[objId]!.fontName = str
+
+//            tmpObjectForStringProperty.width = tmp.width
+//            tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
             //            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
             
-            commitTempStringObject()
-            stringObjectDict[objId]?.fontWeight = String(weightName)
+//            commitTempStringObject()
             
             //Set fontName for all selected
-            for id in selectedStrIDList {
-                stringObjectDict[id]!.fontName = str
-            }
+//            for id in selectedStrIDList {
+//                stringObjectDict[id]!.fontName = str
+//            }
         }
+        tmpObjectForStringProperty = stringObjectDict[selectedStrIDList.last!]!.toObjectForStringProperty()
+
         
     }
     

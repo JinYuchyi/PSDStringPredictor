@@ -269,9 +269,9 @@ struct StringObject : Identifiable,  Hashable{
     mutating func calcColor() {
         
 //        var img = LoadNSImage(imageUrlPath: imagePath).ToCIImage()!
-        var img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath))
-        print("img colorspace: \(img.colorSpace)")
-//        img = img.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
+        var img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath))!
+//        print("img colorspace: \(img.colorSpace)")
+        img = img.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
         img = img.settingAlphaOne(in: img.extent)
         img = img.unpremultiplyingAlpha()
 //        print("img color: \(img.colorSpace)")
