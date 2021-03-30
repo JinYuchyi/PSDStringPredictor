@@ -267,11 +267,19 @@ struct StringObject : Identifiable,  Hashable{
     
 
     mutating func calcColor() {
-        guard let img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath)) else {return}
-        img.settingAlphaOne(in: img.extent)
-        img.unpremultiplyingAlpha()
+        
+//        var img = LoadNSImage(imageUrlPath: imagePath).ToCIImage()!
+        var img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath))
+        print("img colorspace: \(img.colorSpace)")
+//        img = img.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
+        img = img.settingAlphaOne(in: img.extent)
+        img = img.unpremultiplyingAlpha()
+//        print("img color: \(img.colorSpace)")
+//        img.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test.png"))
 //        guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
+        
         (color, bgColor) = img.cropped(to: stringRect).getForegroundBackgroundColor(colorMode: self.colorMode)
+//        print(Minimun(img.cropped(to: stringRect)))
     }
 
 //    mutating func CalcColor() -> CGColor {

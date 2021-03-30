@@ -532,11 +532,11 @@ func Minimun(_ image: CIImage) -> ([CGFloat]){
 
 func MaxMin(img: CIImage ) -> (min: [CGFloat], max: [CGFloat]) {
 
-//    img.unpremultiplyingAlpha()
-//    img.settingAlphaOne(in: img.extent)
+
+    var new = img.unpremultiplyingAlpha()
+    new = new.settingAlphaOne(in: img.extent)
     
-//    var path = "/Users/ipdesign/Downloads/raw.png"
-//    img.ToPNG(url: URL.init(fileURLWithPath: path))
+
     var filteredImage: CIImage = CIImage.init()
     var min: [CGFloat] = [1,0,0]
     var max: [CGFloat] = [1,0,0]
@@ -547,25 +547,33 @@ func MaxMin(img: CIImage ) -> (min: [CGFloat], max: [CGFloat]) {
     }
     
     // Shrink a pixel of the bounds, for one pixel of the edge is incorrect
-    var mx = img.extent.minX + 1
+//    var mx = img.extent.minX + 1
 //    mx.round(.awayFromZero)
-    var my = img.extent.minY + 1
+//    var my = img.extent.minY + 1
 //    my.round(.awayFromZero)
-    var w = img.extent.width - 2
+//    var w = img.extent.width - 2
 //    w.round(.towardZero)
-    var h = img.extent.height - 2
+//    var h = img.extent.height - 2
 //    h.round(.towardZero)
-    let rec = CGRect(x: mx, y: my, width: w, height: h)
+//    let rec = CGRect(x: mx, y: my, width: w, height: h)
+    var path = "/Users/ipdesign/Downloads/raw1.png"
+//    new = img.cropped(to: rec)
+    new.ToPNG(url: URL.init(fileURLWithPath: path))
+//    new = new.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.genericRGBLinear)!)!
+    print("new: \(new.colorSpace)" )
+    filter.setValue(new, forKey: kCIInputImageKey)
+    filter.setValue(new.extent.ToCIVector(), forKey: kCIInputExtentKey)
     
-    filter.setValue(img, forKey: kCIInputImageKey)
-    filter.setValue(rec.ToCIVector(), forKey: kCIInputExtentKey)
+//    print(filter.description)
     filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
-//    filteredImage.unpremultiplyingAlpha()
-//    filteredImage.settingAlphaOne(in: filteredImage.extent)
-
-//    path = "/Users/ipdesign/Downloads/maxmin.png"
-//    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
+    filteredImage = filteredImage.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
+//    filteredImage = filteredImage.unpremultiplyingAlpha()
+//    filteredImage = filteredImage.settingAlphaOne(in: filteredImage.extent)
+//
+    path = "/Users/ipdesign/Downloads/maxmin.png"
+    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
     if filteredImage.IsValid() == true{
+        print(filteredImage.colorSpace)
 //        min = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
 //        max = PixelProcess.shared.colorAt(x: 1, y: 0, img: filteredImage)
         

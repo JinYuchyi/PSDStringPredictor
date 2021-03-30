@@ -46,6 +46,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //Prepare the config setting
         PreSettingConfig()
         
+        //test
+//        let img = CIImage.init(contentsOf: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test.png"))!
+//        MaxMin(img: img)
+        
     }
     
 //    func createCharDSWindow(img: CIImage) {

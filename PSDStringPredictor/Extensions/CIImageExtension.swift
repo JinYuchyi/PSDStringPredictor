@@ -19,10 +19,10 @@ extension CIImage{
     
     func ToCGImage() -> CGImage! {
         let context = CIContext()
-
         
-//        var colorSpace = CGColorSpaceCreateDeviceRGB()
-//        context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: .none)
+        
+        //        var colorSpace = CGColorSpaceCreateDeviceRGB()
+        //        context.createCGImage(self, from: self.extent, format: CIFormat.RGBA8, colorSpace: .none)
         
         return context.createCGImage(self, from: self.extent)
     }
@@ -54,8 +54,8 @@ extension CIImage{
     }
     
     func ToPNG(url: URL){
-//        self.settingAlphaOne(in: self.extent)
-//        self.unpremultiplyingAlpha()
+        //        self.settingAlphaOne(in: self.extent)
+        //        self.unpremultiplyingAlpha()
         //let newimg = self.cropped(to: rect)
         let nsimg = self.ToNSImage()
         
@@ -120,62 +120,67 @@ extension CIImage{
     }
     
     func getForegroundBackgroundColor(colorMode: MacColorMode)->(foregroundColor: CGColor, backgroundColor: CGColor){
-//        if charImageList.count > 0{
-        self.settingAlphaOne(in: self.extent)
-        self.unpremultiplyingAlpha()
-//        print("max: \(Maximum(self))")
-//        print("min: \(Minimun(self))")
-        let maxmin = MaxMin(img: self)
-         var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+//        self.settingAlphaOne(in: self.extent)
+//        self.unpremultiplyingAlpha()
+
+//        let maxmin = MaxMin(img: self)
+        let min = Minimun(self)
+        let max = Maximum(self)
+        var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         var backgroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
-            if colorMode == .light{
-//                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-//                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-//                var i: Int = 0
-
-//                for img in charImageList.filter({$0.extent.width > 0}){
-//                    i += 1
-
-//                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
-//                        minc = Minimun(img)
-//
-//                    }
-//                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
-//                        maxc = Maximum(img)
-//                    }
-//                }
-//                let tmpBGValueList = Maximum(self)
-//                let tmpFGValueList = Minimun(self)
-                backgroundColor = CGColor.init(red: maxmin.max[0], green: maxmin.max[1], blue: maxmin.max[2], alpha: 1)
-                foregroundColor = CGColor.init(red: maxmin.min[0], green: maxmin.min[1], blue: maxmin.min[2], alpha: 1)
-                
-            }
+        if colorMode == .light{
+            //                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+            //                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+            //                var i: Int = 0
             
-            else if colorMode == .dark{
-//                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-//                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
-//                var i: Int = 0
-//                for img in charImageList.filter({$0.extent.width > 0}){
-//                    i += 1
-//                    //Calculate the brightest color as the font color
-//                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
-//                        maxc = Maximum(img)
-//
-//                    }
-//                    //Calculate the darkest color as the background color
-//                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
-//                        minc = Minimun(img)
-//                    }
-//                }
-//                bgColor = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
-//                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
-//                let tmpBGValueList = Minimun(self)
-//                let tmpFGValueList = Maximum(self)
-                backgroundColor = CGColor.init(red: maxmin.min[0], green: maxmin.min[1], blue: maxmin.min[2], alpha: 1)
-                foregroundColor = CGColor.init(red: maxmin.max[0], green: maxmin.max[1], blue: maxmin.max[2], alpha: 1)
-            }
-//        }
- 
+            //                for img in charImageList.filter({$0.extent.width > 0}){
+            //                    i += 1
+            
+            //                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
+            //                        minc = Minimun(img)
+            //
+            //                    }
+            //                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
+            //                        maxc = Maximum(img)
+            //                    }
+            //                }
+            //                let tmpBGValueList = Maximum(self)
+            //                let tmpFGValueList = Minimun(self)
+            
+//            backgroundColor = CGColor.init(red: maxmin.max[0], green: maxmin.max[1], blue: maxmin.max[2], alpha: 1)
+//            foregroundColor = CGColor.init(red: maxmin.min[0], green: maxmin.min[1], blue: maxmin.min[2], alpha: 1)
+            
+            backgroundColor = CGColor.init(red: max[0], green: max[1], blue: max[2], alpha: 1)
+            foregroundColor = CGColor.init(red: min[0], green: min[1], blue: min[2], alpha: 1)
+            
+        }
+        
+        else if colorMode == .dark{
+            //                var minc = NSColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+            //                var maxc = NSColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+            //                var i: Int = 0
+            //                for img in charImageList.filter({$0.extent.width > 0}){
+            //                    i += 1
+            //                    //Calculate the brightest color as the font color
+            //                    if Maximum(img).ToGrayScale() >  maxc.ToGrayScale()  {
+            //                        maxc = Maximum(img)
+            //
+            //                    }
+            //                    //Calculate the darkest color as the background color
+            //                    if Minimun(img).ToGrayScale() <  minc.ToGrayScale()  {
+            //                        minc = Minimun(img)
+            //                    }
+            //                }
+            //                bgColor = CGColor.init(red: minc.redComponent, green: minc.greenComponent, blue: minc.blueComponent, alpha: 1)
+            //                result = CGColor.init(red: maxc.redComponent, green: maxc.greenComponent, blue: maxc.blueComponent, alpha: 1)
+            //                let tmpBGValueList = Minimun(self)
+            //                let tmpFGValueList = Maximum(self)
+            backgroundColor = CGColor.init(red: min[0], green: min[1], blue: min[2], alpha: 1)
+            foregroundColor = CGColor.init(red: max[0], green: max[1], blue: max[2], alpha: 1)
+//            print("foregroundColor: \(foregroundColor), backgroundColor: \(backgroundColor)")
+        }
+        //        }
+        
         return (foregroundColor, backgroundColor)
     }
     

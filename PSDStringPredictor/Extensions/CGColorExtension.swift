@@ -42,11 +42,11 @@ extension CGColor: Comparable{
     
     func ToColor()->Color{
 
-        let tmpNSC = NSColor.init(cgColor: self)
-        let tempC = Color.init(tmpNSC!)
-        return tempC
+//        let tmpNSC = NSColor.init(cgColor: self)
+//        let tempC = Color.init(tmpNSC!)
+//        return tempC
         
-        //return Color.init(red: Double(self.components![0]), green: Double(self.components![1]), blue: Double(self.components![2]))
+        return Color.init(red: Double(self.components![0]), green: Double(self.components![1]), blue: Double(self.components![2]))
     }
     
     func ToReversedColor()->Color{

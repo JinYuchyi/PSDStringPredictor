@@ -72,6 +72,8 @@ struct PSDObject: Identifiable{
         
 //        if imgData != nil {
         guard let rowImage = NSImage.init(contentsOf: self.imageURL) else {return NSImage.init()}
+//        let colorSpace = rowImage.ToCIImage()?.colorSpace
+//        print("colorSpace:\(colorSpace)")
             let tn = rowImage.resize(sizeOfThumbnail)
 //            rowImage.
 //            imgData = nil
