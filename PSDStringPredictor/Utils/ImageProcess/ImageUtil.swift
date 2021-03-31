@@ -132,13 +132,13 @@ class ImageUtil{
         }
     }
     
-    func ApplyFilters(target: CIImage, gamma: CGFloat, exp: CGFloat)->CIImage{
+    func ApplyFilters(target: CIImage, gamma: CGFloat, exp: CGFloat, threshold: CGFloat, thresholdOn: Bool)->CIImage{
         if (target.IsValid()){
             var tmp = ChangeGamma(target, gamma)!
             tmp = ChangeExposure(tmp, exp)!
-            //            if isConvolution == true{
-            //                tmp = SetConv(tmp)!
-            //            }
+            if thresholdOn == true{
+                tmp = filterThreshold(img: tmp, value: threshold)
+            }
             return tmp
         }
         return target

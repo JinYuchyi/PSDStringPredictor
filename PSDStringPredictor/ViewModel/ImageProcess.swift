@@ -504,9 +504,8 @@ func Maximum(_ image: CIImage) -> ([CGFloat]){
 func Minimun(_ image: CIImage) -> ([CGFloat]){
     image.settingAlphaOne(in: image.extent)
     image.unpremultiplyingAlpha()
-    print("Color Space: \(image.colorSpace)" )
-    var path = "/Users/ipdesign/Downloads/source.png"
-    image.ToPNG(url: URL.init(fileURLWithPath: path))
+
+//    image.ToPNG(url: URL.init(fileURLWithPath: path))
     var filteredImage: CIImage = CIImage.init()
     var colorValueList: [CGFloat] =  [0,0,0]
 
@@ -530,13 +529,24 @@ func Minimun(_ image: CIImage) -> ([CGFloat]){
     return (colorValueList)
 }
 
+func filterThreshold(img: CIImage, value: CGFloat) -> CIImage{
+    var filteredImage: CIImage = CIImage.init()
+    if img.extent.width > 0 {
+        guard let filter = CIFilter(name: "CIColorThreshold") else {
+            return (filteredImage)
+        }
+        filter.setValue(img, forKey: kCIInputImageKey)
+        let val = NSNumber.init(value: Float(value))
+        filter.setValue(val, forKey: "inputThreshold")
+        filteredImage = filter.outputImage ?? DataStore.zeroCIImage
+    }
+    return (filteredImage)
+}
+
 func MaxMin(img: CIImage ) -> (min: [CGFloat], max: [CGFloat]) {
-
-
     var new = img.unpremultiplyingAlpha()
     new = new.settingAlphaOne(in: img.extent)
     
-
     var filteredImage: CIImage = CIImage.init()
     var min: [CGFloat] = [1,0,0]
     var max: [CGFloat] = [1,0,0]

@@ -234,61 +234,86 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func MoveUp(_ sender: Any) {
 //        guard let lastID = psdsVM.selectedStrIDList.last else {return}
 //        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: lastID) else {return}
-        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY + 1).toString()
-        psdsVM.commitPosY()
+        
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX), y: obj.stringRect.minY + 1, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY).toString()
 //        let tmpRect = CGRect(x: lastObj.stringRect.minX, y: lastObj.stringRect.minY + 1, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
 //        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
 
     }
     
     @IBAction func MoveUpLarge(_ sender: Any) {
-        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY + 10).toString()
-        psdsVM.commitPosY()
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX), y: obj.stringRect.minY + 10, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY).toString()
     }
     
     @IBAction func MoveDown(_ sender: Any) {
 //        guard let lastID = psdsVM.selectedStrIDList.last else {return}
 //        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: lastID) else {return}
-        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY - 1).toString()
-        psdsVM.commitPosY()
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX), y: obj.stringRect.minY - 1, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY).toString()
 //        let tmpRect = CGRect(x: lastObj.stringRect.minX, y: lastObj.stringRect.minY - 1, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
 //        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
     }
     
     @IBAction func MoveDownLarge(_ sender: Any) {
-        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY - 10).toString()
-        psdsVM.commitPosY()
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX), y: obj.stringRect.minY - 10, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posY = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minY).toString()
     }
     
     
     @IBAction func MoveLeft(_ sender: Any) {
 //        guard let lastID = psdsVM.selectedStrIDList.last else {return}
 //        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: lastID) else {return}
-        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX - 1).toString()
-        psdsVM.commitPosX()
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX - 1), y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX).toString()
 //        let tmpRect = CGRect(x: lastObj.stringRect.minX - 1, y: lastObj.stringRect.minY, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
 //        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
     }
     
     
     @IBAction func MoveLeftLarge(_ sender: Any) {
-        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX - 10).toString()
-        psdsVM.commitPosX()
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX - 10), y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX).toString()
     }
     
     @IBAction func MoveRight(_ sender: Any) {
 //        guard let lastID = psdsVM.selectedStrIDList.last else {return}
 //        guard let lastObj = psdsVM.GetSelectedPsd()?.GetStringObjectFromOnePsd(objId: lastID) else {return}
-        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX + 1).toString()
-        psdsVM.commitPosX()
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX + 1), y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX).toString()
 //        let tmpRect = CGRect(x: lastObj.stringRect.minX + 1, y: lastObj.stringRect.minY, width: lastObj.stringRect.width, height: lastObj.stringRect.height)
 //        psdsVM.psdModel.SetRect(psdId: psdsVM.selectedPsdId, objId: psdsVM.selectedStrIDList.last!, value: tmpRect)
     }
     
     
     @IBAction func MoveRightLarge(_ sender: Any) {
-        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX + 10).toString()
-        psdsVM.commitPosX()
+        for id in psdsVM.selectedStrIDList {
+            guard let obj = psdsVM.stringObjectDict[id] else {return}
+            psdsVM.stringObjectDict[id]!.stringRect = CGRect.init(x: (obj.stringRect.minX + 10), y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+        }
+        psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX).toString()
     }
     
  

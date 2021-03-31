@@ -53,6 +53,13 @@ struct PsdThumbnail: View {
             .padding(.leading, 50)
     }
     
+//    func strCountView() -> some View{
+//        Text("ID:\(id)")
+//            .foregroundColor(.gray)
+//            .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .topLeading)
+//            .padding(.leading, 50)
+//    }
+    
     func LabelView() -> some View {
         if psdVM.fetchPsd(psdId: id).status == PsdStatus.normal{
             return Text("􀁢")

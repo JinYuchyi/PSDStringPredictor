@@ -35,6 +35,35 @@ struct ImageProcessView: View {
             
             Divider()
             
+//            HStack{
+//                Text("Threshold")
+//                    .foregroundColor(Color.gray)
+//                Slider(
+//                    value: Binding(
+//                        get: {
+//                            (psdsVM.thresholdDict[psdsVM.selectedPsdId] ?? 0.5)
+//                        },
+//                        set: {(newValue) in
+//                            psdsVM.thresholdDict[psdsVM.selectedPsdId] = newValue
+//                            psdsVM.UpdateProcessedImage(psdId: psdsVM.selectedPsdId)
+//                        }
+//                    ),
+//                    in: 0...1.0
+//                    
+//                ).disabled( psdsVM.selectedPsdId == -1)
+//                let id = psdsVM.selectedPsdId
+//                Toggle(isOn: $psdsVM.thresholdActive ) {
+//                    Text("")
+//                        .fixedSize()
+//                        
+//                }
+//                
+//                Button(action: { ResetGamma() }){
+//                    Text("Reset")
+//                }
+//            }
+//            .padding(.horizontal)
+            
             HStack{
                 Text("Gamma")
                     .foregroundColor(Color.gray)
@@ -56,7 +85,6 @@ struct ImageProcessView: View {
                 }
             }
             .padding(.horizontal)
-//            .padding(.top)
             
             HStack{
                 Text("Exposure")

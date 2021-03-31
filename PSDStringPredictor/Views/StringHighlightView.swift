@@ -86,9 +86,17 @@ struct StringHighlightView: View {
                                                     fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(),
                                                     tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
                                                 )
-                                                psdsVM.tmpObjectForStringProperty.width = tmp.width
-                                                psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
                                                 
+                                                // According to alignment method, change the expand direction
+                                                if psdsVM.fetchLastStringObjectFromSelectedPsd().alignment == .left{
+                                                    psdsVM.tmpObjectForStringProperty.width = tmp.width
+                                                    psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+                                                }else if psdsVM.fetchLastStringObjectFromSelectedPsd().alignment == .right{
+                                                    let delta = tmp.width - psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.width
+                                                    psdsVM.tmpObjectForStringProperty.posX = ( psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX - delta).toString()
+                                                    psdsVM.tmpObjectForStringProperty.width = tmp.width
+                                                    psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+                                                }
                                                 
                                             } else if abs(gesture.translation.width / gesture.translation.height) < 0.5  {
                                                 // Change size
@@ -101,11 +109,18 @@ struct StringHighlightView: View {
                                                 // Re-Calc the bound
                                                 let tmp  = FontUtils.GetStringBound(str: psdsVM.tmpObjectForStringProperty.content, fontName: psdsVM.tmpObjectForStringProperty.fontName, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat(), tracking: psdsVM.tmpObjectForStringProperty.tracking.toCGFloat())
                                                 
-                                                psdsVM.tmpObjectForStringProperty.width = tmp.width
-                                                psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
-                                                
-                                                let dif = originTracking - psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
-                                                psdsVM.tmpObjectForStringProperty.posX = (psdsVM.tmpObjectForStringProperty.posX.toCGFloat() ).toString()
+                                                // According to alignment method, change the expand direction
+                                                if psdsVM.fetchLastStringObjectFromSelectedPsd().alignment == .left{
+                                                    psdsVM.tmpObjectForStringProperty.width = tmp.width
+                                                    psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+//                                                    let dif = originTracking - psdsVM.tmpObjectForStringProperty.tracking.toCGFloat()
+//                                                    psdsVM.tmpObjectForStringProperty.posX = (psdsVM.tmpObjectForStringProperty.posX.toCGFloat() ).toString()
+                                                }else if psdsVM.fetchLastStringObjectFromSelectedPsd().alignment == .right{
+                                                    let delta = tmp.width - psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.width
+                                                    psdsVM.tmpObjectForStringProperty.posX = (psdsVM.fetchLastStringObjectFromSelectedPsd().stringRect.minX - delta).toString()
+                                                    psdsVM.tmpObjectForStringProperty.width = tmp.width
+                                                    psdsVM.tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: psdsVM.tmpObjectForStringProperty.content, fontSize: psdsVM.tmpObjectForStringProperty.fontSize.toCGFloat())
+                                                }
                                                 
                                             }
                                         }

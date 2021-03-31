@@ -217,7 +217,7 @@ struct StringObjectPropertyView: View {
                     ))
                         .frame(width: 15, height: 15, alignment: .center)
                         .mask(RoundedRectangle(cornerRadius: 2))
-                    
+                   
                     Spacer()
 
                     

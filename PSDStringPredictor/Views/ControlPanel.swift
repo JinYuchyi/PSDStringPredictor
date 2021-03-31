@@ -79,25 +79,22 @@ struct ControlPanel: View {
     }
     
     var alignmentButtons: some View  {
+        VStack{
         HStack{
             Button(action: {psdsVM.alignSelection(orientation: "horizontal-left")}){
-                Image("HAlignLeft")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+//                Image("HAlignLeft")
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: 65, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                Text("Set Left")
                     .frame(width: 65, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                //                                        Text("􀌀")
-                //                                            .frame(minWidth: geo.size.width*0.21, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             }
             Button(action: { psdsVM.alignSelection(orientation: "horizontal-center") }){
-                Image("HAlignCenter")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                Text("Set Center")
                     .frame(width: 65, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             }
             Button(action: { psdsVM.alignSelection(orientation: "horizontal-right") }){
-                Image("HAlignRight")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                Text("Set Right")
                     .frame(width: 65, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             }
             
@@ -122,6 +119,19 @@ struct ControlPanel: View {
 //                    .aspectRatio(contentMode: .fit)
 //                    .frame(width: 20, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
 //            }
+        }
+        HStack{
+            Button(action: {psdsVM.moveAndAlignToLeft()}, label: {
+                Text("|􀄪")
+                    .frame(width: 110, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            })
+        
+            
+            Button(action: {psdsVM.moveAndAlignToRight()}, label: {
+                Text("􀄫|")
+                    .frame(width: 110, height: 15,  alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            })
+        }
         }
     }
     

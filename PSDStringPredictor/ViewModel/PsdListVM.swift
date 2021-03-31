@@ -75,7 +75,9 @@ class PsdsVM: ObservableObject{
     @Published var selectedPsdId: Int  //refacting
     @Published var gammaDict: [Int:CGFloat]//refacting
     @Published var expDict: [Int:CGFloat]//refacting
-    @Published var DragOffsetDict: [UUID: CGSize] 
+    @Published var thresholdDict: [Int:CGFloat]//refacting
+    @Published var thresholdActive: Bool
+    @Published var DragOffsetDict: [UUID: CGSize]
     
     //Selected elements
 //    @Published var selectedNSImage: NSImage //refacting
@@ -92,6 +94,7 @@ class PsdsVM: ObservableObject{
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
     @Published var pickerColor: CGColor = CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+    
     //    @Published var PSPath: String = ""
     //    @Published var selectRect: CGRect = zeroRect
     
@@ -141,6 +144,8 @@ class PsdsVM: ObservableObject{
         expDict = [:]
         selectedStrIDList = []
         DragOffsetDict = [:]
+        thresholdDict = [:]
+        thresholdActive = false
         maskedImage = DataStore.zeroCIImage
         charImageDSWillBeSaved = DataStore.zeroCIImage
         
@@ -160,7 +165,9 @@ class PsdsVM: ObservableObject{
         var id = (psdObjectDict.keys.max() ?? -1)
         id = (id + 1) % Int.max
         let newPsd = PSDObject(id: id, imageURL: imageURL)
+//        print("Add psd: \(newPsd.id)")
         psdObjectDict[id] = newPsd
+//        print()
         return id
         //        uniqID = (uniqID + 1) % Int.max
     }
@@ -197,6 +204,8 @@ class PsdsVM: ObservableObject{
     func InitDictForOnePsd(psdId: Int){
         gammaDict[psdId] = 1
         expDict[psdId] = 0
+        thresholdDict[psdId] = 0.5
+        thresholdActive = false
         processedCIImage = DataStore.selectedNSImage.ToCIImage() ?? DataStore.zeroCIImage
     }
     
@@ -245,8 +254,8 @@ class PsdsVM: ObservableObject{
             return nil
         }
         let _targetImageMasked = imageUtil.ApplyBlockMasks(target: DataStore.selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
-        DispatchQueue.main.async{
-            self.processedCIImage = self.imageUtil.ApplyFilters(target: _targetImageMasked, gamma: self.gammaDict[psdId] ?? 1, exp: self.expDict[psdId] ?? 0)
+        DispatchQueue.main.async{ [self] in 
+            self.processedCIImage = self.imageUtil.ApplyFilters(target: _targetImageMasked, gamma: self.gammaDict[psdId] ?? 1, exp: self.expDict[psdId] ?? 0, threshold: self.thresholdDict[psdId] ?? 0.5, thresholdOn: self.thresholdActive ?? false )
         }
         return processedCIImage
     }
@@ -268,7 +277,7 @@ class PsdsVM: ObservableObject{
         
         var img = LoadNSImage(imageUrlPath: tmpImageUrl.path).ToCIImage()!
 //        img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
-        img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
+        img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0, threshold: thresholdDict[psdId] ?? 0.5, thresholdOn: thresholdActive ?? false )
         let allStrObjs = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self)
 //        DispatchQueue.main.async{ [self] in
 //            let tmpList = Array(stringObjectDict.values.filter({$0.status != .normal}))
@@ -316,7 +325,7 @@ class PsdsVM: ObservableObject{
         // Get strobj id list for selected psd
         var preIdList = psdStrDict[selectedPsdId] ?? []
 //        var img = imageUtil.ApplyBlockMasks(target: regionImage, psdId: psdId, rectDict: maskDict)
-        var img = imageUtil.ApplyFilters(target: regionImage, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0)
+        var img = imageUtil.ApplyFilters(target: regionImage, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0, threshold: thresholdDict[psdId] ?? 0.5, thresholdOn: thresholdActive ?? false)
         let newList = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self, offset: offset)
         var result = newList
         if newList.count == 0{
@@ -517,6 +526,20 @@ class PsdsVM: ObservableObject{
     
     func commitFontTracking() {
         for id in selectedStrIDList {
+            let preWidth = stringObjectDict[id]!.stringRect.width
+            let tmp = FontUtils.GetStringBound(
+                str: stringObjectDict[id]!.content,
+                fontName: stringObjectDict[id]!.fontName,
+                fontSize: stringObjectDict[id]!.fontSize,
+                tracking: tmpObjectForStringProperty.tracking.toCGFloat()
+            )
+            let delta = preWidth - tmp.width
+//            print("delta: \(delta), tracking: \(tmpObjectForStringProperty.tracking)")
+            if stringObjectDict[id]!.alignment == .right{
+                stringObjectDict[id]!.stringRect = CGRect.init(x: tmpObjectForStringProperty.posX.toCGFloat() - delta, y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
+            }else if stringObjectDict[id]!.alignment == .left{
+                stringObjectDict[id]!.stringRect = CGRect.init(x: tmpObjectForStringProperty.posX.toCGFloat(), y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
+            }
             stringObjectDict[id]!.tracking = tmpObjectForStringProperty.tracking.toCGFloat()
         }
     }
@@ -581,7 +604,7 @@ class PsdsVM: ObservableObject{
             var bgClolorList = [[Float]]()
             var isParagraphList = [Bool]()
             var descentOffset : [Float] =  []
-            var updateList = psdStrDict[psdId]!
+            var updateList = psdStrDict[psdId] ?? []
             var saveToPath = savePSDToPathList
             var frontSpaceList: [Float] = []
             
@@ -866,9 +889,8 @@ class PsdsVM: ObservableObject{
     }
     
     func createPSDForOne(){
-        if selectedPsdId != nil {
+        if DataStore.selectedNSImage != nil {
             createJS(idList: [selectedPsdId], savePSDToPathList: [""])
-            //            let path = Bundle.main.resourcePath! + "/StringCreator.jsx"
             runJS()
         }
     }
@@ -1165,15 +1187,15 @@ class PsdsVM: ObservableObject{
         
         if orientation == "horizontal-left" {
             
-            let posXList = objList.map({$0.stringRect.minX})
-            let minX = posXList.min()
-            if minX != nil {
+//            let posXList = objList.map({$0.stringRect.minX})
+//            let minX = posXList.min()
+//            if minX != nil {
                 for obj in objList {
-                    let rect: CGRect = CGRect.init(x: minX!, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
-                    stringObjectDict[obj.id]?.stringRect = rect
+//                    let rect: CGRect = CGRect.init(x: minX!, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+//                    stringObjectDict[obj.id]?.stringRect = rect
                     stringObjectDict[obj.id]?.alignment = .left
                 }
-            }
+//            }
         }else if orientation == "horizontal-center" {
             guard let lastId = selectedStrIDList.last else {return }
 //            let lasMidX = fetchLastStringObjectFromSelectedPsd().stringRect.midX
@@ -1233,6 +1255,27 @@ class PsdsVM: ObservableObject{
         
     }
     
+    func moveAndAlignToLeft(){
+//        let mostLeft = stringObjectDict.values.filter({selectedStrIDList.contains($0.id) }).map({$0.stringRect.minX}).sorted()[0]
+        let left = fetchLastStringObjectFromSelectedPsd().stringRect.minX
+        for id in selectedStrIDList {
+            guard let obj = stringObjectDict[id] else {return}
+            let delta = (obj.stringRect.minX) - left
+            stringObjectDict[id]!.stringRect = CGRect.init(x: obj.stringRect.minX - delta, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+            stringObjectDict[id]!.alignment = .left
+        }
+    }
+    
+    func moveAndAlignToRight(){
+//        let mostRight = stringObjectDict.values.filter({selectedStrIDList.contains($0.id) }).map({$0.stringRect.maxX}).sorted(by: >)[0]
+        let right = fetchLastStringObjectFromSelectedPsd().stringRect.maxX
+        for id in selectedStrIDList {
+            guard let obj = stringObjectDict[id] else {return}
+            let delta = (obj.stringRect.maxX) - right
+            stringObjectDict[id]!.stringRect = CGRect.init(x: obj.stringRect.minX - delta, y: obj.stringRect.minY, width: obj.stringRect.width, height: obj.stringRect.height)
+            stringObjectDict[id]!.alignment = .right
+        }
+    }
     
     
     func DeleteAll(){
