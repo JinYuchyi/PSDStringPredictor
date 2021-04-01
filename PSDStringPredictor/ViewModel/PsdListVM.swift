@@ -94,7 +94,7 @@ class PsdsVM: ObservableObject{
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
     @Published var pickerColor: CGColor = CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-    
+    @Published var  createMask = false
     //    @Published var PSPath: String = ""
     //    @Published var selectRect: CGRect = zeroRect
     
@@ -536,9 +536,9 @@ class PsdsVM: ObservableObject{
             let delta = preWidth - tmp.width
 //            print("delta: \(delta), tracking: \(tmpObjectForStringProperty.tracking)")
             if stringObjectDict[id]!.alignment == .right{
-                stringObjectDict[id]!.stringRect = CGRect.init(x: tmpObjectForStringProperty.posX.toCGFloat() - delta, y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
+                stringObjectDict[id]!.stringRect = CGRect.init(x: stringObjectDict[id]!.stringRect.minX - delta, y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
             }else if stringObjectDict[id]!.alignment == .left{
-                stringObjectDict[id]!.stringRect = CGRect.init(x: tmpObjectForStringProperty.posX.toCGFloat(), y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
+                stringObjectDict[id]!.stringRect = CGRect.init(x: stringObjectDict[id]!.stringRect.minX, y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
             }
             stringObjectDict[id]!.tracking = tmpObjectForStringProperty.tracking.toCGFloat()
         }
@@ -699,7 +699,7 @@ class PsdsVM: ObservableObject{
             }
             
             // Create js file
-            let jsStr = jsMgr.CreateJSString( psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: savePSDToPathList[index] , descentOffset: descentOffset, frontSpace: frontSpaceList)
+            let jsStr = jsMgr.CreateJSString( psdPath: psdPath, contentList: contentList, colorList: colorList, fontSizeList: fontSizeList, trackingList: trackingList, fontNameList: fontNameList, positionList: positionList, offsetList: offsetList, alignmentList: alignmentList, rectList: rectList, bgColorList: bgClolorList, isParagraphList: isParagraphList, saveToPath: savePSDToPathList[index] , descentOffset: descentOffset, frontSpace: frontSpaceList, createMask: createMask)
             
             finalStr.append(jsStr)
             

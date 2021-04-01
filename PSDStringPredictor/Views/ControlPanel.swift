@@ -184,6 +184,12 @@ struct ControlPanel: View {
                     
                     Divider()
                     
+                    Toggle(isOn: $psdsVM.createMask ) {
+                        Text("Create Mask")
+                            .fixedSize()
+    
+                    }
+                    
                     createPSDButtons
                     
                     Divider()

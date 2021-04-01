@@ -481,7 +481,7 @@ func Maximum(_ image: CIImage) -> ([CGFloat]){
     var filteredImage: CIImage = CIImage.init()
     filteredImage.unpremultiplyingAlpha()
 
-    var colorValueList: [CGFloat] =  [0,0,0]
+    var colorValueList: [CGFloat] =  [255,0,0]
 
     image.unpremultiplyingAlpha()
 
@@ -507,7 +507,11 @@ func Minimun(_ image: CIImage) -> ([CGFloat]){
 
 //    image.ToPNG(url: URL.init(fileURLWithPath: path))
     var filteredImage: CIImage = CIImage.init()
-    var colorValueList: [CGFloat] =  [0,0,0]
+    
+    
+    
+    var colorValueList: [CGFloat] =  [255,0,0]
+//    image.unpremultiplyingAlpha()
 
     if image.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
@@ -517,7 +521,8 @@ func Minimun(_ image: CIImage) -> ([CGFloat]){
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(image.extent.ToCIVector(), forKey: kCIInputExtentKey)
         filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
-        filteredImage.unpremultiplyingAlpha()
+        filteredImage = filteredImage.settingAlphaOne(in: filteredImage.extent)
+        filteredImage = filteredImage.unpremultiplyingAlpha()
 
 //        var path = "/Users/ipdesign/Downloads/Minimum.png"
 //        filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
@@ -548,6 +553,8 @@ func MaxMin(img: CIImage ) -> (min: [CGFloat], max: [CGFloat]) {
     new = new.settingAlphaOne(in: img.extent)
     
     var filteredImage: CIImage = CIImage.init()
+    filteredImage = filteredImage.unpremultiplyingAlpha()
+    filteredImage  = filteredImage.settingAlphaOne(in: filteredImage.extent)
     var min: [CGFloat] = [1,0,0]
     var max: [CGFloat] = [1,0,0]
 //    guard let img = DataStore.selectedNSImage.ToCIImage() else {return (min,max)}
@@ -566,24 +573,24 @@ func MaxMin(img: CIImage ) -> (min: [CGFloat], max: [CGFloat]) {
 //    var h = img.extent.height - 2
 //    h.round(.towardZero)
 //    let rec = CGRect(x: mx, y: my, width: w, height: h)
-    var path = "/Users/ipdesign/Downloads/raw1.png"
-//    new = img.cropped(to: rec)
-    new.ToPNG(url: URL.init(fileURLWithPath: path))
+//    var path = "/Users/ipdesign/Downloads/raw1.png"
+////    new = img.cropped(to: rec)
+//    new.ToPNG(url: URL.init(fileURLWithPath: path))
 //    new = new.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.genericRGBLinear)!)!
-    print("new: \(new.colorSpace)" )
+//    print("new: \(new.colorSpace)" )
     filter.setValue(new, forKey: kCIInputImageKey)
     filter.setValue(new.extent.ToCIVector(), forKey: kCIInputExtentKey)
     
 //    print(filter.description)
     filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
-    filteredImage = filteredImage.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
+    filteredImage = filteredImage.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.genericRGBLinear)!)!
 //    filteredImage = filteredImage.unpremultiplyingAlpha()
 //    filteredImage = filteredImage.settingAlphaOne(in: filteredImage.extent)
 //
-    path = "/Users/ipdesign/Downloads/maxmin.png"
-    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
+//    path = "/Users/ipdesign/Downloads/maxmin.png"
+//    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
     if filteredImage.IsValid() == true{
-        print(filteredImage.colorSpace)
+//        print(filteredImage.colorSpace)
 //        min = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
 //        max = PixelProcess.shared.colorAt(x: 1, y: 0, img: filteredImage)
         

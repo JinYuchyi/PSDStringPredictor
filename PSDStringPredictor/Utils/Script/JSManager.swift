@@ -66,7 +66,7 @@ class JSManager{
         return inString
     }
     
-    func CreateJSString(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Float]], offsetList: [[Int16]], alignmentList: [String], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool], saveToPath: String, descentOffset: [Float], frontSpace: [Float])->String{
+    func CreateJSString(psdPath: String, contentList: [String], colorList: [[Int]], fontSizeList: [Float], trackingList: [Float], fontNameList: [String], positionList: [[Float]], offsetList: [[Int16]], alignmentList: [String], rectList: [[Float]], bgColorList:[[Float]], isParagraphList: [Bool], saveToPath: String, descentOffset: [Float], frontSpace: [Float], createMask: Bool)->String{
         let names = NamesNormalize(names: contentList)
         let resourcePath = Bundle.main.resourcePath!
         let functionJSStr = ReadJSToString(jsPath: resourcePath +  "/Functions.js")
@@ -90,6 +90,7 @@ class JSManager{
         var saveToPath = "\(saveToPath)"
         var descentOffset = \(descentOffset)
         var frontSpace = \(frontSpace)
+        var createMask = \(createMask)
         """
 //        print("frontSpace: \(frontSpace)")
         let mainJSStr = ReadJSToString(jsPath: resourcePath +  "/Main.js")
