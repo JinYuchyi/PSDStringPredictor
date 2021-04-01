@@ -124,8 +124,11 @@ extension CIImage{
 //        self.unpremultiplyingAlpha()
 
 //        let maxmin = MaxMin(img: self)
-        let min = Minimun(self)
-        let max = Maximum(self)
+//        
+//        var img = self.settingAlphaOne(in: self.extent)
+//        img = img.unpremultiplyingAlpha()
+        let min = MaxMin(img: self).min
+        let max = MaxMin(img: self).max
         var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         var backgroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         if colorMode == .light{

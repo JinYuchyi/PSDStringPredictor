@@ -536,7 +536,7 @@ class PsdsVM: ObservableObject{
             let delta = preWidth - tmp.width
 //            print("delta: \(delta), tracking: \(tmpObjectForStringProperty.tracking)")
             if stringObjectDict[id]!.alignment == .right{
-                stringObjectDict[id]!.stringRect = CGRect.init(x: tmpObjectForStringProperty.posX.toCGFloat() - delta, y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
+                stringObjectDict[id]!.stringRect = CGRect.init(x: stringObjectDict[id]!.posX.toCGFloat() - delta, y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
             }else if stringObjectDict[id]!.alignment == .left{
                 stringObjectDict[id]!.stringRect = CGRect.init(x: tmpObjectForStringProperty.posX.toCGFloat(), y: stringObjectDict[id]!.stringRect.minY, width: tmp.width, height: stringObjectDict[id]!.stringRect.height)
             }
@@ -1019,7 +1019,6 @@ class PsdsVM: ObservableObject{
         let particialName = fName[startIndex..<endIndex!]
         var weightName = fName[endIndex!..<fName.endIndex]
         var str = ""
-//            print("weightName: \(weightName)")
         if weightName == " Regular"  {
             weightName = "Semibold"
             str = particialName + " Semibold"
@@ -1029,28 +1028,15 @@ class PsdsVM: ObservableObject{
         }
         
         for objId in selectedStrIDList{
-        if objId == nil {return}
-//        var psd = stringObjectDict[psdId]
-//        if psdObjectDict[psdId] != nil {
-//            for objId in selectedStrIDList{}
+            if objId == nil {return}
             
             stringObjectDict[objId]!.fontName = str
             
             let tmp  = FontUtils.GetStringBound(str: stringObjectDict[objId]!.content, fontName: stringObjectDict[objId]!.fontName, fontSize: stringObjectDict[objId]!.fontSize, tracking: stringObjectDict[objId]!.tracking)
-            stringObjectDict[objId]!.stringRect = CGRect.init(x: stringObjectDict[objId]!.stringRect.minX, y: stringObjectDict[objId]!.stringRect.minY, width: tmp.width, height: tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat()) )
+            stringObjectDict[objId]!.stringRect = CGRect.init(x: stringObjectDict[objId]!.stringRect.minX, y: stringObjectDict[objId]!.stringRect.minY, width: tmp.width, height: tmp.height - FontUtils.FetchTailOffset(content: stringObjectDict[objId]!.content, fontSize: stringObjectDict[objId]!.fontSize) )
             stringObjectDict[objId]!.fontWeight = String(weightName)
             stringObjectDict[objId]!.fontName = str
 
-//            tmpObjectForStringProperty.width = tmp.width
-//            tmpObjectForStringProperty.height = tmp.height - FontUtils.FetchTailOffset(content: tmpObjectForStringProperty.content, fontSize: tmpObjectForStringProperty.fontSize.toCGFloat())
-            //            tmpObjectForStringProperty.posX = (tmpObjectForStringProperty.posX.toCGFloat() + tmp.minX).toString()
-            
-//            commitTempStringObject()
-            
-            //Set fontName for all selected
-//            for id in selectedStrIDList {
-//                stringObjectDict[id]!.fontName = str
-//            }
         }
         tmpObjectForStringProperty = stringObjectDict[selectedStrIDList.last!]!.toObjectForStringProperty()
 
