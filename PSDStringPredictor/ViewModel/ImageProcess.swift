@@ -326,8 +326,9 @@ func LoadNSImage(imageUrlPath: String) -> NSImage {
     //        newImg = NSImage(data: data as Data)!
     //
     //    }
-    guard let ci = CIImage.init(contentsOf: url) else {return NSImage.init()}
-    
+    guard var ci = CIImage.init(contentsOf: url) else {return NSImage.init()}
+    ci = ci.settingAlphaOne(in: ci.extent)
+//    ci = ci.unpremultiplyingAlpha()
 //    var newImg = NSImage(contentsOf: url)!
     //    let scale = ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height / newImg.size.height
     //    let size: NSSize = NSSize(width: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.width, height: ImageUtil.sizeForImageAtURL(url: url as NSURL)!.height)
@@ -475,15 +476,16 @@ func SetGrayScale(_ image: CIImage) -> CIImage?{
 //}
 
 func Maximum(_ image: CIImage) -> ([CGFloat]){
+//    var img = image.unpremultiplyingAlpha()
     var img = image.settingAlphaOne(in: image.extent)
-    img.unpremultiplyingAlpha()
+    
 
     var filteredImage: CIImage = CIImage.init()
-    filteredImage.unpremultiplyingAlpha()
+//    filteredImage.unpremultiplyingAlpha()
 
     var colorValueList: [CGFloat] =  [255,0,0]
 
-    img.unpremultiplyingAlpha()
+//    img.unpremultiplyingAlpha()
 
     if img.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMaximum") else {
@@ -502,12 +504,14 @@ func Maximum(_ image: CIImage) -> ([CGFloat]){
 }
 
 func Minimun(_ image: CIImage) -> ([CGFloat]){
+//    var img = image.unpremultiplyingAlpha()
     var img = image.settingAlphaOne(in: image.extent)
-    img = img.unpremultiplyingAlpha()
 
 //    image.ToPNG(url: URL.init(fileURLWithPath: path))
     var filteredImage: CIImage = CIImage.init()
+
     var colorValueList: [CGFloat] =  [255,0,0]
+
 
     if img.extent.width > 0 {
         guard let filter = CIFilter(name: "CIAreaMinimum") else {
@@ -517,7 +521,8 @@ func Minimun(_ image: CIImage) -> ([CGFloat]){
         filter.setValue(img, forKey: kCIInputImageKey)
         filter.setValue(img.extent.ToCIVector(), forKey: kCIInputExtentKey)
         filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
-        filteredImage.unpremultiplyingAlpha()
+        filteredImage = filteredImage.settingAlphaOne(in: filteredImage.extent)
+        filteredImage = filteredImage.unpremultiplyingAlpha()
 
 //        var path = "/Users/ipdesign/Downloads/Minimum.png"
 //        filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
@@ -545,34 +550,40 @@ func filterThreshold(img: CIImage, value: CGFloat) -> CIImage{
 
 func MaxMin(img: CIImage ) -> (min: [CGFloat], max: [CGFloat]) {
 //    var new = img.unpremultiplyingAlpha()
-//    new = new.settingAlphaOne(in: img.extent)
+    let new = img.settingAlphaOne(in: img.extent)
 //    new.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
     var filteredImage: CIImage = CIImage.init()
+//    filteredImage = filteredImage.unpremultiplyingAlpha()
+//    filteredImage  = filteredImage.settingAlphaOne(in: filteredImage.extent)
     var min: [CGFloat] = [1,0,0]
     var max: [CGFloat] = [1,0,0]
-//    var path = "/Users/ipdesign/Downloads/row.png"
-//    new.ToPNG(url: URL.init(fileURLWithPath: path))
+    var path = "/Users/ipdesign/Downloads/row.png"
+    new.ToPNG(url: URL.init(fileURLWithPath: path))
 //    areaHistogram(img: img)
     guard let filter = CIFilter(name: "CIAreaMinMax") else {
         return (min,max)
     }
 
-    filter.setValue(img, forKey: kCIInputImageKey)
-    filter.setValue(img.extent.ToCIVector(), forKey: kCIInputExtentKey)
+    filter.setValue(new, forKey: kCIInputImageKey)
+    filter.setValue(new.extent.ToCIVector(), forKey: kCIInputExtentKey)
     
     filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
 //    filteredImage = filteredImage.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
-    filteredImage = filteredImage.unpremultiplyingAlpha()
+//    filteredImage = filteredImage.unpremultiplyingAlpha()
     filteredImage = filteredImage.settingAlphaOne(in: filteredImage.extent)
-//    let path = "/Users/ipdesign/Downloads/maxmin.png"
-//    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
+     path = "/Users/ipdesign/Downloads/maxmin.png"
+    filteredImage.ToPNG(url: URL.init(fileURLWithPath: path))
     if filteredImage.IsValid() == true{
+
         var bitmap = [UInt8](repeating: 0, count: 8)
         let context = CIContext(options: [.workingColorSpace: kCFNull])
-        context.render(filteredImage, toBitmap: &bitmap, rowBytes: 8, bounds: CGRect(x: 0, y: 0, width: 2, height: 1), format: .RGBA8, colorSpace: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)
-        min = [CGFloat(bitmap[0])/255, CGFloat(bitmap[1])/255, CGFloat(bitmap[2])/255]
-        max = [CGFloat(bitmap[4])/255, CGFloat(bitmap[5])/255, CGFloat(bitmap[6])/255]
-//        print("min:\(min), max:\(max)")
+//        context.render(filteredImage, toBitmap: &bitmap, rowBytes: 8, bounds: CGRect(x: 0, y: 0, width: 2, height: 1), format: .RGBA8, colorSpace: nil)
+//        min = [CGFloat(bitmap[0])/255, CGFloat(bitmap[1])/255, CGFloat(bitmap[2])/255]
+//        max = [CGFloat(bitmap[4])/255, CGFloat(bitmap[5])/255, CGFloat(bitmap[6])/255]
+        min = PixelProcess.shared.colorAt(x: 0, y: 0, img: filteredImage)
+        max = PixelProcess.shared.colorAt(x: 1, y: 0, img: filteredImage)
+        print("min:\(min), max:\(max)")
+//        print("total: \(bitmap)")
         return (min, max)
     }
 
@@ -592,7 +603,7 @@ func areaHistogram(img: CIImage) {
     filter.setValue(1, forKey: "inputScale")
     
     filteredImage = filter.outputImage ?? DataStore.zeroCIImage //Result Correct
-    filteredImage = filteredImage.unpremultiplyingAlpha()
+//    filteredImage = filteredImage.unpremultiplyingAlpha()
     filteredImage = filteredImage.settingAlphaOne(in: filteredImage.extent)
     
     let path = "/Users/ipdesign/Downloads/hist.png"

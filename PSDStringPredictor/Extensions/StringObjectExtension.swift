@@ -136,7 +136,7 @@ extension StringObject{
     func seprateIfPossible() -> [StringObject]? {
         var result: [StringObject] = []
         let IndexList = self.gapIndexList()
-        print("IndexList: \(IndexList)")
+//        print("IndexList: \(IndexList)")
 
         if IndexList.count == 0 {
             return nil

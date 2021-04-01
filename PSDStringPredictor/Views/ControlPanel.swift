@@ -35,6 +35,13 @@ struct ControlPanel: View {
     var panelWidth: CGFloat
     //Constant
     
+    func regionBtnPress(){
+        regionProcessVM.regionBtnPressed();
+        psdsVM.canProcess = true;
+        interactive.selectionRect = zeroRect
+        
+    }
+    
     var calculationBtns: some View {
         HStack{
             Button(action: {psdsVM.ProcessForOnePsd()}){
@@ -43,7 +50,7 @@ struct ControlPanel: View {
             }
             .disabled(psdsVM.IndicatorText != "")
             
-            Button(action: {regionProcessVM.regionBtnPressed(); psdsVM.canProcess = true; interactive.selectionRect = zeroRect}){
+            Button(action: {regionBtnPress()}){
                 Text("Region")
                     .frame(minWidth: 70,  maxWidth: .infinity)
             }
@@ -183,6 +190,12 @@ struct ControlPanel: View {
                         .frame(width: panelWidth, alignment: .leading)
                     
                     Divider()
+                    
+                    Toggle(isOn: $psdsVM.createMask ) {
+                        Text("Create Mask")
+                            .fixedSize()
+                    }
+                    .frame(width: panelWidth, alignment: .leading)
                     
                     createPSDButtons
                     

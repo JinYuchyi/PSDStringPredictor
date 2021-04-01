@@ -41,12 +41,10 @@ struct RegionProcessOverlayView: View {
                                 width: interactive.selectionRect.width.rounded(),
                                 height: -interactive.selectionRect.height.rounded()
                             ).standardized
-                            _ = psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
+                            psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
 
                             regionProcessVM.regionButtonActive = false
                             psdsVM.IndicatorText = ""
-
-
                         }
                 )
                 .mask(

@@ -43,7 +43,7 @@ extension CIImage{
     }
     
     func GetCroppedImages(rects: [CGRect]) -> [CIImage]{
-        self.unpremultiplyingAlpha()
+//        self.unpremultiplyingAlpha()
         self.settingAlphaOne(in: self.extent)
         var imgs :[CIImage] = []
         for rect in rects {
@@ -124,9 +124,9 @@ extension CIImage{
 //        self.unpremultiplyingAlpha()
 
 //        let maxmin = MaxMin(img: self)
-//        
-//        var img = self.settingAlphaOne(in: self.extent)
-//        img = img.unpremultiplyingAlpha()
+//
+//        var img = self.unpremultiplyingAlpha()
+        var img = self.settingAlphaOne(in: self.extent)
         let min = MaxMin(img: self).min
         let max = MaxMin(img: self).max
         var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)

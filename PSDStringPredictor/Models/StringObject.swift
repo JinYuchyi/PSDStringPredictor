@@ -272,12 +272,12 @@ struct StringObject : Identifiable,  Hashable{
        var img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath))!
 //        print("img colorspace: \(img.colorSpace)")
 //        img = img.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
-        img = img.unpremultiplyingAlpha()
+//        img = img.unpremultiplyingAlpha()
         img = img.settingAlphaOne(in: img.extent)
         // img color s[ace is p3
         img.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test.png"))
 //        guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
-        
+        let newRect = CGRect.init(x: stringRect.minX.rounded(.awayFromZero), y: stringRect.minY.rounded(.awayFromZero), width: stringRect.width.rounded(.towardZero), height: stringRect.height.rounded(.towardZero))
         (color, bgColor) = img.cropped(to: stringRect).getForegroundBackgroundColor(colorMode: self.colorMode)
 //        print("color: \(color), background: \(bgColor)")
 //        print(Minimun(img.cropped(to: stringRect)))
