@@ -93,7 +93,7 @@ class PsdsVM: ObservableObject{
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
     @Published var pickerColor: CGColor = CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
-    @Published var  createMask = false
+    @Published var  createMask = true
     //    @Published var PSPath: String = ""
     //    @Published var selectRect: CGRect = zeroRect
     
@@ -296,6 +296,11 @@ class PsdsVM: ObservableObject{
         DispatchQueue.main.async{ [self] in
             updateStringObjectsForPsd(psdId: psdId, strObjs: allStrObjs)
             IndicatorText = ""
+            self.prograssScale = 0
+            var psd = self.psdObjectDict[psdId]
+            if psd != nil {
+                psdObjectDict[psdId]!.status = .processed
+            }
         }
         
     }
@@ -319,7 +324,10 @@ class PsdsVM: ObservableObject{
     
     
     func fetchRegionStringObjects(rect: CGRect, psdId: Int) {
-        let regionImage = processedCIImage.cropped(to: rect).settingAlphaOne(in: rect) 
+        var regionImage = processedCIImage.cropped(to: rect)
+//        regionImage = regionImage.premultiplyingAlpha()
+//        regionImage = regionImage.settingAlphaOne(in: regionImage.extent)
+//        MaxMinTemp(img: regionImage)
         var offset = CGPoint.init(x: rect.minX, y: rect.minY)
         var preIdList = psdStrDict[selectedPsdId] ?? []
         var img = imageUtil.ApplyFilters(target: regionImage, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0, threshold: thresholdDict[psdId] ?? 0.5, thresholdOn: thresholdActive ?? false)
@@ -387,8 +395,9 @@ class PsdsVM: ObservableObject{
     //    }
     
     func CreateAllStringObjects(rawImg: CIImage, psdId: Int, psdsVM: PsdsVM, offset: CGPoint = CGPoint.init(x: 0, y: 0 )) -> [StringObject]{
+        var img = rawImg.settingAlphaOne(in: rawImg.extent)
         var strobjs : [StringObject] = []
-        let requestHandler = VNImageRequestHandler(ciImage: rawImg, options: [:])
+        let requestHandler = VNImageRequestHandler(ciImage: img, options: [:])
         let TextRecognitionRequest = VNRecognizeTextRequest()
         TextRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         TextRecognitionRequest.usesLanguageCorrection = true
@@ -406,7 +415,7 @@ class PsdsVM: ObservableObject{
         }
         
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-        let stringsRects = ocr.GetRectsFromObservations(results_fast, Int(rawImg.extent.width.rounded()), Int(rawImg.extent.height.rounded()))
+        let stringsRects = ocr.GetRectsFromObservations(results_fast, Int(img.extent.width.rounded()), Int(img.extent.height.rounded()))
         let strs = ocr.GetStringArrayFromObservations(results_fast)
         
         for i in 0..<stringsRects.count where canProcess == true{
@@ -415,9 +424,9 @@ class PsdsVM: ObservableObject{
                 psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
-            let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((rawImg.extent.width).rounded()), Int((rawImg.extent.height).rounded()))
+            let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((img.extent.width).rounded()), Int((img.extent.height).rounded()))
             
-            let charImageList = rawImg.GetCroppedImages(rects: charRects.offset(offset: offset) )
+            let charImageList = img.GetCroppedImages(rects: charRects.offset(offset: offset) )
             
             var newStrObj = StringObject.init(imagePath: psdObjectDict[psdId]!.imageURL.path, strs[i], stringsRects[i].offset(offset: offset) , chars, charRects.offset(offset: offset), charImageList: charImageList)
             
@@ -875,10 +884,14 @@ class PsdsVM: ObservableObject{
                 queueCalc.async {
                     
                     self.FetchStringObjects(psdId: psd.id)
-                    DispatchQueue.main.async{
-                        self.prograssScale = 0
-                        self.psdObjectDict[psd.id]!.status = .processed
-                    }
+//                    DispatchQueue.main.async{
+//                        self.prograssScale = 0
+//                        var psd = self.psdObjectDict[psd.id]
+//                        if psd != nil {
+//                            psd!.status = .processed
+//                        }
+//
+//                    }
                     c += 1
                 }
             }

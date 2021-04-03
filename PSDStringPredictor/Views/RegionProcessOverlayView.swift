@@ -42,7 +42,7 @@ struct RegionProcessOverlayView: View {
                                 height: -interactive.selectionRect.height.rounded()
                             ).standardized
                             psdsVM.fetchRegionStringObjects(rect: cropRect, psdId: psdsVM.selectedPsdId)
-
+                            
                             regionProcessVM.regionButtonActive = false
                             psdsVM.IndicatorText = ""
                         }

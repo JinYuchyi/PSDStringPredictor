@@ -181,7 +181,7 @@ struct StringObject : Identifiable,  Hashable{
     
     func mergeRect(rects: [CGRect]) -> CGRect{
         let maxHeight = rects.map({$0.height}).max()!
-        return CGRect.init(x: rects[0].minX, y: rects[0].minY, width: rects.last!.maxX - rects[0].minX, height: maxHeight)
+        return CGRect.init(x: rects[0].minX.rounded(), y: rects[0].minY.rounded(), width: (rects.last!.maxX - rects[0].minX).rounded(), height: maxHeight.rounded())
     }
     
     mutating func calcColorMode() -> MacColorMode{
@@ -239,7 +239,7 @@ struct StringObject : Identifiable,  Hashable{
 //        }
         // . -> ·
         let dotsList = target.findDots()
-        print("Dot found: \(dotsList)")
+//        print("Dot found: \(dotsList)")
         var charList = Array(content)
         for _index in dotsList {
             if _index != 0 {
@@ -274,11 +274,17 @@ struct StringObject : Identifiable,  Hashable{
 //        img = img.matchedFromWorkingSpace(to: CGColorSpace.init(name: CGColorSpace.extendedLinearDisplayP3)!)!
 //        img = img.unpremultiplyingAlpha()
         img = img.settingAlphaOne(in: img.extent)
-        // img color s[ace is p3
-        img.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test.png"))
+//        // img color s[ace is p3
 //        guard let img = DataStore.selectedNSImage.ToCIImage() else {return}
         let newRect = CGRect.init(x: stringRect.minX.rounded(.awayFromZero), y: stringRect.minY.rounded(.awayFromZero), width: stringRect.width.rounded(.towardZero), height: stringRect.height.rounded(.towardZero))
-        (color, bgColor) = img.cropped(to: stringRect).getForegroundBackgroundColor(colorMode: self.colorMode)
+//        print(newRect)
+        
+        img = img.cropped(to: newRect)
+        img.settingAlphaOne(in: img.extent)
+        img.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test1.png"))
+
+        (color, bgColor) = img.getForegroundBackgroundColor(colorMode: self.colorMode)
+        
 //        print("color: \(color), background: \(bgColor)")
 //        print(Minimun(img.cropped(to: stringRect)))
     }

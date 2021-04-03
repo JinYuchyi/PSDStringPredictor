@@ -45,6 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         //Prepare the config setting
         PreSettingConfig()
+//        MaxMin()
         
         //test
 //        let img = CIImage.init(contentsOf: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test.png"))!

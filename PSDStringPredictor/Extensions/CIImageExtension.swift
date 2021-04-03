@@ -18,7 +18,7 @@ extension CIImage{
     }
     
     func ToCGImage() -> CGImage! {
-        let context = CIContext()
+//        let context = CIContext()
         
         
         //        var colorSpace = CGColorSpaceCreateDeviceRGB()
@@ -127,8 +127,14 @@ extension CIImage{
 //
 //        var img = self.unpremultiplyingAlpha()
         var img = self.settingAlphaOne(in: self.extent)
-        let min = MaxMin(img: self).min
-        let max = MaxMin(img: self).max
+        let min = MaxMinTemp(img: img).min
+        let max = MaxMinTemp(img: img).max
+        
+       
+        
+//        let max = Maximum(self)
+//        let min = Minimun(self)
+//        print("min:\(min), max:\(max)")
         var foregroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         var backgroundColor: CGColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
         if colorMode == .light{

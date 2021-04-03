@@ -195,6 +195,7 @@ struct ControlPanel: View {
                         Text("Create Mask")
                             .fixedSize()
                     }
+                    .padding(.leading)
                     .frame(width: panelWidth, alignment: .leading)
                     
                     createPSDButtons
