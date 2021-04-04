@@ -14,7 +14,8 @@ import ImageIO
 
 class ColorModeClassifier{
     var output: Int = -1
-    
+    static let shared = ColorModeClassifier.init()
+    private init(){}
     init(image: CIImage){
         Prediction(image: image)
     }

@@ -134,10 +134,10 @@ class ImageUtil{
     
     func ApplyFilters(target: CIImage, gamma: CGFloat, exp: CGFloat, threshold: CGFloat, thresholdOn: Bool)->CIImage{
         if (target.IsValid()){
-            var tmp = ChangeGamma(target, gamma)!
-            tmp = ChangeExposure(tmp, exp)!
+            var tmp = Filters.shared.ChangeGamma(target, gamma)!
+            tmp = Filters.shared.ChangeExposure(tmp, exp)!
             if thresholdOn == true{
-                tmp = filterThreshold(img: tmp, value: threshold)
+                tmp = Filters.shared.filterThreshold(img: tmp, value: threshold)
             }
             return tmp
         }
@@ -167,7 +167,7 @@ class ImageUtil{
     }
     
     private func StringColorMode(img: CIImage) -> MacColorMode {
-        let bw = SetGrayScale(img)
+        let bw = Filters.shared.SetGrayScale(img)
                 let tmpPath = GetDocumentsPath().appending("/bw.bmp")
         bw!.ToPNG(url: URL.init(fileURLWithPath: tmpPath))
         let colorMode = ColorModeClassifier(image: img)

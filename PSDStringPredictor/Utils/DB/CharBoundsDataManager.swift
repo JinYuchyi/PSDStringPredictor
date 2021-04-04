@@ -10,11 +10,15 @@ import Foundation
 import CoreData
 
 class CharBoundsDataManager{
+    let fetchRequest: NSFetchRequest<CharBounds>
+    
     static let shared = CharBoundsDataManager()
     
-    private init(){}
+    private init(){
+        fetchRequest = NSFetchRequest(entityName: "CharBounds")
+    }
     
-    static func Insert(_ context: NSManagedObjectContext, _ char: String, _ fontSize: Int16 , _ x1: Int16, _ y1: Int16, _ x2: Int16, _ y2: Int16, _ weight: String){
+     func Insert(_ context: NSManagedObjectContext, _ char: String, _ fontSize: Int16 , _ x1: Int16, _ y1: Int16, _ x2: Int16, _ y2: Int16, _ weight: String){
         var keyvalues: [String: AnyObject] = [:]
         keyvalues["char"] = char as AnyObject
         keyvalues["fontSize"] = fontSize as AnyObject
@@ -23,7 +27,7 @@ class CharBoundsDataManager{
         keyvalues["x2"] = x2 as AnyObject
         keyvalues["y2"] = y2 as AnyObject
         keyvalues["weight"] = weight as AnyObject
-        let items = CharBoundsDataManager.FetchItems(context, keyValues: keyvalues)
+        let items = CharBoundsDataManager.shared.FetchItems(context, keyValues: keyvalues)
         
         //print("Count: \(items.count)")
         
@@ -43,7 +47,7 @@ class CharBoundsDataManager{
         }
     }
     
-    static func BatchInsert(_ context: NSManagedObjectContext, CharBoundsList: [CharBoundsObject]){
+     func BatchInsert(_ context: NSManagedObjectContext, CharBoundsList: [CharBoundsObject]){
         //Create objects
         var objects: [[String: Any]] = []
         for item in CharBoundsList{
@@ -78,10 +82,10 @@ class CharBoundsDataManager{
     //
     //    }
     
-    static func FetchItems(_ context: NSManagedObjectContext, keyValues: [String: AnyObject]) -> [CharBoundsObject]{
+     func FetchItems(_ context: NSManagedObjectContext, keyValues: [String: AnyObject]) -> [CharBoundsObject]{
         var charBoundsList:[CharBoundsObject] = []
-        let request: NSFetchRequest<CharBounds> = NSFetchRequest(entityName: "CharBounds")
-        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
+        let fetchRequest: NSFetchRequest<CharBounds> = NSFetchRequest(entityName: "CharBounds")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
         
         var predicateList: [NSPredicate] = []
         
@@ -91,10 +95,10 @@ class CharBoundsDataManager{
                 let predicate:NSPredicate = NSPredicate(format: "%K == %@", key, value as! NSObject)
                 predicateList.append(predicate)
             }
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates:predicateList)
+            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates:predicateList)
         }
 
-        let objs = (try? context.fetch(request)) ?? []
+        let objs = (try? context.fetch(fetchRequest)) ?? []
         //print("Fetched \(objs.count) items, from char = \(char), width = \(width), height = \(height) ")
         for item in objs {
             
@@ -104,17 +108,16 @@ class CharBoundsDataManager{
         return charBoundsList
     }
     
-    static func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> CharBoundsObject{
-        let request: NSFetchRequest<CharBounds> = NSFetchRequest(entityName: "CharBounds")
-        request.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: false)]
-        request.predicate = NSPredicate(format: "fontSize <= %@ ", NSNumber(value: Int(fontSize)))
+     func FetchNearestOne(_ context: NSManagedObjectContext, fontSize: Int16 ) -> CharBoundsObject{
         
-        let request1: NSFetchRequest<CharBounds> = NSFetchRequest(entityName: "CharBounds")
-        request1.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
-        request1.predicate = NSPredicate(format: "fontSize > %@ ", NSNumber(value: Int(fontSize)))
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: false)]
+        fetchRequest.predicate = NSPredicate(format: "fontSize <= %@ ", NSNumber(value: Int(fontSize)))
+        let objs = (try? context.fetch(fetchRequest)) ?? []
         
-        let objs = (try? context.fetch(request)) ?? []
-        let objs1 = (try? context.fetch(request1)) ?? []
+//        let request1: NSFetchRequest<CharBounds> = NSFetchRequest(entityName: "CharBounds")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "fontSize", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "fontSize > %@ ", NSNumber(value: Int(fontSize)))
+        let objs1 = (try? context.fetch(fetchRequest)) ?? []
         
         let size = objs.first?.fontSize ?? 0
         let size1 = objs1.first?.fontSize ?? 0
@@ -129,14 +132,14 @@ class CharBoundsDataManager{
         }
     }
     
-    static func Delete(_ context: NSManagedObjectContext, fontSize: Int16 = -1000, char: String = "", weight: String = ""){
-        let request: NSFetchRequest<CharBounds> = NSFetchRequest(entityName: "CharBounds")
+     func Delete(_ context: NSManagedObjectContext, fontSize: Int16 = -1000, char: String = "", weight: String = ""){
+//        let request: NSFetchRequest<CharBounds> = NSFetchRequest(entityName: "CharBounds")
         
         if (fontSize != -1000 && char != ""){
-            request.predicate = NSPredicate(format: "fontSize = %@ and char = %@", NSNumber(value: Int(fontSize)), String(char))
+            fetchRequest.predicate = NSPredicate(format: "fontSize = %@ and char = %@", NSNumber(value: Int(fontSize)), String(char))
         }
         
-        let objs = (try? context.fetch(request)) ?? []
+        let objs = (try? context.fetch(fetchRequest)) ?? []
         let index = objs.count
         var index1 = 0
         for item in objs {

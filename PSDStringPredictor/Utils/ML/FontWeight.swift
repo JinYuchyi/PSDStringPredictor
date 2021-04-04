@@ -14,7 +14,8 @@ import ImageIO
 
 class FontWeightPredict{
     private var result: String = ""
-
+    static let shared = FontWeightPredict.init()
+    private init(){}
     lazy var classificationRequest: VNCoreMLRequest = {
         do {
             /*

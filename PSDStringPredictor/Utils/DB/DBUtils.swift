@@ -126,12 +126,12 @@ class DBUtils{
                 {
                     //DataStore.fontCsvPath = panel.url!.path
                     //DB.shared.RefillFontDBFromCSV()
-                    CharBoundsDataManager.Delete(viewContext)
+                    CharBoundsDataManager.shared.Delete(viewContext)
 
                     //let str = CSVManager.shared.ReadAllContentAsString(FromFile: panel.url!.path)
                     //let objArray = CSVManager.shared.ParsingCsvStringAsCharObjArray(FromString: str)
                     let objArray = CSVManager.shared.ParsingCsvFileAsBoundsObjArray(FilePath: panel.url!.path)
-                    CharBoundsDataManager.BatchInsert(viewContext, CharBoundsList: objArray)
+                    CharBoundsDataManager.shared.BatchInsert(viewContext, CharBoundsList: objArray)
                 }
             }
         }

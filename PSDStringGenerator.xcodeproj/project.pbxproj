@@ -120,6 +120,7 @@
 		3F59C11125D3CF8600F9CF52 /* qColor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F59C0DD25D3CF8600F9CF52 /* qColor.mlmodel */; };
 		3F59C11225D3CF8600F9CF52 /* rColor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F59C0DE25D3CF8600F9CF52 /* rColor.mlmodel */; };
 		3F59C11325D3CF8600F9CF52 /* sColor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3F59C0DF25D3CF8600F9CF52 /* sColor.mlmodel */; };
+		3F63B1962619F94800052841 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F63B1952619F94800052841 /* Filters.swift */; };
 		3F662AFA25677D40008F1879 /* TerminalScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F662AF925677D40008F1879 /* TerminalScriptManager.swift */; };
 		3F66F86F2567BCE800BD48C3 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F66F86E2567BCE800BD48C3 /* PythonKit */; };
 		3F66F8722567BD7100BD48C3 /* PythonScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */; };
@@ -332,6 +333,7 @@
 		3F59C0DD25D3CF8600F9CF52 /* qColor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = qColor.mlmodel; sourceTree = "<group>"; };
 		3F59C0DE25D3CF8600F9CF52 /* rColor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = rColor.mlmodel; sourceTree = "<group>"; };
 		3F59C0DF25D3CF8600F9CF52 /* sColor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = sColor.mlmodel; sourceTree = "<group>"; };
+		3F63B1952619F94800052841 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		3F662AF925677D40008F1879 /* TerminalScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalScriptManager.swift; sourceTree = "<group>"; };
 		3F66F8712567BD7100BD48C3 /* PythonScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonScriptManager.swift; sourceTree = "<group>"; };
 		3F68B701252D7D8900CCFCE5 /* FontSizeTrackingTable.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = FontSizeTrackingTable.csv; sourceTree = "<group>"; };
@@ -870,6 +872,7 @@
 				3F8460A1251057FF00788176 /* CompareImage.swift */,
 				3FD9957E2518B48D007E3D05 /* ImageUtil.swift */,
 				3F308026251DD96600550DEA /* PixelProcess.swift */,
+				3F63B1952619F94800052841 /* Filters.swift */,
 			);
 			path = ImageProcess;
 			sourceTree = "<group>";
@@ -1193,6 +1196,7 @@
 				3F59C0F425D3CF8600F9CF52 /* oColor.swift in Sources */,
 				3F040A2825A69C4F0054E124 /* StringObjectExtension.swift in Sources */,
 				3F0007BC252EF8AC0047574A /* Csv.swift in Sources */,
+				3F63B1962619F94800052841 /* Filters.swift in Sources */,
 				3F59C10225D3CF8600F9CF52 /* hColor.swift in Sources */,
 				3FC3DFCC25B670EB0060521D /* KeyBoard.swift in Sources */,
 				3F3EFFAB2535ABB60047E4E5 /* CharDataObject.swift in Sources */,
@@ -1388,7 +1392,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 5N7U97AKYG;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1399,7 +1403,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				MARKETING_VERSION = 0.5.5;
+				MARKETING_VERSION = 0.5.6;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1418,7 +1422,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 5N7U97AKYG;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1429,7 +1433,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				MARKETING_VERSION = 0.5.5;
+				MARKETING_VERSION = 0.5.6;
 				MTL_COMPILER_FLAGS = "-cikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.PSDStringGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";

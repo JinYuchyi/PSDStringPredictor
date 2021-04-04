@@ -62,7 +62,7 @@ struct StringObjectForStringProperty{
 
 class PsdsVM: ObservableObject{
     
-    let ocr = OCR.shared
+//    let ocr = OCR.shared
     
     
     //refacting
@@ -92,7 +92,7 @@ class PsdsVM: ObservableObject{
     @Published var stringIsOn: Bool = true
     @Published var tmpObjectForStringProperty: StringObjectForStringProperty = StringObjectForStringProperty.init()
     @Published var viewScale: CGFloat = 1.0
-    @Published var pickerColor: CGColor = CGColor.init(red: 1, green: 1, blue: 1, alpha: 1)
+    @Published var pickerColor: CGColor = CGColor.white
     @Published var  createMask = true
     //    @Published var PSPath: String = ""
     //    @Published var selectRect: CGRect = zeroRect
@@ -243,13 +243,13 @@ class PsdsVM: ObservableObject{
     }
     
     func FetchBoundTable(path:String){
-        CharBoundsDataManager.Delete(viewContext)
+        CharBoundsDataManager.shared.Delete(viewContext)
         let objArray = CSVManager.shared.ParsingCsvFileAsBoundsObjArray(FilePath: path)
-        CharBoundsDataManager.BatchInsert(viewContext, CharBoundsList: objArray)
+        CharBoundsDataManager.shared.BatchInsert(viewContext, CharBoundsList: objArray)
     }
     
     func UpdateProcessedImage(psdId: Int)->CIImage?{
-        if DataStore.selectedNSImage.size.width == 0 || DataStore.selectedNSImage == nil {
+        if DataStore.selectedNSImage.size.width == 0 {
             return nil
         }
         let _targetImageMasked = imageUtil.ApplyBlockMasks(target: DataStore.selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
@@ -270,11 +270,12 @@ class PsdsVM: ObservableObject{
     }
     
     func FetchStringObjects(psdId: Int){
-        var result: [StringObject] = []
+//        var result: [StringObject] = []
         
         guard let tmpImageUrl = psdObjectDict[psdId]?.imageURL else {return}
         
         var img = LoadNSImage(imageUrlPath: tmpImageUrl.path).ToCIImage()!
+        
         //        img = imageUtil.ApplyBlockMasks(target: img, psdId: psdId, rectDict: maskDict)
         img = imageUtil.ApplyFilters(target: img, gamma: gammaDict[psdId] ?? 1, exp: expDict[psdId] ?? 0, threshold: thresholdDict[psdId] ?? 0.5, thresholdOn: thresholdActive ?? false )
         let allStrObjs = CreateAllStringObjects(rawImg: img, psdId: psdId, psdsVM: self)
@@ -415,8 +416,8 @@ class PsdsVM: ObservableObject{
         }
         
         guard let results_fast = TextRecognitionRequest.results as? [VNRecognizedTextObservation] else {return ([])}
-        let stringsRects = ocr.GetRectsFromObservations(results_fast, Int(img.extent.width.rounded()), Int(img.extent.height.rounded()))
-        let strs = ocr.GetStringArrayFromObservations(results_fast)
+        let stringsRects = OCR.shared.GetRectsFromObservations(results_fast, Int(img.extent.width.rounded()), Int(img.extent.height.rounded()))
+        let strs = OCR.shared.GetStringArrayFromObservations(results_fast)
         
         for i in 0..<stringsRects.count where canProcess == true{
             
@@ -424,7 +425,7 @@ class PsdsVM: ObservableObject{
                 psdsVM.prograssScale += 1/CGFloat(stringsRects.count)
                 psdsVM.IndicatorText = "Processing Image ID: \(psdId), \(i+1) / \(stringsRects.count) strings"
             }
-            let (charRects, chars) = ocr.GetCharsInfoFromObservation(results_fast[i], Int((img.extent.width).rounded()), Int((img.extent.height).rounded()))
+            let (charRects, chars) = OCR.shared.GetCharsInfoFromObservation(results_fast[i], Int((img.extent.width).rounded()), Int((img.extent.height).rounded()))
             
             let charImageList = img.GetCroppedImages(rects: charRects.offset(offset: offset) )
             
@@ -863,6 +864,7 @@ class PsdsVM: ObservableObject{
             return
         }
         //        let queueCalc = DispatchQueue(label: "calc")
+        
         queueCalc.async {
             self.FetchStringObjects(psdId: processOn)
             DispatchQueue.main.async{
@@ -879,7 +881,7 @@ class PsdsVM: ObservableObject{
         let _list = psdObjectDict.values.filter({$0.status == .commited}).sorted(by: {$0.id < $1.id})
         if _list.count > 0{
             
-            var c: CGFloat = 0
+//            var c: CGFloat = 0
             for psd in _list {
                 queueCalc.async {
                     
@@ -892,7 +894,7 @@ class PsdsVM: ObservableObject{
 //                        }
 //
 //                    }
-                    c += 1
+//                    c += 1
                 }
             }
             IndicatorText = ""

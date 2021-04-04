@@ -47,16 +47,12 @@ extension CGImage{
         var minB: CGFloat = 1000
         var max: [CGFloat] = []
         var min: [CGFloat] = []
-//        print("test des: \(data[1010101010].words)" )
 
         for j in 0..<(self.height) {
             for i in 0..<(self.width){
                 let pixelInfo: Int = ((self.width * j) + i) * 4
-//                print("des: \(data[pixelInfo].words.)" )
                 if CGFloat(data[pixelInfo]) + CGFloat(data[pixelInfo + 1]) + CGFloat(data[pixelInfo + 2]) != 0{
                     let l = (0.21 * CGFloat(data[pixelInfo])) + (0.72 * CGFloat(data[pixelInfo + 1])) + (0.07 * CGFloat(data[pixelInfo + 2]))
-    //                print("pixelInfo (\(j), \(i)): \(CGFloat(data[pixelInfo])), \(CGFloat(data[pixelInfo+1])), \(CGFloat(data[pixelInfo+2]))")
-
                     if l > maxB {
                         maxB = l
                         max = [CGFloat(data[pixelInfo])/255, CGFloat(data[pixelInfo+1])/255, CGFloat(data[pixelInfo+2])/255]
@@ -69,7 +65,6 @@ extension CGImage{
 
             }
         }
-//        print("new func: \(min), \(max)")
 
         return (min, max)
     }

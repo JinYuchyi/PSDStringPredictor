@@ -188,10 +188,10 @@ struct StringObject : Identifiable,  Hashable{
         var result = -1
         charColorModeList = []
         for index in 0..<charArray.count{
-            let bw = SetGrayScale(charImageList[index])
+            let bw = Filters.shared.SetGrayScale(charImageList[index])
             
-            let charColorMode = CharColorModeClassifierV2.init()
-            let result = charColorMode.Prediction(fromImage: bw!, char: String(charArray[index]))
+//            let charColorMode = CharColorModeClassifierV2.init()
+            let result = CharColorModeClassifierV2.shared.Prediction(fromImage: bw!, char: String(charArray[index]))
             charColorModeList.append(result)
         }
         if charColorModeList.count > 0 {
@@ -281,7 +281,7 @@ struct StringObject : Identifiable,  Hashable{
         
         img = img.cropped(to: newRect)
         img.settingAlphaOne(in: img.extent)
-        img.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test1.png"))
+//        img.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Desktop/test1.png"))
 
         (color, bgColor) = img.getForegroundBackgroundColor(colorMode: self.colorMode)
         
@@ -479,8 +479,8 @@ struct StringObject : Identifiable,  Hashable{
     mutating func PredictFontWeight()->String{
         charFontWeightList.removeAll()
         for img in charImageList{
-            let bw = SetGrayScale(img)
-            let temp = FontWeightPredict().Prediction(ciImage: bw!)
+            let bw = Filters.shared.SetGrayScale(img)
+            let temp = FontWeightPredict.shared.Prediction(ciImage: bw!)
             if (temp == "semibold"){
                 charFontWeightList.append("Semibold")
             }else if (temp == "regular"){

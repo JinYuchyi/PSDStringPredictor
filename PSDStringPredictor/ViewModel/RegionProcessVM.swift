@@ -19,16 +19,16 @@ class RegionProcessVM: ObservableObject {
     //    @Published var targetImageHeight: CGFloat = 0
     
     var targetImage: CIImage = DataStore.zeroCIImage
-    let imgUtil = ImageUtil.shared
+//    let imgUtil = ImageUtil.shared
     
     private func fetchRegionOverlay( regionRect: CGRect, bgWidth: CGFloat, bgHeight: CGFloat) -> (mask1: CIImage, mask2: CIImage){
         let bgImg = CIImage.init(color: CIColor.black ).cropped(to: CGRect.init(x: 0, y: 0, width: bgWidth, height: bgHeight))
         let regionImg = CIImage.init(color: CIColor.init(red: 1, green: 1, blue: 1, alpha: 1)).cropped(to: CGRect.init(x: 0, y: 0, width: regionRect.width, height: regionRect.height))
-        let mask1 = imgUtil.ImageOntop(OverlayImage: regionImg, BGImage: bgImg, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
+        let mask1 = ImageUtil.shared.ImageOntop(OverlayImage: regionImg, BGImage: bgImg, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
         
         let bgImg2 = CIImage.init(color: CIColor.white ).cropped(to: CGRect.init(x: 0, y: 0, width: bgWidth, height: bgHeight))
         let regionImg2 = CIImage.init(color: CIColor.black).cropped(to: CGRect.init(x: 0, y: 0, width: regionRect.width, height: regionRect.height))
-        let mask2 = imgUtil.ImageOntop(OverlayImage: regionImg2, BGImage: bgImg2, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
+        let mask2 = ImageUtil.shared.ImageOntop(OverlayImage: regionImg2, BGImage: bgImg2, OffsetX: regionRect.minX, OffsetY: regionRect.minY)
 
         return (mask1, mask2)
     }

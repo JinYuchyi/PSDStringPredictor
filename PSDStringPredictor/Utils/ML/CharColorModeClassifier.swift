@@ -15,7 +15,8 @@ import ImageIO
 class CharColorModeClassifier{
     
     var result = -1
-    
+    static let shared = CharColorModeClassifier.init()
+    private init(){}
     lazy var classificationRequest: VNCoreMLRequest = {
         do {
             /*

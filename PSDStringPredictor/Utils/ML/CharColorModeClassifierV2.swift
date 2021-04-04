@@ -16,7 +16,12 @@ class CharColorModeClassifierV2{
     //    static var shared = CharColorModeClassifierV2()
     var result = -1
     var letter: String = ""
-    
+    var model : VNCoreMLModel = try! VNCoreMLModel(for: CharColorMode.shared.model)
+    static let shared = CharColorModeClassifierV2.init()
+    private init(){
+//        var model = try! VNCoreMLModel(for: CharColorMode.shared.model)
+        
+    }
     lazy var classificationRequest: VNCoreMLRequest = {
         do {
             /*
@@ -24,7 +29,7 @@ class CharColorModeClassifierV2{
              To use a different Core ML classifier model, add it to the project
              and replace `MobileNet` with that model's generated Swift class.
              */
-            var model = try VNCoreMLModel(for: CharColorMode.shared.model)
+            
             switch letter {
             case "a", "A": model = try VNCoreMLModel(for: aColor.shared.model)
             case "b", "B": model = try VNCoreMLModel(for: bColor.shared.model)
@@ -111,7 +116,7 @@ class CharColorModeClassifierV2{
     func Prediction(fromImage ciImage: CIImage, char: String) -> Int{
         letter = char
         //DispatchQueue.global(qos: .userInitiated).async {
-        let handler = VNImageRequestHandler(ciImage: SetGrayScale(ciImage)!, orientation: .up)
+        let handler = VNImageRequestHandler(ciImage: ciImage, orientation: .up)
         do {
             try handler.perform([self.classificationRequest])
         } catch {

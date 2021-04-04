@@ -127,8 +127,8 @@ extension CIImage{
 //
 //        var img = self.unpremultiplyingAlpha()
         var img = self.settingAlphaOne(in: self.extent)
-        let min = MaxMinTemp(img: img).min
-        let max = MaxMinTemp(img: img).max
+        let min = Filters.shared.MaxMinTemp(img: img).min
+        let max = Filters.shared.MaxMinTemp(img: img).max
         
        
         

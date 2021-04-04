@@ -14,8 +14,8 @@ let zeroUUID: UUID = UUID.init()
 
 struct ContentView: View  {
 
-    let font = FontUtils.shared
-    let imgUtil = ImageUtil.shared
+//    let font = FontUtils.shared
+//    let imgUtil = ImageUtil.shared
 
     @ObservedObject var imageViewModel: ImageProcess
     @ObservedObject var psdsVM: PsdsVM
@@ -23,16 +23,16 @@ struct ContentView: View  {
     @ObservedObject var interactive = InteractiveViewModel()
     @ObservedObject var settingVM : SettingViewModel
 
-    @State var showImage = false
+//    @State var showImage = false
     @State var showPatchLayer = false
     //@State var showDebugOverlay = true
-    @State private var showPredictString = true
-    @State private var showDebugOverlay = true
-    @State var isDragging = false
+//    @State private var showPredictString = true
+//    @State private var showDebugOverlay = true
+//    @State var isDragging = false
     @State private var clickPositionOnImage = CGSize.zero
     @State var showFakeString: UUID = zeroUUID
     
-    
+    //Constant
     var screenSize: NSRect? = NSScreen.main?.visibleFrame
     let leftPanelWidth: CGFloat = 300
     let rightPanelWidth: CGFloat = 300

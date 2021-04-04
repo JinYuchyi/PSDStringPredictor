@@ -273,7 +273,7 @@ struct StringObjectPropertyView: View {
             let result = panel.runModal()
             if result == .OK{
                 GetLastSelectObject().charImageList[index].ToPNG(url: panel.url!)
-                let bw = SetGrayScale(GetLastSelectObject().charImageList[index] )
+                let bw = Filters.shared.SetGrayScale(GetLastSelectObject().charImageList[index] )
                 let newUrl = URL.init(fileURLWithPath: panel.url!.path + "_bw.bmp")
                 bw!.ToPNG(url: newUrl)
             }
