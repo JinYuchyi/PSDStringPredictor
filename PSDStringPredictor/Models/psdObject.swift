@@ -50,20 +50,21 @@ struct PSDObject: Identifiable{
         self.thumbnail = thumbnail
         self.dpi = dpi
         self.status = status
-        self.width = CIImage.init(contentsOf: imageURL)?.extent.width ?? 0
-        self.height = CIImage.init(contentsOf: imageURL)?.extent.height ?? 0
+        let img = CIImage.init(contentsOf: imageURL) ?? CIImage.init()
+        self.width = img.extent.width
+        self.height = img.extent.height
 //        print("height: \(self.height)")
     }
     
     init(id: Int, imageURL: URL){
         self.id = id
-//        stringObjects = []
         self.imageURL = imageURL
         self.thumbnail = FetchThumbnail(size: sizeOfThumbnail)
         colorMode = PsdsUtil.shared.FetchColorMode(img: thumbnail.ToCIImage()!)
         status = .normal
-        self.width = CIImage.init(contentsOf: imageURL)?.extent.width ?? 0
-        self.height = CIImage.init(contentsOf: imageURL)?.extent.height ?? 0
+        let img = CIImage.init(contentsOf: imageURL) ?? CIImage.init()
+        self.width = img.extent.width
+        self.height = img.extent.height
 //        print("height: \(self.height)")
     }
     

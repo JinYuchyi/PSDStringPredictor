@@ -8,7 +8,9 @@
 
 import SwiftUI
 
-let sizeOfThumbnail: Int = 180
+let sizeOfThumbnail: Int = 100
+let thumbnailWidth: CGFloat = 300
+let thumbnailHeight: CGFloat = 180
 
 struct PsdThumbnail: View {
     var id: Int
@@ -17,20 +19,26 @@ struct PsdThumbnail: View {
     
     @ObservedObject var psdVM: PsdsVM
     
+    
     var body: some View {
         ZStack{
             IDView()
             
             Image(nsImage: ((psdVM.fetchPsd(psdId: id).thumbnail ?? NSImage.init(contentsOfFile: Bundle.main.path(forResource: "defaultImage", ofType: "png")!))!))
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+                .scaleEffect(1.8)
+                
+                
             StatusView()
             titleView()
         }
-        .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        .frame(width: thumbnailWidth, height: thumbnailHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
     
     func StatusView()-> some View{
         LabelView()
-            .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .topTrailing)
+            .frame(width: thumbnailWidth, height: thumbnailHeight, alignment: .topTrailing)
             .onTapGesture {
                 psdVM.psdStatusTapped(psdId: id)
             }.padding(.trailing, 50)
@@ -42,14 +50,14 @@ struct PsdThumbnail: View {
         Text("\(title)")
             .background(Color.black.opacity(0.2))
             .foregroundColor(.white)
-            .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .bottom)
+            .frame(width: 300, height: thumbnailHeight, alignment: .bottom)
 //            .padding(.leading, 50)
     }
     
     func IDView() -> some View{
         Text("ID:\(id)")
             .foregroundColor(.gray)
-            .frame(width: 300, height: CGFloat(sizeOfThumbnail), alignment: .topLeading)
+            .frame(width: 300, height: thumbnailHeight, alignment: .topLeading)
             .padding(.leading, 50)
     }
     
@@ -74,6 +82,15 @@ struct PsdThumbnail: View {
             return Text("􀁞")
                 .font(.system(size: 20, weight: .light, design: .serif))
                 .foregroundColor(Color.orange)
+        }
+    }
+    
+    private func size() -> (w: CGFloat, h: CGFloat){
+        let psd = psdVM.fetchPsd(psdId: id)
+        if psd.width > psd.height {
+            return (thumbnailWidth, thumbnailWidth / psd.width * psd.height )
+        }else{
+            return ( thumbnailHeight / psd.height * psd.width, thumbnailHeight)
         }
     }
     

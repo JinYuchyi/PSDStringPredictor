@@ -47,21 +47,15 @@ class ImageProcess: ObservableObject{
 //    }
     
     func GetImageProperty(keyName: String, path: String) -> Int{
-        //        var imgData: Data = Data.init()
         let url = URL.init(fileURLWithPath: path)
-        //        if targetNSImage.isValid{
-        //            imgData = targetNSImage.tiffRepresentation!
-        //
-        //        }
+
         var imageData: NSData =  NSData.init()
         do{
             try imageData = NSData.init(contentsOf: url)
         }catch{
             print("Image data generate error in getting DPI function.")
         }
-        
-        //print("keyName: \(keyName), path: \(path)")
-        
+                
         guard let imageSource = CGImageSourceCreateWithData(imageData, nil),
               let metaData = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
               let dpi = metaData[keyName] as? Int else {

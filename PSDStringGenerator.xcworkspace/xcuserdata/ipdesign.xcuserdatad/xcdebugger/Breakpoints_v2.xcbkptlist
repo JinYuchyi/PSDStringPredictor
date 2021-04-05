@@ -14,8 +14,8 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "884"
-            endingLineNumber = "884"
+            startingLineNumber = "883"
+            endingLineNumber = "883"
             landmarkName = "ProcessForAll()"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,10 +30,10 @@
             filePath = "PSDStringPredictor/ViewModel/PsdListVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "877"
-            endingLineNumber = "877"
-            landmarkName = "ProcessForAll()"
-            landmarkType = "7">
+            startingLineNumber = "876"
+            endingLineNumber = "876"
+            landmarkName = "PsdsVM"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "47C4C79D-9B7C-47A2-8AA4-2E2FB3A3C0CB - 9698fd740e0e9aac"

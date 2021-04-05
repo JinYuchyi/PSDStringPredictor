@@ -252,9 +252,9 @@ class PsdsVM: ObservableObject{
         if DataStore.selectedNSImage.size.width == 0 {
             return nil
         }
-        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: DataStore.selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
+//        let _targetImageMasked = imageUtil.ApplyBlockMasks(target: DataStore.selectedNSImage.ToCIImage()!, psdId: psdId, rectDict: maskDict)
         DispatchQueue.main.async{ [self] in 
-            self.processedCIImage = self.imageUtil.ApplyFilters(target: _targetImageMasked, gamma: self.gammaDict[psdId] ?? 1, exp: self.expDict[psdId] ?? 0, threshold: self.thresholdDict[psdId] ?? 0.5, thresholdOn: self.thresholdActive ?? false )
+            self.processedCIImage = self.imageUtil.ApplyFilters(target: DataStore.selectedNSImage.ToCIImage()!, gamma: self.gammaDict[psdId] ?? 1, exp: self.expDict[psdId] ?? 0, threshold: self.thresholdDict[psdId] ?? 0.5, thresholdOn: self.thresholdActive ?? false )
         }
         return processedCIImage
     }
@@ -433,7 +433,6 @@ class PsdsVM: ObservableObject{
             
             newStrObj.deleteFontTailLength()
             let sepObjList = newStrObj.seprateIfPossible()
-            //            print(sepObjList?.count)
             if sepObjList != nil {
                 for obj in sepObjList!{
                     strobjs.append(obj)
@@ -882,9 +881,9 @@ class PsdsVM: ObservableObject{
         if _list.count > 0{
             
 //            var c: CGFloat = 0
-            for psd in _list {
-                queueCalc.async {
-                    
+            
+            queueCalc.async {
+                for psd in _list {
                     self.FetchStringObjects(psdId: psd.id)
 //                    DispatchQueue.main.async{
 //                        self.prograssScale = 0

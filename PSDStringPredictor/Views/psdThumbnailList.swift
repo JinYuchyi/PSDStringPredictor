@@ -26,7 +26,7 @@ struct psdThumbnailList: View {
 //                    VStack(alignment: .center){
                         PsdThumbnail(id: psd.id, title: psd.imageURL.lastPathComponent, psdVM: psdsVM)
                             .tooltip("Path:" + "\r\n" + "\(psdsVM.fetchPsd(psdId: psd.id).imageURL)" + "\r\n" + "Size: \(psdsVM.fetchPsd(psdId: psd.id).width), \(psdsVM.fetchPsd(psdId: psd.id).height)")
-                            .frame(width: geo.size.width*0.85, height: CGFloat(sizeOfThumbnail))
+                            .frame(width: geo.size.width*0.85, height: thumbnailHeight)
                             
                             .onTapGesture {
 //                                psdsVM.selectionRectShow = false

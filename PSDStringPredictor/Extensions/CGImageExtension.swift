@@ -26,12 +26,12 @@ extension CGImage{
     
     func maxMinColor() -> (min: [CGFloat], max: [CGFloat]){
 //        print("alpha: \(self.alphaInfo.rawValue)")
-        var ci = self.ToCIImage()
-        ci.settingAlphaOne(in: ci.extent)
+//        var ci = self.ToCIImage()
+//        ci.settingAlphaOne(in: ci.extent)
 //        let _data = self.bitsPerPixel
 //        ci = ci.premultiplyingAlpha()
-        ci.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/123.png"))
-        let pixelData=ci.ToCGImage().dataProvider!.data
+//        ci.ToPNG(url: URL.init(fileURLWithPath: "/Users/ipdesign/Downloads/123.png"))
+        let pixelData=self.dataProvider!.data
 //        print(ci.ToCGImage().dataProvider!.info.debugDescription)
         let data:UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
         
