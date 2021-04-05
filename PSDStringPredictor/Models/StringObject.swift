@@ -267,14 +267,35 @@ struct StringObject : Identifiable,  Hashable{
     
 
     mutating func calcColor() {
-        
-       var img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath))!
-        img = img.settingAlphaOne(in: img.extent)
-        let newRect = CGRect.init(x: stringRect.minX.rounded(.awayFromZero), y: stringRect.minY.rounded(.awayFromZero), width: stringRect.width.rounded(.towardZero), height: stringRect.height.rounded(.towardZero))
-        img = img.cropped(to: newRect)
-        img.settingAlphaOne(in: img.extent)
-
-        (color, bgColor) = img.getForegroundBackgroundColor(colorMode: self.colorMode)
+        var darkcompImg = charImageList[0]
+        var brightcompImg = charImageList[0]
+        if charImageList.count >= 2 {
+            for i in 1..<charImageList.count {
+                darkcompImg = darkcompImg.applyingFilter("CIDarkenBlendMode",
+                                                parameters: [
+                                                    kCIInputImageKey: charImageList[i]
+                                                 ])
+                brightcompImg = brightcompImg.applyingFilter("CILightenBlendMode",
+                                                parameters: [
+                                                    kCIInputImageKey: charImageList[i]
+                                                 ])
+            }
+        }
+       
+//       var img = CIImage.init(contentsOf: URL.init(fileURLWithPath: imagePath))!
+//        img = img.settingAlphaOne(in: img.extent)
+//        let newRect = CGRect.init(x: stringRect.minX.rounded(.awayFromZero), y: stringRect.minY.rounded(.awayFromZero), width: stringRect.width.rounded(.towardZero), height: stringRect.height.rounded(.towardZero))
+//        img = img.cropped(to: newRect)
+//        img.settingAlphaOne(in: img.extent)
+        if colorMode == .light {
+            color = darkcompImg.ToCGImage().maxMinColor().min.toCGColor()
+            bgColor = brightcompImg.ToCGImage().maxMinColor().max.toCGColor()
+        }else if colorMode == .dark {
+            bgColor = darkcompImg.ToCGImage().maxMinColor().min.toCGColor()
+            color = brightcompImg.ToCGImage().maxMinColor().max.toCGColor()
+        }
+  
+//        (color, bgColor) = img.getForegroundBackgroundColor(colorMode: self.colorMode)
     }
 
 //    mutating func CalcColor() -> CGColor {

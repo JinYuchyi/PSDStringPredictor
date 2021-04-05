@@ -87,7 +87,13 @@ extension Array where Element == Data {
 
 extension Array where Element == CGFloat {
     func toCGColor()-> CGColor {
-        return CGColor.init(red: self[0], green: self[1], blue: self[2], alpha: self[3])
+        if self.count == 4{
+            return CGColor.init(red: self[0], green: self[1], blue: self[2], alpha: self[3])
+        }else if self.count == 3{
+            return CGColor.init(red: self[0], green: self[1], blue: self[2], alpha: 1)
+        }else{
+            return CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+        }
     }
     
     func toCIColor()-> CIColor {
